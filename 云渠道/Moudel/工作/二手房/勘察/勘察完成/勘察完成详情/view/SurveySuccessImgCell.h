@@ -1,0 +1,17 @@
+//
+//  SurveySuccessImgCell.h
+//  云渠道
+//
+//  Created by 谷治墙 on 2018/6/19.
+//  Copyright © 2018年 xiaoq. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface SurveySuccessImgCell : UITableViewCell
+
+@property (nonatomic, strong) UILabel *numL;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+
+@end
