@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+@class AddBankCardVC;
+
+typedef void(^AddBankCardBlock)(void);
+
 @interface AddBankCardVC : BaseViewController
+
+@property (nonatomic, copy) AddBankCardBlock addBankCardBlock;
 
 @end

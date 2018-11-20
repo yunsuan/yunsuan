@@ -21,67 +21,139 @@
 }
 
 - (void)setModel:(CompanyModel *)model{
-    if (model.logo.length>0) {
-        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.logo]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    
+    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.logo]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+       
+        if (error) {
             
-            if (error) {
-                
-                _headImg.image = [UIImage imageNamed:@"default_3"];
-            }
-        }];
-    }
-   else
-   {
-       _headImg.image = [UIImage imageNamed:@"default_3"];
-   }
+            _headImg.image = [UIImage imageNamed:@"default_3"];
+        }
+    }];
     
     _nameL.text = model.company_name;
     _addressL.text = model.absolute_address;
-    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",model.contact_tel];
-    _contactL.text = [NSString stringWithFormat:@"负责人：%@",model.contact];
+//    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",model.contact_tel];
+//    _contactL.text = [NSString stringWithFormat:@"负责人：%@",model.contact];
+//    if (model.absolute_address.length) {
+//        
+//        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+//            
+//            make.left.equalTo(self.contentView).offset(0 *SIZE);
+//            make.top.equalTo(_phoneL.mas_bottom).offset(15 *SIZE);
+//            make.width.mas_equalTo(SCREEN_Width);
+//            make.height.mas_equalTo(SIZE);
+//            make.bottom.equalTo(self.contentView).offset(0 *SIZE);
+//        }];
+//    }else{
+//        
+//        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+//            
+//            make.left.equalTo(self.contentView).offset(0 *SIZE);
+//            make.top.equalTo(_headImg.mas_bottom).offset(18 *SIZE);
+//            make.width.mas_equalTo(SCREEN_Width);
+//            make.height.mas_equalTo(SIZE);
+//            make.bottom.equalTo(self.contentView).offset(0 *SIZE);
+//        }];
+//    }
 }
 
 - (void)initUI{
     
-    _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 17 *SIZE, 67 *SIZE, 67 *SIZE)];
+    _headImg = [[UIImageView alloc] init];
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
     _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
     
-    _nameL = [[UILabel alloc] initWithFrame:CGRectMake(95 *SIZE, 16 *SIZE, 180 *SIZE, 13 *SIZE)];
+    _nameL = [[UILabel alloc] init];
     _nameL.textColor = YJContentLabColor;
+    _nameL.numberOfLines = 0;
     _nameL.font = [UIFont systemFontOfSize:13 *SIZE];
-//    _nameL.text = @"云算科技";
     [self.contentView addSubview:_nameL];
     
-    _addressL = [[UILabel alloc] initWithFrame:CGRectMake(95 *SIZE, 36 *SIZE, 180 *SIZE, 11 *SIZE)];
+    _addressL = [[UILabel alloc] init];
+    _addressL.numberOfLines = 0;
     _addressL.textColor = YJContentLabColor;
     _addressL.font = [UIFont systemFontOfSize:12 *SIZE];
-//    _addressL.text = @"大禹东路108号3栋2单元";
     [self.contentView addSubview:_addressL];
     
-    _codeL = [[UILabel alloc] initWithFrame:CGRectMake(95 *SIZE, 56 *SIZE, 180 *SIZE, 10 *SIZE)];
+    _codeL = [[UILabel alloc] init];
+    _codeL.numberOfLines = 0;
     _codeL.textColor = YJContentLabColor;
     _codeL.font = [UIFont systemFontOfSize:11 *SIZE];
-//    _codeL.text = @"营业执照：YYZZHNO138";
     [self.contentView addSubview:_codeL];
     
-    _phoneL = [[UILabel alloc] initWithFrame:CGRectMake(95 *SIZE, 74 *SIZE, 150 *SIZE, 10 *SIZE)];
+    _phoneL = [[UILabel alloc] init];
+    _phoneL.numberOfLines = 0;
     _phoneL.textColor = YJContentLabColor;
     _phoneL.font = [UIFont systemFontOfSize:11 *SIZE];
-//    _phoneL.text = @"联系方式：18745455623";
     [self.contentView addSubview:_phoneL];
     
-    _contactL = [[UILabel alloc] initWithFrame:CGRectMake(250 *SIZE, 74 *SIZE, 100 *SIZE, 10 *SIZE)];
+    _contactL = [[UILabel alloc] init];
     _contactL.textColor = YJContentLabColor;
     _contactL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _contactL.numberOfLines = 0;
     _contactL.textAlignment = NSTextAlignmentRight;
-//    _contactL.text = @"负责人：张三";
     [self.contentView addSubview:_contactL];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 99 *SIZE, SCREEN_Width, SIZE)];
-    line.backgroundColor = YJBackColor;
-    [self.contentView addSubview:line];
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
+    
+    [self MasonryUI];
+}
+
+- (void)MasonryUI{
+    
+    [_headImg mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+         make.top.equalTo(self.contentView).offset(17 *SIZE);
+         make.width.height.mas_equalTo(67 *SIZE);
+    }];
+    
+    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(95 *SIZE);
+        make.top.equalTo(self.contentView).offset(16 *SIZE);
+        make.right.equalTo(self.contentView).offset(15 *SIZE);
+    }];
+    
+    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(95 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(7 *SIZE);
+        make.right.equalTo(self.contentView).offset(15 *SIZE);
+    }];
+    
+    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(95 *SIZE);
+        make.top.equalTo(_addressL.mas_bottom).offset(8 *SIZE);
+        make.right.equalTo(self.contentView).offset(15 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(95 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(180 *SIZE);
+    }];
+    
+    [_contactL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(250 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(self.contentView).offset(100 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(SIZE);
+        make.bottom.equalTo(self.contentView).offset(0 *SIZE);
+    }];
 }
 
 @end

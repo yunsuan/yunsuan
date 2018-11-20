@@ -226,6 +226,10 @@
     if (![_dataArr[indexPath.section][@"bank_card"] length]) {
         
         AddBankCardVC *nextVC = [[AddBankCardVC alloc] init];
+        nextVC.addBankCardBlock = ^{
+            
+            [self RequestMethod];
+        };
         [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         

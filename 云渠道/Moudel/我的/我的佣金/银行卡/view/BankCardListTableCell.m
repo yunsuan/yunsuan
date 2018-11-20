@@ -34,7 +34,7 @@
     _logoImg.backgroundColor = YJBackColor;
 //    [self.contentView addSubview:_logoImg];
     
-    _bankL = [[UILabel alloc] initWithFrame:CGRectMake(68 *SIZE,  38*SIZE, 200 *SIZE, 14 *SIZE)];
+    _bankL = [[UILabel alloc] initWithFrame:CGRectMake(68 *SIZE,  38*SIZE, 280 *SIZE, 14 *SIZE)];
     _bankL.textColor = CH_COLOR_white;
     _bankL.font = [UIFont systemFontOfSize:15 *SIZE];
 //    _bankL.text = @"中国建设银行";

@@ -7,12 +7,17 @@
 //
 
 #import "MyBrokerageVC.h"
-#import "BrokerageTableCell.h"
 #import "BankCardListVC.h"
 #import "UnpaidBrokerageVC.h"
 #import "BrokerageRecordVC.h"
 #import "IDcardAuthenticationVC.h"
 #import "IdentifyingVC.h"
+#import "BrokerageAwardVC.h"
+
+#import "BrokerageTableCell.h"
+
+
+
 
 @interface MyBrokerageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -22,6 +27,22 @@
     NSArray *_brokerCount;
 }
 @property (nonatomic, strong) UITableView *brokerTable;
+
+@property (nonatomic, strong) UIImageView *awardView;
+
+@property (nonatomic, strong) UILabel *titleL1;
+
+@property (nonatomic, strong) UILabel *priceL1;
+
+@property (nonatomic, strong) UIButton *awardBtn1;
+
+@property (nonatomic, strong) UIImageView *awardView1;
+
+@property (nonatomic, strong) UILabel *titleL2;
+
+@property (nonatomic, strong) UILabel *priceL2;
+
+@property (nonatomic, strong) UIButton *awardBtn2;
 
 @property (nonatomic, strong) UILabel *priceL;
 
@@ -63,7 +84,7 @@
         }
         
     } failure:^(NSError *error) {
-//        NSLog(@"%@",error);
+
     }];
 }
 
@@ -121,6 +142,20 @@
 }
 
 
+- (void)ActionAwardBtn:(UIButton *)btn{
+    
+    if (btn.tag == 0) {
+        
+        BrokerageAwardVC *nextVC = [[BrokerageAwardVC alloc] initWithTitle:@"邀请奖励"];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        BrokerageAwardVC *nextVC = [[BrokerageAwardVC alloc] initWithTitle:@"其他奖励"];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+    
+}
+
 #pragma mark -- tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -130,7 +165,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 146 *SIZE;
+    return 91 *SIZE;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -142,16 +177,18 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.numL.text = _brokerCount[indexPath.row][0];
-    cell.priceL.text = _brokerCount[indexPath.row][1];
     if (indexPath.row == 0) {
         
-        cell.backImg.image = [UIImage imageNamed:@"bg_1-1"];
-        
+        cell.titleL.text = @"未结佣金";
     }else{
         
-        cell.backImg.image = [UIImage imageNamed:@"bg_2-1"];
+        cell.titleL.text = @"已结佣金";
     }
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"条数%@",_brokerCount[indexPath.row][0]]];
+    [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 *SIZE] range:NSMakeRange(0, 2)];
+    cell.numL.attributedText = attr;
+    cell.priceL.text = [NSString stringWithFormat:@"%@",_brokerCount[indexPath.row][1]];
+
     
     return cell;
 }
@@ -211,7 +248,64 @@
         [whiteView addSubview:btn];
     }
     
-    _brokerTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 133 *SIZE, SCREEN_Width, SCREEN_Height - 133 *SIZE - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+    for (int i = 0; i < 2; i++) {
+        
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE + SCREEN_Width / 2 * i, 144 *SIZE + NAVIGATION_BAR_HEIGHT, 167 *SIZE, 83 *SIZE)];
+        img.userInteractionEnabled = YES;
+        if (i == 0) {
+            
+            img.image = [UIImage imageNamed:@"blue"];
+        }else{
+            
+            img.image = [UIImage imageNamed:@"orange"];
+        }
+//        img.backgroundColor = YJBlueBtnColor;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 18 *SIZE, 167 *SIZE, 13 *SIZE)];
+        label.textColor = CH_COLOR_white;
+        if (i == 0) {
+            
+            label.text = @"邀请奖励";
+        }else{
+            
+            label.text = @"其他奖励";
+        }
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        label.textAlignment = NSTextAlignmentCenter;
+        
+        UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 47 *SIZE, 167 *SIZE, 13 *SIZE)];
+        label1.textColor = CH_COLOR_white;
+        label1.font = [UIFont systemFontOfSize:13 *SIZE];
+        label1.text = @"￥0";
+        label1.textAlignment = NSTextAlignmentCenter;
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = img.bounds;
+        btn.tag = 0;
+        [btn addTarget:self action:@selector(ActionAwardBtn:) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (i == 0) {
+            
+            _awardView = img;
+            [self.view addSubview:_awardView];
+            _titleL1 = label;
+            [_awardView addSubview:_titleL1];
+            _priceL1 = label1;
+            [_awardView addSubview:_priceL1];
+            [_awardView addSubview:btn];
+        }else{
+            
+            _awardView1 = img;
+            [self.view addSubview:_awardView1];
+            _titleL2 = label;
+            [_awardView1 addSubview:_titleL2];
+            _priceL2 = label1;
+            [_awardView1 addSubview:_priceL2];
+            [_awardView1 addSubview:btn];
+        }
+    }
+    
+    _brokerTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 133 *SIZE + 105 *SIZE, SCREEN_Width, SCREEN_Height - 133 *SIZE - 105 *SIZE - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _brokerTable.backgroundColor = self.view.backgroundColor;
     _brokerTable.delegate = self;
     _brokerTable.dataSource = self;

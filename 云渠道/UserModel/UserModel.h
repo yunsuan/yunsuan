@@ -10,6 +10,7 @@
 
 
 @interface UserModel : NSObject
+@property (nonatomic, assign)  NSInteger comment;
 @property (nonatomic , strong) NSString *Token;
 @property (nonatomic , strong) NSString *Account;
 @property (nonatomic , strong) NSString *Password;

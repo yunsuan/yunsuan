@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface BirthVC : BaseViewController
-
+- (instancetype)initWithTime:(NSString *)time;
 @end

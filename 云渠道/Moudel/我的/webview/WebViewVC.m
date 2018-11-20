@@ -21,7 +21,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"操作指南";
     //2.创建URL
-    NSURL *URL = [NSURL URLWithString:redirectUrl];
+    NSURL *URL = [NSURL URLWithString:_weburl];
     //3.创建Request
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     //4.加载Request
@@ -50,10 +50,12 @@
 //    [self showContent:@"网络错误"];
 //}
 
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+// 页面加载失败时调用
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
     [self showContent:@"网络错误"];
 }
+
+
 
 -(WKWebView *)webwivw
 {

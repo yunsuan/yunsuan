@@ -139,6 +139,13 @@ static NSString *const QuitAuth_URL = @"agent/personal/quit";
 
 static NSString *const QRCode_URL = @"agent/personal/qrcodeUrl";
 
+//我的团队
+static NSString *const PersonalMyTeamList_URL = @"agent/personal/myTeamList";
+
+//加入团队地址
+static NSString *const PersonalJoinAgentTeam_URL = @"agent/personal/joinAgentTeam";
+
+
 #pragma mark ---  客源  ---
 
 

@@ -467,10 +467,10 @@
     return _dataArr.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 100 *SIZE;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    return 100 *SIZE;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -554,6 +554,8 @@
     [whiteView addSubview:_selectColl];
     
     _selecTable = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_selectColl.frame) + SIZE, SCREEN_Width, SCREEN_Height - CGRectGetMaxY(_selectColl.frame) - SIZE) style:UITableViewStylePlain];
+    _selecTable.rowHeight = UITableViewAutomaticDimension;
+    _selecTable.estimatedRowHeight = 100 *SIZE;
     _selecTable.backgroundColor = self.view.backgroundColor;
     _selecTable.delegate = self;
     _selecTable.dataSource = self;

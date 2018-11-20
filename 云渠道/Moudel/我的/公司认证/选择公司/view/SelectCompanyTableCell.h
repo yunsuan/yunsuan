@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) UILabel *contactL;
 
+@property (nonatomic, strong) UIView *line;
+
 @property (nonatomic, strong) CompanyModel *model;
 
 @end

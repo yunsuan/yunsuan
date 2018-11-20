@@ -61,14 +61,14 @@
 - (void)SetData:(NSArray *)data{
     
     [_dataArr removeAllObjects];
-    for (NSUInteger i = 0; i < data.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
            
             if ([obj isKindOfClass:[NSNull class]]) {
                 
-                tempDic[key] = @"";
+                [tempDic setObject:@"" forKey:key];
             }
         }];
         
@@ -82,10 +82,10 @@
     return _dataArr.count;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//    return 144 *SIZE;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 144 *SIZE;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -95,21 +95,35 @@
         cell = [[ExperienceTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ExperienceTableCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if ([_dataArr[(NSUInteger) indexPath.row][@"quit_time"] length]) {
+    if ([_dataArr[indexPath.row][@"quit_time"] length]) {
         
-        cell.timeL.text = [NSString stringWithFormat:@"%@至%@", _dataArr[(NSUInteger) indexPath.row][@"entry_time"], _dataArr[(NSUInteger)indexPath.row][@"quit_time"]];
+        cell.timeL.text = [NSString stringWithFormat:@"%@至%@",_dataArr[indexPath.row][@"entry_time"],_dataArr[indexPath.row][@"quit_time"]];
     }else{
         
-        cell.timeL.text = [NSString stringWithFormat:@"%@至今",_dataArr[(NSUInteger) indexPath.row][@"entry_time"]];
+        cell.timeL.text = [NSString stringWithFormat:@"%@至今",_dataArr[indexPath.row][@"entry_time"]];
     }
     
-    cell.companyL.text = _dataArr[(NSUInteger) indexPath.row][@"company_name"];
-    cell.recommendL.text = [NSString stringWithFormat:@"推荐客户数量：%@",_dataArr[(NSUInteger)indexPath.row][@"his"][@"recommend"]];
-    cell.visitL.text = [NSString stringWithFormat:@"到访客户数量：%@",_dataArr[(NSUInteger)indexPath.row][@"his"][@"value"]];
-    cell.dealL.text = [NSString stringWithFormat:@"成交客户数量：%@",_dataArr[(NSUInteger)indexPath.row][@"his"][@"deal"]];
-    cell.roleL.text = _dataArr[(NSUInteger)indexPath.row][@"role"];
-    cell.upLine.hidden = indexPath.row == 0;
-    cell.downLine.hidden = indexPath.row == _dataArr.count - 1;
+    cell.companyL.text = _dataArr[indexPath.row][@"company_name"];
+    cell.recommendL.text = [NSString stringWithFormat:@"推荐客户数量：%@",_dataArr[indexPath.row][@"his"][@"recommend"]];
+    cell.visitL.text = [NSString stringWithFormat:@"到访客户数量：%@",_dataArr[indexPath.row][@"his"][@"value"]];
+    cell.dealL.text = [NSString stringWithFormat:@"成交客户数量：%@",_dataArr[indexPath.row][@"his"][@"deal"]];
+    cell.roleL.text = _dataArr[indexPath.row][@"role"];
+    
+    if (indexPath.row == 0) {
+        
+        cell.upLine.hidden = YES;
+    }else{
+        
+        cell.upLine.hidden = NO;
+    }
+    
+    if (indexPath.row == _dataArr.count - 1) {
+        
+        cell.downLine.hidden = YES;
+    }else{
+        
+        cell.downLine.hidden = NO;
+    }
     return cell;
 }
 
@@ -119,8 +133,6 @@
     self.titleLabel.text = @"工作经历";
     
     _experienceTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
-    _experienceTable.rowHeight = UITableViewAutomaticDimension;
-    _experienceTable.estimatedRowHeight = 144 *SIZE;
     _experienceTable.backgroundColor = self.view.backgroundColor;
     _experienceTable.delegate = self;
     _experienceTable.dataSource = self;

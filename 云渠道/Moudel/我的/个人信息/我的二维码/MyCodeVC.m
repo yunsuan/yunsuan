@@ -9,7 +9,10 @@
 #import "MyCodeVC.h"
 
 @interface MyCodeVC ()
-
+{
+    
+    NSString *_url;
+}
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UIImageView *tagImg;
@@ -60,14 +63,29 @@
 
 - (void)ActionRightBtn:(UIButton *)btn{
     
-    [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
+    [BaseRequest GET:@"user/project/shareAgent" parameters:@{@"agent_id":[UserModel defaultModel].agent_id} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            _url = resposeObject[@"data"][@"url"];
+            [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
+        }else{
+            
+            [self showContent:@"分享失败"];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"分享失败"];
+        NSLog(@"%@",error);
+    }];
 }
 
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"我的二维码";
-    self.rightBtn.hidden = YES;
+    self.rightBtn.hidden = NO;
     [self.rightBtn setTitle:@"分享" forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.rightBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];
@@ -81,23 +99,16 @@
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(100 *SIZE, 24 *SIZE, 67 *SIZE, 67 *SIZE)];
     _headImg.backgroundColor = [UIColor greenColor];
-    _headImg.layer.cornerRadius = (CGFloat) (33.5 *SIZE);
+    _headImg.layer.cornerRadius = 33.5 *SIZE;
     _headImg.clipsToBounds = YES;
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
-    if ([UserInfoModel defaultModel].head_img.length>0) {
-        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,[UserInfoModel defaultModel].head_img]] placeholderImage:[UIImage imageNamed:@"def_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,[UserInfoModel defaultModel].head_img]] placeholderImage:[UIImage imageNamed:@"def_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+        if (error) {
             
-            if (error) {
-                
-                _headImg.image = [UIImage imageNamed:@"def_head"];
-            }
-        }];
-    }else
-    {
-        _headImg.image = [UIImage imageNamed:@"def_head"];
-
-    }
-
+            _headImg.image = [UIImage imageNamed:@"def_head"];
+        }
+    }];
     [_whiteView addSubview:_headImg];
     
     
@@ -106,7 +117,7 @@
     [_whiteView addSubview:_tagImg];
     
     _genderImg = [[UIImageView alloc] initWithFrame:CGRectMake(19 *SIZE, 11 *SIZE, 12 *SIZE, 12 *SIZE)];
-//    _genderImg.image = [UIImage imageNamed:@"man"];
+    //    _genderImg.image = [UIImage imageNamed:@"man"];
     if ([[UserInfoModel defaultModel].sex integerValue] == 1) {
         
         _genderImg.image = [UIImage imageNamed:@"man_2"];
@@ -138,7 +149,7 @@
     _YSlable.textAlignment = NSTextAlignmentCenter;
     [self.whiteView addSubview:_YSlable];
     _codeImg = [[UIImageView alloc] initWithFrame:CGRectMake(50 *SIZE, 168 *SIZE, 167 *SIZE, 167 *SIZE)];
-//    _codeImg.backgroundColor = [UIColor blackColor];
+    //    _codeImg.backgroundColor = [UIColor blackColor];
     
     [_whiteView addSubview:_codeImg];
 }
@@ -200,15 +211,19 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
-//    //创建网页内容对象
-//    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_nameL.text descr:@"" thumImage:[NSString stringWithFormat:@"%@%@",Base_Net,[UserInfoModel defaultModel].head_img]];
-//    //设置网页地址
+    //    //创建网页内容对象
+    //    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_nameL.text descr:@"" thumImage:[NSString stringWithFormat:@"%@%@",Base_Net,[UserInfoModel defaultModel].head_img]];
+    //    //设置网页地址
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房产渠道专业平台" thumImage:[UIImage imageNamed:@"shareimg"]];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"%@的名片",[UserInfoModel defaultModel].name] thumImage:[UIImage imageNamed:@"shareimg"]];
     //设置网页地址
-    shareObject.webpageUrl =@"http://itunes.apple.com/app/id1371978352?mt=8";
+    shareObject.webpageUrl = _url;
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;
+    
+    if (platformType == UMSocialPlatformType_WechatTimeLine) {
+        shareObject.title = [NSString stringWithFormat:@"【云渠道】%@的名片",[UserInfoModel defaultModel].name];
+    }
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -235,7 +250,7 @@
     
     // 4.通过KVO设置滤镜, 传入data, 将来滤镜就知道要通过传入的数据生成二维码
     [filter setValue:data forKey:@"inputMessage"];
-
+    
     // 5.生成二维码
     CIImage *outputImage = filter.outputImage;
     CGFloat scale = _codeImg.frame.size.width/ CGRectGetWidth(outputImage.extent);
@@ -248,8 +263,8 @@
     UIImage *qrCodeImage = [UIImage imageWithCGImage:imageRef];
     
     // 6.设置生成好得二维码到imageView上
-  _codeImg.image  = qrCodeImage;
-
+    _codeImg.image  = qrCodeImage;
+    
 }
 
 

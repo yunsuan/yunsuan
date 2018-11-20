@@ -9,6 +9,5 @@
 #import "BaseViewController.h"
 
 @interface ChangeAddessVC : BaseViewController
-
-
+- (instancetype)initWithAddress:(NSString *)address;
 @end

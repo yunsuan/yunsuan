@@ -28,15 +28,21 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView{
-
-    _placeL.hidden = textView.text.length != 0;
+    
+    if (textView.text.length) {
+        
+        _placeL.hidden = YES;
+    }else{
+        
+        _placeL.hidden = NO;
+    }
 }
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
     
     if (![self isEmpty:_textView.text]) {
-
+        
         _confirmBtn.userInteractionEnabled = NO;
         [BaseRequest POST:Advice_URL parameters:@{@"content":_textView.text} success:^(id resposeObject) {
             

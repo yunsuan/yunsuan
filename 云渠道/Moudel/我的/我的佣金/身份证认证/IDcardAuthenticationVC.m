@@ -312,15 +312,15 @@
     view.backgroundColor = CH_COLOR_white;
     [self.view addSubview:view];
     
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 15 *SIZE, 100 *SIZE, 13 *SIZE)];
-    label1.textColor = YJTitleLabColor;
-    label1.font = [UIFont systemFontOfSize:13 *SIZE];
-    label1.text = @"身份证照片：";
-    [view addSubview:label1];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 15 *SIZE, 100 *SIZE, 13 *SIZE)];
+    label.textColor = YJTitleLabColor;
+    label.font = [UIFont systemFontOfSize:13 *SIZE];
+    label.text = @"身份证照片：";
+    [view addSubview:label];
     
     NSArray *titleArr = @[@"上传正面人像页",@"上传背面国徽页",@"手持正面身份证"];
     NSArray *imgArr = @[@"positive",@"back",@"handheld"];
-    for (NSUInteger i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(13 *SIZE + i * 122 *SIZE, 132 *SIZE, 100 *SIZE, 10 *SIZE)];
         label.textColor = YJ170Color;

@@ -10,15 +10,15 @@
 #import "BrokerageDetailTableCell.h"
 #import "BrokerageDetailTableCell2.h"
 #import "BrokerageDetailTableCell3.h"
-//#import "BrokerageDetailTableCell4.h"
+#import "BrokerageDetailTableCell4.h"
 #import "BrokerDetailHeader.h"
 #import "RoomDetailVC1.h"
-//#import "RoomListModel.h"
+#import "RoomListModel.h"
 
 @interface BrokerageDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-//    BOOL _drop;
+    BOOL _drop;
     NSDictionary *_data;
     NSArray *_Pace;
 }
@@ -96,9 +96,9 @@
             header = [[BrokerDetailHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 50 *SIZE)];
         }
         header.titleL.text = @"当前项目进度";
-//        header.dropBtnBlock = ^{
-//
-//        };
+        header.dropBtnBlock = ^{
+
+        };
         
         return header;
     }
@@ -202,9 +202,21 @@
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@", _Pace[(NSUInteger) indexPath.row][@"process_name"], _Pace[(NSUInteger)indexPath.row][@"time"]];
-            cell.upLine.hidden = indexPath.row == 0;
-            cell.downLine.hidden = indexPath.row == _Pace.count-1;
+                cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+                if (indexPath.row == 0) {
+                    
+                    cell.upLine.hidden = YES;
+                }else{
+                    
+                    cell.upLine.hidden = NO;
+                }
+                if (indexPath.row == _Pace.count-1) {
+                    
+                    cell.downLine.hidden = YES;
+                }else{
+                    
+                    cell.downLine.hidden = NO;
+                }
                 return cell;
 //            }
         }
@@ -287,9 +299,10 @@
 {
     RoomListModel *model = [[RoomListModel alloc]init];
     model.project_id = _data[@"project_id"];
-    RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
-    nextVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:nextVC animated:YES];
+//    model.info_id = _data[@
+//    RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+//    nextVC.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 @end

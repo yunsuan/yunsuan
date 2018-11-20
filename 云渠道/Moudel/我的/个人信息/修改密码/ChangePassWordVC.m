@@ -33,10 +33,10 @@
 {
     [self.view addSubview:self.RegisterBtn];
     [self.view addSubview:self.Account];
-//    [self.view addSubview:self.Code];
-//    [self.view addSubview:self.GetCodeBtn];
+    //    [self.view addSubview:self.Code];
+    //    [self.view addSubview:self.GetCodeBtn];
     [self.view addSubview:self.SurePassWord];
-//    [self.view addSubview:self.timeLabel];
+    //    [self.view addSubview:self.timeLabel];
     [self.view addSubview:self.PassWord];
     [self.view addSubview:self.leftButton];
     [self.view addSubview:self.maskButton];
@@ -48,7 +48,7 @@
     [self.view addSubview:title];
     
     for (int i = 0; i<3; i++) {
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+154*SIZE+47*SIZE*i, 316*SIZE, (CGFloat) (0.5*SIZE))];
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+154*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
         line.backgroundColor = COLOR(180, 180, 180, 1);
         [self.view addSubview:line];
     }
@@ -70,7 +70,7 @@
         [self showContent:@"两次输入的密码不相同！"];
         return;
     }
-
+    
     NSDictionary *parameter = @{
                                 @"old_password":_Account.text,
                                 @"password":_PassWord.text,
@@ -78,18 +78,18 @@
                                 };
     
     [BaseRequest POST:ChangePassword_URL parameters:parameter success:^(id resposeObject) {
-//        NSLog(@"%@",resposeObject);
-    
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             [UserModel defaultModel].Password = _PassWord.text;
             [UserModelArchiver archive];
-
-//            [self alertControllerWithNsstring:@"系统提示" And:[NSString stringWithFormat:@"修改密码成功，你的新密码为：%@，请妥善保管",_PassWord.text]];
+            
+            //            [self alertControllerWithNsstring:@"系统提示" And:[NSString stringWithFormat:@"修改密码成功，你的新密码为：%@，请妥善保管",_PassWord.text]];
             [self alertControllerWithNsstring:@"系统提示" And:[NSString stringWithFormat:@"修改密码成功，你的新密码为：%@，请妥善保管",_PassWord.text] WithDefaultBlack:^{
-                            [self.navigationController popViewControllerAnimated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             }];
-       
-        
+            
+            
         }
         else{
             [self showContent:resposeObject[@"msg"]];
@@ -104,10 +104,10 @@
 
 
 
-//-(void)Protocol
-//{
-//
-//}
+-(void)Protocol
+{
+    
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
@@ -139,7 +139,7 @@
     if (!_Account) {
         _Account = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+119*SIZE, 200*SIZE, 25*SIZE)];
         _Account.placeholder = @"请输入原始密码";
-        _Account.keyboardType = UIKeyboardTypeDefault;
+        _Account.keyboardType = UIKeyboardTypePhonePad;
         _Account.delegate = self;
         _Account.font = [UIFont systemFontOfSize:14*SIZE];
         
@@ -189,9 +189,6 @@
     }
     return _RegisterBtn;
 }
-
-
-
 
 
 

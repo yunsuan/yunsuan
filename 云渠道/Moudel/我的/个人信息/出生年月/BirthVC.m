@@ -10,6 +10,11 @@
 #import "DateChooseView.h"
 
 @interface BirthVC ()
+{
+    
+    NSDate *_date;
+    NSString *_time;
+}
 @property (nonatomic, strong) UILabel *birthL;
 
 @property (nonatomic, strong) UIButton *birthBtn;
@@ -24,9 +29,19 @@
 
 @implementation BirthVC
 
+- (instancetype)initWithTime:(NSString *)time
+{
+    self = [super init];
+    if (self) {
+        
+        _time = [NSString stringWithFormat:@"%@",time];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    
     [self initUI];
 }
 
@@ -49,8 +64,8 @@
         NSDictionary *dic = @{@"birth":_birthL.text};
         [BaseRequest POST:UpdatePersonal_URL parameters:dic success:^(id resposeObject) {
             
-//            NSLog(@"%@",resposeObject);
-          
+            //            NSLog(@"%@",resposeObject);
+            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [UserInfoModel defaultModel].birth = _birthL.text;
@@ -61,8 +76,8 @@
             }
         } failure:^(NSError *error) {
             
-               [self showContent:@"网络错误"];
-//            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+            //            NSLog(@"%@",error);
         }];
     }
 }
@@ -86,6 +101,14 @@
     
     _birthL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 20 *SIZE, 300 *SIZE, 12 *SIZE)];
     _birthL.textColor = YJTitleLabColor;
+    if (_time.length) {
+        
+        _birthL.text = _time;
+    }else{
+        
+        _birthL.text = @"请选择出生日期";
+    }
+    
     _birthL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.whiteView addSubview:_birthL];
     
@@ -113,7 +136,8 @@
         _dateView = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
         __weak __typeof(&*self)weakSelf = self;
         _dateView.dateblock = ^(NSDate *date) {
-
+            
+            _date = date;
             weakSelf.birthL.text = [weakSelf.formatter stringFromDate:date];
         };
     }

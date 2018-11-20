@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface WebViewVC : BaseViewController
-
+@property (nonatomic , strong) NSString *weburl;
 @end

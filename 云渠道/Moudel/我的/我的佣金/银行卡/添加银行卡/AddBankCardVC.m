@@ -118,7 +118,11 @@
         [self showContent:resposeObject[@"msg"]];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            if (self.addBankCardBlock) {
+                
+                self.addBankCardBlock();
+            }
+            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
        

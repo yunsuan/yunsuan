@@ -15,10 +15,11 @@
     NSString *_provinceId;
     NSString *_cityId;
     NSString *_areaId;
+    NSString *_address;
 }
 @property (nonatomic, strong) UILabel *addressL;
 
-//@property (nonatomic, strong) UIButton *addressBtn;
+@property (nonatomic, strong) UIButton *addressBtn;
 
 @property (nonatomic, strong) UIView *whiteView;
 
@@ -30,6 +31,16 @@
 
 @implementation ChangeAddessVC
 
+- (instancetype)initWithAddress:(NSString *)address
+{
+    self = [super init];
+    if (self) {
+        
+        _address = address;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -38,33 +49,36 @@
 
 - (void)ActionRightBtn:(UIButton *)btn{
     
-    if (!_provinceId && !_cityId && !_areaId && [self isEmpty:_detailTV.text]) {
+    if (!_provinceId && !_cityId && !_areaId) {
         
-        [self showContent:@"请选择地址"];
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择地址"];
+    }else if ([self isEmpty:_detailTV.text]){
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写详细地址"];
     }else{
         
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
         
         if (_provinceId) {
             
-            tempDic[@"province"] = _provinceId;
+            [tempDic setObject:_provinceId forKey:@"province"];
         }
         if (_cityId) {
             
-            tempDic[@"city"] = _cityId;
+            [tempDic setObject:_cityId forKey:@"city"];
         }
         if (_areaId) {
             
-            tempDic[@"district"] = _areaId;
+            [tempDic setObject:_areaId forKey:@"district"];
         }
         if (![self isEmpty:_detailTV.text]) {
             
-            tempDic[@"absolute_address"] = _detailTV.text;
+            [tempDic setObject:_detailTV.text forKey:@"absolute_address"];
         }
         [BaseRequest POST:UpdatePersonal_URL parameters:tempDic success:^(id resposeObject) {
             
-//            NSLog(@"%@",resposeObject);
-      
+            //            NSLog(@"%@",resposeObject);
+            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 if (_provinceId) {
@@ -92,7 +106,7 @@
         } failure:^(NSError *error) {
             
             [self showContent:@"网络错误"];
-//            NSLog(@"%@",error);
+            //            NSLog(@"%@",error);
         }];
     }
 }
@@ -114,6 +128,7 @@
     _addressL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 18 *SIZE, 200 *SIZE, 13 *SIZE)];
     _addressL.textColor = YJTitleLabColor;
     _addressL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _addressL.text = @"请选择地址";
     if ([UserInfoModel defaultModel].province.length && [UserInfoModel defaultModel].city.length && [UserInfoModel defaultModel].district.length) {
         
         NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
@@ -122,22 +137,24 @@
         NSArray *provice = [NSJSONSerialization JSONObjectWithData:JSONData
                                                            options:NSJSONReadingMutableContainers
                                                              error:&err];
-        for (NSUInteger i = 0; i < provice.count; i++) {
+        for (int i = 0; i < provice.count; i++) {
             
             if([provice[i][@"code"] integerValue] == [[UserInfoModel defaultModel].province integerValue]){
                 
                 NSArray *city = provice[i][@"city"];
-                for (NSUInteger j = 0; j < city.count; j++) {
+                for (int j = 0; j < city.count; j++) {
                     
                     if([city[j][@"code"] integerValue] == [[UserInfoModel defaultModel].city integerValue]){
                         
                         NSArray *area = city[j][@"district"];
                         
-                        for (NSUInteger k = 0; k < area.count; k++) {
+                        for (int k = 0; k < area.count; k++) {
                             
                             if([area[k][@"code"] integerValue] == [[UserInfoModel defaultModel].district integerValue]){
                                 
-                                
+                                _provinceId = [UserInfoModel defaultModel].province;
+                                _cityId = [UserInfoModel defaultModel].city;
+                                _areaId = [UserInfoModel defaultModel].district;
                                 _addressL.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[0][@"name"],area[k][@"name"]];
                             }
                         }

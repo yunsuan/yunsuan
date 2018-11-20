@@ -13,7 +13,7 @@
 @interface UnpaidBrokerageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray *_data;
-    int nowpage;
+    int page;
 }
 @property (nonatomic , strong) UITableView *MainTableView;
 
@@ -29,6 +29,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    page= 1;
     [self postWithPage:@"1"];
 }
 
@@ -123,22 +124,24 @@
         cell = [[UnpaidCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 
-    cell.nameL.text = _data[(NSUInteger) indexPath.row][@"name"];
-    cell.phoneL.text = _data[(NSUInteger)indexPath.row][@"tel"];
-    cell.unitL.text =  _data[(NSUInteger)indexPath.row][@"project_name"];
-    cell.codeL.text = [NSString stringWithFormat:@"推荐编号：%@",_data[(NSUInteger)indexPath.row][@"client_id"]];
-    cell.typeL.text =  [NSString stringWithFormat:@"类型：%@",_data[(NSUInteger)indexPath.row][@"broker_type"]];
-    cell.timeL.text = [NSString stringWithFormat:@"推荐时间：%@",_data[(NSUInteger)indexPath.row][@"create_time"]];
+    cell.nameL.text = _data[indexPath.row][@"name"];
+    cell.phoneL.text = _data[indexPath.row][@"tel"];
+    cell.unitL.text =  _data[indexPath.row][@"project_name"];
+    cell.codeL.text = [NSString stringWithFormat:@"推荐编号：%@",_data[indexPath.row][@"client_id"]];
+    cell.typeL.text =  [NSString stringWithFormat:@"类型：%@",_data[indexPath.row][@"broker_type"]];
+    cell.timeL.text = [NSString stringWithFormat:@"推荐时间：%@",_data[indexPath.row][@"create_time"]];
     cell.expediteBtn.tag = indexPath.row;
-    if ([_data[(NSUInteger)indexPath.row][@"type"] integerValue]==1) {
+    if ([_data[indexPath.row][@"type"] integerValue]==1) {
         cell.priceL.text = @"";
+        cell.expediteBtn.hidden = YES;
     }
     else{
-    cell.priceL.text = [NSString stringWithFormat:@"%@",_data[(NSUInteger)indexPath.row][@"broker_num"]];
+    cell.priceL.text = [NSString stringWithFormat:@"%@",_data[indexPath.row][@"broker_num"]];
+        cell.expediteBtn.hidden = NO;
     }
 //    WS(weakself);
     
-    if ([_data[(NSUInteger)indexPath.row][@"is_urge"] integerValue]==1) {
+    if ([_data[indexPath.row][@"is_urge"] integerValue]==1) {
         [cell.expediteBtn setTitle:@"已催佣" forState:UIControlStateNormal];
         cell.expediteBtn.userInteractionEnabled = NO;
     }
@@ -146,7 +149,7 @@
     __weak __typeof(&*cell)weakcell = cell;
     cell.moneybtnBlook = ^(NSInteger index) {
         [BaseRequest POST:Urge_URL parameters:@{
-                                    @"broker_id":_data[(NSUInteger)indexPath.row][@"broker_id"]
+                                    @"broker_id":_data[indexPath.row][@"broker_id"]
                                                 }
                   success:^(id resposeObject) {
 //                      NSLog(@"%@",resposeObject);
@@ -172,10 +175,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BrokerageDetailVC *nextVC = [[BrokerageDetailVC alloc] init];
-    nextVC.broker_id = _data[(NSUInteger)indexPath.row][@"broker_id"];
+    nextVC.broker_id = _data[indexPath.row][@"broker_id"];
     nextVC.type = @"0";
-    nextVC.is_urge =_data[(NSUInteger)indexPath.row][@"is_urge"];
-    nextVC.iscompany = _data[(NSUInteger)indexPath.row][@"type"];
+    nextVC.is_urge =_data[indexPath.row][@"is_urge"];
+    nextVC.iscompany = _data[indexPath.row][@"type"];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
@@ -191,11 +194,12 @@
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
         _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+            page = 1;
             [self postWithPage:@"1"];
         }];
         _MainTableView.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
-            nowpage++;
-            [self postWithPage:[NSString stringWithFormat:@"%d",nowpage]];
+            page++;
+            [self postWithPage:[NSString stringWithFormat:@"%d",page]];
         }];
 //        _MainTableView.
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

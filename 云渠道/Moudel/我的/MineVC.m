@@ -21,6 +21,10 @@
 #import "ExperienceVC.h"
 #import "WebViewVC.h"
 #import "MySubscripVC.h"
+#import "MyTeamVC.h"
+#import <StoreKit/StoreKit.h>
+
+
 
 
 #import "MineCell.h"
@@ -55,6 +59,34 @@
     [self InitDataSouce];
     [self InitUI];
     [self RequestMethod];
+    [self LoadRequest];
+}
+
+- (void)LoadRequest{
+    
+    if (![UserModel defaultModel].comment) {
+        [UserModel defaultModel].comment = 0;
+        [UserModelArchiver archive];
+    }
+    else{
+        [UserModel defaultModel].comment += 1;
+        [UserModelArchiver archive];
+        if ([UserModel defaultModel].comment%50==0) {
+            if (@available(iOS 10.3, *)) {
+                [SKStoreReviewController requestReview];
+            }
+            else{
+                [self alertControllerWithNsstring:@"温馨提示" And:@"是否去APPStore进行评分？" WithCancelBlack:^{
+                    
+                } WithDefaultBlack:^{
+                    NSString *str = @"itms-apps://itunes.apple.com/app/id1371978352?mt=8";
+                    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:str]];
+                    
+                }];
+            }
+            
+        }
+    }
 }
 
 -(void)InitUI{
@@ -106,9 +138,9 @@
 
 -(void)InitDataSouce
 {
-    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅"],@[@"意见反馈",@"关于云算",@"操作指南"]];
-    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"subs"],@[@"opinion",@"about",@"operation"]];
-    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@""],@[@" ",YQDversion,@""]];
+    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅",@"我的团队"],@[@"意见反馈",@"关于云算",@"操作指南"]];
+    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"subs",@"team"],@[@"opinion",@"about",@"operation"]];
+    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@"",@""],@[@" ",YQDversion,@""]];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
 
@@ -336,14 +368,10 @@
 #pragma mark  ---  delegate  ---
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 2)
         return 3;
-    }else if (section == 0){
-        
-        return 4;
-    }
     else
-        return 3;
+        return 4;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -519,9 +547,15 @@
                 MyAttentionVC *nextVC = [[MyAttentionVC alloc] init];
                 nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
-            }else{
+            }else if(indexPath.row ==2)
+            {
                 
                 MySubscripVC *nextVC = [[MySubscripVC alloc] init];
+                nextVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else
+            {
+                MyTeamVC *nextVC = [[MyTeamVC alloc] init];
                 nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }

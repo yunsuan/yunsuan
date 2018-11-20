@@ -360,7 +360,7 @@
         }
         case 2:
         {
-            ChangeNameVC *nextVC = [[ChangeNameVC alloc] init];
+            ChangeNameVC *nextVC = [[ChangeNameVC alloc] initWithName:[UserInfoModel defaultModel].name];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
@@ -432,7 +432,7 @@
         }
         case 5:
         {
-            BirthVC *nextVC = [[BirthVC alloc] init];
+            BirthVC *nextVC = [[BirthVC alloc] initWithTime:[UserInfoModel defaultModel].birth];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }

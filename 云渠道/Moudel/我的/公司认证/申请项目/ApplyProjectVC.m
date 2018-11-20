@@ -126,14 +126,14 @@
 
 - (void)SetData:(NSArray *)data{
 
-    for (NSUInteger i = 0; i < data.count; i++) {
+    for (int i = 0; i < data.count; i++) {
 
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
 
             if ([obj isKindOfClass:[NSNull class]]) {
 
-                tempDic[key] = @"";
+                [tempDic setObject:@"" forKey:key];
             }
             
         }];
@@ -174,7 +174,7 @@
     if (!cell) {
         cell = [[PeopleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    MyAttentionModel *model = _dataArr[(NSUInteger) indexPath.row];
+    MyAttentionModel *model = _dataArr[indexPath.row];
     [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
     
     NSArray *tempArr1 = @[model.property_tags,model.project_tags_name];
@@ -203,7 +203,7 @@
 {
     if (self.applyProjectVCBlock) {
         
-        RoomListModel *model = _dataArr[(NSUInteger) indexPath.row];
+        RoomListModel *model = _dataArr[indexPath.row];
         self.applyProjectVCBlock(model.project_id, model.project_name);
         [self.navigationController popViewControllerAnimated:YES];
     }
