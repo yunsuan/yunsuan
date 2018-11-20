@@ -11,18 +11,26 @@
 #import "PeopleCell.h"
 #import "RoomListModel.h"
 #import "CustomDetailVC.h"
+#import "SelectWorkerView.h"
+#import "ReportCustomSuccessView.h"
+#import "ReportCustomConfirmView.h"
 
 @interface QuickSearchVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     
     NSInteger _page;
-//    NSArray *_arr;
+    NSArray *_arr;
     NSMutableArray *_dataArr;
     NSString *_city;
     NSArray *_tagsArr;
     NSArray *_propertyArr;
     CustomRequireModel *_model;
+    NSInteger _state;
+    NSInteger _selected;
 }
+
+@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
+
 @property (nonatomic , strong) UITableView *searchTable;
 
 @end
@@ -65,14 +73,14 @@
     
     if (self.title.length) {
         
-        dic[@"project_name"] = self.title;
+        [dic setObject:self.title forKey:@"project_name"];
     }
     
     [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
         
         [self.searchTable.mj_header endRefreshing];
-//        NSLog(@"%@",resposeObject);
-     
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             
@@ -84,28 +92,28 @@
                 _searchTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
-      
-                [self showContent:resposeObject[@"msg"]];
+            
+            [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
         [self.searchTable.mj_header endRefreshing];
         [self.searchTable.mj_footer endRefreshing];
-//        NSLog(@"%@",error.localizedDescription);
+        //        NSLog(@"%@",error.localizedDescription);
     }];
     
 }
 
 - (void)SetData:(NSArray *)data{
     
-    for (NSUInteger i = 0; i < data.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
                 
-                tempDic[key] = @"";
+                [tempDic setObject:@"" forKey:key];
             }
         }];
         
@@ -117,12 +125,53 @@
     [_searchTable reloadData];
 }
 
+#pragma mark -- Method --
+
+- (void)RequestRecommend:(NSDictionary *)dic projectName:(NSString *)projectName{
+    
+    [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+        
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            
+            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+            NSDictionary *tempDic = @{@"project":projectName,
+                                      @"sex":self.customerTableModel.sex,
+                                      @"tel":self.customerTableModel.tel,
+                                      @"name":self.customerTableModel.name
+                                      };
+            reportCustomSuccessView.state = _state;
+            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[CustomDetailVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            };
+            [self.view addSubview:reportCustomSuccessView];
+        }
+        else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
 
 #pragma mark  ---  delegate   ---
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
+    
     return _dataArr.count;
 }
 
@@ -138,9 +187,8 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    RoomListModel *model;
-    model = _dataArr[(NSUInteger) indexPath.row];
+    
+    RoomListModel *model = _dataArr[indexPath.row];
     if ([model.guarantee_brokerage integerValue] == 2) {
         
         static NSString *CellIdentifier = @"CompanyCell";
@@ -151,7 +199,7 @@
         }
         [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
         NSMutableArray *tempArr = [@[] mutableCopy];
-        for (NSUInteger i = 0; i < model.property_tags.count; i++) {
+        for (int i = 0; i < model.property_tags.count; i++) {
             
             [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
@@ -162,8 +210,23 @@
                 }
             }];
         }
-
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+        
+        NSArray *tempArr1 = model.project_tags;
+        NSMutableArray *tempArr2 = [@[] mutableCopy];
+        for (int i = 0; i < tempArr1.count; i++) {
+            
+            
+            [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [tempArr1[i] integerValue]) {
+                    
+                    [tempArr2 addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        NSArray *tempArr3 = @[tempArr,tempArr2.count == 0 ? @[]:tempArr2];
+        [cell settagviewWithdata:tempArr3];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -185,11 +248,17 @@
         }else{
             
             cell.statusImg.hidden = NO;
-            cell.surelab.hidden = [model.guarantee_brokerage integerValue] != 1;
+            if ([model.guarantee_brokerage integerValue] == 1) {
+                
+                cell.surelab.hidden = NO;
+            }else{
+                
+                cell.surelab.hidden = YES;
+            }
         }
         
         NSMutableArray *tempArr = [@[] mutableCopy];
-        for (NSUInteger i = 0; i < model.property_tags.count; i++) {
+        for (int i = 0; i < model.property_tags.count; i++) {
             
             [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
@@ -201,7 +270,21 @@
             }];
         }
         
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+        NSArray *tempArr1 = model.project_tags;
+        NSMutableArray *tempArr2 = [@[] mutableCopy];
+        for (int i = 0; i < tempArr1.count; i++) {
+            
+            [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [tempArr1[i] integerValue]) {
+                    
+                    [tempArr2 addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        NSArray *tempArr3 = @[tempArr,tempArr2.count == 0 ? @[]:tempArr2];
+        [cell settagviewWithdata:tempArr3];
         
         if (model.sort) {
             
@@ -238,32 +321,101 @@
 {
     
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
-
-        RoomListModel *model;
-        model = _dataArr[(NSUInteger) indexPath.row];
-        [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":model.project_id,@"client_need_id":_model.need_id,@"client_id":_model.client_id} success:^(id resposeObject) {
-            
-//            NSLog(@"%@",resposeObject);
         
+        RoomListModel *model = _dataArr[indexPath.row];
+        self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
+        SS(strongSelf);
+        WS(weakSelf);
+        self.selectWorkerView.selectWorkerRecommendBlock = ^{
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
+            if (weakSelf.selectWorkerView.nameL.text) {
+                
+                [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
+            }
+            
+            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+            NSDictionary *tempDic = @{@"project":model.project_name,
+                                      @"sex":weakSelf.customerTableModel.sex,
+                                      @"tel":weakSelf.customerTableModel.tel,
+                                      @"name":weakSelf.customerTableModel.name
+                                      };
+            reportCustomConfirmView.state = strongSelf->_state;
+            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                
+                [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+                    
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
+                        NSDictionary *tempDic = @{@"project":model.project_name,
+                                                  @"sex":weakSelf.customerTableModel.sex,
+                                                  @"tel":weakSelf.customerTableModel.tel,
+                                                  @"name":weakSelf.customerTableModel.name
+                                                  };
+                        reportCustomSuccessView.state = strongSelf->_state;
+                        reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                        reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                            
+                            for (UIViewController *vc in weakSelf.navigationController.viewControllers) {
+                                
+                                if ([vc isKindOfClass:[CustomDetailVC class]]) {
+                                    
+                                    [weakSelf.navigationController popToViewController:vc animated:YES];
+                                }
+                            }
+                        };
+                        [weakSelf.view addSubview:reportCustomSuccessView];                    }
+                    else{
+                        
+                        [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    NSLog(@"%@",error);
+                    [weakSelf showContent:@"网络错误"];
+                }];
+            };
+            [weakSelf.view addSubview:reportCustomConfirmView];
+            
+        };
+        [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
+            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                for (UIViewController *vc in self.navigationController.viewControllers) {
+                if ([resposeObject[@"data"][@"rows"] count]) {
                     
-                    if ([vc isKindOfClass:[CustomDetailVC class]]) {
+                    weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
+                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                    weakSelf.selectWorkerView.advicerSelect = _selected;
+                    [self.view addSubview:weakSelf.selectWorkerView];
+                }else{
+                    
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
+                    
+                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                    NSDictionary *tempDic = @{@"project":model.project_name,
+                                              @"sex":self.customerTableModel.sex,
+                                              @"tel":self.customerTableModel.tel,
+                                              @"name":self.customerTableModel.name
+                                              };
+                    reportCustomConfirmView.state = strongSelf->_state;
+                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
                         
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            
-                            [self.navigationController popToViewController:vc animated:YES];
-                        });
-                    }
+                        [self RequestRecommend:dic projectName:model.project_name];
+                    };
+                    [weakSelf.view addSubview:reportCustomConfirmView];
                 }
-            }
-            else{
+            }else{
+                
                 [self showContent:resposeObject[@"msg"]];
             }
         } failure:^(NSError *error) {
             
-//            NSLog(@"%@",error);
             [self showContent:@"网络错误"];
         }];
     }else{

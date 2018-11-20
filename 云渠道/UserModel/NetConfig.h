@@ -32,6 +32,10 @@ static NSString *const Config_URL = @"config";
 
 static NSString *const Advicer_URL = @"user/yunsuan/advicer";
 
+//获取项目置业顾问
+static NSString *const ProjectAdvicer_URL = @"agent/project/advicer";
+
+
 #pragma mark ---  登录注册  ---
 //1登录
 static NSString *const Login_URL = @"agent/user/login";
@@ -651,4 +655,6 @@ static NSString *const BreachList_URL = @"agent/house/sub/breach/list";
 
 //挞定详情
 static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
+
+
 

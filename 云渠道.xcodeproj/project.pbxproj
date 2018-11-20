@@ -572,6 +572,11 @@
 		10AEEE8021A2BFB80049625B /* BrokerageDetailTableCell4.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE7F21A2BFB70049625B /* BrokerageDetailTableCell4.m */; };
 		10AEEE8721A2BFD40049625B /* BrokerageAwardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8221A2BFD40049625B /* BrokerageAwardVC.m */; };
 		10AEEE8821A2BFD40049625B /* BrokerageAwardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8521A2BFD40049625B /* BrokerageAwardCell.m */; };
+		10AEEE8E21A3E6A30049625B /* WorkerPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8C21A3E6A20049625B /* WorkerPickView.m */; };
+		10AEEE8F21A3E6A30049625B /* SelectWorkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8D21A3E6A20049625B /* SelectWorkerView.m */; };
+		10AEEE9721A3E7340049625B /* ReportCustomConfirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9121A3E7340049625B /* ReportCustomConfirmView.m */; };
+		10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */; };
+		10AEEE9C21A3EA050049625B /* LocalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9B21A3EA050049625B /* LocalModel.m */; };
 		10B07C65216C4B4E00E2D1C6 /* OriginatorsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B07C64216C4B4E00E2D1C6 /* OriginatorsModel.m */; };
 		10B2CAA5205A0D0900E814AC /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA3205A0D0900E814AC /* RegisterVC.m */; };
 		10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */; };
@@ -1723,6 +1728,16 @@
 		10AEEE8421A2BFD40049625B /* BrokerageAwardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrokerageAwardCell.h; sourceTree = "<group>"; };
 		10AEEE8521A2BFD40049625B /* BrokerageAwardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrokerageAwardCell.m; sourceTree = "<group>"; };
 		10AEEE8621A2BFD40049625B /* BrokerageAwardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrokerageAwardVC.h; sourceTree = "<group>"; };
+		10AEEE8A21A3E6A20049625B /* WorkerPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkerPickView.h; sourceTree = "<group>"; };
+		10AEEE8B21A3E6A20049625B /* SelectWorkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectWorkerView.h; sourceTree = "<group>"; };
+		10AEEE8C21A3E6A20049625B /* WorkerPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkerPickView.m; sourceTree = "<group>"; };
+		10AEEE8D21A3E6A20049625B /* SelectWorkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectWorkerView.m; sourceTree = "<group>"; };
+		10AEEE9121A3E7340049625B /* ReportCustomConfirmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCustomConfirmView.m; sourceTree = "<group>"; };
+		10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCustomSuccessView.m; sourceTree = "<group>"; };
+		10AEEE9421A3E7340049625B /* ReportCustomSuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomSuccessView.h; sourceTree = "<group>"; };
+		10AEEE9521A3E7340049625B /* ReportCustomConfirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomConfirmView.h; sourceTree = "<group>"; };
+		10AEEE9A21A3EA050049625B /* LocalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModel.h; sourceTree = "<group>"; };
+		10AEEE9B21A3EA050049625B /* LocalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModel.m; sourceTree = "<group>"; };
 		10B07C63216C4B4E00E2D1C6 /* OriginatorsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OriginatorsModel.h; sourceTree = "<group>"; };
 		10B07C64216C4B4E00E2D1C6 /* OriginatorsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OriginatorsModel.m; sourceTree = "<group>"; };
 		10B2CAA3205A0D0900E814AC /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
@@ -1806,7 +1821,6 @@
 		0C06B1F8209D92D100F11993 /* 快速推荐房源 */ = {
 			isa = PBXGroup;
 			children = (
-				0C3D303D218B06FA00B8B8C2 /* 已推荐项目状态 */,
 				0C06B1F9209D92EB00F11993 /* QuickRoomVC.h */,
 				0C06B1FA209D92EB00F11993 /* QuickRoomVC.m */,
 				0C06B1FC209D9B3000F11993 /* QuickSearchVC.h */,
@@ -1987,6 +2001,7 @@
 		0C0B82042063513400238D4F /* 客户详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C3D303D218B06FA00B8B8C2 /* 已推荐项目状态 */,
 				0C25222D215397140031CC44 /* 添加商铺写字楼 */,
 				0CC19D1F207216F70007CC5F /* 添加需求 */,
 				0C06B1F8209D92D100F11993 /* 快速推荐房源 */,
@@ -3873,6 +3888,7 @@
 		0CD90A2720DA58FA00061B4A /* 可修改弹出框 */ = {
 			isa = PBXGroup;
 			children = (
+				10AEEE9021A3E7340049625B /* 推荐-弹出框 */,
 				0CD90AA120E21D7200061B4A /* 新加输入框相册名字 */,
 				0CD90A8020E1DAD100061B4A /* 报备-房源详情弹出框 */,
 				0CD90A2820DA592C00061B4A /* 标题内容时间双按钮 */,
@@ -5364,6 +5380,8 @@
 		106900012057974200E11F52 /* UserModel */ = {
 			isa = PBXGroup;
 			children = (
+				10AEEE9A21A3EA050049625B /* LocalModel.h */,
+				10AEEE9B21A3EA050049625B /* LocalModel.m */,
 				0C07BFC02060D835007F31EC /* UserModel.h */,
 				0C07BFC12060D835007F31EC /* UserModel.m */,
 				0C07BFC32060D88C007F31EC /* UserModelArchiver.h */,
@@ -5520,6 +5538,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				10AEEE8921A3E6A20049625B /* 选择置业顾问 */,
 				10F0BC51217F1D8E00CC0C70 /* 房源导航 */,
 				0CD90A2720DA58FA00061B4A /* 可修改弹出框 */,
 				0CDD6FEC20CFA85700D6609C /* 自定义协议 */,
@@ -5603,6 +5622,28 @@
 				10AEEE8521A2BFD40049625B /* BrokerageAwardCell.m */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		10AEEE8921A3E6A20049625B /* 选择置业顾问 */ = {
+			isa = PBXGroup;
+			children = (
+				10AEEE8A21A3E6A20049625B /* WorkerPickView.h */,
+				10AEEE8B21A3E6A20049625B /* SelectWorkerView.h */,
+				10AEEE8C21A3E6A20049625B /* WorkerPickView.m */,
+				10AEEE8D21A3E6A20049625B /* SelectWorkerView.m */,
+			);
+			path = "选择置业顾问";
+			sourceTree = "<group>";
+		};
+		10AEEE9021A3E7340049625B /* 推荐-弹出框 */ = {
+			isa = PBXGroup;
+			children = (
+				10AEEE9121A3E7340049625B /* ReportCustomConfirmView.m */,
+				10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */,
+				10AEEE9421A3E7340049625B /* ReportCustomSuccessView.h */,
+				10AEEE9521A3E7340049625B /* ReportCustomConfirmView.h */,
+			);
+			path = "推荐-弹出框";
 			sourceTree = "<group>";
 		};
 		10B07C62216C4B0900E2D1C6 /* model */ = {
@@ -5935,6 +5976,7 @@
 				0CAF4DE0219EC08E0009873E /* AttetionComModel.m in Sources */,
 				0C6B6348211B04F500ABB506 /* CompleteSurveyInfoVC.m in Sources */,
 				0C0BED2320A18F7A005A16A1 /* ComplaintCell.m in Sources */,
+				10AEEE8E21A3E6A30049625B /* WorkerPickView.m in Sources */,
 				0CF04F47207B367100A45F4A /* ComplaintVC.m in Sources */,
 				0C2D02B120AD51BA002F1B4E /* AppealComplaintedVC.m in Sources */,
 				0CEF348921816A0500419D5E /* SystemWorkConfirmTableCell.m in Sources */,
@@ -6036,6 +6078,7 @@
 				0C9CD42421006AE4004894A3 /* MaintainCustomVC.m in Sources */,
 				0C25221F21523A3F0031CC44 /* MaintainRoomInfoNeiborCell.m in Sources */,
 				0C581DFB213BCEC90048546C /* ChangeImgNameView.m in Sources */,
+				10AEEE8F21A3E6A30049625B /* SelectWorkerView.m in Sources */,
 				0CF04F51207B39AA00A45F4A /* ComplaintUnCompleteVC.m in Sources */,
 				0C0B821A2063AB2900238D4F /* AddBankCardVC.m in Sources */,
 				0CF89A6320C14BE600454EDD /* BingdingAccountVC.m in Sources */,
@@ -6099,6 +6142,7 @@
 				0C0B82032063467C00238D4F /* RoomCollCell.m in Sources */,
 				0CD909C820D73FDF00061B4A /* SurveyComplaintDetailVC.m in Sources */,
 				0C9CD41D21003C97004894A3 /* MaintainRoomInfoVC.m in Sources */,
+				10AEEE9C21A3EA050049625B /* LocalModel.m in Sources */,
 				0C0C19DB20EB74CC0086E739 /* YBImageBrowserProgressBar.m in Sources */,
 				0C2883AB2109A94D00F69C5F /* RentingSurveyComplaintDetailVC.m in Sources */,
 				0C0C19E020ECABB10086E739 /* SecAllRoomDetailInfoVC.m in Sources */,
@@ -6154,6 +6198,7 @@
 				0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */,
 				0C3AD5592068EF750059CE02 /* RoomDetailTableCell.m in Sources */,
 				0C06B1FE209D9B3100F11993 /* QuickSearchVC.m in Sources */,
+				10AEEE9721A3E7340049625B /* ReportCustomConfirmView.m in Sources */,
 				0C9CD42D2100A662004894A3 /* MaintainRoomInfoCell2.m in Sources */,
 				0CF04F97207CB97F00A45F4A /* AuthenedVC.m in Sources */,
 				102DF9702057A12B00E1859C /* MessageVC.m in Sources */,
@@ -6415,6 +6460,7 @@
 				0C0850EA214BA7810034ED44 /* SecAllRoomStoreVC.m in Sources */,
 				0C2883A32109A17200F69C5F /* RentingSurveyWaitDetailVC.m in Sources */,
 				0C0C19CC20EB74CC0086E739 /* YBImageBrowserAnimatedTransitioning.m in Sources */,
+				10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */,
 				0C0BED1D20A18D94005A16A1 /* FailedDealCell.m in Sources */,
 				10174C082072175800D00B9A /* BuildinginfoCell.m in Sources */,
 				0C9CD3EE20FD8A60004894A3 /* SecBrokerCell.m in Sources */,
@@ -6670,7 +6716,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/云渠道/Resource/PrefixHeader.h";
 				INFOPLIST_FILE = "云渠道/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6681,6 +6727,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -6703,7 +6750,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/云渠道/Resource/PrefixHeader.h";
 				INFOPLIST_FILE = "云渠道/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6714,6 +6761,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
