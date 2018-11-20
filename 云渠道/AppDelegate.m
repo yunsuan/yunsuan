@@ -11,6 +11,7 @@
 #import "GuideVC.h"
 #import "SystemMessageVC.h"
 #import "WorkMessageVC.h"
+#import <WebKit/WebKit.h>
 
 
 // 引入JPush功能所需头文件
@@ -20,9 +21,9 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 // 如果需要使用idfa功能所需要引入的头文件（可选）
-//#import <AdSupport/AdSupport.h>
+#import <AdSupport/AdSupport.h>
 
-//#import <UMShare/UMShare.h>
+#import <UMShare/UMShare.h>
 
 #import <Bugtags/Bugtags.h>
 
@@ -54,8 +55,8 @@
         } failure:^(NSError *error) {
             
         }];
-        
     });
+
     dispatch_group_async(group, queue1, ^{
         
         [BaseRequest GET:HouseRecordUI_URL parameters:@{@"type":@"2"} success:^(id resposeObject) {
@@ -231,6 +232,52 @@
     return YES;
 }
 
+- (void)deleteWebCache {
+    
+    //    if([UIDevice currentDevice])
+    if(@available(iOS 9.0, *)) {
+        NSSet * websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+        NSDate * dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
+        [[WKWebsiteDataStore defaultDataStore]removeDataOfTypes: websiteDataTypes
+                                                  modifiedSince:dateFrom completionHandler:^{
+                                                      
+                                                  }];
+        
+    }else{
+        
+        NSString*libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask,YES)objectAtIndex:0];
+        NSString* cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
+        NSError * errors;
+        [[NSFileManager defaultManager]removeItemAtPath:cookiesFolderPath error:&errors];
+        
+    }
+    
+}
+
+
+- (void)GotoMessVC{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+    SystemMessageVC *next_vc = [[SystemMessageVC alloc] init];
+    next_vc.hidesBottomBarWhenPushed = YES;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
+    nav.navigationBar.hidden = YES;
+    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
+
+- (void)GotoSystemVC{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+    WorkMessageVC *next_vc = [[WorkMessageVC alloc] init];
+    next_vc.hidesBottomBarWhenPushed = YES;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
+    nav.navigationBar.hidden = YES;
+    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
+        
+    }];
+}
 
 - (void)GotoHome{
     
@@ -305,8 +352,6 @@
     } failure:^(NSError *error) {
         
     }];
-    
-    
     
 }
 
@@ -417,6 +462,34 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *title = content.title;  // 推送消息的标题
     NSLog(@"22222222%@",userInfo);
     
+    if (userInfo[@"agent_type"]) {
+        
+        switch ([userInfo[@"agent_type"] integerValue]) {
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 2:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 3:
+            {
+                [UserModel defaultModel].agent_identity = @"2";
+                break;
+            }
+            default:
+                break;
+        }
+        [UserModelArchiver archive];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
+    }
     
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
@@ -444,6 +517,36 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *subtitle = content.subtitle;  // 推送消息的副标题
     NSString *title = content.title;  // 推送消息的标题
     //    NSLog(@"1111111%@",userInfo);
+    
+    if (userInfo[@"agent_type"]) {
+        
+        switch ([userInfo[@"agent_type"] integerValue]) {
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 2:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 3:
+            {
+                [UserModel defaultModel].agent_identity = @"2";
+                break;
+            }
+            default:
+                break;
+        }
+        [UserModelArchiver archive];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
+    }
+    
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
         
@@ -473,14 +576,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     //    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     completionHandler(UIBackgroundFetchResultNewData);
     
-//    if (application.applicationState == UIApplicationStateActive) {
-//
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-//
+    [self GotoHome];
+    if (application.applicationState == UIApplicationStateActive) {
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+
+    }
 //    }else{
 //
-        [self GotoHome];
+//        [self GotoHome];
 //    }
 }
 
@@ -490,14 +595,47 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"%@",userInfo);
     application.applicationIconBadgeNumber += 1;
     
-//    if (application.applicationState == UIApplicationStateActive) {
-//
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-//
+    if (userInfo[@"agent_type"]) {
+        
+        switch ([userInfo[@"agent_type"] integerValue]) {
+            case 0:
+            {
+                break;
+            }
+            case 1:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 2:
+            {
+                [UserModel defaultModel].agent_identity = @"1";
+                break;
+            }
+            case 3:
+            {
+                [UserModel defaultModel].agent_identity = @"2";
+                break;
+            }
+            default:
+                break;
+        }
+        
+        [UserModelArchiver archive];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
+    }
+    application.applicationIconBadgeNumber += 1;
+    
+    [self GotoHome];
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+    }
 //    }else{
 //
-        [self GotoHome];
+//        [self GotoHome];
 //    }
 }
 
