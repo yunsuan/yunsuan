@@ -32,6 +32,15 @@ static NSString *const Config_URL = @"config";
 
 static NSString *const Advicer_URL = @"user/yunsuan/advicer";
 
+//获取项目置业顾问
+static NSString *const ProjectAdvicer_URL = @"agent/project/advicer";
+
+//到访确认获取项目置业顾问
+static NSString *const ProjectGetAdvicer_URL = @"user/project/getAdvicer";
+
+//加入团队地址
+static NSString *const PersonalJoinAgentTeam_URL = @"agent/personal/joinAgentTeam";
+
 #pragma mark ---  登录注册  ---
 //1登录
 static NSString *const Login_URL = @"agent/user/login";
@@ -142,8 +151,6 @@ static NSString *const QRCode_URL = @"agent/personal/qrcodeUrl";
 //我的团队
 static NSString *const PersonalMyTeamList_URL = @"agent/personal/myTeamList";
 
-//加入团队地址
-static NSString *const PersonalJoinAgentTeam_URL = @"agent/personal/joinAgentTeam";
 
 
 #pragma mark ---  客源  ---
@@ -315,6 +322,9 @@ static NSString *const AgentInfoCount_URL = @"agent/work/broker/count";
 
 
 static NSString *const Butterinfocount_URL = @"agent/work/butter/count";
+
+//确认所需字段
+static NSString *const ClientNeedInfo_URL = @"agent/client/needInfo";
 
 //更新数据
 static NSString *const FlushDate_URL = @"agent/work/flushDate";

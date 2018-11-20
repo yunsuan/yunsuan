@@ -36,6 +36,6 @@ typedef void(^confirmBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
-
+@property (nonatomic, strong) UIView *lineView;
 
 @end

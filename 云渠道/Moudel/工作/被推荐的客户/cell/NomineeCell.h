@@ -40,6 +40,8 @@ typedef void(^confirmBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) UIButton *confirmBtn;
 
+@property (nonatomic, strong) UIView *lineView;
+
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end

@@ -11,6 +11,7 @@
 #import "BorderTF.h"
 #import "AuthenCollCell.h"
 #import "SinglePickView.h"
+#import "WorkerPickView.h"
 #import "DateChooseView.h"
 #import "RecommendVC.h"
 #import "TypeOneVC.h"
@@ -32,7 +33,10 @@
     NSDate *_date;
     NSString *_agentname;
     NSString *_agentid;
+    NSString *_agentPhone;
 }
+
+//@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
 @property (nonatomic, strong) UIScrollView *scrolleView;
 
@@ -121,6 +125,11 @@
     _imagePickerController.delegate = self;
     _agentname =@"";
     _agentid = @"0";
+    
+    [self.consulDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        [self.consulDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+    }];
 }
 
 - (void)ActionAddBtn:(UIButton *)btn{
@@ -216,41 +225,61 @@
 -(void)action_agent
 {
     
-    [BaseRequest GET:Advicer_URL parameters:@{
-                                              @"project_id":_datadic[@"project_id"],
-                                              @"broker_id":_datadic[@"broker_id"]
-                                              }
-             success:^(id resposeObject) {
-                 
-                 if ([resposeObject[@"code"] integerValue]==200) {
-                     NSArray *data = resposeObject[@"data"][@"rows"];
-                     NSMutableArray * agent = [[NSMutableArray alloc]init];
-                     for (int i = 0; i<data.count; i++) {
-                         NSDictionary *dic = @{
-                                               @"param":data[i][@"RYXM"],
-                                               @"id":data[i][@"ID"]
-                                               };
-                         [agent addObject:dic];
-                     }
-                     
-                     SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:agent];
-                     WS(weakself);
-                     view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                         
-                         weakself.agentbtn.content.text = MC;
-                         weakself.agentbtn->str = [NSString stringWithFormat:@"%@", ID];
-                         _agentid = ID;
-                         _agentname = MC;
-                     };
-                     [self.view addSubview:view];
-                     
-                 }
-                 
-                 
-             } failure:^(NSError *error) {
-                 
-                 [self showContent:@"获取置业顾问失败"];
-             }];
+    [BaseRequest GET:ProjectGetAdvicer_URL parameters:@{@"project_id":_datadic[@"project_id"]} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:resposeObject[@"data"][@"rows"]];
+            view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+                
+                _agentname = [NSString stringWithFormat:@"%@",RYXM];
+                _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                _agentid = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"获取置业顾问失败"];
+    }];
+    //    [BaseRequest GET:Advicer_URL parameters:@{
+    //                                              @"project_id":_datadic[@"project_id"],
+    //                                              @"broker_id":_datadic[@"broker_id"]
+    //                                      }
+    //             success:^(id resposeObject) {
+    //
+    //                 if ([resposeObject[@"code"] integerValue]==200) {
+    //                     NSArray *data = resposeObject[@"data"][@"rows"];
+    //                     NSMutableArray * agent = [[NSMutableArray alloc]init];
+    //                     for (int i = 0; i<data.count; i++) {
+    //                         NSDictionary *dic = @{
+    //                                               @"param":data[i][@"RYXM"],
+    //                                               @"id":data[i][@"ID"]
+    //                                               };
+    //                         [agent addObject:dic];
+    //                     }
+    //
+    //                     SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:agent];
+    //                     WS(weakself);
+    //                     view.selectedBlock = ^(NSString *MC, NSString *ID) {
+    //
+    //                         weakself.agentbtn.content.text = [NSString stringWithFormat:@"%@,%@",MC,ID];
+    //                         weakself.agentbtn.str = [NSString stringWithFormat:@"%@",ID];
+    //                         _agentid = ID;
+    //                         _agentname = MC;
+    //                     };
+    //                     [self.view addSubview:view];
+    //
+    //                 }
+    //
+    //
+    //    } failure:^(NSError *error) {
+    //
+    //        [self showContent:@"获取置业顾问失败"];
+    //    }];
     
     
 }
@@ -265,7 +294,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.numBtn.content.text = MC;
-                weakself.numBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.numBtn.str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -277,7 +306,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.purposeBtn.content.text = MC;
-                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.purposeBtn.str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -295,22 +324,7 @@
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
     
-    
-    //    if (!_imgArr1.count) {
-    //
-    //        [self showContent:@"请选择到访照片"];
-    //        return;
-    //
-    //    }
-    
-    //    if (!_imgArr2.count) {
-    //
-    //        [self showContent:@"请选择确认单图片"];
-    //        return;
-    //
-    //    }
-    
-    if (!_numBtn->str) {
+    if (!_numBtn.str) {
         
         [self showContent:@"请选择到访人数"];
         return;
@@ -362,14 +376,14 @@
         _agentname = _adviserTF.textfield.text;
     }
     
-    if (_numBtn->str) {
+    if (_numBtn.str) {
         
-        [_dic setObject:_numBtn->str forKey:@"visit_num"];
+        [_dic setObject:_numBtn.str forKey:@"visit_num"];
     }
     
-    if (_purposeBtn->str) {
+    if (_purposeBtn.str) {
         
-        [_dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+        [_dic setObject:_purposeBtn.str forKey:@"buy_purpose"];
     }
     
     if (_agentid) {
@@ -799,6 +813,12 @@
                 {
                     if (_datadic[@"yunsuan_id"]&&_datadic[@"yunsuan_url"]) {
                         _agentbtn = [[DropDownBtn alloc]initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+                        if ([self.consulDic[@"id"] length]) {
+                            
+                            _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",self.consulDic[@"comsulatent_advicer_company"],self.consulDic[@"comsulatent_advicer"],self.consulDic[@"comsulatent_advicer_tel"]];
+                            _agentname = self.consulDic[@"comsulatent_advicer"];
+                            _agentid = self.consulDic[@"id"];
+                        }
                         [_agentbtn addTarget:self action:@selector(action_agent) forControlEvents:UIControlEventTouchUpInside];
                         [_infoView addSubview:_agentbtn];
                     }

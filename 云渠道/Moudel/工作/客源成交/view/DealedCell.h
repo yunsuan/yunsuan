@@ -28,4 +28,6 @@ typedef void(^DealedCellPhoneBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) UIView *lineView;
+
 @end

@@ -855,20 +855,20 @@
     }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (_index == 0) {
-        
-        return 132 *SIZE;
-        
-    }else if (_index < 3){
-        
-        return 107 *SIZE;
-    }else{
-        
-        return 103 *SIZE;
-    }
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    if (_index == 0) {
+//
+//        return 132 *SIZE;
+//
+//    }else if (_index < 3){
+//
+//        return 107 *SIZE;
+//    }else{
+//
+//        return 103 *SIZE;
+//    }
+//}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -919,6 +919,9 @@
                         }
                     } failure:^(NSError *error) {
                         
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"操作失败" WithDefaultBlack:^{
+                            
+                        }];
                     }];
                 };
                 
@@ -954,16 +957,22 @@
             cell.tag = indexPath.row;
             cell.phoneBtnBlock = ^(NSInteger index) {
                 
-                NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];
-                if (phone.length) {
+                if ([_validArr[index][@"tel_complete_state"] integerValue] <= 2) {
                     
-                    //获取目标号码字符串,转换成URL
-                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
-                    //调用系统方法拨号
-                    [[UIApplication sharedApplication] openURL:url];
+                    NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];
+                    if (phone.length) {
+                        
+                        //获取目标号码字符串,转换成URL
+                        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
+                        //调用系统方法拨号
+                        [[UIApplication sharedApplication] openURL:url];
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+                    }
                 }else{
                     
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+                    
                 }
             };
         }else{
@@ -972,16 +981,22 @@
             cell.tag = indexPath.row;
             cell.phoneBtnBlock = ^(NSInteger index) {
                 
-                NSString *phone = [_inValidArr[index][@"tel"] componentsSeparatedByString:@","][0];
-                if (phone.length) {
+                if ([_inValidArr[index][@"tel_complete_state"] integerValue] <= 2) {
                     
-                    //获取目标号码字符串,转换成URL
-                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
-                    //调用系统方法拨号
-                    [[UIApplication sharedApplication] openURL:url];
+                    NSString *phone = [_inValidArr[index][@"tel"] componentsSeparatedByString:@","][0];
+                    if (phone.length) {
+                        
+                        //获取目标号码字符串,转换成URL
+                        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
+                        //调用系统方法拨号
+                        [[UIApplication sharedApplication] openURL:url];
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+                    }
                 }else{
                     
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+                    
                 }
             };
         }
@@ -1049,6 +1064,8 @@
     {
         _MainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 41 *SIZE, 360*SIZE, SCREEN_Height-NAVIGATION_BAR_HEIGHT - 41 *SIZE) style:UITableViewStylePlain];
         _MainTableView.backgroundColor = YJBackColor;
+        _MainTableView.rowHeight = UITableViewAutomaticDimension;
+        _MainTableView.estimatedRowHeight = 130 *SIZE;
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

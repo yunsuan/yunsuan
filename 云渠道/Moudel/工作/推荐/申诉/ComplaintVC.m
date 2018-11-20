@@ -12,6 +12,8 @@
 #import "BarginVC.h"
 #import "NomineeVC.h"
 
+#import "TypeZeroVC.h"
+
 @interface ComplaintVC ()<UITextViewDelegate>
 {
     
@@ -68,29 +70,39 @@
 
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            for (UIViewController *vc in self.navigationController.viewControllers) {
+            [self alertControllerWithNsstring:@"温馨提示" And:@"申诉成功" WithDefaultBlack:^{
                 
-                if ([vc isKindOfClass:[RecommendVC class]]) {
+                for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
-                    [self.navigationController popToViewController:vc animated:YES];
-                }
-                
-                if ([vc isKindOfClass:[NomineeVC class]]) {
+                    if ([vc isKindOfClass:[RecommendVC class]]) {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
-                    [self.navigationController popToViewController:vc animated:YES];
-                }
-                
-                if ([vc isKindOfClass:[BarginVC class]]) {
+                    if ([vc isKindOfClass:[NomineeVC class]]) {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
-                    [self.navigationController popToViewController:vc animated:YES];
+                    if ([vc isKindOfClass:[BarginVC class]]) {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                    
+                    if ([vc isKindOfClass:[TypeZeroVC class]]) {
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
                 }
-            }
+            }];
         }
         else{
             [self showContent:resposeObject[@"msg"]];

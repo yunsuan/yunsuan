@@ -29,6 +29,8 @@ typedef void(^phoneBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) UIButton *phoneBtn;
 
+@property (nonatomic, strong) UIView *lineView;
+
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong) NSMutableDictionary *inValidDic;

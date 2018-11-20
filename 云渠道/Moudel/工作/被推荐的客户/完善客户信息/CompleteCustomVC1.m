@@ -13,8 +13,7 @@
 #import "CompleteCustomVC2.h"
 #import "SinglePickView.h"
 
-@interface CompleteCustomVC1 ()<//UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,
-UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CompleteCustomVC1 ()</*UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,*/UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 {
     
     NSInteger _num;
@@ -43,11 +42,33 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UILabel *phoneL;
 
-@property (nonatomic, strong) BorderTF *phoneTF1;
+@property (nonatomic, strong) UITextField *phoneTF1;
 
-@property (nonatomic, strong) BorderTF *phoneTF2;
+@property (nonatomic, strong) UITextField *phoneTF2;
 
-@property (nonatomic, strong) BorderTF *phoneTF3;
+@property (nonatomic, strong) UITextField *phoneTF3;
+
+@property (nonatomic, strong) UITextField *phoneTF4;
+
+@property (nonatomic, strong) UITextField *phoneTF5;
+
+@property (nonatomic, strong) UITextField *phoneTF6;
+
+@property (nonatomic, strong) UITextField *phoneTF7;
+
+@property (nonatomic, strong) UITextField *phoneTF8;
+
+@property (nonatomic, strong) UITextField *phoneTF9;
+
+@property (nonatomic, strong) UITextField *phoneTF10;
+
+@property (nonatomic, strong) UITextField *phoneTF11;
+
+@property (nonatomic, strong) UILabel *hideL;
+
+@property (nonatomic, strong) UIImageView *hideImg;
+
+@property (nonatomic, strong) UILabel *hideReportL;
 
 @property (nonatomic, strong) UILabel *identifyL;
 
@@ -59,9 +80,9 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UILabel *collL;
 
-@property (nonatomic, strong) UICollectionView *authenColl;
-
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+//@property (nonatomic, strong) UICollectionView *authenColl;
+//
+//@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UIButton *posBtn;
 
@@ -103,6 +124,65 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     _cardType =@"";
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
+    
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    textField.text = @"";
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    
+    if (range.location > 0) {
+        
+        textField.text = [textField.text substringToIndex:1];
+        
+        if (textField == _phoneTF1) {
+            
+            [_phoneTF2 becomeFirstResponder];
+        }else if (textField == _phoneTF2) {
+            
+            [_phoneTF3 becomeFirstResponder];
+        }else if (textField == _phoneTF3) {
+            
+            [_phoneTF4 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF4) {
+            
+            [_phoneTF5 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF5) {
+            
+            [_phoneTF6 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF6) {
+            
+            [_phoneTF7 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF7) {
+            
+            [_phoneTF8 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF8) {
+            
+            [_phoneTF9 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF9) {
+            
+            [_phoneTF10 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF10) {
+            
+            [_phoneTF11 becomeFirstResponder];
+        }else if (textField == _phoneTF11) {
+            
+            [_phoneTF11 endEditing:YES];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 - (void)ActionTagNumBtn:(UIButton *)btn{
@@ -126,41 +206,56 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 - (void)ActionNextBtn:(UIButton *)btn{
     
     NSString *tel;
-    if (_num == 0) {
+    
+    if ([_dataDic[@"tel_complete_state"] integerValue] == 2) {
         
-        if (![self checkTel:_phoneTF1.textfield.text]) {
+        tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
+        if (![self checkTel:tel]) {
             
-            [self showContent:@"请填写正确的电话号码"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写正确的电话号码"];
             return;
-        }else{
-            
-            tel = _phoneTF1.textfield.text;
         }
-    }else if (_num == 1) {
+    }else if ([_dataDic[@"tel_complete_state"] integerValue] == 0){
         
-        if (_phoneTF2.textfield.text.length) {
+        tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
+        if (![self checkTel:tel]) {
             
-            if (![self checkTel:_phoneTF2.textfield.text]) {
-                
-                [self showContent:@"请填写正确的电话号码"];
-                return;
-            }else{
-                
-                tel = [NSString stringWithFormat:@"%@,%@",_phoneTF1.textfield.text,_phoneTF2.textfield.text];
-            }
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写正确的电话号码"];
+            return;
         }
     }else{
         
-        if (_phoneTF3.textfield.text.length) {
+        if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
             
-            if (![self checkTel:_phoneTF3.textfield.text]) {
+            [self alertControllerWithNsstring:@"温馨提示" And:@"电话号码不完整"];
+        }else{
+            
+            if (!_phoneTF4.text.length) {
                 
-                [self showContent:@"请填写正确的电话号码"];
-                return;
-            }else{
-                
-                tel = [NSString stringWithFormat:@"%@,%@,%@",_phoneTF1.textfield.text,_phoneTF2.textfield.text,_phoneTF3.textfield.text];
+                _phoneTF4.text = @"X";
             }
+            if (!_phoneTF5.text.length){
+                
+                _phoneTF5.text = @"X";
+            }
+            if (!_phoneTF6.text.length){
+                
+                _phoneTF6.text = @"X";
+            }
+            if (!_phoneTF7.text.length){
+                
+                _phoneTF7.text = @"X";
+            }
+            
+            if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+                
+                _phoneTF4.text = @"X";
+                _phoneTF5.text = @"X";
+                _phoneTF6.text = @"X";
+                _phoneTF7.text = @"X";
+            }
+            
+            tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
         }
     }
     
@@ -168,10 +263,7 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     
     [dic setObject:_clientId forKey:@"client_id"];
     [dic setObject:_nameTF.textfield.text forKey:@"client_name"];
-    if (tel.length>0) {
-         [dic setObject:tel forKey:@"client_tel"];
-    }
-   
+    [dic setObject:tel forKey:@"client_tel"];
     if (_cardType) {
         
         [dic setObject:_cardType forKey:@"card_type"];
@@ -192,14 +284,35 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
         [dic setObject:_imgStr2 forKey:@"card_img_url"];
     }
     
-    CompleteCustomVC2 *nextVC = [[CompleteCustomVC2 alloc] initWithData:dic];
-    nextVC.datadic = _dataDic;
-    [self.navigationController pushViewController:nextVC animated:YES];
+    [BaseRequest GET:ClientNeedInfo_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            CompleteCustomVC2 *nextVC = [[CompleteCustomVC2 alloc] initWithData:dic];
+            nextVC.consulDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
+            nextVC.datadic = _dataDic;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            CompleteCustomVC2 *nextVC = [[CompleteCustomVC2 alloc] initWithData:dic];
+            nextVC.datadic = _dataDic;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
+    } failure:^(NSError *error) {
+        
+        CompleteCustomVC2 *nextVC = [[CompleteCustomVC2 alloc] initWithData:dic];
+        
+        nextVC.datadic = _dataDic;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }];
+    
 }
 
 - (void)ActionSliderChange:(UISlider *)slider{
     
+    
 }
+
 - (void)ActionAddBtn:(UIButton *)btn{
     
     _num += 1;
@@ -370,7 +483,7 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
                           
                           [self showContent:resposeObject[@"msg"]];
                       }
-                      [self.authenColl reloadData];
+                      //                      [self.authenColl reloadData];
                   } failure:^(NSError *error) {
                       
                       [self showContent:@"网络错误"];
@@ -403,7 +516,7 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
                       
                       [self showContent:resposeObject[@"msg"]];
                   }
-                  [self.authenColl reloadData];
+                  //                  [self.authenColl reloadData];
               } failure:^(NSError *error) {
                   
                   [self showContent:@"网络错误"];
@@ -411,7 +524,7 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     }
     [self dismissViewControllerAnimated:YES completion:^{
         
-        [self.authenColl reloadData];
+        //        [self.authenColl reloadData];
         
     }];
 }
@@ -437,11 +550,15 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     _infoView.backgroundColor = CH_COLOR_white;
     [_scrolleView addSubview:_infoView];
     
-    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addBtn.frame = CGRectMake(313 *SIZE, 87 *SIZE, 25 *SIZE, 25 *SIZE);
-    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
-    [_infoView addSubview:_addBtn];
+    //    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    _addBtn.frame = CGRectMake(313 *SIZE, 87 *SIZE, 25 *SIZE, 25 *SIZE);
+    //    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+    //    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
+    //    [_infoView addSubview:_addBtn];
+    
+    _hideImg = [[UIImageView alloc] init];
+    _hideImg.image = [UIImage imageNamed:@"eye"];
+    [_infoView addSubview:_hideImg];
     
     for(int i = 0; i < 7; i++){
         
@@ -459,11 +576,20 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
             case 1:
             {
                 
+                _hideL = label;
+                _hideL.font = [UIFont systemFontOfSize:11 *SIZE];
+                _hideL.textColor = YJ170Color;
+                _hideL.text = @"只需输入手机号前三位后四位";
+                [_infoView addSubview:_hideL];
                 break;
             }
             case 2:
             {
-                
+                _hideReportL = label;
+                _hideReportL.font = [UIFont systemFontOfSize:10 *SIZE];
+                _hideReportL.textColor = COLOR(255, 165, 29, 1);
+                _hideReportL.text = @"隐号报备";
+                [_infoView addSubview:_hideReportL];
                 break;
             }
             case 3:
@@ -523,70 +649,151 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
             }
         }
         
-        if (i < 6) {
+        if (i < 1) {
             
             BorderTF *TF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
-            switch (i) {
-                case 0:
-                {
-                    
-                    break;
-                }
-                case 1:
-                {
-                    
-                    break;
-                }
-                case 2:
-                {
-                    _phoneTF1 = TF;
-                    _phoneTF1.textfield.keyboardType = UIKeyboardTypePhonePad;
-                    _phoneTF1.frame = CGRectMake(0, 0, 217 *SIZE, 33 *SIZE);
-                    _phoneTF1.textfield.text = [_dataDic[@"tel"] componentsSeparatedByString:@","][0];
-                    [_infoView addSubview:_phoneTF1];
-                    break;
-                }
-                case 3:
-                {
-                    _phoneTF2 = TF;
-                    _phoneTF2.textfield.keyboardType = UIKeyboardTypePhonePad;
-                    _phoneTF2.hidden = YES;
-                    [_infoView addSubview:_phoneTF2];
-                    break;
-                }
-                case 4:
-                {
-                    _phoneTF3 = TF;
-                    _phoneTF3.textfield.keyboardType = UIKeyboardTypePhonePad;
-                    _phoneTF3.hidden = YES;
-                    [_infoView addSubview:_phoneTF3];
-                    break;
-                }
-                case 5:
-                {
-                    _codeTF = TF;
-                    _codeTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
-                    [_infoView addSubview:_codeTF];
-                    break;
-                }
-                default:
-                    break;
-            }
+            _codeTF = TF;
+            _codeTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_infoView addSubview:_codeTF];
         }
     }
     
-    //    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    //    _flowLayout.itemSize = CGSizeMake(120 *SIZE, 91 *SIZE);
-    //    _flowLayout.minimumLineSpacing = 0;
-    //    _flowLayout.minimumInteritemSpacing = 0;
-    //
-    //    _authenColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50 *SIZE, SCREEN_Width, 91 *SIZE) collectionViewLayout:_flowLayout];
-    //    _authenColl.backgroundColor = CH_COLOR_white;
-    //    _authenColl.delegate = self;
-    //    _authenColl.dataSource = self;
-    //
-    //    [_authenColl registerClass:[AuthenCollCell class] forCellWithReuseIdentifier:@"AuthenCollCell"];
-    //    [_infoView addSubview:_authenColl];
+    for (int i = 0; i < 11; i++) {
+        
+        UITextField *borderTF = [[UITextField alloc] initWithFrame:CGRectMake(80 *SIZE, 75 *SIZE, 19 *SIZE, 24 *SIZE)];
+        borderTF.textColor = YJContentLabColor;
+        borderTF.keyboardType = UIKeyboardTypePhonePad;
+        borderTF.font = [UIFont systemFontOfSize:13.3*SIZE];
+        borderTF.layer.cornerRadius = 5*SIZE;
+        borderTF.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+        borderTF.layer.borderWidth = 1*SIZE;
+        borderTF.textAlignment = NSTextAlignmentCenter;
+        switch (i) {
+            case 0:
+            {
+                _phoneTF1 = borderTF;
+                _phoneTF1.delegate = self;
+                _phoneTF1.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(0, 1)];
+                [_infoView addSubview:_phoneTF1];
+                break;
+            }
+            case 1:
+            {
+                _phoneTF2 = borderTF;
+                _phoneTF2.delegate = self;
+                _phoneTF2.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(1, 1)];
+                [_infoView addSubview:_phoneTF2];
+                break;
+            }
+            case 2:
+            {
+                _phoneTF3 = borderTF;
+                _phoneTF3.delegate = self;
+                _phoneTF3.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(2, 1)];
+                [_infoView addSubview:_phoneTF3];
+                break;
+            }
+            case 3:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF4 = borderTF;
+                _phoneTF4.delegate = self;
+                _phoneTF4.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(3, 1)];
+                [_infoView addSubview:_phoneTF4];
+                break;
+            }
+            case 4:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF5 = borderTF;
+                _phoneTF5.delegate = self;
+                _phoneTF5.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(4, 1)];
+                [_infoView addSubview:_phoneTF5];
+                break;
+            }
+            case 5:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF6 = borderTF;
+                _phoneTF6.delegate = self;
+                _phoneTF6.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(5, 1)];
+                [_infoView addSubview:_phoneTF6];
+                break;
+            }
+            case 6:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF7 = borderTF;
+                _phoneTF7.delegate = self;
+                _phoneTF7.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(6, 1)];
+                [_infoView addSubview:_phoneTF7];
+                break;
+            }
+            case 7:
+            {
+                _phoneTF8 = borderTF;
+                _phoneTF8.delegate = self;
+                _phoneTF8.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(7, 1)];
+                [_infoView addSubview:_phoneTF8];
+                break;
+            }
+            case 8:
+            {
+                _phoneTF9 = borderTF;
+                _phoneTF9.delegate = self;
+                _phoneTF9.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(8, 1)];
+                [_infoView addSubview:_phoneTF9];
+                break;
+            }
+            case 9:
+            {
+                _phoneTF10 = borderTF;
+                _phoneTF10.delegate = self;
+                _phoneTF10.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(9, 1)];
+                [_infoView addSubview:_phoneTF10];
+                break;
+            }
+            case 10:
+            {
+                _phoneTF11 = borderTF;
+                _phoneTF11.delegate = self;
+                _phoneTF11.text = [[_dataDic[@"tel"] componentsSeparatedByString:@","][0] substringWithRange:NSMakeRange(10, 1)];
+                [_infoView addSubview:_phoneTF11];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+    if ([_dataDic[@"tel_complete_state"] integerValue] == 2) {
+        
+        _phoneTF4.text = @"X";
+        _phoneTF5.text = @"X";
+        _phoneTF6.text = @"X";
+        _phoneTF7.text = @"X";
+        
+        _hideReportL.hidden = YES;
+        _hideL.hidden = YES;
+        _hideImg.hidden = YES;
+        
+    }else if ([_dataDic[@"tel_complete_state"] integerValue] == 5){
+        
+        _phoneTF4.text = @"X";
+        _phoneTF5.text = @"X";
+        _phoneTF6.text = @"X";
+        _phoneTF7.text = @"X";
+        
+        _hideReportL.hidden = NO;
+        _hideL.hidden = NO;
+        _hideImg.hidden = NO;
+        
+    }else{
+        
+        _hideReportL.hidden = YES;
+        _hideL.hidden = YES;
+        _hideImg.hidden = YES;
+    }
     
     for (int i = 0; i < 2; i++) {
         
@@ -681,14 +888,118 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
         
         make.left.equalTo(_infoView).offset(81 *SIZE);
         make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
-        make.width.equalTo(@(217 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF1.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF2.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF3.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF4.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF5.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF6.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF7.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF9 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF8.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF10 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF9.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF11 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF10.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_hideL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(80 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(18 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+        make.height.mas_equalTo(10 *SIZE);
+    }];
+    
+    [_hideImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(271 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(14 *SIZE);
+        make.height.mas_equalTo(6 *SIZE);
+    }];
+    
+    [_hideReportL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(299 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(18 *SIZE);
+        make.width.mas_equalTo(50 *SIZE);
+        make.height.mas_equalTo(10 *SIZE);
     }];
     
     [_identifyL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_phoneTF1.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_hideL.mas_bottom).offset(31 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
@@ -696,7 +1007,7 @@ UINavigationControllerDelegate,UIImagePickerControllerDelegate>
     [_identifyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(81 *SIZE);
-        make.top.equalTo(_phoneTF1.mas_bottom).offset(21 *SIZE);
+        make.top.equalTo(_hideL.mas_bottom).offset(21 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
     }];
