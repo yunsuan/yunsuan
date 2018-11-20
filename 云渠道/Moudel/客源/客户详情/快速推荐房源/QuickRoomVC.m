@@ -21,23 +21,40 @@
 #import "CustomDetailVC.h"
 #import "CityVC.h"
 
-@interface QuickRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
+#import "LocalModel.h"
+#import "SelectWorkerView.h"
+#import "ReportCustomSuccessView.h"
+#import "ReportCustomConfirmView.h"
+
+
+#import<BaiduMapAPI_Location/BMKLocationService.h>
+
+#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
+
+#import<BaiduMapAPI_Map/BMKMapComponent.h>
+
+#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+
+#import <CoreLocation/CoreLocation.h>
+
+@interface QuickRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate,BMKGeoCodeSearchDelegate>
 {
     CustomRequireModel *_model;
-//    NSArray *_arr;
+    NSArray *_arr;
     BOOL _upAndDown;
     NSInteger _page;
-//    NSMutableDictionary *_parameter;
+    NSMutableDictionary *_parameter;
     NSMutableArray *_dataArr;
-//    NSString *_provice;
+    NSString *_provice;
     NSString *_city;
+    NSString *_cityName;
     NSString *_district;
     NSString *_price;
     NSString *_type;
-//    NSString *_more;
+    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
-//    NSString *_status;
+    NSString *_status;
     NSMutableArray *_searchArr;
     NSArray *_tagsArr;
     NSArray *_propertyArr;
@@ -45,7 +62,14 @@
     BOOL _is2;
     BOOL _is3;
     BOOL _is4;
+    NSInteger _state;
+    NSInteger _selected;
+    BMKLocationService *_locService;  //定位
+    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
+    BOOL _isLocation;
 }
+
+@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
 @property (nonatomic , strong) UITableView *MainTableView;
 
@@ -79,13 +103,13 @@
 
 @implementation QuickRoomVC
 
-- (instancetype)initWithModel:(CustomRequireModel *)model upAndDown:(BOOL)upAndDown tag:(NSString *)tag {
+- (instancetype)initWithModel:(CustomRequireModel *)model
+{
     self = [super init];
     if (self) {
         
-//        _city = @"510100";
+        //        _city = @"510100";
         _model = model;
-        _tag=tag;
     }
     return self;
 }
@@ -103,6 +127,23 @@
     [super viewWillAppear:animated];
 }
 
+- (void)ActionMaskBtn:(UIButton *)btn{
+    
+    _is1 = NO;
+    _is2 = NO;
+    _is3 = NO;
+    _is4 = NO;
+    _areaBtn.selected = NO;
+    _priceBtn.selected = NO;
+    _typeBtn.selected = NO;
+    _moreBtn.selected = NO;
+    [self.areaView removeFromSuperview];
+    [self.priceView removeFromSuperview];
+    [self.typeView removeFromSuperview];
+    [self.moreView removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)initDateSouce
 {
     
@@ -111,19 +152,86 @@
     _page = 1;
     _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
-//    [self RequestMethod];
+    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
+    _geocodesearch.delegate = self;
+    
+    if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
+        
+        if (!_isLocation) {
+            
+            if ([LocalModel defaultModel].cityCode) {
+                
+                _cityName = [LocalModel defaultModel].cityName;
+                _city = [LocalModel defaultModel].cityCode;
+                _isLocation = YES;
+                [_cityBtn setTitle:_cityName forState:UIControlStateNormal];
+                [self RequestMethod];
+            }else{
+                
+                [self startLocation];
+            }
+            
+        }else{
+            
+            
+        }
+    }else{
+        
+        _isLocation = YES;
+        [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
+        _city = [NSString stringWithFormat:@"510100"];
+        _cityName = @"成都市";
+        [self RequestMethod];
+        [self alertControllerWithNsstring:@"打开[定位服务权限]来允许[云渠道]确定您的位置" And:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" WithCancelBlack:^{
+            
+            
+        } WithDefaultBlack:^{
+            
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if( [[UIApplication sharedApplication]canOpenURL:url] ) {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }];
+    }
+    
+    //    [self RequestMethod];
+}
+
+- (void)SearchRequest{
+    
+    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
+        
+        //        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            
+            [self SetSearch:resposeObject[@"data"]];
+        }
+    } failure:^(NSError *error) {
+        
+        //        NSLog(@"%@",error);
+    }];
+}
+
+- (void)SetSearch:(NSDictionary *)data{
+    
+    [_searchArr removeAllObjects];
+    [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        [_searchArr addObject:key];
+    }];
 }
 
 - (void)SetData:(NSArray *)data{
     
-    for (NSUInteger i = 0; i < data.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
                 
-                tempDic[key] = @"";
+                [tempDic setObject:@"" forKey:key];
             }
         }];
         
@@ -143,37 +251,37 @@
     }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-    dic[@"agent_id"] = [UserModel defaultModel].agent_id;
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     if (_city.length) {
         
-        dic[@"city"] = _city;
+        [dic setObject:_city forKey:@"city"];
     }
     if (_district.length && [_district isEqualToString:@"0"]) {
         
-        dic[@"district"] = _district;
+        [dic setObject:_district forKey:@"district"];
     }
     if (![_price isEqualToString:@"0"] && _price) {
         
-        dic[@"average_price"] = [NSString stringWithFormat:@"%@", _price];
+        [dic setObject:[NSString stringWithFormat:@"%@",_price] forKey:@"average_price"];
     }
     if (![_type isEqualToString:@"0"] && _type) {
         
-        dic[@"property_id"] = [NSString stringWithFormat:@"%@", _type];
+        [dic setObject:[NSString stringWithFormat:@"%@",_type] forKey:@"property_id"];
     }
     if (_tag.length) {
         
-        dic[@"project_tags"] = [NSString stringWithFormat:@"%@", _tag];
+        [dic setObject:[NSString stringWithFormat:@"%@",_tag] forKey:@"project_tags"];
     }
     if (_houseType.length) {
         
-        dic[@"house_type"] = [NSString stringWithFormat:@"%@", _houseType];
+        [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
     }
     
     [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
         
         [self.MainTableView.mj_header endRefreshing];
-//        NSLog(@"%@",resposeObject);
-      
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
@@ -181,7 +289,7 @@
                 
                 [self SetData:resposeObject[@"data"]];
             }else{
-            
+                
                 self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
             [self.MainTableView reloadData];
@@ -194,7 +302,7 @@
         
         [self.MainTableView.mj_header endRefreshing];
         [self showContent:@"网路错误"];
-//        NSLog(@"%@",error.localizedDescription);
+        //        NSLog(@"%@",error.localizedDescription);
     }];
     
 }
@@ -203,36 +311,36 @@
     
     _page += 1;
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-    dic[@"agent_id"] = [UserModel defaultModel].agent_id;
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     if (_city.length) {
         
-        dic[@"city"] = _city;
+        [dic setObject:_city forKey:@"city"];
     }
     if (_district.length && [_district isEqualToString:@"0"]) {
         
-        dic[@"district"] = _district;
+        [dic setObject:_district forKey:@"district"];
     }
     if (![_price isEqualToString:@"0"] && _price) {
         
-        dic[@"average_price"] = [NSString stringWithFormat:@"%@", _price];
+        [dic setObject:[NSString stringWithFormat:@"%@",_price] forKey:@"average_price"];
     }
     if (![_type isEqualToString:@"0"] && _type) {
         
-        dic[@"property_id"] = [NSString stringWithFormat:@"%@", _type];
+        [dic setObject:[NSString stringWithFormat:@"%@",_type] forKey:@"property_id"];
     }
     if (_tag.length) {
         
-        dic[@"project_tags"] = [NSString stringWithFormat:@"%@", _type];
+        [dic setObject:[NSString stringWithFormat:@"%@",_type] forKey:@"project_tags"];
     }
     if (_houseType.length) {
         
-        dic[@"house_type"] = [NSString stringWithFormat:@"%@", _houseType];
+        [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
     }
     
     [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
         
-//        NSLog(@"%@",resposeObject);
-       
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"] count]) {
@@ -240,7 +348,7 @@
                 [self SetData:resposeObject[@"data"]];
                 [self.MainTableView.mj_footer endRefreshing];
             }else{
-            
+                
                 self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
@@ -254,12 +362,49 @@
         _page -= 1;
         [self showContent:@"网路错误"];
         [self.MainTableView.mj_footer endRefreshing];
-//        NSLog(@"%@",error.localizedDescription);
+        //        NSLog(@"%@",error.localizedDescription);
     }];
     
 }
 
 #pragma mark -- Method
+
+- (void)RequestRecommend:(NSDictionary *)dic projectName:(NSString *)projectName{
+    
+    [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+            NSDictionary *tempDic = @{@"project":projectName,
+                                      @"sex":self.customerTableModel.sex,
+                                      @"tel":self.customerTableModel.tel,
+                                      @"name":self.customerTableModel.name
+                                      };
+            reportCustomSuccessView.state = _state;
+            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[CustomDetailVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            };
+            [self.view addSubview:reportCustomSuccessView];
+        }
+        else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
@@ -286,39 +431,39 @@
                 _is1 = YES;
                 _district = @"0";
                 
-                NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
-                
-                NSError *err;
-                NSArray *pro = [NSJSONSerialization JSONObjectWithData:JSONData
-                                                               options:NSJSONReadingMutableContainers
-                                                                 error:&err];
-                NSMutableArray * tempArr;
-                for (NSDictionary *proDic in pro) {
-                    
-                    for (NSDictionary *cityDic in proDic[@"city"]) {
-                        
-                        if ([cityDic[@"code"] integerValue] == [_city integerValue]) {
-                            
-                            tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
-                            break;
-                        }
-                    }
-                }
-                [tempArr insertObject:@{@"code":@"0",@"name":@"不限"} atIndex:0];
-                self.areaView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if (idx == 0) {
-                        
-                        tempArr[idx] = @(1);
-                    }else{
-                        
-                        tempArr[idx] = @(0);
-                    }
-                    
-                }];
-                self.areaView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [self.areaView.mainTable reloadData];
+                //                NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+                //
+                //                NSError *err;
+                //                NSArray *pro = [NSJSONSerialization JSONObjectWithData:JSONData
+                //                                                               options:NSJSONReadingMutableContainers
+                //                                                                 error:&err];
+                //                NSMutableArray * tempArr;
+                //                for (NSDictionary *proDic in pro) {
+                //
+                //                    for (NSDictionary *cityDic in proDic[@"city"]) {
+                //
+                //                        if ([cityDic[@"code"] integerValue] == [_city integerValue]) {
+                //
+                //                            tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
+                //                            break;
+                //                        }
+                //                    }
+                //                }
+                //                [tempArr insertObject:@{@"code":@"0",@"name":@"不限"} atIndex:0];
+                //                self.areaView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                //
+                //                    if (idx == 0) {
+                //
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+                //                    }else{
+                //
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+                //                    }
+                //
+                //                }];
+                //                self.areaView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [self.areaView.mainTable reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.areaView];
             }
             break;
@@ -342,22 +487,22 @@
                 
                 _is2 = YES;
                 _price = @"0";
-                NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
-                NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
-                [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
-                self.priceView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if (idx == 0) {
-                        
-                        tempArr[idx] = @(1);
-                    }else{
-                        
-                        tempArr[idx] = @(0);
-                    }
-                }];
-                self.priceView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [self.priceView.mainTable reloadData];
+                //                NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
+                //                NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
+                //                [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+                //                self.priceView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                //
+                //                    if (idx == 0) {
+                //
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+                //                    }else{
+                //
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+                //                    }
+                //                }];
+                //                self.priceView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [self.priceView.mainTable reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.priceView];
             }
             break;
@@ -382,20 +527,20 @@
                 _is3 = YES;
                 _type = @"0";
                 
-                NSMutableArray * tempArr = [NSMutableArray arrayWithArray:_propertyArr];
-                [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
-                self.typeView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if (idx == 0) {
-                        
-                        tempArr[idx] = @(1);
-                    }else{
-                        tempArr[idx] = @(0);
-                    }
-                }];
-                self.typeView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [self.typeView.mainTable reloadData];
+                //                NSMutableArray * tempArr = [NSMutableArray arrayWithArray:_propertyArr];
+                //                [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+                //                self.typeView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                //
+                //                    if (idx == 0) {
+                //
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+                //                    }else{
+                //                        [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+                //                    }
+                //                }];
+                //                self.typeView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+                //                [self.typeView.mainTable reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.typeView];
             }
             break;
@@ -418,7 +563,7 @@
             }else{
                 
                 _is4 = YES;
-//                _more = @"0";
+                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];
@@ -437,6 +582,19 @@
 
 - (void)ActionSearchBtn:(UIButton *)btn{
     
+    
+    _is1 = NO;
+    _is2 = NO;
+    _is3 = NO;
+    _is4 = NO;
+    _areaBtn.selected = NO;
+    _priceBtn.selected = NO;
+    _typeBtn.selected = NO;
+    _moreBtn.selected = NO;
+    [self.areaView removeFromSuperview];
+    [self.priceView removeFromSuperview];
+    [self.typeView removeFromSuperview];
+    [self.moreView removeFromSuperview];
     // 1.创建热门搜索
     //    NSArray *hotSeaches = @[@"Java", @"Python", @"Objective-C", @"Swift", @"C", @"C++", @"PHP", @"C#", @"Perl", @"Go", @"JavaScript", @"R", @"Ruby", @"MATLAB"];
     
@@ -452,18 +610,19 @@
                 
             }else{
                 
-                [searchViewController.navigationController pushViewController:[[QuickSearchVC alloc] initWithTitle:searchText city:_city model:_model] animated:YES];
+                QuickSearchVC *vc = [[QuickSearchVC alloc] initWithTitle:searchText city:_city model:_model];
+                vc.customerTableModel = self.customerTableModel;
+                [searchViewController.navigationController pushViewController:vc animated:YES];
             }
         }];
         // 3. 设置风格
         searchViewController.searchBar.returnKeyType = UIReturnKeySearch;
-        searchViewController.hotSearchStyle = PYHotSearchStyleBorderTag; // 热门搜索风格根据选择
+        searchViewController.hotSearchStyle = 3; // 热门搜索风格根据选择
         searchViewController.searchHistoryStyle = PYHotSearchStyleDefault; // 搜索历史风格为
         // 4. 设置代理
         searchViewController.delegate = self;
         // 5. 跳转到搜索控制器
-        UINavigationController *nav;
-        nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
         [self presentViewController:nav  animated:NO completion:nil];
     }else{
         
@@ -481,18 +640,66 @@
         }];
     }
     
-//    [self.navigationController presentViewController:nav animated:NO completion:nil];
-//    [self.navigationController pushViewController:nav animated:NO];
+    //    [self.navigationController presentViewController:nav animated:NO completion:nil];
+    //    [self.navigationController pushViewController:nav animated:NO];
 }
 
 
 - (void)ActionCityBtn:(UIButton *)btn{
+    
+    _is1 = NO;
+    _is2 = NO;
+    _is3 = NO;
+    _is4 = NO;
+    _areaBtn.selected = NO;
+    _priceBtn.selected = NO;
+    _typeBtn.selected = NO;
+    _moreBtn.selected = NO;
+    [self.areaView removeFromSuperview];
+    [self.priceView removeFromSuperview];
+    [self.typeView removeFromSuperview];
+    [self.moreView removeFromSuperview];
     
     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
         
         [_cityBtn setTitle:city forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"%@",code];
+        
+        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+        
+        NSError *err;
+        NSArray *pro = [NSJSONSerialization JSONObjectWithData:JSONData
+                                                       options:NSJSONReadingMutableContainers
+                                                         error:&err];
+        NSMutableArray * tempArr;
+        for (NSDictionary *proDic in pro) {
+            
+            for (NSDictionary *cityDic in proDic[@"city"]) {
+                
+                if ([cityDic[@"code"] integerValue] == [_city integerValue]) {
+                    
+                    tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
+                    break;
+                }
+            }
+        }
+        [tempArr insertObject:@{@"code":@"0",@"name":@"不限"} atIndex:0];
+        self.areaView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+            
+        }];
+        self.areaView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [self.areaView.mainTable reloadData];
+        
         [self RequestMethod];
     };
     nextVC.hidesBottomBarWhenPushed = YES;
@@ -501,13 +708,121 @@
 
 - (void)ActionUpAndDownBtn:(UIButton *)btn{
     
-
+    _upAndDown = !_upAndDown;
+    if (_upAndDown) {
+        
+        
+    }else{
+        
+        
+    }
 }
 
 //textfieldDelegate;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     return YES;
+}
+
+
+#pragma mark -- 百度SDK
+-(void)startLocation
+
+{
+    
+    //初始化BMKLocationService
+    
+    _locService = [[BMKLocationService alloc]init];
+    
+    _locService.delegate = self;
+    
+    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    
+    //启动LocationService
+    
+    [_locService startUserLocationService];
+    
+}
+
+- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
+
+{
+    
+    
+    //    NSLog(@"heading is %@",userLocation.heading);
+    
+    
+}
+
+//处理位置坐标更新
+
+- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
+{
+    
+    
+    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
+    
+    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+    
+    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
+    
+    if(flag){
+        
+        //        NSLog(@"反geo检索发送成功");
+        
+        [_locService stopUserLocationService];
+        
+    }else{
+        
+        //        NSLog(@"反geo检索发送失败");
+        
+    }
+    
+}
+
+#pragma mark -------------地理反编码的delegate---------------
+
+-(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
+
+{
+    
+    if (_city) {
+        
+    }else{
+        NSArray *opencity =  [UserModel defaultModel].cityArr;
+        [_cityBtn setTitle:result.addressDetail.city forState:UIControlStateNormal];
+        NSInteger disInteger = [result.addressDetail.adCode integerValue];
+        NSInteger cityInteger = disInteger / 100 * 100;
+        NSMutableArray *citycode = [NSMutableArray array];
+        for (int i=0; i<opencity.count; i++) {
+            [citycode addObject:opencity[i][@"city_code"]];
+        }
+        
+        if ([citycode containsObject:[NSString stringWithFormat:@"%ld",cityInteger]]) {
+            _city = [NSString stringWithFormat:@"%ld",cityInteger];
+            _cityName = result.addressDetail.city;
+            [LocalModel defaultModel].cityName = _cityName;
+            [LocalModel defaultModel].cityCode = _city;
+            [self RequestMethod];
+        }
+        else
+        {
+            [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
+            _city = [NSString stringWithFormat:@"510100"];
+            _cityName = @"成都市";
+            [self RequestMethod];
+        }
+        
+    }
+}
+
+//定位失败
+
+- (void)didFailToLocateUserWithError:(NSError *)error{
+    
+    //    NSLog(@"error:%@",error);
+    [self alertControllerWithNsstring:@"定位失败" And:@"请检查定位设置"];
+    
 }
 
 
@@ -531,7 +846,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    RoomListModel *model = _dataArr[(NSUInteger) indexPath.row];
+    RoomListModel *model = _dataArr[indexPath.row];
     if ([model.guarantee_brokerage integerValue] == 2) {
         
         static NSString *CellIdentifier = @"CompanyCell";
@@ -542,7 +857,7 @@
         }
         [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
         NSMutableArray *tempArr = [@[] mutableCopy];
-        for (NSUInteger i = 0; i < model.property_tags.count; i++) {
+        for (int i = 0; i < model.property_tags.count; i++) {
             
             [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
@@ -554,7 +869,22 @@
             }];
         }
         
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+        NSArray *tempArr1 = model.project_tags;
+        NSMutableArray *tempArr2 = [@[] mutableCopy];
+        for (int i = 0; i < tempArr1.count; i++) {
+            
+            
+            [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [tempArr1[i] integerValue]) {
+                    
+                    [tempArr2 addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        NSArray *tempArr3 = @[tempArr,tempArr2.count == 0 ? @[]:tempArr2];
+        [cell settagviewWithdata:tempArr3];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -576,10 +906,43 @@
         }else{
             
             cell.statusImg.hidden = NO;
-            cell.surelab.hidden = [model.guarantee_brokerage integerValue] != 1;
+            if ([model.guarantee_brokerage integerValue] == 1) {
+                
+                cell.surelab.hidden = NO;
+            }else{
+                
+                cell.surelab.hidden = YES;
+            }
         }
         
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+        NSMutableArray *tempArr = [@[] mutableCopy];
+        for (int i = 0; i < model.property_tags.count; i++) {
+            
+            [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [model.property_tags[i] integerValue]) {
+                    
+                    [tempArr addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        
+        NSArray *tempArr1 = model.project_tags;
+        NSMutableArray *tempArr2 = [@[] mutableCopy];
+        for (int i = 0; i < tempArr1.count; i++) {
+            
+            [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [tempArr1[i] integerValue]) {
+                    
+                    [tempArr2 addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        NSArray *tempArr3 = @[tempArr,tempArr2.count == 0 ? @[]:tempArr2];
+        [cell settagviewWithdata:tempArr3];
         
         if (model.sort) {
             
@@ -620,37 +983,106 @@
             
             if (self.quickRoomVCSelectBlock) {
                 
-                RoomListModel *model = _dataArr[(NSUInteger) indexPath.row];
+                RoomListModel *model = _dataArr[indexPath.row];
                 self.quickRoomVCSelectBlock(model.project_id, model.project_name);
+                //                self.quickRoomVCRoomBlock(model);
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }else{
-            
-            RoomListModel *model = _dataArr[(NSUInteger) indexPath.row];
-            [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":model.project_id,@"client_need_id":_model.need_id,@"client_id":_model.client_id} success:^(id resposeObject) {
+            RoomListModel *model = _dataArr[indexPath.row];
+            self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
+            SS(strongSelf);
+            WS(weakSelf);
+            self.selectWorkerView.selectWorkerRecommendBlock = ^{
                 
-//                NSLog(@"%@",resposeObject);
+                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
+                if (weakSelf.selectWorkerView.nameL.text) {
+                    
+                    [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
+                }
+                
+                ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                NSDictionary *tempDic = @{@"project":model.project_name,
+                                          @"sex":weakSelf.customerTableModel.sex,
+                                          @"tel":weakSelf.customerTableModel.tel,
+                                          @"name":weakSelf.customerTableModel.name
+                                          };
+                reportCustomConfirmView.state = strongSelf->_state;
+                reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                    
+                    [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+                        
+                        
+                        if ([resposeObject[@"code"] integerValue] == 200) {
+                            
+                            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
+                            NSDictionary *tempDic = @{@"project":model.project_name,
+                                                      @"sex":weakSelf.customerTableModel.sex,
+                                                      @"tel":weakSelf.customerTableModel.tel,
+                                                      @"name":weakSelf.customerTableModel.name
+                                                      };
+                            reportCustomSuccessView.state = strongSelf->_state;
+                            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                                
+                                for (UIViewController *vc in weakSelf.navigationController.viewControllers) {
+                                    
+                                    if ([vc isKindOfClass:[CustomDetailVC class]]) {
+                                        
+                                        [weakSelf.navigationController popToViewController:vc animated:YES];
+                                    }
+                                }
+                            };
+                            [weakSelf.view addSubview:reportCustomSuccessView];
+                        }
+                        else{
+                            
+                            [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                        }
+                    } failure:^(NSError *error) {
+                        
+                        NSLog(@"%@",error);
+                        [weakSelf showContent:@"网络错误"];
+                    }];
+                };
+                [weakSelf.view addSubview:reportCustomConfirmView];
+            };
+            [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
+                    if ([resposeObject[@"data"][@"rows"] count]) {
                         
-                        for (UIViewController *vc in self.navigationController.viewControllers) {
+                        weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
+                        _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                        _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                        weakSelf.selectWorkerView.advicerSelect = _selected;
+                        [self.view addSubview:weakSelf.selectWorkerView];
+                    }else{
+                        
+                        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
+                        
+                        ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                        NSDictionary *tempDic = @{@"project":model.project_name,
+                                                  @"sex":weakSelf.customerTableModel.sex,
+                                                  @"tel":weakSelf.customerTableModel.tel,
+                                                  @"name":weakSelf.customerTableModel.name
+                                                  };
+                        reportCustomConfirmView.state = strongSelf->_state;
+                        reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                        reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
                             
-                            if ([vc isKindOfClass:[CustomDetailVC class]]) {
-                                
-                                [self.navigationController popToViewController:vc animated:YES];
-                            }
-                        }
-                    }];
-                }
-                else{
+                            [self RequestRecommend:dic projectName:model.project_name];
+                        };
+                        [weakSelf.view addSubview:reportCustomConfirmView];
+                    }
+                }else{
                     
-                    [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                    [self showContent:resposeObject[@"msg"]];
                 }
             } failure:^(NSError *error) {
                 
-                NSLog(@"%@",error);
                 [self showContent:@"网络错误"];
             }];
         }
@@ -677,10 +1109,17 @@
     _cityBtn.frame = CGRectMake(300 *SIZE, 19 *SIZE, 50 *SIZE, 21 *SIZE);
     _cityBtn.titleLabel.font = [UIFont systemFontOfSize:12 *sIZE];
     [_cityBtn addTarget:self action:@selector(ActionCityBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_cityBtn setTitle:@"选择城市" forState:UIControlStateNormal];
+    if ([LocalModel defaultModel].cityCode) {
+        
+        [_cityBtn setTitle:[LocalModel defaultModel].cityName forState:UIControlStateNormal];
+    }else{
+        
+        [_cityBtn setTitle:@"选择城市" forState:UIControlStateNormal];
+    }
+    
     [_cityBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     [self.headerView addSubview:_cityBtn];
-
+    
     
     _searchBar = [[UIView alloc] initWithFrame:CGRectMake(58 *SIZE, 13 *SIZE, 242 *SIZE, 33 *SIZE)];
     _searchBar.backgroundColor = YJBackColor;
@@ -704,7 +1143,7 @@
     for (int i = 0; i < 5; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(80 * i, 62 *SIZE, 80 *SIZE, 40 *SIZE);
+        btn.frame = CGRectMake(80 *SIZE * i, 62 *SIZE, 80 *SIZE, 40 *SIZE);
         btn.tag = i + 1;
         [btn setBackgroundColor:CH_COLOR_white];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -756,9 +1195,9 @@
             }
             case 4:
             {
-                btn.frame = CGRectMake(80 * i, 62 *SIZE, 40 *SIZE, 40 *SIZE);
-                [btn setImage:[UIImage imageNamed:@"downarrow1"] forState:UIControlStateNormal];
-                [btn setImage:[UIImage imageNamed:@"uparrow2"] forState:UIControlStateSelected];
+                btn.frame = CGRectMake(80 *SIZE * i, 62 *SIZE, 40 *SIZE, 40 *SIZE);
+                [btn setImage:[UIImage imageNamed:@"reverseorder"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"reverseorder"] forState:UIControlStateSelected];
                 _sortBtn = btn;
                 [self.headerView addSubview:_sortBtn];
                 break;
@@ -816,7 +1255,7 @@
         
         _MainTableView.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
             
-//            [self RequestAddMethod];
+            //            [self RequestAddMethod];
             
             if (_city) {
                 
@@ -856,7 +1295,43 @@
     if (!_areaView) {
         
         _areaView = [[BoxAddressView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 102 *SIZE, SCREEN_Width, SCREEN_Height - 102 *SIZE)];
+        
+        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+        
+        NSError *err;
+        NSArray *pro = [NSJSONSerialization JSONObjectWithData:JSONData
+                                                       options:NSJSONReadingMutableContainers
+                                                         error:&err];
+        NSMutableArray * tempArr;
+        for (NSDictionary *proDic in pro) {
+            
+            for (NSDictionary *cityDic in proDic[@"city"]) {
+                
+                if ([cityDic[@"code"] integerValue] == [_city integerValue]) {
+                    
+                    tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
+                    break;
+                }
+            }
+        }
+        [tempArr insertObject:@{@"code":@"0",@"name":@"不限"} atIndex:0];
+        _areaView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+            
+        }];
+        _areaView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [_areaView.mainTable reloadData];
+        
         WS(weakSelf);
+        SS(strongSelf);
         _areaView.boxAddressComfirmBlock = ^(NSString *ID, NSString *str, NSInteger index) {
             
             if ([str isEqualToString:@"不限"]) {
@@ -880,24 +1355,24 @@
             _is1 = NO;
             weakSelf.areaBtn.selected = NO;
             [weakSelf.areaView removeFromSuperview];
-//            [weakSelf RequestMethod];
-            if (_city) {
+            //            [weakSelf RequestMethod];
+            if (strongSelf->_city) {
                 
                 [weakSelf RequestMethod];
             }else{
                 
-                [_MainTableView.mj_header endRefreshing];
+                [strongSelf->_MainTableView.mj_header endRefreshing];
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先选择城市" WithDefaultBlack:^{
                     
                     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
                     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
                         
-                        [_cityBtn setTitle:city forState:UIControlStateNormal];
-                        _city = [NSString stringWithFormat:@"%@",code];
-                        [self RequestMethod];
+                        [strongSelf->_cityBtn setTitle:city forState:UIControlStateNormal];
+                        strongSelf->_city = [NSString stringWithFormat:@"%@",code];
+                        [weakSelf RequestMethod];
                     };
                     nextVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 }];
             }
         };
@@ -916,7 +1391,26 @@
     if (!_priceView) {
         
         _priceView = [[BoxView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 102 *SIZE, SCREEN_Width, SCREEN_Height - 102 *SIZE)];
+        
+        NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
+        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
+        [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+        _priceView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+        }];
+        _priceView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [_priceView.mainTable reloadData];
+        
         WS(weakSelf);
+        SS(strongSelf);
         _priceView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
             
             if ([str isEqualToString:@"不限"]) {
@@ -930,23 +1424,23 @@
             _price = [NSString stringWithFormat:@"%@",ID];
             weakSelf.priceBtn.selected = NO;
             [weakSelf.priceView removeFromSuperview];
-            if (_city) {
+            if (strongSelf->_city) {
                 
                 [weakSelf RequestMethod];
             }else{
                 
-                [_MainTableView.mj_header endRefreshing];
+                [strongSelf->_MainTableView.mj_header endRefreshing];
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先选择城市" WithDefaultBlack:^{
                     
                     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
                     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
                         
-                        [_cityBtn setTitle:city forState:UIControlStateNormal];
-                        _city = [NSString stringWithFormat:@"%@",code];
-                        [self RequestMethod];
+                        [strongSelf->_cityBtn setTitle:city forState:UIControlStateNormal];
+                        strongSelf->_city = [NSString stringWithFormat:@"%@",code];
+                        [weakSelf RequestMethod];
                     };
                     nextVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 }];
             }
         };
@@ -965,7 +1459,24 @@
     if (!_typeView) {
         
         _typeView = [[BoxView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 102 *SIZE, SCREEN_Width, SCREEN_Height - 102 *SIZE)];
+        
+        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:_propertyArr];
+        [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+        _typeView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+        }];
+        _typeView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [_typeView.mainTable reloadData];
+        
         WS(weakSelf);
+        SS(strongSelf);
         _typeView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
             
             if ([str isEqualToString:@"不限"]) {
@@ -979,24 +1490,24 @@
             _type = [NSString stringWithFormat:@"%@",ID];
             weakSelf.typeBtn.selected = NO;
             [weakSelf.typeView removeFromSuperview];
-//            [weakSelf RequestMethod];
-            if (_city) {
+            //            [weakSelf RequestMethod];
+            if (strongSelf->_city) {
                 
                 [weakSelf RequestMethod];
             }else{
                 
-                [_MainTableView.mj_header endRefreshing];
+                [strongSelf->_MainTableView.mj_header endRefreshing];
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先选择城市" WithDefaultBlack:^{
                     
                     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
                     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
                         
-                        [_cityBtn setTitle:city forState:UIControlStateNormal];
-                        _city = [NSString stringWithFormat:@"%@",code];
-                        [self RequestMethod];
+                        [strongSelf->_cityBtn setTitle:city forState:UIControlStateNormal];
+                        strongSelf->_city = [NSString stringWithFormat:@"%@",code];
+                        [weakSelf RequestMethod];
                     };
                     nextVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 }];
             }
         };
@@ -1017,7 +1528,11 @@
         _moreView = [[MoreView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 103 *SIZE, SCREEN_Width, SCREEN_Height - 103 *SIZE - STATUS_BAR_HEIGHT - TAB_BAR_MORE)];
         
         WS(weakSelf);
+        SS(strongSelf);
         _moreView.moreBtnBlock = ^(NSString *tag, NSString *houseType, NSString *status) {
+            
+            _is4 = NO;
+            weakSelf.moreBtn.selected = NO;
             
             if (tag) {
                 
@@ -1029,35 +1544,41 @@
                 _houseType = [NSString stringWithFormat:@"%@",houseType];
             }
             
-//            if (status) {
-//
-//                _status = [NSString stringWithFormat:@"%@",status];
-//            }
-////
-//            [weakSelf RequestMethod];
-            if (_city) {
+            if (status) {
+                
+                _status = [NSString stringWithFormat:@"%@",status];
+            }
+            //
+            //            [weakSelf RequestMethod];
+            if (strongSelf->_city) {
                 
                 [weakSelf RequestMethod];
             }else{
                 
-                [_MainTableView.mj_header endRefreshing];
+                [strongSelf->_MainTableView.mj_header endRefreshing];
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先选择城市" WithDefaultBlack:^{
                     
                     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
                     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
                         
-                        [_cityBtn setTitle:city forState:UIControlStateNormal];
-                        _city = [NSString stringWithFormat:@"%@",code];
-                        [self RequestMethod];
+                        [strongSelf->_cityBtn setTitle:city forState:UIControlStateNormal];
+                        strongSelf->_city = [NSString stringWithFormat:@"%@",code];
+                        [weakSelf RequestMethod];
                     };
                     nextVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 }];
             }
+        };
+        _moreView.moreViewClearBlock = ^{
+            
+            _is4 = NO;
+            weakSelf.moreBtn.selected = NO;
         };
         
     }
     return _moreView;
 }
+
 
 @end

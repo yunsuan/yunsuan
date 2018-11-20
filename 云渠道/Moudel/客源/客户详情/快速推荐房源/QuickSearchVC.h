@@ -8,8 +8,10 @@
 
 #import "BaseViewController.h"
 #import "CustomRequireModel.h"
+#import "CustomerTableModel.h"
 
 @interface QuickSearchVC : BaseViewController
+@property (nonatomic, strong) CustomerTableModel *customerTableModel;
 
 - (instancetype)initWithTitle:(NSString *)str city:(NSString *)city model:(CustomRequireModel *)model;
 

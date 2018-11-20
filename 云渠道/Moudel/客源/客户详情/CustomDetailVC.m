@@ -295,7 +295,9 @@
 - (void)ActionRightBtn:(UIButton *)btn{
     
     if (_dataArr.count) {
-        QuickRoomVC  *nextVC = [[QuickRoomVC alloc] initWithModel:_dataArr[0] upAndDown:NO tag:nil];
+        QuickRoomVC  *nextVC = [[QuickRoomVC alloc] initWithModel:_dataArr[0]];
+//        self.model.client_id = _customModel.client_id;
+        nextVC.customerTableModel = self.model;
         [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
@@ -770,7 +772,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"客户详情";
 
-    self.rightBtn.hidden = YES;
+    self.rightBtn.hidden = NO;
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     
