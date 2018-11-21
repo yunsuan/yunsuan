@@ -42,8 +42,8 @@
     [self.contentView addSubview:_titleL];
     
     _dropBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _dropBtn.frame = CGRectMake(331 *SIZE, 20 *SIZE, 22 *SIZE, 22 *SIZE);
-
+    _dropBtn.frame = CGRectMake(331 *SIZE, 15 *SIZE, 22 *SIZE, 22 *SIZE);
+    
     self.userInteractionEnabled = YES;
     [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionDropBtn:)]];
     [self.contentView addSubview:_dropBtn];

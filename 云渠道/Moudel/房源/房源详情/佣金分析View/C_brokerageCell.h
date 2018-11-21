@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RuleView.h"
 
 @interface C_brokerageCell : UITableViewCell
 
-@property (nonatomic, strong) RuleView *ruleView;
+@property (nonatomic, strong) UIView *ruleView;
 
+@property (nonatomic, strong) UIImageView *ruleImg;
+
+@property (nonatomic, strong) UILabel *ruleL;
 
 @end

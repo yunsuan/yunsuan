@@ -79,24 +79,27 @@
         [img addGestureRecognizer:tap];
         img.userInteractionEnabled = YES;
         [_scrollView addSubview:img];
+        
         if ([_allArr[i][@"img_url"] isEqualToString:@"default_3"]) {
             
             img.image = [UIImage imageNamed:@"default_3"];
         }else{
-            NSString *imgname = _allArr[i][@"img_url"];
-            if (imgname.length>0) {
-                [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_allArr[i][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            
+            [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_allArr[i][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                if (error) {
                     
-                    if (error) {
-                        
-                        img.image = [UIImage imageNamed:@"default_3"];
-                    }
-                }];
-            }else{
-                img.image = [UIImage imageNamed:@"default_3"];
-
+                    img.image = [UIImage imageNamed:@"default_3"];
+                }
+            }];
+            if ([_allArr[i][@"img_url_3d"] length]) {
+                
+                UIImageView *img2 = [[UIImageView alloc] init];
+                img2.bounds = CGRectMake(0, 0, 60 *SIZE, 60 *SIZE);
+                img2.center = _scrollView.center;
+                img2.image = [UIImage imageNamed:@"3D"];
+                [img addSubview:img2];
             }
-        
         }
         
     }

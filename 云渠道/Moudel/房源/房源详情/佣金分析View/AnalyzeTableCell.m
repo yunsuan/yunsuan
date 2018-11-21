@@ -22,7 +22,7 @@
 
 - (void)initUI{
     
- 
+    
     UIView * header = [[UIView alloc]initWithFrame:CGRectMake(10*SIZE , 16*SIZE, 6.7*SIZE, 15*SIZE)];
     header.backgroundColor = YJBlueBtnColor;
     [self.contentView addSubview:header];
@@ -38,7 +38,7 @@
     [self.contentView addSubview:_contentL];
     
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
-       
+        
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.width.equalTo(@(319 *SIZE));
         make.top.equalTo(self.contentView).offset(16 *SIZE);
