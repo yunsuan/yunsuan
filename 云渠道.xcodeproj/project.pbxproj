@@ -400,7 +400,6 @@
 		0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */; };
 		0CEBDE3720AEAC92004BAF7A /* QuickAddAndRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3620AEAC92004BAF7A /* QuickAddAndRecommendVC.m */; };
 		0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */; };
-		0CEC62E2208DDE0C006EC0BD /* RuleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62E1208DDE0C006EC0BD /* RuleView.m */; };
 		0CEC62E5208DE786006EC0BD /* RoomBrokerageTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62E4208DE786006EC0BD /* RoomBrokerageTableHeader.m */; };
 		0CEC62EB208DEB86006EC0BD /* RoomBrokerageTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62EA208DEB86006EC0BD /* RoomBrokerageTableCell2.m */; };
 		0CEC62EE208DED26006EC0BD /* AnalyzeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62ED208DED26006EC0BD /* AnalyzeTableCell.m */; };
@@ -1392,8 +1391,6 @@
 		0CEBDE3620AEAC92004BAF7A /* QuickAddAndRecommendVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddAndRecommendVC.m; sourceTree = "<group>"; };
 		0CEC62DD208DDA62006EC0BD /* RoomBrokerageTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBrokerageTableCell.h; sourceTree = "<group>"; };
 		0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomBrokerageTableCell.m; sourceTree = "<group>"; };
-		0CEC62E0208DDE0C006EC0BD /* RuleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RuleView.h; sourceTree = "<group>"; };
-		0CEC62E1208DDE0C006EC0BD /* RuleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RuleView.m; sourceTree = "<group>"; };
 		0CEC62E3208DE786006EC0BD /* RoomBrokerageTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBrokerageTableHeader.h; sourceTree = "<group>"; };
 		0CEC62E4208DE786006EC0BD /* RoomBrokerageTableHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomBrokerageTableHeader.m; sourceTree = "<group>"; };
 		0CEC62E9208DEB86006EC0BD /* RoomBrokerageTableCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBrokerageTableCell2.h; sourceTree = "<group>"; };
@@ -4510,8 +4507,6 @@
 			children = (
 				0CEC62DD208DDA62006EC0BD /* RoomBrokerageTableCell.h */,
 				0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */,
-				0CEC62E0208DDE0C006EC0BD /* RuleView.h */,
-				0CEC62E1208DDE0C006EC0BD /* RuleView.m */,
 				0CEC62E3208DE786006EC0BD /* RoomBrokerageTableHeader.h */,
 				0CEC62E4208DE786006EC0BD /* RoomBrokerageTableHeader.m */,
 				0CEC62E9208DEB86006EC0BD /* RoomBrokerageTableCell2.h */,
@@ -6129,7 +6124,6 @@
 				0C9CD40920FF2A47004894A3 /* ModifyRecordVC.m in Sources */,
 				0C0B820B20638A2A00238D4F /* CustomDetailTableCell.m in Sources */,
 				0C96DA01209C6A6700B6A8B8 /* QuickAddCustomVC.m in Sources */,
-				0CEC62E2208DDE0C006EC0BD /* RuleView.m in Sources */,
 				0CDD700C20CFFC6E00D6609C /* RoomReportFailVC.m in Sources */,
 				0C2883D5210FFB8800F69C5F /* RentingSurveyingDetailVC.m in Sources */,
 				0C96D9FD209C61CF00B6A8B8 /* PassCell.m in Sources */,

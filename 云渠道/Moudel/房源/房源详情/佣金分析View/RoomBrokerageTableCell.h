@@ -7,13 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RuleView.h"
 
 @interface RoomBrokerageTableCell : UITableViewCell
-
-@property (nonatomic, strong) RuleView *ruleView;
-
-@property (nonatomic, strong) RuleView *standView;
 
 @property (nonatomic, strong) UILabel *ruleL;
 
@@ -34,6 +29,16 @@
 @property (nonatomic, strong) UIImageView *speedImg4;
 
 @property (nonatomic, strong) UIImageView *speedImg5;
+
+@property (nonatomic, strong) UIView *ruleView;
+
+@property (nonatomic, strong) UIImageView *ruleImg;
+
+@property (nonatomic, strong) UIView *standView;
+
+@property (nonatomic, strong) UIImageView *standImg;
+
+
 
 - (void)SetLevel:(NSInteger )level;
 

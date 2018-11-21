@@ -78,12 +78,12 @@
             break;
         }
         default:
-            _speedImg1.image = [UIImage imageNamed:@"lightning"];
-            _speedImg2.image = [UIImage imageNamed:@"lightning"];
-            _speedImg3.image = [UIImage imageNamed:@"lightning"];
-            _speedImg4.image = [UIImage imageNamed:@"lightning"];
-            _speedImg5.image = [UIImage imageNamed:@"lightning"];
-            break;
+        _speedImg1.image = [UIImage imageNamed:@"lightning"];
+        _speedImg2.image = [UIImage imageNamed:@"lightning"];
+        _speedImg3.image = [UIImage imageNamed:@"lightning"];
+        _speedImg4.image = [UIImage imageNamed:@"lightning"];
+        _speedImg5.image = [UIImage imageNamed:@"lightning"];
+        break;
     }
 }
 
@@ -166,12 +166,67 @@
                 break;
             }
             default:
-                break;
+            break;
         }
     }
     
+    
+    
+    _ruleView = [[UIView alloc] init];
+    _ruleView.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:_ruleView];
+    
+    UIImageView *titleImg = [[UIImageView alloc] initWithFrame:CGRectMake(11 *SIZE, 12 *SIZE, 17 *SIZE, 17 *SIZE)];
+    titleImg.image = [UIImage imageNamed:@"rules"];
+    [_ruleView addSubview:titleImg];
+    
+    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(42 *SIZE, 13 *SIZE, 200 *SIZE, 14 *SIZE)];
+    titleL.textColor = YJTitleLabColor;
+    titleL.font = [UIFont systemFontOfSize:15 *SIZE];
+    titleL.text = @"佣金规则";
+    [_ruleView addSubview:titleL];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 39 *SIZE, SCREEN_Width, SIZE)];
+    line.backgroundColor = YJBackColor;
+    [_ruleView addSubview:line];
+    
+    _ruleL = [[UILabel alloc] init];
+    _ruleL.textColor = YJ86Color;
+    _ruleL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _ruleL.numberOfLines = 0;
+    [_ruleView addSubview:_ruleL];
+    
+    _standView = [[UIView alloc] init];
+    _standView.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:_standView];
+    
+    UIImageView *titleImg2 = [[UIImageView alloc] initWithFrame:CGRectMake(11 *SIZE, 12 *SIZE, 17 *SIZE, 17 *SIZE)];
+    titleImg2.image = [UIImage imageNamed:@"commission4"];
+    [_standView addSubview:titleImg2];
+    
+    UILabel *titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(42 *SIZE, 13 *SIZE, 200 *SIZE, 14 *SIZE)];
+    titleL2.textColor = YJTitleLabColor;
+    titleL2.font = [UIFont systemFontOfSize:15 *SIZE];
+    titleL2.text = @"结佣标准";
+    [_standView addSubview:titleL2];
+    
+    UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, 39 *SIZE, SCREEN_Width, SIZE)];
+    line2.backgroundColor = YJBackColor;
+    [_standView addSubview:line2];
+    
+    _standL = [[UILabel alloc] init];
+    _standL.textColor = YJ86Color;
+    _standL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _standL.numberOfLines = 0;
+    [_standView addSubview:_standL];
+    
+    [self MasonryUI];
+}
+
+- (void)MasonryUI{
+    
     [_rankL mas_makeConstraints:^(MASConstraintMaker *make) {
-       
+        
         make.left.equalTo(self.contentView).offset(114 *SIZE);
         make.height.equalTo(@(13 *SIZE));
         make.top.equalTo(self.contentView).offset(50 *SIZE);
@@ -179,32 +234,42 @@
     }];
     
     [_statusImg mas_makeConstraints:^(MASConstraintMaker *make) {
-       
+        
         make.left.equalTo(_rankL.mas_right).offset(0);
         make.top.equalTo(self.contentView).offset(50 *SIZE);
         make.height.equalTo(@(17 *SIZE));
         make.width.equalTo(@(17 *SIZE));
     }];
     
-    _ruleView = [[RuleView alloc] initWithFrame:CGRectMake(0, 134 *SIZE, SCREEN_Width, 40 *SIZE)];
-    [self.contentView addSubview:_ruleView];
-    
-    _standView = [[RuleView alloc] init];
-    [self.contentView addSubview:_standView];
     [_ruleView mas_makeConstraints:^(MASConstraintMaker *make) {
-       
-        make.left.equalTo(self.contentView).offset(0);
-        make.right.equalTo(self.contentView).offset(0);
+        
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(self.contentView).offset(134 *SIZE);
-//        make.bottom.equalTo(_standView.mas_top).offset(-8 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+    }];
+    
+    [_ruleL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_ruleView).offset(41 *SIZE);
+        make.top.equalTo(_ruleView).offset(58 *SIZE);
+        make.width.mas_equalTo(304 *SIZE);
+        make.bottom.equalTo(_ruleView).offset(-31 *SIZE);
     }];
     
     [_standView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(0);
-        make.right.equalTo(self.contentView).offset(0);
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(_ruleView.mas_bottom).offset(8 *SIZE);
-        make.bottom.equalTo(self.contentView).offset(0);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.bottom.equalTo(self.contentView).offset(0 *SIZE);
+    }];
+    
+    [_standL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_standView).offset(41 *SIZE);
+        make.top.equalTo(_standView).offset(58 *SIZE);
+        make.width.mas_equalTo(304 *SIZE);
+        make.bottom.equalTo(_standView).offset(-31 *SIZE);
     }];
 }
 

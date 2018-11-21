@@ -14,7 +14,7 @@
 {
     NSMutableArray *_titlelist;
     NSMutableArray *_contentlist;
-    NSString *_info_id;
+    NSString *_projectId;
 }
 @property (nonatomic , strong) UITableView *Mytableview;
 -(void)initUI;
@@ -23,12 +23,12 @@
 
 @implementation BuildingInfoVC
 
-- (instancetype)initWithinfoid:(NSString *)infoid
+- (instancetype)initWithProjectId:(NSString *)projectId
 {
     self = [super init];
     if (self) {
         
-        _info_id = infoid;
+        _projectId = projectId;
     }
     return self;
 }
@@ -62,7 +62,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ProjectBuildInfo_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
+    [BaseRequest GET:ProjectBuildInfo_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
         
         //        NSLog(@"%@",resposeObject);
         
@@ -162,6 +162,42 @@
                         }
                     }
                     
+                    if ([key isEqualToString:@"parking_num"]) {
+                        
+                        if ([obj isEqualToString:@"0"]) {
+                            
+                            [tempData setObject:@"暂无数据" forKey:key];
+                        }else{
+                            
+                            [tempData setObject:[NSString stringWithFormat:@"%@%@",obj,@""] forKey:key];
+                        }
+                    }
+                    
+                    if ([key isEqualToString:@"households_num"]) {
+                        
+                        if ([obj isEqualToString:@"0"]) {
+                            
+                            [tempData setObject:@"暂无数据" forKey:key];
+                        }else{
+                            
+                            [tempData setObject:[NSString stringWithFormat:@"%@%@",obj,@""] forKey:key];
+                        }
+                    }
+                    
+                    
+                    if ([key isEqualToString:@"plot_retio"]) {
+                        
+                        if ([obj isEqualToString:@"0"]) {
+                            
+                            [tempData setObject:@"暂无数据" forKey:key];
+                        }else{
+                            
+                            [tempData setObject:[NSString stringWithFormat:@"%@%@",obj,@"%"] forKey:key];
+                        }
+                    }
+                    
+#pragma warning ---- 修改  ---
+                    
                     if ([key isEqualToString:@"property_cost"]) {
                         
                         if ([obj isEqualToString:@"0"]) {
@@ -177,9 +213,8 @@
         }
     }];
     
-    
     NSArray *arr1 = @[tempData[@"project_name"],tempData[@"sale_state"],tempData[@"developer_name"],[NSString stringWithFormat:@"%@-%@-%@",tempData[@"province_name"],tempData[@"city_name"],tempData[@"district_name"]],tempData[@"decoration_company"],tempData[@"absolute_address"],tempData[@"sale_address"]];
-    NSArray *arr2 = @[tempData[@"build_type"],[NSString stringWithFormat:@"%@",tempData[@"average_price"]],[NSString stringWithFormat:@"%@万-%@万",tempData[@"min_price"],tempData[@"max_price"]],[NSString stringWithFormat:@"%@ ",tempData[@"floor_space"]],tempData[@"decoration_standard"],[NSString stringWithFormat:@"%@",tempData[@"covered_area"]],[NSString stringWithFormat:@"%@",tempData[@"plot_retio"]],[NSString stringWithFormat:@"%@",tempData[@"greening_rate"]],[NSString stringWithFormat:@"%@",tempData[@"households_num"]],[NSString stringWithFormat:@"%@",tempData[@"parking_num"]]];
+    NSArray *arr2 = @[tempData[@"build_type"],[NSString stringWithFormat:@"%@",tempData[@"average_price"]],[tempData[@"max_price"] integerValue]>0?[NSString stringWithFormat:@"%@万-%@万",tempData[@"min_price"],tempData[@"max_price"]]:@"暂无数据",[NSString stringWithFormat:@"%@ ",tempData[@"floor_space"]],tempData[@"decoration_standard"],[NSString stringWithFormat:@"%@",tempData[@"covered_area"]],[NSString stringWithFormat:@"%@",tempData[@"plot_retio"]],[NSString stringWithFormat:@"%@",tempData[@"greening_rate"]],[NSString stringWithFormat:@"%@",tempData[@"households_num"]],[NSString stringWithFormat:@"%@",tempData[@"parking_num"]]];
     NSArray *arr3 = @[[tempData[@"property"] componentsJoinedByString:@","],tempData[@"property_company_name"],[NSString stringWithFormat:@"%@",tempData[@"property_cost"]],tempData[@"heat_supply"],tempData[@"water_supply"],tempData[@"power_supply"]];
     
     NSArray *tempArr = @[@"发证时间"];

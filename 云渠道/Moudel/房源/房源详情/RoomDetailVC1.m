@@ -203,6 +203,7 @@
     self.scrollView.delegate = self;
 }
 
+
 - (TransmitView *)transmitView{
     
     if (!_transmitView) {
@@ -259,14 +260,15 @@
     //创建分享消息对象
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
-    //    //创建网页内容对象
-    //    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_model.project_name descr:_model.district_name thumImage:[NSString stringWithFormat:@"%@%@",Base_Net,_model.img_url]];
+    //创建网页内容对象
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageNamed:@"shareimg"]];
     //    //设置网页地址
     
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房产渠道专业平台" thumImage:[UIImage imageNamed:@"shareimg"]];
+    //    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房产渠道专业平台" thumImage:[UIImage imageNamed:@"shareimg"]];
     //设置网页地址
+    
     
     
     [BaseRequest GET:@"user/project/getShare" parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
@@ -274,10 +276,14 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            shareObject.webpageUrl =@"http://itunes.apple.com/app/id1371978352?mt=8";
-            //            shareObject.webpageUrl = resposeObject[@"data"];
+            //             shareObject.webpageUrl =@"http://itunes.apple.com/app/id1371978352?mt=8";
+            shareObject.webpageUrl = resposeObject[@"data"];
             //分享消息对象设置分享内容对象
             messageObject.shareObject = shareObject;
+            if (platformType == UMSocialPlatformType_WechatTimeLine) {
+                shareObject.title =
+                [NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
+            }
             
             //调用分享接口
             [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
@@ -291,14 +297,14 @@
                 }
             }];
         }else{
-            
             [self alertControllerWithNsstring:@"温馨提示" And:@"获取分享链接失败"];
         }
     } failure:^(NSError *error) {
-        
         [self alertControllerWithNsstring:@"温馨提示" And:@"获取分享链接失败"];
         NSLog(@"%@",error);
     }];
+    
+    
 }
 
 @end
