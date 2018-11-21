@@ -294,7 +294,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.numBtn.content.text = MC;
-                weakself.numBtn.str = [NSString stringWithFormat:@"%@",ID];
+                weakself.numBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -306,7 +306,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.purposeBtn.content.text = MC;
-                weakself.purposeBtn.str = [NSString stringWithFormat:@"%@",ID];
+                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -324,7 +324,7 @@
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
     
-    if (!_numBtn.str) {
+    if (!_numBtn->str) {
         
         [self showContent:@"请选择到访人数"];
         return;
@@ -376,14 +376,14 @@
         _agentname = _adviserTF.textfield.text;
     }
     
-    if (_numBtn.str) {
+    if (_numBtn->str) {
         
-        [_dic setObject:_numBtn.str forKey:@"visit_num"];
+        [_dic setObject:_numBtn->str forKey:@"visit_num"];
     }
     
-    if (_purposeBtn.str) {
+    if (_purposeBtn->str) {
         
-        [_dic setObject:_purposeBtn.str forKey:@"buy_purpose"];
+        [_dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
     }
     
     if (_agentid) {

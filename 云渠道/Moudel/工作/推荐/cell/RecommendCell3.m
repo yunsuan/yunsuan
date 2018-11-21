@@ -51,48 +51,40 @@
 
 - (void)initUI{
     
-    
     _nameL = [[UILabel alloc] init];
-    
     _nameL.textColor = YJTitleLabColor;
     _nameL.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.contentView addSubview:_nameL];
     
-    
     _codeL = [[UILabel alloc] init];
-    
     _codeL.textColor = YJ86Color;
     _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_codeL];
     
-    
     _projectL = [[UILabel alloc] init];
-    
     _projectL.textColor = YJ86Color;
     _projectL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_projectL];
     
-    
     _timeL = [[UILabel alloc] init];
-    
     _timeL.textColor = YJ170Color;
     _timeL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_timeL];
     
     _phoneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
     [_phoneBtn addTarget:self action:@selector(ActionPhoneBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_phoneBtn setBackgroundImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
     [self.contentView addSubview:_phoneBtn];
     
-    
     _statusL = [[UILabel alloc] init];
-    
     _statusL.textColor = YJBlueBtnColor;
     _statusL.font = [UIFont systemFontOfSize:11 *SIZE];
     _statusL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_statusL];
     
+    _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 106 *SIZE, SCREEN_Width, SIZE)];
+    _lineView.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_lineView];
     
     [self MasonryUI];
 }
@@ -150,5 +142,6 @@
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }
+
 
 @end

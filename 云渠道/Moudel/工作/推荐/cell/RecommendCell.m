@@ -33,11 +33,11 @@
     _nameL.text = dataDic[@"name"];
     _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"client_id"]];
     _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",dataDic[@"project_name"]];
-//    _confirmL.text = [NSString stringWithFormat:@"到访确认人：%@",dataDic[@"butter_name"]];
+    //    _confirmL.text = [NSString stringWithFormat:@"到访确认人：%@",dataDic[@"butter_name"]];
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]]];
     [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
     _timeL.attributedText = attr;
-
+    
     _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
 }
 
@@ -67,11 +67,6 @@
     _timeL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_timeL];
     
-//    _confirmL = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 107 *SIZE, 170 *SIZE, 10 *SIZE)];
-//    _confirmL.textColor = YJ170Color;
-//    _confirmL.font = [UIFont systemFontOfSize:11 *SIZE];
-//    [self.contentView addSubview:_confirmL];
-
     _statusImg = [[UIImageView alloc] init];
     _statusImg.layer.cornerRadius = 10 *SIZE;
     _statusImg.clipsToBounds = YES;
@@ -89,7 +84,7 @@
     [self.contentView addSubview:_lineView];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
+    //    _confirmBtn.frame = CGRectMake(273 *SIZE, 61 *SIZE, 77 *SIZE, 30 *SIZE);
     _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
     [_confirmBtn addTarget:self action:@selector(ActionComfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
@@ -163,8 +158,8 @@
         make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
-    
 }
+
 
 
 
