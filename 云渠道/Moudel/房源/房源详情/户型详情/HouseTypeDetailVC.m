@@ -16,9 +16,11 @@
 #import "HouseTypeTableCell2.h"
 #import "HouseTypeTableHeader.h"
 #import "HouseTypeTableHeader2.h"
-
-
 #import "YBImageBrowser.h"
+
+#import "SelectWorkerView.h"
+#import "ReportCustomConfirmView.h"
+#import "ReportCustomSuccessView.h"
 
 @interface HouseTypeDetailVC ()<UITableViewDelegate,UITableViewDataSource,YBImageBrowserDelegate>
 {
@@ -30,12 +32,19 @@
     NSString *_projectId;
     NSString *_infoid;
     NSMutableArray *_matchList;
+    NSString *_url;
+    NSInteger _state;
+    NSInteger _selected;
 }
+@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
+
 @property (nonatomic, strong) UIButton *recommendBtn;
 
 @property (nonatomic, strong) UITableView *houseTable;
 
 @property (nonatomic, strong) TransmitView *transmitView;
+
+@property (nonatomic, strong) YBImageBrowser *browser;
 
 @end
 
@@ -90,6 +99,27 @@
         
     });
 }
+
+- (void)ActionRightBtn:(UIButton *)btn{
+    
+    [BaseRequest GET:@"user/project/getHouseType" parameters:@{@"house_type_id":_houseTypeId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            _url = resposeObject[@"data"][@"url"];
+            [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
+        }else{
+            
+            [self showContent:@"分享失败"];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"分享失败"];
+    }];
+}
+
 
 - (void)RequestMethod{
     
@@ -190,6 +220,43 @@
     [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
 }
 
+#pragma mark -- Method --
+
+- (void)RequestRecommend:(NSDictionary *)dic model:(CustomMatchModel *)model{
+    
+    [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+            NSDictionary *tempDic = @{@"project":_model.project_name,
+                                      @"sex":model.sex,
+                                      @"tel":model.tel,
+                                      @"name":model.name
+                                      };
+            reportCustomSuccessView.state = _state;
+            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                
+            };
+            [self.view addSubview:reportCustomSuccessView];
+        }else if ([resposeObject[@"code"] integerValue] == 401){
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+        }
+        else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return 3;
@@ -240,10 +307,15 @@
                     [tempArr1 addObject:subDic[@"img_url"]];
                 }
             }
-            [tempArr1 enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
                 YBImageBrowserModel *model = [YBImageBrowserModel new];
-                model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj]];
+                model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
+                if ([obj[@"img_url_3d"] length]) {
+                    
+                    model.third_URL = [NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url_3d"]];
+                }
+                
                 [tempArr addObject:model];
             }];
             
@@ -257,6 +329,13 @@
                 
             }];
             
+             YBImageBrowserModel *YBmodel = tempArr[num];
+            if (YBmodel.third_URL.length) {
+                
+                BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
+                nextVC.weburl = YBmodel.third_URL;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
             YBImageBrowser *browser = [YBImageBrowser new];
             browser.delegate = self;
             browser.dataArray = tempArr;
@@ -264,6 +343,7 @@
             browser.infoid = _infoid;
             browser.currentIndex = num;
             [browser show];
+            }
         };
         return header;
     }else{
@@ -287,6 +367,7 @@
         header.houseTypeTableHeader2Block = ^{
             
             CustomMatchListVC *nextVC = [[CustomMatchListVC alloc] initWithDataArr:_matchList projectId:_projectId];
+            nextVC.model = _model;
             [self.navigationController pushViewController:nextVC animated:YES];
         };
         return header;
@@ -328,6 +409,7 @@
             cell.collCellBlock = ^(NSInteger index) {
                 
                 HouseTypeDetailVC *nextVC = [[HouseTypeDetailVC alloc] initWithHouseTypeId:[NSString stringWithFormat:@"%@",_houseArr[index][@"id"]] index:index dataArr:self.dataArr projectId:_projectId infoid:_infoid];
+                    nextVC.model = self.model;
                 //                nextVC.dataArr = _houseArr;
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
@@ -346,23 +428,93 @@
             cell.recommendBtnBlock5 = ^(NSInteger index) {
                 
                 CustomMatchModel *model = _matchList[index];
-                [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
+                self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
+                SS(strongSelf);
+                WS(weakSelf);
+                self.selectWorkerView.selectWorkerRecommendBlock = ^{
                     
-                    //                    NSLog(@"%@",resposeObject);
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
+                    if (weakSelf.selectWorkerView.nameL.text) {
+                        
+                        [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
+                    }
+                    
+                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                    NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
+                                              @"sex":model.sex,
+                                              @"tel":model.tel,
+                                              @"name":model.name
+                                              };
+                    reportCustomConfirmView.state = strongSelf->_state;
+                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                        
+                        [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+                            
+                            if ([resposeObject[@"code"] integerValue] == 200) {
+                                
+                                ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
+                                NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
+                                                          @"sex":model.sex,
+                                                          @"tel":model.tel,
+                                                          @"name":model.name
+                                                          };
+                                reportCustomSuccessView.state = strongSelf->_state;
+                                reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                                reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                                    
+                                };
+                                [weakSelf.view addSubview:reportCustomSuccessView];
+                            }else if ([resposeObject[@"code"] integerValue] == 400){
+                                
+                                [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                            }
+                            else{
+                                [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                            }
+                        } failure:^(NSError *error) {
+                            
+                            [weakSelf showContent:@"网络错误"];
+                        }];
+                    };
+                    [weakSelf.view addSubview:reportCustomConfirmView];
+                };
+                
+                [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":strongSelf->_projectId} success:^(id resposeObject) {
                     
                     if ([resposeObject[@"code"] integerValue] == 200) {
                         
+                        if ([resposeObject[@"data"][@"rows"] count]) {
+                            
+                            weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
+                            _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                            _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                            weakSelf.selectWorkerView.advicerSelect = _selected;
+                            [self.view addSubview:weakSelf.selectWorkerView];
+                        }else{
+                            
+                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
+                            
+                            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                            NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
+                                                      @"sex":model.sex,
+                                                      @"tel":model.tel,
+                                                      @"name":model.name
+                                                      };
+                            reportCustomConfirmView.state = strongSelf->_state;
+                            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                                
+                                [weakSelf RequestRecommend:dic model:model];
+                            };
+                            [weakSelf.view addSubview:reportCustomConfirmView];
+                        }
+                    }else{
                         
-                    }else if ([resposeObject[@"code"] integerValue] == 400){
-                        
-                        
-                    }
-                    else{
                         [self showContent:resposeObject[@"msg"]];
                     }
                 } failure:^(NSError *error) {
                     
-                    //                    NSLog(@"%@",error);
                     [self showContent:@"网络错误"];
                 }];
             };
@@ -388,7 +540,11 @@
     self.titleLabel.text = @"户型详情";
     self.line.hidden = YES;
     
-    
+    self.rightBtn.hidden = NO;
+    [self.rightBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15 *SIZE];
+    [self.rightBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     _houseTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
     _houseTable.estimatedRowHeight = 150 *SIZE;
     _houseTable.rowHeight = UITableViewAutomaticDimension;
@@ -410,8 +566,42 @@
             
             if (index == 0) {
                 
-                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
+                }
+            }else if (index == 1){
+                
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_Qzone];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
+                }
+            }else if (index == 2){
+                
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatSession];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
+                }
+            }else{
+                
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
+                }
             }
+            
         };
     }
     return _transmitView;
@@ -424,12 +614,16 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房地产分销渠道平台" thumImage:[UIImage imageNamed:@"shareimg"]];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name]  thumImage:[UIImage imageNamed:@"shareimg"]];
     //设置网页地址
-    shareObject.webpageUrl =@"http://itunes.apple.com/app/id1371978352?mt=8";
+    shareObject.webpageUrl = _url;
     
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;
+    
+    if (platformType == UMSocialPlatformType_WechatTimeLine) {
+        shareObject.title = [NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
+    }
     
     //调用分享接口
     [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {

@@ -22,16 +22,12 @@
     
 }
 @property (nonatomic , strong) UIScrollView *scrollview;
-@property (nonatomic, strong) UILabel *nameL;
 @property (nonatomic, strong) UILabel *numclasslab;
 @property (nonatomic, strong) UILabel *numlab;
 @property (nonatomic, strong) UILabel *adresslab;
-@property (nonatomic , strong) UILabel *sexL;
 @property (nonatomic , strong) DropDownBtn *sex;
 @property (nonatomic , strong) BorderTF *name;
-@property (nonatomic , strong) UILabel *birthL;
 @property (nonatomic , strong) DropDownBtn *birth;
-@property (nonatomic , strong) UILabel *telL;
 @property (nonatomic , strong) BorderTF *tel1;
 @property (nonatomic, strong) UIButton *addBtn;
 @property (nonatomic , strong) BorderTF *tel2;
@@ -40,8 +36,6 @@
 @property (nonatomic , strong) BorderTF *num;
 @property (nonatomic , strong) DropDownBtn *adress;
 @property (nonatomic , strong) UITextView *detailadress;
-@property (nonatomic, strong) UILabel *needL;
-@property (nonatomic , strong) DropDownBtn *needBtn;
 @property (nonatomic , strong) UIButton *surebtn;
 @property (nonatomic , strong) CustomerInfoModel *Customerinfomodel;
 
@@ -183,56 +177,43 @@
     [backview addSubview:title];
     [_scrollview addSubview:backview];
     
-    _needL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
-    _needL.text = @"类型:";
-    _needL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _needL.textColor = YJTitleLabColor;
-    [_scrollview addSubview:_needL];
-    
-    _needBtn = [[DropDownBtn alloc]initWithFrame:CGRectMake(80.3*SIZE, 46*SIZE, 257 *SIZE, 33.3*SIZE)];
-    [_scrollview addSubview:_needBtn];
-    
     //姓名
-    _nameL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
-    _nameL.text = @"姓名:";
-    _nameL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _nameL.textColor = YJTitleLabColor;
-    [_scrollview addSubview:_nameL];
-    
+    UILabel *namelab = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
+    namelab.text = @"姓名:";
+    namelab.font = [UIFont systemFontOfSize:13.3*SIZE];
+    namelab.textColor = YJTitleLabColor;
+    [_scrollview addSubview:namelab];
     _name = [[BorderTF alloc]initWithFrame:CGRectMake(80.3*SIZE, 46*SIZE, 116.7*SIZE, 33.3*SIZE)];
     _name.textfield.placeholder = @"必填";
     [_scrollview addSubview:_name];
     
     //性别
-    _sexL = [[UILabel alloc]initWithFrame:CGRectMake(208.7*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
-    _sexL.text = @"性别:";
-    _sexL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _sexL.textColor = YJTitleLabColor;
-    [_scrollview addSubview:_sexL];
-    
+    UILabel *sexlab = [[UILabel alloc]initWithFrame:CGRectMake(208.7*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
+    sexlab.text = @"性别:";
+    sexlab.font = [UIFont systemFontOfSize:13.3*SIZE];
+    sexlab.textColor = YJTitleLabColor;
+    [_scrollview addSubview:sexlab];
     _sex = [[DropDownBtn alloc]initWithFrame:CGRectMake(251.3*SIZE, 46*SIZE, 86.7*SIZE, 33.3*SIZE)];
     [_sex addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_sex];
     
     //出生日期
-    _birthL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 106*SIZE, 100*SIZE, 14*SIZE)];
-    _birthL.text = @"出生日期:";
-    _birthL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _birthL.textColor = YJTitleLabColor;
-    [_scrollview addSubview:_birthL];
-    
+    UILabel *brithlab = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 106*SIZE, 100*SIZE, 14*SIZE)];
+    brithlab.text = @"出生日期:";
+    brithlab.font = [UIFont systemFontOfSize:13.3*SIZE];
+    brithlab.textColor = YJTitleLabColor;
+    [_scrollview addSubview:brithlab];
     _birth = [[DropDownBtn alloc]initWithFrame:CGRectMake(80.3*SIZE, 96*SIZE, 257.7*SIZE, 33.3*SIZE)];
     
     [_birth addTarget:self action:@selector(action_brith) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_birth];
     
     //电话
-    _telL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 169*SIZE, 100*SIZE, 14*SIZE)];
-    _telL.text = @"联系号码:";
-    _telL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _telL.textColor = YJTitleLabColor;
-    [_scrollview addSubview:_telL];
-    
+    UILabel *tellab1 = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 169*SIZE, 100*SIZE, 14*SIZE)];
+    tellab1.text = @"联系号码:";
+    tellab1.font = [UIFont systemFontOfSize:13.3*SIZE];
+    tellab1.textColor = YJTitleLabColor;
+    [_scrollview addSubview:tellab1];
     _tel1 = [[BorderTF alloc]initWithFrame:CGRectMake(80.3*SIZE, 146*SIZE, 257.7*SIZE, 33.3*SIZE)];
     _tel1.textfield.placeholder = @"必填";
     _tel1.textfield.keyboardType = UIKeyboardTypePhonePad;
@@ -320,87 +301,13 @@
         make.bottom.equalTo(self.view).offset(0);
     }];
     
-    [_needL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(10  *SIZE);
-        make.top.equalTo(_scrollview).offset(56 *SIZE);
-        make.width.equalTo(@(100 *SIZE));
-        make.height.equalTo(@(14 *SIZE));
-    }];
-    
-    [_needBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(80 *SIZE);
-        make.top.equalTo(_scrollview).offset(46 *SIZE);
-        make.width.equalTo(@(257 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(10 *SIZE);
-        make.top.equalTo(_needBtn.mas_bottom).offset(30 *SIZE);
-        make.width.equalTo(@(65 *SIZE));
-        make.height.equalTo(@(14 *SIZE));
-    }];
-    
-    [_name mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(80 *SIZE);
-        make.top.equalTo(_needBtn.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(117 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_sexL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(208 *SIZE);
-        make.top.equalTo(_needBtn.mas_bottom).offset(30 *SIZE);
-        make.width.equalTo(@(100 *SIZE));
-        make.height.equalTo(@(14 *SIZE));
-    }];
-    
-    [_sex mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(251 *SIZE);
-        make.top.equalTo(_needBtn.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(86 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_birthL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(10 *SIZE);
-        make.top.equalTo(_name.mas_bottom).offset(30 *SIZE);
-        make.width.equalTo(@(100 *SIZE));
-        make.height.equalTo(@(14 *SIZE));
-    }];
-    
-    [_birth mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(80 *SIZE);
-        make.top.equalTo(_name.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(257 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_telL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollview).offset(10 *SIZE);
-        make.top.equalTo(_birth.mas_bottom).offset(30 *SIZE);
-        make.width.equalTo(@(100 *SIZE));
-        make.height.equalTo(@(14 *SIZE));
-    }];
-    
     [_tel1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollview).offset(81 *SIZE);
-        make.top.equalTo(_birth.mas_bottom).offset(19 *SIZE);
-        //        make.width.equalTo(@(217 *SIZE));
-        make.width.equalTo(@(257 *SIZE));
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(217 *SIZE));
         make.height.equalTo(@(33 *SIZE));
     }];
-    
     
     [_numclasslab mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -568,6 +475,7 @@
     
     QuickAddRequireVC *nextVC = [[QuickAddRequireVC alloc] initWithProjectId:_projectId];
     nextVC.status = @"addCustom";
+    nextVC.projectName = self.projectName;
     nextVC.infoModel = _Customerinfomodel;
     [self.navigationController pushViewController:nextVC animated:YES];
 }

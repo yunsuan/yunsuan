@@ -27,6 +27,7 @@ FOUNDATION_EXPORT char * const YBImageBrowserModel_SELName_cutImage;
 
 @interface YBImageBrowserModel : NSObject
 
+@property (nonatomic, strong) NSString *third_URL;
 /**
  本地图片
  （setImageWithFileName:fileType: 若图片不在 Assets 中，尽量使用此方法以避免图片缓存过多导致内存飙升）

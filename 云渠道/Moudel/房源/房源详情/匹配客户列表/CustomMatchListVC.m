@@ -8,13 +8,19 @@
 
 #import "CustomMatchListVC.h"
 #import "RoomDetailTableCell5.h"
+#import "ReportCustomConfirmView.h"
+#import "ReportCustomSuccessView.h"
+#import "SelectWorkerView.h"
 
 @interface CustomMatchListVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
     
     NSMutableArray *_dataArr;
     NSMutableArray *_tempArr;
     NSString *_projectId;
+    NSInteger _state;
+    NSInteger _selected;
 }
+@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
 @property (nonatomic , strong) UITableView *matchTable;
 
@@ -48,6 +54,36 @@
     [self initUI];
 }
 
+- (void)RecommendRequest:(CustomMatchModel *)model{
+    
+    [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+            NSDictionary *tempDic = @{@"project":self.model.project_name,
+                                      @"sex":model.sex,
+                                      @"tel":model.tel,
+                                      @"name":model.name
+                                      };
+            reportCustomSuccessView.state = _state;
+            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            };
+            [self.view addSubview:reportCustomSuccessView];
+        }
+        else{
+            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return _tempArr.count;
@@ -66,17 +102,83 @@
     cell.recommendBtnBlock5 = ^(NSInteger index) {
         
         CustomMatchModel *model = _tempArr[index];
-        [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
-                      
+        self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
+        SS(strongSelf);
+        WS(weakSelf);
+        self.selectWorkerView.selectWorkerRecommendBlock = ^{
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
+            if (weakSelf.selectWorkerView.nameL.text) {
+                
+                [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
+            }
+            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+            NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
+                                      @"sex":model.sex,
+                                      @"tel":model.tel,
+                                      @"name":model.name
+                                      };
+            reportCustomConfirmView.state = strongSelf->_state;
+            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                
+                [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
+                        NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
+                                                  @"sex":model.sex,
+                                                  @"tel":model.tel,
+                                                  @"name":model.name
+                                                  };
+                        reportCustomSuccessView.state = strongSelf->_state;
+                        reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                        reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                        };
+                        [weakSelf.view addSubview:reportCustomSuccessView];
+                    }
+                    else{
+                        [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [weakSelf showContent:@"网络错误"];
+                }];
+            };
+            [weakSelf.view addSubview:reportCustomConfirmView];
+        };
+        [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":strongSelf->_projectId} success:^(id resposeObject) {
+            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
-                   
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
-                    [self.navigationController popViewControllerAnimated:YES];
-                }];
-            }
-            else{
+                if ([resposeObject[@"data"][@"rows"] count]) {
+                    weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
+                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                    weakSelf.selectWorkerView.advicerSelect = _selected;
+                    [weakSelf.view addSubview:weakSelf.selectWorkerView];
+                }else{
+                    
+                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                    NSDictionary *dic = @{@"project":weakSelf.model.project_name,
+                                          @"sex":model.sex,
+                                          @"tel":model.tel,
+                                          @"name":model.name
+                                          };
+                    reportCustomConfirmView.state = strongSelf->_state;
+                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                        
+                        [weakSelf RecommendRequest:model];
+                    };
+                    [weakSelf.view addSubview:reportCustomConfirmView];
+                }
+            }else{
+                
                 [self showContent:resposeObject[@"msg"]];
             }
         } failure:^(NSError *error) {
@@ -92,16 +194,16 @@
     [_tempArr removeAllObjects];
     UITextField *sender = (UITextField *)[notification object];
     if (sender.text.length) {
-
+        
         for (CustomMatchModel *model in _dataArr) {
-
+            
             if ([model.name containsString:sender.text] ||[model.tel containsString:sender.text]) {
-
+                
                 [_tempArr addObject:model];
             }
         }
     }else{
-
+        
         _tempArr = [NSMutableArray arrayWithArray:_dataArr];
     }
     
@@ -135,7 +237,7 @@
     _searchBar.font = [UIFont systemFontOfSize:11 *SIZE];
     _searchBar.returnKeyType = UIReturnKeySearch;
     UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
-//    rightImg.backgroundColor = YJGreenColor;
+    //    rightImg.backgroundColor = YJGreenColor;
     rightImg.image = [UIImage imageNamed:@"search_2"];
     _searchBar.rightView = rightImg;
     _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;

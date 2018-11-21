@@ -42,4 +42,7 @@
 
 @property (nonatomic , strong) NSString *info_id;
 
+@property (nonatomic , strong) NSString *total_float_url_panorama;
+
+
 @end

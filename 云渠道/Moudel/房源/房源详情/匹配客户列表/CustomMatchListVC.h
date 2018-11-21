@@ -8,8 +8,13 @@
 
 #import "BaseViewController.h"
 
+#import "RoomDetailModel.h"
+
 @interface CustomMatchListVC : BaseViewController
+
+@property (nonatomic, strong) RoomDetailModel *model;
 
 - (instancetype)initWithDataArr:(NSArray *)dataArr projectId:(NSString *)projectId;
 
 @end
+

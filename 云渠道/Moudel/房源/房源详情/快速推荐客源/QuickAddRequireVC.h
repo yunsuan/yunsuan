@@ -11,6 +11,8 @@
 
 @interface QuickAddRequireVC : BaseViewController
 
+@property (nonatomic, strong) NSString *projectName;
+
 @property (nonatomic, strong) NSString *status;
 
 @property (nonatomic, strong) CustomerInfoModel *infoModel;

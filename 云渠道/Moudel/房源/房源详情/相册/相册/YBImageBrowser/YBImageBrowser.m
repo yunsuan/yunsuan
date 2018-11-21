@@ -16,6 +16,8 @@
 #import "YBImageBrowserDownloader.h"
 #import "NSBundle+YBImageBrowser.h"
 
+#import "WebViewVC.h"
+
 static CGFloat _maxDisplaySize = 3500;
 static BOOL _showStatusBar = NO;    //改控制器是否需要隐藏状态栏
 static BOOL _isControllerPreferredForStatusBar = YES; //状态栏是否是控制器优先
@@ -339,7 +341,35 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
 }
 
 - (void)applyForHiddenByYBImageBrowserView:(YBImageBrowserView *)imageBrowserView {
+    
     [self hide];
+//    self.dataArray[self.currentIndex][@"img_url_3d"];
+//    YBImageBrowserModel *model = self.dataArray[self.currentIndex];
+//    if (model.third_URL.length) {
+//
+//
+//        WebViewVC *nextVC = [[WebViewVC alloc] init];
+//        nextVC.weburl = model.third_URL;
+//
+//        if(_delegate && [_delegate respondsToSelector:@selector(XGPushNextVC:animated:)]){
+//
+//            [_delegate XGPushNextVC:nextVC animated:YES];
+//            [self hide];
+//        }
+////        [self.navigationController pushViewController:nextVC animated:YES];
+//    }else{
+//
+        
+//    }
+}
+
+- (void)XGPushNextVC:(BuildingAlbumVC *)vc byYBImageBrowserView:(YBImageBrowserView *)imageBrowserView{
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(XGPushNextVC:animated:)]) {
+        
+        [_delegate XGPushNextVC:vc animated:YES];
+        [self hide];
+    }
 }
 
 #pragma mark YBImageBrowserViewDataSource
@@ -495,8 +525,7 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
     
     if (!_xgToolBar) {
         
-        _xgToolBar = [[XGToolBar alloc]initWithFrame:CGRectMake(0, SCREEN_Height - 100 *SIZE, SCREEN_Width, 100 *SIZE) infoid:self.infoid albumArr:self.albumArr];
-
+        _xgToolBar = [[XGToolBar alloc] initWithFrame:CGRectMake(0, SCREEN_Height - 100 *SIZE, SCREEN_Width, 100 *SIZE) projectId:self.infoid albumArr:self.albumArr];
         _xgToolBar.delegate = self;
     }
     return _xgToolBar;

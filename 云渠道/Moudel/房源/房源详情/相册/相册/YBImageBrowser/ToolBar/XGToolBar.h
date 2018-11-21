@@ -30,7 +30,7 @@
 
 //@property (nonatomic, strong) NSString *projectId;
 
-- (instancetype)initWithFrame:(CGRect)frame infoid:(NSString *)infoid albumArr:(NSArray *)albumArr;
+-(instancetype)initWithFrame:(CGRect)frame projectId:(NSString *)projectId albumArr:(NSArray *)albumArr;
 
 - (void)setTitleLabelWithCurrentIndex:(NSUInteger)index totalCount:(NSUInteger)totalCount;
 @end

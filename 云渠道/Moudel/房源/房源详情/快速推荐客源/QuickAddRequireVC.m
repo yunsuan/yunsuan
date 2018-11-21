@@ -10,6 +10,7 @@
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 #import "AdressChooseView.h"
+#import "AddressChooseView3.h"
 #import "CustomerVC.h"
 #import "SinglePickView.h"
 #import "CustomDetailTableCell4.h"
@@ -17,6 +18,9 @@
 #import "AddTagView.h"
 #import "RoomProjectVC.h"
 #import "RoomDetailVC1.h"
+#import "SelectWorkerView.h"
+#import "ReportCustomConfirmView.h"
+#import "ReportCustomSuccessView.h"
 
 @interface QuickAddRequireVC ()
 
@@ -28,7 +32,10 @@
     NSInteger _num;
     NSInteger _btnNum;
     NSString *_projectId;
+    NSInteger _state;
+    NSInteger _selected;
 }
+@property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
 @property (nonatomic, strong) UIScrollView *scrolleView;
 
@@ -176,27 +183,84 @@
             break;
         }
         default:
-            break;
+        break;
     }
-    AdressChooseView *addressChooseView= [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
+    //    AdressChooseView *addressChooseView= [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
+    //    WS(weakself);
+    //    addressChooseView.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
+    //
+    //        if (_btnNum == 1) {
+    //
+    //            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
+    //            weakself.addressBtn.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
+    //        }else if (_btnNum == 2){
+    //
+    //            weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
+    //            weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
+    //        }else{
+    //
+    //            weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
+    //            weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
+    //        }
+    //    };
+    //
+    //    [self.view addSubview:addressChooseView];
+    
+    AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
     WS(weakself);
-    addressChooseView.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
+    addressChooseView.addressChooseView3ConfirmBlock = ^(NSString *city, NSString *area, NSString *cityid, NSString *areaid) {
+        
+        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+        
+        NSError *err;
+        NSArray *proArr = [NSJSONSerialization JSONObjectWithData:JSONData
+                                                          options:NSJSONReadingMutableContainers
+                                                            error:&err];
+        NSString *pro = [cityid substringToIndex:2];
+        pro = [NSString stringWithFormat:@"%@0000",pro];
+        NSString *proName;
+        for (NSDictionary *dic in proArr) {
+            
+            if([dic[@"code"] isEqualToString:pro]){
+                
+                proName = dic[@"name"];
+                break;
+            }
+        }
         
         if (_btnNum == 1) {
             
-            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-            weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@", proviceid, cityid, areaid];
+            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+            weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid];
+            _addBtn.hidden = NO;
         }else if (_btnNum == 2){
             
-            weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-            weakself.addressBtn3->str = [NSString stringWithFormat:@"%@-%@-%@", proviceid, cityid, areaid];
+            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]]) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
+                    
+                }];
+            }else{
+                
+                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+                weakself.addressBtn2->str = [NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid];
+                _addBtn.hidden = NO;
+            }
         }else{
             
-            weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-            weakself.addressBtn3->str = [NSString stringWithFormat:@"%@-%@-%@", proviceid, cityid, areaid];
+            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]] || [weakself.addressBtn2->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]]) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
+                    
+                }];
+            }else{
+                
+                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+                weakself.addressBtn3->str = [NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid];
+                _addBtn.hidden = NO;
+            }
         }
     };
-    
     [self.view addSubview:addressChooseView];
 }
 
@@ -222,7 +286,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.houseTypeBtn.content.text = MC;
-                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -234,7 +298,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.priceBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -246,7 +310,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.areaBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -258,7 +322,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.typeBtn.content.text = MC;
-                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.typeBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -270,7 +334,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.purposeBtn.content.text = MC;
-                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -282,7 +346,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.payWayBtn.content.text = MC;
-                weakself.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.payWayBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -294,7 +358,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.floorTF1.content.text = MC;
-                weakself.floorTF1->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.floorTF1->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -306,7 +370,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.floorTF2.content.text = MC;
-                weakself.floorTF2->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.floorTF2->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -318,13 +382,13 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.standardTF.content.text = MC;
-                weakself.standardTF->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.standardTF->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
         }
         default:
-            break;
+        break;
     }
 }
 
@@ -340,13 +404,13 @@
         
         if (self.addressBtn2->str.length) {
             
-            [dic setObject:[NSString stringWithFormat:@"%@,%@", self.addressBtn->str, self.addressBtn2->str] forKey:@"region"];
+            [dic setObject:[NSString stringWithFormat:@"%@,%@",self.addressBtn->str,self.addressBtn2->str] forKey:@"region"];
         }
     }else{
         
         if (self.addressBtn3->str.length) {
             
-            [dic setObject:[NSString stringWithFormat:@"%@,%@,%@", self.addressBtn->str, self.addressBtn2->str, self.addressBtn3->str] forKey:@"region"];
+            [dic setObject:[NSString stringWithFormat:@"%@,%@,%@",self.addressBtn->str,self.addressBtn2->str,self.addressBtn3->str] forKey:@"region"];
         }
     }
     if (_houseTypeBtn->str.length) {
@@ -373,7 +437,7 @@
         
         [dic setObject:_floorTF2->str forKey:@"floor_max"];
     }
-
+    
     if (_standardTF->str.length) {
         
         [dic setObject:_standardTF->str forKey:@"decorate"];
@@ -419,11 +483,115 @@
         
         [dic setObject:str forKey:@"need_tags"];
     }
+    self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
+    SS(strongSelf);
+    WS(weakSelf);
+    self.selectWorkerView.selectWorkerRecommendBlock = ^{
+        
+        if (weakSelf.selectWorkerView.nameL.text) {
+            
+            [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
+        }
+        ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+        NSDictionary *tempDic = @{@"project":weakSelf.projectName,
+                                  @"sex":strongSelf->_infoModel.sex,
+                                  @"tel":strongSelf->_infoModel.tel,
+                                  @"name":strongSelf->_infoModel.name
+                                  };
+        reportCustomConfirmView.state = strongSelf->_state;
+        reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+        reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+            
+            [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
+                    NSDictionary *tempDic = @{@"project":weakSelf.projectName,
+                                              @"sex":strongSelf->_infoModel.sex,
+                                              @"tel":strongSelf->_infoModel.tel,
+                                              @"name":strongSelf->_infoModel.name
+                                              };
+                    reportCustomSuccessView.state = strongSelf->_state;
+                    reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                    reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
+                        
+                        for (UIViewController *vc in weakSelf.navigationController.viewControllers) {
+                            
+                            if ([vc isKindOfClass:[RoomDetailVC1 class]]) {
+                                
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
+                                [weakSelf.navigationController popToViewController:vc animated:YES];
+                            }
+                        }
+                    };
+                    [weakSelf.view addSubview:reportCustomSuccessView];
+                }
+                else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [weakSelf showContent:@"网络错误"];
+            }];
+        };
+        [weakSelf.view addSubview:reportCustomConfirmView];
+    };
+    
+    [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"][@"rows"] count]) {
+                weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
+                _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                weakSelf.selectWorkerView.advicerSelect = _selected;
+                [weakSelf.view addSubview:weakSelf.selectWorkerView];
+            }else{
+                
+                ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
+                NSDictionary *tempDic = @{@"project":self.projectName,
+                                          @"sex":_infoModel.sex,
+                                          @"tel":_infoModel.tel,
+                                          @"name":_infoModel.name
+                                          };
+                reportCustomConfirmView.state = strongSelf->_state;
+                reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
+                    
+                    [weakSelf RequestRecommend:dic];
+                    //                    [weakSelf RecommendRequest:dic projectName:strongSelf->_dataArr[index][@"project_name"]];
+                };
+                [weakSelf.view addSubview:reportCustomConfirmView];
+            }
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestRecommend:(NSDictionary *)dic{
+    
     [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
+            ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+            NSDictionary *tempDic = @{@"project":self.projectName,
+                                      @"sex":_infoModel.sex,
+                                      @"tel":_infoModel.tel,
+                                      @"name":_infoModel.name
+                                      };
+            reportCustomSuccessView.state = _state;
+            reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
                 
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
@@ -434,7 +602,8 @@
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                 }
-            }];
+            };
+            [self.view addSubview:reportCustomSuccessView];
         }
         else{
             
@@ -662,7 +831,7 @@
                 break;
             }
             default:
-                break;
+            break;
         }
         
         if (i < 12) {
@@ -753,7 +922,7 @@
                     [_infoView addSubview:_standardTF];
                 }
                 default:
-                    break;
+                break;
             }
         }
         
@@ -787,14 +956,14 @@
                 case 4:
                 {
                     _urgentTF = TF;
-
+                    
                     _urgentTF.textfield.textAlignment = NSTextAlignmentRight;
                     _urgentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
                     [_infoView addSubview:_urgentTF];
                     break;
                 }
                 default:
-                    break;
+                break;
             }
         }
         
@@ -826,7 +995,7 @@
     
     
     _tagView = [[AddTagView alloc] initWithFrame:CGRectMake(0, 757 *SIZE, SCREEN_Width, 127 *SIZE)];
-
+    
     [_tagView reloadInputViews];
     WS(weak);
     _tagView.addBtnBlock = ^{
@@ -977,7 +1146,7 @@
         make.height.equalTo(@(33 *SIZE));
         make.bottom.equalTo(_floorTF1.mas_top).offset(-19 *SIZE);
     }];
-
+    
     
     [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
         

@@ -7,28 +7,29 @@
 //
 
 #import "XGToolBar.h"
-#import "BuildingAlbumCollCell.h"
+//#import "BuildingAlbumCollCell.h"
+#import "AlbumCollCell.h"
 
 @interface XGToolBar()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 {
     
     NSInteger _total;
     NSMutableArray *_imgArr;
-    NSString *_info_id;
+    NSString *_projectId;
 }
 
 @end
 
 @implementation XGToolBar
 
-- (instancetype)initWithFrame:(CGRect)frame infoid:(NSString *)infoid albumArr:(NSArray *)albumArr
+- (instancetype)initWithFrame:(CGRect)frame projectId:(NSString *)projectId albumArr:(NSArray *)albumArr
 {
     self = [super initWithFrame:frame];
     if (self) {
         
 //        _imgArr = [@[] mutableCopy];
         _imgArr = [NSMutableArray arrayWithArray:albumArr];
-        _info_id = infoid;
+        _projectId = projectId;
         [self initUI];
         [self SetData:_imgArr];
 //        [self RequestMethod];
@@ -38,7 +39,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:GetImg_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
+    [BaseRequest GET:GetImg_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -87,16 +88,29 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    BuildingAlbumCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BuildingAlbumCollCell" forIndexPath:indexPath];
+    AlbumCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AlbumCollCell" forIndexPath:indexPath];
     if (!cell) {
         
-        cell = [[BuildingAlbumCollCell alloc] initWithFrame:CGRectMake(0, 0, 50 *SIZE, 27 *SIZE)];
+        cell = [[AlbumCollCell alloc] initWithFrame:CGRectMake(0, 0, 78 *SIZE, 27 *SIZE)];
     }
     
 //    cell.contentL.text = @"123";
     cell.contentL.text = _imgArr[indexPath.item][@"name"];
     
     return cell;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    
+    NSInteger numberOfItems = [collectionView numberOfItemsInSection:0];
+    
+    CGFloat combinedItemWidth = (numberOfItems * _flowLayout.itemSize.width) + ((numberOfItems - 1) * _flowLayout.minimumInteritemSpacing);
+    
+    CGFloat padding = (collectionView.frame.size.width - combinedItemWidth) / 2;
+    
+    padding = padding > 0 ? padding :0 ;
+    
+    return UIEdgeInsetsMake(0, padding + 5 *SIZE,0, padding - 5 *SIZE);
 }
 
 - (void)setTitleLabelWithCurrentIndex:(NSUInteger)index totalCount:(NSUInteger)totalCount {
@@ -131,7 +145,7 @@
     }
 //    [_scrollView setContentOffset:CGPointMake(count * SCREEN_Width, 0) animated:NO];
     
-    _currentL.text = [NSString stringWithFormat:@"%@1/%d",_imgArr[indexPath.item][@"name"],(unsigned)[_imgArr[indexPath.item][@"data"] count]];
+    _currentL.text = [NSString stringWithFormat:@"%@1/%d",_imgArr[indexPath.item][@"name"],[_imgArr[indexPath.item][@"data"] count]];
     if (_delegate && [_delegate respondsToSelector:@selector(XGBarScrollToIndex:)]) {
         
         [_delegate XGBarScrollToIndex:(count + 1)];
@@ -143,9 +157,10 @@
     self.backgroundColor = [UIColor clearColor];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.itemSize = CGSizeMake(50 *SIZE, 27 *SIZE);
+    _flowLayout.itemSize = CGSizeMake(78 *SIZE, 27 *SIZE);
     _flowLayout.minimumInteritemSpacing = 7 *SIZE;
-    _flowLayout.sectionInset = UIEdgeInsetsMake(SIZE, 10 *SIZE, 27 *SIZE, 10 *SIZE);
+//    _flowLayout.sectionInset = UIEdgeInsetsMake(SIZE, 10 *SIZE, 27 *SIZE, 10 *SIZE);
+    _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     _currentL = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 5 *SIZE, 100 *SIZE, 12 *SIZE)];
     _currentL.textColor = YJContentLabColor;
@@ -162,7 +177,7 @@
     _XGColl.backgroundColor = [UIColor clearColor];
     _XGColl.delegate = self;
     _XGColl.dataSource = self;
-    [_XGColl registerClass:[BuildingAlbumCollCell class] forCellWithReuseIdentifier:@"BuildingAlbumCollCell"];
+    [_XGColl registerClass:[AlbumCollCell class] forCellWithReuseIdentifier:@"AlbumCollCell"];
     [self addSubview:_XGColl];
 }
 

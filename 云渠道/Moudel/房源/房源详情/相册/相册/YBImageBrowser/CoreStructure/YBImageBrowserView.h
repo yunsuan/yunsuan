@@ -9,6 +9,7 @@
 #import "YBImageBrowserUtilities.h"
 #import "YBImageBrowserModel.h"
 #import "YBImageBrowserScreenOrientationProtocol.h"
+#import "BuildingAlbumVC.h"
 
 @class YBImageBrowserView;
 
@@ -19,6 +20,9 @@
 - (void)yBImageBrowserView:(YBImageBrowserView *)imageBrowserView longPressBegin:(UILongPressGestureRecognizer *)gesture;
 
 - (void)applyForHiddenByYBImageBrowserView:(YBImageBrowserView *)imageBrowserView;
+
+
+- (void)XGPushNextVC:(BuildingAlbumVC *)vc byYBImageBrowserView:(YBImageBrowserView *)imageBrowserView;
 
 @end
 

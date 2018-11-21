@@ -8,7 +8,11 @@
 
 #import "BaseViewController.h"
 
+#import "RoomDetailModel.h"
+
 @interface CustomListVC : BaseViewController
+
+@property (nonatomic, strong) RoomDetailModel *model;
 
 - (instancetype)initWithProjectId:(NSString *)projectId;
 

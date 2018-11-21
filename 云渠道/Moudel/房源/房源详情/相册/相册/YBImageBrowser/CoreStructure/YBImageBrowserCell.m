@@ -12,6 +12,7 @@
 #import <objc/message.h>
 #import "YBImageBrowserDownloader.h"
 #import "YBImageBrowser.h"
+#import "BuildingAlbumVC.h"
 
 @interface YBImageBrowserCell () <UIScrollViewDelegate> {
     //动画相关
@@ -59,6 +60,7 @@
         [self addNotification];
         [self.contentView addSubview:self.scrollView];
         [self.scrollView addSubview:self.imageView];
+        [self addSubview:self.tagImg];
         [self addSubview:self.localImageView];
     }
     return self;
@@ -102,9 +104,23 @@
 }
 
 - (void)respondsToTapSingle:(UITapGestureRecognizer *)tap {
-    if (_delegate && [_delegate respondsToSelector:@selector(applyForHiddenByYBImageBrowserCell:)]) {
-        [_delegate applyForHiddenByYBImageBrowserCell:self];
+    
+    if (_model.third_URL.length) {
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(XGPushNextVC:byYBImageBrowserCell:)]) {
+            
+            BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
+            nextVC.weburl = _model.third_URL;
+            
+            [_delegate XGPushNextVC:nextVC byYBImageBrowserCell:self];
+        }
+    }else{
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(applyForHiddenByYBImageBrowserCell:)]) {
+            [_delegate applyForHiddenByYBImageBrowserCell:self];
+        }
     }
+    
 }
 
 - (void)respondsToTapDouble:(UITapGestureRecognizer *)tap {
@@ -583,6 +599,13 @@
 - (void)setModel:(YBImageBrowserModel *)model {
     if (!model) return;
     _model = model;
+    if (_model.third_URL.length) {
+        
+        self.tagImg.hidden = NO;
+    }else{
+        
+        self.tagImg.hidden = YES;
+    }
     [self loadImageWithModel:model isPreview:NO];
 }
 
@@ -600,6 +623,20 @@
         _imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _imageView;
+}
+
+- (UIImageView *)tagImg{
+    
+    if (!_tagImg) {
+        _tagImg = [UIImageView new];
+        _tagImg.bounds = CGRectMake(0, 0, 60 *SIZE, 60 *SIZE);
+        _tagImg.center = CGPointMake(SCREEN_Width / 2, SCREEN_Height / 2);
+//        _tagImg.center = [UIApplication sharedApplication].keyWindow.center;
+        _tagImg.image = [UIImage imageNamed:@"3D"];
+//        _tagImg.contentMode = UIViewContentModeScaleAspectFill;
+//        _tagImg.hidden = YES;
+    }
+    return _tagImg;
 }
 
 - (UIImageView *)localImageView {

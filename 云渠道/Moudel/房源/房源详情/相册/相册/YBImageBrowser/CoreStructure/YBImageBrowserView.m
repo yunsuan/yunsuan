@@ -92,6 +92,14 @@ static NSString * const YBImageBrowserViewCellIdentifier = @"YBImageBrowserViewC
     }
 }
 
+- (void)XGPushNextVC:(BuildingAlbumVC *)vc byYBImageBrowserCell:(YBImageBrowserCell *)imageBrowserCell{
+    
+    if (_yb_delegate && [_yb_delegate respondsToSelector:@selector(XGPushNextVC:byYBImageBrowserView:)]) {
+        
+        [_yb_delegate XGPushNextVC:vc byYBImageBrowserView:self];
+    }
+}
+
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -115,14 +123,19 @@ static NSString * const YBImageBrowserViewCellIdentifier = @"YBImageBrowserViewC
     cell.cancelDragImageViewAnimation = self.cancelDragImageViewAnimation;
     cell.outScaleOfDragImageViewAnimation = self.outScaleOfDragImageViewAnimation;
     cell.autoCountMaximumZoomScale = self.autoCountMaximumZoomScale;
+    
     [cell so_updateFrameWithScreenOrientation:_so_screenOrientation];
     if (_yb_dataSource && [_yb_dataSource respondsToSelector:@selector(yBImageBrowserView:modelForCellAtIndex:)]) {
         cell.model = [_yb_dataSource yBImageBrowserView:self modelForCellAtIndex:indexPath.row];
     } else {
         cell.model = nil;
     }
+//    cell.tagImg.center = cell.animateImageView.center;
     return cell;
 }
+
+
+
 
 #pragma mark UIScrollViewDelegate
 

@@ -8,16 +8,14 @@
 
 #import "BaseViewController.h"
 
+@class BuildingAlbumVC;
+
+typedef void(^BuildBackBlock)(void);
+
 @interface BuildingAlbumVC : BaseViewController
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, copy) BuildBackBlock buildBackBlock;
 
-@property (nonatomic, strong) UICollectionView *albumColl;
-
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
-
-//- (instancetype)initWithNum:(NSInteger )num imgArr:(NSArray *)imgArr;
-
-- (instancetype)initWithNum:(NSInteger)num infoid:(NSString *)infoid;
+@property (nonatomic , strong) NSString *weburl;
 
 @end
