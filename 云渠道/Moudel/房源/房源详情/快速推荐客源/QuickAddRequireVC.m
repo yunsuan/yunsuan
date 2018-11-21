@@ -11,7 +11,7 @@
 #import "BorderTF.h"
 #import "AdressChooseView.h"
 #import "AddressChooseView3.h"
-#import "CustomerVC.h"
+#import "CustomerListVC.h"
 #import "SinglePickView.h"
 #import "CustomDetailTableCell4.h"
 #import "AddTagVC.h"

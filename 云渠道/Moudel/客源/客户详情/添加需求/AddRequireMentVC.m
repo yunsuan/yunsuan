@@ -11,7 +11,7 @@
 #import "BorderTF.h"
 //#import "AdressChooseView.h"
 #import "AddressChooseView3.h"
-#import "CustomerVC.h"
+#import "CustomerListVC.h"
 #import "CustomDetailVC.h"
 #import "SinglePickView.h"
 #import "CustomDetailTableCell4.h"
@@ -562,7 +562,7 @@
 //                [self showContent:@"添加成功"];
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    if ([vc isKindOfClass:[CustomerVC class]]) {
+                    if ([vc isKindOfClass:[CustomerListVC class]]) {
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];
