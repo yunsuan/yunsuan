@@ -23,11 +23,13 @@ typedef void(^editBlock)(NSInteger index);
 
 @property (nonatomic, strong) UILabel *addressL;
 
+@property (nonatomic, strong) UILabel *houseTypeL;
+
 @property (nonatomic, strong) UILabel *priceL;
 
 @property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) UILabel *houseTypeL;
+@property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UILabel *floorL;
 

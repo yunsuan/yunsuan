@@ -23,15 +23,17 @@
 - (void)setModel:(CustomRequireModel *)model{
     
     _addressL.text = @"";
+    _houseTypeL.text = @"";
     _priceL.text = @"";
     _areaL.text = @"";
-    _houseTypeL.text = @"";
+    _typeL.text = @"";
     _floorL.text = @"";
     _standardL.text = @"";
     _purposeL.text = @"";
     _payWayL.text = @"";
     _intentionL.text = @"";
     _urgentL.text = @"";
+    
     
     if (model.region.count) {
         
@@ -77,6 +79,14 @@
         
         _addressL.text = @"区域：";
     }
+    
+//    if (model.house_type.length) {
+//        
+//        _houseTypeL.text = [NSString stringWithFormat:@"物业类型：%@",model.house_type];
+//    }else{
+//        
+//        
+//    }
     
     if (model.total_price.length) {
         
@@ -126,7 +136,7 @@
         [_purposeL mas_remakeConstraints:^(MASConstraintMaker *make) {
             
             make.left.equalTo(self.contentView).offset(28 *SIZE);
-            make.top.equalTo(_houseTypeL.mas_bottom).offset(18 *SIZE);
+            make.top.equalTo(_typeL.mas_bottom).offset(18 *SIZE);
             make.right.equalTo(self.contentView).offset(-28 *SIZE);
             //            make.bottom.equalTo(_payWayL.mas_top).offset(-18 *SIZE);
         }];
@@ -134,10 +144,10 @@
         
         if (model.shop_type.count) {
             
-            _houseTypeL.text = [NSString stringWithFormat:@"商铺类型：%@",[model.shop_type componentsJoinedByString:@","]];
+            _typeL.text = [NSString stringWithFormat:@"商铺类型：%@",[model.shop_type componentsJoinedByString:@","]];
         }else{
             
-            _houseTypeL.text = @"商铺类型：";
+            _typeL.text = @"商铺类型：";
         }
         
         
@@ -214,7 +224,6 @@
         }];
     }else{
         
-        
         if ([model.house_type integerValue]) {
             
             NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
@@ -224,14 +233,14 @@
                 
                 if ([typeArr[i][@"id"] integerValue] == [model.house_type integerValue]) {
                     
-                    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",typeArr[i][@"param"]];
+                    _typeL.text = [NSString stringWithFormat:@"户型：%@",typeArr[i][@"param"]];
                     break;
                 }
             }
             
         }else{
             
-            _houseTypeL.text = @"户型：";
+            _typeL.text = @"户型：";
         }
         
         if ([model.floor_max integerValue] && [model.floor_min integerValue]) {
@@ -256,25 +265,6 @@
             _standardL.text = @"装修标准：";
         }
     }
-    
-//    if ([model.buy_purpose integerValue]) {
-//
-//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",12]];
-//        NSArray *typeArr = dic[@"param"];
-//        for (int i = 0; i < typeArr.count; i++) {
-//
-//            if ([typeArr[i][@"id"] integerValue] == [model.buy_purpose integerValue]) {
-//
-//                _purposeL.text = [NSString stringWithFormat:@"置业目的：%@",typeArr[i][@"param"]];
-//                break;
-//            }
-//        }
-//
-//    }else{
-//
-//        _purposeL.text = @"置业目的：";
-//    }
     
     if (model.pay_type.length) {
         
@@ -358,8 +348,8 @@
             }
             case 3:
             {
-                _houseTypeL = label;
-                [self.contentView addSubview:_houseTypeL];
+                _typeL = label;
+                [self.contentView addSubview:_typeL];
                 break;
             }
             case 4:
@@ -398,6 +388,12 @@
                 [self.contentView addSubview:_urgentL];
                 break;
             }
+            case 10:
+            {
+                _houseTypeL = label;
+                [self.contentView addSubview:_houseTypeL];
+                break;
+            }
             default:
                 break;
         }
@@ -412,6 +408,13 @@
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(self.contentView).offset(32 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+
+    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_priceL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
@@ -429,7 +432,7 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_areaL.mas_bottom).offset(18 *SIZE);
@@ -439,7 +442,7 @@
     [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_houseTypeL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_typeL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

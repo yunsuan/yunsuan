@@ -586,8 +586,18 @@
             };
             cell.type = _customModel.client_type;
             cell.proType = _customModel.client_property_type;
-            cell.model = _dataArr[indexPath.row];
-            
+            CustomRequireModel *model = _dataArr[indexPath.row];
+            cell.model = model;
+            if ([_model.client_type isEqualToString:@"新房"]) {
+                
+                if (model.property_type.length) {
+                    
+                    cell.houseTypeL.text = [NSString stringWithFormat:@"物业类型：%@",model.property_type];
+                }else{
+                    
+                    cell.houseTypeL.text = @"物业类型：";
+                }
+            }
             return cell;
         }else{
             

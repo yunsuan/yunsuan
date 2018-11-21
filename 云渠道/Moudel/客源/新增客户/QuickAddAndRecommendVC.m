@@ -200,9 +200,6 @@
     [_scrollview addSubview:_needL];
     
     _needBtn = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 46*SIZE, 257 *SIZE,(CGFloat) 33.3*SIZE)];
-    _needBtn.backgroundColor = YJBackColor;
-    _needBtn.content.text = @"新房";
-    _needBtn->str = @"184";
     [_scrollview addSubview:_needBtn];
     
     //姓名

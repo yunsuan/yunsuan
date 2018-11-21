@@ -44,9 +44,37 @@
     if (model.client_property_type.length) {
         
         _proTypeL.text = [NSString stringWithFormat:@"意向物业：%@",model.client_property_type];
+        _proTypeL.hidden = NO;
+        [_proTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(28 *SIZE);
+            make.top.equalTo(_typeL.mas_bottom).offset(18 *SIZE);
+            make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        }];
+        
+        [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(28 *SIZE);
+            make.top.equalTo(_proTypeL.mas_bottom).offset(18 *SIZE);
+            make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        }];
     }else{
         
         _proTypeL.text = @"意向物业：";
+        _proTypeL.hidden = YES;
+//        [_proTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(self.contentView).offset(28 *SIZE);
+//            make.top.equalTo(_typeL.mas_bottom).offset(18 *SIZE);
+//            make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//        }];
+        
+        [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(28 *SIZE);
+            make.top.equalTo(_typeL.mas_bottom).offset(18 *SIZE);
+            make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        }];
     }
     
     if (model.name) {

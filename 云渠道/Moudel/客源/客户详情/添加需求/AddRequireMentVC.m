@@ -942,7 +942,7 @@
                 case 3:
                 {
                     _houseTypeBtn = btn;
-//                    [_infoView addSubview:_houseTypeBtn];
+                    [_infoView addSubview:_houseTypeBtn];
                     break;
                 }
                 case 4:
@@ -1348,10 +1348,28 @@
         make.height.equalTo(@(33 *SIZE));
     }];
     
+    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(10 *SIZE);
+        make.top.equalTo(_addressBtn.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_houseTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(81 *SIZE);
+        make.top.equalTo(_addressBtn.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+//        make.bottom.equalTo(_areaBtn.mas_top).offset(-19 *SIZE);
+    }];
+
+    
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_addressBtn.mas_bottom).offset(29 *SIZE);
+        make.top.equalTo(_houseTypeBtn.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
@@ -1359,7 +1377,7 @@
     [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(_infoView).offset(81 *SIZE);
-        make.top.equalTo(_addressBtn.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_houseTypeBtn.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
         make.bottom.equalTo(_areaBtn.mas_top).offset(-19 *SIZE);
