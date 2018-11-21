@@ -7,7 +7,6 @@
 //
 
 #import "RoomDetailTableHeader.h"
-#import "MapVC.h"
 #import <MapKit/MapKit.h>
 
 @interface RoomDetailTableHeader()<UIScrollViewDelegate>

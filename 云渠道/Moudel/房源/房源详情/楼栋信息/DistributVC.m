@@ -204,15 +204,15 @@
                 
                 if (error) {
                     
-                 _backimg.image =   [UIImage imageNamed:@"banner_default_2"];
+                    _backimg.image =   [UIImage imageNamed:@"banner_default_2"];
                 }
             }];
         }
         else{
             _backimg.image =   [UIImage imageNamed:@"banner_default_2"];
-
+            
         }
-       
+        
     }
     return _backimg;
 }

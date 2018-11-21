@@ -477,7 +477,6 @@
 		100D8F7E2180189B006839EB /* HNTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 100D8F782180189B006839EB /* HNTitleView.xib */; };
 		100D8F7F2180189B006839EB /* HNChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 100D8F792180189B006839EB /* HNChannelModel.m */; };
 		100D8F8221801B28006839EB /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 100D8F8121801B28006839EB /* UIView+Frame.m */; };
-		100FD892209960CC00D02EAC /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 100FD891209960CC00D02EAC /* MapVC.m */; };
 		1016245B208863BB00AD53DE /* YJChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1016245A208863BB00AD53DE /* YJChooseView.m */; };
 		1016245E2088640300AD53DE /* YJChooseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1016245D2088640300AD53DE /* YJChooseViewCell.m */; };
 		10174BEF2071D82000D00B9A /* DateChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174BEE2071D82000D00B9A /* DateChooseView.m */; };
@@ -1543,8 +1542,6 @@
 		100D8F7A2180189B006839EB /* HNTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNTitleView.h; sourceTree = "<group>"; };
 		100D8F8021801B28006839EB /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		100D8F8121801B28006839EB /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
-		100FD890209960CC00D02EAC /* MapVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
-		100FD891209960CC00D02EAC /* MapVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
 		10162459208863BB00AD53DE /* YJChooseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJChooseView.h; sourceTree = "<group>"; };
 		1016245A208863BB00AD53DE /* YJChooseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YJChooseView.m; sourceTree = "<group>"; };
 		1016245C2088640300AD53DE /* YJChooseViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YJChooseViewCell.h; sourceTree = "<group>"; };
@@ -4880,15 +4877,6 @@
 			path = HNChannelView;
 			sourceTree = "<group>";
 		};
-		100FD88F2099606900D02EAC /* 地图页面 */ = {
-			isa = PBXGroup;
-			children = (
-				100FD890209960CC00D02EAC /* MapVC.h */,
-				100FD891209960CC00D02EAC /* MapVC.m */,
-			);
-			path = "地图页面";
-			sourceTree = "<group>";
-		};
 		101624582088638B00AD53DE /* 自定义选择页面 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5199,7 +5187,6 @@
 			children = (
 				10255A3421A53D000042738C /* 相册 */,
 				0C96D9FE209C6A3700B6A8B8 /* 快速推荐客源 */,
-				100FD88F2099606900D02EAC /* 地图页面 */,
 				0CEC62DC208DDA51006EC0BD /* 佣金分析View */,
 				0CBD859420871B5400E7B183 /* model */,
 				10DBB1E2207C7F6500CFE59D /* 楼栋信息 */,
@@ -5987,7 +5974,6 @@
 				0CEF348921816A0500419D5E /* SystemWorkConfirmTableCell.m in Sources */,
 				0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */,
 				0C08BF6C206CCF55005BB3B4 /* BrokerDetailHeader.m in Sources */,
-				100FD892209960CC00D02EAC /* MapVC.m in Sources */,
 				0C2883752107131F00F69C5F /* RentingReportComplaitVC.m in Sources */,
 				0CC19D19207202E80007CC5F /* ChangeNameVC.m in Sources */,
 				0C08BF5F206CB7CD005BB3B4 /* BrokerageDetailVC.m in Sources */,

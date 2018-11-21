@@ -7,7 +7,6 @@
 //
 
 #import "SecComRoomDetailTableHeader.h"
-#import "MapVC.h"
 #import <MapKit/MapKit.h>
 
 @interface SecComRoomDetailTableHeader()<UIScrollViewDelegate>
