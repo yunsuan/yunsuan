@@ -304,7 +304,7 @@
                 
                 for (NSDictionary *subDic in dic[@"list"]) {
                     
-                    [tempArr1 addObject:subDic[@"img_url"]];
+                    [tempArr1 addObject:subDic];
                 }
             }
             [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {

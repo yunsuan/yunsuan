@@ -8,7 +8,7 @@
 
 #import "AddStoreRequireMentVC.h"
 
-#import "CustomerVC.h"
+#import "CustomerListVC.h"
 #import "CustomDetailVC.h"
 
 #import "BaseFrameHeader.h"
@@ -236,7 +236,7 @@
                 //                [self showContent:@"添加成功"];
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    if ([vc isKindOfClass:[CustomerVC class]]) {
+                    if ([vc isKindOfClass:[CustomerListVC class]]) {
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];

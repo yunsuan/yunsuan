@@ -18,7 +18,7 @@
 //#import "AddTagVC.h"
 #import "RecommendedStatusVC.h"
 #import "CustomSearchVC.h"
-#import "CustomerVC.h"
+#import "CustomerListVC.h"
 
 #import "CustomDetailTableCell.h"
 #import "CustomDetailTableCell2.h"
@@ -95,7 +95,7 @@
             [self.navigationController popToViewController:vc animated:YES];
         }else{
             
-            if ([vc isKindOfClass:[CustomerVC class]]) {
+            if ([vc isKindOfClass:[CustomerListVC class]]) {
                 
                 [self.navigationController popViewControllerAnimated:YES];
             }

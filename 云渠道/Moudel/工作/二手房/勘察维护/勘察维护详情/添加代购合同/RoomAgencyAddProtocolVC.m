@@ -555,7 +555,13 @@
                     if (indexPath.section == 2) {
                         
                         RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        if (cell.homelandTF.textfield.text.length) {
+                            
+                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        }else{
+                            
+                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                        }
                     }
 
                     if (indexPath.section == 3) {
@@ -952,7 +958,13 @@
                     if (indexPath.section == 2) {
                         
                         RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        if (cell.homelandTF.textfield.text.length) {
+                            
+                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        }else{
+                            
+                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                        }
                     }
                     
                     if (indexPath.section == 3) {
@@ -1078,7 +1090,13 @@
                     if (indexPath.section == 2) {
                         
                         RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        if (cell.homelandTF.textfield.text.length) {
+                            
+                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        }else{
+                            
+                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                        }
                     }
 
                     if (indexPath.section == 3) {
@@ -1196,7 +1214,13 @@
                     if (indexPath.section == 2) {
                         
                         RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        if (cell.homelandTF.textfield.text.length) {
+                            
+                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        }else{
+                            
+                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                        }
                     }
 
                     if (indexPath.section == 3) {
@@ -1345,7 +1369,14 @@
                         if (indexPath.section == 2) {
                             
                             RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                            if (cell.homelandTF.textfield.text.length) {
+                                
+                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                            }else{
+                                
+                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                            }
+                            
                         }
                         
                         if (indexPath.section == 3) {
@@ -1463,7 +1494,13 @@
                         if (indexPath.section == 2) {
                             
                             RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                            if (cell.homelandTF.textfield.text.length) {
+                                
+                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                            }else{
+                                
+                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                            }
                         }
                         
                         if (indexPath.section == 3) {
@@ -1629,7 +1666,13 @@
                     if (indexPath.section == 2) {
                         
                         RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        if (cell.homelandTF.textfield.text.length) {
+                            
+                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+                        }else{
+                            
+                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+                        }
                     }
 
                     if (indexPath.section == 3) {

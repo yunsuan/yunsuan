@@ -347,6 +347,28 @@
     
     _needBtn = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat) 80.3*SIZE, 46*SIZE, 257 *SIZE,(CGFloat)  33.3*SIZE)];
     [_needBtn addTarget:self action:@selector(ActionNeedBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (self.status) {
+        
+//        _needBtn.userInteractionEnabled = NO;
+        if (self.status == 1) {
+            
+            _needBtn.content.text = @"新房";
+            _needBtn->str = @"184";
+        }else if (self.status == 2){
+            
+            _needBtn.content.text = @"二手房";
+            _needBtn->str = @"185";
+        }else{
+            
+            _needBtn.content.text = @"租房";
+            _needBtn->str = @"186";
+        }
+    } else {
+        
+//        _needBtn.userInteractionEnabled = YES;
+    }
+    
     if (_model.client_type) {
         
         _needBtn.content.text = _model.client_type;

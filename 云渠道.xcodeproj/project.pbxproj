@@ -406,6 +406,7 @@
 		0CEC62EE208DED26006EC0BD /* AnalyzeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62ED208DED26006EC0BD /* AnalyzeTableCell.m */; };
 		0CEC62F1208F0017006EC0BD /* HouseTypeBriefModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62F0208F0017006EC0BD /* HouseTypeBriefModel.m */; };
 		0CEC62F420917668006EC0BD /* RankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62F320917668006EC0BD /* RankView.m */; };
+		0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2821A5422600997B76 /* CustomerListVC.m */; };
 		0CEF347821806BC900419D5E /* SystemoWorkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347721806BC900419D5E /* SystemoWorkVC.m */; };
 		0CEF347E21807B5500419D5E /* SystemWorkWaitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347D21807B5500419D5E /* SystemWorkWaitVC.m */; };
 		0CEF348221807C1500419D5E /* SystemWorkWaitTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF348121807C1500419D5E /* SystemWorkWaitTableCell.m */; };
@@ -1403,6 +1404,8 @@
 		0CEC62F0208F0017006EC0BD /* HouseTypeBriefModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseTypeBriefModel.m; sourceTree = "<group>"; };
 		0CEC62F220917668006EC0BD /* RankView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RankView.h; sourceTree = "<group>"; };
 		0CEC62F320917668006EC0BD /* RankView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankView.m; sourceTree = "<group>"; };
+		0CED5B2721A5422600997B76 /* CustomerListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerListVC.h; sourceTree = "<group>"; };
+		0CED5B2821A5422600997B76 /* CustomerListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerListVC.m; sourceTree = "<group>"; };
 		0CEF347621806BC900419D5E /* SystemoWorkVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemoWorkVC.h; sourceTree = "<group>"; };
 		0CEF347721806BC900419D5E /* SystemoWorkVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemoWorkVC.m; sourceTree = "<group>"; };
 		0CEF347C21807B5500419D5E /* SystemWorkWaitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemWorkWaitVC.h; sourceTree = "<group>"; };
@@ -5102,6 +5105,8 @@
 				0C07BFCD2060E7DC007F31EC /* view */,
 				102DF9772057A1DD00E1859C /* CustomerVC.h */,
 				102DF9782057A1DD00E1859C /* CustomerVC.m */,
+				0CED5B2721A5422600997B76 /* CustomerListVC.h */,
+				0CED5B2821A5422600997B76 /* CustomerListVC.m */,
 			);
 			path = "客源";
 			sourceTree = "<group>";
@@ -6065,6 +6070,7 @@
 				0C0BED3A20A2CF74005A16A1 /* GZQGifHeader.m in Sources */,
 				10DBB1F5207CCACE00CFE59D /* KyoCenterLineView.m in Sources */,
 				10255A6F21A53D000042738C /* YBImageBrowserViewLayout.m in Sources */,
+				0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */,
 				0C9CD43C2101B95C004894A3 /* ModifyProjectAnalysisVC.m in Sources */,
 				0C3AD55F2069DABC0059CE02 /* RoomDetailTableCell1.m in Sources */,
 				0C07BFC22060D835007F31EC /* UserModel.m in Sources */,

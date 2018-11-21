@@ -11,5 +11,7 @@
 
 @interface AddCustomerVC : BaseViewController
 
+@property (nonatomic, assign) NSInteger status;
+
 - (instancetype)initWithModel:(CustomerModel *)model;
 @end
