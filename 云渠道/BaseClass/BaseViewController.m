@@ -179,7 +179,7 @@
         _leftviewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [WJQTools setButtonAttributeWithButton:_leftviewBtn Title:@"" TitleFont:0 ImageName:@"Ctab_wode2@2x.png" Tag:1 fram:CGRectMake(256*SIZE, 0, 64*SIZE, 48)];
         [_leftviewBtn setImage:[UIImage imageNamed:@"Ctab_wode1@2x.png"] forState:UIControlStateSelected];
-        [_leftviewBtn addTarget:self action:@selector(action_leftview) forControlEvents:UIControlEventTouchUpInside];
+//        [_leftviewBtn addTarget:self action:@selector(action_leftview) forControlEvents:UIControlEventTouchUpInside];
         //        _leftviewBtn.backgroundColor = [UIColor blackColor];
         
         _leftviewBtn.hidden = YES;
@@ -187,14 +187,14 @@
     return _leftviewBtn;
 }
 
--(void)action_leftview
-{
-    if (!_leftviewBtn.selected) {
-        _leftviewBtn.selected = YES;
-
-    }
-    
-}
+//-(void)action_leftview
+//{
+//    if (!_leftviewBtn.selected) {
+//        _leftviewBtn.selected = YES;
+//
+//    }
+//
+//}
 
 - (void)ActionMaskBtn:(UIButton *)btn{
     

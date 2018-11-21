@@ -61,6 +61,8 @@
     NSString *_name;
     NSInteger _state;
     NSInteger _selected;
+    NSString *_subId;
+
 }
 @property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
@@ -540,7 +542,7 @@
                 [browser show];
             }else{
                 
-                [BaseRequest GET:GetImg_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
+                [BaseRequest GET:GetImg_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
                     
                     if ([resposeObject[@"code"] integerValue] == 200) {
                         
@@ -591,9 +593,9 @@
             
             if (_focusDic.count) {
                 
-                if ([_focusDic[@"is_focus"] integerValue]) {
+                if ([_focusDic[@"is_focus"] integerValue] !=0) {
                     
-                    [BaseRequest GET:CancelFocusProject_URL parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
+                    [BaseRequest GET:CancelFocusProject_URL parameters:@{@"sub_id":_focusDic[@"is_focus"]} success:^(id resposeObject) {
                         
                         
                         NSLog(@"%@",resposeObject);
@@ -613,17 +615,15 @@
                     }];
                 }else{
                     
-                    [BaseRequest GET:FocusProject_URL parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
+                    [BaseRequest GET:PersonalFocusProject_URL parameters:@{@"project_id":_model.project_id,@"type":@"0"} success:^(id resposeObject) {
                         
                         NSLog(@"%@",resposeObject);
                         
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
+                            _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
                             [self RequestMethod];
-                        }else if([resposeObject[@"code"] integerValue] == 400){
-                            
-                        }
-                        else{
+                        }else{
                             [self showContent:resposeObject[@"msg"]];
                         }
                         [self RequestMethod];
