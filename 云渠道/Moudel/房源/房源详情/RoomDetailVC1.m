@@ -14,6 +14,7 @@
 #import "RoomVC.h"
 #import "BrokerageDetailVC.h"
 #import "MyAttentionVC.h"
+#import "MySubscripVC.h"
 
 
 @interface RoomDetailVC1 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
@@ -76,6 +77,9 @@
                 [self.navigationController popViewControllerAnimated:YES];
             }
             if ([vc isKindOfClass:[MyAttentionVC class]]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            if ([vc isKindOfClass:[MySubscripVC class]]) {
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }

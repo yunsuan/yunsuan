@@ -14,7 +14,7 @@
 {
     NSMutableArray *_titlelist;
     NSMutableArray *_contentlist;
-    NSString *_projectId;
+    NSString *_infoid;
 }
 @property (nonatomic , strong) UITableView *Mytableview;
 -(void)initUI;
@@ -23,12 +23,12 @@
 
 @implementation BuildingInfoVC
 
-- (instancetype)initWithProjectId:(NSString *)projectId
+- (instancetype)initWithinfoid:(NSString *)infoid
 {
     self = [super init];
     if (self) {
         
-        _projectId = projectId;
+        _infoid = infoid;
     }
     return self;
 }
@@ -62,7 +62,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ProjectBuildInfo_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+    [BaseRequest GET:ProjectBuildInfo_URL parameters:@{@"info_id":_infoid} success:^(id resposeObject) {
         
         //        NSLog(@"%@",resposeObject);
         
