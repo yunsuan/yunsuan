@@ -586,8 +586,9 @@
                         cell.surelab.hidden = YES;
                     }
                 }
-                
-                [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+                NSArray *project_tags =model.project_tags?model.project_tags:@[];
+                NSArray *property_tags = model.property_tags?model.property_tags:@[];
+                [cell settagviewWithdata:@[property_tags,project_tags]];
                 if (model.sort) {
                     
                     cell.rankView.rankL.text = [NSString stringWithFormat:@"佣金:第%@名",model.sort];
