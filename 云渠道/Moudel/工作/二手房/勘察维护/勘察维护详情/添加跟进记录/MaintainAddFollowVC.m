@@ -28,6 +28,7 @@
     NSInteger _follow;
     NSString *_followTime;
     NSMutableDictionary *_dataDic;
+    NSString *_payWay;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -176,6 +177,7 @@
 //        return;
 //    }
     
+    
     if ([self isEmpty:_titleL.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写挂牌标题"];
@@ -197,6 +199,26 @@
     if ([self isEmpty:_minPriceTF.textfield.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写出售底价"];
+        return;
+    }
+    
+    _payWay = @"";
+    for (int i = 0; i < _selectArr2.count; i++) {
+        
+        if ([_selectArr2[i] integerValue] == 1) {
+            
+            if (!_payWay.length) {
+                
+                _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+            }else{
+                
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+            }
+        }
+    }
+    if (!_payWay.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择收款方式"];
         return;
     }
     
@@ -233,7 +255,7 @@
                                                                                @"check_way":_seeWay,
                                                                                @"price":_priceTF.textfield.text,
                                                                                @"minimum":_minPriceTF.textfield.text,
-                                                                               @"pay_way":@([_payArr[_follow][@"id"] integerValue]),
+                                                                               @"pay_way":_payWay,
                                                                                @"comment":_markTV.text,
                                                                                @"next_visit_time":_timeBtn.content.text
                                                                                }];

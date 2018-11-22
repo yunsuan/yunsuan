@@ -31,18 +31,18 @@
     _titlelab.textColor = YJTitleLabColor;
     [_whiteView addSubview:_titlelab];
     
-    _contentlab = [[UILabel alloc]init];//WithFrame:CGRectMake(11*SIZE, 41.7*SIZE, 300*SIZE, 14*SIZE)];
+    _contentlab = [[UILabel alloc]init];
     _contentlab.font = [UIFont systemFontOfSize:12*SIZE];
     _contentlab.textColor = YJContentLabColor;
     _contentlab.numberOfLines = 0;
     [_whiteView addSubview:_contentlab];
     
-    _timelab = [[UILabel alloc]init];//WithFrame:CGRectMake(11*SIZE, 69.7*SIZE, 300*SIZE, 14*SIZE)];
+    _timelab = [[UILabel alloc]init];
     _timelab.font = [UIFont systemFontOfSize:12*SIZE];
     _timelab.textColor = YJContentLabColor;
     [_whiteView addSubview:_timelab];
     
-    _messageimg = [[UIImageView alloc]init];//WithFrame:CGRectMake(317.3*SIZE, 16.7*SIZE, 16.3*SIZE, 16.3*SIZE)];
+    _messageimg = [[UIImageView alloc]initWithFrame:CGRectMake(317.3*SIZE, 16.7*SIZE, 16.3*SIZE, 16.3*SIZE)];
     [_whiteView addSubview:_messageimg];
     
     [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,7 +57,7 @@
         
         make.left.equalTo(_whiteView).offset(11 *SIZE);
         make.top.equalTo(_whiteView).offset(42 *SIZE);
-        make.right.equalTo(_whiteView).offset(-15 *SIZE);
+        make.right.equalTo(_whiteView.mas_right).offset(-15 *SIZE);
     }];
     
     [_timelab mas_makeConstraints:^(MASConstraintMaker *make) {

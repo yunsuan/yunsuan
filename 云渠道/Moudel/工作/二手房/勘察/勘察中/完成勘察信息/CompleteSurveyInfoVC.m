@@ -120,12 +120,14 @@
 
 - (void)RequestAddressMethod{
     
-    [BaseRequest GET:HouseProjectAddressInfo_URL parameters:@{@"project_id":self.dataDic[@"project_id"]} success:^(id resposeObject) {
+    [BaseRequest GET:HouseProjectAddressInfo_URL parameters:@{@"project_id":self.projectID} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            _addressBtn.content.text = resposeObject[@"data"][@"city_name"];
+            _addressBtn1.content.text = resposeObject[@"data"][@"district_name"];
+            _addressTF.textfield.text = resposeObject[@"data"][@"absolute_address"];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -189,12 +191,40 @@
         
         return;
     }
-    NSDictionary *dic = @{@"survey_id":self.surveyId,
-                          @"intent":_intentTF.textfield.text,
-                          @"urgency":_urgentTF.textfield.text,
-                          @"property_limit":@"60"
-                          };
+    
+    NSMutableDictionary *tempDic = [@{} mutableCopy];
+    if (self.surveyId) {
+        tempDic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":self.surveyId,
+                                                                  @"intent":_intentTF.textfield.text,
+                                                                  @"urgency":_urgentTF.textfield.text,
+                                                                  @"property_limit":@"60"
+                                                                  }];
+    }else{
+        
+        NSDictionary *dic = @{@"project_id":self.projectID,
+                              @"build_id":self.buildId,
+                              @"build_name":self.dataDic[@"LDMC"],
+                              @"unit_id":self.unitId,
+                              @"unit_name":self.dataDic[@"DYMC"],
+                              @"house_id":self.dataDic[@"FJID"],
+                              @"house_name":self.dataDic[@"FJMC"],
+                              @"property_type":self.dataDic[@"WYMC"],
+                              @"house_type":self.dataDic[@"HXMC"],
+                              @"floor_num":self.dataDic[@"FLOORNUM"],
+                              @"orientation":@"1",
+                              @"build_area":self.dataDic[@"JZMJ"],
+                              @"intent":_intentTF.textfield.text,
+                              @"urgency":_urgentTF.textfield.text,
+                              @"property_limit":@"60"
+                              };
+        tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    }
+    
     NSString *str = self.dataDic[@"property_type"];
+    if ([self.status isEqualToString:@"direct"]) {
+        
+        str = self.dataDic[@"WYMC"];
+    }
     if ([str containsString:@"参数"]) {
         
         str = [str stringByReplacingOccurrencesOfString:@"参数" withString:@""];
@@ -209,7 +239,7 @@
                 self.completeSurveyInfoVCBlock();
             }
         };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
         [self.navigationController pushViewController:nextVC animated:YES];
     }else if ([str isEqualToString:@"商铺"]){
         
@@ -221,7 +251,7 @@
                 self.completeSurveyInfoVCBlock();
             }
         };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
         [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
@@ -233,7 +263,7 @@
                 self.completeSurveyInfoVCBlock();
             }
         };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
         [self.navigationController pushViewController:nextVC animated:YES];
     }
     
@@ -288,7 +318,8 @@
     _codeHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     if ([self.status isEqualToString:@"direct"]) {
         
-        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
+//        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
     }else{
         
         _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];

@@ -412,7 +412,7 @@
                 _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
             }else{
                 
-                _payWay = [NSString stringWithFormat:@"%@%@",_payWay,_payArr[i][@"id"]];
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
             }
         }
     }
