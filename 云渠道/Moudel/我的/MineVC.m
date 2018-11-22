@@ -24,9 +24,6 @@
 #import "MyTeamVC.h"
 #import <StoreKit/StoreKit.h>
 
-
-
-
 #import "MineCell.h"
 
 

@@ -28,6 +28,8 @@
 @property (nonatomic , strong) UIButton  *QQBtn;
 @property (nonatomic , strong) UIButton  *WEIBOBTN;
 @property (nonatomic, strong) JudgeView *judgeView;
+
+@property (nonatomic, strong) UIButton *settingbtn;
 @end
 
 @implementation LoginVC
@@ -45,52 +47,68 @@
     [self.view addSubview:self.Account];
     [self.view addSubview:self.PassWord];
     
-    for (int i = 0; i<2; i++) {
-        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
-        line.backgroundColor = COLOR(130, 130, 130, 1);
-        [self.view addSubview:line];
-        
-        //        UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(101 *SIZE + i * 133 *SIZE, 526 *SIZE , 27*SIZE, SIZE)];
-        //        line2.backgroundColor = YJ170Color;
-        //        [self.view addSubview:line2];
-    }
+    [self.view addSubview:self.settingbtn];
     
-    //    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession] && [[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
-    //
-    //
-    //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
-    //        label.textColor = YJ170Color;
-    //        label.font = [UIFont systemFontOfSize:13 *SIZE];
-    //        label.text = @"第三方账号登录";
-    //        [self.view addSubview:label];
-    //
-    //        [self.view addSubview:self.WEIBOBTN];
-    //        [self.view addSubview:self.QQBtn];
-    //    }else if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]){
-    //
-    //
-    //
-    //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
-    //        label.textColor = YJ170Color;
-    //        label.font = [UIFont systemFontOfSize:13 *SIZE];
-    //        label.text = @"第三方账号登录";
-    //        [self.view addSubview:label];
-    //
-    //        self.WEIBOBTN.frame = CGRectMake(106.7*SIZE, 544*SIZE+STATUS_BAR_HEIGHT, 40*SIZE, 40*SIZE);
-    //        [self.view addSubview:self.WEIBOBTN];
-    //    }else{
-    //
-    //
-    //
-    //        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
-    //        label.textColor = YJ170Color;
-    //        label.font = [UIFont systemFontOfSize:13 *SIZE];
-    //        label.text = @"第三方账号登录";
-    //        [self.view addSubview:label];
-    //
-    //        self.QQBtn.frame = CGRectMake(160 *SIZE, 544*SIZE+STATUS_BAR_HEIGHT, 40*SIZE, 40*SIZE);
-    //        [self.view addSubview:self.QQBtn];
-    //    }
+//    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession] && [[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+//
+//        for (int i = 0; i<2; i++) {
+//            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
+//            line.backgroundColor = COLOR(130, 130, 130, 1);
+//            [self.view addSubview:line];
+//
+//            UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(101 *SIZE + i * 133 *SIZE, 526 *SIZE , 27*SIZE, SIZE)];
+//            line2.backgroundColor = YJ170Color;
+//            [self.view addSubview:line2];
+//        }
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
+//        label.textColor = YJ170Color;
+//        label.font = [UIFont systemFontOfSize:13 *SIZE];
+//        label.text = @"第三方账号登录";
+//        [self.view addSubview:label];
+//
+//        [self.view addSubview:self.WEIBOBTN];
+//        [self.view addSubview:self.QQBtn];
+//    }else if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]){
+//
+//        for (int i = 0; i<2; i++) {
+//            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
+//            line.backgroundColor = COLOR(130, 130, 130, 1);
+//            [self.view addSubview:line];
+//
+//            UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(101 *SIZE + i * 133 *SIZE, 526 *SIZE , 27*SIZE, SIZE)];
+//            line2.backgroundColor = YJ170Color;
+//            [self.view addSubview:line2];
+//        }
+//
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
+//        label.textColor = YJ170Color;
+//        label.font = [UIFont systemFontOfSize:13 *SIZE];
+//        label.text = @"第三方账号登录";
+//        [self.view addSubview:label];
+//
+//        self.WEIBOBTN.frame = CGRectMake(106.7*SIZE, 544*SIZE+STATUS_BAR_HEIGHT, 40*SIZE, 40*SIZE);
+//        [self.view addSubview:self.WEIBOBTN];
+//    }else{
+//
+//        for (int i = 0; i<2; i++) {
+//            UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
+//            line.backgroundColor = COLOR(130, 130, 130, 1);
+//            [self.view addSubview:line];
+//
+//            UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(101 *SIZE + i * 133 *SIZE, 526 *SIZE , 27*SIZE, SIZE)];
+//            line2.backgroundColor = YJ170Color;
+//            [self.view addSubview:line2];
+//        }
+//
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(133 *SIZE, 521 *SIZE, 200 *SIZE, 13 *SIZE)];
+//        label.textColor = YJ170Color;
+//        label.font = [UIFont systemFontOfSize:13 *SIZE];
+//        label.text = @"第三方账号登录";
+//        [self.view addSubview:label];
+//
+//        self.QQBtn.frame = CGRectMake(160 *SIZE, 544*SIZE+STATUS_BAR_HEIGHT, 40*SIZE, 40*SIZE);
+//        [self.view addSubview:self.QQBtn];
+//    }
     
     [self.view addSubview:self.LoginBtn];
     [self.view addSubview:self.FindPassWordBtn];
@@ -203,7 +221,12 @@
                         [self.view addSubview:self.judgeView];
                     }else if ([resposeObject[@"code"] integerValue] == 200){
                         
-                        
+                        [[NSUserDefaults standardUserDefaults]setValue:LOGINSUCCESS forKey:LOGINENTIFIER];
+                        [UserModel defaultModel].Token = resposeObject[@"data"][@"token"];
+                        [UserModel defaultModel].agent_id =resposeObject[@"data"][@"agent_id"];
+                        [UserModel defaultModel].agent_identity =resposeObject[@"data"][@"agent_identity"];
+                        [UserModelArchiver archive];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"goHome" object:nil];
                     }else{
                         
                         
@@ -268,7 +291,7 @@
 -(UIImageView *)Headerimg
 {
     if (!_Headerimg) {
-        _Headerimg = [[UIImageView alloc]initWithFrame:CGRectMake(135*SIZE, 82*SIZE, 93*SIZE, 58*SIZE)];
+        _Headerimg = [[UIImageView alloc]initWithFrame:CGRectMake(130*SIZE, 82*SIZE, 100*SIZE, 68*SIZE)];
         _Headerimg.image = [UIImage imageNamed:@"logo_2"];
     }
     return _Headerimg;
@@ -468,6 +491,58 @@
         _judgeView = [[JudgeView alloc] initWithFrame:self.view.bounds];
     }
     return _judgeView;
+}
+
+-(UIButton *)settingbtn
+{
+    if (!_settingbtn) {
+        _settingbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _settingbtn.center = CGPointMake(SCREEN_Width - 25 * SIZE, STATUS_BAR_HEIGHT+20);
+        _settingbtn.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
+        [_settingbtn addTarget:self action:@selector(action_sever) forControlEvents:UIControlEventTouchUpInside];
+        [_settingbtn setImage:[UIImage imageNamed:@"housing_selected"] forState:UIControlStateNormal];
+    }
+    return _settingbtn;
+}
+
+-(void)action_sever
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"服务器选择" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertAction *cs = [UIAlertAction actionWithTitle:@"测试服" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
+        NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
+        [dataarr writeToFile:filePath atomically:YES];
+        
+        
+    }];
+    
+    
+    
+    UIAlertAction *ys = [UIAlertAction actionWithTitle:@"演示服" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
+        NSArray *dataarr  = @[@"http://47.106.39.169:2797/"];
+        [dataarr writeToFile:filePath atomically:YES];
+    }];
+    
+    UIAlertAction *zs = [UIAlertAction actionWithTitle:@"正式服" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
+        NSArray *dataarr  = @[@"http://120.78.69.178:2902/"];
+        [dataarr writeToFile:filePath atomically:YES];
+    }];
+    
+    [alert addAction:cs];
+    [alert addAction:ys];
+    [alert addAction:zs];
+    [alert addAction:cancel];
+    [self.navigationController presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
 
 @end
