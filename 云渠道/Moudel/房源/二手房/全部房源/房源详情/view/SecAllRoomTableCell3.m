@@ -24,15 +24,15 @@
 - (void)setModel:(SecAllRoomProjectModel *)model{
     
     if (model.project_img_url.length>0) {
-        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_1"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (error) {
                 
-                _roomImg.image = [UIImage imageNamed:@"default_2"];
+                _roomImg.image = [UIImage imageNamed:@"default_1"];
             }
         }];
     }else{
-         _roomImg.image = [UIImage imageNamed:@"default_2"];
+         _roomImg.image = [UIImage imageNamed:@"default_1"];
     }
    
     
@@ -57,16 +57,16 @@
 
 - (void)setStoreModel:(SecAllRoomStoreModel *)storeModel{
     if (storeModel.project_img_url.length>0) {
-        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,storeModel.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,storeModel.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_1"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (error) {
                 
-                _roomImg.image = [UIImage imageNamed:@"default_2"];
+                _roomImg.image = [UIImage imageNamed:@"default_1"];
             }
         }];
     }
     else{
-         _roomImg.image = [UIImage imageNamed:@"default_2"];
+         _roomImg.image = [UIImage imageNamed:@"default_1"];
     }
     
     if (![storeModel.project_average_price integerValue]) {
@@ -91,16 +91,16 @@
 - (void)setOfficeModel:(SecAllRoomOfficeModel *)officeModel{
     
     if (officeModel.project_img_url.length>0) {
-        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,officeModel.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,officeModel.project_img_url]] placeholderImage:[UIImage imageNamed:@"default_1"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (error) {
                 
-                _roomImg.image = [UIImage imageNamed:@"default_2"];
+                _roomImg.image = [UIImage imageNamed:@"default_1"];
             }
         }];
     }
     else{
-        _roomImg.image = [UIImage imageNamed:@"default_2"];
+        _roomImg.image = [UIImage imageNamed:@"default_1"];
     }
     
     

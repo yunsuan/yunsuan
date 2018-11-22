@@ -85,7 +85,7 @@
     
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"我的二维码";
-    self.rightBtn.hidden = NO;
+    self.rightBtn.hidden = YES;
     [self.rightBtn setTitle:@"分享" forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.rightBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];

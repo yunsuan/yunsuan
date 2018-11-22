@@ -446,7 +446,7 @@
     
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"我的团队";
-    self.rightBtn.hidden = NO;
+    self.rightBtn.hidden = YES;
     [self.rightBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];
