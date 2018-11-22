@@ -265,6 +265,7 @@ static NSString *const MessageGetUnreadCount_URL = @"agent/message/getUnreadCoun
 //系统消息列表
 static NSString *const SystemInfoList_URL = @"agent/message/system";
 
+static NSString *const SystemInfoisread_URL = @"agent/message/system/isRead";
 //系统消息列表
 static NSString *const GetMessage_URL = @"admin/message/getMessage";
 

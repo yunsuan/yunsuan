@@ -8,6 +8,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
 
 typedef NS_OPTIONS(NSUInteger, ConfigState){
     BANK_TYPE=1, //银行类型

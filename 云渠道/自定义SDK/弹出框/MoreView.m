@@ -123,7 +123,7 @@
             
             if ([_tagSelectArr[idx] integerValue] == 1) {
                 
-                weakSelf.tagId = _tagArr[idx][@"id"];
+                weakSelf.tagId = [NSString stringWithFormat:@"%@",_tagArr[idx][@"id"]];
             }
         }];
         
@@ -131,15 +131,15 @@
             
             if ([_houseSelectArr[idx] integerValue] == 1) {
                 
-                weakSelf.houseId = _houseTypeArr[idx][@"id"];
+                weakSelf.houseId = [NSString stringWithFormat:@"%@",_houseTypeArr[idx][@"id"]];
             }
         }];
         
-        [_statusArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.statusArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             if ([_statusSelectArr[idx] integerValue] == 1) {
                 
-                weakSelf.statusId = _statusArr[idx][@"id"];
+                weakSelf.statusId = [NSString stringWithFormat:@"%@",obj];
             }
         }];
         
@@ -150,6 +150,24 @@
 
 - (void)ActionCancelBtn:(UIButton *)btn{
     
+    __weak __typeof(&*self)weakSelf = self;
+    [_tagSelectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [_tagSelectArr replaceObjectAtIndex:idx withObject:@0];
+        weakSelf.tagId = @"";
+    }];
+    
+    [_statusSelectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        [_statusSelectArr replaceObjectAtIndex:idx withObject:@0];
+        weakSelf.statusId = @"";
+    }];
+    
+    [_houseSelectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        weakSelf.houseId = @"";
+        [_houseSelectArr replaceObjectAtIndex:idx withObject:@0];
+    }];
     if (self.moreViewClearBlock) {
         
         self.moreViewClearBlock();
