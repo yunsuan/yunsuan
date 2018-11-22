@@ -30,7 +30,7 @@
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _moreBtn.frame = CGRectMake(287 *SIZE, 7 *SIZE, 65 *SIZE, 20 *SIZE);
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
 //    [_moreBtn addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"查看更多 >>" forState:UIControlStateNormal];
     [_moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];

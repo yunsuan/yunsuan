@@ -313,7 +313,7 @@
     
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_whiteView];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 15 *SIZE, 7 *SIZE, 13 *SIZE)];
@@ -474,7 +474,7 @@
     }
     
     _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_saveBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [_saveBtn setBackgroundColor:YJBlueBtnColor];

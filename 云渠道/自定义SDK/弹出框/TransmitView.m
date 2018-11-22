@@ -45,14 +45,14 @@
     [self addSubview:alphaView];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_Height - 167 *SIZE - TAB_BAR_MORE, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteView];
     
     for (int i = 0; i < 4; i++) {
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40 *SIZE + i * 73 *SIZE, 88 *SIZE, 50 *SIZE, 13 *SIZE)];
         label.textColor = YJTitleLabColor;
-        label.font = [UIFont systemFontOfSize:13 *sIZE];
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
         label.textAlignment = NSTextAlignmentCenter;
         label.text = titleArr[i];
         [whiteView addSubview:label];
@@ -66,8 +66,8 @@
     }
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(0 *SIZE , 127 *sIZE, SCREEN_Width , 40 *SIZE + TAB_BAR_MORE);
-    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    cancelBtn.frame = CGRectMake(0 *SIZE , 127 *SIZE, SCREEN_Width , 40 *SIZE + TAB_BAR_MORE);
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setBackgroundColor:COLOR(238, 238, 238, 1)];

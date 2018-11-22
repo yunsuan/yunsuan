@@ -117,7 +117,7 @@
                 }
                 
                 header.titleL.text = _titleArr[section];
-                header.lineView.backgroundColor = CH_COLOR_white;
+                header.lineView.backgroundColor = [UIColor whiteColor];
                 return header;
             }else{
                 
@@ -139,7 +139,7 @@
                     }
                 };
                 header.titleL.text = _titleArr[section];
-                header.lineView.backgroundColor = CH_COLOR_white;
+                header.lineView.backgroundColor = [UIColor whiteColor];
                 return header;
             }
         }else{
@@ -151,7 +151,7 @@
             }
             
             header.titleL.text = _titleArr2[section];
-            header.lineView.backgroundColor = CH_COLOR_white;
+            header.lineView.backgroundColor = [UIColor whiteColor];
             return header;
         }
     }

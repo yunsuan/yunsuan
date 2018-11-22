@@ -494,15 +494,15 @@
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:_searchBar];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 62 *SIZE + STATUS_BAR_HEIGHT)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 61 *SIZE, SCREEN_Width, SIZE)];
     line.backgroundColor = YJBackColor;
     [whiteView addSubview:line];
     
-    self.leftButton.center = CGPointMake(25 * sIZE, STATUS_BAR_HEIGHT + 30 *SIZE);
-    self.leftButton.bounds = CGRectMake(0, 0, 80 * sIZE, 33 * sIZE);
-    self.maskButton.frame = CGRectMake(0, STATUS_BAR_HEIGHT, 60 * sIZE, 44 *SIZE);
+    self.leftButton.center = CGPointMake(25 * SIZE, STATUS_BAR_HEIGHT + 30 *SIZE);
+    self.leftButton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
+    self.maskButton.frame = CGRectMake(0, STATUS_BAR_HEIGHT, 60 * SIZE, 44 *SIZE);
     
     self.rightBtn.hidden = NO;
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];

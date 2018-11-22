@@ -250,7 +250,7 @@
     [self.view addSubview:label];
     
     _storeView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 50 *SIZE)];
-    _storeView.backgroundColor = CH_COLOR_white;
+    _storeView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_storeView];
     
     _storeTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 70 *SIZE, 12 *SIZE)];
@@ -271,7 +271,7 @@
     [_storeView addSubview:_storeBtn];
     
     _roleView = [[UIView alloc] init];
-    _roleView.backgroundColor = CH_COLOR_white;
+    _roleView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_roleView];
     
     _roleTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 70 *SIZE, 12 *SIZE)];
@@ -286,7 +286,7 @@
     _flowLayout.itemSize = CGSizeMake(110 *SIZE, 30 *SIZE);
     
     _roleColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20 *SIZE, 280 *SIZE, 70 *SIZE) collectionViewLayout:_flowLayout];
-    _roleColl.backgroundColor = CH_COLOR_white;
+    _roleColl.backgroundColor = [UIColor whiteColor];
     _roleColl.delegate = self;
     _roleColl.dataSource = self;
     
@@ -294,7 +294,7 @@
     [_roleView addSubview:_roleColl];
     
     _employeeView = [[UIView alloc] init];
-    _employeeView.backgroundColor = CH_COLOR_white;
+    _employeeView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_employeeView];
     
     _employeeTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 100 *SIZE, 12 *SIZE)];
@@ -342,7 +342,7 @@
     
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commitBtn.frame = CGRectMake(0, SCREEN_Height - TAB_BAR_MORE - 40 *SIZE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_commitBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_commitBtn setTitle:@"提交申请" forState:UIControlStateNormal];
     [_commitBtn setBackgroundColor:YJBlueBtnColor];

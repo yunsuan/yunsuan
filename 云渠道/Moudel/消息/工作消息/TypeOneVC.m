@@ -236,11 +236,11 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
-    [_confirmBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _confirmBtn.hidden = YES;
     if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
         

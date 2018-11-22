@@ -104,7 +104,7 @@
     
     
     _roomView = [[UIView alloc] init];
-    _roomView.backgroundColor = CH_COLOR_white;
+    _roomView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_roomView];
     
     _roomHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -144,7 +144,7 @@
                 [_roomView addSubview:_liftL];
                 _liftBtn = btn;
                 _liftBtn.userInteractionEnabled = YES;
-                _liftBtn.backgroundColor = CH_COLOR_white;
+                _liftBtn.backgroundColor = [UIColor whiteColor];
                 [_roomView addSubview:_liftBtn];
                 break;
             }
@@ -153,7 +153,7 @@
 //                _timeL = label;
 //                _timeBtn = btn;
 //                _timeBtn.userInteractionEnabled = YES;
-//                _timeBtn.backgroundColor = CH_COLOR_white;
+//                _timeBtn.backgroundColor = [UIColor whiteColor];
 //                [_roomView addSubview:_timeBtn];
 //                [_roomView addSubview:_timeL];
                 break;
@@ -229,7 +229,7 @@
                 [_roomView addSubview:_decorateL];
                 _decorateBtn = btn;
                 _decorateBtn.userInteractionEnabled = YES;
-                _decorateBtn.backgroundColor = CH_COLOR_white;
+                _decorateBtn.backgroundColor = [UIColor whiteColor];
                 [_roomView addSubview:_decorateBtn];
                 break;
             }
@@ -239,7 +239,7 @@
     }
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

@@ -8,6 +8,7 @@
 
 #import "DynamicDetailVC.h"
 #import <WebKit/WebKit.h>
+#import "WaitAnimation.h"
 
 @interface DynamicDetailVC ()<WKNavigationDelegate>
 {

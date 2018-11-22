@@ -239,7 +239,7 @@
         if ([self.tagSelectArr[indexPath.item] integerValue]) {
             
             cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
-            cell.titleL.textColor = CH_COLOR_white;
+            cell.titleL.textColor = [UIColor whiteColor];
         }else{
             
             cell.titleL.textColor = YJ86Color;
@@ -251,7 +251,7 @@
         cell.titleL.text = self.houseTypeArr[indexPath.item][@"param"];
         if ([self.houseSelectArr[indexPath.item] integerValue]) {
             
-            cell.contentView.backgroundColor = CH_COLOR_white;
+            cell.contentView.backgroundColor = [UIColor whiteColor];
             cell.titleL.textColor = COLOR(133, 200, 255, 1);
             cell.layer.borderWidth = 1;
         }else{
@@ -277,7 +277,7 @@
         if ([self.statusSelectArr[indexPath.item] integerValue]) {
             
             cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
-            cell.titleL.textColor = CH_COLOR_white;
+            cell.titleL.textColor = [UIColor whiteColor];
         }else{
             
             cell.titleL.textColor = YJ86Color;
@@ -337,7 +337,7 @@
     _flowlayout.sectionInset = UIEdgeInsetsMake(0, 10 *SIZE, 10 *SIZE, 10 *SIZE);
 
     _moreColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.bounds.size.height - 50 *SIZE) collectionViewLayout:_flowlayout];
-    _moreColl.backgroundColor = CH_COLOR_white;
+    _moreColl.backgroundColor = [UIColor whiteColor];
     _moreColl.delegate = self;
     _moreColl.dataSource = self;
     
@@ -347,7 +347,7 @@
     
     _clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _clearBtn.frame = CGRectMake(67 *SIZE, self.bounds.size.height - 47 *SIZE, 100 *SIZE, 33 *SIZE);
-    _clearBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _clearBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_clearBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_clearBtn setTitle:@"清空" forState:UIControlStateNormal];
     _clearBtn.layer.cornerRadius = 2 *SIZE;
@@ -359,7 +359,7 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(192 *SIZE, self.bounds.size.height - 47 *SIZE, 100 *SIZE, 33 *SIZE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:COLOR(27, 152, 255, 1)];

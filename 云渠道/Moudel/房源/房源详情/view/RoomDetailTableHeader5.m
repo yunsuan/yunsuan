@@ -30,7 +30,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _numL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE, 200 *SIZE, 14 *SIZE)];
     _numL.textColor = YJTitleLabColor;
@@ -39,7 +39,7 @@
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _moreBtn.frame = CGRectMake(287 *SIZE, 7 *SIZE, 65 *SIZE, 20 *SIZE);
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"查看更多 >>" forState:UIControlStateNormal];
     [_moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];

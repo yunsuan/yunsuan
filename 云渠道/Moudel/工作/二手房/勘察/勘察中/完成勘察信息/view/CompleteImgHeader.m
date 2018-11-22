@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = CH_COLOR_white;
+        self.backgroundColor = [UIColor whiteColor];
         
         _titleTF = [[UITextField alloc] initWithFrame:CGRectMake(0 *SIZE, 0 *SIZE, SCREEN_Width, 40 *SIZE)];
 //        _titleTF.

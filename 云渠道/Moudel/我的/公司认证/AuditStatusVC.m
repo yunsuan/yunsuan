@@ -84,7 +84,7 @@
     [backview addSubview:blueView];
     
     UILabel *statusL = [[UILabel alloc] initWithFrame:CGRectMake(0, 31 *SIZE, SCREEN_Width, 17 *SIZE)];
-    statusL.textColor = CH_COLOR_white;
+    statusL.textColor = [UIColor whiteColor];
     statusL.font = [UIFont systemFontOfSize:19 *SIZE];
     statusL.textAlignment = NSTextAlignmentCenter;
     statusL.text = @"审核中";

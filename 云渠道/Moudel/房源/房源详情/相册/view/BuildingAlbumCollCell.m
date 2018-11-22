@@ -37,7 +37,7 @@
     
     if (selected) {
         
-        _contentL.textColor = CH_COLOR_white;
+        _contentL.textColor = [UIColor whiteColor];
         self.contentView.backgroundColor = YJBlueBtnColor;
     }else{
         

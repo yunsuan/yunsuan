@@ -436,7 +436,7 @@
     [self.view addSubview:_scrollView];
     
     _contentView = [[UIView alloc] init];
-    _contentView.backgroundColor = CH_COLOR_white;
+    _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
     for (int i = 0; i < 9; i++) {
@@ -625,7 +625,7 @@
     //    _flowLayout.itemSize = CGSizeMake(140 *SIZE, 20 *SIZE);
     
     _wayColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_layout];
-    _wayColl.backgroundColor = CH_COLOR_white;
+    _wayColl.backgroundColor = [UIColor whiteColor];
     _wayColl.allowsMultipleSelection = NO;
     _wayColl.delegate = self;
     _wayColl.dataSource = self;
@@ -640,7 +640,7 @@
     //    _flowLayout.itemSize = CGSizeMake(140 *SIZE, 20 *SIZE);
     
     _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_flowLayout];
-    _payColl.backgroundColor = CH_COLOR_white;
+    _payColl.backgroundColor = [UIColor whiteColor];
     _payColl.allowsMultipleSelection = YES;
     _payColl.delegate = self;
     _payColl.dataSource = self;
@@ -654,7 +654,7 @@
     [_scrollView addSubview:_contentL];
     
     _timeView = [[UIView alloc] init];
-    _timeView.backgroundColor = CH_COLOR_white;
+    _timeView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_timeView];
     
     _markTV = [[UITextView alloc] init];
@@ -677,7 +677,7 @@
     [_timeView addSubview:_timeBtn];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

@@ -437,7 +437,7 @@
     self.line.hidden = YES;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,  NAVIGATION_BAR_HEIGHT, SCREEN_Width, 56 *SIZE)];
-    view.backgroundColor = CH_COLOR_white;
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     
     _searchBar = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 20 *SIZE, 340 *SIZE, 33 *SIZE)];
@@ -464,7 +464,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(SCREEN_Width / 4 * i, NAVIGATION_BAR_HEIGHT + 56 *SIZE, SCREEN_Width / 4, 40 *SIZE);
         btn.tag = i + 1;
-        [btn setBackgroundColor:CH_COLOR_white];
+        [btn setBackgroundColor:[UIColor whiteColor]];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         
         switch (i) {

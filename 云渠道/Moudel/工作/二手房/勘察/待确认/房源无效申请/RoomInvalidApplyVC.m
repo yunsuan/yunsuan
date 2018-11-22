@@ -143,7 +143,7 @@
     self.titleLabel.text = @"房源无效申请";
     
     _contentView = [[UIView alloc] init];
-    _contentView.backgroundColor = CH_COLOR_white;
+    _contentView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_contentView];
     
     for (int i = 0; i < 5; i++) {
@@ -195,7 +195,7 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(22 *SIZE, 494 *SIZE + NAVIGATION_BAR_HEIGHT, 317 *SIZE, 40 *SIZE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [_confirmBtn setTitle:@"提交" forState:UIControlStateNormal];

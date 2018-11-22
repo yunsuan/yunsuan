@@ -313,7 +313,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
     _imgScroll.pagingEnabled = YES;
@@ -374,12 +374,12 @@
 
     
     _moreView = [[UIView alloc] initWithFrame:CGRectMake(0, 249 *SIZE, SCREEN_Width, 67 *SIZE)];
-    _moreView.backgroundColor = CH_COLOR_white;
+    _moreView.backgroundColor = [UIColor whiteColor];
 //    NSArray *titleArr = @[@"售价",@"房型",@"产权面积"];
     NSArray *titleArr = @[@"售价",@"房型",@"产权面积"];
     for (int i = 0; i < 3; i++) {
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 3 * i, 17 *SIZE, SIZE, 36 *SIZE)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_Width / 3 * i, 17 *SIZE, SIZE, 36 *SIZE)];
         line.backgroundColor = YJBackColor;
         if (i != 0) {
             

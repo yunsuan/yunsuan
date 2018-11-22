@@ -40,7 +40,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self addSubview:_whiteView];
@@ -95,7 +95,7 @@
     }
     
     _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _backBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _backBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_backBtn addTarget:self action:@selector(ActionBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_backBtn setTitle:@"知道了" forState:UIControlStateNormal];
     [_backBtn setTitleColor:YJ86Color forState:UIControlStateNormal];

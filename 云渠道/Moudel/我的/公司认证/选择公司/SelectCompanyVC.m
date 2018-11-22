@@ -505,7 +505,7 @@
     
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 160 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
     [whiteView addSubview:self.leftButton];
@@ -513,10 +513,10 @@
     
     UILabel *titleL = [[UILabel alloc] init];
     titleL.center = CGPointMake(SCREEN_Width / 2, STATUS_BAR_HEIGHT+20 );
-    titleL.bounds = CGRectMake(0, 0, 180 * sIZE, 30 * sIZE);
+    titleL.bounds = CGRectMake(0, 0, 180 * SIZE, 30 * SIZE);
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor = [UIColor blackColor];
-    titleL.font = [UIFont systemFontOfSize:17 * sIZE];
+    titleL.font = [UIFont systemFontOfSize:17 * SIZE];
     titleL.text = @"选择公司";
     [whiteView addSubview:titleL];
     
@@ -546,7 +546,7 @@
     _flowLayout.itemSize = CGSizeMake(120 *SIZE, 40 *SIZE);
     
     _selectColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 120 *SIZE, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _selectColl.backgroundColor = CH_COLOR_white;
+    _selectColl.backgroundColor = [UIColor whiteColor];
     _selectColl.delegate = self;
     _selectColl.dataSource = self;
     _selectColl.bounces = NO;

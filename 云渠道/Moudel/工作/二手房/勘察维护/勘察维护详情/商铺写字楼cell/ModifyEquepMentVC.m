@@ -153,8 +153,8 @@
     [_nearView addSubview:_markView];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.frame = CGRectMake(0, SCREEN_Height - TABBAR_Height - 40 *SIZE, SCREEN_Width, 40 *SIZE + TABBAR_Height);
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.frame = CGRectMake(0, SCREEN_Height - TAB_BAR_HEIGHT - 40 *SIZE, SCREEN_Width, 40 *SIZE + TAB_BAR_HEIGHT);
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

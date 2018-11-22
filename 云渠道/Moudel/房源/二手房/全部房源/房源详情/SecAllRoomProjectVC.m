@@ -5,10 +5,11 @@
 //  Created by 谷治墙 on 2018/6/11.
 //  Copyright © 2018年 xiaoq. All rights reserved.
 //
-#import <BaiduMapAPI_Search/BMKPoiSearchType.h>
-#import <BaiduMapAPI_Search/BMKPoiSearchOption.h>
-#import <BaiduMapAPI_Search/BMKPoiSearch.h>
 
+#import <BaiduMapAPI_Search/BMKPoiSearch.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Map/BMKPointAnnotation.h>
+#import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 #import "YBImageBrowserModel.h"
 #import "YBImageBrowser.h"
 
@@ -536,16 +537,16 @@
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _attentBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 100 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _attentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _attentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
     [_attentBtn setBackgroundColor:COLOR(74, 211, 195, 1)];
-    [_attentBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_attentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_attentBtn];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(100 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 260 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];

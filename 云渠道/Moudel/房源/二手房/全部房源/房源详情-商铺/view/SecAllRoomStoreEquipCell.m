@@ -62,7 +62,7 @@
     self.contentView.backgroundColor = YJBackColor;
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self.contentView addSubview:_whiteView];
@@ -75,7 +75,7 @@
     
     _coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 17 *SIZE, 340 *SIZE, 60 *SIZE) collectionViewLayout:_layout];
     _coll.pagingEnabled = YES;
-    _coll.backgroundColor = CH_COLOR_white;
+    _coll.backgroundColor = [UIColor whiteColor];
     _coll.delegate = self;
     _coll.dataSource = self;
     _coll.showsVerticalScrollIndicator = NO;

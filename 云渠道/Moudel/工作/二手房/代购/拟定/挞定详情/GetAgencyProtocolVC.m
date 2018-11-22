@@ -104,11 +104,11 @@
     for (int i = 0; i < 4; i++) {
         
         UIView *view = [[UIView alloc] init];
-        view.backgroundColor = CH_COLOR_white;
+        view.backgroundColor = [UIColor whiteColor];
         
         BaseFrameHeader *header = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
         header.titleL.text = _titleArr[i];
-        header.backgroundColor = CH_COLOR_white;
+        header.backgroundColor = [UIColor whiteColor];
         
         switch (i) {
             case 0:
@@ -250,7 +250,7 @@
     [_protocolView addSubview:_timeBtn];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
     [_confirmBtn addTarget:self action:@selector(action_confirm) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];

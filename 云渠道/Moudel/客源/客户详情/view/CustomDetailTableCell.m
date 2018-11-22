@@ -297,7 +297,7 @@
                 
             }else{
                 
-                btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+                btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
                 [btn setTitle:@"编辑" forState:UIControlStateNormal];
                 [btn setTitleColor:COLOR(27, 152, 255, 1) forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];

@@ -39,7 +39,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _numListL = [[UILabel alloc] initWithFrame:CGRectMake(11 *SIZE, 26 *SIZE, 150 *SIZE, 16 *SIZE)];
     _numListL.textColor = YJTitleLabColor;

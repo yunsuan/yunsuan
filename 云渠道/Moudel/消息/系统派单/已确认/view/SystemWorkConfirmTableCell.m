@@ -82,7 +82,7 @@
     [self.contentView addSubview:_timeL];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [_confirmBtn setTitle:@"去确认" forState:UIControlStateNormal];

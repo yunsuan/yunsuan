@@ -62,7 +62,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = CH_COLOR_white;
+    self.backgroundColor = [UIColor whiteColor];
     
     _comL = [[UILabel alloc] init];
     _comL.textColor = YJTitleLabColor;

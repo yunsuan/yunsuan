@@ -27,7 +27,7 @@
     _backView = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 8 *SIZE, 340 *SIZE, 83 *SIZE)];
     _backView.layer.cornerRadius = 3 *SIZE;
     _backView.clipsToBounds = YES;
-    _backView.backgroundColor = CH_COLOR_white;
+    _backView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_backView];
     
     UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(319 *SIZE, 17 *SIZE, 12 *SIZE, 12 *SIZE)];

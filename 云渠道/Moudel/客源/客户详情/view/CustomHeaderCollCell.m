@@ -39,7 +39,7 @@
     if (selected) {
         
         _backView.backgroundColor = COLOR(28, 151, 255, 1);
-        _titleL.textColor = CH_COLOR_white;
+        _titleL.textColor = [UIColor whiteColor];
     }else{
         
         _backView.backgroundColor = YJBackColor;

@@ -304,7 +304,7 @@
     
     _cityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cityBtn.frame = CGRectMake(0, 19 *SIZE + STATUS_BAR_HEIGHT, 50 *SIZE, 21 *SIZE);
-    _cityBtn.titleLabel.font = [UIFont systemFontOfSize:12 *sIZE];
+    _cityBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [_cityBtn addTarget:self action:@selector(ActionCityBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_cityBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     [_cityBtn setTitle:@"定位中" forState:UIControlStateNormal];

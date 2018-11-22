@@ -411,15 +411,15 @@
         if (_item == 0) {
             
             [header.infoBtn setBackgroundColor:YJBlueBtnColor];
-            [header.infoBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.infoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else if (_item == 1){
             
             [header.followBtn setBackgroundColor:YJBlueBtnColor];
-            [header.followBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.followBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else{
             
             [header.matchBtn setBackgroundColor:YJBlueBtnColor];
-            [header.matchBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.matchBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
 
         header.customTableHeaderEditBlock = ^{

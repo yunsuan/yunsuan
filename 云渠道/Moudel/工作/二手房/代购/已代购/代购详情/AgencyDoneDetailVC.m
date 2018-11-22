@@ -251,15 +251,15 @@
         if (_item == 0) {
             
             [header.infoBtn setBackgroundColor:YJBlueBtnColor];
-            [header.infoBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.infoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else if (_item == 1){
             
             [header.agentBtn setBackgroundColor:YJBlueBtnColor];
-            [header.agentBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.agentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else{
             
             [header.roomBtn setBackgroundColor:YJBlueBtnColor];
-            [header.roomBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.roomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
         header.agencyDoneHeaderBlock = ^(NSInteger index) {
@@ -296,7 +296,7 @@
                 else{
                     header.titleL.text = @"附权益人";
                 }
-                header.lineView.backgroundColor = CH_COLOR_white;
+                header.lineView.backgroundColor = [UIColor whiteColor];
                 header.blueTitleMoreHeaderBlock = ^{
                     AgencyDoneCustomerDetailVC *nextVC = [[AgencyDoneCustomerDetailVC alloc] init];
                     nextVC.status = _subDic[@"check_state"];

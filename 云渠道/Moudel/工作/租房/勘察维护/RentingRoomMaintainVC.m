@@ -97,7 +97,7 @@
     self.titleLabel.text = @"勘察维护";
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 3 *SIZE, 340 *SIZE, 33 *SIZE)];
@@ -124,7 +124,7 @@
     [self.rightBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE) style:UITableViewStylePlain];
-    _table.estimatedRowHeight = 108 *sIZE;
+    _table.estimatedRowHeight = 108 *SIZE;
     _table.rowHeight = UITableViewAutomaticDimension;
     _table.backgroundColor = self.view.backgroundColor;
     _table.delegate = self;

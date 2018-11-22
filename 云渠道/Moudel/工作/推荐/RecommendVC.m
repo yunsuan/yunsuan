@@ -732,7 +732,7 @@
     _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 4, 40 *SIZE);
     
     _recommendColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _recommendColl.backgroundColor = CH_COLOR_white;
+    _recommendColl.backgroundColor = [UIColor whiteColor];
     _recommendColl.delegate = self;
     _recommendColl.dataSource = self;
     _recommendColl.bounces = NO;

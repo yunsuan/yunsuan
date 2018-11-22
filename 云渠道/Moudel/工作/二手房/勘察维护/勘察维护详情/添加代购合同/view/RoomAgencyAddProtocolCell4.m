@@ -70,7 +70,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     _titleArr = @[@"交易总价：",@"诚意金：",@"违约金：",@"佣金：",@"付款方式：",@"约定签约时间：",@"约定事项："];
     
     for (int i = 0; i < 6; i++) {

@@ -73,7 +73,7 @@
     self.titleLabel.text = @"意见反馈";
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 150 *SIZE)];
-    view.backgroundColor = CH_COLOR_white;
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(22 *SIZE, 10 *SIZE, 320 *SIZE, 105 *SIZE)];
@@ -97,10 +97,10 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(22 *SIZE, 475 *SIZE + NAVIGATION_BAR_HEIGHT, 314 *SIZE, 40 *SIZE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [_confirmBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [self.view addSubview:_confirmBtn];
 }

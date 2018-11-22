@@ -47,7 +47,7 @@
     self.contentView.backgroundColor = YJBackColor;
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self.contentView addSubview:_whiteView];

@@ -132,11 +132,11 @@
     
     _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _selectBtn.frame = CGRectMake(0, SCREEN_Height - 43 *SIZE - TAB_BAR_MORE, SCREEN_Width, 43 *SIZE + TAB_BAR_MORE);
-    _selectBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _selectBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_selectBtn addTarget:self action:@selector(ActionSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_selectBtn setTitle:@"选择该公司" forState:UIControlStateNormal];
     [_selectBtn setBackgroundColor:COLOR(27, 152, 255, 1)];
-    [_selectBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_selectBtn];
 }
 

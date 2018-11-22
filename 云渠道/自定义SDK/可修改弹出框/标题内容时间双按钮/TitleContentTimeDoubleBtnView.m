@@ -46,7 +46,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] initWithFrame:CGRectMake(55 *SIZE, 154 *SIZE, 250 *SIZE, 331 *SIZE)];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_whiteView];
     
     _titleL = [[UILabel alloc] init];
@@ -84,7 +84,7 @@
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.bounds = CGRectMake(0, 0, 125 *SIZE, 40 *SIZE);
-            btn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+            btn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
             if (i == 1) {
                 
                 _confirmBtn = btn;
@@ -99,7 +99,7 @@
                 [_cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
                 [_cancelBtn setBackgroundColor:YJBlueBtnColor];
                 [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-                [_cancelBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+                [_cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [_whiteView addSubview:_cancelBtn];
             }
         }

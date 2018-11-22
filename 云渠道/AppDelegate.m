@@ -12,8 +12,6 @@
 #import "SystemMessageVC.h"
 #import "WorkMessageVC.h"
 #import <WebKit/WebKit.h>
-
-
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
@@ -22,10 +20,25 @@
 #endif
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <AdSupport/AdSupport.h>
-
-#import <UMShare/UMShare.h>
-
 #import <Bugtags/Bugtags.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+
+//云渠道百度地图
+//static NSString *const kBaiduSDK = @"HFkm6kre5vprHrNAXGF4eZXNx9rEX3pt";
+//云中介百度地图
+static NSString *const kBaiduSDK = @"h7fphBWBFsYPImk01SmFvMr5k4ELf7ae";
+
+//云渠道极光
+//static NSString *const kJpushAPPKey = @"2dd909361c253b51e0cd05a9";
+//云中介极光
+static NSString *const kJpushAPPKey = @"9c68e106ec6a106956e5d700";
+
+
+//云渠道U盟以及qq，微信
+static NSString *const kUmengAppkey = @"5ac9debcb27b0a2147000050";
+static NSString *const kWechatAppId = @"wx3e34d92e8b8cb53e";
+static NSString *const kWechatSecret = @"200ee15186843d67c0d9ba6a66f3a6ba";
+static NSString *const kQQAPPID = @"1106811849";
 
 @interface AppDelegate ()<JPUSHRegisterDelegate,BMKMapViewDelegate>
 {
@@ -38,15 +51,78 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self initUI];
+    [self NetworkingStart];
+    [self configThirdWithOptions:launchOptions];
+  
+    return YES;
+}
+//初始化
+- (void)initUI{
+    if (![UserModelArchiver unarchive].agent_id) {
+        [UserModel defaultModel].agent_id = @"0";
+        [UserModelArchiver archive];
+    }
+    //注册通知，退出登陆时回到首页
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(comeBackLoginVC) name:@"goLoginVC" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goHome) name:@"goHome" object:nil];
     
-//    [Bugtags startWithAppKey:@"1560323d00d5dac86cd32d7b0d130787" invocationEvent:BTGInvocationEventNone];
-    [self postVersion];
-    dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
-    
-    dispatch_group_t group = dispatch_group_create();
-    
-    dispatch_group_async(group, queue1, ^{
+    NSString *logIndentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOGINENTIFIER];
+    BOOL flag = [[NSUserDefaults standardUserDefaults] boolForKey:@"Guided"];
+    if (flag == YES) {
+            [self deleteWebCache];
+        if ([logIndentifier isEqualToString:@"logInSuccessdentifier"]) {
+            CYLTabBarControllerConfig *tabBarControllerConfig = [[CYLTabBarControllerConfig alloc] init];
+            _window.rootViewController = tabBarControllerConfig.tabBarController;
+        }else {
+            //未登录
+            LoginVC *mainLogin_vc = [[LoginVC alloc] init];
+            UINavigationController *mainLogin_nav = [[UINavigationController alloc] initWithRootViewController:mainLogin_vc];
+            mainLogin_nav.navigationBarHidden = YES;
+            _window.rootViewController = mainLogin_nav;
+            [_window makeKeyAndVisible];
+            
+        }
         
+    } else {
+        GuideVC *guideVC = [[GuideVC alloc] init];
+        UINavigationController *guideNav = [[UINavigationController alloc] initWithRootViewController:guideVC];
+        guideNav.navigationBarHidden = YES;
+        _window.rootViewController = guideNav;
+        [_window makeKeyAndVisible];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Guided"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+}
+
+//网络请求
+- (void)NetworkingStart {
+//    dispatch_queue_t queue1 = dispatch_queue_create("queue1", DISPATCH_QUEUE_CONCURRENT);
+//    dispatch_group_t group = dispatch_group_create();
+//    //版本
+//    dispatch_group_async(group, queue1, ^{
+        [BaseRequest GET:Version_URL parameters:nil success:^(id resposeObject) {
+                if ([resposeObject[@"code"] integerValue] ==200) {
+                        if ([resposeObject[@"data"] floatValue]>[YQDversion floatValue]) {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去APPStore下载最新版本" preferredStyle:UIAlertControllerStyleAlert];
+                                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
+                                }]];
+                                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                                    
+                                }];
+                }
+         
+            }
+            
+        } failure:^(NSError *error) {
+            
+        }];
+//    });
+   //配置文件
+//    dispatch_group_async(group, queue1, ^{
+    
         [BaseRequest GET:Config_URL parameters:nil success:^(id resposeObject) {
             if ([resposeObject[@"code"] integerValue] == 200) {
                 [UserModel defaultModel].Configdic = resposeObject[@"data"];
@@ -55,10 +131,10 @@
         } failure:^(NSError *error) {
             
         }];
-    });
-
-    dispatch_group_async(group, queue1, ^{
-        
+//    });
+    //获取配套UI
+//    dispatch_group_async(group, queue1, ^{
+    
         [BaseRequest GET:HouseRecordUI_URL parameters:@{@"type":@"2"} success:^(id resposeObject) {
             if ([resposeObject[@"code"] integerValue] == 200) {
                 [UserModel defaultModel].storeArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
@@ -68,21 +144,22 @@
             
         }];
         
-    });
-    dispatch_group_async(group, queue1, ^{
-        
+//    });
+    //完成勘察UI
+//    dispatch_group_async(group, queue1, ^{
+    
         [BaseRequest GET:HouseRecordUI_URL parameters:@{@"type":@"3"} success:^(id resposeObject) {
             if ([resposeObject[@"code"] integerValue] == 200) {
-                 [UserModel defaultModel].officeArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+                [UserModel defaultModel].officeArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
                 [UserModelArchiver archive];
             }
         } failure:^(NSError *error) {
             
         }];
         
-    });
-    dispatch_group_async(group, queue1, ^{
-        
+//    });
+    //获取源标签
+//    dispatch_group_async(group, queue1, ^{
         [BaseRequest GET:ProjectResources_URL parameters:nil success:^(id resposeObject) {
             if ([resposeObject[@"code"] integerValue] == 200) {
                 NSArray *arr = resposeObject[@"data"];
@@ -107,14 +184,11 @@
             
         }];
         
-    });
-    dispatch_group_async(group, queue1, ^{
-        
+//    });
+    //开放城市
+//    dispatch_group_async(group, queue1, ^{
         [BaseRequest GET:OpenCity_URL parameters:nil success:^(id resposeObject) {
-            
-            //            NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
-                
                 [UserModel defaultModel].cityArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
                 [UserModelArchiver archive];
             }
@@ -122,54 +196,38 @@
             
         }];
         
-    });
-    
-    if (![UserModelArchiver unarchive].agent_id) {
-        [UserModel defaultModel].agent_id = @"0";
-        [UserModelArchiver archive];
-    }
-    //注册通知，退出登陆时回到首页
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(comeBackLoginVC) name:@"goLoginVC" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goHome) name:@"goHome" object:nil];
-    
+//    });
+}
+
+
+
+//配置三方
+- (void)configThirdWithOptions:(NSDictionary *)launchOptions{
+    [self configUSharePlatforms];
+    [self configBaiduMap];
+//    [self configBugTags];
+    [self conifgJpushWithOptions:launchOptions];
+}
+//配置友盟
+- (void)configUSharePlatforms
+{
+    [[UMSocialManager defaultManager] setUmSocialAppkey:kUmengAppkey];
+    /* 设置微信的appKey和appSecret */
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kWechatAppId appSecret:kWechatSecret redirectURL:redirectUrl];
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:kQQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:redirectUrl];
+}
+//配置百度地图
+- (void)configBaiduMap {
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-    BOOL ret = [_mapManager start:BaiduKey  generalDelegate:nil];
+    BOOL ret = [_mapManager start:kBaiduSDK  generalDelegate:nil];
     if (!ret) {
         NSLog(@"manager start failed!");
     }
-    NSString *logIndentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOGINENTIFIER];
-    BOOL flag = [[NSUserDefaults standardUserDefaults] boolForKey:@"Guided"];
-    if (flag == YES) {
-        
-        if ([logIndentifier isEqualToString:@"logInSuccessdentifier"]) {
-            
-            
-            CYLTabBarControllerConfig *tabBarControllerConfig = [[CYLTabBarControllerConfig alloc] init];
-            _window.rootViewController = tabBarControllerConfig.tabBarController;
-        }else {
-            
-            //未登录
-            LoginVC *mainLogin_vc = [[LoginVC alloc] init];
-            UINavigationController *mainLogin_nav = [[UINavigationController alloc] initWithRootViewController:mainLogin_vc];
-            mainLogin_nav.navigationBarHidden = YES;
-            _window.rootViewController = mainLogin_nav;
-            [_window makeKeyAndVisible];
+}
 
-        }
-        
-    } else {
-
-        GuideVC *guideVC = [[GuideVC alloc] init];
-        UINavigationController *guideNav = [[UINavigationController alloc] initWithRootViewController:guideVC];
-        guideNav.navigationBarHidden = YES;
-        _window.rootViewController = guideNav;
-        [_window makeKeyAndVisible];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Guided"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
+//配置极光推送
+- (void)conifgJpushWithOptions:(NSDictionary *)launchOptions  {
     //极光配置
     //Required
     //notice: 3.0.0及以后版本注册可以这样写，也可以继续用之前的注册方式
@@ -180,19 +238,17 @@
         // NSSet<UNNotificationCategory *> *categories for iOS10 or later
         // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeAlert |UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:nil];
-        
-    }else{
-        
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeAlert |UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:nil];
-    }
+        }else{
+            [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeAlert |UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:nil];
+        }
     [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-    
     // Required
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
     //    NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    [JPUSHService setupWithOption:launchOptions appKey:JpushAppKey
+    
+    [JPUSHService setupWithOption:launchOptions appKey:kJpushAPPKey
                           channel:@"appstore"
                  apsForProduction:YES
             advertisingIdentifier:nil];
@@ -207,31 +263,27 @@
         }
     }];
     if (launchOptions) {
-        
         NSDictionary *remote = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-        
         if (remote) {
             [self GotoHome];
         }else{
-
             NSString *loggIndentifier;
             loggIndentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOGINENTIFIER];
             if ([loggIndentifier isEqualToString:@"logInSuccessdentifier"]) {
-                
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
             }
         }
     }
-    
-    
-    [self configUSharePlatforms];
-    [self confitUShareSettings];
-    
-    
-    return YES;
 }
 
+//配置bugtags
+- (void)configBugTags
+{
+    [Bugtags startWithAppKey:@"1560323d00d5dac86cd32d7b0d130787" invocationEvent:BTGInvocationEventNone];
+}
+
+//删除web缓存
 - (void)deleteWebCache {
     
     //    if([UIDevice currentDevice])
@@ -249,7 +301,6 @@
         NSString* cookiesFolderPath = [libraryPath stringByAppendingString:@"/Cookies"];
         NSError * errors;
         [[NSFileManager defaultManager]removeItemAtPath:cookiesFolderPath error:&errors];
-        
     }
     
 }
@@ -280,36 +331,14 @@
 }
 
 - (void)GotoHome{
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
     [UIApplication sharedApplication].keyWindow.cyl_tabBarController.selectedIndex = 0;
 }
 
-- (void)confitUShareSettings
-{
-    /*
-     * 打开图片水印
-     */
-    //[UMSocialGlobal shareInstance].isUsingWaterMark = YES;
-    /*
-     * 关闭强制验证https，可允许http图片分享，但需要在info.plist设置安全域名
-     <key>NSAppTransportSecurity</key>
-     <dict>
-     <key>NSAllowsArbitraryLoads</key>
-     <true/>
-     </dict>
-     */
-    //[UMSocialGlobal shareInstance].isUsingHttpsWhenShareContent = NO;
-}
 
-- (void)configUSharePlatforms
-{
-    [[UMSocialManager defaultManager] setUmSocialAppkey:UmengAppkey];
-    /* 设置微信的appKey和appSecret */
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WechatAppId appSecret:WechatSecret redirectURL:redirectUrl];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:redirectUrl];
-}
+
+
 
 - (void)SetTagsAndAlias{
     NSString *logIndentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOGINENTIFIER];
@@ -323,37 +352,7 @@
     }
 }
 
--(void)postVersion
-{
-    [BaseRequest GET:Version_URL parameters:nil success:^(id resposeObject) {
-        
-        if ([resposeObject[@"code"] integerValue] ==200) {
-            
-            
-            if ([resposeObject[@"data"] floatValue]<=[YQDversion floatValue]) {
-                
-            }
-            else
-            {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去APPStore下载最新版本" preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    [ [UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
-                }]];
-                //            [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                //
-                //            }]];
-                [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
-                    
-                }];
-                
-            }
-        }
-        
-    } failure:^(NSError *error) {
-        
-    }];
-    
-}
+
 
 -(void)tagsAliasCallback:(int)iResCode
                     tags:(NSSet*)tags
@@ -422,12 +421,9 @@
     return result;
 }
 
-
-
 //极光方法
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings{
-    
     [application registerForRemoteNotifications];
 }
 
@@ -583,10 +579,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
 
     }
-//    }else{
-//
-//        [self GotoHome];
-//    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -633,10 +625,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
     }
-//    }else{
-//
-//        [self GotoHome];
-//    }
+
 }
 
 

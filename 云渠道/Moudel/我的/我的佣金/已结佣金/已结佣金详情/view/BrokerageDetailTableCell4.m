@@ -23,7 +23,7 @@
 - (void)initUI{
     
     _declareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _declareBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _declareBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
 //    [<#UIButton#> addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
     [_declareBtn setTitle:@"佣金有误，我要申诉？" forState:UIControlStateNormal];
     [_declareBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];

@@ -47,7 +47,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = CH_COLOR_white;
+    self.backgroundColor = [UIColor whiteColor];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 20 *SIZE, 100 *SIZE, 11 *SIZE)];
     label.textColor = YJTitleLabColor;
@@ -59,7 +59,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(71 *SIZE + i * 146 *SIZE, 14 *SIZE, 96 *SIZE, 25 *SIZE);
-        btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = i + 1;
         [btn setImage:[UIImage imageNamed:@"default"] forState:UIControlStateNormal];

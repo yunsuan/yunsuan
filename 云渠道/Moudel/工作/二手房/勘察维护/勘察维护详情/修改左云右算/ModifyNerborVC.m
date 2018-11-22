@@ -162,7 +162,7 @@
 - (void)initUI{
     
     _nearView = [[UIView alloc] init];
-    _nearView.backgroundColor = CH_COLOR_white;
+    _nearView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_nearView];
     
     _nearHeader = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -276,7 +276,7 @@
     [_nearView addSubview:_markView];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

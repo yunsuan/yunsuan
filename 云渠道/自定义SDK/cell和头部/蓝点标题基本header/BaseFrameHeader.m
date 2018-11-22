@@ -22,7 +22,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = CH_COLOR_white;
+    self.backgroundColor = [UIColor whiteColor];
     
     _colorView = [[UIView alloc] init];//WithFrame:CGRectMake(10 *SIZE, 13 *SIZE, 7 *SIZE, 13 *SIZE)];
     _colorView.backgroundColor = YJBlueBtnColor;

@@ -153,11 +153,11 @@
     [self.view addSubview:_scrollView];
     
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 128 *SIZE)];
-    view1.backgroundColor = CH_COLOR_white;
+    view1.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:view1];
     
     UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 136 *SIZE, SCREEN_Width, 591 *SIZE)];
-    view2.backgroundColor = CH_COLOR_white;
+    view2.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:view2];
     
 

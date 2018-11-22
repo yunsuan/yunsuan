@@ -32,7 +32,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _titleL = [[UILabel alloc] init];
     _titleL.textColor = YJTitleLabColor;
@@ -40,14 +40,14 @@
     [self.contentView addSubview:_titleL];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
     [_moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
     [self.contentView addSubview:_moreBtn];
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _addBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     //    [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_addBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.contentView addSubview:_addBtn];

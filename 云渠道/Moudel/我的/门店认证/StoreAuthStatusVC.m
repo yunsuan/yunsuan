@@ -98,41 +98,41 @@
     [self.view addSubview:_statusView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 31 *SIZE, SCREEN_Width, 17 *SIZE)];
-    label.textColor = CH_COLOR_white;;
+    label.textColor = [UIColor whiteColor];;
     label.font = [UIFont systemFontOfSize:19 *SIZE];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"审核中";
     [_statusView addSubview:label];
     
     _nameL = [[UILabel alloc] init];
-    _nameL.textColor = CH_COLOR_white;
+    _nameL.textColor = [UIColor whiteColor];
     _nameL.font = [UIFont systemFontOfSize:13 *SIZE];
     _nameL.numberOfLines = 0;
     _nameL.text = [NSString stringWithFormat:@"门店名称：%@",_data[@"store_name"]];
     [_statusView addSubview:_nameL];
     
     _codeL = [[UILabel alloc] init];
-    _codeL.textColor = CH_COLOR_white;
+    _codeL.textColor = [UIColor whiteColor];
     _codeL.font = [UIFont systemFontOfSize:13 *SIZE];
     _codeL.numberOfLines = 0;
     _codeL.text = [NSString stringWithFormat:@"门店编号：%@",_data[@"store_code"]];
     [_statusView addSubview:_codeL];
     
     _contactL = [[UILabel alloc] init];
-    _contactL.textColor = CH_COLOR_white;
+    _contactL.textColor = [UIColor whiteColor];
     _contactL.font = [UIFont systemFontOfSize:13 *SIZE];
     _contactL.numberOfLines = 0;
     _contactL.text = [NSString stringWithFormat:@"门店负责人：%@",_data[@"contact"]];
     [_statusView addSubview:_contactL];
     
     _phoneL = [[UILabel alloc] init];
-    _phoneL.textColor = CH_COLOR_white;
+    _phoneL.textColor = [UIColor whiteColor];
     _phoneL.font = [UIFont systemFontOfSize:13 *SIZE];
     _phoneL.numberOfLines = 0;
     
     NSString *str = [NSString stringWithFormat:@"负责人电话：%@",_data[@"contact_tel"]];
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:str];
-    [attr addAttribute:NSForegroundColorAttributeName value:CH_COLOR_white range:NSMakeRange(6, str.length - 6)];
+    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(6, str.length - 6)];
     _phoneL.attributedText = attr;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionPhoneTap)];
     [_phoneL addGestureRecognizer:tap];
@@ -140,7 +140,7 @@
     [_statusView addSubview:_phoneL];
     
     _detailView = [[UIView alloc] init];
-    _detailView.backgroundColor = CH_COLOR_white;
+    _detailView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_detailView];
     
     BaseFrameHeader *header = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];

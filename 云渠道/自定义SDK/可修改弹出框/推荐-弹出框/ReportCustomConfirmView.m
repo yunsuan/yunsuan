@@ -94,7 +94,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self addSubview:_whiteView];
@@ -258,7 +258,7 @@
     [_whiteView addSubview:_hideReportL];
     
     _cancenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _cancenBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _cancenBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_cancenBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_cancenBtn setTitle:@"取消" forState:UIControlStateNormal];
     [_cancenBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
@@ -266,7 +266,7 @@
     [_whiteView addSubview:_cancenBtn];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];

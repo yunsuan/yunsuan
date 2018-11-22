@@ -58,7 +58,7 @@
             }
             case 4:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = YJBlueBtnColor;
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;
@@ -69,7 +69,7 @@
             }
             case 5:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = COLOR(27, 152, 255, 0.4);
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;
@@ -80,7 +80,7 @@
             }
             case 6:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = COLOR(220, 220, 220, 1);
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;

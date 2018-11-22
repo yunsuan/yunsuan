@@ -8,7 +8,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-root-class"
-//#import "WaitAnimation.h"
+#import "WaitAnimation.h"
 static UIImageView *_imageV ;
 
 @interface WaitAnimation()

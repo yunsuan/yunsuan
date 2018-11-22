@@ -126,7 +126,7 @@
     if (!_layout) {
         _layout = [[UICollectionViewFlowLayout alloc]init];
         //设置item的大小
-        _layout.itemSize = CGSizeMake(self.mycollectionView.bounds.size.width / _row, 14*sIZE);
+        _layout.itemSize = CGSizeMake(self.mycollectionView.bounds.size.width / _row, 14*SIZE);
         _layout.minimumLineSpacing = 33*SIZE;
         _layout.minimumInteritemSpacing = 0;
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;

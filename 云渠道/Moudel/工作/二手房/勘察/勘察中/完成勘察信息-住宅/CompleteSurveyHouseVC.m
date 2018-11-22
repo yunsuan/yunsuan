@@ -458,7 +458,7 @@
     [self.view addSubview:_scrollView];
     
     _contentView = [[UIView alloc] init];
-    _contentView.backgroundColor = CH_COLOR_white;
+    _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
     _titleHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -714,7 +714,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     
     _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_flowLayout];
-    _payColl.backgroundColor = CH_COLOR_white;
+    _payColl.backgroundColor = [UIColor whiteColor];
     _payColl.allowsMultipleSelection = YES;
     _payColl.delegate = self;
     _payColl.dataSource = self;
@@ -730,7 +730,7 @@
     [_scrollView addSubview:_markView];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

@@ -9,6 +9,11 @@
 #import <BaiduMapAPI_Search/BMKPoiSearchType.h>
 #import <BaiduMapAPI_Search/BMKPoiSearchOption.h>
 #import <BaiduMapAPI_Search/BMKPoiSearch.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Radar/BMKRadarOption.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Base/BMKMapManager.h>
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
 #import "YBImageBrowser.h"
 
@@ -901,21 +906,21 @@
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _attentBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 100 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _attentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _attentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_attentBtn setTitle:@"订阅" forState:UIControlStateNormal];
     _attentBtn.userInteractionEnabled = NO;
     [_attentBtn setBackgroundColor:COLOR(74, 211, 195, 1)];
-    [_attentBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_attentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_attentBtn];
     
     _counselBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _counselBtn.frame = CGRectMake(100 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 260 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _counselBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _counselBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_counselBtn addTarget:self action:@selector(ActionCounselBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
-    [_counselBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
 //        _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
 //    }
@@ -923,7 +928,7 @@
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(120 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];

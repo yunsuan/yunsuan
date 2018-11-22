@@ -370,7 +370,7 @@
     [self addSubview:backView];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 243 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteView];
     
     for (int i = 0; i < 3; i++) {
@@ -383,7 +383,7 @@
         switch (i) {
             case 0:
             {
-                table.backgroundColor = CH_COLOR_white;
+                table.backgroundColor = [UIColor whiteColor];
                 _proTable = table;
                 [self addSubview:_proTable];
                 break;
@@ -397,7 +397,7 @@
             }
             case 2:
             {
-                table.backgroundColor = CH_COLOR_white;
+                table.backgroundColor = [UIColor whiteColor];
                 _districtTable = table;
                 [self addSubview:_districtTable];
                 break;

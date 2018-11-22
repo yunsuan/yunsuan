@@ -30,7 +30,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _titleArr = @[@"房源编号：",@"所属小区：",@"房号：",@"产权面积：",@"产权编号：",@"国土使用证号：",@"物业类型：",@"户型："];
     
@@ -84,7 +84,7 @@
                 _certNumL = label;
                 [self.contentView addSubview:_certNumL];
                 _certNumTF = textField;
-                _certNumTF.backgroundColor = CH_COLOR_white;
+                _certNumTF.backgroundColor = [UIColor whiteColor];
                 _certNumTF.textfield.placeholder = @"";
                 [self.contentView addSubview:_certNumTF];
                 break;
@@ -95,7 +95,7 @@
                 [self.contentView addSubview:_homelandL];
                 _homelandTF = textField;
                 _homelandTF.userInteractionEnabled = YES;
-                _homelandTF.backgroundColor = CH_COLOR_white;
+                _homelandTF.backgroundColor = [UIColor whiteColor];
                 _homelandTF.textfield.placeholder = @"";
                 [self.contentView addSubview:_homelandTF];
                 break;

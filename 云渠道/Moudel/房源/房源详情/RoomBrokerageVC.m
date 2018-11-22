@@ -255,7 +255,7 @@
     _brokerageTable.rowHeight = UITableViewAutomaticDimension;
     _brokerageTable.estimatedRowHeight = 300 *SIZE;
     
-    _brokerageTable.backgroundColor = CH_COLOR_white;;
+    _brokerageTable.backgroundColor = [UIColor whiteColor];;
     _brokerageTable.delegate = self;
     _brokerageTable.dataSource = self;
     _brokerageTable.separatorStyle = UITableViewCellSeparatorStyleNone;

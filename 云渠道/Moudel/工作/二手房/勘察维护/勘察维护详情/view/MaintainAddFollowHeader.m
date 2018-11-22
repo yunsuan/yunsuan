@@ -30,10 +30,10 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _addBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_addBtn setTitle:@"添加跟进" forState:UIControlStateNormal];
     [_addBtn setImage:[UIImage imageNamed:@"add_3-1"] forState:UIControlStateNormal];

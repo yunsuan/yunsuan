@@ -196,7 +196,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
     _imgScroll.pagingEnabled = YES;
@@ -270,7 +270,7 @@
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _moreBtn.frame = CGRectMake(287 *SIZE, 155 *SIZE + CGRectGetMaxY(_imgScroll.frame), 65 *SIZE, 20 *SIZE);
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_moreBtn setTitle:@"查看更多 >>" forState:UIControlStateNormal];
     [_moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
     [self.contentView addSubview:_moreBtn];

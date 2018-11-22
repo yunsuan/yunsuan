@@ -472,7 +472,7 @@
     
     _exitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _exitBtn.frame = CGRectMake(0, SCREEN_Height - 50 *SIZE - TAB_BAR_MORE, SCREEN_Width, 50 *SIZE + TAB_BAR_MORE);
-    _exitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _exitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_exitBtn addTarget:self action:@selector(ActionExitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_exitBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [_exitBtn setBackgroundColor:YJContentLabColor];

@@ -25,20 +25,17 @@
 #import "RoomDetailTableCell3.h"
 #import "RoomDetailTableCell4.h"
 #import "RoomDetailTableCell5.h"
-
 #import "CustomMatchModel.h"
 #import "RoomDetailModel.h"
-
-
 #import "YBImageBrowser.h"
-
-#import <BaiduMapAPI_Search/BMKPoiSearchType.h>
-#import <BaiduMapAPI_Search/BMKPoiSearchOption.h>
-#import <BaiduMapAPI_Search/BMKPoiSearch.h>
-
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
 #import "SelectWorkerView.h"
+
+#import <BaiduMapAPI_Search/BMKPoiSearch.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+#import <BaiduMapAPI_Map/BMKPointAnnotation.h>
+#import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 
 @interface RoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,BMKMapViewDelegate,RoomDetailTableCell4Delegate,BMKPoiSearchDelegate,UIGestureRecognizerDelegate,YBImageBrowserDelegate>
 {
@@ -977,11 +974,11 @@
     
     _counselBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 119 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _counselBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _counselBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_counselBtn addTarget:self action:@selector(ActionCounselBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
-    [_counselBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
         _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
     }
@@ -989,7 +986,7 @@
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(120 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
-    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"快速推荐" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];

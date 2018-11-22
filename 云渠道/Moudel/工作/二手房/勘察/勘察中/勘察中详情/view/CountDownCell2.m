@@ -55,7 +55,7 @@
     //        make.height.mas_equalTo(120*SIZE);
     //    }];
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_moreBtn addTarget:self action:@selector(ActionChangeBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"查看变更记录" forState:UIControlStateNormal];
 //    [_moreBtn setBackgroundColor:COLOR(151, 205, 255, 1)];

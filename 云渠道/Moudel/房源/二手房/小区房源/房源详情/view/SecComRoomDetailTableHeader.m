@@ -215,7 +215,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
     _imgScroll.pagingEnabled = YES;
@@ -286,7 +286,7 @@
     [_addressL addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action_map)]];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_moreBtn setTitle:@"查看更多 >>" forState:UIControlStateNormal];
     _moreBtn.tag = 4;
     [_moreBtn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -294,7 +294,7 @@
 //    [self.contentView addSubview:_moreBtn];
     
     _btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 344 *SIZE, SCREEN_Width, 107 *SIZE)];
-    _btnView.backgroundColor = CH_COLOR_white;
+    _btnView.backgroundColor = [UIColor whiteColor];
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width , SIZE)];
     line.backgroundColor = YJBackColor;
     [_btnView addSubview:line];

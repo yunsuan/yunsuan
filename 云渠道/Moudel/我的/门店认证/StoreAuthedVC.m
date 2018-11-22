@@ -124,7 +124,7 @@
     _reCommitBtn.frame = CGRectMake(21 *SIZE, SCREEN_Height - TAB_BAR_MORE - 100 *SIZE, 317 *SIZE, 40 *SIZE);
     _reCommitBtn.layer.masksToBounds = YES;
     _reCommitBtn.layer.cornerRadius = 2 *SIZE;
-    _reCommitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _reCommitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_reCommitBtn addTarget:self action:@selector(ActionRecommitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_reCommitBtn setTitle:@"重新认证" forState:UIControlStateNormal];
     [_reCommitBtn setBackgroundColor:YJBlueBtnColor];

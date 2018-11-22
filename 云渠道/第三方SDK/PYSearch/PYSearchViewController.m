@@ -810,7 +810,7 @@
     label.userInteractionEnabled = YES;
     label.font = [UIFont systemFontOfSize:12];
     label.text = title;
-    label.textColor = CH_COLOR_white;
+    label.textColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor py_colorWithHexString:@"#fafafa"];
     label.layer.cornerRadius = 3;
     label.clipsToBounds = YES;
