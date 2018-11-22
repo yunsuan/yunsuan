@@ -20,6 +20,12 @@ typedef void(^CompleteSurveyInfoVCBlock)(void);
 
 @property (nonatomic, strong) NSString *surveyId;
 
+@property (nonatomic, strong) NSString *projectID;
+
+@property (nonatomic, strong) NSString *buildId;
+
+@property (nonatomic, strong) NSString *unitId;
+
 - (instancetype)initWithTitle:(NSString *)titleStr;
 
 @end

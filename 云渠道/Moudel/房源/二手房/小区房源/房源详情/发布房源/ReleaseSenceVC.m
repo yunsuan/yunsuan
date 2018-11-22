@@ -611,6 +611,9 @@
                 CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
                 nextVC.status = @"direct";
                 nextVC.dataDic = weakSelf.fjxx;
+                nextVC.projectID = weakSelf.project_id;
+                nextVC.buildId = weakSelf.build_id;
+                nextVC.unitId = weakSelf.unit_id;
 //                nextVC.surveyId = //缺少勘察ID,直接勘察，需要新接口
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{

@@ -408,7 +408,13 @@
         
         if ([_selectArr[i] integerValue]) {
             
-            _payWay = [NSString stringWithFormat:@"%@%@",_payWay,_payArr[i][@"id"]];
+            if (i == 0) {
+                
+                _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+            }else{
+                
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+            }
         }
     }
     

@@ -49,6 +49,13 @@
     
     [self.view addSubview:self.settingbtn];
     
+    for (int i = 0; i<2; i++) {
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
+        line.backgroundColor = COLOR(130, 130, 130, 1);
+        [self.view addSubview:line];
+        
+    }
+    
 //    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession] && [[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
 //
 //        for (int i = 0; i<2; i++) {
@@ -520,7 +527,6 @@
         
         
     }];
-    
     
     
     UIAlertAction *ys = [UIAlertAction actionWithTitle:@"演示服" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
