@@ -597,6 +597,14 @@
                     
                     cell.houseTypeL.text = @"物业类型：";
                 }
+            }else{
+                
+                [cell.priceL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(cell.contentView).offset(28 *SIZE);
+                    make.top.equalTo(cell.addressL.mas_bottom).offset(18 *SIZE);
+                    make.right.equalTo(cell.contentView).offset(-28 *SIZE);
+                }];
             }
             return cell;
         }else{

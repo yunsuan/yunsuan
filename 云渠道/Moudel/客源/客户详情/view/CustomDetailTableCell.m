@@ -80,13 +80,6 @@
         _addressL.text = @"区域：";
     }
     
-//    if (model.house_type.length) {
-//        
-//        _houseTypeL.text = [NSString stringWithFormat:@"物业类型：%@",model.house_type];
-//    }else{
-//        
-//        
-//    }
     
     if (model.total_price.length) {
         
@@ -224,19 +217,9 @@
         }];
     }else{
         
-        if ([model.house_type integerValue]) {
+        if (model.house_type.length) {
             
-            NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-            NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
-            NSArray *typeArr = dic[@"param"];
-            for (NSUInteger i = 0; i < typeArr.count; i++) {
-                
-                if ([typeArr[i][@"id"] integerValue] == [model.house_type integerValue]) {
-                    
-                    _typeL.text = [NSString stringWithFormat:@"户型：%@",typeArr[i][@"param"]];
-                    break;
-                }
-            }
+            _typeL.text = [NSString stringWithFormat:@"户型：%@",model.house_type];
             
         }else{
             
@@ -414,14 +397,15 @@
     [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_priceL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_addressL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        make.bottom.equalTo(_priceL.mas_top).offset(-18 *SIZE);
     }];
     
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_addressL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_houseTypeL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
@@ -481,8 +465,6 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-17 *SIZE);
     }];
-    
-    
 }
 
 @end

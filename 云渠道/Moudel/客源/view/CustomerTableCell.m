@@ -25,8 +25,25 @@
 - (void)setModel:(CustomerTableModel *)model{
     
     _needTypeL.text = model.client_type;
+    
+    _typeL.text = @"意向物业：";
+    if (model.client_property_type.length) {
+        
+        _typeL.text = [NSString stringWithFormat:@"意向物业：%@",model.client_property_type];
+    }else{
+        
+        _typeL.text = @"意向物业：";
+    }
     if ([model.client_type isEqualToString:@"新房"]) {
         
+        _typeL.text = @"意向物业：";
+        if (model.property_type.length) {
+            
+            _typeL.text = [NSString stringWithFormat:@"意向物业：%@",model.property_type];
+        }else{
+            
+            _typeL.text = @"意向物业：";
+        }
         _needTypeL.textColor = COLOR(64, 169, 255, 1);
         _needTypeL.backgroundColor = COLOR(213, 242, 255, 1);
     }else if ([model.client_type isEqualToString:@"二手房"]){
@@ -61,15 +78,6 @@
     }else{
         
         _priceL.text = @"意向总价：";
-    }
-    
-    _typeL.text = @"意向物业：";
-    if (model.client_property_type.length) {
-        
-        _typeL.text = [NSString stringWithFormat:@"意向物业：%@",model.client_property_type];
-    }else{
-        
-        _typeL.text = @"意向物业：";
     }
     
     _areaL.text = @"意向区域：";
