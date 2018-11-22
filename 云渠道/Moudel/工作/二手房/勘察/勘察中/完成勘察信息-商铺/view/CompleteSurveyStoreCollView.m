@@ -60,7 +60,7 @@
     _layout.minimumInteritemSpacing = 0;
     
     _coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_layout];
-    _coll.backgroundColor = CH_COLOR_white;
+    _coll.backgroundColor = [UIColor whiteColor];
     _coll.allowsMultipleSelection = YES;
     _coll.delegate = self;
     _coll.dataSource = self;

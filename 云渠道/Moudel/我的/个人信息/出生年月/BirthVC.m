@@ -124,7 +124,7 @@
     if (!_whiteView) {
         
         _whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 12 *SIZE, SCREEN_Width, 50 *SIZE)];
-        _whiteView.backgroundColor = CH_COLOR_white;
+        _whiteView.backgroundColor = [UIColor whiteColor];
     }
     return _whiteView;
 }

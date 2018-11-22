@@ -45,7 +45,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] initWithFrame:CGRectMake(55 *SIZE, 154 *SIZE, 250 *SIZE, 331 *SIZE)];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_whiteView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 18 *SIZE, 250 *SIZE, 16 *SIZE)];
@@ -113,7 +113,7 @@
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.bounds = CGRectMake(0, 0, 125 *SIZE, 40 *SIZE);
-            btn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+            btn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
             if (i == 0) {
                 
                 _tranmitBtn = btn;
@@ -128,7 +128,7 @@
                 [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
                 [_confirmBtn setBackgroundColor:YJBlueBtnColor];
                 [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
-                [_confirmBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+                [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [_whiteView addSubview:_confirmBtn];
             }
         }

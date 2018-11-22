@@ -800,7 +800,7 @@
     [self.view addSubview:_scrolleView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = CH_COLOR_white;
+    _infoView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_infoView];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 20 *SIZE, 7 *SIZE, 13 *SIZE)];

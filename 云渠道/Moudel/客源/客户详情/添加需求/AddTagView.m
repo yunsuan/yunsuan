@@ -66,7 +66,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = CH_COLOR_white;
+    self.backgroundColor = [UIColor whiteColor];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(11 *SIZE, 13 *SIZE, 7 *SIZE, 13 *SIZE)];
     view.backgroundColor = YJBlueBtnColor;
@@ -91,7 +91,7 @@
 
     
     _tagColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 60 *SIZE, SCREEN_Width, 37 *SIZE) collectionViewLayout:_flowLayout];
-    _tagColl.backgroundColor = CH_COLOR_white;
+    _tagColl.backgroundColor = [UIColor whiteColor];
     _tagColl.delegate = self;
     _tagColl.dataSource = self;
     _tagColl.showsHorizontalScrollIndicator = NO;

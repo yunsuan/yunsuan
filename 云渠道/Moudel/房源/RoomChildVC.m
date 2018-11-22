@@ -681,7 +681,7 @@
 
 - (void)initUI{
     
-    _MainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, SCREEN_Width, SCREEN_Height - 46 - 46 *SIZE - STATUS_BAR_HEIGHT - TABBAR_Height) style:UITableViewStylePlain];
+    _MainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, SCREEN_Width, SCREEN_Height - 46 - 46 *SIZE - STATUS_BAR_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
     
     _MainTableView.rowHeight = UITableViewAutomaticDimension;
     _MainTableView.estimatedRowHeight = 120 *SIZE;

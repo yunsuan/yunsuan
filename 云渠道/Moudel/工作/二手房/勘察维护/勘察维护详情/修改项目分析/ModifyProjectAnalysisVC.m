@@ -136,7 +136,7 @@
     for (int i = 0; i < 2; i++) {
         
         UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + i * 147 *SIZE, SCREEN_Width, 140 *SIZE)];
-        whiteView.backgroundColor = CH_COLOR_white;
+        whiteView.backgroundColor = [UIColor whiteColor];
         
 //        BaseHeader *header = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
         BaseHeader *header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
@@ -182,7 +182,7 @@
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"保存" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

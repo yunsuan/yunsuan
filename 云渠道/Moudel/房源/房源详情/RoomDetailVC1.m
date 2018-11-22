@@ -167,7 +167,7 @@
     
     
     _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(80 *SIZE, STATUS_BAR_HEIGHT, 200 *SIZE, 43) collectionViewLayout:_flowLayout];
-    _segmentColl.backgroundColor = CH_COLOR_white;
+    _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
     _segmentColl.dataSource = self;
     _segmentColl.showsHorizontalScrollIndicator = NO;

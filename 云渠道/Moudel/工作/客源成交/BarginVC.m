@@ -752,7 +752,7 @@
     _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 4, 40 *SIZE);
     
     _nomineeColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _nomineeColl.backgroundColor = CH_COLOR_white;
+    _nomineeColl.backgroundColor = [UIColor whiteColor];
     _nomineeColl.delegate = self;
     _nomineeColl.dataSource = self;
     _nomineeColl.bounces = NO;

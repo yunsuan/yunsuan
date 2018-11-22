@@ -92,7 +92,7 @@
     self.contentView.backgroundColor = YJBackColor;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 128 *SIZE)];
-    view.backgroundColor = CH_COLOR_white;
+    view.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:view];
     
     _timeL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 14 *SIZE, 200 *SIZE, 13 *SIZE)];

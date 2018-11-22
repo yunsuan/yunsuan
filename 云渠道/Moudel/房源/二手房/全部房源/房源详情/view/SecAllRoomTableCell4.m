@@ -25,7 +25,7 @@
     NSArray *titleArr = @[@"近7日看房",@"累计看房",@"关注房源的人"];
     for (int i = 0; i < 3; i++) {
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(screenWidth / 3 * i, 17 *SIZE, SIZE, 36 *SIZE)];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_Width / 3 * i, 17 *SIZE, SIZE, 36 *SIZE)];
         line.backgroundColor = YJBackColor;
         if (i != 0) {
             

@@ -39,7 +39,7 @@
 
 + (CGFloat)heightForCellWithType:(CellType)type
 {
-    return 44.7 *sIZE;
+    return 44.7 *SIZE;
 }
 
 - (void)fillWithNode:(BDDynamicTreeNode*)node
@@ -74,7 +74,7 @@
     if (type == CellType_Department) {
         self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
                                             self.contentView.frame.origin.y,
-                                            self.contentView.frame.size.width, 44.7 *sIZE);
+                                            self.contentView.frame.size.width, 44.7 *SIZE);
         
         self.avatarImageView.hidden = YES;
         
@@ -101,7 +101,7 @@
         
         self.contentView.frame = CGRectMake(self.contentView.frame.origin.x,
                                             self.contentView.frame.origin.y,
-                                            self.contentView.frame.size.width, 44.7 *sIZE);
+                                            self.contentView.frame.size.width, 44.7 *SIZE);
         
         self.plusImageView.hidden = YES;
         

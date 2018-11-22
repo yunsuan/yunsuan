@@ -453,7 +453,7 @@
 - (void)initUI{
     
 //    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 39 *SIZE)];
-//    _headerView.backgroundColor = CH_COLOR_white;
+//    _headerView.backgroundColor = [UIColor whiteColor];
 //    [self.view addSubview:_headerView];
 //
 //    for (int i = 0; i < 5; i++) {
@@ -461,7 +461,7 @@
 //        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        btn.frame = CGRectMake(80 *SIZE * i, 0 *SIZE, 80 *SIZE, 39 *SIZE);
 //        btn.tag = i + 1;
-//        [btn setBackgroundColor:CH_COLOR_white];
+//        [btn setBackgroundColor:[UIColor whiteColor]];
 //        [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
 //
 //        switch (i) {

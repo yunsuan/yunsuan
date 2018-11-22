@@ -214,7 +214,7 @@
     self.titleLabel.text = @"我的佣金";
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width , 133 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
     for (int i = 0; i < 3; i++) {
@@ -262,7 +262,7 @@
 //        img.backgroundColor = YJBlueBtnColor;
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 18 *SIZE, 167 *SIZE, 13 *SIZE)];
-        label.textColor = CH_COLOR_white;
+        label.textColor = [UIColor whiteColor];
         if (i == 0) {
             
             label.text = @"邀请奖励";
@@ -274,7 +274,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 47 *SIZE, 167 *SIZE, 13 *SIZE)];
-        label1.textColor = CH_COLOR_white;
+        label1.textColor = [UIColor whiteColor];
         label1.font = [UIFont systemFontOfSize:13 *SIZE];
         label1.text = @"￥0";
         label1.textAlignment = NSTextAlignmentCenter;

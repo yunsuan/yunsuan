@@ -23,7 +23,7 @@
 - (void)initUI{
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10 *SIZE, 12 *SIZE, 340 *SIZE, 167 *SIZE)];
-    _scrollView.backgroundColor = YJRedColor;
+    _scrollView.backgroundColor = COLOR(255, 70, 70, 1);
     [self.contentView addSubview:_scrollView];
     
     _numL = [[UILabel alloc] init];

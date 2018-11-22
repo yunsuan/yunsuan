@@ -33,7 +33,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] initWithFrame:CGRectMake(55 *SIZE, 230 *SIZE, 250 *SIZE, 197 *SIZE)];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self addSubview:_whiteView];
@@ -72,12 +72,12 @@
     }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.bounds = CGRectMake(42 *SIZE, 136 *SIZE, 167 *SIZE, 37 *SIZE);
-    btn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    btn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     _backBtn = btn;
     [_backBtn addTarget:self action:@selector(ActionBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_backBtn setBackgroundColor:YJBlueBtnColor];
     [_backBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [_backBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _backBtn.layer.cornerRadius = 2 *SIZE;
     _backBtn.clipsToBounds = YES;
     [_whiteView addSubview:_backBtn];

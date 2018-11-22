@@ -282,7 +282,7 @@
     [self.view addSubview:_scrollView];
     
     _codeView = [[UIView alloc] init];
-    _codeView.backgroundColor = CH_COLOR_white;
+    _codeView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_codeView];
     
     _codeHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -315,7 +315,7 @@
     [_codeView addSubview:_sourceL];
     
     _contentView = [[UIView alloc] init];
-    _contentView.backgroundColor = CH_COLOR_white;
+    _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
     _titleHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -507,7 +507,7 @@
     }
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

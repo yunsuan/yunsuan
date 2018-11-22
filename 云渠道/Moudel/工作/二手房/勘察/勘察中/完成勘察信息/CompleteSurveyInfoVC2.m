@@ -269,7 +269,7 @@
     
     
     _tagColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) collectionViewLayout:_flowLayout];
-    _tagColl.backgroundColor = CH_COLOR_white;
+    _tagColl.backgroundColor = [UIColor whiteColor];
     _tagColl.delegate = self;
     _tagColl.dataSource = self;
     _tagColl.showsHorizontalScrollIndicator = NO;
@@ -282,7 +282,7 @@
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

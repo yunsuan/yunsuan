@@ -94,7 +94,7 @@
     self.view.backgroundColor = COLOR(67, 67, 67, 1);
     
     _whiteView = [[UIView alloc] initWithFrame:CGRectMake(46 *SIZE, 100 *SIZE + NAVIGATION_BAR_HEIGHT, 267 *SIZE, 350 *SIZE)];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_whiteView];
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(100 *SIZE, 24 *SIZE, 67 *SIZE, 67 *SIZE)];
@@ -131,7 +131,7 @@
     [_tagImg addSubview:_genderImg];
     
     _nameL = [[UILabel alloc] initWithFrame:CGRectMake(36 *SIZE, 11 *SIZE, 50 *SIZE, 14 *SIZE)];
-    _nameL.textColor = CH_COLOR_white;
+    _nameL.textColor = [UIColor whiteColor];
     _nameL.font = [UIFont systemFontOfSize:13 *SIZE];
     if ([UserInfoModel defaultModel].name) {
         

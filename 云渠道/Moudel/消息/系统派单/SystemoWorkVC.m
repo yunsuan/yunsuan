@@ -134,7 +134,7 @@
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _segmentColl.backgroundColor = CH_COLOR_white;
+    _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
     _segmentColl.dataSource = self;
     _segmentColl.showsHorizontalScrollIndicator = NO;

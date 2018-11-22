@@ -46,7 +46,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     _whiteView.layer.cornerRadius = 3 *SIZE;
     _whiteView.clipsToBounds = YES;
     [self addSubview:_whiteView];
@@ -101,7 +101,7 @@
     }
     
     _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _backBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _backBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_backBtn addTarget:self action:@selector(ActionBackBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [_backBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
@@ -109,10 +109,10 @@
     [_whiteView addSubview:_backBtn];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"立即勘察" forState:UIControlStateNormal];
-    [_confirmBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [_whiteView addSubview:_confirmBtn];
     

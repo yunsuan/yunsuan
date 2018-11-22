@@ -486,7 +486,7 @@
     [self.view addSubview:_scrollView];
     
     UIView *whiteView11 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 361 *SIZE)];
-    whiteView11.backgroundColor = CH_COLOR_white;
+    whiteView11.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:whiteView11];
     
     for (NSUInteger i = 0; i < 7; i++) {
@@ -580,7 +580,7 @@
     }
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(whiteView11.frame), SCREEN_Width, 174 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:whiteView];
     
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 100 *SIZE, 13 *SIZE)];
@@ -595,7 +595,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     
     _authenColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50 *SIZE, SCREEN_Width, 91 *SIZE) collectionViewLayout:_flowLayout];
-    _authenColl.backgroundColor = CH_COLOR_white;
+    _authenColl.backgroundColor = [UIColor whiteColor];
     _authenColl.delegate = self;
     _authenColl.dataSource = self;
     

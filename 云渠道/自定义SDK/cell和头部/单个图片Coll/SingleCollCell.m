@@ -22,7 +22,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _singleImg = [[UIImageView alloc] initWithFrame:self.bounds];
     _singleImg.contentMode = UIViewContentModeScaleAspectFill;

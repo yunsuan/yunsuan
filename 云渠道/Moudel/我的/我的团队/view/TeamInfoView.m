@@ -55,7 +55,7 @@
     [_tagImg addSubview:_genderImg];
     
     _nameL = [[UILabel alloc] initWithFrame:CGRectMake(23 *SIZE, 8 *SIZE, 40 *SIZE, 10 *SIZE)];
-    _nameL.textColor = CH_COLOR_white;
+    _nameL.textColor = [UIColor whiteColor];
     _nameL.font = [UIFont systemFontOfSize:11 *SIZE];
     [_tagImg addSubview:_nameL];
     

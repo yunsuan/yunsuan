@@ -734,7 +734,7 @@
     [self.view addSubview:_scrolleView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = CH_COLOR_white;
+    _infoView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_infoView];
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -886,7 +886,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     
     _authenColl1 = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50 *SIZE, SCREEN_Width, 91 *SIZE) collectionViewLayout:_flowLayout];
-    _authenColl1.backgroundColor = CH_COLOR_white;
+    _authenColl1.backgroundColor = [UIColor whiteColor];
     _authenColl1.delegate = self;
     _authenColl1.dataSource = self;
     
@@ -894,7 +894,7 @@
     [_infoView addSubview:_authenColl1];
     
     _authenColl2 = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50 *SIZE, SCREEN_Width, 91 *SIZE) collectionViewLayout:_flowLayout];
-    _authenColl2.backgroundColor = CH_COLOR_white;
+    _authenColl2.backgroundColor = [UIColor whiteColor];
     _authenColl2.delegate = self;
     _authenColl2.dataSource = self;
     
@@ -913,7 +913,7 @@
     [_markView addSubview:_placeL];
     
     _timeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 50 *SIZE)];
-    _timeView.backgroundColor = CH_COLOR_white;
+    _timeView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_timeView];
     
     UILabel *arriveL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 70 *SIZE, 13 *SIZE)];

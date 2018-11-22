@@ -157,15 +157,15 @@
         if (_item == 0) {
             
             [header.infoBtn setBackgroundColor:YJBlueBtnColor];
-            [header.infoBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.infoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else if (_item == 1){
             
             [header.advantageBtn setBackgroundColor:YJBlueBtnColor];
-            [header.advantageBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.advantageBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else{
             
             [header.followBtn setBackgroundColor:YJBlueBtnColor];
-            [header.followBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+            [header.followBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
         header.rentingMaintainTagHeaderBlock = ^(NSInteger index) {
@@ -194,7 +194,7 @@
             }
             
             header.titleL.text = _titleArr2[section];
-            header.lineView.backgroundColor = CH_COLOR_white;
+            header.lineView.backgroundColor = [UIColor whiteColor];
             
             [header.moreBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
             [header.moreBtn setTitle:@"" forState:UIControlStateNormal];

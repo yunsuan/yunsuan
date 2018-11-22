@@ -8,6 +8,7 @@
 
 #import "WebViewVC.h"
 #import <WebKit/WebKit.h>
+#import "WaitAnimation.h"
 
 @interface WebViewVC ()<WKNavigationDelegate>
 @property (nonatomic , strong) WKWebView *webwivw;

@@ -35,7 +35,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _contentTV = [[UITextView alloc] init];
     _contentTV.textColor = YJContentLabColor;

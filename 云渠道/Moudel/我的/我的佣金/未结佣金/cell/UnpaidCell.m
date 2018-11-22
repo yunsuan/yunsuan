@@ -69,13 +69,13 @@
     
     _expediteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _expediteBtn.frame = CGRectMake(273 *SIZE, 65 *SIZE, 77 *SIZE, 30 *SIZE);
-    _expediteBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _expediteBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_expediteBtn addTarget:self action:@selector(ActionExpediteBtn:) forControlEvents:UIControlEventTouchUpInside];
     _expediteBtn.layer.cornerRadius = 2 *SIZE;
     _expediteBtn.clipsToBounds = YES;
     [_expediteBtn setTitle:@"催佣" forState:UIControlStateNormal];
     [_expediteBtn setBackgroundColor:YJBlueBtnColor];
-    [_expediteBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_expediteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_expediteBtn];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 133 *SIZE, SCREEN_Width, SIZE)];

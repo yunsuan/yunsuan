@@ -136,7 +136,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = CH_COLOR_white;
+    self.backgroundColor = [UIColor whiteColor];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancelBtn.frame = CGRectMake(10 *SIZE, 20 *SIZE + STATUS_BAR_HEIGHT, 31 *SIZE, 31 *SIZE);
@@ -160,7 +160,7 @@
     self.flowLayout.sectionInset = UIEdgeInsetsMake(10 *SIZE, 10 *SIZE, 10 *SIZE, 10 *SIZE);
     
     self.coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 55 *SIZE, SCREEN_Width, self.bounds.size.height - 55 *SIZE - STATUS_BAR_HEIGHT - TAB_BAR_MORE) collectionViewLayout:self.flowLayout];
-    self.coll.backgroundColor = CH_COLOR_white;
+    self.coll.backgroundColor = [UIColor whiteColor];
     self.coll.delegate = self;
     self.coll.dataSource = self;
     [self.coll registerClass:[RoomTypeViewCollCell class] forCellWithReuseIdentifier:@"RoomTypeViewCollCell"];

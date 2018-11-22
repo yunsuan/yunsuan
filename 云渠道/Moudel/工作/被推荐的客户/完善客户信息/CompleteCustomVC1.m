@@ -547,7 +547,7 @@
     [self.view addSubview:_scrolleView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = CH_COLOR_white;
+    _infoView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_infoView];
     
     //    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];

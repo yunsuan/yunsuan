@@ -207,7 +207,7 @@
     
     
     _tagColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) collectionViewLayout:_flowLayout];
-    _tagColl.backgroundColor = CH_COLOR_white;
+    _tagColl.backgroundColor = [UIColor whiteColor];
     _tagColl.delegate = self;
     _tagColl.dataSource = self;
     _tagColl.showsHorizontalScrollIndicator = NO;
@@ -220,7 +220,7 @@
     
     _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _saveBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_saveBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [_saveBtn setBackgroundColor:YJBlueBtnColor];

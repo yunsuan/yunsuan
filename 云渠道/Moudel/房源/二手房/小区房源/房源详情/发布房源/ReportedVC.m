@@ -561,7 +561,7 @@
     
     
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_commitBtn addTarget:self action:@selector(ActionCommitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_commitBtn setTitle:@"提交" forState:UIControlStateNormal];
     [_commitBtn setBackgroundColor:YJBlueBtnColor];

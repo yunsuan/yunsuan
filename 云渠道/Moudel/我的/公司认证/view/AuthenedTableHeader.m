@@ -25,14 +25,14 @@
     self.contentView.backgroundColor = YJBlueBtnColor;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 31 *SIZE, SCREEN_Width, 17 *SIZE)];
-    label.textColor = CH_COLOR_white;
+    label.textColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:19 *SIZE];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"已认证";
     [self.contentView addSubview:label];
     
     _phoneL = [[UILabel alloc] initWithFrame:CGRectMake(0, 69 *SIZE, SCREEN_Width, 17 *SIZE)];
-    _phoneL.textColor = CH_COLOR_white;
+    _phoneL.textColor = [UIColor whiteColor];
     _phoneL.font = [UIFont systemFontOfSize:13 *SIZE];
     _phoneL.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_phoneL];

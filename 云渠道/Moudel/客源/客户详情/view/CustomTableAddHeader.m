@@ -32,7 +32,7 @@
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _addBtn.frame = CGRectMake(0, 0, SCREEN_Width, 40 *SIZE);
-    _addBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _addBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_addBtn setImage:[UIImage imageNamed:@"add_follow"] forState:UIControlStateNormal];
     [self.contentView addSubview:_addBtn];

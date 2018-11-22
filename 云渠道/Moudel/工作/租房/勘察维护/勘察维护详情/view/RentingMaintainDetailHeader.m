@@ -53,7 +53,7 @@
     _titleArr = @[@"联系人信息",@"房源信息",@"跟进记录"];
     
     _codeView = [[UIView alloc] init];
-    _codeView.backgroundColor = CH_COLOR_white;
+    _codeView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_codeView];
     
     _blueView = [[UIView alloc] init];
@@ -159,12 +159,12 @@
     for (int i = 0; i < 3; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
         //        [btn addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = i;
         [btn setTitle:_titleArr[i] forState:UIControlStateNormal];
         [btn setBackgroundColor:COLOR(219, 219, 219, 1)];
-        //        [btn setTitleColor:CH_COLOR_white forState:UIControlStateSelected];
+        //        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
         if (i == 0) {

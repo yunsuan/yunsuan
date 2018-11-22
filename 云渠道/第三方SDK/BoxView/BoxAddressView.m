@@ -120,7 +120,7 @@
     [self addSubview:backView];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 243 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteView];
     
     for (int i = 0; i < 2; i++) {
@@ -161,7 +161,7 @@
         
         _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 160 *SIZE) style:UITableViewStylePlain];
         //        _mainTable.backgroundColor = COLOR(202, 201, 201, 1);
-        _mainTable.backgroundColor = CH_COLOR_white;
+        _mainTable.backgroundColor = [UIColor whiteColor];
         _mainTable.delegate = self;
         _mainTable.dataSource = self;
         _mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;

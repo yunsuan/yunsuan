@@ -180,7 +180,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 7 *SIZE, 13 *SIZE)];
     view.backgroundColor = COLOR(27, 152, 255, 1);;
@@ -194,7 +194,7 @@
     
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     editBtn.frame = CGRectMake(316 *SIZE, 16 *SIZE, 36 *SIZE, 22 *SIZE);
-    editBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    editBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [editBtn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:COLOR(27, 152, 255, 1) forState:UIControlStateNormal];
@@ -270,7 +270,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        btn.frame = CGRectMake(120 *SIZE * i, 320 *SIZE, 120 *SIZE, 47 *SIZE);
-        btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
         btn.tag = i;
         [btn setTitle:_titleArr[(NSUInteger) i] forState:UIControlStateNormal];
         [btn setBackgroundColor:COLOR(219, 219, 219, 1)];

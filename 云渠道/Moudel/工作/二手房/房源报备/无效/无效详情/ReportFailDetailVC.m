@@ -199,11 +199,11 @@
     
     _complaintBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _complaintBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
-    _complaintBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _complaintBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_complaintBtn addTarget:self action:@selector(ActionComplaintBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_complaintBtn setTitle:@"申诉" forState:UIControlStateNormal];
     [_complaintBtn setBackgroundColor:COLOR(191, 191, 191, 1)];
-    [_complaintBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_complaintBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_complaintBtn];
 }
 

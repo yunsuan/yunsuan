@@ -55,14 +55,14 @@
     [self addSubview:alphaView];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0 *SIZE, SCREEN_Height - 100 *SIZE - TAB_BAR_MORE, SCREEN_Width, 100 *SIZE - TAB_BAR_MORE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteView];
     
     for (int i = 0; i < 2; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(50 *SIZE + i * 143 *SIZE, 30 *SIZE, 117 *SIZE, 40 *SIZE);
-        btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
         btn.tag = i;
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         

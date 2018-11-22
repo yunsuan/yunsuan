@@ -92,7 +92,7 @@
     _flowLayout.itemSize = CGSizeMake(110 *SIZE, 30 *SIZE);
     
     _coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20 *SIZE, 280 *SIZE, 70 *SIZE) collectionViewLayout:_flowLayout];
-    _coll.backgroundColor = CH_COLOR_white;
+    _coll.backgroundColor = [UIColor whiteColor];
     _coll.delegate = self;
     _coll.dataSource = self;
     

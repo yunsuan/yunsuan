@@ -635,7 +635,7 @@
     [self.view addSubview:_scrollView];
     
     _contentView = [[UIView alloc] init];
-    _contentView.backgroundColor = CH_COLOR_white;
+    _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
     _titleHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -918,7 +918,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     
     _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_flowLayout];
-    _payColl.backgroundColor = CH_COLOR_white;
+    _payColl.backgroundColor = [UIColor whiteColor];
     _payColl.allowsMultipleSelection = YES;
     _payColl.delegate = self;
     _payColl.dataSource = self;
@@ -926,7 +926,7 @@
     [_contentView addSubview:_payColl];
     
     _CollView = [[UIView alloc] init];
-    _CollView.backgroundColor = CH_COLOR_white;
+    _CollView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_CollView];
     
     _collHeader = [[BlueTitleMoreHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -962,7 +962,7 @@
     _facilityLayout.minimumInteritemSpacing = 0;
     
     _facilityColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40 *SIZE, SCREEN_Width, 87 *SIZE) collectionViewLayout:_facilityLayout];
-    _facilityColl.backgroundColor = CH_COLOR_white;
+    _facilityColl.backgroundColor = [UIColor whiteColor];
     _facilityColl.delegate = self;
     _facilityColl.dataSource = self;
     [_facilityColl registerClass:[StoreViewCollCell class] forCellWithReuseIdentifier:@"StoreViewCollCell"];
@@ -971,7 +971,7 @@
     //    [_scrollView addSubview:_storeCollView];
     
     _nearView = [[UIView alloc] init];
-    _nearView.backgroundColor = CH_COLOR_white;
+    _nearView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_nearView];
     
     _nearHeader = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -1041,7 +1041,7 @@
     [_nearView addSubview:_markView];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

@@ -112,7 +112,7 @@
     
     _recommentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommentBtn.frame = CGRectMake(281 *SIZE, 67 *SIZE, 67 *SIZE, 30 *SIZE);
-    _recommentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _recommentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommentBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommentBtn setTitle:@"推荐" forState:UIControlStateNormal];
     [_recommentBtn setBackgroundColor:YJBlueBtnColor];

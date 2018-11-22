@@ -142,7 +142,7 @@
     self.titleLabel.text = @"申诉";
     
     UIView *whiteView1 = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 43 *SIZE)];
-    whiteView1.backgroundColor = CH_COLOR_white;
+    whiteView1.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView1];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(11 *SIZE, 15 *SIZE, 60 *SIZE, 12 *SIZE)];
@@ -167,7 +167,7 @@
     [whiteView1 addSubview:_selectBtn];
     
     UIView *whiteView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 53 * SIZE +  NAVIGATION_BAR_HEIGHT, SCREEN_Width, 150 *SIZE)];
-    whiteView2.backgroundColor = CH_COLOR_white;
+    whiteView2.backgroundColor = [UIColor whiteColor];;
     [self.view addSubview:whiteView2];
     
     UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(11 *SIZE, 15 *SIZE, 60 *SIZE, 12 *SIZE)];
@@ -192,11 +192,11 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(21 *SIZE, 486 *SIZE + NAVIGATION_BAR_HEIGHT, 317 *SIZE, 40 *SIZE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionComfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"提交" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
-    [_confirmBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_confirmBtn];
 
 }

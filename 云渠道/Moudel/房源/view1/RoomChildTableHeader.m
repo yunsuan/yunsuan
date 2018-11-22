@@ -39,7 +39,7 @@
 - (void)initUI{
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_whiteView];
     
     _roomListBtn = [UIButton buttonWithType:UIButtonTypeCustom];

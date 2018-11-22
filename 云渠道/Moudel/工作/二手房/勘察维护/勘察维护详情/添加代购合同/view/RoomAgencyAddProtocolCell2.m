@@ -81,7 +81,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _titleArr = @[@"经办人名称：",@"联系电话",@"门店名称：",@"门店地址：",@"登记日期：",@"性别：",@"公司名称："];
     

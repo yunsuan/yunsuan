@@ -16,6 +16,7 @@
 #import "CountDownCell.h"
 #import "SingleContentCell.h"
 #import "BaseHeader.h"
+#import "WaitAnimation.h"
 
 @interface SystemWorkConfirmDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -285,7 +286,7 @@
     _invalidBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _invalidBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 119 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     [_invalidBtn setBackgroundColor:COLOR(191, 191, 191, 1)];
-    _invalidBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _invalidBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_invalidBtn addTarget:self action:@selector(ActionInValidBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_invalidBtn setTitle:@"以后确认" forState:UIControlStateNormal];
     [self.view addSubview:_invalidBtn];
@@ -293,7 +294,7 @@
     _validBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _validBtn.frame = CGRectMake(120 *SIZE, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     
-    _validBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _validBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_validBtn addTarget:self action:@selector(ActionValidBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_validBtn setBackgroundColor:YJBlueBtnColor];
     [_validBtn setTitle:@"现在确认" forState:UIControlStateNormal];

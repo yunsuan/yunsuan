@@ -220,8 +220,8 @@
     _flowLayout.minimumLineSpacing = 10 *SIZE *SIZE;
     _flowLayout.minimumInteritemSpacing = 0;
     
-    _coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TABBAR_Height) collectionViewLayout:_flowLayout];
-    _coll.backgroundColor = CH_COLOR_white;
+    _coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_HEIGHT) collectionViewLayout:_flowLayout];
+    _coll.backgroundColor = [UIColor whiteColor];
     _coll.allowsMultipleSelection = YES;
     _coll.delegate = self;
     _coll.dataSource = self;
@@ -229,8 +229,8 @@
     [self.view addSubview:_coll];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TABBAR_Height, SCREEN_Width, 40 *SIZE + TABBAR_Height);
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_HEIGHT, SCREEN_Width, 40 *SIZE + TAB_BAR_HEIGHT);
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

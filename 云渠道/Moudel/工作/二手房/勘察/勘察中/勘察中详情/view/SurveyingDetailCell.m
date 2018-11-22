@@ -37,7 +37,7 @@
     [self.contentView addSubview:self.contentL];
     
     _changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _changeBtn.titleLabel.font = [UIFont systemFontOfSize:11 *sIZE];
+    _changeBtn.titleLabel.font = [UIFont systemFontOfSize:11 *SIZE];
     [_changeBtn addTarget:self action:@selector(ActionChangeBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_changeBtn setTitle:@"变更预约时间" forState:UIControlStateNormal];
     [_changeBtn setBackgroundColor:COLOR(145, 205, 255, 1)];

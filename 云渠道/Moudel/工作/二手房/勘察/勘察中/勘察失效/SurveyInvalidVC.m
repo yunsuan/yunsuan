@@ -124,7 +124,7 @@
     self.titleLabel.text = @"勘察计划";
     
     UIView *whiteView1 = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 87 *SIZE)];
-    whiteView1.backgroundColor = CH_COLOR_white;
+    whiteView1.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView1];
     
     for (int i = 0; i < 2; i++) {
@@ -157,7 +157,7 @@
     }
     
     UIView *whiteView2 = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 93 *SIZE, SCREEN_Width, 183 *SIZE)];
-    whiteView2.backgroundColor = CH_COLOR_white;
+    whiteView2.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView2];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 27 *SIZE, 80 *SIZE, 10 *SIZE)];
@@ -185,7 +185,7 @@
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(22 *SIZE, 493 *SIZE + NAVIGATION_BAR_HEIGHT, 317 *SIZE, 40 *SIZE);
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];

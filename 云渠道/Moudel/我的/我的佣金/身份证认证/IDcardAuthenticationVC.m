@@ -277,7 +277,7 @@
     for (int i = 0; i < 2; i++) {
         
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + i *52 *SIZE, SCREEN_Width, 50 *SIZE)];
-        view.backgroundColor = CH_COLOR_white;
+        view.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:view];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 18 *SIZE, 60 *SIZE, 13 *SIZE)];
@@ -309,7 +309,7 @@
     }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 104 *SIZE + NAVIGATION_BAR_HEIGHT, SCREEN_Width, 158 *SIZE)];
-    view.backgroundColor = CH_COLOR_white;
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 15 *SIZE, 100 *SIZE, 13 *SIZE)];
@@ -356,7 +356,7 @@
     
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _doneBtn.frame = CGRectMake(22 *SIZE, 492 *SIZE + NAVIGATION_BAR_HEIGHT, 317 *SIZE, 40 *SIZE);
-    _doneBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _doneBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_doneBtn addTarget:self action:@selector(ActionDoneBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [_doneBtn setBackgroundColor:YJBlueBtnColor];

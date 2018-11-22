@@ -73,7 +73,7 @@
     
     _whiteView = [[UIView alloc] initWithFrame:CGRectMake(55 *SIZE, 206 *SIZE, 250 *SIZE, 227 *SIZE)];
     
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_whiteView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 24 *SIZE, 250 *SIZE, 13 *SIZE)];
@@ -111,7 +111,7 @@
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(25 *SIZE, 164 *SIZE, 200 *SIZE, 37 *SIZE);
-    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     _recommendBtn.tag = 1;
     [_recommendBtn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"推荐" forState:UIControlStateNormal];

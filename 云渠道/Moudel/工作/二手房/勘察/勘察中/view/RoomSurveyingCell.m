@@ -173,7 +173,7 @@
     [self.contentView addSubview:_phoneL];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:12 *sIZE];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     _confirmBtn.layer.cornerRadius = 2 *SIZE;
     _confirmBtn.clipsToBounds = YES;

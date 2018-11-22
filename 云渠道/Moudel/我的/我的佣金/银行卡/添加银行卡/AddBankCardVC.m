@@ -214,7 +214,7 @@
     [self.view addSubview:label];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 260 *SIZE)];
-    view.backgroundColor = CH_COLOR_white;
+    view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     
     NSArray *titleArr = @[@"持卡人",@"卡号",@"卡类型",@"手机号",@"验证码"];

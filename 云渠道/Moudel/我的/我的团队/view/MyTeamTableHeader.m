@@ -23,7 +23,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _recommendL = [[UILabel alloc] init];
     _recommendL.textColor = YJ86Color;

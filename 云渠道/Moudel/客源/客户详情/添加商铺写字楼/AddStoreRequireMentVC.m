@@ -529,7 +529,7 @@
     [self.view addSubview:_scrolleView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = CH_COLOR_white;
+    _infoView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_infoView];
     
     BaseFrameHeader *header = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
@@ -724,7 +724,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     
     _comercialColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_flowLayout];
-    _comercialColl.backgroundColor = CH_COLOR_white;
+    _comercialColl.backgroundColor = [UIColor whiteColor];
     _comercialColl.allowsMultipleSelection = YES;
     _comercialColl.delegate = self;
     _comercialColl.dataSource = self;

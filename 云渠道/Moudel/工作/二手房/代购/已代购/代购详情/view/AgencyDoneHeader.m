@@ -52,7 +52,7 @@
     _titleArr = @[@"客户信息",@"经办人信息",@"房源信息"];
     
     _titleView = [[UIView alloc] init];
-    _titleView.backgroundColor = CH_COLOR_white;
+    _titleView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_titleView];
     
     for (int i = 0; i < 6; i++) {
@@ -79,7 +79,7 @@
             }
             case 2:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = YJBlueBtnColor;
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;
@@ -90,7 +90,7 @@
             }
             case 3:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = COLOR(27, 152, 255, 0.4);
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;
@@ -101,7 +101,7 @@
             }
             case 4:
             {
-                label.textColor = CH_COLOR_white;
+                label.textColor = [UIColor whiteColor];
                 label.backgroundColor = COLOR(220, 220, 220, 1);
                 label.layer.cornerRadius = 2 *SIZE;
                 label.clipsToBounds = YES;
@@ -122,7 +122,7 @@
     }
     
     _tradeView = [[UIView alloc] init];
-    _tradeView.backgroundColor = CH_COLOR_white;
+    _tradeView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_tradeView];
     
     _blueView = [[UIView alloc] init];
@@ -209,12 +209,12 @@
     for (int i = 0; i < 3; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
         //        [btn addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
         btn.tag = i;
         [btn setTitle:_titleArr[i] forState:UIControlStateNormal];
         [btn setBackgroundColor:COLOR(219, 219, 219, 1)];
-        //        [btn setTitleColor:CH_COLOR_white forState:UIControlStateSelected];
+        //        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
         if (i == 0) {

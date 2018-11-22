@@ -17,6 +17,7 @@
 #import "MoreView.h"
 
 #import "SecdaryAllTableCell.h"
+#import <BaiduMapAPI_Location/BMKLocationService.h>
 
 
 @interface SecdaryAllRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
@@ -529,9 +530,9 @@
 -(void)initUI
 {
     [self.view addSubview:self.headerView];
-    self.leftButton.center = CGPointMake(25 * sIZE,  30 *SIZE);
-    self.leftButton.bounds = CGRectMake(0, 0, 80 * sIZE, 33 * sIZE);
-    self.maskButton.frame = CGRectMake(0, 0, 60 * sIZE, 44 *SIZE);
+    self.leftButton.center = CGPointMake(25 * SIZE,  30 *SIZE);
+    self.leftButton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
+    self.maskButton.frame = CGRectMake(0, 0, 60 * SIZE, 44 *SIZE);
     
     [self.headerView addSubview:self.leftButton];
     [self.headerView addSubview:self.maskButton];
@@ -561,7 +562,7 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(80 * i, 62 *SIZE, 80 *SIZE, 40 *SIZE);
         btn.tag = i + 1;
-        [btn setBackgroundColor:CH_COLOR_white];
+        [btn setBackgroundColor:[UIColor whiteColor]];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         
         switch (i) {

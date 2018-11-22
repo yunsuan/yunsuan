@@ -189,7 +189,7 @@
     _gender = [[UIImageView alloc] init];
 //    _gender.layer.cornerRadius = 33.5 *SIZE;
 //    _gender.clipsToBounds = YES;
-    _gender.backgroundColor = CH_COLOR_white;
+    _gender.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_gender];
     
     _nameL = [[UILabel alloc] init];

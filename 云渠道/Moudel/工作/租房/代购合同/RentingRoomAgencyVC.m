@@ -105,7 +105,7 @@
     
     
     _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _segmentColl.backgroundColor = CH_COLOR_white;
+    _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
     _segmentColl.dataSource = self;
     _segmentColl.showsHorizontalScrollIndicator = NO;
@@ -114,7 +114,7 @@
     [self.view addSubview:_segmentColl];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 3 *SIZE, 340 *SIZE, 33 *SIZE)];

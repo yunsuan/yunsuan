@@ -8,6 +8,9 @@
 
 
 #import "BaseViewController.h"
+#import "MBProgressHUD.h"
+#import "WaitAnimation.h"
+
 //#import "LogoinViewController.h"
 //#import <AFNetworkReachabilityManager.h>
 
@@ -115,7 +118,8 @@
 
         _navBackgroundView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_Width, 44)];
-        imageview.image = IMAGE_WITH_NAME(@"nav-beijingtu.png");
+        imageview.image = [UIImage imageNamed:@"nav-beijingtu.png"];
+      
         [_navBackgroundView addSubview:imageview];
         _line = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT - SIZE, SCREEN_Width, SIZE)];
         _line.backgroundColor = YJBackColor;
@@ -145,7 +149,7 @@
 //        _leftButton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
         _leftButton.center = CGPointMake(25 * SIZE, STATUS_BAR_HEIGHT + 20);
         _leftButton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
-        [_leftButton setImage:IMAGE_WITH_NAME(@"leftarrow.png") forState:UIControlStateNormal];
+        [_leftButton setImage:[UIImage imageNamed:@"leftarrow.png"] forState:UIControlStateNormal];
     }
     return _leftButton;
 }
@@ -265,7 +269,7 @@
     hud.label.textColor = [UIColor whiteColor];
     hud.margin = 10.f;
     [hud setOffset:CGPointMake(0, 10.f*SIZE)];
-    //    hud.yOffset = 10.f * sIZE;
+    //    hud.yOffset = 10.f * SIZE;
     hud.removeFromSuperViewOnHide = YES;
     //    [hud hide:YES afterDelay:1.5];
     [hud hideAnimated:YES afterDelay:1.5];

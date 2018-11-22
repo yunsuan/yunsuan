@@ -23,7 +23,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     self.contentL = [[UILabel alloc] init];
     self.contentL.numberOfLines = 0;

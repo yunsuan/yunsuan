@@ -73,7 +73,7 @@
     [self.contentView addSubview:_contentL];
     
     _averageL = [[UILabel alloc] init];
-    _averageL.textColor = YJRedColor;
+    _averageL.textColor = COLOR(255, 70, 70, 1);
     _averageL.font = [UIFont systemFontOfSize:13 *SIZE];
     _averageL.numberOfLines = 0;
     [self.contentView addSubview:_averageL];

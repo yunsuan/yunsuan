@@ -49,7 +49,7 @@
     [self addSubview:alphaView];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(55 *SIZE, 226 *SIZE, 250 *SIZE, 167 *SIZE)];
-    whiteView.backgroundColor = CH_COLOR_white;
+    whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:whiteView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 17 *SIZE, 250 *SIZE, 13 *SIZE)];
@@ -69,7 +69,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(125 *SIZE * i , 127 *SIZE, 125 *SIZE, 40 *SIZE);
-        btn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+        btn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
         if (i == 0) {
 
             

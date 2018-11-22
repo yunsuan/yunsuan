@@ -8,6 +8,7 @@
 
 #import "BuildingAlbumVC.h"
 #import <WebKit/WebKit.h>
+#import "WaitAnimation.h"
 
 @interface BuildingAlbumVC ()<WKNavigationDelegate>
 

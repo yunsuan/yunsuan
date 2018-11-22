@@ -441,7 +441,7 @@
     [self.view addSubview:_scrolleView];
     
     _infoView = [[UIView alloc] init];
-    _infoView.backgroundColor = CH_COLOR_white;
+    _infoView.backgroundColor = [UIColor whiteColor];
     [_scrolleView addSubview:_infoView];
     
     BaseFrameHeader *header = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];

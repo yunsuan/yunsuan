@@ -30,7 +30,7 @@
 
 - (void)initUI{
     
-    self.contentView.backgroundColor = CH_COLOR_white;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 50 *SIZE)];
     view.backgroundColor = YJBackColor;

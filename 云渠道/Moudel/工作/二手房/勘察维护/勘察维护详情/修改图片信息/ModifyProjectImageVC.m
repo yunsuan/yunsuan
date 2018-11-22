@@ -566,7 +566,7 @@
 
     
     _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 50 *SIZE)];
-    _titleView.backgroundColor = CH_COLOR_white;
+    _titleView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_titleView];
     
     _blueView = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 7 *SIZE, 13 *SIZE)];
@@ -589,7 +589,7 @@
     
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _doneBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _doneBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _doneBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_doneBtn addTarget:self action:@selector(ActionDoneBtn:) forControlEvents:UIControlEventTouchUpInside];
     if (_ImgArr.count) {
         

@@ -10,6 +10,7 @@
 #import "HousedistributVC.h"
 #import "SelectView.h"
 #import <WebKit/WebKit.h>
+#import "WaitAnimation.h"
 
 @interface DistributVC ()<WKNavigationDelegate>
 {
@@ -222,9 +223,10 @@
         _leftbutton = [UIButton buttonWithType:UIButtonTypeCustom];
         _leftbutton.center = CGPointMake(25 * SIZE, 20 + 22);
         _leftbutton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
-        _leftbutton.center = CGPointMake(25 * sIZE, STATUS_BAR_HEIGHT+20);
-        _leftbutton.bounds = CGRectMake(0, 0, 80 * sIZE, 33 * sIZE);
-        [_leftbutton setImage:IMAGE_WITH_NAME(@"leftarrow_white.png") forState:UIControlStateNormal];
+        _leftbutton.center = CGPointMake(25 * SIZE, STATUS_BAR_HEIGHT+20);
+        _leftbutton.bounds = CGRectMake(0, 0, 80 * SIZE, 33 * SIZE);
+        [_leftbutton setImage:[UIImage imageNamed:@"leftarrow_white.png"] forState:UIControlStateNormal];
+         
         [_leftbutton addTarget:self action:@selector(action_back) forControlEvents:UIControlEventTouchUpInside];
     }
     return _leftbutton;

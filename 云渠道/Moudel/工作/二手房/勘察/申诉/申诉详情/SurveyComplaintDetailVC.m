@@ -130,11 +130,11 @@
 
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancelBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_cancelBtn setTitle:@"取消申诉" forState:UIControlStateNormal];
     [_cancelBtn setBackgroundColor:YJBlueBtnColor];
-    [_cancelBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_cancelBtn];
 }
 

@@ -49,7 +49,7 @@
     for (int i = 0; i < 2; i++) {
         
         UILabel *label = [[UILabel alloc] init];
-        label.textColor = CH_COLOR_white;
+        label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:19 *SIZE];
         label.textAlignment = NSTextAlignmentCenter;
         if (i == 0) {
@@ -63,7 +63,7 @@
         }
         
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(180 *SIZE * i, 42 *SIZE, 180 *SIZE, 12 *SIZE)];
-        label1.textColor = CH_COLOR_white;
+        label1.textColor = [UIColor whiteColor];
         label1.font = [UIFont systemFontOfSize:12 *SIZE];
         label1.textAlignment = NSTextAlignmentCenter;
         label1.text = titleArr[i];

@@ -33,7 +33,7 @@
     [self addSubview:alphaView];
     
     _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = CH_COLOR_white;
+    _whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_whiteView];
     
     for (int i = 0; i < 3; i++) {
@@ -65,7 +65,7 @@
         if (i != 0) {
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+            btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
             [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
             btn.tag = i;
             if (i == 1) {

@@ -7,8 +7,13 @@
 //
 
 #import "LoginVC.h"
+#import "MBProgressHUD.h"
+#import "WaitAnimation.h"
+
 static AFHTTPSessionManager *manager ;
 static AFHTTPSessionManager *updatemanager ;
+//header头
+static NSString *const kACCESSROLE = @"agent";
 //static MBProgressHUD *hud ;
 
 
@@ -19,7 +24,7 @@ static AFHTTPSessionManager *updatemanager ;
     [WaitAnimation startAnimation];
       AFHTTPSessionManager *htttmanger  =   [BaseRequest sharedHttpSessionManager];
     [manager.requestSerializer setValue:[UserModelArchiver unarchive].Token forHTTPHeaderField:@"ACCESS-TOKEN"];
-    [manager.requestSerializer setValue:ACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
+    [manager.requestSerializer setValue:kACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
 
     NSString *str = [NSString stringWithFormat:@"%@%@",TestBase_Net,url];
     
@@ -60,7 +65,7 @@ static AFHTTPSessionManager *updatemanager ;
     [WaitAnimation startAnimation];
     AFHTTPSessionManager *htttmanger  =   [BaseRequest sharedHttpSessionManager];
     [manager.requestSerializer setValue:[UserModelArchiver unarchive].Token forHTTPHeaderField:@"ACCESS-TOKEN"];
-    [manager.requestSerializer setValue:ACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
+    [manager.requestSerializer setValue:kACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
 
     NSString *str = [NSString stringWithFormat:@"%@%@",TestBase_Net,url];
     [htttmanger POST:str parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -101,7 +106,7 @@ static AFHTTPSessionManager *updatemanager ;
     str = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:str]];
   
     AFHTTPSessionManager *htttmanger = [self sharedHttpSessionUpdateManager];
-    [updatemanager.requestSerializer setValue:ACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
+    [updatemanager.requestSerializer setValue:kACCESSROLE forHTTPHeaderField:@"ACCESS-ROLE"];
     [updatemanager.requestSerializer setValue:[UserModelArchiver unarchive].Token forHTTPHeaderField:@"ACCESS-TOKEN"];
 
     [htttmanger POST:str parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -129,7 +134,7 @@ static AFHTTPSessionManager *updatemanager ;
     hud.label.textColor = [UIColor whiteColor];
     hud.margin = 10.f;
     [hud setOffset:CGPointMake(0, 10.f*SIZE)];
-    //    hud.yOffset = 10.f * sIZE;
+    //    hud.yOffset = 10.f * SIZE;
     hud.removeFromSuperViewOnHide = YES;
     //    [hud hide:YES afterDelay:1.5];
     [hud hideAnimated:YES afterDelay:1.5];

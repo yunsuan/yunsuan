@@ -48,7 +48,7 @@
     
     UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     moreBtn.frame = CGRectMake(280 *SIZE, 120 *SIZE, 80 *SIZE, 21 *SIZE);
-    moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *sIZE];
+    moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [moreBtn setTitle:@"阅读全文 >>" forState:UIControlStateNormal];
     [moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];

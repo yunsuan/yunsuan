@@ -25,7 +25,7 @@
     self.contentView.backgroundColor = YJBackColor;
     
     _backView = [[UIView alloc] init];
-    _backView.backgroundColor = CH_COLOR_white;
+    _backView.backgroundColor = [UIColor whiteColor];
     _backView.layer.cornerRadius = 3 *SIZE;
     _backView.clipsToBounds = YES;
     [self.contentView addSubview:_backView];

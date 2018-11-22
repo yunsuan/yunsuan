@@ -30,7 +30,7 @@
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [_cancelBtn setBackgroundColor:YJGreenColor];
-    _cancelBtn.frame = CGRectMake(95 *sIZE, 0, 20 *sIZE, 20 *sIZE);
+    _cancelBtn.frame = CGRectMake(95 *SIZE, 0, 20 *SIZE, 20 *SIZE);
     [_cancelBtn setImage:[UIImage imageNamed:@"fork"] forState:UIControlStateNormal];
     [self.contentView addSubview:_cancelBtn];
 }

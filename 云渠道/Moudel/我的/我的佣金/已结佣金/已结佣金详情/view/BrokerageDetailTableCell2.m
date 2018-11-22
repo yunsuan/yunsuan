@@ -81,7 +81,7 @@
 
     _ruleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    _ruleBtn.frame = CGRectMake(259 *SIZE, 262 *SIZE, 94 *SIZE, 23 *SIZE);
-    _ruleBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _ruleBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_ruleBtn setTitle:@"查看佣金规则!" forState:UIControlStateNormal];
     [_ruleBtn setTitleColor:YJBlueBtnColor forState:UIControlStateNormal];
     [self.contentView addSubview:_ruleBtn];

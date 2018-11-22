@@ -233,10 +233,10 @@
     [self.contentView addSubview:_urgentRateL];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:13 *sIZE];
+    _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [_recommendBtn setBackgroundColor:COLOR(27, 152, 255, 1)];
     [_recommendBtn setTitle:@"推荐" forState:UIControlStateNormal];
-    [_recommendBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_recommendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         

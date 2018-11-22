@@ -95,14 +95,14 @@
     
     _inBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _inBtn.frame = CGRectMake(120 *SIZE, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 120 *SIZE, 33 *SIZE);
-    _inBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _inBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     _inBtn.layer.cornerRadius = 5 *SIZE;
     _inBtn.clipsToBounds = YES;
     [_inBtn addTarget:self action:@selector(ActionInBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_inBtn setTitle:@"开启渠道" forState:UIControlStateNormal];
     [_inBtn setBackgroundColor:YJBlueBtnColor];
     _inBtn.hidden = YES;
-    [_inBtn setTitleColor:CH_COLOR_white forState:UIControlStateNormal];
+    [_inBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_inBtn];
 }
 

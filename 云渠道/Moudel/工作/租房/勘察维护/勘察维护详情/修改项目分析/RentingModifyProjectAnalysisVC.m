@@ -160,7 +160,7 @@
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"保存" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];

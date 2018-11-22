@@ -61,7 +61,7 @@
 
     
     _getBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _getBtn.titleLabel.font = [UIFont systemFontOfSize:14 *sIZE];
+    _getBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_getBtn addTarget:self action:@selector(ActionGetBtn:) forControlEvents:UIControlEventTouchUpInside];
     _getBtn.layer.cornerRadius = 2 *SIZE;
     _getBtn.clipsToBounds = YES;
