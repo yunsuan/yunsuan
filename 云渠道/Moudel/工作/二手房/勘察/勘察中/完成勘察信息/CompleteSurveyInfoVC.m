@@ -221,6 +221,10 @@
     }
     
     NSString *str = self.dataDic[@"property_type"];
+    if ([self.status isEqualToString:@"direct"]) {
+        
+        str = self.dataDic[@"WYMC"];
+    }
     if ([str containsString:@"参数"]) {
         
         str = [str stringByReplacingOccurrencesOfString:@"参数" withString:@""];
@@ -314,7 +318,8 @@
     _codeHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     if ([self.status isEqualToString:@"direct"]) {
         
-        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
+//        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
     }else{
         
         _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];

@@ -614,6 +614,7 @@
                 nextVC.projectID = weakSelf.project_id;
                 nextVC.buildId = weakSelf.build_id;
                 nextVC.unitId = weakSelf.unit_id;
+                nextVC.comName = self.comName;
 //                nextVC.surveyId = //缺少勘察ID,直接勘察，需要新接口
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{

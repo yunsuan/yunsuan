@@ -26,6 +26,8 @@ typedef void(^CompleteSurveyInfoVCBlock)(void);
 
 @property (nonatomic, strong) NSString *unitId;
 
+@property (nonatomic, strong) NSString *comName;;
+
 - (instancetype)initWithTitle:(NSString *)titleStr;
 
 @end

@@ -87,7 +87,15 @@
         [self.dic setObject:jsonResult forKey:@"img_group"];
     }
     
-    [BaseRequest POST:HouseSurveySuccess_URL parameters:self.dic success:^(id resposeObject) {
+    NSString *urlStr;
+    if (self.dic[@"survey_id"]) {
+        
+        urlStr = HouseSurveySuccess_URL;
+    }else{
+        
+        urlStr = @"agent/house/recordAndSurvey";
+    }
+    [BaseRequest POST:urlStr parameters:self.dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
