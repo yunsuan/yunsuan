@@ -62,14 +62,6 @@
         _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_OFFICE];
     }
     
-//    for (int i = 0; i < _tagArr.count; i++) {
-//        [_tagArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            if ([obj[@"id"] integerValue] == [_tagArr[i][@"id"] integerValue]) {
-//                [_dataArr addObject:obj];
-//                *stop = YES;
-//            }
-//        }];
-//    }
 }
 
 - (void)ActionSaveBtn:(UIButton *)btn{
