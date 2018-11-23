@@ -19,7 +19,6 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 // 如果需要使用idfa功能所需要引入的头文件（可选）
-#import <AdSupport/AdSupport.h>
 #import <Bugtags/Bugtags.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
 
@@ -306,29 +305,29 @@ static NSString *const kQQAPPID = @"1106811849";
 }
 
 
-- (void)GotoMessVC{
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-    SystemMessageVC *next_vc = [[SystemMessageVC alloc] init];
-    next_vc.hidesBottomBarWhenPushed = YES;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
-    nav.navigationBar.hidden = YES;
-    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
-
-- (void)GotoSystemVC{
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-    WorkMessageVC *next_vc = [[WorkMessageVC alloc] init];
-    next_vc.hidesBottomBarWhenPushed = YES;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
-    nav.navigationBar.hidden = YES;
-    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
-        
-    }];
-}
+//- (void)GotoMessVC{
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+//    SystemMessageVC *next_vc = [[SystemMessageVC alloc] init];
+//    next_vc.hidesBottomBarWhenPushed = YES;
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
+//    nav.navigationBar.hidden = YES;
+//    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
+//
+//    }];
+//}
+//
+//- (void)GotoSystemVC{
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
+//    WorkMessageVC *next_vc = [[WorkMessageVC alloc] init];
+//    next_vc.hidesBottomBarWhenPushed = YES;
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
+//    nav.navigationBar.hidden = YES;
+//    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
+//
+//    }];
+//}
 
 - (void)GotoHome{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
