@@ -735,20 +735,9 @@
                 }];
             }
             
-            NSArray *tempArr1 = [_projectArr[indexPath.row][@"project_tags"]  componentsSeparatedByString:@","];
-            NSMutableArray *tempArr2 = [@[] mutableCopy];
-            for (int i = 0; i < tempArr1.count; i++) {
-                
-                [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if ([obj[@"id"] integerValue] == [tempArr1[i] integerValue]) {
-                        
-                        [tempArr2 addObject:obj[@"param"]];
-                        *stop = YES;
-                    }
-                }];
-            }
-            NSArray *tempArr3 = @[tempArr,tempArr2.count == 0 ? @[]:tempArr2];
+            NSArray *tempArr1 = _projectArr[indexPath.row][@"project_tags"];
+            
+            NSArray *tempArr3 = @[tempArr,tempArr1.count == 0 ? @[]:tempArr1];
             [cell settagviewWithdata:tempArr3];
             
             cell.recommendBtnBlock3 = ^(NSInteger index) {

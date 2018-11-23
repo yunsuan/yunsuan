@@ -49,7 +49,7 @@
     }
 
     
-    _addressL.text = [NSString stringWithFormat:@"%@-%@",dataDic[@"district_name"],dataDic[@"absolute_address"]];
+    _addressL.text = [NSString stringWithFormat:@"%@",dataDic[@"absolute_address"]];
     
     if (dataDic[@"sort"]) {
         
@@ -92,6 +92,7 @@
     
     _headImg = [[UIImageView alloc]initWithFrame:CGRectMake((CGFloat) (11.7*SIZE),(CGFloat)16.3*SIZE, 100*SIZE, (CGFloat)88.3*SIZE)];
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
+    _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
     
     _titleL = [[UILabel alloc]initWithFrame:CGRectMake((CGFloat)123.3*SIZE, 16*SIZE, 140*SIZE, 14*SIZE)];
