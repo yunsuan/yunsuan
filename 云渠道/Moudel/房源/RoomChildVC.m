@@ -8,21 +8,21 @@
 
 #import "RoomChildVC.h"
 
-#import "RoomDetailVC1.h"
-#import "SecAllRoomDetailVC.h"
-#import "SecdaryCommunityRoomVC.h"
-#import "SecdaryAllRoomVC.h"
+//#import "RoomDetailVC1.h"
+//#import "SecAllRoomDetailVC.h"
+//#import "SecdaryCommunityRoomVC.h"
+//#import "SecdaryAllRoomVC.h"
 
-#import "RentingCell.h"
+//#import "RentingCell.h"
 #import "SecdaryAllTableCell.h"
 #import "CompanyCell.h"
 #import "PeopleCell.h"
-#import "RoomChildTableHeader.h"
+//#import "RoomChildTableHeader.h"
 #import "SecdaryComTableCell.h"
 #import "AttentionHouseCell.h"
 #import "AttentionComCell.h"
 
-#import "SecdaryComModel.h"
+//#import "SecdaryComModel.h"
 
 @interface RoomChildVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -36,13 +36,13 @@
     NSString *_district;
     NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
     NSString *_property_id;
     NSString *_asc;
     NSString *_urlString;
-    NSArray *_propertyArr;
+//    NSArray *_propertyArr;
 }
 
 @property (nonatomic , strong) UITableView *MainTableView;
@@ -87,7 +87,7 @@
 
 - (void)initDataSource{
     
-    _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
+//    _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     _dataArr = [@[] mutableCopy];
     _page = 1;
     _asc = @"asc";

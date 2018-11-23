@@ -12,10 +12,10 @@
 #import "SecComRoomDetailVC.h"
 
 #import "MySubscripModel.h"
-#import "RoomListModel.h"
+//#import "RoomListModel.h"
 #import "SecdaryComModel.h"
 
-#import "MySubscripCell.h"
+//#import "MySubscripCell.h"
 #import "CompanyCell.h"
 #import "SecdaryComTableCell.h"
 
@@ -89,7 +89,7 @@
 
         }else{
             
-            MySubscripModel *model = [[MySubscripModel alloc] initWithDictionary:tempDic];
+//            MySubscripModel *model = [[MySubscripModel alloc] initWithDictionary:tempDic];
 
         }
 //

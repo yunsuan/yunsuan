@@ -9,12 +9,12 @@
 #import "LevelView.h"
 
 @interface LevelView()
-{
-
-    NSInteger _level;
-    UIImage *_image;
-    NSString *_title;
-}
+//{
+//
+////    NSInteger _level;
+//    UIImage *_image;
+//    NSString *_title;
+//}
 
 @end
 

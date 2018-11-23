@@ -7,8 +7,8 @@
 //
 
 #import "CustomListVC.h"
-#import "CustomerTableModel.h"
-#import "CustomDetailVC.h"
+//#import "CustomerTableModel.h"
+//#import "CustomDetailVC.h"
 #import "RoomDetailTableCell5.h"
 #import "QuickAddCustomVC.h"
 #import "SelectWorkerView.h"
@@ -19,7 +19,7 @@
 @interface CustomListVC() <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
     
     NSMutableArray *_dataArr;
-    NSMutableArray *_tempArr;
+//    NSMutableArray *_tempArr;
     NSString *_projectId;
     NSInteger _page;
     BOOL _isSearch;

@@ -12,11 +12,11 @@
 #import "CompleteSurveyOfficeVC.h"
 #import "CompleteSurveyHouseVC.h"
 
-#import "SinglePickView.h"
+//#import "SinglePickView.h"
 
-#import "SingleContentCell.h"
+//#import "SingleContentCell.h"
 #import "BaseFrameHeader.h"
-#import "CompleteSurveyCollCell.h"
+//#import "CompleteSurveyCollCell.h"
 
 #import "BorderTF.h"
 #import "DropDownBtn.h"
@@ -192,7 +192,7 @@
         return;
     }
     
-    NSMutableDictionary *tempDic = [@{} mutableCopy];
+    NSMutableDictionary *tempDic;
     if (self.surveyId) {
         tempDic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":self.surveyId,
                                                                   @"intent":_intentTF.textfield.text,

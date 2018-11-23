@@ -8,8 +8,8 @@
 
 #import "ComfirmInValidVC.h"
 
-#import "BaseHeader.h"
-#import "CountDownCell.h"
+//#import "BaseHeader.h"
+//#import "CountDownCell.h"
 #import "InfoDetailCell.h"
 #import "ComplaintVC.h"
 
@@ -21,7 +21,7 @@
     NSString *_clientId;
     NSString *_messageId;
     NSMutableDictionary *_dataDic;
-    NSString *_endtime;
+//    NSString *_endtime;
     NSString *_name;
 }
 

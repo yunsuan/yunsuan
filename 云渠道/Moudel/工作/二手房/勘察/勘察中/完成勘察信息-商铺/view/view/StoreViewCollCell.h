@@ -18,8 +18,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
-- (UIImage*)grayImage:(UIImage*)sourceImage;
-
 - (UIImage*)grayscaleImageForImage:(UIImage*)image;
 
 @end

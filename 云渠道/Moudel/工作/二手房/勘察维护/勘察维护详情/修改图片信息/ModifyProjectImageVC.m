@@ -12,7 +12,7 @@
 
 #import "ChangeImgNameView.h"
 #import "DropDownBtn.h"
-#import "AddAlbumView.h"
+//#import "AddAlbumView.h"
 
 @interface ModifyProjectImageVC ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -20,7 +20,7 @@
     NSMutableArray *_ImgArr;
     NSMutableArray *_titleArr;
     NSMutableArray *_NameUrlArr;
-    NSInteger _section;
+//    NSInteger _section;
     NSInteger _index;
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
@@ -89,14 +89,14 @@
     _imagePickerController.delegate = self;
 }
 
-- (void)ActionEditBtn:(UIButton *)btn{
-    
-    self.rightBtn.selected = !self.rightBtn.selected;
-    if (self.rightBtn.selected) {
-        
-        _imgTable.editing = YES;
-    }
-}
+//- (void)ActionEditBtn:(UIButton *)btn{
+//
+//    self.rightBtn.selected = !self.rightBtn.selected;
+//    if (self.rightBtn.selected) {
+//
+//        _imgTable.editing = YES;
+//    }
+//}
 
 - (void)ActionDoneBtn:(UIButton *)btn{
     
@@ -151,58 +151,58 @@
 
 #pragma mark -- request --
 
-- (void)RequestAddDic:(NSDictionary *)dic index:(NSInteger )index{
-    
-    
-    [BaseRequest POST:HouseSurveyAddImg_URL parameters:dic success:^(id resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            if (self.modifyProjectImageVCBlock) {
-                
-                self.modifyProjectImageVCBlock();
-            }
-            NSMutableDictionary *mutabDic = [NSMutableDictionary dictionaryWithDictionary:@{@"img_id":resposeObject[@"data"],@"img_url":dic[@"img_url"],@"name":@"请输入图片名称"}];
-            [_ImgArr addObject:mutabDic];
-            [_nameArr addObject:mutabDic];;
-            [_imgTable reloadData];
-        }else{
-            
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-        [self showContent:@"网络错误"];
-        NSLog(@"%@",error);
-    }];
-}
+//- (void)RequestAddDic:(NSDictionary *)dic index:(NSInteger )index{
+//
+//
+//    [BaseRequest POST:HouseSurveyAddImg_URL parameters:dic success:^(id resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//            if (self.modifyProjectImageVCBlock) {
+//
+//                self.modifyProjectImageVCBlock();
+//            }
+//            NSMutableDictionary *mutabDic = [NSMutableDictionary dictionaryWithDictionary:@{@"img_id":resposeObject[@"data"],@"img_url":dic[@"img_url"],@"name":@"请输入图片名称"}];
+//            [_ImgArr addObject:mutabDic];
+//            [_nameArr addObject:mutabDic];;
+//            [_imgTable reloadData];
+//        }else{
+//
+//            [self showContent:resposeObject[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        [self showContent:@"网络错误"];
+//        NSLog(@"%@",error);
+//    }];
+//}
 
-- (void)RequestModifyDic:(NSDictionary *)dic index:(NSInteger )index{
-    
-    [BaseRequest POST:HouseSurveyUpdateImg_URL parameters:dic success:^(id resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            if (self.modifyProjectImageVCBlock) {
-                
-                self.modifyProjectImageVCBlock();
-            }
-            NSMutableDictionary *mutabDic = [NSMutableDictionary dictionaryWithDictionary:@{@"img_id":dic[@"img_id"],@"img_url":dic[@"img_url"],@"name":@"请输入图片名称"}];
-            [_ImgArr replaceObjectAtIndex:index withObject:mutabDic];
-            [_nameArr replaceObjectAtIndex:index withObject:mutabDic];
-            [_imgTable reloadData];
-        }else{
-            
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-        [self showContent:@"网络错误"];
-        NSLog(@"%@",error);
-    }];
-}
+//- (void)RequestModifyDic:(NSDictionary *)dic index:(NSInteger )index{
+//
+//    [BaseRequest POST:HouseSurveyUpdateImg_URL parameters:dic success:^(id resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//            if (self.modifyProjectImageVCBlock) {
+//
+//                self.modifyProjectImageVCBlock();
+//            }
+//            NSMutableDictionary *mutabDic = [NSMutableDictionary dictionaryWithDictionary:@{@"img_id":dic[@"img_id"],@"img_url":dic[@"img_url"],@"name":@"请输入图片名称"}];
+//            [_ImgArr replaceObjectAtIndex:index withObject:mutabDic];
+//            [_nameArr replaceObjectAtIndex:index withObject:mutabDic];
+//            [_imgTable reloadData];
+//        }else{
+//
+//            [self showContent:resposeObject[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        [self showContent:@"网络错误"];
+//        NSLog(@"%@",error);
+//    }];
+//}
 
 #pragma mark -- table --
 
@@ -323,7 +323,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    _section = indexPath.section;
+//    _section = indexPath.section;
     _index = indexPath.item;
     
     BOOL Name = false;

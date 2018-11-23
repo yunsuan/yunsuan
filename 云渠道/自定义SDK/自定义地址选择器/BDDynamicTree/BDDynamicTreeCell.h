@@ -36,7 +36,7 @@ typedef enum {
 @property (nonatomic, strong) IBOutlet UILabel *labelTitle;
 @property (nonatomic, strong) IBOutlet UIView *underLine;
 
-+ (CGFloat)heightForCellWithType:(CellType)type;
++ (CGFloat)heightForCellWithType;
 
 - (void)fillWithNode:(BDDynamicTreeNode*)node;
 

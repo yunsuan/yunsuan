@@ -10,15 +10,15 @@
 
 #import "SelectStoreVC.h"
 
-#import "TitleContentImgCell.h"
-#import "StoreAuthCollCell.h"
+//#import "TitleContentImgCell.h"
+//#import "StoreAuthCollCell.h"
 #import "CompleteSurveyCollCell.h"
 
 @interface StoreAuthVC ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 {
     
-    NSArray *_titleArr;
-    NSArray *_imgArr;
+//    NSArray *_titleArr;
+//    NSArray *_imgArr;
     
     NSMutableArray *_selectArr;
     NSMutableArray *_roleArr;
@@ -73,8 +73,8 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"所属门店",@"",@"是否为本店员工"];
-    _imgArr = @[@"rightarrow",@"",@"downarrow1"];
+//    _titleArr = @[@"所属门店",@"",@"是否为本店员工"];
+//    _imgArr = @[@"rightarrow",@"",@"downarrow1"];
     
     _selectArr = [@[] mutableCopy];
     _roleArr = [@[] mutableCopy];

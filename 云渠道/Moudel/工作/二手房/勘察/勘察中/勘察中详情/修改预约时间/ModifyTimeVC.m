@@ -16,9 +16,9 @@
 @interface ModifyTimeVC (){
     
     NSArray *_titleArr;
-    NSArray *_contentArr;
+//    NSArray *_contentArr;
     NSString *_surveyId;
-    NSDate *_date;
+//    NSDate *_date;
 //    NSDateFormatter *_formatter;
 }
 @property (nonatomic, strong) DropDownBtn *originTimeBtn;
@@ -104,7 +104,7 @@
     
     view.dateblock = ^(NSDate *date) {
         
-        strongSelf->_date = date;
+//        strongSelf->_date = date;
         strongSelf->_timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
     };
     [self.view addSubview:view];

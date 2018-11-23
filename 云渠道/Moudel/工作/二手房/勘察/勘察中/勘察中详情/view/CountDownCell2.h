@@ -24,10 +24,10 @@ typedef void(^CountDownMoreBlock)(void);
 
 @property (nonatomic , copy) CountDownMoreBlock countDownMoreBlock;
 
--(void)setcountdownbyday:(NSInteger )day
-                   hours:(NSInteger )hours
-                     min:(NSInteger )min
-                     sec:(NSInteger )sec;
+//-(void)setcountdownbyday:(NSInteger )day
+//                   hours:(NSInteger )hours
+//                     min:(NSInteger )min
+//                     sec:(NSInteger )sec;
 
 -(void)setcountdownbyendtime:(NSString *)endtime;
 @end

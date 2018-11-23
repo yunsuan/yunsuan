@@ -46,7 +46,7 @@
 @property (nonatomic , strong) UIButton *surebtn;
 @property (nonatomic , strong) CustomerInfoModel *Customerinfomodel;
 
-- (void)ActionAddBtn;
+//- (void)ActionAddBtn;
 @end
 
 @implementation QuickAddAndRecommendVC
@@ -79,95 +79,95 @@
     _Customerinfomodel.sex = @"0";
 }
 
-- (void)ActionAddBtn {
-    
-    [_tel1.textfield endEditing:YES];
-    [_tel2.textfield endEditing:YES];
-    [_tel3.textfield endEditing:YES];
-    [_name.textfield endEditing:YES];
-    [_tel2.textfield endEditing:YES];
-    [_num.textfield endEditing:YES];
-    [_detailadress endEditing:YES];
-    if (_numAdd == 0 ) {
-        
-        if ([self checkTel:_tel1.textfield.text]) {
-            
-            _numAdd += 1;
-            [_tel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel1.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-            _tel2.hidden = NO;
-            
-            
-            [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(9 *SIZE);
-                make.top.equalTo(_tel2.mas_bottom).offset(30 *SIZE);
-                make.width.equalTo(@(65 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
-            
-            [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-        }else{
-            
-            [self showContent:@"请填写正确的电话号码"];
-        }
-        
-    }else{
-        
-        if ([_tel2.textfield.text isEqualToString:_tel1.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请不要输入相同电话号码" WithDefaultBlack:^{
-                
-                
-            }];
-        }else{
-            
-            if ([self checkTel:_tel2.textfield.text]) {
-                
-                _numAdd += 1;
-                [_tel3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(_scrollview).offset(80 *SIZE);
-                    make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-                    make.width.equalTo(@(258 *SIZE));
-                    make.height.equalTo(@(33 *SIZE));
-                }];
-                _tel3.hidden = NO;
-                
-                
-                [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(_scrollview).offset(9 *SIZE);
-                    make.top.equalTo(_tel3.mas_bottom).offset(30 *SIZE);
-                    make.width.equalTo(@(65 *SIZE));
-                    make.height.equalTo(@(13 *SIZE));
-                }];
-                
-                [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(_scrollview).offset(80 *SIZE);
-                    make.top.equalTo(_tel3.mas_bottom).offset(19 *SIZE);
-                    make.width.equalTo(@(258 *SIZE));
-                    make.height.equalTo(@(33 *SIZE));
-                }];
-            }else{
-                
-                [self showContent:@"请填写正确的电话号码"];
-            }
-        }
-    }
-}
+//- (void)ActionAddBtn {
+//
+//    [_tel1.textfield endEditing:YES];
+//    [_tel2.textfield endEditing:YES];
+//    [_tel3.textfield endEditing:YES];
+//    [_name.textfield endEditing:YES];
+//    [_tel2.textfield endEditing:YES];
+//    [_num.textfield endEditing:YES];
+//    [_detailadress endEditing:YES];
+//    if (_numAdd == 0 ) {
+//
+//        if ([self checkTel:_tel1.textfield.text]) {
+//
+//            _numAdd += 1;
+//            [_tel2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//                make.left.equalTo(_scrollview).offset(80 *SIZE);
+//                make.top.equalTo(_tel1.mas_bottom).offset(19 *SIZE);
+//                make.width.equalTo(@(258 *SIZE));
+//                make.height.equalTo(@(33 *SIZE));
+//            }];
+//            _tel2.hidden = NO;
+//
+//
+//            [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                make.left.equalTo(_scrollview).offset(9 *SIZE);
+//                make.top.equalTo(_tel2.mas_bottom).offset(30 *SIZE);
+//                make.width.equalTo(@(65 *SIZE));
+//                make.height.equalTo(@(13 *SIZE));
+//            }];
+//
+//            [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                make.left.equalTo(_scrollview).offset(80 *SIZE);
+//                make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
+//                make.width.equalTo(@(258 *SIZE));
+//                make.height.equalTo(@(33 *SIZE));
+//            }];
+//        }else{
+//
+//            [self showContent:@"请填写正确的电话号码"];
+//        }
+//
+//    }else{
+//
+//        if ([_tel2.textfield.text isEqualToString:_tel1.textfield.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请不要输入相同电话号码" WithDefaultBlack:^{
+//
+//
+//            }];
+//        }else{
+//
+//            if ([self checkTel:_tel2.textfield.text]) {
+//
+//                _numAdd += 1;
+//                [_tel3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//                    make.left.equalTo(_scrollview).offset(80 *SIZE);
+//                    make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
+//                    make.width.equalTo(@(258 *SIZE));
+//                    make.height.equalTo(@(33 *SIZE));
+//                }];
+//                _tel3.hidden = NO;
+//
+//
+//                [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                    make.left.equalTo(_scrollview).offset(9 *SIZE);
+//                    make.top.equalTo(_tel3.mas_bottom).offset(30 *SIZE);
+//                    make.width.equalTo(@(65 *SIZE));
+//                    make.height.equalTo(@(13 *SIZE));
+//                }];
+//
+//                [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                    make.left.equalTo(_scrollview).offset(80 *SIZE);
+//                    make.top.equalTo(_tel3.mas_bottom).offset(19 *SIZE);
+//                    make.width.equalTo(@(258 *SIZE));
+//                    make.height.equalTo(@(33 *SIZE));
+//                }];
+//            }else{
+//
+//                [self showContent:@"请填写正确的电话号码"];
+//            }
+//        }
+//    }
+//}
 
 
 #pragma mark -- TextFieldDelegate

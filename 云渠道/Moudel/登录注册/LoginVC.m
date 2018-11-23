@@ -7,7 +7,7 @@
 //
 
 #import "LoginVC.h"
-#import "CYLTabBarControllerConfig.h"
+//#import "CYLTabBarControllerConfig.h"
 #import "RegisterVC.h"
 #import "FindPassWordVC.h"
 #import <UMSocialQQHandler.h>
@@ -341,11 +341,11 @@
 
 }
 
--(void)QuickLogin
-{
-
-    
-}
+//-(void)QuickLogin
+//{
+//
+//
+//}
 
 -(void)Protocol
 {

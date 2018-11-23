@@ -9,10 +9,10 @@
 #import "CustomDetailTableCell4.h"
 
 @interface CustomDetailTableCell4()
-{
-    
-    NSMutableArray *_dataArr;
-}
+//{
+//
+//    NSMutableArray *_dataArr;
+//}
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @end

@@ -12,7 +12,6 @@
 #define PICKERHEIGHT 216
 #define BGHEIGHT     256
 
-#define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
 @interface DateChooseView(){
     
     NSDate *_date;

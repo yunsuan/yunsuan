@@ -16,7 +16,7 @@
 @interface RoomBrokerageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-    NSMutableArray *_dataArr;
+//    NSMutableArray *_dataArr;
     NSMutableArray *_selectArr;
     RoomListModel *_roomModel;
     BrokerModel *_model;
@@ -51,7 +51,7 @@
 - (void)initDataSource{
     
     _selectArr = [@[] mutableCopy];
-    _dataArr = [@[] mutableCopy];
+//    _dataArr = [@[] mutableCopy];
     
     _selectArr = [NSMutableArray arrayWithArray:@[@1,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
 }

@@ -38,7 +38,7 @@
 
 #pragma mark public
 
-- (void)setTitleLabelWithCurrentIndex:(NSUInteger)index totalCount:(NSUInteger)totalCount {
+- (void)setTitleLabelWithCurrentIndex {
 //    if (!totalCount) return;
 //    if (totalCount == 1) {
 //        self.titleLabel.hidden = YES;

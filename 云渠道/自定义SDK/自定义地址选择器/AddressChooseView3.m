@@ -10,7 +10,7 @@
 #define PICKERHEIGHT 216
 #define BGHEIGHT     256
 
-#define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
+//#define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
 
 @interface AddressChooseView3()<UIPickerViewDelegate,UIPickerViewDataSource>
 
@@ -35,7 +35,7 @@
 /**
  记录市选中的位置
  */
-@property(nonatomic, assign) NSInteger selected;
+//@property(nonatomic, assign) NSInteger selected;
 
 @property (nonatomic, strong) NSArray *proArr;;
 
@@ -144,7 +144,7 @@
 - (instancetype)initWithFrame:(CGRect)frame withdata:(NSArray *)data
 {
     if (self = [super initWithFrame:frame]) {
-        self.selected = 0;
+//        self.selected = 0;
         [self loadDatas];
         [self initSuViews];
         
@@ -277,8 +277,8 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (component == 0) {//选择市
-        self.selected = row;
-        
+
+
         self.cityStr = self.cityArray[row][@"city_name"];
         self.cityid = self.cityArray[row][@"city_code"];
         

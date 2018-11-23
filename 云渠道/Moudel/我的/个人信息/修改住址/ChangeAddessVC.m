@@ -15,7 +15,7 @@
     NSString *_provinceId;
     NSString *_cityId;
     NSString *_areaId;
-    NSString *_address;
+//    NSString *_address;
 }
 @property (nonatomic, strong) UILabel *addressL;
 
@@ -36,7 +36,7 @@
     self = [super init];
     if (self) {
         
-        _address = address;
+//        _address = address;
     }
     return self;
 }

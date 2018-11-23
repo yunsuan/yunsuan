@@ -14,5 +14,5 @@
 
 @property (nonatomic, strong) NSString *beforeId;
 
-- (void)ActionCancelBtn;
+//- (void)ActionCancelBtn;
 @end

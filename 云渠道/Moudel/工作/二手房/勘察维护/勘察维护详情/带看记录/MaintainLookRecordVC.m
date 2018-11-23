@@ -12,10 +12,10 @@
 #import "MaintainLookHeader.h"
 
 @interface MaintainLookRecordVC ()<UITableViewDataSource,UITableViewDelegate>
-{
-    
-    NSArray *_titleArr;
-}
+//{
+//
+//    NSArray *_titleArr;
+//}
 @property (nonatomic, strong) UITableView *table;
 
 @end

@@ -10,7 +10,7 @@
 #import "ComplaintVC.h"
 
 #import "BaseHeader.h"
-#import "CountDownCell.h"
+//#import "CountDownCell.h"
 #import "InfoDetailCell.h"
 
 
@@ -21,7 +21,7 @@
     NSArray *_titleArr;
     NSString *_clientId;
     NSMutableDictionary *_dataDic;
-    NSString *_endtime;
+//    NSString *_endtime;
     NSString *_name;
 }
 

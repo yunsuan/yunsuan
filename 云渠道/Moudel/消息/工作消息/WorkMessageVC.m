@@ -8,7 +8,7 @@
 
 #import "WorkMessageVC.h"
 #import "WorkMessageCell.h"
-#import "InfoDetailVC.h"
+//#import "InfoDetailVC.h"
 #import "TypeZeroVC.h"
 #import "TypeOneVC.h"
 #import "TypeTwoVC.h"

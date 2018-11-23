@@ -10,41 +10,41 @@
 #import <BaiduMapAPI_Search/BMKPoiSearchOption.h>
 #import <BaiduMapAPI_Search/BMKPoiSearch.h>
 #import <BaiduMapAPI_Map/BMKMapComponent.h>
-#import <BaiduMapAPI_Radar/BMKRadarOption.h>
-#import <BaiduMapAPI_Location/BMKLocationComponent.h>
-#import <BaiduMapAPI_Base/BMKMapManager.h>
-#import <BaiduMapAPI_Base/BMKBaseComponent.h>
+//#import <BaiduMapAPI_Radar/BMKRadarOption.h>
+//#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+//#import <BaiduMapAPI_Base/BMKMapManager.h>
+//#import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
 #import "YBImageBrowser.h"
 
 #import "SecComRoomProjectVC.h"
 #import "BuildingInfoVC.h"
-#import "SecHouseTypeDetailVC.h"
+//#import "SecHouseTypeDetailVC.h"
 #import "DynamicListVC.h"
 #import "CustomMatchListVC.h"
-#import "BuildingAlbumVC.h"
-#import "DynamicDetailVC.h"
+//#import "BuildingAlbumVC.h"
+//#import "DynamicDetailVC.h"
 #import "CustomListVC.h"
-#import "DistributVC.h"
+//#import "DistributVC.h"
 #import "SecDistributVC.h"
 #import "OverviewVC.h"
 #import "DealRecordVC.h"
 //#import "DistributVC.h"
-#import "SecDistributVC.h"
+//#import "SecDistributVC.h"
 #import "SecComAllRoomListVC.h"
 #import "SecComTypeRoomListVC.h"
 
 #import "SecComRoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
-#import "RoomDetailTableHeader6.h"
-#import "RoomDetailTableCell.h"
+//#import "RoomDetailTableHeader6.h"
+//#import "RoomDetailTableCell.h"
 #import "RoomDetailTableCell1.h"
 #import "RoomDetailTableCell2.h"
 #import "RoomDetailTableCell3.h"
 #import "RoomDetailTableCell4.h"
 #import "RoomDetailTableCell5.h"
 
-#import "ContentTimeBtnBaseView.h"
+//#import "ContentTimeBtnBaseView.h"
 
 @interface SecComRoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,BMKMapViewDelegate,RoomDetailTableCell4Delegate,BMKPoiSearchDelegate,UIGestureRecognizerDelegate,YBImageBrowserDelegate>
 {
@@ -56,12 +56,12 @@
     NSString *_dynamicNum;
     NSMutableArray *_imgArr;
     NSMutableArray *_albumArr;
-    NSString *_focusId;
+//    NSString *_focusId;
     NSMutableArray *_houseArr;
     NSMutableArray *_peopleArr;
-    NSMutableDictionary *_buildDic;
+//    NSMutableDictionary *_buildDic;
     NSString *_phone;
-    NSString *_phone_url;
+//    NSString *_phone_url;
     NSString *_name;
     SecAllRoomDetailHeaderModel *_model;
     NSString *_city;
@@ -125,7 +125,7 @@
     _dynamicDic = [@{} mutableCopy];
     _houseArr = [@[] mutableCopy];
     _peopleArr = [@[] mutableCopy];
-    _buildDic = [@{} mutableCopy];
+//    _buildDic = [@{} mutableCopy];
     
     dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
     
@@ -221,10 +221,10 @@
         _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
     }
 
-    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
-
-        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
-    }
+//    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
+//
+//        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
+//    }
 
     if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
 
@@ -426,10 +426,10 @@
 
 #pragma mark -- BMKMap
 
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
-    
-    
-}
+//- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
+//
+//
+//}
 
 
 #pragma mark -- delegate

@@ -27,8 +27,6 @@
 
 #import "SecComRoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
-#import "RoomDetailTableHeader6.h"
-#import "RoomDetailTableCell.h"
 #import "RoomDetailTableCell1.h"
 #import "RoomDetailTableCell2.h"
 #import "RoomDetailTableCell3.h"

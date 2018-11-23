@@ -19,7 +19,7 @@
 {
     
     NSInteger _page;
-    NSArray *_arr;
+//    NSArray *_arr;
     NSMutableArray *_dataArr;
     NSString *_city;
     NSArray *_tagsArr;

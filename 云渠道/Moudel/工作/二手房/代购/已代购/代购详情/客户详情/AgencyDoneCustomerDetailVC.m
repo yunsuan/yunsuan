@@ -14,7 +14,7 @@
 
 @interface AgencyDoneCustomerDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSArray *_contentArr;
+//    NSArray *_contentArr;
     NSMutableArray *_customerArr;
 }
 @property (nonatomic, strong) UITableView *table;

@@ -19,12 +19,12 @@
 {
     
     NSArray *_titleArr;
-    NSMutableArray *_contentArr;
+//    NSMutableArray *_contentArr;
 //    NSMutableArray *_imgArr;
 //    NSString *_imgUrl;
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
-    NSInteger _index;
+//    NSInteger _index;
     NSString *_companyId;
 //    NSString *_workCode;
     NSString *_role;
@@ -76,7 +76,7 @@
     
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"yyyy-MM-dd"];
-    _contentArr = [[NSMutableArray alloc] init];
+//    _contentArr = [[NSMutableArray alloc] init];
 //    _imgArr = [[NSMutableArray alloc] init];
     _titleArr = @[@"所属公司",@"工号",@"角色",@"申请项目",@"所属部门",@"职位",@"入职/申请时间"];
     _imagePickerController = [[UIImagePickerController alloc] init];
@@ -327,7 +327,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    _index = indexPath.item;
+//    _index = indexPath.item;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         

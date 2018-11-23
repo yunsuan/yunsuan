@@ -14,21 +14,21 @@
 #import "YBImageBrowser.h"
 
 #import "SecAllRoomProjectVC.h"
-#import "SecAllRoomDetailInfoVC.h"
+//#import "SecAllRoomDetailInfoVC.h"
 #import "SecComRoomDetailVC.h"
 #import "SecAllRoomDetailVC.h"
 
 #import "SecAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "SecAllRoomTableCell.h"
-#import "SecAllRoomTableCell2.h"
+//#import "SecAllRoomTableCell2.h"
 #import "SecAllRoomTableCell3.h"
-#import "SecAllRoomTableCell4.h"
-#import "RoomDetailTableCell5.h"
+//#import "SecAllRoomTableCell4.h"
+//#import "RoomDetailTableCell5.h"
 #import "RoomDetailTableCell4.h"
 #import "SecAllRoomTableOtherHouseCell.h"
 
-#import "SecAllRoomProjectModel.h"
+//#import "SecAllRoomProjectModel.h"
 
 
 @interface SecAllRoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,YBImageBrowserDelegate,BMKPoiSearchDelegate,BMKMapViewDelegate,RoomDetailTableCell4Delegate,UIGestureRecognizerDelegate>

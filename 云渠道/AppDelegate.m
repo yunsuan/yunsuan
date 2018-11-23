@@ -9,8 +9,8 @@
 #import "CYLTabBarControllerConfig.h"
 #import "LoginVC.h"
 #import "GuideVC.h"
-#import "SystemMessageVC.h"
-#import "WorkMessageVC.h"
+//#import "SystemMessageVC.h"
+//#import "WorkMessageVC.h"
 #import <WebKit/WebKit.h>
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
@@ -353,12 +353,12 @@ static NSString *const kQQAPPID = @"1106811849";
 
 
 
--(void)tagsAliasCallback:(int)iResCode
-                    tags:(NSSet*)tags
-                   alias:(NSString*)alias
-{
-    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
-}
+//-(void)tagsAliasCallback:(int)iResCode
+//                    tags:(NSSet*)tags
+//                   alias:(NSString*)alias
+//{
+//    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
+//}
 
 - (void)comeBackLoginVC {
     //未登录

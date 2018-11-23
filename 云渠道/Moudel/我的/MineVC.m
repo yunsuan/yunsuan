@@ -22,7 +22,7 @@
 #import "WebViewVC.h"
 #import "MySubscripVC.h"
 #import "MyTeamVC.h"
-#import <StoreKit/StoreKit.h>
+//#import <StoreKit/StoreKit.h>
 
 #import "MineCell.h"
 

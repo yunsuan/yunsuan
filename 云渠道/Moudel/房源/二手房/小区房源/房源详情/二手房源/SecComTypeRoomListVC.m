@@ -11,7 +11,7 @@
 
 #import "SecdaryAllTableCell.h"
 
-#import "SecdaryAllTableModel.h"
+//#import "SecdaryAllTableModel.h"
 
 @interface SecComTypeRoomListVC ()<UITableViewDelegate,UITableViewDataSource>
 {

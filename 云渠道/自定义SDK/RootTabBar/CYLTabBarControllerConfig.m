@@ -50,7 +50,7 @@
         CYLTabBarController *tabBarController = [CYLTabBarController tabBarControllerWithViewControllers:self.viewControllers
                                                                                    tabBarItemsAttributes:self.tabBarItemsAttributesForController];
         //[_tabBarController.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -10)];
-        [self customizeTabBarAppearance:tabBarController];
+        [self customizeTabBarAppearance];
         _tabBarController = tabBarController;
     
     }
@@ -159,7 +159,7 @@
 /**
  *  更多TabBar自定义设置：比如：tabBarItem 的选中和不选中文字和背景图片属性、tabbar 背景图片属性等等
  */
-- (void)customizeTabBarAppearance:(CYLTabBarController *)tabBarController {
+- (void)customizeTabBarAppearance {
 //warning CUSTOMIZE YOUR TABBAR APPEARANCE
     // Customize UITabBar height
     // 自定义 TabBar 高度

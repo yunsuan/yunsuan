@@ -212,7 +212,7 @@
                 
                 if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
                     
-                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
+                    [weakSelf shareWebPageToPlatformType];
                 }else{
                     
                     [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
@@ -221,7 +221,7 @@
                 
                 if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
                     
-                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_Qzone];
+                    [weakSelf shareWebPageToPlatformType];
                 }else{
                     
                     [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
@@ -230,7 +230,7 @@
                 
                 if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
                     
-                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatSession];
+                    [weakSelf shareWebPageToPlatformType];
                 }else{
                     
                     [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
@@ -239,7 +239,7 @@
                 
                 if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
                     
-                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
+                    [weakSelf shareWebPageToPlatformType];
                 }else{
                     
                     [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
@@ -251,8 +251,7 @@
 }
 
 //
-- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
-{
+- (void)shareWebPageToPlatformType {
     //创建分享消息对象
 //    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     

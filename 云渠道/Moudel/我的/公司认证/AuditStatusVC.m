@@ -12,7 +12,7 @@
 @interface AuditStatusVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_data;
-    NSArray *_titleArr;
+//    NSArray *_titleArr;
     NSDictionary *_dataDic;
 }
 @property (nonatomic , strong) UITableView *statusTable;

@@ -13,10 +13,10 @@
 @interface ModifyProjectAnalysisVC ()
 {
     
-    NSMutableArray *_dataArr;
-    NSArray *_titleArr;
-    NSArray *_tagArr;
-    NSArray *_contentArr;
+//    NSMutableArray *_dataArr;
+//    NSArray *_titleArr;
+//    NSArray *_tagArr;
+//    NSArray *_contentArr;
     NSMutableDictionary *_dataDic;
 }
 
@@ -49,10 +49,10 @@
 
 - (void)initDataSource{
     
-    _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
-    _tagArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
-    _dataArr = [[NSMutableArray alloc] init];
-    _titleArr = @[@"核心卖点",@"装修描述"];
+//    _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
+//    _tagArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
+//    _dataArr = [[NSMutableArray alloc] init];
+//    _titleArr = @[@"核心卖点",@"装修描述"];
 }
 
 - (void)ActionSaveBtn:(UIButton *)btn{

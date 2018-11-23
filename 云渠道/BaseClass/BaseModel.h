@@ -12,7 +12,7 @@
 
 @property (nonatomic,copy)NSString *other;
 
-- (NSMutableDictionary *)modeltodic;
+//- (NSMutableDictionary *)modeltodic;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @end

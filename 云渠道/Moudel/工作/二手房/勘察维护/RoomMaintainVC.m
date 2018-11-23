@@ -8,13 +8,13 @@
 
 #import "RoomMaintainVC.h"
 #import "MaintainDetailVC.h"
-#import "CompleteSurveyInfoVC.h"
-#import "SecdaryCommunityRoomVC.h"
+//#import "CompleteSurveyInfoVC.h"
+//#import "SecdaryCommunityRoomVC.h"
 #import "RoomReportAddVC.h"
 
 #import "RoomMaintainCell.h"
 
-#import "RoomMaintainModel.h"
+//#import "RoomMaintainModel.h"
 
 @interface RoomMaintainVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {

@@ -10,7 +10,7 @@
 
 @class AddTagViewCollCell;
 
-typedef void(^DeleteBtnBlock)(NSInteger index);
+//typedef void(^DeleteBtnBlock)(NSInteger index);
 
 @interface AddTagViewCollCell : UICollectionViewCell
 

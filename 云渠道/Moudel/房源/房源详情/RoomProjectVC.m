@@ -7,7 +7,7 @@
 //
 
 #import "RoomProjectVC.h"
-#import "BuildingAlbumVC.h"
+//#import "BuildingAlbumVC.h"
 #import "BuildingInfoVC.h"
 #import "HouseTypeDetailVC.h"
 #import "DynamicListVC.h"
@@ -18,15 +18,15 @@
 
 #import "RoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
-#import "RoomDetailTableHeader6.h"
-#import "RoomDetailTableCell.h"
+//#import "RoomDetailTableHeader6.h"
+//#import "RoomDetailTableCell.h"
 #import "RoomDetailTableCell1.h"
 #import "RoomDetailTableCell2.h"
 #import "RoomDetailTableCell3.h"
 #import "RoomDetailTableCell4.h"
 #import "RoomDetailTableCell5.h"
-#import "CustomMatchModel.h"
-#import "RoomDetailModel.h"
+//#import "CustomMatchModel.h"
+//#import "RoomDetailModel.h"
 #import "YBImageBrowser.h"
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
@@ -49,16 +49,16 @@
     NSString *_dynamicNum;
     NSMutableArray *_imgArr;
     NSMutableArray *_albumArr;
-    NSString *_focusId;
+//    NSString *_focusId;
     NSMutableArray *_houseArr;
     NSMutableArray *_peopleArr;
-    NSMutableDictionary *_buildDic;
+//    NSMutableDictionary *_buildDic;
     NSString *_phone;
-    NSString *_phone_url;
+//    NSString *_phone_url;
     NSString *_name;
     NSInteger _state;
     NSInteger _selected;
-    NSString *_subId;
+//    NSString *_subId;
 
 }
 @property (nonatomic, strong) SelectWorkerView *selectWorkerView;
@@ -116,7 +116,7 @@
     _model = [[RoomDetailModel alloc] init];
     _houseArr = [@[] mutableCopy];
     _peopleArr = [@[] mutableCopy];
-    _buildDic = [@{} mutableCopy];
+//    _buildDic = [@{} mutableCopy];
     
     dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
     
@@ -237,19 +237,19 @@
 }
 
 - (void)SetData:(NSDictionary *)data{
-    if (data[@"total_float_url_phone"]) {
-        _phone_url =  [NSString stringWithFormat:@"%@",data[@"total_float_url_phone"]];
-    }
+//    if (data[@"total_float_url_phone"]) {
+//        _phone_url =  [NSString stringWithFormat:@"%@",data[@"total_float_url_phone"]];
+//    }
     
     if (data[@"butter_tel"]) {
         
         _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
     }
     
-    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
-        
-        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
-    }
+//    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
+//
+//        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
+//    }
     
     if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
         
@@ -398,10 +398,10 @@
 
 #pragma mark -- BMKMap
 
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
-    
-    
-}
+//- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation{
+//
+//
+//}
 
 
 #pragma mark -- delegate
@@ -618,7 +618,7 @@
                         
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
-                            _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+//                            _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
                             [self RequestMethod];
                         }else{
                             [self showContent:resposeObject[@"msg"]];

@@ -52,7 +52,7 @@
 //}
 
 // 页面加载失败时调用
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+- (void)webView {
     [self showContent:@"网络错误"];
 }
 

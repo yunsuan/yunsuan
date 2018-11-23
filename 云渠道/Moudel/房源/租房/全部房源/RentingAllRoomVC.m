@@ -20,19 +20,19 @@
 @interface RentingAllRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
 {
     
-    NSInteger _page;
-    NSMutableArray *_dataArr;
-    NSString *_provice;
+//    NSInteger _page;
+//    NSMutableArray *_dataArr;
+//    NSString *_provice;
     NSString *_city;
-    NSString *_district;
-    NSString *_price;
+//    NSString *_district;
+//    NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
     NSString *_status;
     NSMutableArray *_searchArr;
-    NSArray *_tagsArr;
+//    NSArray *_tagsArr;
     NSArray *_propertyArr;
     BOOL _is1;
     BOOL _is2;
@@ -122,7 +122,7 @@
             }else{
                 
                 _is1 = YES;
-                _district = @"0";
+//                _district = @"0";
                 
                 NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
                 
@@ -179,7 +179,7 @@
             }else{
                 
                 _is2 = YES;
-                _price = @"0";
+//                _price = @"0";
                 NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
                 NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
                 [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
@@ -256,7 +256,7 @@
             }else{
                 
                 _is4 = YES;
-                _more = @"0";
+//                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];
@@ -504,7 +504,7 @@
             if ([str isEqualToString:@"不限"]) {
                 
                 [weakSelf.areaBtn setTitle:@"区域" forState:UIControlStateNormal];
-                _district = @"";
+//                _district = @"";
             }else{
                 
                 if (str.length) {
@@ -514,10 +514,10 @@
                     
                     [weakSelf.areaBtn setTitle:@"区域" forState:UIControlStateNormal];
                 }
-                if ([ID integerValue]) {
-                    
-                    _district = [NSString stringWithFormat:@"%@",ID];
-                }
+//                if ([ID integerValue]) {
+//
+//                    _district = [NSString stringWithFormat:@"%@",ID];
+//                }
             }
             _is1 = NO;
             weakSelf.areaBtn.selected = NO;
@@ -550,7 +550,7 @@
                 [weakSelf.priceBtn setTitle:str forState:UIControlStateNormal];
             }
             _is2 = NO;
-            _price = [NSString stringWithFormat:@"%@",ID];
+//            _price = [NSString stringWithFormat:@"%@",ID];
             weakSelf.priceBtn.selected = NO;
             [weakSelf.priceView removeFromSuperview];
             

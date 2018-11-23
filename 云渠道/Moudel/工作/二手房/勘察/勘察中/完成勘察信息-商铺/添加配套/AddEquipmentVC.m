@@ -54,7 +54,7 @@
     
         for (int i = 0; i < self.data.count; i++) {
             
-            [_selectArr replaceObjectAtIndex:[_dataArr indexOfObject:self.data[i]] withObject:@(1)];
+            _selectArr[[_dataArr indexOfObject:self.data[i]]] = @(1);
         }
     }
     

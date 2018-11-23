@@ -37,8 +37,7 @@
     self.avatarImageView.layer.masksToBounds = YES;
 }
 
-+ (CGFloat)heightForCellWithType:(CellType)type
-{
++ (CGFloat)heightForCellWithType {
     return 44.7 *SIZE;
 }
 

@@ -17,7 +17,7 @@
     NSInteger _nowNum;
     NSMutableArray *_allArr;
     NSInteger _total;
-    NSInteger _current;
+//    NSInteger _current;
 }
 
 

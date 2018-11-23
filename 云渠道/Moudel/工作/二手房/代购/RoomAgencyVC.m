@@ -9,7 +9,7 @@
 #import "RoomAgencyVC.h"
 #import "RoomAgencyProtocolVC.h"
 #import "RoomAgencyDoneVC.h"
-#import "SecdaryCommunityRoomVC.h"
+//#import "SecdaryCommunityRoomVC.h"
 #import "RoomAgencyAddProtocolVC.h"
 
 #import "RoomAgencyCollCell.h"

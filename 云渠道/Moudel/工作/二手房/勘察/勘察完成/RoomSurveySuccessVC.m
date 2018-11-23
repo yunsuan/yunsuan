@@ -7,7 +7,7 @@
 //
 
 #import "RoomSurveySuccessVC.h"
-#import "SurveySuccessDetailVC.h"
+//#import "SurveySuccessDetailVC.h"
 #import "MaintainDetailVC.h"
 
 #import "RoomSurveySuccessCell.h"

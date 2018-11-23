@@ -30,13 +30,13 @@
     NSString *_reporterType;
     NSString *_cardType;
     NSString *_gender;
-    NSInteger _num;
+//    NSInteger _num;
     NSString *_tel;
     NSString *_address;
     BOOL _isCheck;
     NSDateFormatter *_formatter;
     NSString *_city;
-    NSString *_district;
+//    NSString *_district;
 }
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -87,7 +87,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             _city = resposeObject[@"data"][@"city_name"];
-            _district = resposeObject[@"data"][@"district_name"];
+//            _district = resposeObject[@"data"][@"district_name"];
         }
         [self initUI];
     } failure:^(NSError *error) {

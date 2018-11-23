@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+    <option name="CUSTOM_SCOPE_NAME" value="Project Source Files" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e569859-5410-4e4f-9474-94bae5e98070" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/云渠道.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/AppDelegate.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/AppDelegate.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/BaseClass/BaseModel.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/BaseClass/BaseModel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/BaseClass/BaseModel.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/BaseClass/BaseModel.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/BaseClass/BaseViewController.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/BaseClass/BaseViewController.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/model/CustomerTableModel.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/model/CustomerTableModel.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/view/CustomerCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/view/CustomerCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomDetailTableCell4.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomDetailTableCell4.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomDetailTableCell4.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomDetailTableCell4.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomHeaderCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomHeaderCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/快速推荐房源/QuickRoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/快速推荐房源/QuickRoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/快速推荐房源/QuickSearchVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/快速推荐房源/QuickSearchVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/添加需求/AddTagViewCollCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/添加需求/AddTagViewCollCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/AddCustomerVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/AddCustomerVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/QuickAddAndRecommendVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/QuickAddAndRecommendVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/RoomAgencyVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/RoomAgencyVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/RoomAgencyDoneVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/RoomAgencyDoneVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/AgencyDoneDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/AgencyDoneDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/客户详情/AgencyDoneCustomerDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/客户详情/AgencyDoneCustomerDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/客户详情/修改客户详情/AgencyEditCustomerDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/客户详情/修改客户详情/AgencyEditCustomerDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/拟定/RoomAgencyProtocolVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/拟定/RoomAgencyProtocolVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/拟定/挞定详情/GetAgencyProtocolVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/拟定/挞定详情/GetAgencyProtocolVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察中详情/view/CountDownCell2.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察中详情/view/CountDownCell2.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察中详情/修改预约时间/ModifyTimeVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察中详情/修改预约时间/ModifyTimeVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察失效/SurveyInvalidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/勘察失效/SurveyInvalidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-住宅/CompleteSurveyHouseVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-住宅/CompleteSurveyHouseVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-写字楼/CompleteSurveyOfficeVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-写字楼/CompleteSurveyOfficeVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/CompleteSurveyStoreVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/CompleteSurveyStoreVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/CompleteSurveyStoreCollView.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/CompleteSurveyStoreCollView.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/添加配套/AddEquipmentVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/添加配套/AddEquipmentVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/CompleteSurveyInfoVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/CompleteSurveyInfoVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/CompleteSurveyInfoVC4.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/CompleteSurveyInfoVC4.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/layout/MyFlowLayout.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/layout/MyFlowLayout.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/view/CompleteImgHeader.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/view/CompleteImgHeader.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/view/CompleteInfoCollHeader.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息/view/CompleteInfoCollHeader.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察完成/RoomSurveySuccessVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察完成/RoomSurveySuccessVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察完成/勘察完成详情/SurveySuccessDetailVC.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察完成/勘察完成详情/SurveySuccessDetailVC.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/待确认/房源有效/RoomValidApplyVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/待确认/房源有效/RoomValidApplyVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/申诉/申诉详情/SurveyComplaintDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/申诉/申诉详情/SurveyComplaintDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/RoomMaintainVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/RoomMaintainVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/MaintainDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/MaintainDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/view/DashesLineView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/view/DashesLineView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/下架房源/RoomSoldOutVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/下架房源/RoomSoldOutVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/业主信息/view/NameSexCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/业主信息/view/NameSexCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改图片信息/ModifyProjectImageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改图片信息/ModifyProjectImageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改项目分析/ModifyProjectAnalysisVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改项目分析/ModifyProjectAnalysisVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/商铺写字楼cell/ModifyEquepMentVC.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/商铺写字楼cell/ModifyEquepMentVC.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/带看记录/MaintainLookRecordVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/带看记录/MaintainLookRecordVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/RoomAgencyAddProtocolVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/RoomAgencyAddProtocolVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/model/OriginatorsModel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/model/OriginatorsModel.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/选择客源/SelectCustomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/选择客源/SelectCustomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/房源报备/快速报备/RoomReportAddVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/房源报备/快速报备/RoomReportAddVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/待成交详情/UnDealVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/待成交详情/UnDealVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/成交详情/DealedVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/成交详情/DealedVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/未成交详情/FailedDealVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/未成交详情/FailedDealVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/申述详情/DealComplaintResultVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/申述详情/DealComplaintResultVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/申述详情/DealComplaintingVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/申述详情/DealComplaintingVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/RecommendVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/RecommendVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/已确认详情/confirmDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/已确认详情/confirmDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/无效详情/InvalidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/无效详情/InvalidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/有效详情/ValidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/有效详情/ValidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/申诉/ComplaintCompleteVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/申诉/ComplaintCompleteVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/申诉/ComplaintUnCompleteVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/申诉/ComplaintUnCompleteVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/NomineeVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/NomineeVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCell.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCell.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCell3.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCell3.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/cell/NomineeCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/完善客户信息/CompleteCustomVC1.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/完善客户信息/CompleteCustomVC1.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/完善客户信息/CompleteCustomVC2.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/完善客户信息/CompleteCustomVC2.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/报备有效详情/NoValidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/报备有效详情/NoValidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/申诉/AppealComplaintedVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/申诉/AppealComplaintedVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/申诉/AppealComplaintingVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/申诉/AppealComplaintingVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/被推荐失效详情/NoInvalidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/被推荐失效详情/NoInvalidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/MineVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/MineVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/webview/WebViewVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/webview/WebViewVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改住址/ChangeAddessVC.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改住址/ChangeAddessVC.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改住址/ChangeAddessVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改住址/ChangeAddessVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改密码/ChangePassWordVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/修改密码/ChangePassWordVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/出生年月/BirthVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/个人信息/出生年月/BirthVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuditStatusVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuditStatusVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenedVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenedVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenticationVC.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenticationVC.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenticationVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/AuthenticationVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/选择公司/SelectCompanyVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/选择公司/SelectCompanyVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/选择公司/公司详情/CompanyDetailHeaderCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/选择公司/公司详情/CompanyDetailHeaderCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/BrokerageDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/BrokerageDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/view/BrokerDetailHeader.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/view/BrokerDetailHeader.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/view/BrokerageDetailTableCell4.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/已结佣金/已结佣金详情/view/BrokerageDetailTableCell4.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/银行卡/添加银行卡/AddBankCardVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/银行卡/添加银行卡/AddBankCardVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的关注/MyAttentionVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的关注/MyAttentionVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的关注/view/AttentionTableCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的关注/view/AttentionTableCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的团队/MyTeamVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的团队/MyTeamVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的订阅/MySubscripVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/我的订阅/MySubscripVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的订阅/view/MySubscripCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/我的订阅/view/MySubscripCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/StoreAuthVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/StoreAuthVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/view/StoreAuthCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/view/StoreAuthCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/view/TitleContentImgCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/view/TitleContentImgCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/选择门店/SelectStoreVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/选择门店/SelectStoreVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/选择门店/view/StoreAddressView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/选择门店/view/StoreAddressView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/RoomChildVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/RoomChildVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/RoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/RoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view/LevelView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/view/LevelView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view/RoomCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view/RoomCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/RoomChildTableHeader.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/RoomChildTableHeader.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/RoomTypeCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/RoomTypeCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/SlideSDK/SlideBottomView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/view1/SlideSDK/SlideBottomView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/SecdaryAllRoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/SecdaryAllRoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-写字楼/SecAllRoomOfficeVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-写字楼/SecAllRoomOfficeVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-商铺/SecAllRoomStoreVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-商铺/SecAllRoomStoreVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomBrokerageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomBrokerageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomProjectVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomProjectVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/view/SecAllRoomDetailTableHeader.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/view/SecAllRoomDetailTableHeader.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/户型信息/SecHouseTypeDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/户型信息/SecHouseTypeDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/房源信息/SecAllRoomDetailInfoVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/房源信息/SecAllRoomDetailInfoVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/SecdaryCommunityRoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/SecdaryCommunityRoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomBrokerageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomBrokerageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomProjectVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomProjectVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/二手房源/SecComTypeRoomListVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/二手房源/SecComTypeRoomListVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReleaseSenceVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReleaseSenceVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReportedVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReportedVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/关注/AttentionProjectCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/关注/AttentionProjectCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/城市/CityVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/城市/CityVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomBrokerageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomBrokerageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomProjectVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomProjectVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell6.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell6.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell7.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell7.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell8.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableCell8.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader6.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader6.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/动态列表/DynamicDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/动态列表/DynamicDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/快速推荐客源/CustomListVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/快速推荐客源/CustomListVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/快速推荐客源/QuickAddRequireVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/快速推荐客源/QuickAddRequireVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/HouseTypeDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/HouseTypeDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/view/HouseTypeTableHeader.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/view/HouseTypeTableHeader.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/楼栋信息/DistributVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/楼栋信息/DistributVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/楼栋信息/HousedistributVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/楼栋信息/HousedistributVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/BuildingAlbumVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/BuildingAlbumVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/CoreStructure/YBImageBrowserCell.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/CoreStructure/YBImageBrowserCell.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/ToolBar/YBImageBrowserToolBar.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/ToolBar/YBImageBrowserToolBar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/ToolBar/YBImageBrowserToolBar.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/ToolBar/YBImageBrowserToolBar.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/YBImageBrowser.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/YBImageBrowser.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/HouseSearchVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/HouseSearchVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecHouseSearchVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecHouseSearchVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecProhectSearchVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecProhectSearchVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/RentingAllRoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/RentingAllRoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/RentingAllRoomDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/RentingAllRoomDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/RentingAllRoomProjectVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/RentingAllRoomProjectVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/房源信息/RentingAllRoomDetailInfoVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/房源信息/RentingAllRoomDetailInfoVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/RentingCommunityRoomVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/RentingCommunityRoomVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/房源详情/RentingComRoomDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/房源详情/RentingComRoomDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/房源详情/RentingComRoomProjectVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/房源/租房/小区房源/房源详情/RentingComRoomProjectVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/ComfirmInValidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/ComfirmInValidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/ComfirmValidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/ComfirmValidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/DealValidVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/DealValidVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeTwoVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeTwoVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeZeroVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeZeroVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/WorkMessageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/WorkMessageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/二手房工作消息/SecWorkFailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/二手房工作消息/SecWorkFailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/抢单/GetWorkVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/抢单/GetWorkVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/抢单/抢单详情/GetWorkDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/抢单/抢单详情/GetWorkDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/InfoDetailVC.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/InfoDetailVC.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/InfoDetailCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/InfoDetailCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/NoPassCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/NoPassCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/PassCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/cell/PassCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/已确认/已确认详情/SystemWorkConfirmDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/已确认/已确认详情/SystemWorkConfirmDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/待确认/待确认详情/SystemWorkWaitDetailVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/待确认/待确认详情/SystemWorkWaitDetailVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/消息/系统消息/SystemMessageVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/消息/系统消息/SystemMessageVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/登录注册/LoginVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/登录注册/LoginVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/登录注册/找回密码/FindPassWordVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/登录注册/找回密码/FindPassWordVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/登录注册/注册/BingdingAccountVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/登录注册/注册/BingdingAccountVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Moudel/登录注册/注册/RegisterVC.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Moudel/登录注册/注册/RegisterVC.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/Other/BaseRequest.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/Other/BaseRequest.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/UserModel/NetConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/UserModel/NetConfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/RootTabBar/CYLTabBarControllerConfig.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/RootTabBar/CYLTabBarControllerConfig.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/单个图片Coll/SingleCollCell.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/单个图片Coll/SingleCollCell.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/蓝点标题基本cell/BlueTitleBaseCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/蓝点标题基本cell/BlueTitleBaseCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/蓝点标题基本header/BaseHeader.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/蓝点标题基本header/BaseHeader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/可修改弹出框/新加输入框相册名字/AddAlbumView.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/可修改弹出框/新加输入框相册名字/AddAlbumView.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/弹出框/TransmitView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/弹出框/TransmitView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView2.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView2.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AdressChooseView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AdressChooseView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTree.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTree.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTreeCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTreeCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTreeCell.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/BDDynamicTree/BDDynamicTreeCell.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/自定义时间选择器/DateChooseView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/自定义时间选择器/DateChooseView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/选房/KyoCinameSeatScrollView/KyoCinameSeatScrollView.h" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/选房/KyoCinameSeatScrollView/KyoCinameSeatScrollView.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/选房/KyoCinameSeatScrollView/KyoCinameSeatScrollView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/选房/KyoCinameSeatScrollView/KyoCinameSeatScrollView.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/云渠道/自定义SDK/选择置业顾问/WorkerPickView.m" beforeDir="false" afterPath="$PROJECT_DIR$/云渠道/自定义SDK/选择置业顾问/WorkerPickView.m" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_6E4E9353-74CC-4AF4-889B-FB592772C989" />
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1086653592">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.21" value="1" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.opened" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="h" value="57" />
+          <entry key="m" value="261" />
+          <entry key="pbxproj" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="ObjectiveC" value="318" />
+          <entry key="XCodeProjectFiles" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="h" value="1" />
+          <entry key="m" value="100" />
+          <entry key="pbxproj" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="ObjectiveC" value="101" />
+          <entry key="XCodeProjectFiles" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="18" column="59" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecHouseSearchVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="296" column="8" selection-start-line="296" selection-start-column="8" selection-end-line="296" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/SecdaryCommunityRoomVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="334">
+              <caret line="132" column="3" selection-start-line="118" selection-start-column="2" selection-end-line="132" selection-end-column="3" />
+              <folding>
+                <element signature="e#395#415#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/SecdaryAllRoomVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="113">
+              <caret line="110" selection-start-line="110" selection-start-column="2" selection-end-line="125" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="869">
+              <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomProjectVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="428" selection-start-line="428" selection-start-column="2" selection-end-line="431" selection-end-column="3" />
+              <folding>
+                <element signature="e#127#174#0" expanded="true" />
+                <element signature="e#510#536#0" expanded="true" />
+                <element signature="e#632#657#0" expanded="true" />
+                <element signature="e#799#825#0" expanded="true" />
+                <element signature="e#929#960#0" expanded="true" />
+                <element signature="e#1141#1173#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="994">
+              <caret line="143" column="64" selection-start-line="143" selection-start-column="63" selection-end-line="143" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/搜索/HouseSearchVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="271" column="8" lean-forward="true" selection-start-line="271" selection-start-column="8" selection-end-line="271" selection-end-column="8" />
+              <folding>
+                <element signature="e#121#146#0" expanded="true" />
+                <element signature="e#251#270#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/AddCustomerVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="128">
+              <caret line="38" column="48" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/添加商铺写字楼/AddStoreRequireMentVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="559" column="19" lean-forward="true" selection-start-line="559" selection-start-column="19" selection-end-line="559" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>_tagsArr</find>
+      <find>_more</find>
+      <find>_recordId</find>
+      <find>_contentArr</find>
+      <find>_endtime</find>
+      <find>isLoadFailed</find>
+      <find>AttentionProjectCell</find>
+      <find>ActionContinueBtn</find>
+      <find>ActionSeeWayBtn</find>
+      <find>HNTitleView</find>
+      <find>initDataSouce</find>
+      <find>setNeedsDisplay</find>
+      <find>RequestAddMethod</find>
+      <find>ActionRecommendBtn</find>
+      <find>ActionEditBtn</find>
+      <find>RequestAddDic</find>
+      <find>creatQRCodeWith</find>
+      <find>initUI</find>
+      <find>MasonryUI</find>
+      <find>ActionMessBtn</find>
+      <find>ActionAddBtn</find>
+      <find>SearchRequest</find>
+      <find>ReleaseSenceVC</find>
+      <find>getSeatColorWithState</find>
+      <find>roomNumL</find>
+      <find>selected</find>
+      <find>ActionRightBtn</find>
+      <find>tagsAliasCallback</find>
+      <find>typeBtn</find>
+      <find>typeL</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/RecommendVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReleaseSenceVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/租房/全部房源/房源详情/RentingAllRoomProjectVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/RoomAgencyVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/RoomChildVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/RoomMaintainVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/下架房源/RoomSoldOutVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察完成/RoomSurveySuccessVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/RoomVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomBrokerageVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-写字楼/SecAllRoomOfficeVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/SecAllRoomProjectVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情-商铺/SecAllRoomStoreVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomBrokerageVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/二手房源/SecComTypeRoomListVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/房源详情/户型信息/SecHouseTypeDetailVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecProhectSearchVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/我的/公司认证/选择公司/SelectCompanyVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/选择客源/SelectCustomVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/view1/SlideSDK/SlideBottomView.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/我的/门店认证/StoreAuthVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/申诉/申诉详情/SurveyComplaintDetailVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/系统消息/SystemMessageVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/已确认/已确认详情/SystemWorkConfirmDetailVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/待确认/待确认详情/SystemWorkWaitDetailVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/自定义SDK/弹出框/TransmitView.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeZeroVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/待成交详情/UnDealVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/WorkMessageVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/银行卡/添加银行卡/AddBankCardVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/自定义SDK/可修改弹出框/新加输入框相册名字/AddAlbumView.h" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/AddCustomerVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView2.m" />
+        <option value="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.h" />
+        <option value="$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.m" />
+        <option value="$PROJECT_DIR$/云渠道/AppDelegate.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/关注/AttentionProjectCell.h" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/AgencyDoneDetailVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改图片信息/ModifyProjectImageVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/RoomAgencyAddProtocolVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomProjectVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/房源报备/快速报备/RoomReportAddVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/推荐/有效详情/ValidVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/我的/webview/WebViewVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeTwoVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.h" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/SecdaryCommunityRoomVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/SecdaryAllRoomVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomProjectVC.m" />
+        <option value="$PROJECT_DIR$/云渠道/Moudel/房源/搜索/HouseSearchVC.m" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-14" />
+    <option name="y" value="67" />
+    <option name="width" value="1260" />
+    <option name="height" value="701" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>C/C++</id>
+          </State>
+          <State>
+            <id>ClassesObjective-C</id>
+          </State>
+          <State>
+            <id>GeneralObjective-C</id>
+          </State>
+          <State>
+            <id>Message resolutionObjective-C</id>
+          </State>
+          <State>
+            <id>MethodsObjective-C</id>
+          </State>
+          <State>
+            <id>Objective-C</id>
+          </State>
+          <State>
+            <id>PropertiesObjective-C</id>
+          </State>
+          <State>
+            <id>RELAX NG</id>
+          </State>
+          <State>
+            <id>Unused codeC/C++</id>
+          </State>
+          <State>
+            <id>Unused codeObjective-C</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Unused codeC/C++</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Cidr.FilesView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="云渠道" type="1d218c8b:XcodeProjectNode" />
+            </path>
+            <path>
+              <item name="" type="efc3779f:XcodeRootNode" />
+              <item name="云渠道" type="1d218c8b:XcodeProjectNode" />
+              <item name="云渠道" type="fcab9f18:XcodeViewNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="云渠道" type="AppleRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="云渠道" TARGET_NAME="云渠道" CONFIG_NAME="Debug" SCHEME_NAME="云渠道" IS_LOCATION_SIMULATION_ALLOWED="true" RUN_TARGET_PROJECT_NAME="云渠道" RUN_TARGET_NAME="云渠道" MAKE_ACTIVE="TRUE">
+      <EXTENSION ID="org.jetbrains.appcode.reveal.RevealRunConfigurationExtension">
+        <REVEAL_SETTINGS autoInject="false" autoInstall="true" askToEnableAutoInstall="true" />
+      </EXTENSION>
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e569859-5410-4e4f-9474-94bae5e98070" name="Default Changelist" comment="" />
+      <created>1542867826172</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1542867826172</updated>
+      <workItem from="1542867831807" duration="8000" />
+      <workItem from="1542867852785" duration="948000" />
+      <workItem from="1542880975770" duration="13172000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="14128000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-14" y="67" width="1260" height="701" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25779969" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32840723" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3293919" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32840723" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3293919" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Inspection Results" order="11" visible="true" weight="0.32019705" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeZeroVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-end-line="17" />
+          <folding>
+            <element signature="e#119#141#0" expanded="true" />
+            <element signature="e#218#244#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/客源成交/待成交详情/UnDealVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="9" column="16" selection-start-line="9" selection-end-line="10" />
+          <folding>
+            <element signature="e#169#191#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/WorkMessageVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="10" column="17" selection-start-line="10" selection-end-line="11" />
+          <folding>
+            <element signature="e#123#148#0" expanded="true" />
+            <element signature="e#204#226#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/第三方SDK/WMPageController/WMMenuView.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="53" column="12" selection-start-line="53" selection-start-column="12" selection-end-line="53" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/我的/我的佣金/银行卡/添加银行卡/AddBankCardVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="33" column="45" selection-start-line="33" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/可修改弹出框/新加输入框相册名字/AddAlbumView.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="26" column="49" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView2.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="46" column="44" selection-start-line="46" selection-end-line="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="24" column="4" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/关注/AttentionProjectCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+          <folding>
+            <element signature="e#128#151#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/被推荐的客户/申诉/AppealComplaintedVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#127#158#0" expanded="true" />
+            <element signature="e#211#237#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/view/HouseHeaderCollCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/view/HouseHeaderCollCell.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-196" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/户型详情/HouseTypeDetailVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4784">
+          <folding>
+            <element signature="e#186#213#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/model/HouseTypeBriefModel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/消息/消息详情/InfoDetailVC.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/model/HouseTypeBriefModel.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/添加需求/AddTagViewCollCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/BaseClass/BaseViewController.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8">
+          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/第三方SDK/Bugtags-iOS-3.0.1/Bugtags.framework/Headers/Bugtags.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="183" column="5" selection-start-line="183" selection-start-column="5" selection-end-line="183" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/view/CustomDetailTableCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/UserModel/LocalModel.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/客户详情/AgencyDoneCustomerDetailVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/AgencyDoneDetailVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-53">
+          <caret line="79" column="14" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+          <folding>
+            <element signature="e#126#156#0" expanded="true" />
+            <element signature="e#227#265#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/AppDelegate.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="279" column="8" selection-start-line="279" selection-start-column="8" selection-end-line="279" selection-end-column="8" />
+          <folding>
+            <element signature="e#118#141#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/cell和头部/蓝点标题查看更多header/BlueTitleMoreHeader.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/修改图片信息/ModifyProjectImageVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="204" column="3" lean-forward="true" selection-start-line="194" selection-start-column="13" selection-end-line="204" selection-end-column="3" />
+          <folding>
+            <element signature="e#127#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/代购/已代购/代购详情/view/NameSexImgCell.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/发布房源/ReleaseSenceVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="436" column="12" lean-forward="true" selection-start-line="436" selection-start-column="12" selection-end-line="436" selection-end-column="12" />
+          <folding>
+            <element signature="e#122#148#0" expanded="true" />
+            <element signature="e#329#361#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/勘察维护详情/添加代购合同/RoomAgencyAddProtocolVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-23674">
+          <caret line="140" selection-start-line="140" selection-end-line="145" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/view/RoomDetailTableHeader.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="290" column="5" selection-start-line="290" selection-start-column="5" selection-end-line="298" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源列表model/RoomListModel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察维护/RoomMaintainVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
+          <folding>
+            <element signature="e#122#148#0" expanded="true" />
+            <element signature="e#250#277#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/RoomProjectVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="400" column="6" selection-start-line="400" selection-start-column="6" selection-end-line="403" selection-end-column="3" />
+          <folding>
+            <element signature="e#177#203#0" expanded="true" />
+            <element signature="e#508#540#0" expanded="true" />
+            <element signature="e#734#760#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/房源报备/快速报备/RoomReportAddVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="118" column="3" lean-forward="true" selection-start-line="104" selection-start-column="12" selection-end-line="118" selection-end-column="3" />
+          <folding>
+            <element signature="e#208#234#0" expanded="true" />
+            <element signature="e#399#419#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/view1/RoomTypeView.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/推荐/有效详情/ValidVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+          <folding>
+            <element signature="e#114#133#0" expanded="true" />
+            <element signature="e#186#212#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/我的/webview/WebViewVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/房源详情/相册/相册/YBImageBrowser/ToolBar/XGToolBar.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-88">
+          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/消息/工作消息/TypeTwoVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+          <folding>
+            <element signature="e#118#139#0" expanded="true" />
+            <element signature="e#192#218#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/消息/系统派单/已确认/已确认详情/SystemWorkConfirmDetailVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="55" column="14" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="14" />
+          <folding>
+            <element signature="e#126#163#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/待确认/待确认详情/SurveyWaitDetailVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="52" column="7" selection-start-line="52" selection-start-column="7" selection-end-line="52" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/工作/二手房/勘察/勘察中/完成勘察信息-商铺/view/view/StoreViewCollCell.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="18" column="59" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/搜索/SecHouseSearchVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="296" column="8" selection-start-line="296" selection-start-column="8" selection-end-line="296" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/SecdaryCommunityRoomVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="132" column="3" selection-start-line="118" selection-start-column="2" selection-end-line="132" selection-end-column="3" />
+          <folding>
+            <element signature="e#395#415#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/全部房源/SecdaryAllRoomVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="110" selection-start-line="110" selection-start-column="2" selection-end-line="125" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/二手房/小区房源/房源详情/SecComRoomProjectVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="428" selection-start-line="428" selection-start-column="2" selection-end-line="431" selection-end-column="3" />
+          <folding>
+            <element signature="e#127#174#0" expanded="true" />
+            <element signature="e#510#536#0" expanded="true" />
+            <element signature="e#632#657#0" expanded="true" />
+            <element signature="e#799#825#0" expanded="true" />
+            <element signature="e#929#960#0" expanded="true" />
+            <element signature="e#1141#1173#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/自定义SDK/自定义地址选择器/AddressChooseView3.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="994">
+          <caret line="143" column="64" selection-start-line="143" selection-start-column="63" selection-end-line="143" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/房源/搜索/HouseSearchVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="271" column="8" lean-forward="true" selection-start-line="271" selection-start-column="8" selection-end-line="271" selection-end-column="8" />
+          <folding>
+            <element signature="e#121#146#0" expanded="true" />
+            <element signature="e#251#270#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/新增客户/AddCustomerVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="38" column="48" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/Moudel/客源/客户详情/添加商铺写字楼/AddStoreRequireMentVC.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="559" column="19" lean-forward="true" selection-start-line="559" selection-start-column="19" selection-end-line="559" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/云渠道/第三方SDK/CYLTabBarController/CYLTabBarController.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="869">
+          <caret line="85" column="8" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

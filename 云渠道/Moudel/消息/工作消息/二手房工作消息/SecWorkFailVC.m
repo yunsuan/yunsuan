@@ -18,7 +18,7 @@
     
     NSArray *_titleArr;
     NSArray *_contentArr;
-    NSString *_recordId;
+//    NSString *_recordId;
     NSMutableArray *_processArr;
     
     NSString *_surveyId;

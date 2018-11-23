@@ -10,11 +10,11 @@
 #import "ComplaintVC.h"
 
 #import "BaseHeader.h"
-#import "CountDownCell.h"
+//#import "CountDownCell.h"
 #import "InfoDetailCell.h"
 
 #import "RecommendView.h"
-#import "TransmitView.h"
+//#import "TransmitView.h"
 #import "FailView.h"
 
 @interface TypeZeroVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -23,7 +23,7 @@
     NSArray *_data;
     NSArray *_titleArr;
     NSMutableDictionary *_dataDic;
-    NSString *_endtime;
+//    NSString *_endtime;
     NSString *_name;
 }
 

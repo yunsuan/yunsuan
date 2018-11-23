@@ -7,7 +7,7 @@
 //
 
 #import "HouseTypeDetailVC.h"
-#import "HouseTypeDetailVC.h"
+//#import "HouseTypeDetailVC.h"
 #import "BuildingAlbumVC.h"
 #import "CustomMatchListVC.h"
 
@@ -215,10 +215,10 @@
 
 
 
-- (void)ActionRecommendBtn:(UIButton *)btn{
-    
-    [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
-}
+//- (void)ActionRecommendBtn:(UIButton *)btn{
+//
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.transmitView];
+//}
 
 #pragma mark -- Method --
 
