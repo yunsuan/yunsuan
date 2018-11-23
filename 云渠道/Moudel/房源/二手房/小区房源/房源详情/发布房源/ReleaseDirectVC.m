@@ -140,6 +140,13 @@
     nextVC.buildId = self.buildId;
     nextVC.unitId = self.unitId;
     nextVC.comName = self.comName;
+    nextVC.completeSurveyInfoVCBlock = ^{
+        
+        if (self.releaseDirectVCBlock) {
+            
+            self.releaseDirectVCBlock();
+        }
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

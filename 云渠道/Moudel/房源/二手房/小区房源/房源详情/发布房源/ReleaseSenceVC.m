@@ -610,10 +610,6 @@
             }else if ([weakSelf.status isEqualToString:@"complete"]){
                 
                 ReleaseDirectVC *nextVC = [[ReleaseDirectVC alloc] init];
-//                nextVC.releaseDirectVCBlock = ^{
-//                    
-//                    
-//                }
                 nextVC.dataDic = weakSelf.fjxx;
                 nextVC.projectID = weakSelf.project_id;
                 nextVC.buildId = weakSelf.build_id;
