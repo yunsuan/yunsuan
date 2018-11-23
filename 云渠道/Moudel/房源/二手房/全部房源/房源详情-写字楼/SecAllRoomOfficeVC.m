@@ -41,6 +41,7 @@
     SecAllRoomOfficeModel *_model;
     NSMutableArray *_imgArr;
     NSMutableDictionary *_focusDic;
+    NSMutableArray *_houseArr;
     NSString *_focusId;
     NSString *_phone;
 }
@@ -83,6 +84,7 @@
     _imgArr = [@[] mutableCopy];
     _model = [[SecAllRoomOfficeModel alloc] init];
     _focusDic = [@{} mutableCopy];
+    _houseArr = [@[] mutableCopy];
     //    _albumArr = [@[] mutableCopy];
 }
 
@@ -167,6 +169,10 @@
         _focusDic = [NSMutableDictionary dictionaryWithDictionary:data[@"focus"]];
     }
     _attentBtn.userInteractionEnabled = YES;
+    if ([data[@"other"] isKindOfClass:[NSArray class]]) {
+        
+        _houseArr = [NSMutableArray arrayWithArray:data[@"other"]];
+    }
     [_roomTable reloadData];
 }
 
@@ -508,30 +514,31 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        //        if (_houseArr.count > 3) {
-        //
-        //            cell.num = _houseArr.count;
-        //        }else{
-        //
-        //            cell.num = 3;
-        //        }
-        //        if (_houseArr.count) {
-        //
-        ////            cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
-        //            [cell.cellColl reloadData];
-        //        }else{
-        //
-        //            [cell.cellColl reloadData];
-        //        }
+        if (_houseArr.count) {
+            
+            cell.num = _houseArr.count;
+        }else{
+            
+            cell.num = 1;
+        }
+        
+        if (_houseArr.count) {
+            
+            cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
+            [cell.cellColl reloadData];
+        }else{
+            
+            [cell.cellColl reloadData];
+        }
         
         cell.secAllRoomTableOtherHouseCellCollBlock = ^(NSInteger index) {
             
-            //            if (_houseArr.count) {
-            //
-            //                SecHouseTypeDetailVC *nextVC = [[SecHouseTypeDetailVC alloc] initWithHouseTypeId:[NSString stringWithFormat:@"%@",_houseArr[index][@"id"]] index:index dataArr:_houseArr projectId:_projectId];
-            //                [self.navigationController pushViewController:nextVC animated:YES];
-            //            }
-            
+            if (_houseArr.count) {
+                
+                SecAllRoomOfficeVC *nextVC = [[SecAllRoomOfficeVC alloc] initWithHouseId:_houseArr[index][@"house_id"] city:_city];
+                nextVC.type = [_houseArr[index][@"type"] integerValue];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         };
         
         return cell;

@@ -388,6 +388,7 @@
 		0CEC62F1208F0017006EC0BD /* HouseTypeBriefModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62F0208F0017006EC0BD /* HouseTypeBriefModel.m */; };
 		0CEC62F420917668006EC0BD /* RankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62F320917668006EC0BD /* RankView.m */; };
 		0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2821A5422600997B76 /* CustomerListVC.m */; };
+		0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */; };
 		0CEF347821806BC900419D5E /* SystemoWorkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347721806BC900419D5E /* SystemoWorkVC.m */; };
 		0CEF347E21807B5500419D5E /* SystemWorkWaitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347D21807B5500419D5E /* SystemWorkWaitVC.m */; };
 		0CEF348221807C1500419D5E /* SystemWorkWaitTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF348121807C1500419D5E /* SystemWorkWaitTableCell.m */; };
@@ -1337,6 +1338,8 @@
 		0CEC62F320917668006EC0BD /* RankView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RankView.m; sourceTree = "<group>"; };
 		0CED5B2721A5422600997B76 /* CustomerListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerListVC.h; sourceTree = "<group>"; };
 		0CED5B2821A5422600997B76 /* CustomerListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerListVC.m; sourceTree = "<group>"; };
+		0CED5B2A21A7C72800997B76 /* ReleaseDirectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseDirectVC.h; sourceTree = "<group>"; };
+		0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseDirectVC.m; sourceTree = "<group>"; };
 		0CEF347621806BC900419D5E /* SystemoWorkVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemoWorkVC.h; sourceTree = "<group>"; };
 		0CEF347721806BC900419D5E /* SystemoWorkVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemoWorkVC.m; sourceTree = "<group>"; };
 		0CEF347C21807B5500419D5E /* SystemWorkWaitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemWorkWaitVC.h; sourceTree = "<group>"; };
@@ -3960,6 +3963,8 @@
 				0CDD6FEA20CFA6B400D6609C /* ReleaseSenceVC.m */,
 				0CDD6FF120CFAE4400D6609C /* ReportedVC.h */,
 				0CDD6FF220CFAE4400D6609C /* ReportedVC.m */,
+				0CED5B2A21A7C72800997B76 /* ReleaseDirectVC.h */,
+				0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */,
 			);
 			path = "发布房源";
 			sourceTree = "<group>";
@@ -5863,6 +5868,7 @@
 				0C9B01CF216F47EE0055A9A8 /* RoomTypeCollHeader.m in Sources */,
 				0C96CE6C21940A080049C1AC /* SecWorkSuccessVC.m in Sources */,
 				0CD90A4620DB3CFA00061B4A /* MaintainLookCell.m in Sources */,
+				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
 				0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */,
 				0CD7B5C3214799C5009517F2 /* RoomChildVC.m in Sources */,
 				10255A7021A53D000042738C /* YBImageBrowserCopywriter.m in Sources */,

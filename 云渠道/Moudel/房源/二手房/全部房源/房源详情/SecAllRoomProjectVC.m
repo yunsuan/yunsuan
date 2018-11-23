@@ -478,13 +478,20 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        if (_houseArr.count) {
+            
             cell.num = _houseArr.count;
+        }else{
+            
+            cell.num = 1;
+        }
+        
         if (_houseArr.count) {
 
             cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
             [cell.cellColl reloadData];
         }else{
-
+            
             [cell.cellColl reloadData];
         }
         

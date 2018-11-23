@@ -10,6 +10,7 @@
 #import "ReportedVC.h"
 #import "RoomAgencyAddProtocolVC.h"
 #import "CompleteSurveyInfoVC.h"
+#import "ReleaseDirectVC.h"
 
 #import "SMScrollView.h"
 //#import "KyoCenterLineView.h"
@@ -610,15 +611,23 @@
                 }
             }else if ([weakSelf.status isEqualToString:@"complete"]){
                 
-                CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-                nextVC.status = @"direct";
+                ReleaseDirectVC *nextVC = [[ReleaseDirectVC alloc] init];
                 nextVC.dataDic = weakSelf.fjxx;
                 nextVC.projectID = weakSelf.project_id;
                 nextVC.buildId = weakSelf.build_id;
                 nextVC.unitId = weakSelf.unit_id;
-                nextVC.comName = self.comName;
-//                nextVC.surveyId = //缺少勘察ID,直接勘察，需要新接口
+                nextVC.comName = weakSelf.comName;
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
+
+//                CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+//                nextVC.status = @"direct";
+//                nextVC.dataDic = weakSelf.fjxx;
+//                nextVC.projectID = weakSelf.project_id;
+//                nextVC.buildId = weakSelf.build_id;
+//                nextVC.unitId = weakSelf.unit_id;
+//                nextVC.comName = self.comName;
+////                nextVC.surveyId = //缺少勘察ID,直接勘察，需要新接口
+//                [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
                 ReportedVC *nextVC = [[ReportedVC alloc] initWithData:strongSelf->_fjxx buildId:weakSelf.build_id unitId:weakSelf.unit_id];

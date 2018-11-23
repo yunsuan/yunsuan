@@ -42,26 +42,37 @@
             
             cell = [[SecAllRoomCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 220 *SIZE)];
         }
-    
-    NSString *imgurl = _dataArr[indexPath.item][@"img_url"];
-    if (imgurl.length>0) {
+    if (_dataArr.count) {
         
-        [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,self.dataArr[indexPath.item][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        NSString *imgurl = _dataArr[indexPath.item][@"img_url"];
+        if (imgurl.length>0) {
             
-            if (error) {
+            [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,self.dataArr[indexPath.item][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 
-                cell.typeImg.image = [UIImage imageNamed:@"default_3"];
-            }
-        }];
-    }
-    else{
-        
-        cell.typeImg.image = [UIImage imageNamed:@"default_3"];
-    }
+                if (error) {
+                    
+                    cell.typeImg.image = [UIImage imageNamed:@"default_3"];
+                }
+            }];
+        }
+        else{
+            
+            cell.typeImg.image = [UIImage imageNamed:@"default_3"];
+        }
         cell.nameL.text = self.dataArr[indexPath.item][@"title"];
         cell.areaL.text = [NSString stringWithFormat:@"%@㎡",self.dataArr[indexPath.item][@"build_area"]];
         cell.priceL.text = [NSString stringWithFormat:@"%@万",self.dataArr[indexPath.item][@"price"]];
-        return cell;
+    }else{
+        
+        
+        cell.typeImg.image = [UIImage imageNamed:@"default_3"];
+        
+        cell.nameL.text = @"暂无房源信息";
+//        cell.areaL.text = [NSString stringWithFormat:@"%@㎡",self.dataArr[indexPath.item][@"build_area"]];
+//        cell.priceL.text = [NSString stringWithFormat:@"%@万",self.dataArr[indexPath.item][@"price"]];
+    }
+    
+    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
