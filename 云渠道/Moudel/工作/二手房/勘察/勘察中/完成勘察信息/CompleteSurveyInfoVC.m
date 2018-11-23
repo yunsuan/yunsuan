@@ -216,6 +216,10 @@
                               @"intent":_intentTF.textfield.text,
                               @"urgency":_urgentTF.textfield.text,
                               @"property_limit":@"60",
+                              @"name":self.dataDic[@"name"],
+                              @"sex":self.dataDic[@"sex"],
+                              @"tel":self.dataDic[@"tel"],
+                              @"report_type":self.dataDic[@"report_type"]
                               };
         tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     }
