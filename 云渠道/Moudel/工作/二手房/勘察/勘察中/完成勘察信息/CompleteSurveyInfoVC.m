@@ -215,7 +215,7 @@
                               @"build_area":self.dataDic[@"JZMJ"],
                               @"intent":_intentTF.textfield.text,
                               @"urgency":_urgentTF.textfield.text,
-                              @"property_limit":@"60"
+                              @"property_limit":@"60",
                               };
         tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     }

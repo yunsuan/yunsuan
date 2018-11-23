@@ -10,6 +10,8 @@
 
 @interface SecAllRoomStoreVC : BaseViewController
 
+@property (nonatomic, assign) NSInteger type;
+
 - (instancetype)initWithHouseId:(NSString *)houseId city:(NSString *)city;
 
 @end
