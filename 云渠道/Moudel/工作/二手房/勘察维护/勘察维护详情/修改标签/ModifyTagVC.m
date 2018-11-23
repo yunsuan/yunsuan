@@ -32,7 +32,17 @@
     self = [super init];
     if (self) {
         
-        _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS];
+        if ([self.typeId integerValue] == 1) {
+            
+            _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_HOUSE];
+        }else if ([self.typeId integerValue] == 2){
+            
+            _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_SHOP];
+        }else{
+            
+            _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_OFFICE];
+        }
+        
         _dataArr = [[NSMutableArray alloc] init];//WithArray:array];
         for (NSUInteger i = 0; i < array.count; i++) {
             

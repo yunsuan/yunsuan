@@ -46,17 +46,20 @@
 - (void)initDataSource{
     
     _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
-    _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS];
+    
     _dataArr = [[NSMutableArray alloc] init];
     if ([self.dic[@"type"] integerValue] == 1) {
         
         _titleArr = @[@"核心卖点",@"装修描述",@"房源标签",@"已选标签"];
+        _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_HOUSE];
     }else if ([self.dic[@"type"] integerValue] == 2){
         
         _titleArr = @[@"商铺描述",@"铺面优势",@"房源标签",@"已选标签"];
+        _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_SHOP];
     }else{
         
         _titleArr = @[@"房源描述",@"房源优势",@"房源标签",@"已选标签"];
+        _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_OFFICE];
     }
     
 //    for (int i = 0; i < _tagArr.count; i++) {

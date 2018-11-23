@@ -16,6 +16,8 @@ typedef void(^ModifyTagSaveBtnBlock)(NSArray *array);
 
 @property (nonatomic, copy) ModifyTagSaveBtnBlock modifyTagSaveBtnBlock;
 
+@property (nonatomic, strong) NSString *status;
+
 @property (nonatomic, strong) NSString *houseId;
 
 @property (nonatomic, strong) NSString *typeId;

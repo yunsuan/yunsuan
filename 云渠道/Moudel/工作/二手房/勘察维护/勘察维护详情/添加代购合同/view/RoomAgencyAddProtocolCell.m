@@ -42,6 +42,8 @@
         _genderBtn.content.text = @"";
     }
 
+    _phoneTF.textfield.text = @"";
+    _phoneTF2.textfield.text = @"";
     if ([dic[@"tel"] count]) {
         
         if ([dic[@"tel"] count] == 1) {
@@ -57,6 +59,7 @@
     NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
     NSDictionary *tempDic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",2]];
     NSArray *typeArr = tempDic[@"param"];
+    _certTypeBtn.content.text = @"";
     for (int i = 0; i < typeArr.count; i++) {
         
         if ([typeArr[i][@"id"] integerValue] == [dic[@"card_type"] integerValue]) {
@@ -69,11 +72,17 @@
     if ([dic[@"card_id"] length]) {
         
         _certNumTF.textfield.text = [NSString stringWithFormat:@"%@",dic[@"card_id"]];
+    }else{
+        
+        _certNumTF.textfield.text = @"";
     }
     
     if ([dic[@"address"] length]) {
         
         _addressTF.textfield.text = [NSString stringWithFormat:@"%@",dic[@"address"]];
+    }else{
+        
+        _addressTF.textfield.text = @"";
     }
 }
 
