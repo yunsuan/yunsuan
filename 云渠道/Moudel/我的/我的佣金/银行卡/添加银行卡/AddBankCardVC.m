@@ -31,7 +31,7 @@
 
 @property (nonatomic, strong) UIButton *addBtn;
 
-@property (nonatomic, strong) UILabel *timeLabel;
+//@property (nonatomic, strong) UILabel *timeLabel;
 
 @end
 

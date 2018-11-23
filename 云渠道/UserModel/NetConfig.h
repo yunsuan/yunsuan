@@ -30,7 +30,7 @@ static NSString *const Version_URL = @"getVersion";
 //配置文件
 static NSString *const Config_URL = @"config";
 
-static NSString *const Advicer_URL = @"user/yunsuan/advicer";
+//static NSString *const Advicer_URL = @"user/yunsuan/advicer";
 
 //获取项目置业顾问
 static NSString *const ProjectAdvicer_URL = @"agent/project/advicer";
@@ -94,7 +94,7 @@ static NSString *const GetCompanyProject_URL = @"agent/personal/getCompanyProjec
 static NSString *const WorkHis_URL = @"agent/personal/WorkHis";
 
 //获取经纪人申请历史
-static NSString *const ApplyHis_URL = @"agent/personal/ApplyHis";
+//static NSString *const ApplyHis_URL = @"agent/personal/ApplyHis";
 
 //取消订阅项目
 static NSString *const CancelFocusProject_URL = @"agent/personal/cancelFocusProject";
@@ -167,14 +167,14 @@ static NSString *const UpdateClient_URL = @"agent/client/update";
 
 
 //新增客户需求
-static NSString *const AddCliendAddNeed_URL = @"agent/client/addNeed";
+//static NSString *const AddCliendAddNeed_URL = @"agent/client/addNeed";
 
 //修改客户需求
 
 static NSString *const UpdateNeed_URL = @"agent/client/updateNeed";
 
 //删除客户需求
-static NSString *const DeleteNeed_URL = @"agent/client/deleteNeed";
+//static NSString *const DeleteNeed_URL = @"agent/client/deleteNeed";
 
 //获取客户信息
 static NSString *const GetCliendInfo_URL = @"agent/client/getInfo/v2.7";
@@ -186,7 +186,7 @@ static NSString *const AddRecord_URL = @"agent/client/addFollow";
 static NSString *const GetRecord_URL = @"agent/client/getFollowList";
 
 //获取客户以推荐项目
-static NSString *const GetStateList_URL = @"agent/client/getStateList";
+//static NSString *const GetStateList_URL = @"agent/client/getStateList";
 
 //推荐客户
 static NSString *const RecommendClient_URL = @"agent/client/recommend";
@@ -214,7 +214,7 @@ static NSString *const ProjectDetail_URL = @"user/project/detail/v2.7";
 static NSString *const ProjectBuildInfo_URL = @"user/project/buildInfo/v2.7";
 
 //关注项目
-static NSString *const FocusProject_URL = @"agent/personal/focusProject";
+//static NSString *const FocusProject_URL = @"agent/personal/focusProject";
 
 //获取动态列表
 static NSString *const DynamicList_URL = @"user/dynamic/list/v2.7";
@@ -226,7 +226,7 @@ static NSString *const GetImg_URL = @"user/img/get/v2.7";
 //static NSString *const HouseTypeAnalyse_URL = @"user/houseType/analyse/v2.7";
 
 //获取佣金规则
-static NSString *const GetRule_URL = @"user/project/getRule";
+//static NSString *const GetRule_URL = @"user/project/getRule";
 
 //获取佣金规则新
 static NSString *const GetRuleNew_URL = @"user/project/getRuleNew";
@@ -257,7 +257,7 @@ static NSString *const FastRecommendList_URL = @"agent/matching/fastRecommendLis
 #pragma mark ---  消息  ---
 
 //获取消息未读数量
-static NSString *const InfoList_URL = @"agent/message/getUnread";
+//static NSString *const InfoList_URL = @"agent/message/getUnread";
 
 //获取消息未读数量-新
 static NSString *const MessageGetUnreadCount_URL = @"agent/message/getUnreadCount";
@@ -268,10 +268,10 @@ static NSString *const SystemInfoList_URL = @"agent/message/system";
 static NSString *const SystemInfoisread_URL = @"agent/message/system/isRead";
 
 //系统消息列表
-static NSString *const GetMessage_URL = @"admin/message/getMessage";
+//static NSString *const GetMessage_URL = @"admin/message/getMessage";
 
 //标记系统消息已读
-static NSString *const SystemRead_URL = @"agent/message/agentMessageRead";
+//static NSString *const SystemRead_URL = @"agent/message/agentMessageRead";
 
 //工作消息列表
 //static NSString *const WorkingInfoList_URL = @"agent/message/work/list";
@@ -316,7 +316,7 @@ static NSString *const HousePushConfirmList_URL = @"agent/house/push/confirm/lis
 static NSString *const HousePushDisabledList_URL = @"agent/house/push/disabled/list";
 
 #pragma mark ---  工作  ---
-static NSString *const RecommendList_URL = @"agent/work/getRecommendList";
+//static NSString *const RecommendList_URL = @"agent/work/getRecommendList";
 
 //经纪人信息统计
 static NSString *const AgentInfoCount_URL = @"agent/work/broker/count";
@@ -331,10 +331,10 @@ static NSString *const ClientNeedInfo_URL = @"agent/client/needInfo";
 static NSString *const FlushDate_URL = @"agent/work/flushDate";
 
 //经纪人信息统计
-static NSString *const BrokerCount_URL = @"agent/work/broker/count";
+//static NSString *const BrokerCount_URL = @"agent/work/broker/count";
 
 //对接人信息统计
-static NSString *const ButterCount_URL = @"agent/work/butter/count";
+//static NSString *const ButterCount_URL = @"agent/work/butter/count";
 
 //经纪人待确认客户列表
 static NSString *const BrokerWaitConfirm_URL = @"agent/work/broker/waitConfirm";
@@ -368,7 +368,7 @@ static NSString *const WaitConfirmDetail_URL = @"agent/work/broker/waitConfirmDe
 static NSString *const DisabledDetail_URL = @"agent/work/broker/disabledDetail";
 
 //获取申诉信息
-static NSString *const AppealGetOne_URL = @"agent/appeal/getOne";
+//static NSString *const AppealGetOne_URL = @"agent/appeal/getOne";
 
 //取消申诉
 static NSString *const AppealCancel_URL = @"agent/client/appealCancel";
@@ -625,7 +625,7 @@ static NSString *const HouseSurveyDelImg_URL = @"agent/house/survey/delImg";
 static NSString *const HouseSurveyCancelSale_URL = @"agent/house/survey/cancelSale";
 
 //下架检测
-static NSString *const HouseSurveyCheckCancel_URL = @"agent/house/survey/checkCancel";
+//static NSString *const HouseSurveyCheckCancel_URL = @"agent/house/survey/checkCancel";
 
 
 #pragma mark -- 代购合同 --

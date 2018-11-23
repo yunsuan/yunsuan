@@ -28,7 +28,7 @@
 #import "SecAllRoomStoreNeiborCell.h"
 #import "SecAllRoomTableCell3.h"
 
-#import "SecAllRoomStoreModel.h"
+//#import "SecAllRoomStoreModel.h"
 
 @interface SecAllRoomStoreVC ()<UITableViewDelegate,UITableViewDataSource,YBImageBrowserDelegate,BMKPoiSearchDelegate,RoomDetailTableCell4Delegate,BMKMapViewDelegate,UIGestureRecognizerDelegate>
 {

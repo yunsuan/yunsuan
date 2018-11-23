@@ -36,7 +36,7 @@
 @property (nonatomic , strong) DropDownBtn *birth;
 @property (nonatomic , strong) UILabel *telL;
 @property (nonatomic , strong) BorderTF *tel1;
-@property (nonatomic, strong) UIButton *addBtn;
+//@property (nonatomic, strong) UIButton *addBtn;
 @property (nonatomic , strong) BorderTF *tel2;
 @property (nonatomic , strong) BorderTF *tel3;
 @property (nonatomic , strong) DropDownBtn *numclass;

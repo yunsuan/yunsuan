@@ -12,8 +12,8 @@
 #import "CompleteSurveyInfoVC.h"
 
 #import "SMScrollView.h"
-#import "KyoCenterLineView.h"
-#import "KyoRowIndexView.h"
+//#import "KyoCenterLineView.h"
+//#import "KyoRowIndexView.h"
 #import "ReportRoomDetailView.h"
 
 #import "SingleHouseCell.h"
@@ -87,11 +87,11 @@
     [self post];
     
 }
-
--(void)initDataSouce
-{
-    
-}
+//
+//-(void)initDataSouce
+//{
+//
+//}
 
 -(void)post{
 
@@ -389,13 +389,14 @@
 #pragma mark --------------------
 #pragma mark - Methods
 
--(UIColor *)getSeatColorWithState:(KyoCinameSeatState)state {
-    
-    if (state ==  KyoCinameSeatStateHadBuy)
-        return [UIColor redColor];
-    else
-        return [UIColor redColor];
-}
+
+//-(UIColor *)getSeatColorWithState:(KyoCinameSeatState)state {
+//
+//    if (state ==  KyoCinameSeatStateHadBuy)
+//        return [UIColor redColor];
+//    else
+//        return [UIColor redColor];
+//}
 
 //根据座位类型返回实际图片
 - (UIImage *)getSeatImageWithState:(KyoCinameSeatState)state {
@@ -424,13 +425,14 @@
     }
 }
 
+
 - (void)setNeedsDisplay {
     //[super setNeedsDisplay];
-    
+
     if (self.rowIndexView) {
         [self.rowIndexView setNeedsDisplay];
     }
-    
+
     if (self.centerLineView) {
         [self.centerLineView setNeedsDisplay];
     }

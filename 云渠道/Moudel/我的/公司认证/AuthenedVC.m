@@ -18,8 +18,8 @@
     
     NSArray *_titleArr;
     NSMutableArray *_contentArr;
-    NSMutableArray *_imgArr;
-    NSInteger _index;
+//    NSMutableArray *_imgArr;
+//    NSInteger _index;
     NSDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITableView *authenTable;
@@ -58,7 +58,7 @@
 - (void)initDataSource{
     
     _contentArr = [[NSMutableArray alloc] init];
-    _imgArr = [[NSMutableArray alloc] init];
+//    _imgArr = [[NSMutableArray alloc] init];
     NSArray *tempArr = @[_dataDic[@"company_name"],_dataDic[@"work_code"],_dataDic[@"company_name"],_dataDic[@"butter_project"],_dataDic[@"department"],_dataDic[@"position"],_dataDic[@"create_time"]];
     _contentArr = [NSMutableArray arrayWithArray:tempArr];
     if ([[NSString stringWithFormat:@"%@",_dataDic[@"butter_project"]] isEqualToString:@"0"]) {

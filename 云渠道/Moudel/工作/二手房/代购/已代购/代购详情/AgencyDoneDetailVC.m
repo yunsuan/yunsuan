@@ -8,7 +8,7 @@
 
 #import "AgencyDoneDetailVC.h"
 #import "GetAgencyProtocolVC.h"
-#import "RoomAgencyAddProtocolVC.h"
+//#import "RoomAgencyAddProtocolVC.h"
 #import "AgencyDoneCustomerDetailVC.h"
 #import "AgencyEditTradeVC.h"
 #import "AgencyEditCustomerDetailVC.h"
@@ -24,8 +24,8 @@
 {
     
     NSInteger _item;
-    NSArray *_titleArr;
-    NSArray *_headerArr;
+//    NSArray *_titleArr;
+//    NSArray *_headerArr;
     NSArray *_contentArr;
     NSArray *_contentArr2;
     NSArray *_contentArr3;

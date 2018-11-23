@@ -19,14 +19,14 @@
     }
     return self;
 }
-
-- (void)ActionMessBtn:(UIButton *)btn{
-    
-    if (self.messBtnBlock) {
-        
-        self.messBtnBlock(self.tag);
-    }
-}
+//
+//- (void)ActionMessBtn:(UIButton *)btn{
+//
+//    if (self.messBtnBlock) {
+//
+//        self.messBtnBlock(self.tag);
+//    }
+//}
 
 - (void)ActionPhoneBtn:(UIButton *)btn{
     
@@ -36,13 +36,13 @@
     }
 }
 
-- (void)ActionComfirmBtn:(UIButton *)btn{
-    
-    if (self.confirmBtnBlock) {
-        
-        self.confirmBtnBlock(self.tag);
-    }
-}
+//- (void)ActionComfirmBtn:(UIButton *)btn{
+//
+//    if (self.confirmBtnBlock) {
+//
+//        self.confirmBtnBlock(self.tag);
+//    }
+//}
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     

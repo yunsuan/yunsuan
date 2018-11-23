@@ -6,7 +6,7 @@
 //  Copyright © 2018年 xiaoq. All rights reserved.
 //
 
-#import "TransmitView.h"
+//#import "TransmitView.h"
 
 @implementation TransmitView
 

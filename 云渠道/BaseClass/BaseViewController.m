@@ -118,7 +118,7 @@
 
         _navBackgroundView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_Width, 44)];
-        imageview.image = [UIImage imageNamed:@"nav-beijingtu.png"];
+//        imageview.image = [UIImage imageNamed:@"nav-beijingtu.png"];
       
         [_navBackgroundView addSubview:imageview];
         _line = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT - SIZE, SCREEN_Width, SIZE)];
@@ -182,7 +182,7 @@
     if (!_leftviewBtn) {
         _leftviewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [WJQTools setButtonAttributeWithButton:_leftviewBtn Title:@"" TitleFont:0 ImageName:@"Ctab_wode2@2x.png" Tag:1 fram:CGRectMake(256*SIZE, 0, 64*SIZE, 48)];
-        [_leftviewBtn setImage:[UIImage imageNamed:@"Ctab_wode1@2x.png"] forState:UIControlStateSelected];
+//        [_leftviewBtn setImage:[UIImage imageNamed:@"Ctab_wode1@2x.png"] forState:UIControlStateSelected];
 //        [_leftviewBtn addTarget:self action:@selector(action_leftview) forControlEvents:UIControlEventTouchUpInside];
         //        _leftviewBtn.backgroundColor = [UIColor blackColor];
         

@@ -21,6 +21,6 @@ typedef void(^AddBtnBlock)(void);
 
 @property (nonatomic, strong) UIButton *addBtn;
 
-- (void)MasonryUI;
+//- (void)MasonryUI;
 
 @end

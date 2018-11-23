@@ -18,9 +18,9 @@
 
 {
     
-    NSString *_province;
-    NSString *_city;
-    NSString *_area;
+//    NSString *_province;
+//    NSString *_city;
+//    NSString *_area;
     NSString *_name;
     NSString *_id;
     NSMutableArray *_dataArr;

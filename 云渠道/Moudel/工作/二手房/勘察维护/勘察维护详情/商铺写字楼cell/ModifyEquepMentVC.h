@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModifyEquepMentVC : BaseViewController
 
-- (instancetype)initWithType:(NSInteger )type;
+//- (instancetype)initWithType:(NSInteger )type;
 
 @end
 

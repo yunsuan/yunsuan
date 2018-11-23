@@ -44,7 +44,7 @@
 
 @property(nonatomic , copy)NSString *areaid;
 
-@property(nonatomic, assign) NSInteger selected;
+//@property(nonatomic, assign) NSInteger selected;
 
 @end
 
@@ -222,7 +222,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView == _proTable) {//选择省
-        self.selected = indexPath.row;
+//        self.selected = indexPath.row;
         [self getCityArrayByprovince:indexPath.row];
         [self getAreaArrayBycity:0];
         self.provinceStr = self.provinceArray[indexPath.row][@"name"];

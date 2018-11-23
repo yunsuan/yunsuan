@@ -488,7 +488,7 @@
     CGPoint point = [pan locationInView:self];
     BOOL shouldAddAnimationView = point.y > lastPointY && scrollView.contentOffset.y < -10 && !self.animateImageView.superview;
     if (shouldAddAnimationView) {
-        [self dragAnimation_addAnimationImageViewWithPoint:point];
+        [self dragAnimation_addAnimationImageViewWithPoint];
     }
     
     if (pan.state == UIGestureRecognizerStateChanged) {
@@ -499,7 +499,7 @@
     lastPointX = point.x;
 }
 
-- (void)dragAnimation_addAnimationImageViewWithPoint:(CGPoint)point {
+- (void)dragAnimation_addAnimationImageViewWithPoint {
     if (self.imageView.frame.size.width <= 0 || self.imageView.frame.size.height <= 0) return;
     
     if (!YBImageBrowser.isControllerPreferredForStatusBar) [[UIApplication sharedApplication] setStatusBarHidden:YBImageBrowser.statusBarIsHideBefore];

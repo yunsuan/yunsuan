@@ -137,7 +137,7 @@
 {
     BDDynamicTreeNode *node = _dataSource[indexPath.row];
     CellType type = node.isDepartment?CellType_Department:CellType_Employee;
-    return [BDDynamicTreeCell heightForCellWithType:type];
+    return [BDDynamicTreeCell heightForCellWithType];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

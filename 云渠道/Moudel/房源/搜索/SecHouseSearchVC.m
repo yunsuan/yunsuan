@@ -21,10 +21,10 @@
 {
     
     NSInteger _page;
-    NSArray *_arr;
+//    NSArray *_arr;
     NSMutableArray *_dataArr;
     NSString *_city;
-    NSArray *_tagsArr;
+//    NSArray *_tagsArr;
     NSArray *_propertyArr;
     
     BOOL _is1;
@@ -37,7 +37,7 @@
     NSString *_district;
     NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_asc;
     NSString *_tag;
     NSString *_houseType;
@@ -91,7 +91,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
+//    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     _page = 1;
     _dataArr = [@[] mutableCopy];
@@ -386,7 +386,7 @@
             }else{
                 
                 _is4 = YES;
-                _more = @"0";
+//                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];

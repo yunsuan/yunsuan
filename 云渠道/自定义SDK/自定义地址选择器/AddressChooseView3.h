@@ -18,7 +18,7 @@ typedef void(^AddressChooseView3CancelBlock)(void);
 
 @property(nonatomic, copy) AddressChooseView3ConfirmBlock addressChooseView3ConfirmBlock;
 
-@property (nonatomic, copy) AddressChooseView3CancelBlock addressChooseView3CancelBlock;
+//@property (nonatomic, copy) AddressChooseView3CancelBlock addressChooseView3CancelBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame withdata:(NSArray *)data;
 

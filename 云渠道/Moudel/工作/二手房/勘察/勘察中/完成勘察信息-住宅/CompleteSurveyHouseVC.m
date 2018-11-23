@@ -13,7 +13,7 @@
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 
-#import "SingleContentCell.h"
+//#import "SingleContentCell.h"
 #import "BaseFrameHeader.h"
 #import "CompleteSurveyCollCell.h"
 
@@ -260,17 +260,17 @@
     }
 }
 
-- (void)ActionSeeWayBtn:(UIButton *)btn{
-    
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:31]];
-    SS(strongSelf);
-    view.selectedBlock = ^(NSString *MC, NSString *ID) {
-        
-        strongSelf.seeWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-//                strongSelf->_seeWay = [NSString stringWithFormat:@"%@",ID];
-    };
-    [self.view addSubview:view];
-}
+//- (void)ActionSeeWayBtn:(UIButton *)btn{
+//
+//    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:31]];
+//    SS(strongSelf);
+//    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//        strongSelf.seeWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+////                strongSelf->_seeWay = [NSString stringWithFormat:@"%@",ID];
+//    };
+//    [self.view addSubview:view];
+//}
 
 - (void)ActionNextBtn:(UIButton *)btn{
     

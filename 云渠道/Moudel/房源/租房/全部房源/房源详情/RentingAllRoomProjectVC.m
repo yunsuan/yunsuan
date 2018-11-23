@@ -17,7 +17,7 @@
 #import "SecAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "RentingAllRoomTableCell.h"
-#import "SecAllRoomTableCell2.h"
+//#import "SecAllRoomTableCell2.h"
 #import "SecAllRoomTableCell3.h"
 #import "SecAllRoomTableCell4.h"
 #import "RoomDetailTableCell4.h"
@@ -28,8 +28,8 @@
     
     CLLocationCoordinate2D _leftBottomPoint;
     CLLocationCoordinate2D _rightBottomPoint;//地图矩形的顶点
-    NSString *_phone;
-    NSString *_phone_url;
+//    NSString *_phone;
+//    NSString *_phone_url;
     NSString *_name;
 }
 @property (nonatomic, strong) UITableView *roomTable;

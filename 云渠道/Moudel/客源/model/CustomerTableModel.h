@@ -41,7 +41,7 @@
 @property (nonatomic, copy) NSString *urgency;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
-- (NSMutableDictionary *)modeltodic;
+//- (NSMutableDictionary *)modeltodic;
 
 @end
 

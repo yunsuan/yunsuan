@@ -9,7 +9,7 @@
 #import "CompleteCustomVC1.h"
 #import "DropDownBtn.h"
 #import "BorderTF.h"
-#import "AuthenCollCell.h"
+//#import "AuthenCollCell.h"
 #import "CompleteCustomVC2.h"
 #import "SinglePickView.h"
 
@@ -17,8 +17,8 @@
 {
     
     NSInteger _num;
-    NSMutableArray *_imgArr;
-    NSMutableArray *_imgUrl;
+//    NSMutableArray *_imgArr;
+//    NSMutableArray *_imgUrl;
     NSString *_imgStr1;
     NSString *_imgStr2;
     UIImagePickerController *_imagePickerController;
@@ -119,8 +119,8 @@
 
 - (void)initDataSource{
     
-    _imgArr = [@[] mutableCopy];
-    _imgUrl = [@[] mutableCopy];
+//    _imgArr = [@[] mutableCopy];
+//    _imgUrl = [@[] mutableCopy];
     _cardType =@"";
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
@@ -308,69 +308,69 @@
     
 }
 
-- (void)ActionSliderChange:(UISlider *)slider{
-    
-    
-}
+//- (void)ActionSliderChange:(UISlider *)slider{
+//
+//
+//}
 
-- (void)ActionAddBtn:(UIButton *)btn{
-    
-    _num += 1;
-    if (_num == 1) {
-        
-        [_phoneTF2 mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(81 *SIZE);
-            make.top.equalTo(_phoneTF1.mas_bottom).offset(21 *SIZE);
-            make.width.equalTo(@(258 *SIZE));
-            make.height.equalTo(@(33 *SIZE));
-        }];
-        _phoneTF2.hidden = NO;
-        
-        [_identifyL mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(10 *SIZE);
-            make.top.equalTo(_phoneTF2.mas_bottom).offset(31 *SIZE);
-            make.width.equalTo(@(70 *SIZE));
-            make.height.equalTo(@(13 *SIZE));
-        }];
-        
-        [_identifyBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(81 *SIZE);
-            make.top.equalTo(_phoneTF2.mas_bottom).offset(21 *SIZE);
-            make.width.equalTo(@(258 *SIZE));
-            make.height.equalTo(@(33 *SIZE));
-        }];
-        
-    }else{
-        
-        [_phoneTF3 mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(81 *SIZE);
-            make.top.equalTo(_phoneTF2.mas_bottom).offset(21 *SIZE);
-            make.width.equalTo(@(258 *SIZE));
-            make.height.equalTo(@(33 *SIZE));
-        }];
-        _phoneTF3.hidden = NO;
-        
-        [_identifyL mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(10 *SIZE);
-            make.top.equalTo(_phoneTF3.mas_bottom).offset(31 *SIZE);
-            make.width.equalTo(@(70 *SIZE));
-            make.height.equalTo(@(13 *SIZE));
-        }];
-        
-        [_identifyBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(_infoView).offset(81 *SIZE);
-            make.top.equalTo(_phoneTF3.mas_bottom).offset(21 *SIZE);
-            make.width.equalTo(@(258 *SIZE));
-            make.height.equalTo(@(33 *SIZE));
-        }];
-    }
-}
+//- (void)ActionAddBtn:(UIButton *)btn{
+//
+//    _num += 1;
+//    if (_num == 1) {
+//
+//        [_phoneTF2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(81 *SIZE);
+//            make.top.equalTo(_phoneTF1.mas_bottom).offset(21 *SIZE);
+//            make.width.equalTo(@(258 *SIZE));
+//            make.height.equalTo(@(33 *SIZE));
+//        }];
+//        _phoneTF2.hidden = NO;
+//
+//        [_identifyL mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(10 *SIZE);
+//            make.top.equalTo(_phoneTF2.mas_bottom).offset(31 *SIZE);
+//            make.width.equalTo(@(70 *SIZE));
+//            make.height.equalTo(@(13 *SIZE));
+//        }];
+//
+//        [_identifyBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(81 *SIZE);
+//            make.top.equalTo(_phoneTF2.mas_bottom).offset(21 *SIZE);
+//            make.width.equalTo(@(258 *SIZE));
+//            make.height.equalTo(@(33 *SIZE));
+//        }];
+//
+//    }else{
+//
+//        [_phoneTF3 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(81 *SIZE);
+//            make.top.equalTo(_phoneTF2.mas_bottom).offset(21 *SIZE);
+//            make.width.equalTo(@(258 *SIZE));
+//            make.height.equalTo(@(33 *SIZE));
+//        }];
+//        _phoneTF3.hidden = NO;
+//
+//        [_identifyL mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(10 *SIZE);
+//            make.top.equalTo(_phoneTF3.mas_bottom).offset(31 *SIZE);
+//            make.width.equalTo(@(70 *SIZE));
+//            make.height.equalTo(@(13 *SIZE));
+//        }];
+//
+//        [_identifyBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_infoView).offset(81 *SIZE);
+//            make.top.equalTo(_phoneTF3.mas_bottom).offset(21 *SIZE);
+//            make.width.equalTo(@(258 *SIZE));
+//            make.height.equalTo(@(33 *SIZE));
+//        }];
+//    }
+//}
 
 - (void)ActionTagBtn:(UIButton *)btn{
     

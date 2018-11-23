@@ -19,7 +19,7 @@
 {
     
     NSArray *_titleArr;
-    NSArray *_contentArr;
+//    NSArray *_contentArr;
     NSString *_time;
     NSDictionary *_dataDic;
     NSString *_surveyId;

@@ -12,7 +12,7 @@
 #import "CompanyCell.h"
 #import "PeopleCell.h"
 
-#import "RoomListModel.h"
+//#import "RoomListModel.h"
 
 #import "BoxView.h"
 #import "BoxAddressView.h"
@@ -22,10 +22,10 @@
 {
     
     NSInteger _page;
-    NSArray *_arr;
+//    NSArray *_arr;
     NSMutableArray *_dataArr;
     NSString *_city;
-    NSArray *_tagsArr;
+//    NSArray *_tagsArr;
     NSArray *_propertyArr;
     
     BOOL _is1;
@@ -38,7 +38,7 @@
     NSString *_district;
     NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_asc;
     NSString *_tag;
     NSString *_houseType;
@@ -86,13 +86,13 @@
     
     [super viewWillDisappear:animated];
     
-    [self ActionUpAndDownBtn:_sortBtn];
+    [self ActionUpAndDownBtn];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
+//    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     _page = 1;
     _dataArr = [@[] mutableCopy];
@@ -165,68 +165,68 @@
     
 }
 
-- (void)RequestAddMethod{
-    
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"city":_city}];
-    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
-    if (self.title.length) {
-        
-        [dic setObject:self.title forKey:@"project_name"];
-    }
-    
-    if (![_district isEqualToString:@"0"] && _district.length) {
-        
-        [dic setObject:_district forKey:@"district"];
-    }
-    if (![_price isEqualToString:@"0"] && _price) {
-        
-        [dic setObject:[NSString stringWithFormat:@"%@",_price] forKey:@"average_price"];
-    }
-    if (![_type isEqualToString:@"0"] && _type) {
-        
-        [dic setObject:[NSString stringWithFormat:@"%@",_type] forKey:@"property_id"];
-    }
-    if (_tag.length) {
-        
-        [dic setObject:[NSString stringWithFormat:@"%@",_tag] forKey:@"project_tags"];
-    }
-    if (_houseType.length) {
-        
-        [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
-    }
-    if (_status.length) {
-        
-        [dic setObject:[NSString stringWithFormat:@"%@",_status] forKey:@"sale_state"];
-    }
-    [dic setObject:_asc forKey:@"sort_type"];
-    
-    [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
-        
-//        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            if ([resposeObject[@"data"] count]) {
-                
-                [self SetData:resposeObject[@"data"]];
-                [self.searchTable.mj_footer endRefreshing];
-            }else{
-                
-                self.searchTable.mj_footer.state = MJRefreshStateNoMoreData;
-            }
-        }else{
-            
-            _page -= 1;
-            [self showContent:resposeObject[@"msg"]];
-            [self.searchTable.mj_footer endRefreshing];
-        }
-    } failure:^(NSError *error) {
-        
-        _page -= 1;
-//        NSLog(@"%@",error);
-        [self.searchTable.mj_footer endRefreshing];
-    }];
-}
+//- (void)RequestAddMethod{
+//
+//
+//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"city":_city}];
+//    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
+//    if (self.title.length) {
+//
+//        [dic setObject:self.title forKey:@"project_name"];
+//    }
+//
+//    if (![_district isEqualToString:@"0"] && _district.length) {
+//
+//        [dic setObject:_district forKey:@"district"];
+//    }
+//    if (![_price isEqualToString:@"0"] && _price) {
+//
+//        [dic setObject:[NSString stringWithFormat:@"%@",_price] forKey:@"average_price"];
+//    }
+//    if (![_type isEqualToString:@"0"] && _type) {
+//
+//        [dic setObject:[NSString stringWithFormat:@"%@",_type] forKey:@"property_id"];
+//    }
+//    if (_tag.length) {
+//
+//        [dic setObject:[NSString stringWithFormat:@"%@",_tag] forKey:@"project_tags"];
+//    }
+//    if (_houseType.length) {
+//
+//        [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
+//    }
+//    if (_status.length) {
+//
+//        [dic setObject:[NSString stringWithFormat:@"%@",_status] forKey:@"sale_state"];
+//    }
+//    [dic setObject:_asc forKey:@"sort_type"];
+//
+//    [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
+//
+////        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//            if ([resposeObject[@"data"] count]) {
+//
+//                [self SetData:resposeObject[@"data"]];
+//                [self.searchTable.mj_footer endRefreshing];
+//            }else{
+//
+//                self.searchTable.mj_footer.state = MJRefreshStateNoMoreData;
+//            }
+//        }else{
+//
+//            _page -= 1;
+//            [self showContent:resposeObject[@"msg"]];
+//            [self.searchTable.mj_footer endRefreshing];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        _page -= 1;
+////        NSLog(@"%@",error);
+//        [self.searchTable.mj_footer endRefreshing];
+//    }];
+//}
 
 - (void)SetData:(NSArray *)data{
     
@@ -252,7 +252,7 @@
 
 #pragma mark -- Method --
 
-- (void)ActionUpAndDownBtn:(UIButton *)btn{
+- (void)ActionUpAndDownBtn {
     
     _is1 = NO;
     _is2 = NO;
@@ -368,7 +368,7 @@
             }else{
                 
                 _is4 = YES;
-                _more = @"0";
+//                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];

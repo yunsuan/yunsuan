@@ -12,7 +12,7 @@
 @interface BirthVC ()
 {
     
-    NSDate *_date;
+//    NSDate *_date;
     NSString *_time;
 }
 @property (nonatomic, strong) UILabel *birthL;
@@ -137,7 +137,7 @@
         __weak __typeof(&*self)weakSelf = self;
         _dateView.dateblock = ^(NSDate *date) {
             
-            _date = date;
+//            _date = date;
             weakSelf.birthL.text = [weakSelf.formatter stringFromDate:date];
         };
     }

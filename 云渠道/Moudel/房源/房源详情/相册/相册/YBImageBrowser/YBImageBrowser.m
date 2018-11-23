@@ -141,7 +141,7 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
     if (!self.browserView.isHidden)  self.browserView.hidden = YES;
 }
 
-- (void)XGBarCollectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)XGBarCollectionView {
     
     
 }
@@ -244,7 +244,7 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
     } else if (_dataSource && [_dataSource respondsToSelector:@selector(numberInYBImageBrowser:)]) {
         totalCount = [_dataSource numberInYBImageBrowser:self];
     }
-    [self.toolBar setTitleLabelWithCurrentIndex:index totalCount:totalCount];
+    [self.toolBar setTitleLabelWithCurrentIndex];
     [self.xgToolBar setTitleLabelWithCurrentIndex:index totalCount:totalCount];
 }
 

@@ -8,13 +8,13 @@
 
 #import "SelectCustomVC.h"
 
-#import "CustomDetailVC.h"
+//#import "CustomDetailVC.h"
 
 #import "AddCustomerVC.h"
-#import "CustomSearchVC.h"
+//#import "CustomSearchVC.h"
 
 #import "CustomerTableCell.h"
-#import "CustomerCollCell.h"
+//#import "CustomerCollCell.h"
 
 #import "BoxView.h"
 #import "AddressChooseView2.h"
@@ -23,7 +23,7 @@
 {
     
     NSMutableArray *_dataArr;
-    NSMutableDictionary *_parameter;
+//    NSMutableDictionary *_parameter;
     NSInteger _page;
     NSString *_type;
     NSString *_district;

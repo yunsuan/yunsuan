@@ -546,8 +546,8 @@
     }];
 }
 
--(void)creatQRCodeWith:(NSString *)urlString
-{
+//-(void)creatQRCodeWith:(NSString *)urlString
+//{
     // 1.实例化二维码滤镜
 //    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
 //
@@ -573,7 +573,7 @@
 //    // 6.设置生成好得二维码到imageView上
 //    _codeImg.image  = qrCodeImage;
     
-}
+//}
 
 
 @end

@@ -16,13 +16,13 @@
 
 #import "BoxView.h"
 #import "BoxAddressView.h"
-#import "AdressChooseView.h"
+//#import "AdressChooseView.h"
 #import "MoreView.h"
 
 
 #import "SecdaryComTableCell.h"
 
-#import "SecdaryComModel.h"
+//#import "SecdaryComModel.h"
 #import <BaiduMapAPI_Location/BMKLocationService.h>
 
 @interface SecdaryCommunityRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
@@ -30,18 +30,18 @@
     
     NSInteger _page;
     NSMutableArray *_dataArr;
-    NSString *_provice;
+//    NSString *_provice;
     NSString *_city;
     NSString *_district;
     NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
-    NSString *_status;
+//    NSString *_status;
     NSString *_asc;
     NSMutableArray *_searchArr;
-    NSArray *_tagsArr;
+//    NSArray *_tagsArr;
     NSArray *_propertyArr;
     BOOL _is1;
     BOOL _is2;
@@ -111,26 +111,26 @@
     _dataArr = [@[] mutableCopy];
     _page = 1;
     _asc = @"asc";
-    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
+//    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     [self RequestMethod];
 }
 
-- (void)SearchRequest{
-    
-    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
-        
-        //        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            
-            [self SetSearch:resposeObject[@"data"]];
-        }
-    } failure:^(NSError *error) {
-        
-        //        NSLog(@"%@",error);
-    }];
-}
+//- (void)SearchRequest{
+//
+//    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
+//
+//        //        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//
+//            [self SetSearch:resposeObject[@"data"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        //        NSLog(@"%@",error);
+//    }];
+//}
 
 - (void)SetSearch:(NSDictionary *)data{
     
@@ -397,7 +397,7 @@
             }else{
                 
                 _is4 = YES;
-                _more = @"0";
+//                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];
@@ -790,11 +790,11 @@
                 _houseType = [NSString stringWithFormat:@"%@",houseType];
             }
             
-            if (status) {
-                
-                _status = [NSString stringWithFormat:@"%@",status];
-            }
-            //
+//            if (status) {
+//
+//                _status = [NSString stringWithFormat:@"%@",status];
+//            }
+//            //
             [weakSelf RequestMethod];
             
         };

@@ -81,10 +81,13 @@
     [WaitAnimation stopAnimation];
 }
 // 页面加载失败时调用
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+//- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+//    [self showContent:@"网络错误"];
+//}
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     [self showContent:@"网络错误"];
-}
 
+}
 
 
 @end

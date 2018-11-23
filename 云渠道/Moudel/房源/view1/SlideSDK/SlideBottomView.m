@@ -7,7 +7,7 @@
 //
 
 #import "SlideBottomView.h"
-#import "RoomChildVC.h"
+//#import "RoomChildVC.h"
 #import <UIKit/UIKit.h>
 
 #define TitleScrollViewHeight   45.0   //标题栏的高度

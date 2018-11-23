@@ -6,7 +6,7 @@
 //  Copyright © 2018年 xiaoq. All rights reserved.
 //
 
-#import "BaseModel.h"
+//#import "BaseModel.h"
 
 @implementation BaseModel
 

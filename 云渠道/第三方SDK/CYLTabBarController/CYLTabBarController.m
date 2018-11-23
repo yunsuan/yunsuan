@@ -53,7 +53,7 @@ static void * const CYLTabImageViewDefaultOffsetContext = (void*)&CYLTabImageVie
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {
     [super setSelectedIndex:selectedIndex];
-    [self updateSelectionStatusIfNeededForTabBarController:nil shouldSelectViewController:nil];
+    [self updateSelectionStatusIfNeededForShouldSelectViewController:nil];
 }
 
 - (void)setViewDidLayoutSubViewsBlock:(CYLViewDidLayoutSubViewsBlock)viewDidLayoutSubviewsBlock {
@@ -458,7 +458,7 @@ static void * const CYLTabImageViewDefaultOffsetContext = (void*)&CYLTabImageVie
 
 #pragma mark - delegate
 
-- (void)updateSelectionStatusIfNeededForTabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+- (void)updateSelectionStatusIfNeededForShouldSelectViewController:(UIViewController *)viewController {
     UIButton *plusButton = CYLExternPlusButton;
     if (!viewController) {
         viewController = self.selectedViewController;
@@ -485,7 +485,7 @@ static void * const CYLTabImageViewDefaultOffsetContext = (void*)&CYLTabImageVie
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    [self updateSelectionStatusIfNeededForTabBarController:tabBarController shouldSelectViewController:viewController];
+    [self updateSelectionStatusIfNeededForShouldSelectViewController:viewController];
     return YES;
 }
 

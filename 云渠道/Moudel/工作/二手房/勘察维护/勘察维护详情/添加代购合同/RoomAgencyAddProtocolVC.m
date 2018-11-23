@@ -36,7 +36,7 @@
     NSArray *_titleArr;
     NSMutableArray *_foldArr;
     NSMutableArray *_dataArr;
-    NSMutableDictionary *_dataDic;
+//    NSMutableDictionary *_dataDic;
     NSMutableDictionary *_roomDic;
     NSMutableDictionary *_tradeDic;
     NSDateFormatter *_formatter;

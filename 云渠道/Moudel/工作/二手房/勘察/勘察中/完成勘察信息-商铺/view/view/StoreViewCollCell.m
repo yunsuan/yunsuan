@@ -93,7 +93,7 @@
     return resultUIImage;
 }
 
-- (void)setDataDic:(NSMutableDictionary *)dataDic{
+- (void)setDataDic {
     
     
 }

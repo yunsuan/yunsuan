@@ -8,7 +8,7 @@
 
 #import "DashesLineView.h"
 
-#define kInterval 3 *SIZE                                // 全局间距
+//#define kInterval 3 *SIZE                                // 全局间距
 
 @implementation DashesLineView
 

@@ -7,8 +7,8 @@
 //
 
 #import "MaintainDetailVC.h"
-#import "SurveySuccessRoomDetailVC.h"
-#import "SurveySuccessOwnerDetailVC.h"
+//#import "SurveySuccessRoomDetailVC.h"
+//#import "SurveySuccessOwnerDetailVC.h"
 #import "RoomSoldOutVC.h"
 #import "MaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
@@ -41,15 +41,15 @@
 
 @interface MaintainDetailVC ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSString *_surveyId;
+//    NSString *_surveyId;
     NSString *_houseId;
     NSInteger _item;
-    NSArray *_titleArr;
+//    NSArray *_titleArr;
     NSArray *_titleArr2;
-    NSArray *_roomInfoArr;
+//    NSArray *_roomInfoArr;
     NSMutableDictionary *_houseDic;
     NSMutableArray *_peopleArr;
-    NSMutableDictionary *_infoDic;
+//    NSMutableDictionary *_infoDic;
     NSMutableDictionary *_moreDic;
     NSMutableArray *_followArr;
     NSMutableArray *_tagArr;
@@ -68,7 +68,7 @@
     self = [super init];
     if (self) {
         
-        _surveyId = surveyId;
+//        _surveyId = surveyId;
         _houseId = houseId;
         _type = type;
     }
@@ -85,7 +85,7 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"",@"联系信息",@"业主信息",@"房源信息",@"房源真实图片"];
+//    _titleArr = @[@"",@"联系信息",@"业主信息",@"房源信息",@"房源真实图片"];
     if (_type == 1) {
         
         _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"项目分析",@"其他费项"];
@@ -99,7 +99,7 @@
     
     _houseDic = [@{} mutableCopy];
     _peopleArr = [@[] mutableCopy];
-    _infoDic = [@{} mutableCopy];
+//    _infoDic = [@{} mutableCopy];
     _followArr = [@[] mutableCopy];
     _tagArr = [@[] mutableCopy];
     _matchArr = [@[] mutableCopy];
@@ -174,9 +174,9 @@
         _peopleArr = [NSMutableArray arrayWithArray:data[@"contact"]];
     }
     
-    if ([data[@"info"] isKindOfClass:[NSDictionary class]]) {
-        
-        _infoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"info"]];
+//    if ([data[@"info"] isKindOfClass:[NSDictionary class]]) {
+//
+//        _infoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"info"]];
 
 //        [_tagArr removeAllObjects];
 //        NSArray *arr = _detailDic[@"house_tags"];
@@ -184,9 +184,9 @@
 //
 //            [_tagArr addObject:dic[@"tag_name"]];
 //        }
-    }
+//    }
     _matchArr = [NSMutableArray arrayWithArray:_detailDic[@"match_tags"]];
-    
+
     if ([data[@"follow"] isKindOfClass:[NSArray class]]) {
         
         _followArr = [NSMutableArray arrayWithArray:data[@"follow"]];

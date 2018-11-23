@@ -7,8 +7,8 @@
 //
 
 #import "SecHouseTypeDetailVC.h"
-#import "BuildingAlbumVC.h"
-#import "CustomMatchListVC.h"
+//#import "BuildingAlbumVC.h"
+//#import "CustomMatchListVC.h"
 
 #import "RoomDetailTableCell5.h"
 #import "HouseTypeTableCell.h"

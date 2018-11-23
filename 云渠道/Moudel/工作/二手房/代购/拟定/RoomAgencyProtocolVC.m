@@ -15,7 +15,7 @@
 {
     NSArray *_dataArr;
     NSString *_page;
-    NSString *_content;
+//    NSString *_content;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -41,7 +41,7 @@
 
 - (void)SearchMethod:(NSNotification *)noti{
     
-    _content = noti.userInfo[@"content"];
+//    _content = noti.userInfo[@"content"];
     [self postWithpage:_page];
 }
 

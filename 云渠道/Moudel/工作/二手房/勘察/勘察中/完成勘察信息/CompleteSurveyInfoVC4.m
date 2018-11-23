@@ -14,7 +14,7 @@
 #import "ChangeImgNameView.h"
 
 #import "DropDownBtn.h"
-#import "AddAlbumView.h"
+//#import "AddAlbumView.h"
 
 @interface CompleteSurveyInfoVC4 ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
@@ -22,7 +22,7 @@
     NSMutableArray *_ImgArr;
     NSMutableArray *_titleArr;
     NSMutableArray *_NameUrlArr;
-    NSInteger _section;
+//    NSInteger _section;
     NSInteger _index;
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
@@ -192,7 +192,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    _section = indexPath.section;
+//    _section = indexPath.section;
     _index = indexPath.item;
     
     BOOL Name = false;

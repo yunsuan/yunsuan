@@ -17,7 +17,7 @@
 {
     
     NSArray *_titleArr;
-    NSArray *_contentArr;
+//    NSArray *_contentArr;
     NSString *_type;
     NSDictionary *_dataDic;
 }

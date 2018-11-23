@@ -12,7 +12,7 @@
 //#import "BoxView.h"
 #import "BoxAddressView.h"
 #import "CompanyDetailVC.h"
-#import "CompanyModel.h"
+//#import "CompanyModel.h"
 //#import "SinglePickView.h"
 
 @interface SelectCompanyVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>

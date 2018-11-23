@@ -87,20 +87,20 @@
 
 
 #pragma mark -- 按键方法
-- (void)ActionRightBtn:(UIButton *)btn{
-    
-    //    if (self.cityVCSaveBlock) {
-    //
-    //        if (_code) {
-    //
-    //            self.cityVCSaveBlock(_code,_city);
-    //            [self.navigationController popViewControllerAnimated:YES];
-    //        }else{
-    //
-    //            [self showContent:@"请选择城市"];
-    //        }
-    //    }
-}
+//- (void)ActionRightBtn:(UIButton *)btn{
+//
+//    //    if (self.cityVCSaveBlock) {
+//    //
+//    //        if (_code) {
+//    //
+//    //            self.cityVCSaveBlock(_code,_city);
+//    //            [self.navigationController popViewControllerAnimated:YES];
+//    //        }else{
+//    //
+//    //            [self showContent:@"请选择城市"];
+//    //        }
+//    //    }
+//}
 
 
 #pragma mark -- tableview

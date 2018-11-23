@@ -10,15 +10,13 @@
 #import "BrokerageDetailTableCell.h"
 #import "BrokerageDetailTableCell2.h"
 #import "BrokerageDetailTableCell3.h"
-#import "BrokerageDetailTableCell4.h"
 #import "BrokerDetailHeader.h"
 #import "RoomDetailVC1.h"
-#import "RoomListModel.h"
 
 @interface BrokerageDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-    BOOL _drop;
+//    BOOL _drop;
     NSDictionary *_data;
     NSArray *_Pace;
 }

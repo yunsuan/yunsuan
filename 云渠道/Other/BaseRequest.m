@@ -6,7 +6,7 @@
 //  Copyright © 2018年 xiaoq. All rights reserved.
 //
 
-#import "LoginVC.h"
+//#import "LoginVC.h"
 #import "MBProgressHUD.h"
 #import "WaitAnimation.h"
 

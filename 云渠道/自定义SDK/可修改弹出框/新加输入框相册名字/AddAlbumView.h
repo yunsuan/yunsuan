@@ -24,7 +24,7 @@ typedef void(^AddAlbumViewAddBlock)(void);
 
 @property (nonatomic, strong) UILabel *nameL;
 
-@property (nonatomic, strong) UILabel *roomNumL;
+//@property (nonatomic, strong) UILabel *roomNumL;
 
 @property (nonatomic, strong) BorderTF *nameTF;
 

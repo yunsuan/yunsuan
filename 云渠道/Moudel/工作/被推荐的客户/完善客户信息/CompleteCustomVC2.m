@@ -33,7 +33,7 @@
     NSDate *_date;
     NSString *_agentname;
     NSString *_agentid;
-    NSString *_agentPhone;
+//    NSString *_agentPhone;
 }
 
 //@property (nonatomic, strong) SelectWorkerView *selectWorkerView;

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) UIButton *rightButton;
 @property (nonatomic, strong) NSString *projectId;
 
-- (void)setTitleLabelWithCurrentIndex:(NSUInteger)index totalCount:(NSUInteger)totalCount;
+- (void)setTitleLabelWithCurrentIndex;
 
 - (void)setRightButtonHide:(BOOL)hide;
 - (void)setRightButtonImage:(nullable UIImage *)image;

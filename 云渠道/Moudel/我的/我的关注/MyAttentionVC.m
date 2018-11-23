@@ -10,7 +10,7 @@
 
 #import "SecAllRoomDetailVC.h"
 
-#import "SecdaryAllTableModel.h"
+//#import "SecdaryAllTableModel.h"
 #import "SecdaryAllTableCell.h"
 
 @interface MyAttentionVC ()<UITableViewDelegate,UITableViewDataSource>

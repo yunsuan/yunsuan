@@ -8,9 +8,9 @@
 
 #import<BaiduMapAPI_Location/BMKLocationService.h>
 #import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
-#import<BaiduMapAPI_Map/BMKMapComponent.h>
-#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
-#import <CoreLocation/CoreLocation.h>
+//#import<BaiduMapAPI_Map/BMKMapComponent.h>
+//#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
+//#import <CoreLocation/CoreLocation.h>
 
 #import "PYSearchViewController.h"
 

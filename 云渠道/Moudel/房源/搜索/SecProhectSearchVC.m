@@ -9,11 +9,11 @@
 #import "SecProhectSearchVC.h"
 #import "SecComRoomDetailVC.h"
 //#import "DistributVC.h"
-#import "SecDistributVC.h"
+//#import "SecDistributVC.h"
 
 #import "SecdaryComTableCell.h"
 
-#import "SecdaryComModel.h"
+//#import "SecdaryComModel.h"
 
 #import "BoxView.h"
 #import "BoxAddressView.h"
@@ -38,7 +38,7 @@
     NSString *_district;
     NSString *_price;
     NSString *_type;
-    NSString *_more;
+//    NSString *_more;
     NSString *_asc;
     NSString *_tag;
     NSString *_houseType;
@@ -352,7 +352,7 @@
             }else{
                 
                 _is4 = YES;
-                _more = @"0";
+//                _more = @"0";
                 
                 [self.moreView.moreColl reloadData];
                 [[UIApplication sharedApplication].keyWindow addSubview:self.moreView];

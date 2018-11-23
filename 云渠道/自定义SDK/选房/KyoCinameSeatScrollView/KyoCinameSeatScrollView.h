@@ -30,47 +30,6 @@ typedef enum : NSInteger {
 
 IB_DESIGNABLE
 
-@interface KyoCinameSeatScrollView : UIScrollView
-
-@property (weak, nonatomic) IBOutlet id<KyoCinameSeatScrollViewDelegate> kyoCinameSeatScrollViewDelegate;
-
-@property (nonatomic, assign) IBInspectable NSUInteger row;
-@property (nonatomic, assign) IBInspectable NSUInteger column;
-@property (nonatomic, assign) IBInspectable CGSize seatSize;
-@property (assign, nonatomic) IBInspectable CGFloat seatTop;
-@property (assign, nonatomic) IBInspectable CGFloat seatLeft;
-@property (assign, nonatomic) IBInspectable CGFloat seatBottom;
-@property (assign, nonatomic) IBInspectable CGFloat seatRight;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatNormal;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatHadBuy;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatSelected;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatUnexist;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversLeftNormal;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversLeftHadBuy;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversLeftSelected;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversRightNormal;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversRightHadBuy;
-@property (strong, nonatomic) IBInspectable UIImage *imgSeatLoversRightSelected;
-
-@property (assign, nonatomic) IBInspectable BOOL showCenterLine;
-@property (assign, nonatomic) IBInspectable BOOL showRowIndex;
-@property (assign, nonatomic) IBInspectable BOOL rowIndexStick;  /**< 是否让showIndexView粘着左边 */
-@property (strong, nonatomic) IBInspectable UIColor *rowIndexViewColor;
-@property (assign, nonatomic) IBInspectable NSInteger rowIndexType; //座位左边行号提示样式
-@property (strong, nonatomic) IBInspectable NSArray *arrayRowIndex; //座位号左边行号提示（用它则忽略rowindextype）
-
-//增加缩放功能
-@property (nonatomic, assign) CGSize prevBoundsSize;
-@property (nonatomic, assign) CGPoint prevContentOffset;
-@property (nonatomic, strong, readwrite) UIView *viewForZooming;
-@property (nonatomic, strong, readwrite) UITapGestureRecognizer *doubleTapGestureRecognizer;
-
-- (void)displaySeatCenter;  //显示中心位置
-- (UIView *)getZoomView;   //返回缩小放大的view
-- (UIView *)getRowIndexView;   //返回左边现实row的视图
-
-@end
-
 @protocol KyoCinameSeatScrollViewDelegate <NSObject>
 
 @optional

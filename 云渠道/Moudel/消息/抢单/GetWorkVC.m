@@ -8,7 +8,7 @@
 
 #import "GetWorkVC.h"
 #import "GetWorkDetailVC.h"
-#import "RentingSurveyWaitDetailVC.h"
+//#import "RentingSurveyWaitDetailVC.h"
 
 #import "GetWorkCell.h"
 

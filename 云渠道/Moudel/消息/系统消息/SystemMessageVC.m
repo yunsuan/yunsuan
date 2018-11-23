@@ -8,7 +8,7 @@
 
 #import "SystemMessageVC.h"
 #import "SystemMessageCell.h"
-#import "InfoDetailVC.h"
+//#import "InfoDetailVC.h"
 #import "DynamicDetailVC.h"
 
 @interface SystemMessageVC ()<UITableViewDelegate,UITableViewDataSource>

@@ -7,7 +7,7 @@
 //
 
 #import "HouseTypeTableHeader.h"
-#import "HouseHeaderCollCell.h"
+//#import "HouseHeaderCollCell.h"
 #import "BuildingAlbumCollCell.h"
 
 @interface HouseTypeTableHeader() <UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
@@ -17,7 +17,7 @@
     NSInteger _nowNum;
     NSMutableArray *_allArr;
     NSInteger _total;
-    NSInteger _current;
+//    NSInteger _current;
 }
 
 @end
