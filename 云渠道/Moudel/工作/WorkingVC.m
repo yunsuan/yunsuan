@@ -84,6 +84,8 @@
             _imglist = @[@"recommended",@"client",@"Clinchadeal"];
              _countdata  = @[@"",@"",@""];
             [BaseRequest GET:AgentInfoCount_URL parameters:nil success:^(id resposeObject) {
+                
+                [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"]integerValue] ==200) {
                     
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
@@ -94,6 +96,7 @@
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
                 
+                [_MainTableView.mj_header endRefreshing];
             }];
         }
             break;
@@ -102,7 +105,11 @@
             _imglist = @[@"recommended"];
             _countdata  = @[@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
+                
+                [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"] integerValue] ==200) {
+                
+                    
                 _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
 
@@ -110,6 +117,7 @@
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
 
+                [_MainTableView.mj_header endRefreshing];
             }];
         }
             break;
@@ -179,6 +187,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     return 84*SIZE;
 }
 
