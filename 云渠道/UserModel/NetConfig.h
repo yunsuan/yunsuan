@@ -463,7 +463,7 @@ static NSString *const MessageWordHouseValueDetail_URL = @"agent/message/work/ho
 #pragma mark -- 二手房-房源
 
 //房源-关注
-static NSString *const UserFocusNews_URL = @"user/focusNews";
+static NSString *const UserFocusNews_URL = @"user/focusNews/list";
 
 //项目列表
 static NSString *const HouseProjectList_URL = @"user/house/project/list";
