@@ -147,6 +147,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([dataarr[indexPath.row][@"is_read"][@"is_read"] integerValue] ==0  ) {
+        
+    
     
     [BaseRequest GET:SystemInfoisread_URL parameters:@{
                                                        @"message_id":dataarr[indexPath.row][@"is_read"][@"message_id"]
@@ -154,10 +157,20 @@
              success:^(id resposeObject) {
                  NSLog(@"%@",resposeObject);
                  
+                
+                 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:dataarr[indexPath.row]];
+                 NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dic[@"is_read"]];
+                 [tempDic setObject:@"1" forKey:@"is_read"];
+                 [dic setObject:tempDic forKey:@"is_read"];
+                 [dataarr replaceObjectAtIndex:indexPath.row withObject:dic];
+//                 dataarr[indexPath.row][@"is_read"][@"is_read"] = @"1";
+                 [self.systemmsgtable reloadData];
+                 
              }
              failure:^(NSError *error) {
                  NSLog(@"%@",error);
              }];
+    }
     
     if ([dataarr[indexPath.row][@"is_read"][@"url"] isEqual:@""]  ) {
         
