@@ -204,9 +204,7 @@
         return cell;
     }
     else{
-        
         if (indexPath.section == 0) {
-            
             RoomBrokerageTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomBrokerageTableCell"];
             if (!cell) {
                 
