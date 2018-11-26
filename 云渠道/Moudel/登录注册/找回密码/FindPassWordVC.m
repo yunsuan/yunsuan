@@ -208,6 +208,7 @@
     if (!_PassWord) {
         _PassWord = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+218*SIZE, 200*SIZE, 15*SIZE)];
         _PassWord.placeholder = @"请输入密码";
+        _PassWord.secureTextEntry = YES;
         _PassWord.font = [UIFont systemFontOfSize:14*SIZE];
         
     }
@@ -219,6 +220,7 @@
     if (!_SurePassWord) {
         _SurePassWord = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+265*SIZE, 200*SIZE, 15*SIZE)];
         _SurePassWord.placeholder = @"再次输入密码";
+        _SurePassWord.secureTextEntry = YES;
         _SurePassWord.font = [UIFont systemFontOfSize:14*SIZE];
     }
     return _SurePassWord;

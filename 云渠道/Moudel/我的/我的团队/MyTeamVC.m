@@ -7,12 +7,10 @@
 //
 
 #import "MyTeamVC.h"
-
 #import "MyTeamTableHeader.h"
 #import "MyTeamTableHeader2.h"
 #import "MyTeamTableCell.h"
 #import "MyTeamTableCell2.h"
-
 #import "TeamInfoView.h"
 
 @interface MyTeamVC ()<UITableViewDelegate,UITableViewDataSource>
