@@ -84,7 +84,9 @@
             _imglist = @[@"recommended",@"client",@"Clinchadeal"];
              _countdata  = @[@"",@"",@""];
             [BaseRequest GET:AgentInfoCount_URL parameters:nil success:^(id resposeObject) {
+
                 [self.MainTableView.mj_header endRefreshing];
+
                 if ([resposeObject[@"code"]integerValue] ==200) {
                     
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
@@ -94,7 +96,9 @@
            
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
+
                 [self.MainTableView.mj_header endRefreshing];
+
             }];
         }
             break;
@@ -103,15 +107,23 @@
             _imglist = @[@"recommended"];
             _countdata  = @[@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
-                [self.MainTableView.mj_header endRefreshing];
+
+                
+                [_MainTableView.mj_header endRefreshing];
+
                 if ([resposeObject[@"code"] integerValue] ==200) {
+                
+                    
                 _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
 
                 _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
-                [self.MainTableView.mj_header endRefreshing];
+
+
+                [_MainTableView.mj_header endRefreshing];
+
             }];
         }
             break;
@@ -181,6 +193,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     return 84*SIZE;
 }
 

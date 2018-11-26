@@ -202,11 +202,11 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-//        RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] init];
-//        [self.navigationController pushViewController:nextVC animated:YES];
-    }];
+//    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+////        RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] init];
+////        [self.navigationController pushViewController:nextVC animated:YES];
+//    }];
     
     UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -248,15 +248,15 @@
         
     }];
     
-    [alert addAction:protocol];
+//    [alert addAction:protocol];
     [alert addAction:buy];
     [alert addAction:soldout];
     [alert addAction:cancel];
     
     [self.navigationController presentViewController:alert animated:YES completion:^{
         
+        
     }];
-    
 }
 
 
