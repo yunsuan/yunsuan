@@ -307,6 +307,13 @@
 
 }
 
+//- (void)TextFieldDidChange:(UITextField *)textField{
+//    
+//    RoomAgencyAddProtocolCell *cell = [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//}
+
+#pragma mark -- TableView --
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
 //    return 5;
@@ -1737,6 +1744,263 @@
         }
     }
 }
+
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    if (indexPath.section == 0) {
+//
+//        for (int i = 0; i < _dataArr.count; i++) {
+//
+//            if ([cell isKindOfClass:[RoomAgencyAddProtocolCell class]]) {
+//
+//                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                      @"contact_id":@"",
+//                                      @"report_type":@"",
+//                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                      };
+//                [_dataArr replaceObjectAtIndex:i withObject:dic];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 1) {
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell2 class]]) {
+//
+//            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//            if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                [self.handleDic setObject:@"" forKey:@"agent_name"];
+//            }else{
+//
+//                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//            }
+//
+//            if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//            }else{
+//
+//                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//            }
+//
+//            if (cell.genderTF->str.length) {
+//
+//                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//            }else{
+//
+//                [self.handleDic setObject:@"" forKey:@"sex"];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 2) {
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell3 class]]) {
+//
+//             RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//
+//            if (cell.homelandTF.textfield.text.length) {
+//
+//                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//            }else{
+//
+//                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 3) {
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell4 class]]) {
+//
+//            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//            if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"total_price"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//            }
+//
+//            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//            }
+//
+//            if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"break_money"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//            }
+//
+//            if (!cell.payWayBtn->str.length) {
+//
+//                [_tradeDic setObject:@"" forKey:@"pay_way"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//            }
+//
+//            if (!cell.signTimeBtn->str.length) {
+//
+//                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//            }
+//
+//            if (![self isEmpty:cell.eventTV.text]) {
+//
+//                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//            }else{
+//
+//                [_tradeDic setObject:@"" forKey:@"comment"];
+//            }
+//        }
+//    }
+//}
+
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//
+//    if (indexPath.section == 0) {
+//
+//        for (int i = 0; i < _dataArr.count; i++) {
+//
+//            if ([cell isKindOfClass:[RoomAgencyAddProtocolCell class]]) {
+//
+//                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                      @"contact_id":@"",
+//                                      @"report_type":@"",
+//                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                      };
+//                [_dataArr replaceObjectAtIndex:i withObject:dic];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 1) {
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell2 class]]) {
+//
+//            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//            if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                [self.handleDic setObject:@"" forKey:@"agent_name"];
+//            }else{
+//
+//                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//            }
+//
+//            if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//            }else{
+//
+//                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//            }
+//
+//            if (cell.genderTF->str.length) {
+//
+//                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//            }else{
+//
+//                [self.handleDic setObject:@"" forKey:@"sex"];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 2) {
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell3 class]]) {
+//
+//            RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//
+//            if (cell.homelandTF.textfield.text.length) {
+//
+//                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//            }else{
+//
+//                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//            }
+//        }
+//    }
+//
+//    if (indexPath.section == 3) {
+//
+//
+//        if ([cell isKindOfClass:[RoomAgencyAddProtocolCell4 class]]) {
+//
+//            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//            if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"total_price"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//            }
+//
+//            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//            }
+//
+//            if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                [_tradeDic setObject:@"" forKey:@"break_money"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//            }
+//
+//            if (!cell.payWayBtn->str.length) {
+//
+//                [_tradeDic setObject:@"" forKey:@"pay_way"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//            }
+//
+//            if (!cell.signTimeBtn->str.length) {
+//
+//                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//            }else{
+//
+//                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//            }
+//
+//            if (![self isEmpty:cell.eventTV.text]) {
+//
+//                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//            }else{
+//
+//                [_tradeDic setObject:@"" forKey:@"comment"];
+//            }
+//        }
+//    }
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

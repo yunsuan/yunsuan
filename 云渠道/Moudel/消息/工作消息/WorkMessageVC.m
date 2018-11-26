@@ -327,13 +327,15 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [BaseRequest POST:@"agent/message/work/delete" parameters:@{@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+    [BaseRequest GET:@"agent/message/work/delete" parameters:@{@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [_data removeObjectAtIndex:indexPath.row];
-            [tableView reloadData];
+            [self showContent:@"删除成功"];
+            [self postWithpage:@"1"];
+//            [_data removeObjectAtIndex:indexPath.row];
+//            [tableView reloadData];
         }else{
             
             [self showContent:resposeObject[@"msg"]];

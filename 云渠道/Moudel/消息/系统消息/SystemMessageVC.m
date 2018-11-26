@@ -198,7 +198,24 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    [BaseRequest GET:@"agent/message/system/delete" parameters:@{@"message_id":dataarr[indexPath.row][@"is_read"][@"message_id"]} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self showContent:@"删除成功"];
+            [self postWithpage:@"1"];
+//            [dataarr removeObjectAtIndex:indexPath.row];
+//            [tableView reloadData];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 #pragma mark  ---  懒加载   ---

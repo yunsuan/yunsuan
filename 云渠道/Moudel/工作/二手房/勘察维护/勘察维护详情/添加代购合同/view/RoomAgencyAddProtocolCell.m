@@ -120,7 +120,7 @@
 
 - (void)initUI{
     
-    _titleArr = @[@"性别:",@"主权益人名称：",@"联系电话1：",@"联系电话2：",@"证件类型：",@"证件编号：",@"通讯地址："];
+    _titleArr = @[@"性别:",@"主权益人名称：",@"联系电话：",@"联系电话2：",@"证件类型：",@"证件编号：",@"通讯地址："];
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     

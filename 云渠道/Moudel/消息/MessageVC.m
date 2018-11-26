@@ -119,23 +119,28 @@
                 working = 0;
             }
             NSInteger grab = [resposeObject[@"data"][@"grab"][@"unread"] integerValue];
+            if (grab < 0) {
+                
+                grab = 0;
+            }
             NSInteger work = [resposeObject[@"data"][@"msg"][@"unread"] integerValue];
+            if (work < 0) {
+                
+                work = 0;
+            }
             _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"系统派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
     
             [_messageTable reloadData];
             [_messageTable.mj_header endRefreshing];
 
-            if (working+system < 1) {
+            if (working + system + grab + work< 1) {
                 [self.navigationController.tabBarItem setBadgeValue:nil];
-//                [[[self.navigationController.tabBarController.viewControllers objectAtIndex:0] tabBarItem] setBadgeValue:nil];
             }else{
                 
-//                [[[self.navigationController.tabBarController.viewControllers objectAtIndex:0] tabBarItem] setBadgeValue:[NSString stringWithFormat:@"%ld",working+system]];
-                [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",working+system]];
-
+                [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",working + system + grab + work]];
             }
             
-            [UIApplication sharedApplication].applicationIconBadgeNumber = working+system;
+            [UIApplication sharedApplication].applicationIconBadgeNumber = working + system + grab + work;
         }
         
     } failure:^(NSError *error) {
