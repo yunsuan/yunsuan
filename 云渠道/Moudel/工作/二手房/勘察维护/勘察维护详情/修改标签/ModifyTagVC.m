@@ -73,6 +73,10 @@
 
         tags = i == 0 ? _dataArr[0][@"id"] : [NSString stringWithFormat:@"%@,%@", tags, _dataArr[i][@"id"]];
     }
+    if(!tags.length){
+        
+        tags = @"";
+    }
     NSDictionary *dic = @{@"house_id":self.houseId,
                           @"house_tags":tags,
                           @"type":self.typeId
