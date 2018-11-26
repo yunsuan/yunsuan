@@ -201,6 +201,14 @@
                                                                   }];
     }else{
         
+        NSString *str;
+        if ([self.dataDic[@"JZMJ"] length]) {
+            
+            str = self.dataDic[@"JZMJ"];
+        }else{
+            
+            str = @"0";
+        }
         NSDictionary *dic = @{@"project_id":self.projectID,
                               @"build_id":self.buildId,
                               @"build_name":self.dataDic[@"LDMC"],
@@ -212,7 +220,7 @@
                               @"house_type":self.dataDic[@"HXMC"],
                               @"floor_num":self.dataDic[@"FLOORNUM"],
                               @"orientation":@"1",
-                              @"build_area":self.dataDic[@"JZMJ"],
+                              @"build_area":str,
                               @"intent":_intentTF.textfield.text,
                               @"urgency":_urgentTF.textfield.text,
                               @"property_limit":@"60",

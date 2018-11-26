@@ -44,7 +44,7 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     CHECK_WAY=31,//看房方式
     RECORD_DISABLED_TYPE=32,//报备确认无效类型
     HOUSE_DISABLED_RESON=33,//房源下架原因
-    HOUSE_TAGS=34, //房源标签
+    HOUSE_TAGS_HOUSE=34, //二手房住宅标签
     COMPANY_CHECK_FAIL_TYPE=35,//公司审核拒绝类型
     SYSTEM_FUNC=36,//系统功能(客户类型)
     RULE_TYPE=37,//规则类型
@@ -53,7 +53,9 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     SHOP_TYPE=40,//商铺类型
     FORMAT_TAG=41,//业态标签
     OFFICE_GRADE=42,//写字楼等级
-    BUY_USE=43//购买用途
+    BUY_USE=43,//购买用途
+    HOUSE_TAGS_SHOP=44,//二手房商铺
+    HOUSE_TAGS_OFFICE=45//二手房写字楼标签
 };
 
 

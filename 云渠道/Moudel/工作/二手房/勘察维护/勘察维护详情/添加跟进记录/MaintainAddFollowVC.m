@@ -303,7 +303,7 @@
             
             _intentTF.textfield.text = @"100";
         }
-        _intentTF.textfield.text = [NSString stringWithFormat:@"%d",[_intentTF.textfield.text integerValue]];
+        _intentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentTF.textfield.text integerValue]];
         _intentSlider.value =  [_intentTF.textfield.text floatValue] / 100.0 * 100;
     }else if (textField == _urgentTF.textfield){
         
@@ -311,7 +311,7 @@
             
             _urgentTF.textfield.text = @"100";
         }
-        _urgentTF.textfield.text = [NSString stringWithFormat:@"%d",[_urgentTF.textfield.text integerValue]];
+        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
         _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
     }
     if (textField == _minPriceTF.textfield) {
