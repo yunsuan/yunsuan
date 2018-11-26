@@ -16,6 +16,7 @@
     
     NSMutableArray *_dataArr;
     NSArray *_tagArr;
+    NSInteger _type;
 }
 @property (nonatomic, strong) UICollectionView *tagColl;
 
@@ -27,15 +28,16 @@
 
 @implementation ModifyTagVC
 
-- (instancetype)initWithArray:(NSArray *)array
+- (instancetype)initWithArray:(NSArray *)array type:(NSInteger)type
 {
     self = [super init];
     if (self) {
         
-        if ([self.typeId integerValue] == 1) {
+        _type = type;
+        if (type == 1) {
             
             _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_HOUSE];
-        }else if ([self.typeId integerValue] == 2){
+        }else if (type == 2){
             
             _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_SHOP];
         }else{
@@ -79,7 +81,7 @@
     }
     NSDictionary *dic = @{@"house_id":self.houseId,
                           @"house_tags":tags,
-                          @"type":self.typeId
+                          @"type":[NSString stringWithFormat:@"%ld",_type]
                           };
     [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:dic success:^(id resposeObject) {
         

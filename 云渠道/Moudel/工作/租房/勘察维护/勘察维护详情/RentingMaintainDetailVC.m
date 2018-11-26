@@ -222,7 +222,7 @@
                 
                 if (section == 2) {
                     
-                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:@[]];
+                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:@[] type:0];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };
                 if (section == 3) {

@@ -20,7 +20,7 @@ typedef void(^ModifyTagSaveBtnBlock)(NSArray *array);
 
 @property (nonatomic, strong) NSString *houseId;
 
-@property (nonatomic, strong) NSString *typeId;
+//@property (nonatomic, strong) NSString *typeId;
 
-- (instancetype)initWithArray:(NSArray *)array;
+- (instancetype)initWithArray:(NSArray *)array type:(NSInteger )type;
 @end

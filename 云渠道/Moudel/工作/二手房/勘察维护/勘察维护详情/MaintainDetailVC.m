@@ -396,10 +396,10 @@
               
                 if (section == 2) {
                     
-                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"]];
+                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] type:_type];
 //                    nextVC.status = [NSString stringWithFormat:@"%ld",_type];
                     nextVC.houseId = _houseId;
-                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
+//                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
                     nextVC.modifyTagSaveBtnBlock = ^(NSArray *array) {
                         
                         [self RequestMethod];
