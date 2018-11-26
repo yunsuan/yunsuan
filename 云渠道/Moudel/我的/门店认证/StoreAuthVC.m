@@ -107,7 +107,7 @@
         }
     } failure:^(NSError *error) {
         
-        [self showContent:@"获取权限列表失败"];
+        [self showContent:@"获取权限列表失败,请返回重试"];
         NSLog(@"%@",error);
     }];
 }
