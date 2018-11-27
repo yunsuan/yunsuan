@@ -399,6 +399,25 @@
         header.titleL.text = _titleArr[section];
         //    __weak __typeof(&*header)weakHeader = header;
         header.blueTitleMoreHeaderBlock = ^{
+            //做数据保存
+            
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                
+                
+                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+                                      @"contact_id":@"",
+                                      @"report_type":@"",
+                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+                                      @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
+                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+                                      };
+                [_dataArr replaceObjectAtIndex:i withObject:dic];
+            }
         
             if ([self->_foldArr[section] integerValue]) {
                 [self->_foldArr replaceObjectAtIndex:section withObject:@"0"];
@@ -770,10 +789,10 @@
                     if (indexPath.section == 0) {
 
                         for (int i = 0; i < _dataArr.count; i++) {
-
+                            
                             RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
+                            
+                            
                             NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
                                                   @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
                                                   @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
