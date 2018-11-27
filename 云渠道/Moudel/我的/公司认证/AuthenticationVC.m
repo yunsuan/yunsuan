@@ -7,10 +7,10 @@
 //
 
 #import "AuthenticationVC.h"
-//#import "AuthenTableCell.h"
+#import "AuthenTableCell.h"
 #import "AuthenCollCell.h"
 #import "SelectCompanyVC.h"
-//#import "AuditStatusVC.h"
+#import "AuditStatusVC.h"
 #import "ApplyProjectVC.h"
 #import "DateChooseView.h"
 #import "MineVC.h"
@@ -19,19 +19,19 @@
 {
     
     NSArray *_titleArr;
-//    NSMutableArray *_contentArr;
-//    NSMutableArray *_imgArr;
-//    NSString *_imgUrl;
+    NSMutableArray *_contentArr;
+    //    NSMutableArray *_imgArr;
+    //    NSString *_imgUrl;
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
-//    NSInteger _index;
+    NSInteger _index;
     NSString *_companyId;
-//    NSString *_workCode;
+    NSString *_workCode;
     NSString *_role;
     NSString *_projectId;
-//    NSString *_department;
-//    NSString *_position;
-//    NSString *_entryTime;
+    NSString *_department;
+    NSString *_position;
+    NSString *_entryTime;
     NSString *_imgUrl;
 }
 
@@ -67,7 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+    
     [self initDataSource];
     [self initUI];
 }
@@ -76,16 +76,17 @@
     
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"yyyy-MM-dd"];
-//    _contentArr = [[NSMutableArray alloc] init];
-//    _imgArr = [[NSMutableArray alloc] init];
+    _contentArr = [[NSMutableArray alloc] init];
+    //    _imgArr = [[NSMutableArray alloc] init];
     _titleArr = @[@"所属公司",@"工号",@"角色",@"申请项目",@"所属部门",@"职位",@"入职/申请时间"];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
 }
 
 
-- (void)ActionCancelBtn {
 
+- (void)ActionCancelBtn:(UIButton *)btn{
+    
     [self.authenColl reloadData];
 }
 
@@ -104,15 +105,15 @@
         return;
     }
     
-    if (!_role) {
-        
-        [self showContent:@"请选择角色"];
-        return;
-    }
+    //    if (!_role) {
+    //
+    //        [self showContent:@"请选择角色"];
+    //        return;
+    //    }
     
-    if ([_role isEqualToString:@"到访确认人"]) {
+    if ([_roleL.text isEqualToString:@"到访确认人"]) {
         
-        if (!_projectId) {
+        if ([_projectId isEqual:@""]) {
             
             [self showContent:@"请选择申请项目"];
             return;
@@ -131,33 +132,44 @@
         return;
     }
     
-    if (!_timeL.text) {
+    //    if (!_timeL.text) {
+    //
+    //        [self showContent:@"请选择入职时间"];
+    //        return;
+    //    }
+    //
+    //    if (!_imgUrl) {
+    //
+    //        [self showContent:@"请选择工牌照片"];
+    //        return;
+    //    }
+    
+    [dic setObject:_companyId forKey:@"company_id"];
+    [dic setObject:_role forKey:@"role"];
+    [dic setObject:_numTextField.text forKey:@"work_code"];
+    if ([_roleL.text isEqualToString:@"到访确认人"]) {
         
-        [self showContent:@"请选择入职时间"];
-        return;
+        [dic setObject:_projectId forKey:@"project_id"];
+    }
+    [dic setObject:_departTextField.text forKey:@"department"];
+    [dic setObject:_positionTextField.text forKey:@"position"];
+    if (_timeL.text.length==0) {
+        [dic setObject:@"2018-06-29" forKey:@"entry_time"];
+    }
+    else
+    {
+        [dic setObject:_timeL.text forKey:@"entry_time"];
+    }
+    if (_imgUrl.length==0) {
+        
+    }
+    else{
+        [dic setObject:_imgUrl forKey:@"img_url"];
     }
     
-    if (!_imgUrl) {
-        
-        [self showContent:@"请选择工牌照片"];
-        return;
-    }
-    
-    dic[@"company_id"] = _companyId;
-    dic[@"role"] = _role;
-    dic[@"work_code"] = _numTextField.text;
-    if ([_role isEqualToString:@"到访确认人"]) {
-        
-        dic[@"project_id"] = _projectId;
-    }
-    dic[@"department"] = _departTextField.text;
-    dic[@"position"] = _positionTextField.text;
-    dic[@"entry_time"] = _timeL.text;
-    dic[@"img_url"] = _imgUrl;
-
     if ([self.status isEqualToString:@"重新认证"]) {
         
-        dic[@"before_id"] = self.beforeId;
+        [dic setObject:self.beforeId forKey:@"before_id"];
         [BaseRequest POST:@"agent/personal/reAuth" parameters:dic success:^(id resposeObject) {
             
             
@@ -178,7 +190,7 @@
                 [self showContent:resposeObject[@"msg"]];
             }
         } failure:^(NSError *error) {
-           
+            
             [self showContent:@"网络错误"];
         }];
     }else{
@@ -211,8 +223,10 @@
             SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
             nextVC.selectCompanyVCBlock = ^(NSString *companyId, NSString *name) {
                 
-                _companyId = companyId;
-                _companyL.text = name;
+                self->_companyId = companyId;
+                self->_companyL.text = name;
+                self->_projectL.text = @"";
+                self->_projectId = @"";
             };
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
@@ -228,23 +242,25 @@
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"请选择角色" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             
             UIAlertAction *agent = [UIAlertAction actionWithTitle:@"经纪人" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-               
-                _role = @"1";
-                _roleL.text = @"经纪人";
+                
+                self->_role = @"1";
+                self->_roleL.text = @"经纪人";
+                self->_projectL.text = @"";
+                self->_projectId = @"";
             }];
             
-            UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"到访确认人" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *comfirm = [UIAlertAction actionWithTitle:@"到访确认人" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
-                _role = @"2";
-                _roleL.text = @"到访确认人";
+                self->_role = @"2";
+                self->_roleL.text = @"到访确认人";
             }];
             
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-
+                
             }];
             
             [alert addAction:agent];
-            [alert addAction:confirm];
+            [alert addAction:comfirm];
             [alert addAction:cancel];
             [self.navigationController presentViewController:alert animated:YES completion:^{
                 
@@ -259,9 +275,9 @@
                     
                     ApplyProjectVC *nextVC = [[ApplyProjectVC alloc] initWithCompanyId:_companyId];
                     nextVC.applyProjectVCBlock = ^(NSString *projectId, NSString *name) {
-                      
-                        _projectL.text = name;
-                        _projectId = projectId;
+                        
+                        self->_projectL.text = name;
+                        self->_projectId = [NSString stringWithFormat:@"%@",projectId];
                     };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }else{
@@ -274,18 +290,18 @@
             }
             break;
         }
-//        case 4:
-//        {
-//            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
-//            [self.navigationController pushViewController:nextVC animated:YES];
-//            break;
-//        }
-//        case 5:
-//        {
-////            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
-////            [self.navigationController pushViewController:nextVC animated:YES];
-//            break;
-//        }
+            //        case 4:
+            //        {
+            //            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
+            //            [self.navigationController pushViewController:nextVC animated:YES];
+            //            break;
+            //        }
+            //        case 5:
+            //        {
+            ////            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
+            ////            [self.navigationController pushViewController:nextVC animated:YES];
+            //            break;
+            //        }
         case 6:
         {
             [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
@@ -311,15 +327,15 @@
     }
     cell.cancelBtn.tag = indexPath.item;
     cell.cancelBtn.hidden = YES;
-//    [cell.cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    //    [cell.cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     if (_imgUrl) {
         
         cell.imageView.image = _image;
-//        cell.cancelBtn.hidden = YES;
+        //        cell.cancelBtn.hidden = YES;
     }else{
         
         cell.imageView.image =[UIImage imageNamed:@"uploadphotos"];
-//        cell.cancelBtn.hidden = YES;
+        //        cell.cancelBtn.hidden = YES;
     }
     
     return cell;
@@ -327,7 +343,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-//    _index = indexPath.item;
+    _index = indexPath.item;
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -392,14 +408,14 @@
         [self presentViewController:_imagePickerController animated:YES completion:nil];
         
     } else {
-//        NSLog(@"当前设备不支持拍照");
+        //        NSLog(@"当前设备不支持拍照");
         UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
                                                                                   message:@"当前设备不支持拍照"
                                                                            preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction *action) {
-                                                              //                                                              _uploadButton.hidden = NO;
+                                                              //                                                       _uploadButton.hidden = NO;
                                                           }]];
         [self presentViewController:alertController
                            animated:YES
@@ -420,21 +436,21 @@
                   constructionBody:^(id<AFMultipartFormData> formData) {
                       [formData appendPartWithFileData:data name:@"id_card" fileName:@"id_card.jpg" mimeType:@"image/jpg"];
                   } success:^(id resposeObject) {
-//                      NSLog(@"%@",resposeObject);
+                      //                      NSLog(@"%@",resposeObject);
                       
                       if ([resposeObject[@"code"] integerValue] == 200) {
                           
-                          _imgUrl = resposeObject[@"data"];
+                          self->_imgUrl = resposeObject[@"data"];
                       }else{
                           
                           [self showContent:resposeObject[@"msg"]];
                       }
                       [self.authenColl reloadData];
                   } failure:^(NSError *error) {
-//                      NSLog(@"%@",error);
+                      //                      NSLog(@"%@",error);
                       [self showContent:@"网络错误"];
-            }];
-
+                  }];
+            
         }
     }else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
         
@@ -446,18 +462,18 @@
               constructionBody:^(id<AFMultipartFormData> formData) {
                   [formData appendPartWithFileData:data name:@"id_card" fileName:@"id_card.jpg" mimeType:@"image/jpg"];
               } success:^(id resposeObject) {
-//                  NSLog(@"%@",resposeObject);
+                  //                  NSLog(@"%@",resposeObject);
                   
                   if ([resposeObject[@"code"] integerValue] == 200) {
                       
-                      _imgUrl = resposeObject[@"data"];
+                      self->_imgUrl = resposeObject[@"data"];
                   }else{
                       
                       [self showContent:resposeObject[@"msg"]];
                   }
                   [self.authenColl reloadData];
               } failure:^(NSError *error) {
-//                  NSLog(@"%@",error);
+                  //                  NSLog(@"%@",error);
                   [self showContent:@"网络错误"];
               }];
     }
@@ -489,7 +505,7 @@
     whiteView11.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:whiteView11];
     
-    for (NSUInteger i = 0; i < 7; i++) {
+    for (int i = 0; i < 7; i++) {
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 16 *SIZE + i * 50 *SIZE, 100 *SIZE, 12 *SIZE)];
         label.textColor = YJContentLabColor;
@@ -522,10 +538,10 @@
             }
         }else{
             
-            UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(100 *SIZE, 18 *SIZE + i * 50 *SIZE, 230 *SIZE, 12 *SIZE)];
-            label2.textColor = YJContentLabColor;
-            label2.textAlignment = NSTextAlignmentRight;
-            label2.font = [UIFont systemFontOfSize:13 *SIZE];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100 *SIZE, 18 *SIZE + i * 50 *SIZE, 230 *SIZE, 12 *SIZE)];
+            label.textColor = YJContentLabColor;
+            label.textAlignment = NSTextAlignmentRight;
+            label.font = [UIFont systemFontOfSize:13 *SIZE];
             
             UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(343 *SIZE, 19 *SIZE + i * 50*SIZE, 12 *SIZE, 12 *SIZE)];
             img.image = [UIImage imageNamed:@"rightarrow"];
@@ -546,6 +562,8 @@
                 {
                     _roleL = label;
                     [whiteView11 addSubview:_roleL];
+                    _role = @"1";
+                    _roleL.text = @"经纪人";
                     break;
                 }
                 case 3:
@@ -554,21 +572,21 @@
                     [whiteView11 addSubview:_projectL];
                     break;
                 }
-//                case 4:
-//                {
-//                    _departL = label;
-//                    [whiteView11 addSubview:_departL];
-//                    break;
-//                }
-//                case 5:
-//                {
-//                    _positionL = label;
-//                    [whiteView11 addSubview:_positionL];
-//                    break;
-//                }
+                    //                case 4:
+                    //                {
+                    //                    _departL = label;
+                    //                    [whiteView11 addSubview:_departL];
+                    //                    break;
+                    //                }
+                    //                case 5:
+                    //                {
+                    //                    _positionL = label;
+                    //                    [whiteView11 addSubview:_positionL];
+                    //                    break;
+                    //                }
                 case 6:
                 {
-                    _timeL = label2;
+                    _timeL = label;
                     [whiteView11 addSubview:_timeL];
                     break;
                 }

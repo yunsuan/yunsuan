@@ -12,7 +12,7 @@
 //#import "BoxView.h"
 #import "BoxAddressView.h"
 #import "CompanyDetailVC.h"
-//#import "CompanyModel.h"
+#import "CompanyModel.h"
 //#import "SinglePickView.h"
 
 @interface SelectCompanyVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate>
@@ -84,8 +84,8 @@
     [_dataArr removeAllObjects];
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
         
-//        NSLog(@"%@",resposeObject);
-     
+        //        NSLog(@"%@",resposeObject);
+        
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -107,14 +107,14 @@
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
-                [self showContent:resposeObject[@"msg"]];
-          
+            [self showContent:resposeObject[@"msg"]];
+            
             _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
         }
     } failure:^(NSError *error) {
         
         [_selecTable.mj_header endRefreshing];
-//        NSLog(@"%@",error);
+        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }
@@ -142,8 +142,8 @@
     
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
         
-//        NSLog(@"%@",resposeObject);
-     
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
@@ -166,9 +166,9 @@
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
-          
+            
             [self showContent:resposeObject[@"msg"]];
-           
+            
             _page -= 1;
             _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
         }
@@ -176,7 +176,7 @@
         
         _page -= 1;
         [_selecTable.mj_footer endRefreshing];
-//        NSLog(@"%@",error);
+        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }
@@ -194,8 +194,8 @@
     
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
         
-//        NSLog(@"%@",resposeObject);
-     
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
@@ -218,7 +218,7 @@
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
-         
+            
             [self showContent:resposeObject[@"msg"]];
             _page -= 1;
             _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -227,7 +227,7 @@
         
         _page -= 1;
         [_selecTable.mj_footer endRefreshing];
-//        NSLog(@"%@",error);
+        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }
@@ -258,8 +258,8 @@
         _isSearch = YES;
         [BaseRequest GET:GetCompanyList_URL parameters:@{@"company_name":textField.text} success:^(id resposeObject) {
             
-//            NSLog(@"%@",resposeObject);
-        
+            //            NSLog(@"%@",resposeObject);
+            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
@@ -281,7 +281,7 @@
             }
         } failure:^(NSError *error) {
             
-//            NSLog(@"%@",error);
+            //            NSLog(@"%@",error);
             [self showContent:@"网络错误"];
         }];
     }else{
@@ -372,7 +372,7 @@
         };
         
         _provinceView.boxAddressComfirmBlock = ^(NSString *ID, NSString *str, NSInteger index) {
-          
+            
             _isSearch = NO;
             _province = [NSString stringWithFormat:@"%@",ID];
             _proName = [NSString stringWithFormat:@"%@",str];
@@ -531,7 +531,7 @@
     _searchBar.returnKeyType = UIReturnKeySearch;
     
     UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
-//    rightImg.backgroundColor = [UIColor whiteColor];
+    //    rightImg.backgroundColor = [UIColor whiteColor];
     rightImg.image = [UIImage imageNamed:@"search"];
     _searchBar.rightView = rightImg;
     _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;
@@ -562,7 +562,7 @@
     _selecTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_selecTable];
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
-       
+        
         [self RequestMethod];
     }];
     
@@ -611,3 +611,4 @@
 }
 
 @end
+

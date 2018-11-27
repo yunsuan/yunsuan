@@ -59,17 +59,17 @@
 
 
 - (void)RequestMethod{
-
+    
     self.MainTableView.mj_footer.state = MJRefreshStateIdle;
     NSDictionary *dic = @{@"company_id":_companyId};
-
+    
     [BaseRequest GET:GetCompanyProject_URL parameters:dic success:^(id resposeObject) {
-
+        
         [self.MainTableView.mj_header endRefreshing];
-//        NSLog(@"%@",resposeObject);
-       
+        //        NSLog(@"%@",resposeObject);
+        
         if ([resposeObject[@"code"] integerValue] == 200) {
-
+            
             [_dataArr removeAllObjects];
             [self SetData:resposeObject[@"data"][@"data"]];
             if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
@@ -82,23 +82,27 @@
             self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
         }
     } failure:^(NSError *error) {
-
+        
         [self.MainTableView.mj_header endRefreshing];
         [self showContent:@"网络错误"];
-//        NSLog(@"%@",error.localizedDescription);
+        //        NSLog(@"%@",error.localizedDescription);
     }];
-
+    
 }
 
 - (void)RequestAddMethod{
-
+    
     _page += 1;
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-
+    NSMutableDictionary *dic =[@{@"company_id":_companyId,
+                                @"page":[NSString stringWithFormat:@"%ld",_page]
+                                } mutableCopy];
+    
+    
+    
     [BaseRequest GET:GetCompanyProject_URL parameters:dic success:^(id resposeObject) {
         
         
-//        NSLog(@"%@",resposeObject);
+        //        NSLog(@"%@",resposeObject);
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -118,31 +122,31 @@
         _page -= 1;
         [self.MainTableView.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
-//        NSLog(@"%@",error.localizedDescription);
+        //        NSLog(@"%@",error.localizedDescription);
     }];
-
+    
 }
 
 
 - (void)SetData:(NSArray *)data{
-
+    
     for (int i = 0; i < data.count; i++) {
-
+        
         NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-
+            
             if ([obj isKindOfClass:[NSNull class]]) {
-
+                
                 [tempDic setObject:@"" forKey:key];
             }
             
         }];
-
-       MyAttentionModel *model = [[MyAttentionModel alloc] initWithDictionary:tempDic];
-
+        
+        MyAttentionModel *model = [[MyAttentionModel alloc] initWithDictionary:tempDic];
+        
         [_dataArr addObject:model];
     }
-
+    
     [_MainTableView reloadData];
 }
 

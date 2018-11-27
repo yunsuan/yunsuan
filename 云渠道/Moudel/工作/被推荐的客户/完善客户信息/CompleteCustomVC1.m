@@ -263,7 +263,12 @@
     
     [dic setObject:_clientId forKey:@"client_id"];
     [dic setObject:_nameTF.textfield.text forKey:@"client_name"];
-    [dic setObject:tel forKey:@"client_tel"];
+    if (tel) {
+       [dic setObject:tel forKey:@"client_tel"];
+    }
+    else{
+        [dic setObject:tel forKey:@""];
+    }
     if (_cardType) {
         
         [dic setObject:_cardType forKey:@"card_type"];
