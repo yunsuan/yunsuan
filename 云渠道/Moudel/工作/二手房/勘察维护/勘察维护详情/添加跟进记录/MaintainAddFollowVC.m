@@ -332,7 +332,7 @@
     
     if (textField == _minPriceTF.textfield) {
         
-        if (![self isEmpty:_priceTF.textfield.text]) {
+        if ([self isEmpty:_priceTF.textfield.text]) {
             
             [self alertControllerWithNsstring:@"温馨提示" And:@"请先输入挂牌价格" WithDefaultBlack:^{
                 
