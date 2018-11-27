@@ -127,7 +127,7 @@
     _reCommitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_reCommitBtn addTarget:self action:@selector(ActionRecommitBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_reCommitBtn setTitle:@"重新认证" forState:UIControlStateNormal];
-    [_reCommitBtn setBackgroundColor:YJBlueBtnColor];
+    [_reCommitBtn setBackgroundColor:YJLoginBtnColor];
     [self.view addSubview:_reCommitBtn];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
