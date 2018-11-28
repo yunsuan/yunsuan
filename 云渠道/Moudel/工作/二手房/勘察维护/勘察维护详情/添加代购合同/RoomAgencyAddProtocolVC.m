@@ -35,12 +35,17 @@
     NSString *_houseId;
     NSArray *_titleArr;
     NSMutableArray *_foldArr;
-    NSMutableArray *_dataArr;
+
 //    NSMutableDictionary *_dataDic;
-    NSMutableDictionary *_roomDic;
+//    NSMutableDictionary *_roomDic;
     NSMutableDictionary *_tradeDic;
     NSDateFormatter *_formatter;
 }
+
+@property (nonatomic, strong) NSMutableArray * dataArr;
+
+@property (nonatomic, strong) NSMutableDictionary *roomDic;
+
 
 @property (nonatomic, strong) UITableView *table;
 
@@ -63,16 +68,19 @@
                 
                 if ([(NSString *)obj[@"report_type"] containsString:@"权益人"]) {
                     
-                    [self->_dataArr addObject:obj];
+                    [_dataArr addObject:obj];
                 }
             }];
         }else{
             
             _dataArr = [@[] mutableCopy];
+//            [self.dataArr addObject:@"1"];
         }
     }
     return self;
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,7 +101,7 @@
     
     _titleArr = @[@"客户信息",@"经办人信息",@"房源信息",@"交易信息"];
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0",@"0",@"0"]];
-    _roomDic = [@[] mutableCopy];
+    _roomDic = [@{} mutableCopy];
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY/MM/dd"];
 }
@@ -105,7 +113,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            self->_roomDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
+            _roomDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
             self.handleDic[@"regist_time"] = [self->_formatter stringFromDate:[NSDate date]];
             [self.handleDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                
@@ -122,9 +130,9 @@
                     [self.handleDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:@"sex"];
                 }
             }];
-            [self.handleDic setObject:[NSString stringWithFormat:@"%@",self->_roomDic[@"company_id"]] forKey:@"company_id"];
-            [self.handleDic setObject:[NSString stringWithFormat:@"%@",self->_roomDic[@"store_id"]] forKey:@"store_id"];
-            [self.handleDic setObject:[NSString stringWithFormat:@"%@",self->_roomDic[@"project_id"]] forKey:@"project_id"];
+            [self.handleDic setObject:[NSString stringWithFormat:@"%@",_roomDic[@"company_id"]] forKey:@"company_id"];
+            [self.handleDic setObject:[NSString stringWithFormat:@"%@",_roomDic[@"store_id"]] forKey:@"store_id"];
+            [self.handleDic setObject:[NSString stringWithFormat:@"%@",_roomDic[@"project_id"]] forKey:@"project_id"];
             [weakSelf.table reloadData];
             
         }else{
@@ -401,23 +409,7 @@
         header.blueTitleMoreHeaderBlock = ^{
             //做数据保存
             
-            for (int i = 0; i < _dataArr.count; i++) {
-                
-                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                
-                
-                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                      @"contact_id":@"",
-                                      @"report_type":@"",
-                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                      @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
-                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                      };
-                [_dataArr replaceObjectAtIndex:i withObject:dic];
-            }
+        
         
             if ([self->_foldArr[section] integerValue]) {
                 [self->_foldArr replaceObjectAtIndex:section withObject:@"0"];
@@ -445,1324 +437,1583 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    if (indexPath.section == 0) {
-//
-//        RoomAgencyAddProtocolCell6 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell6"];
-//        if (!cell) {
-//
-//            cell = [[RoomAgencyAddProtocolCell6 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell6"];
-//        }
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-////        if (_roomDic.count) {
-////
-////            cell.codeTF.textfield.text = _roomDic[@"permit_code"];
-////        }
-//
-//        return cell;
-//    }else if (indexPath.section == 1) {
-    
+    //440~691
     if (indexPath.section == 0) {
-        
+
         if (indexPath.row == _dataArr.count) {
-            
             RoomAgencyAddProtocolCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell5"];
-            if (!cell) {
-                
-                cell = [[RoomAgencyAddProtocolCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell5"];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            return cell;
-        }else{
-            
+                if (!cell) {
+                     cell = [[RoomAgencyAddProtocolCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell5"];
+                }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+        }
+        else{
             RoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell"];
             if (!cell) {
-                
                 cell = [[RoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell"];
             }
             cell.tag = indexPath.row;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if (indexPath.row == 0) {
-                
-                cell.nameL.text = @"主权益人名称：";
-            }else{
-                
-                cell.nameL.text = @"副权益人名称：";
-            }
-            
+            cell.nameL.text = @"主权益人名称：";
+            cell.nameL.text = @"附权益人名称：";
             cell.dic = _dataArr[indexPath.row];
-            
+                //加号添加客户
             cell.roomAgencyAddProtocolCellBlock = ^(NSInteger index) {
-              
+                
+
+//                [cell. resignFirstResponder];
                 SelectCustomVC *nextVC = [[SelectCustomVC alloc] init];
                 nextVC.selectCustomVCBlock = ^(CustomerTableModel * _Nonnull model) {
-                    
-                    NSDictionary *dic = @{@"address":model.address,
-                                          @"card_id":[NSString stringWithFormat:@"%@",model.card_id],
-                                          @"card_type":[NSString stringWithFormat:@"%@",model.card_type],
-                                          @"card_type_name":@"",
-                                          @"contact_id":@"",
-                                          @"report_type":@"",
-                                          @"name":model.name,
-                                          @"sex":[NSString stringWithFormat:@"%@",model.sex],
-                                          @"tel":[model.tel componentsSeparatedByString:@","],
-                                          };
-                    [self->_dataArr replaceObjectAtIndex:index withObject:dic];
-                    [tableView reloadData];
-                };
+                            NSDictionary *dic = @{
+                            @"address":model.address,
+                            @"card_id":[NSString stringWithFormat:@"%@",model.card_id],
+                          @"card_type":[NSString stringWithFormat:@"%@",model.card_type],
+                     @"card_type_name":@"",
+                         @"contact_id":@"",
+                        @"report_type":@"",
+                               @"name":model.name,
+                                @"sex":[NSString stringWithFormat:@"%@",model.sex],
+                                                              @"tel":[model.tel componentsSeparatedByString:@","],
+                            };
+                        [_dataArr replaceObjectAtIndex:index withObject:dic];
+                        cell.dic = _dataArr[indexPath.row];
+//                        [tableView reloadData];
+                    };
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
-            
+                //选择男女
             cell.roomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
+                [cell.nameTF.textfield resignFirstResponder];
+                [cell.phoneTF.textfield resignFirstResponder];
+                [cell.phoneTF2.textfield resignFirstResponder];
                 
+//                [cell.nameTF resignFirstResponder];
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                
                 UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-//                    cell.genderBtn.str = @"1";
-//                    cell.genderBtn.content.text = @"男";
-                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:self->_dataArr[index]];
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
                     [dic setObject:@"1" forKey:@"sex"];
-                    [self->_dataArr replaceObjectAtIndex:index withObject:dic];
-                    
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < self->_dataArr.count; i++) {
-
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":self->_dataArr[i][@"card_type"]?self->_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":self->_dataArr[i][@"card_type_name"]?self->_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[self->_dataArr[indexPath.row][@"sex"] length]?self->_dataArr[indexPath.row][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [self->_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            self.handleDic[@"agent_tel"] = cell.phoneTF.textfield.text;
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-
-                    }
-                    
-                    if (indexPath.section == 2) {
-                        
-                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        if (cell.homelandTF.textfield.text.length) {
-                            
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                        }else{
-                            
-                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                        }
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [self->_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [self->_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-
-                    [tableView reloadData];
+                    [_dataArr replaceObjectAtIndex:index withObject:dic];
+                    cell.dic = _dataArr[indexPath.row];
+//                    [tableView reloadData];
                 }];
-                
                 UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-//                    cell.genderBtn.str = @"2";
-//                    cell.genderBtn.content.text = @"女";
                     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
                     [dic setObject:@"2" forKey:@"sex"];
                     [_dataArr replaceObjectAtIndex:index withObject:dic];
-                    
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < _dataArr.count; i++) {
-
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        cell.commisionTF.textfield.text = [NSString stringWithFormat:@"%@%@",_roomDic[@"broker_ratio"],@"%"];
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-
-                    [tableView reloadData];
+                    cell.dic = _dataArr[indexPath.row];
+//                    [tableView reloadData];
                 }];
-                
                 UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                
+                    }];
                 [alert addAction:male];
                 [alert addAction:female];
                 [alert addAction:cancel];
                 [self.navigationController presentViewController:alert animated:YES completion:^{
+                    }];
                     
-                }];
-            };
-            
-            cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
-              
-                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self     getDetailConfigArrByConfigState:2]];
-                view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                  
-//                    cell.certTypeBtn.str = [NSString stringWithFormat:@"%@",ID];
-//                    cell.certTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-                    [tempDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"card_type"];
-                    [tempDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"card_type_name"];
-                    [_dataArr replaceObjectAtIndex:index withObject:tempDic];
-                    
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < _dataArr.count; i++) {
-                            
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                            
-                            
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-
-                    [tableView reloadData];
                 };
-                [self.view addSubview:view];
+            cell.RoomAgencyBlock = ^(NSInteger index, NSDictionary *datadic) {
+                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
+                if (datadic[@"name"]) {
+                    [dic setObject:datadic[@"name"] forKey:@"name"];
+                }
+                if (datadic[@"card_id"]) {
+                    [dic setObject:datadic[@"card_id"] forKey:@"card_id"];
+                }
+                if (datadic[@"address"]) {
+                    [dic setObject:datadic[@"address"] forKey:@"address"];
+                }
+
+                
+                if (datadic[@"tel1"]) {
+                    dic[@"tel"][0] = datadic[@"tel1"];
+                }
+                
+                if (datadic[@"tel2"]) {
+                    dic[@"tel"][2] = datadic[@"tel2"];
+                }
+                [_dataArr replaceObjectAtIndex:index withObject:dic];
+               
             };
-            
+
+            //选择证件类型
+            cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
+                [cell.nameTF.textfield resignFirstResponder];
+                [cell.phoneTF.textfield resignFirstResponder];
+                [cell.phoneTF2.textfield resignFirstResponder];
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self     getDetailConfigArrByConfigState:2]];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
+                        [tempDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"card_type"];
+                        [tempDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"card_type_name"];
+                        [_dataArr replaceObjectAtIndex:index withObject:tempDic];
+                        cell.dic = _dataArr[indexPath.row];
+                    };
+                    [self.view addSubview:view];
+                };
             return cell;
         }
-    }else{
+    }
+    else if(indexPath.section == 1)
+    {
         
-#pragma mark -- Section 2
-        if (indexPath.section == 1) {
-            
-            RoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell2"];
-            if (!cell) {
-                
-                cell = [[RoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell2"];
+        RoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell2"];
+        if (!cell) {
+            cell = [[RoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell2"];
             }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            if (self.handleDic.count) {
-                
-                [cell setDataByDic:self.handleDic];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (self.handleDic.count) {
+            [cell setDataByDic:self.handleDic];
             }
-            __weak RoomAgencyAddProtocolCell2 *weakcell = cell;
+        __weak RoomAgencyAddProtocolCell2 *weakcell = cell;
+        cell.roomAgencyAddProtocolCell2TimeBlock = ^{
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+            view.dateblock = ^(NSDate *date) {
+                weakcell.timeBtn.content.text = [self->_formatter stringFromDate:date];
+                weakcell.timeBtn->str = [self->_formatter stringFromDate:date];
+                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+            };
+            [self.view addSubview:view];
+        };
+        cell.roomAgencyAddProtocolCell2SexBlock = ^{
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                weakcell.genderTF->str = @"1";
+                weakcell.genderTF.content.text = @"男";
+                [self.handleDic setObject:@"1" forKey:@"sex"];
+            }];
+            UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                weakcell.genderTF->str = @"2";
+                weakcell.genderTF.content.text = @"女";
+                [self.handleDic setObject:@"2" forKey:@"sex"];
+            }];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:male];
+            [alert addAction:female];
+            [alert addAction:cancel];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+            }];
+        };
+        cell.roomAgencyCell2Block = ^{
+            if (cell.datadic[@"agent_name"]) {
+                [self.handleDic setObject:weakcell.datadic[@"agent_name"] forKey:@"agent_name"];
+            }
+            if (cell.datadic[@"agent_tel"]) {
+                            [self.handleDic setObject:weakcell.datadic[@"agent_tel"] forKey:@"agent_tel"];
+            }
+        };
+        
+        return cell;
+    }
+    else if (indexPath.section == 2)
+    {
+        RoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell3"];
+        if (!cell) {
+            cell = [[RoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell3"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if ([_roomDic count]) {
+            [cell setDataByDic:_roomDic];
+        }
+        WS(weakSelf);
+        cell.changeblock = ^{
+            if (_housedic.count) {
+                SecComAllRoomListVC *nextVC = [[SecComAllRoomListVC alloc] initWithProjectId:_housedic[@"project_id"] city:@""];
+                nextVC.status = @"protocol";
+                nextVC.secComAllRoomListVCBlock = ^(SecdaryAllTableModel *model) {
+                    _houseId = model.house_id;
+                    [weakSelf RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
+                nextVC.status = @"selectSec";
+                nextVC.roomReportAddModelBlock = ^(SecdaryAllTableModel *model) {
+                    _houseId = model.house_id;
+                    [weakSelf RequestMethod];
+                    };
+                [self.navigationController pushViewController:nextVC animated:YES];
+                }
+        };
+        cell.roomAgencyCell3Block = ^(NSString *homeland) {
+            [_roomDic setObject:homeland forKey:@"land_use_permit_code"];
+        };
+        
+        return cell;
+
+    }
+    else
+    {
+        RoomAgencyAddProtocolCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell4"];
+        if (!cell) {
+            cell = [[RoomAgencyAddProtocolCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell4"];
+            }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (_roomDic.count) {
+            cell.ratio = [_roomDic[@"broker_ratio"] integerValue];
+            [_tradeDic setObject:_roomDic[@"broker_ratio"] forKey:@"broker_ratio"];
+        }else{
+            cell.ratio = 0;
+            [_tradeDic setObject:@"0" forKey:@"broker_ratio"];
+        }
+        cell.tradeDic = _tradeDic;
+        cell.roomAgencyAddProtocolCell4TimeBlock = ^{
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+            [view.pickerView setMinimumDate:[NSDate date]];
+            [view.pickerView setCalendar:[NSCalendar currentCalendar]];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            NSDateComponents *comps = [[NSDateComponents alloc] init];
+            [comps setDay:15];//设置最大时间为：当前时间推后10天
+            [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
+            view.dateblock = ^(NSDate *date) {
+                [_tradeDic setObject:[_formatter stringFromDate:date] forKey:@"appoint_construct_time"];
+                cell.signTimeBtn->str = [_formatter stringFromDate:date];
+                cell.signTimeBtn.content.text = [_formatter stringFromDate:date];
+            };
+            [self.view addSubview:view];
+        };
+        cell.roomAgencyAddProtocolCell4PayBlock = ^{
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+                [_tradeDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"pay_way"];
+                [_tradeDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"pay_way_name"];
+                [tableView reloadData];
+            };
+            [self.view addSubview:view];
+        };
+    return cell;
+    }
+}
+//  693~2144
+//
+////    if (indexPath.section == 0) {
+////
+////        RoomAgencyAddProtocolCell6 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell6"];
+////        if (!cell) {
+////
+////            cell = [[RoomAgencyAddProtocolCell6 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell6"];
+////        }
+////        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+////
+//////        if (_roomDic.count) {
+//////
+//////            cell.codeTF.textfield.text = _roomDic[@"permit_code"];
+//////        }
+////
+////        return cell;
+////    }else if (indexPath.section == 1) {
+//
+//    if (indexPath.section == 0) {
+//
+//        if (indexPath.row == _dataArr.count) {
+//
+//            RoomAgencyAddProtocolCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell5"];
+//            if (!cell) {
+//
+//                cell = [[RoomAgencyAddProtocolCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell5"];
+//            }
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//            return cell;
+//        }else{
+//
+//            RoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell"];
+//            if (!cell) {
+//
+//                cell = [[RoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell"];
+//            }
+//            cell.tag = indexPath.row;
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            if (indexPath.row == 0) {
+//
+//                cell.nameL.text = @"主权益人名称：";
+//            }else{
+//
+//                cell.nameL.text = @"副权益人名称：";
+//            }
+//
+//            cell.dic = _dataArr[indexPath.row];
+//
+
+
+//            cell.roomAgencyAddProtocolCellBlock = ^(NSInteger index) {
+//
+
+//                SelectCustomVC *nextVC = [[SelectCustomVC alloc] init];
+//                nextVC.selectCustomVCBlock = ^(CustomerTableModel * _Nonnull model) {
+//
+//                    NSDictionary *dic = @{@"address":model.address,
+//                                          @"card_id":[NSString stringWithFormat:@"%@",model.card_id],
+//                                          @"card_type":[NSString stringWithFormat:@"%@",model.card_type],
+//                                          @"card_type_name":@"",
+//                                          @"contact_id":@"",
+//                                          @"report_type":@"",
+//                                          @"name":model.name,
+//                                          @"sex":[NSString stringWithFormat:@"%@",model.sex],
+//                                          @"tel":[model.tel componentsSeparatedByString:@","],
+//                                          };
+//                    [_dataArr replaceObjectAtIndex:index withObject:dic];
+//                    [tableView reloadData];
+//                };
+//                [self.navigationController pushViewController:nextVC animated:YES];
+//            };
+//
+
+
+//            cell.roomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
+//
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//
+//                UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+////                    cell.genderBtn.str = @"1";
+////                    cell.genderBtn.content.text = @"男";
+//                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
+//                    [dic setObject:@"1" forKey:@"sex"];
+//                    [_dataArr replaceObjectAtIndex:index withObject:dic];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            self.handleDic[@"agent_tel"] = cell.phoneTF.textfield.text;
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//
+//                    }
+//
+//                    if (indexPath.section == 2) {
+//
+//                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                        if (cell.homelandTF.textfield.text.length) {
+//
+//                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                        }else{
+//
+//                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [self->_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [self->_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                }];
+//
+//                UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+////                    cell.genderBtn.str = @"2";
+////                    cell.genderBtn.content.text = @"女";
+//                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
+//                    [dic setObject:@"2" forKey:@"sex"];
+//                    [_dataArr replaceObjectAtIndex:index withObject:dic];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        cell.commisionTF.textfield.text = [NSString stringWithFormat:@"%@%@",_roomDic[@"broker_ratio"],@"%"];
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                }];
+//
+//                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//                }];
+//
+//                [alert addAction:male];
+//                [alert addAction:female];
+//                [alert addAction:cancel];
+//                [self.navigationController presentViewController:alert animated:YES completion:^{
+//
+//                }];
+//            };
+//
+
+#pragma mark ============
+//            cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
+//
+//                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self     getDetailConfigArrByConfigState:2]];
+//                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+////                    cell.certTypeBtn.str = [NSString stringWithFormat:@"%@",ID];
+////                    cell.certTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
+//                    [tempDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"card_type"];
+//                    [tempDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"card_type_name"];
+//                    [_dataArr replaceObjectAtIndex:index withObject:tempDic];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                };
+//                [self.view addSubview:view];
+//            };
+//
+//            return cell;
+//        }
+//    }else{
+//
+#pragma mark -- Section 2 经办人
+//        if (indexPath.section == 1) {
+//
+//            RoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell2"];
+//            if (!cell) {
+//
+//                cell = [[RoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell2"];
+//            }
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//            if (self.handleDic.count) {
+//
+//                [cell setDataByDic:self.handleDic];
+//            }
+//            __weak RoomAgencyAddProtocolCell2 *weakcell = cell;
+////            WS(weakSelf);
+//            cell.roomAgencyAddProtocolCell2TimeBlock = ^(NSInteger index) {
+//
+//                DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+////                [view.pickerView setMinimumDate:[NSDate date]];
+////                [view.pickerView setCalendar:[NSCalendar currentCalendar]];
+////                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+////                NSDateComponents *comps = [[NSDateComponents alloc] init];
+////                [comps setDay:15];//设置最大时间为：当前时间推后10天
+////                [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
+//                view.dateblock = ^(NSDate *date) {
+//
+//                    weakcell.timeBtn.content.text = [self->_formatter stringFromDate:date];
+//                    weakcell.timeBtn->str = [self->_formatter stringFromDate:date];
+//                    [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//
+//                    }
+//
+//                    if (indexPath.section == 2) {
+//
+//                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                        if (cell.homelandTF.textfield.text.length) {
+//
+//                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                        }else{
+//
+//                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                };
+//
+//                [self.view addSubview:view];
+//            };
+//
+//
+//            cell.roomAgencyAddProtocolCell2SexBlock = ^(NSInteger index) {
+//
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//
+//                UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//                    cell.genderTF->str = @"1";
+//                    cell.genderTF.content.text = @"男";
+//                    [self.handleDic setObject:@"1" forKey:@"sex"];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 2) {
+//
+//                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                        if (cell.homelandTF.textfield.text.length) {
+//
+//                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                        }else{
+//
+//                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                }];
+//
+//                UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//                    cell.genderTF->str = @"2";
+//                    cell.genderTF.content.text = @"女";
+//                    [self.handleDic setObject:@"2" forKey:@"sex"];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 2) {
+//
+//                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                        if (cell.homelandTF.textfield.text.length) {
+//
+//                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                        }else{
+//
+//                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//                    [tableView reloadData];
+//                }];
+//
+//                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//
+//                }];
+//
+//                [alert addAction:male];
+//                [alert addAction:female];
+//                [alert addAction:cancel];
+//                [self.navigationController presentViewController:alert animated:YES completion:^{
+//
+//                }];
+//            };
+//            return cell;
+//        }else if (indexPath.section == 2){
+//
+#pragma mark -- Section 3 房源
+//            RoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell3"];
+//            if (!cell) {
+//
+//                cell = [[RoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell3"];
+//            }
+//
+//            if ([_roomDic count]) {
+//
+//                [cell setDataByDic:_roomDic];
+//            }
+////            if (_housedic.count>0) {
+////                 [cell setDataByDic:_housedic];
+////            }
 //            WS(weakSelf);
-            cell.roomAgencyAddProtocolCell2TimeBlock = ^(NSInteger index) {
-              
-                DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+//            cell.changeblock = ^{
+//
+//                if (_housedic.count) {
+//
+//                    SecComAllRoomListVC *nextVC = [[SecComAllRoomListVC alloc] initWithProjectId:_housedic[@"project_id"] city:@""];
+//                    nextVC.status = @"protocol";
+//                    nextVC.secComAllRoomListVCBlock = ^(SecdaryAllTableModel *model) {
+//
+//                        _houseId = model.house_id;
+//                        if (indexPath.section == 0) {
+//
+//                            for (int i = 0; i < _dataArr.count; i++) {
+//
+//                                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                      @"contact_id":@"",
+//                                                      @"report_type":@"",
+//                                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                      };
+//                                [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                            }
+//                        }
+//
+//                        if (indexPath.section == 1) {
+//
+//                            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                            if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                                [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                            }else{
+//
+//                                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                            }
+//
+//                            if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                                [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                            }else{
+//
+//                                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                            }
+//
+//                            if (cell.genderTF->str.length) {
+//
+//                                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                            }else{
+//
+//                                [self.handleDic setObject:@"" forKey:@"sex"];
+//                            }
+//                        }
+//
+//                        if (indexPath.section == 2) {
+//
+//                            RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                            if (cell.homelandTF.textfield.text.length) {
+//
+//                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                            }else{
+//
+//                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                            }
+//
+//                        }
+//
+//                        if (indexPath.section == 3) {
+//
+//                            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                            if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"total_price"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                            }
+//
+//                            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                            }
+//
+//                            if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"break_money"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                            }
+//
+//                            if (!cell.payWayBtn->str.length) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                            }
+//
+//                            if (!cell.signTimeBtn->str.length) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                            }
+//
+//                            if (![self isEmpty:cell.eventTV.text]) {
+//
+//                                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                            }else{
+//
+//                                [_tradeDic setObject:@"" forKey:@"comment"];
+//                            }
+//                        }
+//                        [weakSelf RequestMethod];
+//                    };
+//                    [self.navigationController pushViewController:nextVC animated:YES];
+//                }else{
+//
+//                    RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
+//                    nextVC.status = @"selectSec";
+//                    nextVC.roomReportAddModelBlock = ^(SecdaryAllTableModel *model) {
+//
+//                        _houseId = model.house_id;
+//                        if (indexPath.section == 0) {
+//
+//                            for (int i = 0; i < _dataArr.count; i++) {
+//
+//                                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                      @"contact_id":@"",
+//                                                      @"report_type":@"",
+//                                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                      };
+//                                [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                            }
+//                        }
+//
+//                        if (indexPath.section == 1) {
+//
+//                            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                            if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                                [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                            }else{
+//
+//                                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                            }
+//
+//                            if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                                [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                            }else{
+//
+//                                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                            }
+//
+//                            if (cell.genderTF->str.length) {
+//
+//                                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                            }else{
+//
+//                                self.handleDic[@"sex"] = @"";
+//                            }
+//                        }
+//
+//                        if (indexPath.section == 2) {
+//
+//                            RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                            if (cell.homelandTF.textfield.text.length) {
+//
+//                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                            }else{
+//
+//                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                            }
+//                        }
+//
+//                        if (indexPath.section == 3) {
+//
+//                            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                            if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"total_price"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                            }
+//
+//                            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                            }
+//
+//                            if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"break_money"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                            }
+//
+//                            if (!cell.payWayBtn->str.length) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                            }
+//
+//                            if (!cell.signTimeBtn->str.length) {
+//
+//                                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                            }else{
+//
+//                                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                            }
+//
+//                            if (![self isEmpty:cell.eventTV.text]) {
+//
+//                                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                            }else{
+//
+//                                [_tradeDic setObject:@"" forKey:@"comment"];
+//                            }
+//                        }
+//                        [weakSelf RequestMethod];
+//                    };
+//                    [self.navigationController pushViewController:nextVC animated:YES];
+//                }
+//            };
+//
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//            return cell;
+//        }else{
+#pragma mark  ----- 交易信息 ------
+//            RoomAgencyAddProtocolCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell4"];
+//            if (!cell) {
+//
+//                cell = [[RoomAgencyAddProtocolCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell4"];
+//            }
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//            if (_roomDic.count) {
+//
+//                cell.ratio = [_roomDic[@"broker_ratio"] integerValue];
+//                [_tradeDic setObject:_roomDic[@"broker_ratio"] forKey:@"broker_ratio"];
+//            }else{
+//
+//                cell.ratio = 0;
+//                [_tradeDic setObject:@"0" forKey:@"broker_ratio"];
+//            }
+//
+//            cell.tradeDic = _tradeDic;
+//
+//            cell.roomAgencyAddProtocolCell4TimeBlock = ^{
+//
+//                DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
 //                [view.pickerView setMinimumDate:[NSDate date]];
 //                [view.pickerView setCalendar:[NSCalendar currentCalendar]];
 //                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
 //                NSDateComponents *comps = [[NSDateComponents alloc] init];
 //                [comps setDay:15];//设置最大时间为：当前时间推后10天
 //                [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
-                view.dateblock = ^(NSDate *date) {
-                    
-                    weakcell.timeBtn.content.text = [self->_formatter stringFromDate:date];
-                    weakcell.timeBtn->str = [self->_formatter stringFromDate:date];
-                    [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
-                    
-                    if (indexPath.section == 0) {
-                        
-                        for (int i = 0; i < self->_dataArr.count; i++) {
-                            
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                            
-                            
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-                    
-                    if (indexPath.section == 1) {
-                        
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-                        
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-                            
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-                            
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-                        
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-                            
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-                            
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-                        
-                        if (cell.genderTF->str.length) {
-                            
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-                            
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-                        
-                    }
-                    
-                    if (indexPath.section == 2) {
-                        
-                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        if (cell.homelandTF.textfield.text.length) {
-                            
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                        }else{
-                            
-                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                        }
-                    }
-                    
-                    if (indexPath.section == 3) {
-                        
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-                        
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-                            
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-                            
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-                        
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-                            
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-                            
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-                        
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-                            
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-                            
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-                        
-                        if (!cell.payWayBtn->str.length) {
-                            
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-                            
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-                        
-                        if (!cell.signTimeBtn->str.length) {
-                            
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-                            
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-                    
-                    [tableView reloadData];
-                };
-                
-                [self.view addSubview:view];
-            };
-            
-            
-            cell.roomAgencyAddProtocolCell2SexBlock = ^(NSInteger index) {
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                
-                UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                    cell.genderTF->str = @"1";
-                    cell.genderTF.content.text = @"男";
-                    [self.handleDic setObject:@"1" forKey:@"sex"];
-
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < _dataArr.count; i++) {
-
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-                    }
-                    
-                    if (indexPath.section == 2) {
-                        
-                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        if (cell.homelandTF.textfield.text.length) {
-                            
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                        }else{
-                            
-                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                        }
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-
-                    [tableView reloadData];
-                }];
-                
-                UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    cell.genderTF->str = @"2";
-                    cell.genderTF.content.text = @"女";
-                    [self.handleDic setObject:@"2" forKey:@"sex"];
-                    
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < _dataArr.count; i++) {
-
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[i][@"sex"] length]?_dataArr[i][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-                    }
-                    
-                    if (indexPath.section == 2) {
-                        
-                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        if (cell.homelandTF.textfield.text.length) {
-                            
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                        }else{
-                            
-                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                        }
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-                    [tableView reloadData];
-                }];
-                
-                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                
-                [alert addAction:male];
-                [alert addAction:female];
-                [alert addAction:cancel];
-                [self.navigationController presentViewController:alert animated:YES completion:^{
-                    
-                }];
-            };
-            return cell;
-        }else if (indexPath.section == 2){
-            
-#pragma mark -- Section 3
-            RoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell3"];
-            if (!cell) {
-                
-                cell = [[RoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell3"];
-            }
-            
-            if ([_roomDic count]) {
-                
-                [cell setDataByDic:_roomDic];
-            }
-//            if (_housedic.count>0) {
-//                 [cell setDataByDic:_housedic];
-//            }
-            WS(weakSelf);
-            cell.changeblock = ^{
-                
-                if (_housedic.count) {
-                    
-                    SecComAllRoomListVC *nextVC = [[SecComAllRoomListVC alloc] initWithProjectId:_housedic[@"project_id"] city:@""];
-                    nextVC.status = @"protocol";
-                    nextVC.secComAllRoomListVCBlock = ^(SecdaryAllTableModel *model) {
-                        
-                        _houseId = model.house_id;
-                        if (indexPath.section == 0) {
-                            
-                            for (int i = 0; i < _dataArr.count; i++) {
-                                
-                                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                                
-                                
-                                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                      @"contact_id":@"",
-                                                      @"report_type":@"",
-                                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
-                                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                      };
-                                [_dataArr replaceObjectAtIndex:i withObject:dic];
-                            }
-                        }
-                        
-                        if (indexPath.section == 1) {
-                            
-                            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-                            
-                            if ([self isEmpty:cell.nameTF.textfield.text]) {
-                                
-                                [self.handleDic setObject:@"" forKey:@"agent_name"];
-                            }else{
-                                
-                                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                            }
-                            
-                            if ([self isEmpty:cell.phoneTF.textfield.text]) {
-                                
-                                [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                            }else{
-                                
-                                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                            }
-                            
-                            if (cell.genderTF->str.length) {
-                                
-                                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                            }else{
-                                
-                                [self.handleDic setObject:@"" forKey:@"sex"];
-                            }
-                        }
-                        
-                        if (indexPath.section == 2) {
-                            
-                            RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                            if (cell.homelandTF.textfield.text.length) {
-                                
-                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                            }else{
-                                
-                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                            }
-                            
-                        }
-                        
-                        if (indexPath.section == 3) {
-                            
-                            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-                            
-                            if ([self isEmpty:cell.priceTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"total_price"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                            }
-                            
-                            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                            }
-                            
-                            if ([self isEmpty:cell.breachTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"break_money"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                            }
-                            
-                            if (!cell.payWayBtn->str.length) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"pay_way"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                            }
-                            
-                            if (!cell.signTimeBtn->str.length) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                            }
-                            
-                            if (![self isEmpty:cell.eventTV.text]) {
-                                
-                                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                            }else{
-                                
-                                [_tradeDic setObject:@"" forKey:@"comment"];
-                            }
-                        }
-                        [weakSelf RequestMethod];
-                    };
-                    [self.navigationController pushViewController:nextVC animated:YES];
-                }else{
-                    
-                    RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
-                    nextVC.status = @"selectSec";
-                    nextVC.roomReportAddModelBlock = ^(SecdaryAllTableModel *model) {
-                        
-                        _houseId = model.house_id;
-                        if (indexPath.section == 0) {
-                            
-                            for (int i = 0; i < _dataArr.count; i++) {
-                                
-                                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                                
-                                
-                                NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                      @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                      @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                      @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                      @"contact_id":@"",
-                                                      @"report_type":@"",
-                                                      @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                      @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
-                                                      @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                      };
-                                [_dataArr replaceObjectAtIndex:i withObject:dic];
-                            }
-                        }
-                        
-                        if (indexPath.section == 1) {
-                            
-                            RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-                            
-                            if ([self isEmpty:cell.nameTF.textfield.text]) {
-                                
-                                [self.handleDic setObject:@"" forKey:@"agent_name"];
-                            }else{
-                                
-                                [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                            }
-                            
-                            if ([self isEmpty:cell.phoneTF.textfield.text]) {
-                                
-                                [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                            }else{
-                                
-                                [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                            }
-                            
-                            if (cell.genderTF->str.length) {
-                                
-                                [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                            }else{
-                                
-                                self.handleDic[@"sex"] = @"";
-                            }
-                        }
-                        
-                        if (indexPath.section == 2) {
-                            
-                            RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                            if (cell.homelandTF.textfield.text.length) {
-                                
-                                [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                            }else{
-                                
-                                [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                            }
-                        }
-                        
-                        if (indexPath.section == 3) {
-                            
-                            RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-                            
-                            if ([self isEmpty:cell.priceTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"total_price"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                            }
-                            
-                            if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                            }
-                            
-                            if ([self isEmpty:cell.breachTF.textfield.text]) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"break_money"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                            }
-                            
-                            if (!cell.payWayBtn->str.length) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"pay_way"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                            }
-                            
-                            if (!cell.signTimeBtn->str.length) {
-                                
-                                [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                            }else{
-                                
-                                [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                            }
-                            
-                            if (![self isEmpty:cell.eventTV.text]) {
-                                
-                                [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                            }else{
-                                
-                                [_tradeDic setObject:@"" forKey:@"comment"];
-                            }
-                        }
-                        [weakSelf RequestMethod];
-                    };
-                    [self.navigationController pushViewController:nextVC animated:YES];
-                }
-            };
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            return cell;
-        }else{
-            
-            RoomAgencyAddProtocolCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell4"];
-            if (!cell) {
-                
-                cell = [[RoomAgencyAddProtocolCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell4"];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            if (_roomDic.count) {
-                
-                cell.ratio = [_roomDic[@"broker_ratio"] integerValue];
-                [_tradeDic setObject:_roomDic[@"broker_ratio"] forKey:@"broker_ratio"];
-            }else{
-                
-                cell.ratio = 0;
-                [_tradeDic setObject:@"0" forKey:@"broker_ratio"];
-            }
-            
-            cell.tradeDic = _tradeDic;
-            
-            cell.roomAgencyAddProtocolCell4TimeBlock = ^{
-                
-                DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
-                [view.pickerView setMinimumDate:[NSDate date]];
-                [view.pickerView setCalendar:[NSCalendar currentCalendar]];
-                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-                NSDateComponents *comps = [[NSDateComponents alloc] init];
-                [comps setDay:15];//设置最大时间为：当前时间推后10天
-                [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
-                view.dateblock = ^(NSDate *date) {
-                    
-                    [_tradeDic setObject:[_formatter stringFromDate:date] forKey:@"appoint_construct_time"];
-                    cell.signTimeBtn->str = [_formatter stringFromDate:date];
-                    cell.signTimeBtn.content.text = [_formatter stringFromDate:date];
-                };
-                [self.view addSubview:view];
-            };
-            
-            cell.roomAgencyAddProtocolCell4PayBlock = ^{
-                
-                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
-                view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                    
-                    cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-                    cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
-                    [_tradeDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"pay_way"];
-                    [_tradeDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"pay_way_name"];
-                    
-                    if (indexPath.section == 0) {
-
-                        for (int i = 0; i < _dataArr.count; i++) {
-
-                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-
-                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
-                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
-                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
-                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
-                                                  @"contact_id":@"",
-                                                  @"report_type":@"",
-                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
-                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
-                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
-                                                  };
-                            [_dataArr replaceObjectAtIndex:i withObject:dic];
-                        }
-                    }
-
-                    if (indexPath.section == 1) {
-
-                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.nameTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_name"];
-                        }else{
-
-                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
-                        }
-
-                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
-
-                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
-                        }else{
-
-                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
-                        }
-
-                        if (cell.genderTF->str.length) {
-
-                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
-                        }else{
-
-                            [self.handleDic setObject:@"" forKey:@"sex"];
-                        }
-                    }
-                    
-                    if (indexPath.section == 2) {
-                        
-                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                        if (cell.homelandTF.textfield.text.length) {
-                            
-                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
-                        }else{
-                            
-                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
-                        }
-                    }
-
-                    if (indexPath.section == 3) {
-
-                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
-
-                        if ([self isEmpty:cell.priceTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"total_price"];
-                        }else{
-
-                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-                        }
-
-                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-                        }
-
-                        if ([self isEmpty:cell.breachTF.textfield.text]) {
-
-                            [_tradeDic setObject:@"" forKey:@"break_money"];
-                        }else{
-
-                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-                        }
-
-                        if (!cell.payWayBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"pay_way"];
-                        }else{
-
-                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-                        }
-
-                        if (!cell.signTimeBtn->str.length) {
-
-                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-                        }else{
-
-                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
-                        }
-                        
-                        if (![self isEmpty:cell.eventTV.text]) {
-                            
-                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
-                        }else{
-                            
-                            [_tradeDic setObject:@"" forKey:@"comment"];
-                        }
-                    }
-                    
-                    [tableView reloadData];
-                };
-                [self.view addSubview:view];
-            };
-            
-            return cell;
-        }
-    }
-}
+//                view.dateblock = ^(NSDate *date) {
+//
+//                    [_tradeDic setObject:[_formatter stringFromDate:date] forKey:@"appoint_construct_time"];
+//                    cell.signTimeBtn->str = [_formatter stringFromDate:date];
+//                    cell.signTimeBtn.content.text = [_formatter stringFromDate:date];
+//                };
+//                [self.view addSubview:view];
+//            };
+//
+//            cell.roomAgencyAddProtocolCell4PayBlock = ^{
+//
+//                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
+//                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                    cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//                    cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+//                    [_tradeDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"pay_way"];
+//                    [_tradeDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"pay_way_name"];
+//
+//                    if (indexPath.section == 0) {
+//
+//                        for (int i = 0; i < _dataArr.count; i++) {
+//
+//                            RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//
+//
+//                            NSDictionary *dic = @{@"address":cell.addressTF.textfield.text.length?cell.addressTF.textfield.text:@"",
+//                                                  @"card_id":cell.certNumTF.textfield.text.length?cell.certNumTF.textfield.text:@"",
+//                                                  @"card_type":_dataArr[i][@"card_type"]?_dataArr[i][@"card_type"]:@"",
+//                                                  @"card_type_name":_dataArr[i][@"card_type_name"]?_dataArr[i][@"card_type_name"]:@"",
+//                                                  @"contact_id":@"",
+//                                                  @"report_type":@"",
+//                                                  @"name":cell.nameTF.textfield.text.length?cell.nameTF.textfield.text:@"",
+//                                                  @"sex":[_dataArr[indexPath.row][@"sex"] length]?_dataArr[indexPath.row][@"sex"]:@"",
+//                                                  @"tel":cell.phoneTF.textfield.text.length?@[cell.phoneTF.textfield.text]:@[],
+//                                                  };
+//                            [_dataArr replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 1) {
+//
+//                        RoomAgencyAddProtocolCell2 *cell = (RoomAgencyAddProtocolCell2 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.nameTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_name"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.nameTF.textfield.text forKey:@"agent_name"];
+//                        }
+//
+//                        if ([self isEmpty:cell.phoneTF.textfield.text]) {
+//
+//                            [self.handleDic setObject:@"" forKey:@"agent_tel"];
+//                        }else{
+//
+//                            [self.handleDic setObject:cell.phoneTF.textfield.text forKey:@"agent_tel"];
+//                        }
+//
+//                        if (cell.genderTF->str.length) {
+//
+//                            [self.handleDic setObject:cell.genderTF->str forKey:@"sex"];
+//                        }else{
+//
+//                            [self.handleDic setObject:@"" forKey:@"sex"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 2) {
+//
+//                        RoomAgencyAddProtocolCell3 *cell = (RoomAgencyAddProtocolCell3 *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                        if (cell.homelandTF.textfield.text.length) {
+//
+//                            [_roomDic setObject:cell.homelandTF.textfield.text forKey:@"land_use_permit_code"];
+//                        }else{
+//
+//                            [_roomDic setObject:@"" forKey:@"land_use_permit_code"];
+//                        }
+//                    }
+//
+//                    if (indexPath.section == 3) {
+//
+//                        RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[tableView cellForRowAtIndexPath:indexPath];
+//
+//                        if ([self isEmpty:cell.priceTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"total_price"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+//                        }
+//
+//                        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+//                        }
+//
+//                        if ([self isEmpty:cell.breachTF.textfield.text]) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"break_money"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+//                        }
+//
+//                        if (!cell.payWayBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"pay_way"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//                        }
+//
+//                        if (!cell.signTimeBtn->str.length) {
+//
+//                            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+//                        }else{
+//
+//                            [_tradeDic setObject:cell.signTimeBtn->str forKey:@"appoint_construct_time"];
+//                        }
+//
+//                        if (![self isEmpty:cell.eventTV.text]) {
+//
+//                            [_tradeDic setObject:cell.eventTV.text forKey:@"comment"];
+//                        }else{
+//
+//                            [_tradeDic setObject:@"" forKey:@"comment"];
+//                        }
+//                    }
+//
+//                    [tableView reloadData];
+//                };
+//                [self.view addSubview:view];
+//            };
+//
+//            return cell;
+//        }
+//    }
+//}
 
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
 //
@@ -2019,7 +2270,6 @@
 //            }
 //        }
 //    }
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

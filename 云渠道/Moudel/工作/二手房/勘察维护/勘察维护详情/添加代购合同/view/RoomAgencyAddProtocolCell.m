@@ -8,7 +8,7 @@
 
 #import "RoomAgencyAddProtocolCell.h"
 
-@interface RoomAgencyAddProtocolCell()<UITextFieldDelegate>
+@interface RoomAgencyAddProtocolCell()
 {
 
     NSArray *_titleArr;
@@ -86,6 +86,32 @@
     }
 }
 
+-(void)textChange:(UITextField *)textField{
+    if (!self.data) {
+        self.data = [NSMutableDictionary dictionary];
+    }
+    if (textField.tag ==1001) {
+         [self.data setValue:textField.text forKey:@"name"];
+    }else if (textField.tag == 1002)
+    {
+        [self.data setValue:textField.text forKey:@"card_id"];
+    }else if (textField.tag == 1003)
+    {
+        [self.data setValue:textField.text forKey:@"address"];
+    }
+    else if(textField.tag == 1004){
+        [self.data setValue:textField.text forKey:@"tel1"];
+    }
+    else{
+        [self.data setValue:textField.text forKey:@"tel2"];
+    }
+    if (self.RoomAgencyBlock) {
+        self.RoomAgencyBlock(self.tag,self.data);
+    }
+}
+
+
+
 - (void)ActionAddBtn:(UIButton *)btn{
     
     if (self.roomAgencyAddProtocolCellBlock) {
@@ -110,13 +136,7 @@
     }
 }
 
-#pragma mark -- TextField;
 
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//    
-//    
-//    
-//}
 
 - (void)initUI{
     
@@ -133,7 +153,7 @@
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         
         BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 17 *SIZE, 257 *SIZE, 33 *SIZE)];
-        textField.textfield.delegate = self;
+//        textField.textfield.delegate = self;
         switch (i) {
             case 0:
             {
@@ -150,6 +170,8 @@
                 [self.contentView addSubview:_nameL];
 //                textField.frame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
                 _nameTF = textField;
+                _nameTF.textfield.tag = 1001;
+                [_nameTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 [self.contentView addSubview:_nameTF];
                 break;
             }
@@ -158,6 +180,9 @@
                 _phoneL = label;
                 [self.contentView addSubview:_phoneL];
                 _phoneTF = textField;
+                _phoneTF.textfield.tag =1004;
+                [_phoneTF.textfield addTarget:self action:@selector(textChange:)
+                 forControlEvents:UIControlEventEditingDidEnd];
                 _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
                 [self.contentView addSubview:_phoneTF];
                 break;
@@ -167,6 +192,9 @@
                 _phoneL2 = label;
 //                [self.contentView addSubview:_phoneL2];
                 _phoneTF2 = textField;
+                _phoneTF2.textfield.tag =1005;
+                [_phoneTF2.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
 //                [self.contentView addSubview:_phoneTF2];
                 break;
             }
@@ -185,6 +213,8 @@
                 [self.contentView addSubview:_certNumL];
                 _certNumTF = textField;
                 _certNumTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
+                _certNumTF.textfield.tag =1002;
+                [_certNumTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
 //                _certNumTF.userInteractionEnabled = NO;
 //                _certNumTF.textfield.placeholder = @"自动生成";
                 [self.contentView addSubview:_certNumTF];
@@ -195,6 +225,8 @@
                 _addressL = label;
                 [self.contentView addSubview:_addressL];
                 _addressTF = textField;
+                _addressTF.textfield.tag =1003;
+                [_addressTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
 //                _addressTF.userInteractionEnabled = NO;
 //                _addressTF.textfield.placeholder = @"自动生成";
                 [self.contentView addSubview:_addressTF];

@@ -11,8 +11,10 @@
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 typedef void(^ChangeBlock)(void);
+typedef void(^RoomAgencyCell3Block)(NSString *homeland);
 
 @interface RoomAgencyAddProtocolCell3 : UITableViewCell
+
 
 @property (nonatomic, strong) UILabel *codeL;
 
@@ -51,6 +53,10 @@ typedef void(^ChangeBlock)(void);
 @property (nonatomic, strong) UIButton *changeRoom;
 
 @property (nonatomic, copy) ChangeBlock changeblock;
+
+@property (nonatomic, copy) RoomAgencyCell3Block roomAgencyCell3Block;
+
+
 
 -(void)setDataByDic:(NSDictionary *)dic;
 

@@ -96,6 +96,8 @@
                 _homelandTF = textField;
                 _homelandTF.userInteractionEnabled = YES;
                 _homelandTF.backgroundColor = [UIColor whiteColor];
+                _homelandTF.textfield.tag = 1001;
+                [_homelandTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 _homelandTF.textfield.placeholder = @"";
                 [self.contentView addSubview:_homelandTF];
                 break;
@@ -137,6 +139,14 @@
     [self.contentView addSubview:_changeRoom];
     [self masonryUI];
 }
+
+-(void)textChange:(UITextField *)textField{
+
+    if (self.roomAgencyCell3Block) {
+        self.roomAgencyCell3Block(textField.text);
+    }
+}
+
 
 - (void)masonryUI{
 

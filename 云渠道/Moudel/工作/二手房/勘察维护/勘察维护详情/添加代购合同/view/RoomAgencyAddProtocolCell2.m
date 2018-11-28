@@ -33,7 +33,7 @@
     
     if (self.roomAgencyAddProtocolCell2SexBlock) {
         
-        self.roomAgencyAddProtocolCell2SexBlock(self.tag);
+        self.roomAgencyAddProtocolCell2SexBlock();
     }
 }
 
@@ -41,7 +41,19 @@
     
     if (self.roomAgencyAddProtocolCell2TimeBlock) {
         
-        self.roomAgencyAddProtocolCell2TimeBlock(self.tag);
+        self.roomAgencyAddProtocolCell2TimeBlock();
+    }
+}
+
+-(void)textChange:(UITextField *)textField{
+    if (textField.tag ==1001) {
+        [self.datadic setValue:textField.text forKey:@"agent_name"];
+    }else if (textField.tag == 1002)
+    {
+        [self.datadic setValue:textField.text forKey:@"agent_tel"];
+    }
+    if (self.roomAgencyCell2Block) {
+        self.roomAgencyCell2Block();
     }
 }
 
@@ -49,7 +61,7 @@
 {
     
     if (dic.count) {
-        
+        _datadic = [dic mutableCopy];
         _nameTF.textfield.text = dic[@"agent_name"];
 //        _nameTF.textfield.text = dic[@"name"];
         if ([dic[@"sex"] integerValue] == 1) {
@@ -69,7 +81,7 @@
         _timeBtn.content.text = dic[@"regist_time"];
         _timeBtn->str = dic[@"regist_time"];
     }else{
-        
+        _datadic =  [@{} mutableCopy];
         _nameTF.textfield.text = @"";
         _phoneTF.textfield.text = @"";
         _genderTF.content.text = @"";
@@ -102,6 +114,8 @@
                 _nameL = label;
                 [self.contentView addSubview:_nameL];
                 _nameTF = textField;
+                _nameTF.textfield.tag = 1001;
+                [_nameTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 [self.contentView addSubview:_nameTF];
                 break;
             }
@@ -110,6 +124,9 @@
                 _phoneL = label;
                 [self.contentView addSubview:_phoneL];
                 _phoneTF = textField;
+                _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
+                _phoneTF.textfield.tag = 1002;
+                [_phoneTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 [self.contentView addSubview:_phoneTF];
                 break;
             }

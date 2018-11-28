@@ -11,15 +11,18 @@
 #import "BorderTF.h"
 #import "DropDownBtn.h"
 
-typedef void(^RoomAgencyAddProtocolCell2SexBlock)(NSInteger index);
+typedef void(^RoomAgencyAddProtocolCell2SexBlock)(void);
 
-typedef void(^RoomAgencyAddProtocolCell2TimeBlock)(NSInteger index);
+typedef void(^RoomAgencyAddProtocolCell2TimeBlock)(void);
+typedef void(^RoomAgencyCell2Block)(void);
 
 @interface RoomAgencyAddProtocolCell2 : UITableViewCell
 
 @property (nonatomic, copy) RoomAgencyAddProtocolCell2SexBlock roomAgencyAddProtocolCell2SexBlock;
 
 @property (nonatomic, copy) RoomAgencyAddProtocolCell2TimeBlock roomAgencyAddProtocolCell2TimeBlock;
+
+@property (nonatomic, copy) RoomAgencyCell2Block roomAgencyCell2Block;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -48,6 +51,8 @@ typedef void(^RoomAgencyAddProtocolCell2TimeBlock)(NSInteger index);
 @property (nonatomic, strong) UILabel *timeL;
 
 @property (nonatomic, strong) DropDownBtn *timeBtn;
+
+@property (nonatomic, strong) NSMutableDictionary *datadic;
 
 -(void)setDataByDic:(NSDictionary *)dic;
 

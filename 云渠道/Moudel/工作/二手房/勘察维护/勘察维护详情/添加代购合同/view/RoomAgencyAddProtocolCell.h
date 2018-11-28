@@ -17,7 +17,11 @@ typedef void(^RoomAgencyAddProtocolCellSexBlock)(NSInteger index);
 
 typedef void(^RoomAgencyAddProtocolCellCardBlock)(NSInteger index);
 
+typedef void(^RoomAgencyBlock)(NSInteger index,NSDictionary *datadic);
+
 @interface RoomAgencyAddProtocolCell : UITableViewCell
+
+@property (nonatomic, copy) RoomAgencyBlock RoomAgencyBlock;
 
 @property (nonatomic, copy) RoomAgencyAddProtocolCellBlock roomAgencyAddProtocolCellBlock;
 
@@ -27,37 +31,41 @@ typedef void(^RoomAgencyAddProtocolCellCardBlock)(NSInteger index);
 
 @property (nonatomic, strong) UILabel *nameL;
 
-@property (nonatomic, strong) BorderTF *nameTF;
+@property (nonatomic, copy) BorderTF *nameTF;
 
 @property (nonatomic, strong) UIButton *addBtn;
 
 @property (nonatomic, strong) UILabel *genderL;
 
-@property (nonatomic, strong) DropDownBtn *genderBtn;
+@property (nonatomic, copy) DropDownBtn *genderBtn;
 
 @property (nonatomic, strong) UILabel *phoneL;
 
-@property (nonatomic, strong) BorderTF *phoneTF;
+@property (nonatomic, copy) BorderTF *phoneTF;
 
 @property (nonatomic, strong) UILabel *phoneL2;
 
-@property (nonatomic, strong) BorderTF *phoneTF2;
+@property (nonatomic, copy) BorderTF *phoneTF2;
 
 @property (nonatomic, strong) UILabel *certTypeL;
 
-@property (nonatomic, strong) DropDownBtn *certTypeBtn;
+@property (nonatomic, copy) DropDownBtn *certTypeBtn;
 
 @property (nonatomic, strong) UILabel *certNumL;
 
-@property (nonatomic, strong) BorderTF *certNumTF;
+@property (nonatomic, copy) BorderTF *certNumTF;
 
 @property (nonatomic, strong) UILabel *addressL;
 
-@property (nonatomic, strong) BorderTF *addressTF;
+@property (nonatomic, copy) BorderTF *addressTF;
 
 @property (nonatomic, strong) UIView *lineView;
 
 @property (nonatomic, strong) NSMutableDictionary *dic;
+
+@property (nonatomic , strong) NSMutableDictionary *data;
+
+//@property(nonatomic ,strong) id model;
 
 
 @end

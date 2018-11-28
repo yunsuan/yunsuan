@@ -10,7 +10,7 @@
 
 @interface BorderTF : UIView
 
-@property (nonatomic , strong) UITextField *textfield;
+@property (nonatomic , copy) UITextField *textfield;
 
-@property (nonatomic, strong) UILabel *unitL;
+@property (nonatomic, copy) UILabel *unitL;
 @end
