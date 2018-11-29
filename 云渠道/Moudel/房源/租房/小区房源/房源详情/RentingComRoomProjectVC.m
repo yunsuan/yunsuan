@@ -19,7 +19,6 @@
 #import "BuildingAlbumVC.h"
 #import "DynamicDetailVC.h"
 #import "CustomListVC.h"
-//#import "DistributVC.h"
 #import "SecDistributVC.h"
 #import "OverviewVC.h"
 #import "DealRecordVC.h"
@@ -33,7 +32,7 @@
 #import "RoomDetailTableCell4.h"
 #import "RoomDetailTableCell5.h"
 
-#import "ContentTimeBtnBaseView.h"
+//#import "ContentTimeBtnBaseView.h"
 
 @interface RentingComRoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,BMKMapViewDelegate,RoomDetailTableCell4Delegate,BMKPoiSearchDelegate,UIGestureRecognizerDelegate>
 {
@@ -41,17 +40,21 @@
     CLLocationCoordinate2D _rightBottomPoint;//地图矩形的顶点
     NSMutableDictionary *_dynamicDic;
     NSString *_projectId;
-    NSString *_infoid;
     NSMutableDictionary *_focusDic;
     NSString *_dynamicNum;
     NSMutableArray *_imgArr;
-    NSString *_focusId;
+    NSMutableArray *_albumArr;
+    //    NSString *_focusId;
     NSMutableArray *_houseArr;
     NSMutableArray *_peopleArr;
-    NSMutableDictionary *_buildDic;
+    //    NSMutableDictionary *_buildDic;
     NSString *_phone;
-    NSString *_phone_url;
+    //    NSString *_phone_url;
     NSString *_name;
+    SecAllRoomDetailHeaderModel *_model;
+    NSString *_city;
+    NSString *_subId;
+    NSString *_info_id;
 }
 
 @property (nonatomic, strong) UITableView *roomTable;
@@ -72,11 +75,23 @@
 
 @implementation RentingComRoomProjectVC
 
+- (instancetype)initWithProjectId:(NSString *)projectId infoid:(NSString *)infoid city:(NSString *)city
+{
+    self = [super init];
+    if (self) {
+        _info_id = infoid;
+        _projectId = projectId;
+        _city = city;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
 }
 
 - (void)MapViewDismissNoti:(NSNotification *)noti{
@@ -97,7 +112,7 @@
     _dynamicDic = [@{} mutableCopy];
     _houseArr = [@[] mutableCopy];
     _peopleArr = [@[] mutableCopy];
-    _buildDic = [@{} mutableCopy];
+//    _buildDic = [@{} mutableCopy];
     
 }
 
@@ -137,30 +152,31 @@
 //    [_roomTable reloadData];
 //}
 //
-//- (void)RequestMethod{
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//    [dic setObject:_projectId forKey:@"project_id"];
-//    [dic setObject:[UserModelArchiver unarchive].agent_id forKey:@"agent_id"];
-//    //    [dic setObject:@"1" forKey:@"agent_id"];
-//    [BaseRequest GET:ProjectDetail_URL parameters:dic success:^(id resposeObject) {
-//        //        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//            if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
-//
+- (void)RequestMethod{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:_projectId forKey:@"project_id"];
+    [dic setObject:self.type forKey:@"type"];
+    [dic setObject:[UserModelArchiver unarchive].agent_id forKey:@"agent_id"];
+    [BaseRequest GET:RentProjectDetail_URL parameters:dic success:^(id resposeObject) {
+        //        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+
+            if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
+
 //                [self SetData:resposeObject[@"data"]];
-//
-//            }else{
-//
-//                [self showContent:@"暂时没有数据"];
-//            }
-//        }
-//    } failure:^(NSError *error) {
-//
-//        //        NSLog(@"%@",error);
-//        [self showContent:@"网络错误"];
-//    }];
-//}
+
+            }else{
+
+                [self showContent:@"暂时没有数据"];
+            }
+        }
+    } failure:^(NSError *error) {
+
+        //        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
 //
 //- (void)SetData:(NSDictionary *)data{
 //    if (data[@"total_float_url_phone"]) {
@@ -250,13 +266,13 @@
     
     if (btn.tag == 1) {
         
-        BuildingInfoVC *next_vc = [[BuildingInfoVC alloc]initWithinfoid:_infoid];
+        BuildingInfoVC *next_vc = [[BuildingInfoVC alloc]initWithinfoid:_info_id];
         [self.navigationController pushViewController:next_vc animated:YES];
     }
     
     if (btn.tag == 2) {
         
-        DynamicListVC *next_vc = [[DynamicListVC alloc]initWithinfoid:_infoid];
+        DynamicListVC *next_vc = [[DynamicListVC alloc]initWithinfoid:_info_id];
         [self.navigationController pushViewController:next_vc animated:YES];
     }
     

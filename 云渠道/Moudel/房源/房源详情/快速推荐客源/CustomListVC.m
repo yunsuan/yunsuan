@@ -272,17 +272,17 @@
                     }else{
                         
                         _customerTable.mj_footer.state = MJRefreshStateNoMoreData;
-                        //                        [self showContent:@"暂无数据"];
+                        
                     }
                 }else{
-                    //                    [self showContent:@"暂无数据"];
+                    
                 }
             }else{
-                //                [self showContent:@"暂无数据"];
+                
             }
         }else if([resposeObject[@"code"] integerValue] == 400){
             
-            //            [self showContent:resposeObject[@"msg"]];
+            
         }
         else{
             [self showContent:resposeObject[@"msg"]];

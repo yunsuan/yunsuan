@@ -181,11 +181,12 @@
     self.scrollView.bounces = NO;
     
     // 创建控制器
-    _roomProjectVC = [[RentingComRoomProjectVC alloc] init];
+    _roomProjectVC = [[RentingComRoomProjectVC alloc] initWithProjectId:_projectId infoid:_info_id city:_city];
+    _roomProjectVC.type = self.type;
     
     _roomBrokerageVC = [[SecComRoomBrokerageVC alloc] initWithProjectId:_projectId];
     
-    _roomAnalyzeVC = [[RoomAnalyzeVC alloc] initWithinfo_Id:@"1"];
+    _roomAnalyzeVC = [[RoomAnalyzeVC alloc] initWithinfo_Id:_info_id];
     
     //添加子控制器
     [self addChildViewController:_roomProjectVC];

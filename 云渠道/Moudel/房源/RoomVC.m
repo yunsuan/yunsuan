@@ -452,6 +452,7 @@
     vc.roomChildVCRentComModelBlock = ^(SecdaryComModel *model) {
         
         RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
+        nextVC.type = weakvc.typeId;
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     return vc;

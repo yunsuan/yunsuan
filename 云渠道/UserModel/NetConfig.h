@@ -670,6 +670,9 @@ static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
 //项目列表
 static NSString *const RentProjectList_URL = @"user/rent/project/list";
 
+//项目详情
+static NSString *const RentProjectDetail_URL = @"user/rent/project/detail";
+
 //房源列表
 static NSString *const RentHouseList_URL = @"user/rent/house/list";
 
