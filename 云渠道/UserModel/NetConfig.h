@@ -21,7 +21,7 @@
 //基础接口测试
 //static NSString *const TestBase_Net = @"http://120.27.21.136:2798/";
 
-static NSString *const TestBase_Net = @"http://47.106.39.169:2797/";
+//static NSString *const TestBase_Net = @"http://47.106.39.169:2797/";
 
 //获取版本
 static NSString *const Version_URL = @"getVersion";
@@ -223,7 +223,7 @@ static NSString *const DynamicList_URL = @"user/dynamic/list/v2.7";
 static NSString *const GetImg_URL = @"user/img/get/v2.7";
 
 ////获取项目分析
-//static NSString *const HouseTypeAnalyse_URL = @"user/houseType/analyse/v2.7";
+static NSString *const HouseTypeAnalyse_URL = @"user/houseType/analyse/v2.7";
 
 //获取佣金规则
 //static NSString *const GetRule_URL = @"user/project/getRule";

@@ -47,7 +47,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ProjectBuildInfo_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
+    [BaseRequest GET:HouseTypeAnalyse_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         
