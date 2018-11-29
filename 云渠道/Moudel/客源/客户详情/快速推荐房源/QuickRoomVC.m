@@ -21,23 +21,12 @@
 #import "CustomDetailVC.h"
 #import "CityVC.h"
 
-#import "LocalModel.h"
 #import "SelectWorkerView.h"
 #import "ReportCustomSuccessView.h"
 #import "ReportCustomConfirmView.h"
+#import "LocationManager.h"
 
-
-#import<BaiduMapAPI_Location/BMKLocationService.h>
-
-#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
-
-//#import<BaiduMapAPI_Map/BMKMapComponent.h>
-
-//#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
-
-//#import <CoreLocation/CoreLocation.h>
-
-@interface QuickRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate,BMKGeoCodeSearchDelegate>
+@interface QuickRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,PYSearchViewControllerDelegate>
 {
     CustomRequireModel *_model;
 //    NSArray *_arr;
@@ -64,8 +53,6 @@
     BOOL _is4;
     NSInteger _state;
     NSInteger _selected;
-    BMKLocationService *_locService;  //定位
-    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
     BOOL _isLocation;
 }
 
@@ -152,49 +139,26 @@
     _page = 1;
     _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
-    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
-    _geocodesearch.delegate = self;
+    NSArray *opencity =  [UserModel defaultModel].cityArr;
+    NSMutableArray *citycode = [NSMutableArray array];
+    for (int i=0; i<opencity.count; i++) {
+        [citycode addObject:opencity[i][@"city_code"]];
+    }
     
-    if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
-        
-        if (!_isLocation) {
-            
-            if ([LocalModel defaultModel].cityCode) {
-                
-                _cityName = [LocalModel defaultModel].cityName;
-                _city = [LocalModel defaultModel].cityCode;
-                _isLocation = YES;
-                [_cityBtn setTitle:_cityName forState:UIControlStateNormal];
-                [self RequestMethod];
-            }else{
-                
-                [self startLocation];
-            }
-            
-        }else{
-            
-            
-        }
-    }else{
-        
-        _isLocation = YES;
+    if ([citycode containsObject:[LocationManager GetCityCode]]) {
+        [_cityBtn setTitle:[LocationManager GetCityName] forState:UIControlStateNormal];
+        _city = [LocationManager GetCityCode];
+        _cityName = [LocationManager GetCityName];
+
+    }
+    else
+    {
         [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"510100"];
         _cityName = @"成都市";
-        [self RequestMethod];
-        [self alertControllerWithNsstring:@"打开[定位服务权限]来允许[云渠道]确定您的位置" And:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" WithCancelBlack:^{
-            
-            
-        } WithDefaultBlack:^{
-            
-            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-            if( [[UIApplication sharedApplication]canOpenURL:url] ) {
-                [[UIApplication sharedApplication] openURL:url];
-            }
-        }];
     }
-    
-    //    [self RequestMethod];
+    [self RequestMethod];
+
 }
 
 //- (void)SearchRequest{
@@ -725,105 +689,6 @@
 }
 
 
-#pragma mark -- 百度SDK
--(void)startLocation
-
-{
-    
-    //初始化BMKLocationService
-    
-    _locService = [[BMKLocationService alloc]init];
-    
-    _locService.delegate = self;
-    
-    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
-    //启动LocationService
-    
-    [_locService startUserLocationService];
-    
-}
-
-- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
-
-{
-    
-    
-    //    NSLog(@"heading is %@",userLocation.heading);
-    
-    
-}
-
-//处理位置坐标更新
-
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
-{
-    
-    
-    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    
-    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
-    
-    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
-    
-    if(flag){
-        
-        //        NSLog(@"反geo检索发送成功");
-        
-        [_locService stopUserLocationService];
-        
-    }else{
-        
-        //        NSLog(@"反geo检索发送失败");
-        
-    }
-    
-}
-
-#pragma mark -------------地理反编码的delegate---------------
-
--(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
-
-{
-    
-    if (_city) {
-        
-    }else{
-        NSArray *opencity =  [UserModel defaultModel].cityArr;
-        [_cityBtn setTitle:result.addressDetail.city forState:UIControlStateNormal];
-        NSInteger disInteger = [result.addressDetail.adCode integerValue];
-        NSInteger cityInteger = disInteger / 100 * 100;
-        NSMutableArray *citycode = [NSMutableArray array];
-        for (int i=0; i<opencity.count; i++) {
-            [citycode addObject:opencity[i][@"city_code"]];
-        }
-        
-        if ([citycode containsObject:[NSString stringWithFormat:@"%ld",cityInteger]]) {
-            _city = [NSString stringWithFormat:@"%ld",cityInteger];
-            _cityName = result.addressDetail.city;
-            [LocalModel defaultModel].cityName = _cityName;
-            [LocalModel defaultModel].cityCode = _city;
-            [self RequestMethod];
-        }
-        else
-        {
-            [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
-            _city = [NSString stringWithFormat:@"510100"];
-            _cityName = @"成都市";
-            [self RequestMethod];
-        }
-        
-    }
-}
-
-//定位失败
-
-- (void)didFailToLocateUserWithError:(NSError *)error{
-    
-    //    NSLog(@"error:%@",error);
-    [self alertControllerWithNsstring:@"定位失败" And:@"请检查定位设置"];
-    
-}
 
 
 #pragma mark  ---  delegate   ---
@@ -1109,9 +974,9 @@
     _cityBtn.frame = CGRectMake(300 *SIZE, 19 *SIZE, 50 *SIZE, 21 *SIZE);
     _cityBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [_cityBtn addTarget:self action:@selector(ActionCityBtn:) forControlEvents:UIControlEventTouchUpInside];
-    if ([LocalModel defaultModel].cityCode) {
+    if ([LocationManager GetCityName]) {
         
-        [_cityBtn setTitle:[LocalModel defaultModel].cityName forState:UIControlStateNormal];
+        [_cityBtn setTitle:[LocationManager GetCityName] forState:UIControlStateNormal];
     }else{
         
         [_cityBtn setTitle:@"选择城市" forState:UIControlStateNormal];
