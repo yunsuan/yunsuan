@@ -136,7 +136,7 @@
     [_tradeView addSubview:_editBtn];
     
     
-    for ( int i = 0; i < 9; i++) {
+    for ( int i = 0; i < 10; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
@@ -196,6 +196,12 @@
                 break;
             }
             case 8:
+            {
+                _comment = label;
+                [_tradeView addSubview:_comment];
+                break;
+            }
+            case 9:
             {
                 _reviewTimeL = label;
                 [_tradeView addSubview:_reviewTimeL];
@@ -356,14 +362,23 @@
         make.top.equalTo(_payWayL.mas_bottom).offset(16 *SIZE);
         make.right.equalTo(_tradeView).offset(-28 *SIZE);
     }];
-
-    [_reviewL mas_makeConstraints:^(MASConstraintMaker *make) {
-
+    
+    [_comment mas_makeConstraints:^(MASConstraintMaker *make) {
+        
         make.left.equalTo(_tradeView).offset(28 *SIZE);
         make.top.equalTo(_timeL.mas_bottom).offset(16 *SIZE);
         make.right.equalTo(_tradeView).offset(-28 *SIZE);
     }];
 
+    [_reviewL mas_makeConstraints:^(MASConstraintMaker *make) {
+
+        make.left.equalTo(_tradeView).offset(28 *SIZE);
+        make.top.equalTo(_comment.mas_bottom).offset(16 *SIZE);
+        make.right.equalTo(_tradeView).offset(-28 *SIZE);
+    }];
+
+
+    
     [_reviewTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(_tradeView).offset(28 *SIZE);

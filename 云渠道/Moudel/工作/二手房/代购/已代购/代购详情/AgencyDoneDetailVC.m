@@ -79,10 +79,10 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-        
-    }];
+//    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//
+//    }];
     
     UIAlertAction *set = [UIAlertAction actionWithTitle:@"挞定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
        
@@ -107,7 +107,7 @@
         
     }];
     
-    [alert addAction:protocol];
+//    [alert addAction:protocol];
     [alert addAction:set];
     [alert addAction:cancel];
     
@@ -214,9 +214,9 @@
                 make.bottom.equalTo(header.titleView).offset(-13 *SIZE);
             }];
             
-            header.validL.hidden = NO;;
+            header.validL.hidden = YES;;
             header.auditL.hidden = NO;;
-            header.validL.text = @"有效";
+//            header.validL.text = @"有效";
             header.auditL.text = @"已审核";
             header.reviewTimeL.text = [NSString stringWithFormat:@"审核时间：%@",_subDic[@"check_time"]];
         }
@@ -245,6 +245,8 @@
         header.commissionL.text = [NSString stringWithFormat:@"佣金：%@%@",_subDic[@"broker_ratio"],@"%"];
         header.payWayL.text = [NSString stringWithFormat:@"付款方式：%@",_subDic[@"pay_way"]];
         header.timeL.text = [NSString stringWithFormat:@"预定签约时间：%@",_subDic[@"appoint_construct_time"]];
+        header.comment.text = [NSString stringWithFormat:@"约定事项：%@",_subDic[@"comment"]];
+        
         header.reviewL.text = [NSString stringWithFormat:@"审核人：%@",_subDic[@"check_person"]];
         
         

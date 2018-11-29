@@ -68,7 +68,7 @@
     }
     
     
-    if (dataDic[@"tel"]) {
+    if (![dataDic[@"tel"] isEqual:@""]) {
         
         NSArray *arr = [dataDic[@"tel"] componentsSeparatedByString:@","];
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:arr[0]];

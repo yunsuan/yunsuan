@@ -8,7 +8,7 @@
 
 #import "RoomAgencyAddProtocolCell4.h"
 
-@interface RoomAgencyAddProtocolCell4 ()<UITextFieldDelegate>
+@interface RoomAgencyAddProtocolCell4 ()<UITextViewDelegate>
 {
     
     NSArray *_titleArr;
@@ -22,18 +22,15 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
+        _datadic = [NSMutableDictionary dictionary];
         [self initUI];
     }
     return self;
 }
 
-- (void)TextFieldDidChange:(UITextField *)textField{
-    
-//    _commisionTF.textfield.text = [NSString stringWithFormat:@"%ld",[_priceTF.textfield.text integerValue] * 10000 / 100 * self.ratio];
-}
 
 - (void)ActionPayBtn:(UIButton *)btn{
+    
     
     if (self.roomAgencyAddProtocolCell4PayBlock) {
         
@@ -65,7 +62,7 @@
     
     _payWayBtn.content.text = tradeDic[@"pay_way_name"];
     _signTimeBtn.content.text = tradeDic[@"appoint_construct_time"];
-    _eventTV.text = tradeDic[@""];
+    _eventTV.text = tradeDic[@"comment"];
 }
 
 - (void)initUI{
@@ -88,8 +85,9 @@
             {
                 _priceL = label;
                 [self.contentView addSubview:_priceL];
-                textField.textfield.delegate = self;
                 _priceTF = textField;
+                _priceTF.textfield.tag = 1001;
+                [_priceTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 _priceTF.unitL.text = @"万";
                 [self.contentView addSubview:_priceTF];
                 break;
@@ -100,6 +98,8 @@
                 [self.contentView addSubview:_sincerityL];
                 _sincerityTF = textField;
                 _sincerityTF.unitL.text = @"元";
+                _sincerityTF.textfield.tag = 1002;
+                [_sincerityTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 [self.contentView addSubview:_sincerityTF];
                 break;
             }
@@ -109,7 +109,10 @@
                 [self.contentView addSubview:_breachL];
                 _breachTF = textField;
                 _breachTF.unitL.text = @"元";
+                _breachTF.textfield.tag = 1003;
+                [_breachTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                 [self.contentView addSubview:_breachTF];
+                
                 break;
             }
             case 3:
@@ -118,6 +121,7 @@
                 [self.contentView addSubview:_commisionL];
                 _commisionTF = textField;
 //                _commisionTF.unitL.text = @"元";
+                _commisionTF.backgroundColor = YJBackColor;
                 _commisionTF.textfield.userInteractionEnabled = NO;
 //                _commisionTF.textfield.placeholder = @"自动生成";
                 [self.contentView addSubview:_commisionTF];
@@ -158,10 +162,34 @@
     _eventTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _eventTV.layer.borderWidth = SIZE;
     _eventTV.clipsToBounds = YES;
+    _eventTV.delegate = self;
     [self.contentView addSubview:_eventTV];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:_priceTF.textfield];
     [self MasonryUI];
+}
+
+-(void)textChange:(UITextField *)textField{
+    
+    if (textField.tag ==1001) {
+        [_datadic setValue:textField.text forKey:@"total_price"];
+    }
+    else if(textField.tag ==1002)
+    {
+        [_datadic setValue:textField.text forKey:@"earnest_money"];
+    }else if(textField.tag ==1003)
+    {
+        [_datadic setValue:textField.text forKey:@"break_money"];
+    }
+    if (self.roomAgencylCell4Block) {
+        self.roomAgencylCell4Block(_datadic);
+    }
+}
+-(void)textViewDidChange:(UITextView *)textView
+{
+    [_datadic setValue:textView.text forKey:@"comment"];
+
+    if (self.roomAgencylCell4Block) {
+        self.roomAgencylCell4Block(_datadic);
+    }
 }
 
 - (void)MasonryUI{

@@ -15,11 +15,15 @@ typedef void(^RoomAgencyAddProtocolCell4TimeBlock)(void);
 
 typedef void(^RoomAgencyAddProtocolCell4PayBlock)(void);
 
+typedef void(^RoomAgencylCell4Block)(NSMutableDictionary *data);
+
 @interface RoomAgencyAddProtocolCell4 : UITableViewCell
 
 @property (nonatomic, copy) RoomAgencyAddProtocolCell4TimeBlock roomAgencyAddProtocolCell4TimeBlock;
 
 @property (nonatomic, copy) RoomAgencyAddProtocolCell4PayBlock roomAgencyAddProtocolCell4PayBlock;
+
+@property (nonatomic, copy) RoomAgencylCell4Block roomAgencylCell4Block;
 
 @property (nonatomic, assign) NSInteger ratio;
 
@@ -52,5 +56,7 @@ typedef void(^RoomAgencyAddProtocolCell4PayBlock)(void);
 @property (nonatomic, strong) UITextView *eventTV;
 
 @property (nonatomic, strong) NSMutableDictionary *tradeDic;
+
+@property (nonatomic, strong) NSMutableDictionary *datadic;
 
 @end

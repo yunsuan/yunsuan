@@ -54,9 +54,14 @@ typedef void(^AgencyEditHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *timeL;
 
+@property (nonatomic, strong) UILabel *comment;
+
 @property (nonatomic, strong) UILabel *reviewL;
 
+
 @property (nonatomic, strong) UILabel *reviewTimeL;
+
+
 
 @property (nonatomic, strong) UIButton *infoBtn;
 

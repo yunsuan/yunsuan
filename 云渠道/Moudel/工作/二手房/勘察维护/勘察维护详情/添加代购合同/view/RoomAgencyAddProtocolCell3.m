@@ -85,6 +85,8 @@
                 [self.contentView addSubview:_certNumL];
                 _certNumTF = textField;
                 _certNumTF.backgroundColor = [UIColor whiteColor];
+                _certNumTF.backgroundColor = YJBackColor;
+                _certNumTF.userInteractionEnabled = NO;
                 _certNumTF.textfield.placeholder = @"";
                 [self.contentView addSubview:_certNumTF];
                 break;

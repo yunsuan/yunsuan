@@ -120,9 +120,9 @@
             make.width.mas_equalTo(40 *SIZE);
             make.height.mas_equalTo(17 *SIZE);
         }];
-        cell.validL.hidden = NO;;
-        cell.auditL.hidden = NO;;
-        cell.validL.text = @"有效";
+        cell.validL.hidden = YES;
+        cell.auditL.hidden = NO;
+//        cell.validL.text = @"有效";
         cell.auditL.text = @"已审核";
     }else if ([_dataArr[indexPath.row][@"check_state"] integerValue] == 2){
         

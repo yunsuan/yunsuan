@@ -77,7 +77,16 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
-            nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+            NSMutableDictionary *dic = [resposeObject[@"data"] mutableCopy];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"YYYY/MM/dd"];
+            [dic setObject:[formatter stringFromDate:[NSDate date]] forKey:@"regist_time"];
+            [dic setObject:dic[@"name"] forKey:@"agent_name"];
+            [dic setObject:dic[@"tel"] forKey:@"agent_tel"];
+            
+            
+            nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+//            nextVC.handleDic 
             nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:[@{} mutableCopy]];
 //            nextVC.roomAgencyAddProtocolVCBlock = ^{
 //                

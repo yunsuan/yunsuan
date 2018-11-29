@@ -190,6 +190,7 @@
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
     [self.view addSubview:_nextBtn];
+    
 }
 
 @end
