@@ -8,6 +8,9 @@
 
 #import "BaseViewController.h"
 
+#import "RoomDetailModel.h"
+
 @interface QuickAddAndRecommendVC : BaseViewController
 
+@property (nonatomic, strong) RoomDetailModel *roomDetailModel;
 @end
