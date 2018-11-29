@@ -106,6 +106,13 @@
     }else if (_AllType == 1){
         
         _urlString = UserFocusNews_URL;
+    }else if(_AllType == 3){
+        
+        _urlString = RentProjectList_URL;
+        if ([self.param isEqualToString:@"rent"]) {
+            
+            _urlString = RentHouseList_URL;
+        }
     }else{
         
         _urlString = ProjectList_URL;
@@ -195,6 +202,13 @@
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
+            }else if (_AllType == 3){
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+                if ([resposeObject[@"data"] count] < 15) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+                }
             }else{
                 
                 [self SetData:resposeObject[@"data"]];
@@ -228,6 +242,13 @@
     }else if (_AllType == 1){
         
         _urlString = ProjectList_URL;
+    }else if(_AllType == 3){
+        
+        _urlString = RentProjectList_URL;
+        if ([self.param isEqualToString:@"rent"]) {
+            
+            _urlString = RentHouseList_URL;
+        }
     }else{
         
         _urlString = ProjectList_URL;
@@ -302,6 +323,13 @@
             }else if (_AllType == 1){
                 
                 [self SetData:resposeObject[@"data"]];
+                if ([resposeObject[@"data"] count] < 15) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+                }
+            }else if (_AllType == 3){
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
                 if ([resposeObject[@"data"] count] < 15) {
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
@@ -439,6 +467,70 @@
                 model.comment = tempDic[@"comment"];
                 model.create_time = tempDic[@"create_time"];
                 model.detail_get = tempDic[@"detail_get"];
+                [_dataArr addObject:model];
+            }
+        }
+    }else if (_AllType == 3){
+        
+        if ([self.param isEqualToString:@"rent"]) {
+            
+            for (int i = 0; i < data.count; i++) {
+                
+                NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+                [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if ([obj isKindOfClass:[NSNull class]]) {
+                        
+                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                            
+                            [tempDic setObject:@[] forKey:key];
+                        }else{
+                            
+                            [tempDic setObject:@"" forKey:key];
+                        }
+                    }else{
+                        
+                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                            
+                            
+                        }else{
+                            
+                            [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                        }
+                    }
+                }];
+                SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] init];//WithDictionary:tempDic];
+                model.price_change = tempDic[@"price_change"];
+                model.img_url = tempDic[@"img_url"];
+                model.house_id = tempDic[@"house_id"];
+                model.title = tempDic[@"title"];
+                model.describe = tempDic[@"describe"];
+                model.price = tempDic[@"price"];
+                model.unit_price = tempDic[@"unit_price"];
+                model.property_type = tempDic[@"property_type"];
+                model.store_name = tempDic[@"store_name"];
+                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
+                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
+                model.type = tempDic[@"type"];
+                model.info_id = tempDic[@"info_id"];
+                [_dataArr addObject:model];
+            }
+        }else{
+            
+            for (int i = 0; i < data.count; i++) {
+                
+                NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+                [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if ([obj isKindOfClass:[NSNull class]]) {
+                        
+                        [tempDic setObject:@"" forKey:key];
+                    }
+                    [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }];
+                
+                
+                SecdaryComModel *model = [[SecdaryComModel alloc] initWithDictionary:tempDic];
                 [_dataArr addObject:model];
             }
         }
@@ -620,6 +712,38 @@
             }
             break;
         }
+        case 3:{
+            
+            if ([self.param isEqualToString:@"rent"]) {
+                
+                SecdaryAllTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecdaryAllTableCell"];
+                if (!cell) {
+                    
+                    cell = [[SecdaryAllTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecdaryAllTableCell"];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                SecdaryAllTableModel *model = _dataArr[indexPath.row];
+                cell.model = model;
+                
+                return cell;
+            }else{
+                
+                SecdaryComTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecdaryComTableCell"];
+                if (!cell) {
+                    
+                    cell = [[SecdaryComTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecdaryComTableCell"];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                cell.model = _dataArr[indexPath.row];
+                
+                return cell;
+            }
+            break;
+        }
         default:
             return [[UITableViewCell alloc] init];
             break;
@@ -667,6 +791,25 @@
             if (self.roomChildVCSecComModelBlock) {
                 
                 self.roomChildVCSecComModelBlock(model);
+            }
+        }
+    }else if(_AllType == 3){
+        
+        if ([self.param isEqualToString:@"rent"]) {
+            
+            SecdaryAllTableModel *model = _dataArr[indexPath.row];
+            
+            if (self.roomChildVCRentModelBlock) {
+                
+                self.roomChildVCRentModelBlock(model);
+            }
+        }else{
+            
+            SecdaryComModel *model = _dataArr[indexPath.row];
+            
+            if (self.roomChildVCRentComModelBlock) {
+                
+                self.roomChildVCRentComModelBlock(model);
             }
         }
     }else{

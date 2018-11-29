@@ -16,10 +16,18 @@ typedef void(^RoomChildVCSecModelBlock)(SecdaryAllTableModel *model);
 
 typedef void(^RoomChildVCSecComModelBlock)(SecdaryComModel *model);
 
+typedef void(^RoomChildVCRentModelBlock)(SecdaryAllTableModel *model);
+
+typedef void(^RoomChildVCRentComModelBlock)(SecdaryComModel *model);
+
 typedef void(^RoomChildVCRoomModelBlock)(RoomListModel *model);
 
 //typedef void(^RoomChildVC)(<#arguments#>);
 @interface RoomChildVC : BaseViewController
+
+@property (nonatomic, copy) RoomChildVCRentModelBlock roomChildVCRentModelBlock;
+
+@property (nonatomic, copy) RoomChildVCRentComModelBlock roomChildVCRentComModelBlock;
 
 @property (nonatomic, copy) RoomChildVCRoomModelBlock roomChildVCRoomModelBlock;
 

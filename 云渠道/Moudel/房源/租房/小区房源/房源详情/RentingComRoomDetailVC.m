@@ -17,6 +17,9 @@
 {
     
     NSArray *_titleArr;
+    NSString *_projectId;
+    NSString *_info_id;
+    NSString *_city;
 }
 @property (nonatomic, strong) UICollectionView *segmentColl;
 
@@ -37,6 +40,18 @@
 @end
 
 @implementation RentingComRoomDetailVC
+
+- (instancetype)initWithProjectId:(NSString *)projectId infoid:(NSString *)infoid city:(NSString *)city
+{
+    self = [super init];
+    if (self) {
+        
+        _projectId = projectId;
+        _city = city;
+        _info_id = infoid;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -168,7 +183,7 @@
     // 创建控制器
     _roomProjectVC = [[RentingComRoomProjectVC alloc] init];
     
-    _roomBrokerageVC = [[SecComRoomBrokerageVC alloc] init];
+    _roomBrokerageVC = [[SecComRoomBrokerageVC alloc] initWithProjectId:_projectId];
     
     _roomAnalyzeVC = [[RoomAnalyzeVC alloc] initWithinfo_Id:@"1"];
     

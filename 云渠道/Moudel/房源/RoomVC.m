@@ -22,6 +22,8 @@
 #import "SecComRoomDetailVC.h"
 #import "SecProhectSearchVC.h"
 #import "SecHouseSearchVC.h"
+#import "RentingComRoomDetailVC.h"
+#import "RentingAllRoomDetailVC.h"
 
 #import "HouseSearchVC.h"
 
@@ -388,6 +390,9 @@
     }else if(/*[((NSString *)dic[@"tag"]) containsString:@"推荐"] || */[((NSString *)dic[@"tag"]) containsString:@"关注"]) {
         
         vc = [[RoomChildVC alloc] initWithType:1];
+    }else if([((NSString *)dic[@"tag"]) containsString:@"租房"]){
+        
+        vc = [[RoomChildVC alloc] initWithType:3];
     }else{
         
         vc = [[RoomChildVC alloc] initWithType:0];
@@ -435,6 +440,18 @@
         
         nextVC.type = weakvc.typeId;
         nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
+    vc.roomChildVCRentModelBlock = ^(SecdaryAllTableModel *model) {
+        
+        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] init];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
+    vc.roomChildVCRentComModelBlock = ^(SecdaryComModel *model) {
+        
+        RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     return vc;

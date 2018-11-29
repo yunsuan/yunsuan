@@ -21,7 +21,7 @@
 //基础接口测试
 //static NSString *const TestBase_Net = @"http://120.27.21.136:2798/";
 
-static NSString *const TestBase_Net = @"http://47.106.39.169:2797/";
+//static NSString *const TestBase_Net = @"http://47.106.39.169:2797/";
 
 //获取版本
 static NSString *const Version_URL = @"getVersion";
@@ -153,7 +153,6 @@ static NSString *const PersonalMyTeamList_URL = @"agent/personal/myTeamList";
 
 
 #pragma mark ---  客源  ---
-
 
 //1客户列表
 //static NSString *const ListClient_URL = @"agent/client/list";
@@ -664,6 +663,13 @@ static NSString *const BreachList_URL = @"agent/house/sub/breach/list";
 static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
 
 
+#pragma mark -- 租房 --
 
+#pragma mark -- 租房-房源
 
+//项目列表
+static NSString *const RentProjectList_URL = @"user/rent/project/list";
+
+//房源列表
+static NSString *const RentHouseList_URL = @"user/rent/house/list";
 

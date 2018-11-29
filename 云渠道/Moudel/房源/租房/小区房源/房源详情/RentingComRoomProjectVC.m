@@ -25,7 +25,7 @@
 #import "DealRecordVC.h"
 #import "DistributVC.h"
 
-#import "SecComRoomDetailTableHeader.h"
+#import "RentingComRoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
 #import "RoomDetailTableCell1.h"
 #import "RoomDetailTableCell2.h"
@@ -366,13 +366,13 @@
     
     if (!section) {
         
-        SecComRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"SecComRoomDetailTableHeader"];
+        RentingComRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RentingComRoomDetailTableHeader"];
         if (!header) {
             
-            header = [[SecComRoomDetailTableHeader alloc] initWithReuseIdentifier:@"SecComRoomDetailTableHeader"];
+            header = [[RentingComRoomDetailTableHeader alloc] initWithReuseIdentifier:@"RentingComRoomDetailTableHeader"];
             
         }
-        header.secComHeaderTagBlock = ^(NSInteger btnNum) {
+        header.rentingComHeaderTagBlock = ^(NSInteger btnNum) {
             
             if (btnNum == 1) {
                 
