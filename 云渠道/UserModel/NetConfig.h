@@ -676,3 +676,6 @@ static NSString *const RentProjectDetail_URL = @"user/rent/project/detail";
 //房源列表
 static NSString *const RentHouseList_URL = @"user/rent/house/list";
 
+//房源详情
+static NSString *const RentHouseDetail_URL =  @"user/rent/house/detail";
+

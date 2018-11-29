@@ -11,6 +11,8 @@
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 
+#import "YBImageBrowser.h"
+
 #import "RentingComRoomProjectVC.h"
 #import "BuildingInfoVC.h"
 #import "SecHouseTypeDetailVC.h"
@@ -164,7 +166,7 @@
 
             if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
 
-//                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"]];
 
             }else{
 
@@ -178,89 +180,98 @@
     }];
 }
 //
-//- (void)SetData:(NSDictionary *)data{
-//    if (data[@"total_float_url_phone"]) {
-//        _phone_url =  [NSString stringWithFormat:@"%@",data[@"total_float_url_phone"]];
-//    }
-//
-//    if (data[@"butter_tel"]) {
-//
-//        _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
-//    }
-//
-//    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
-//
-//        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
-//    }
-//
-//    if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
-//
-//        if (![data[@"dynamic"][@"count"] isKindOfClass:[NSNull class]]) {
-//
-//            _dynamicNum = data[@"dynamic"][@"count"];
-//        }
-//
-//        if ([data[@"dynamic"][@"first"] isKindOfClass:[NSDictionary class]]) {
-//
-//            _dynamicDic = [[NSMutableDictionary alloc] initWithDictionary:data[@"dynamic"][@"first"]];
-//            [_dynamicDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//                if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                    [_dynamicDic setObject:@"" forKey:key];
-//                }
-//            }];
-//        }
-//    }
-//
-//    if ([data[@"focus"] isKindOfClass:[NSDictionary class]]) {
-//
-//        _focusDic = [NSMutableDictionary dictionaryWithDictionary:data[@"focus"]];
-//    }
-//
-//    if ([data[@"house_type"] isKindOfClass:[NSArray class]]) {
-//
-//        _houseArr = [NSMutableArray arrayWithArray:data[@"house_type"]];
-//    }
-//
-//    if ([data[@"project_basic_info"] isKindOfClass:[NSDictionary class]]) {
-//
-//        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[@"project_basic_info"]];
-//        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//            if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                [tempDic setObject:@"" forKey:key];
-//            }
-//        }];
-//        _model = [[RoomDetailModel alloc] initWithDictionary:tempDic];
-//    }
-//
-//    if ([data[@"project_img"] isKindOfClass:[NSDictionary class]]) {
-//
-//        if ([data[@"project_img"][@"url"] isKindOfClass:[NSArray class]]) {
-//
-//            _imgArr = [[NSMutableArray alloc] initWithArray:data[@"project_img"][@"url"]];
-//
-//            [_imgArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//                if ([obj isKindOfClass:[NSDictionary class]]) {
-//
-//                    if ([obj[@"img_url"] isKindOfClass:[NSNull class]]) {
-//
-//                        [_imgArr replaceObjectAtIndex:idx withObject:@{@"img_url":@""}];
-//                    }
-//                }else{
-//
-//                    [_imgArr replaceObjectAtIndex:idx withObject:@{@"img_url":@""}];
-//                }
-//            }];
-//        }
-//    }
-//
-//
-//    [_roomTable reloadData];
-//}
+- (void)SetData:(NSDictionary *)data{
+    
+    if (data[@"butter_tel"]) {
+        
+        _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
+    }
+    
+    //    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
+    //
+    //        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
+    //    }
+    
+    if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
+        
+        if (![data[@"dynamic"][@"count"] isKindOfClass:[NSNull class]]) {
+            
+            _dynamicNum = data[@"dynamic"][@"count"];
+        }
+        
+        if ([data[@"dynamic"][@"first"] isKindOfClass:[NSDictionary class]]) {
+            
+            _dynamicDic = [[NSMutableDictionary alloc] initWithDictionary:data[@"dynamic"][@"first"]];
+            [_dynamicDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                
+                if ([obj isKindOfClass:[NSNull class]]) {
+                    
+                    [_dynamicDic setObject:@"" forKey:key];
+                }
+            }];
+        }
+    }
+    
+    if ([data[@"focus"] isKindOfClass:[NSDictionary class]]) {
+        
+        if ([data[@"focus"][@"is_focus"] integerValue]) {
+            
+            _subId = [NSString stringWithFormat:@"%@",data[@"focus"][@"is_focus"]];
+            [_attentBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+        }
+        _focusDic = [NSMutableDictionary dictionaryWithDictionary:data[@"focus"]];
+    }
+    _attentBtn.userInteractionEnabled = YES;
+    
+    if ([data[@"house_type"] isKindOfClass:[NSArray class]]) {
+        
+        _houseArr = [NSMutableArray arrayWithArray:data[@"house_type"]];
+    }
+    
+    if ([data[@"project_basic_info"] isKindOfClass:[NSDictionary class]]) {
+        
+        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[@"project_basic_info"]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                if ([key isEqualToString:@"property_type"] || [key isEqualToString:@"project_tags"]) {
+                    
+                    [tempDic setObject:@[] forKey:key];
+                }else{
+                    
+                    [tempDic setObject:@"" forKey:key];
+                }
+            }
+        }];
+        _model = [[SecAllRoomDetailHeaderModel alloc] initWithDictionary:tempDic];
+    }
+    
+    if ([data[@"project_img"] isKindOfClass:[NSDictionary class]]) {
+        
+        if ([data[@"project_img"][@"url"] isKindOfClass:[NSArray class]]) {
+            
+            _imgArr = [[NSMutableArray alloc] initWithArray:data[@"project_img"][@"url"]];
+            
+            [_imgArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj isKindOfClass:[NSDictionary class]]) {
+                    
+                    if ([obj[@"img_url"] isKindOfClass:[NSNull class]]) {
+                        
+                        [_imgArr replaceObjectAtIndex:idx withObject:@{@"img_url":@""}];
+                    }
+                }else{
+                    
+                    [_imgArr replaceObjectAtIndex:idx withObject:@{@"img_url":@""}];
+                }
+            }];
+        }
+    }
+    
+    
+    [_roomTable reloadData];
+}
 
 - (void)ActionMoreBtn:(UIButton *)btn{
     
@@ -408,103 +419,80 @@
                 
                 OverviewVC *nextVC = [[OverviewVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
-                //                ContentTimeBtnBaseView *view = [[ContentTimeBtnBaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-                //                view.titleL.text = @"报备成功";
-                //                view.contentL.text = @"****先生，您好！报备房源成功源编号：FYBMNO1。";
-                //                view.timeL.text = @"报备时间：2017-12-23 23:00:10";
-                //                [[UIApplication sharedApplication].keyWindow addSubview:view];
             }
         };
         
-        header.titleL.text = @"FUNX自由青年公寓";
-        header.statusL.text = @"在售";
-        [header.wuyeview setData:@[@"住宅",@"写字楼",@"商铺",@"商铺商铺商铺商铺商铺",@"商铺商铺商铺",@"商铺",@"商铺商",@"商铺",@"商铺"]];
-        [header.tagview setData:@[@"学区房",@"地铁房",@"电梯房",@"商铺商铺商铺",@"商铺商铺商铺商铺商铺",@"商铺",@"商铺商铺",@"商铺",@"商铺"]];
+        header.model = _model;
+        header.imgArr = _imgArr;
         
-        header.attentL.text = @"订阅人数:23";
-        header.priceL.text = @"均价：¥16000元/m2";
-        header.addressL.text = @"高新区-天府五街230号";
-        //        header.model = _model;
-        //        header.imgArr = _imgArr;
+        if (_focusDic.count) {
+            
+            header.attentL.text = [NSString stringWithFormat:@"订阅人数:%@",_focusDic[@"num"]];
+            if ([_focusDic[@"is_focus"] integerValue]) {
+                
+                [header.attentBtn setImage:[UIImage imageNamed:@"Focus_selected"] forState:UIControlStateNormal];
+            }else{
+                
+                [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+            }
+        }else{
+            
+            [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+        }
         
-        //        if (_buildDic[@"handing_room_time"]) {
-        //
-        ////            header.payL.text = [NSString stringWithFormat:@"交房时间：%@",_buildDic[@"handing_room_time"]];
-        //        }else{
-        //
-        //            header.payL.text = [NSString stringWithFormat:@"交房时间：暂无数据"];
-        //        }
-        
-        //        if (_focusDic.count) {
-        //
-        //            header.attentL.text = [NSString stringWithFormat:@"关注人数:%@",_focusDic[@"num"]];
-        //            if ([_focusDic[@"is_focus"] integerValue]) {
-        //
-        //                [header.attentBtn setImage:[UIImage imageNamed:@"Focus_selected"] forState:UIControlStateNormal];
-        //            }else{
-        //
-        //                [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
-        //            }
-        //        }else{
-        //
-        //            [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
-        //        }
-        //        header.imgBtnBlock = ^(NSInteger num, NSArray *imgArr) {
-        //
-        //            BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] initWithNum:num projectId:_projectId];
-        //            [self.navigationController pushViewController:nextVC animated:YES];
-        //        };
-        //
-        //        header.attentBtnBlock = ^{
-        //
-        //            if (_focusDic.count) {
-        //
-        //                if ([_focusDic[@"is_focus"] integerValue]) {
-        //
-        //                    [BaseRequest GET:CancelFocusProject_URL parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
-        //
-        //
-        //                        NSLog(@"%@",resposeObject);
-        //                        if ([resposeObject[@"code"] integerValue] == 200) {
-        //
-        //                            [self RequestMethod];
-        //                        }else if([resposeObject[@"code"] integerValue] == 400){
-        //
-        //                            //                            [self showContent:resposeObject[@"msg"]];
-        //                        }
-        //                        else{
-        //                            [self showContent:resposeObject[@"msg"]];
-        //                        }
-        //                    } failure:^(NSError *error) {
-        //
-        //                        NSLog(@"%@",error);
-        //                        [self showContent:@"网络错误"];
-        //                    }];
-        //                }else{
-        //
-        //                    [BaseRequest GET:FocusProject_URL parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
-        //
-        //                        NSLog(@"%@",resposeObject);
-        //
-        //                        if ([resposeObject[@"code"] integerValue] == 200) {
-        //
-        //                            [self RequestMethod];
-        //                        }else if([resposeObject[@"code"] integerValue] == 400){
-        //
-        //                            //                            [self showContent:resposeObject[@"msg"]];
-        //                        }
-        //                        else{
-        //                            [self showContent:resposeObject[@"msg"]];
-        //                        }
-        //                        [self RequestMethod];
-        //                    } failure:^(NSError *error) {
-        //
-        //                        NSLog(@"%@",error);
-        //                        [self showContent:@"网络错误"];
-        //                    }];
-        //                }
-        //            }
-        //        };
+        header.rentingAllDetailHeaderImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {
+            
+            NSMutableArray *tempArr = [NSMutableArray array];
+            [imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                YBImageBrowserModel *model = [YBImageBrowserModel new];
+                model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
+                [tempArr addObject:model];
+            }];
+            if (_albumArr.count) {
+                
+                YBImageBrowser *browser = [YBImageBrowser new];
+                browser.delegate = self;
+                browser.dataArray = tempArr;
+                browser.albumArr = _albumArr;
+                browser.infoid = _info_id;
+                browser.currentIndex = num;
+                [browser show];
+            }else{
+                
+                [BaseRequest GET:GetImg_URL parameters:@{@"info_id":_info_id} success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
+                            
+                            [_albumArr removeAllObjects];
+                            for ( int i = 0; i < [resposeObject[@"data"] count]; i++) {
+                                
+                                if ([resposeObject[@"data"][i] isKindOfClass:[NSDictionary class]]) {
+                                    
+                                    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"][i]];
+                                    
+                                    [_albumArr addObject:tempDic];
+                                    YBImageBrowser *browser = [YBImageBrowser new];
+                                    browser.delegate = self;
+                                    browser.albumArr = _albumArr;
+                                    browser.dataArray = tempArr;
+                                    browser.infoid  = _info_id;
+                                    browser.currentIndex = num;
+                                    [browser show];
+                                }
+                            }
+                        }else{
+                            
+                        }
+                    }
+                } failure:^(NSError *error) {
+                    
+                    NSLog(@"%@",error);
+                }];
+            }
+        };
         
         return header;
         
@@ -602,13 +590,20 @@
                 cell = [[RoomDetailTableCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell2"];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            //            [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.total_float_url]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-            //
-            //                if (error) {
-            //
-            //                    [UIImage imageNamed:@"banner_default_2"];
-            //                }
-            //            }];
+            
+            if (_model.total_float_url.length>0) {
+                [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.total_float_url]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        cell.bigImg.image =  [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }
+            else{
+                cell.bigImg.image =   [UIImage imageNamed:@"banner_default_2"];
+                
+            }
             
             return cell;
             break;
@@ -640,18 +635,11 @@
             
             cell.collCellBlock = ^(NSInteger index) {
                 
-                //                if (_houseArr.count) {
-                
-                
-                //                    SecHouseTypeDetailVC *nextVC = [[SecHouseTypeDetailVC alloc] initWithHouseTypeId:[NSString stringWithFormat:@"%@",_houseArr[index][@"id"]] index:index dataArr:_houseArr projectId:_projectId];
-                //                    [self.navigationController pushViewController:nextVC animated:YES];
-                //                }
-//                SecHouseTypeDetailVC *nextVC = [[SecHouseTypeDetailVC alloc] initWithHouseTypeId:[NSString stringWithFormat:@"%@",@"1"] index:index dataArr:_houseArr projectId:@"1"];
-                
-               
-                
-//                [self.navigationController pushViewController:nextVC animated:YES];
-                
+                if (_houseArr.count > index) {
+                    
+//                    SecComTypeRoomListVC *nextVC = [[SecComTypeRoomListVC alloc] initWithProjectId:_projectId city:_city name:_houseArr[index][@"house_type_name"]];
+//                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
             };
             
             return cell;
@@ -684,14 +672,15 @@
                     make.bottom.equalTo(cell.contentView).offset(-59 *SIZE);
                 }];
             }
-            //            CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
-            //            [_mapView setCenterCoordinate:cllocation animated:YES];
-            //            BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-            //            annotation.coordinate = cllocation;
-            //            annotation.title = _model.project_name;
-            //            [_mapView addAnnotation:annotation];
-            //            cell.delegate = self;
-            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+            [_mapView setCenterCoordinate:cllocation animated:YES];
+            BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+            annotation.coordinate = cllocation;
+            annotation.title = _model.project_name;
+            [_mapView addAnnotation:annotation];
+            cell.delegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return cell;
             break;
