@@ -10,4 +10,8 @@
 
 @interface RentingReportFailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *search;
+
+- (void)RequestMethod;
+
 @end

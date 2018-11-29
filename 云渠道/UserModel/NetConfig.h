@@ -689,3 +689,9 @@ static NSString *const RentSurveyWaitGrab_URL = @"agent/rent/survey/waitGrab";
 
 //有效列表
 static NSString *const RentRecordValueList_URL = @"agent/rent/record/value/list";
+
+//无效列表
+static NSString *const RentRecordDisabledList_URL = @"agent/rent/record/disabled/list";
+
+//申诉列表
+static NSString *const RentRecordAppealList_URL = @"agent/rent/record/appeal/list";
