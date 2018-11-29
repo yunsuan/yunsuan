@@ -222,7 +222,7 @@ static NSString *const DynamicList_URL = @"user/dynamic/list/v2.7";
 static NSString *const GetImg_URL = @"user/img/get/v2.7";
 
 ////获取项目分析
-//static NSString *const HouseTypeAnalyse_URL = @"user/houseType/analyse/v2.7";
+static NSString *const HouseTypeAnalyse_URL = @"user/houseType/analyse/v2.7";
 
 //获取佣金规则
 //static NSString *const GetRule_URL = @"user/project/getRule";
