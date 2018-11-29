@@ -17,8 +17,6 @@
 {
     
     NSArray *_titleArr;
-    NSString *_houseId;
-    NSString *_city;
 }
 @property (nonatomic, strong) UICollectionView *segmentColl;
 

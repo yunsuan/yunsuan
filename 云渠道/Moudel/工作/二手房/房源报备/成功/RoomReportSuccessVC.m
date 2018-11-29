@@ -151,7 +151,6 @@
 
     cell.roomReportSucPhoneBlock = ^(NSInteger index) {
         
-        //        NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];
         NSString *phone = _dataArr[index][@"tel"];
         if (phone.length) {
             

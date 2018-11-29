@@ -404,9 +404,10 @@
             if (btnNum == 1) {
                 
                 SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-                nextVC.projiect_id = @"6";
-                nextVC.img_name = @"pload/project/img/1529910374_21.jpg";
-                nextVC.status = @"release";
+                nextVC.projiect_id = _projectId;
+                nextVC.img_name = _model.total_float_url_phone;
+                nextVC.status = @"rent";
+                nextVC.comName = _model.project_name;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else if (btnNum == 2){
                 

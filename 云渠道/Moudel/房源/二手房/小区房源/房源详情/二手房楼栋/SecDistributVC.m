@@ -43,6 +43,7 @@
     
 }
 -(void)post{
+    
     [BaseRequest GET:GetAllBuilding_URL parameters:@{
                                                      @"project_id":_projiect_id
                                                      
@@ -114,7 +115,7 @@
         [self.view addSubview:self.selectView];
     }
     else{
-        if ([self.status isEqualToString:@"release"] || [self.status isEqualToString:@"挂牌信息编辑"] || [self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"]) {
+        if ([self.status isEqualToString:@"release"] || [self.status isEqualToString:@"挂牌信息编辑"] || [self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"] || [self.status isEqualToString:@"rent"]) {
             
             ReleaseSenceVC *next_vc = [[ReleaseSenceVC alloc]init];
             next_vc.project_id = _projiect_id;
@@ -141,7 +142,7 @@
 
 {
     [self maskViewTap];
-    if ([self.status isEqualToString:@"release"] || [self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"]) {
+    if ([self.status isEqualToString:@"release"] || [self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"] || [self.status isEqualToString:@"rent"]) {
         
         ReleaseSenceVC *next_vc = [[ReleaseSenceVC alloc]init];
         next_vc.project_id = _projiect_id;

@@ -276,7 +276,16 @@
         
         [dic setObject:_markText.text forKey:@"comment"];
     }
-    [BaseRequest POST:HouseRecord_URL parameters:dic success:^(id resposeObject) {
+    NSString *urlStr;
+    if ([self.status isEqualToString:@"rent"]) {
+        
+        urlStr = RentRecord_URL;
+    }else{
+        
+        urlStr = HouseRecord_URL;
+    }
+    
+    [BaseRequest POST:urlStr parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

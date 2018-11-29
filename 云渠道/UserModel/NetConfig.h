@@ -679,3 +679,13 @@ static NSString *const RentHouseList_URL = @"user/rent/house/list";
 //房源详情
 static NSString *const RentHouseDetail_URL =  @"user/rent/house/detail";
 
+//报备租房
+static NSString *const RentRecord_URL = @"agent/rent/record";
+
+#pragma mark -- 租房 - 报备
+
+//待抢列表
+static NSString *const RentSurveyWaitGrab_URL = @"agent/rent/survey/waitGrab";
+
+//有效列表
+static NSString *const RentRecordValueList_URL = @"agent/rent/record/value/list";

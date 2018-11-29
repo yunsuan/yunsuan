@@ -184,7 +184,7 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

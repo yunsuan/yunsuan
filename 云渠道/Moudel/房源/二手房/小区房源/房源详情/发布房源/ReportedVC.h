@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSString *comName;
 
+@property (nonatomic, strong) NSString *status;
+
 - (instancetype)initWithData:(NSDictionary *)data buildId:(NSString *)buildId unitId:(NSString *)unitId;
 
 @end

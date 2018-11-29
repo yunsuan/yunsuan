@@ -633,6 +633,7 @@
                 ReportedVC *nextVC = [[ReportedVC alloc] initWithData:strongSelf->_fjxx buildId:weakSelf.build_id unitId:weakSelf.unit_id];
                 nextVC.comName = weakSelf.comName;
                 nextVC.projectId = weakSelf.project_id;
+                nextVC.status = weakSelf.status;
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }
         };
