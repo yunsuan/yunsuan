@@ -6,11 +6,7 @@
 //  Copyright © 2018年 xiaoq. All rights reserved.
 //
 
-#import<BaiduMapAPI_Location/BMKLocationService.h>
-#import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
-//#import<BaiduMapAPI_Map/BMKMapComponent.h>
-//#import<BaiduMapAPI_Search/BMKPoiSearchType.h>
-//#import <CoreLocation/CoreLocation.h>
+
 
 #import "PYSearchViewController.h"
 
@@ -29,17 +25,16 @@
 
 #import "HNChannelView.h"
 
+#import "LocationManager.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface RoomVC ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,WMPageControllerDataSource,WMPageControllerDelegate,PYSearchViewControllerDelegate>
+
+@interface RoomVC ()<WMPageControllerDataSource,WMPageControllerDelegate,PYSearchViewControllerDelegate>
 {
-    
-    BOOL _isLocation;
-    BMKLocationService *_locService;  //定位
-    BMKGeoCodeSearch *_geocodesearch; //地理编码主类，用来查询、返回结果信息
+
     NSMutableArray *_searchArr;
     NSString *_city;
     NSString *_cityName;
-    //    NSMutableArray *_typeArr;
     NSMutableArray *_titlearr;
     
 }
@@ -73,27 +68,12 @@
     
     _titlearr = [UserModel defaultModel].tagSelectArr;
     
-    _geocodesearch = [[BMKGeoCodeSearch alloc] init];
-    _geocodesearch.delegate = self;
-    
     if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
-        
-        if (!_isLocation) {
-            
-            [self startLocation];
-        }else{
-            
-            
-        }
+      [self StartLocation];
     }else{
-        
-        _isLocation = YES;
         [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"510100"];
         _cityName = @"成都市";
-        //        [self RequestMethod];
-        
-        
         [self alertControllerWithNsstring:@"打开[定位服务权限]来允许[云渠道]确定您的位置" And:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" WithCancelBlack:^{
             
             
@@ -109,91 +89,31 @@
 
 
 
-#pragma mark -- 百度SDK
--(void)startLocation
 
+-(void)StartLocation
 {
     
-    //初始化BMKLocationService
-    
-    _locService = [[BMKLocationService alloc]init];
-    
-    _locService.delegate = self;
-    
-    _locService.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    
-    //启动LocationService
-    
-    [_locService startUserLocationService];
-    
-}
-
-- (void)didUpdateUserHeading:(BMKUserLocation *)userLocation
-
-{
-    
-    NSLog(@"heading is %@",userLocation.heading);
-    
-    
-}
-
-//处理位置坐标更新
-
-- (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
-{
-    
-    BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
-    
-    reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
-    
-    BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
-    
-    if(flag){
+    LocationManager *manager =  [LocationManager Manager];
+    [manager startLocationSuccess:^(NSString *cityname, NSString *citycode) {
         
-        //        NSLog(@"反geo检索发送成功");
+        [_cityBtn setTitle:cityname forState:UIControlStateNormal];
+        _city = citycode;
+        _cityName = cityname;
         
-        [_locService stopUserLocationService];
-        
-    }else{
-        
-        //        NSLog(@"反geo检索发送失败");
-        
-    }
-    
-}
-
-#pragma mark -------------地理反编码的delegate---------------
-
--(void)onGetReverseGeoCodeResult:(BMKGeoCodeSearch *)searcher result:(BMKReverseGeoCodeResult *)result errorCode:(BMKSearchErrorCode)error
-
-{
-    
-    [_cityBtn setTitle:result.addressDetail.city forState:UIControlStateNormal];
-    NSInteger disInteger = [result.addressDetail.adCode integerValue];
-    NSInteger cityInteger = disInteger / 100 * 100;
-    _city = [NSString stringWithFormat:@"%ld",cityInteger];
-    _cityName = result.addressDetail.city;
-    
-    [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
-    if (error) {
-        
+    } Faild:^{
         [self alertControllerWithNsstring:@"定位失败" And:@"是否要重新定位" WithCancelBlack:^{
             
         } WithDefaultBlack:^{
             
-            [self startLocation];
+            [self StartLocation];
         }];
-    }
+    }];
 }
 
-//定位失败
 
-- (void)didFailToLocateUserWithError:(NSError *)error{
-    
-    //    NSLog(@"error:%@",error);
-    [self alertControllerWithNsstring:@"定位失败" And:@"请检查定位设置"];
-    
-}
+
+
+
 
 
 #pragma mark -- Method
@@ -249,8 +169,7 @@
     
     CityVC *nextVC = [[CityVC alloc] initWithLabel:_cityName];
     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
-        
-        _isLocation = YES;
+
         [_cityBtn setTitle:city forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"%@",code];
         

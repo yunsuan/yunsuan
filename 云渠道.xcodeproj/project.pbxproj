@@ -549,11 +549,11 @@
 		10AEEE8F21A3E6A30049625B /* SelectWorkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8D21A3E6A20049625B /* SelectWorkerView.m */; };
 		10AEEE9721A3E7340049625B /* ReportCustomConfirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9121A3E7340049625B /* ReportCustomConfirmView.m */; };
 		10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */; };
-		10AEEE9C21A3EA050049625B /* LocalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9B21A3EA050049625B /* LocalModel.m */; };
 		10B2CAA5205A0D0900E814AC /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA3205A0D0900E814AC /* RegisterVC.m */; };
 		10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */; };
 		10B2CAAC205A1DFA00E814AC /* WorkingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAAB205A1DFA00E814AC /* WorkingCell.m */; };
 		10B2CAB0205A76FC00E814AC /* MineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAAF205A76FC00E814AC /* MineCell.m */; };
+		10B3930921AF894600DE73AB /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B3930821AF894600DE73AB /* LocationManager.m */; };
 		10B509772092EE0D004355C4 /* BrokerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B509762092EE0D004355C4 /* BrokerModel.m */; };
 		10B5097B209317C7004355C4 /* SelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B5097A209317C7004355C4 /* SelectView.m */; };
 		10DBB1E5207C805F00CFE59D /* DistributVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1E4207C805F00CFE59D /* DistributVC.m */; };
@@ -1656,8 +1656,6 @@
 		10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCustomSuccessView.m; sourceTree = "<group>"; };
 		10AEEE9421A3E7340049625B /* ReportCustomSuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomSuccessView.h; sourceTree = "<group>"; };
 		10AEEE9521A3E7340049625B /* ReportCustomConfirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomConfirmView.h; sourceTree = "<group>"; };
-		10AEEE9A21A3EA050049625B /* LocalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModel.h; sourceTree = "<group>"; };
-		10AEEE9B21A3EA050049625B /* LocalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModel.m; sourceTree = "<group>"; };
 		10B2CAA3205A0D0900E814AC /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
 		10B2CAA4205A0D0900E814AC /* RegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterVC.h; sourceTree = "<group>"; };
 		10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordVC.m; sourceTree = "<group>"; };
@@ -1666,6 +1664,8 @@
 		10B2CAAB205A1DFA00E814AC /* WorkingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkingCell.m; sourceTree = "<group>"; };
 		10B2CAAE205A76FC00E814AC /* MineCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MineCell.h; sourceTree = "<group>"; };
 		10B2CAAF205A76FC00E814AC /* MineCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MineCell.m; sourceTree = "<group>"; };
+		10B3930721AF894600DE73AB /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		10B3930821AF894600DE73AB /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		10B509752092EE0D004355C4 /* BrokerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrokerModel.h; sourceTree = "<group>"; };
 		10B509762092EE0D004355C4 /* BrokerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerModel.m; sourceTree = "<group>"; };
 		10B50979209317C7004355C4 /* SelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectView.h; sourceTree = "<group>"; };
@@ -5238,8 +5238,6 @@
 		106900012057974200E11F52 /* UserModel */ = {
 			isa = PBXGroup;
 			children = (
-				10AEEE9A21A3EA050049625B /* LocalModel.h */,
-				10AEEE9B21A3EA050049625B /* LocalModel.m */,
 				0C07BFC02060D835007F31EC /* UserModel.h */,
 				0C07BFC12060D835007F31EC /* UserModel.m */,
 				0C07BFC32060D88C007F31EC /* UserModelArchiver.h */,
@@ -5249,13 +5247,6 @@
 				0C342FCF2080ACD50058406D /* UserInfoModel.m */,
 			);
 			path = UserModel;
-			sourceTree = "<group>";
-		};
-		106900022057974200E11F52 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Framework;
 			sourceTree = "<group>";
 		};
 		106900032057974200E11F52 /* 第三方SDK */ = {
@@ -5323,7 +5314,6 @@
 				106900032057974200E11F52 /* 第三方SDK */,
 				1069FFFB2057974100E11F52 /* 自定义SDK */,
 				1069FFF62057974100E11F52 /* BaseClass */,
-				106900022057974200E11F52 /* Framework */,
 				1069FFF92057974100E11F52 /* Moudel */,
 				1069FFFA2057974100E11F52 /* Other */,
 				1069FFFF2057974200E11F52 /* Resource */,
@@ -5396,8 +5386,8 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				10B3930621AF88FF00DE73AB /* 定位管理 */,
 				10AEEE8921A3E6A20049625B /* 选择置业顾问 */,
-				10F0BC51217F1D8E00CC0C70 /* 房源导航 */,
 				0CD90A2720DA58FA00061B4A /* 可修改弹出框 */,
 				0CDD6FEC20CFA85700D6609C /* 自定义协议 */,
 				0CDD6FD720CF65E800D6609C /* cell和头部 */,
@@ -5553,6 +5543,15 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		10B3930621AF88FF00DE73AB /* 定位管理 */ = {
+			isa = PBXGroup;
+			children = (
+				10B3930721AF894600DE73AB /* LocationManager.h */,
+				10B3930821AF894600DE73AB /* LocationManager.m */,
+			);
+			path = "定位管理";
+			sourceTree = "<group>";
+		};
 		10B5097820931764004355C4 /* selectview */ = {
 			isa = PBXGroup;
 			children = (
@@ -5604,13 +5603,6 @@
 				10DBB1F3207CCACE00CFE59D /* SMScrollView.h */,
 			);
 			path = SESScrollView;
-			sourceTree = "<group>";
-		};
-		10F0BC51217F1D8E00CC0C70 /* 房源导航 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "房源导航";
 			sourceTree = "<group>";
 		};
 		588A381E570994FF347F095F /* Frameworks */ = {
@@ -5991,7 +5983,6 @@
 				0C581E02213E77300048546C /* SecHouseSearchVC.m in Sources */,
 				0CD909C820D73FDF00061B4A /* SurveyComplaintDetailVC.m in Sources */,
 				0C9CD41D21003C97004894A3 /* MaintainRoomInfoVC.m in Sources */,
-				10AEEE9C21A3EA050049625B /* LocalModel.m in Sources */,
 				0C2883AB2109A94D00F69C5F /* RentingSurveyComplaintDetailVC.m in Sources */,
 				0C0C19E020ECABB10086E739 /* SecAllRoomDetailInfoVC.m in Sources */,
 				0CBD85AD2088842100E7B183 /* AddTagVC.m in Sources */,
@@ -6089,6 +6080,7 @@
 				0C25222C2152547F0031CC44 /* SecAllRoomStoreNeiborCell.m in Sources */,
 				105E18FA206C829A0031558D /* SinglePickView.m in Sources */,
 				0CEC62F420917668006EC0BD /* RankView.m in Sources */,
+				10B3930921AF894600DE73AB /* LocationManager.m in Sources */,
 				1044B3FB20A03654002D9BAE /* TypeOneVC.m in Sources */,
 				0C2883A02109A13D00F69C5F /* RentingInvalidApplyVC.m in Sources */,
 				0CF04F81207C9C8A00A45F4A /* HouseSearchVC.m in Sources */,
