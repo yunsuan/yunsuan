@@ -14,7 +14,11 @@
 #import "RoomSurveyWaitCell.h"
 
 @interface RentingSurveyWaitVC ()<UITableViewDelegate,UITableViewDataSource>
-
+{
+    
+    NSMutableArray *_dataArr;
+    NSInteger _page;
+}
 @property (nonatomic, strong) UITableView *waitTable;
 
 @end
@@ -24,13 +28,122 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initUI];
+    [self RequestMethod];
+}
+
+- (void)initDataSource{
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"secReload" object:nil];
+    _page = 1;
+    _dataArr = [@[] mutableCopy];
+}
+
+- (void)RequestMethod{
+    
+    _page = 1;
+    _waitTable.mj_footer.state = MJRefreshStateIdle;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RentSurveyWaitConfirm_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"] count]) {
+                
+                [_waitTable.mj_header endRefreshing];
+                [self SetData:resposeObject[@"data"]];
+                
+            }else{
+                
+                [_waitTable.mj_header endRefreshing];
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+        }else{
+            
+            [_waitTable.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+        
+        [_waitTable.mj_footer endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RentSurveyWaitConfirm_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] count]) {
+                
+                [_waitTable.mj_footer endRefreshing];
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+        }else{
+            
+            _page -= 1;
+            [_waitTable.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        _page -= 1;
+        [_waitTable.mj_footer endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSArray *)data{
+    
+    [_dataArr addObjectsFromArray:data];
+    
+    for (int i = 0; i < _dataArr.count; i++) {
+        
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }];
+        
+        [_dataArr replaceObjectAtIndex:i withObject:tempDic];
+    }
+    
+    [_waitTable reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 2;
+    return _dataArr.count;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -43,11 +156,45 @@
     
     cell.tag = indexPath.row;
     
-    cell.nameL.text = @"张三";
-    cell.roomL.text = @"天鹅湖小区 - 17栋 - 2单元 - 103";
-    cell.codeL.text = @"房源编号：CD - TEH - 20170810 - 1（F）";
-    cell.countDownL.text = @"房源真实性判断失效倒计时： 23:56:00";
-    cell.timeL.text = @"抢单日期：2017-12-15  13:00:00";
+    cell.dataDic = _dataArr[indexPath.row];
+    
+    cell.roomSyrveyWaitComfirmBlock = ^(NSInteger index) {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+//            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+//            nextVC.roomValidApplyVCBlock = ^{
+//
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
+//                [self RequestMethod];
+//            };
+//            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
+        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+//            RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+//            nextVC.roomInvalidApplyVCBlock = ^{
+//
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+//                [self RequestMethod];
+//            };
+//            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
+        [alert addAction:valid];
+        [alert addAction:invalid];
+        [alert addAction:cancel];
+        [self.navigationController presentViewController:alert animated:YES completion:^{
+            
+        }];
+    };
     
     cell.roomSyrveyWaitComfirmBlock = ^(NSInteger index) {
         
@@ -83,8 +230,7 @@
     cell.phoneL.attributedText = attr;
     cell.roomSurveyWaitPhoneBlock = ^(NSInteger index) {
         
-        //        NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];
-        NSString *phone = @"13438339177";
+        NSString *phone = _dataArr[index][@"tel"];
         if (phone.length) {
             
             //获取目标号码字符串,转换成URL

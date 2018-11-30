@@ -52,7 +52,7 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"待确认",@"勘察中",@"勘察失败",@"申诉",@"勘察完成"];
+    _titleArr = @[@"待确认",@"勘察中",@"勘察失败",@"勘察完成"];
 }
 
 #pragma mark -- collectionview
@@ -118,7 +118,7 @@
     [whiteView addSubview:_searchBar];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 5, 40 *SIZE);
+    _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 4, 40 *SIZE);
     _flowLayout.minimumLineSpacing = 0;
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -148,25 +148,25 @@
     _roomSurveyWaitVC = [[RentingSurveyWaitVC alloc] init];
     _roomSurveyingVC = [[RentingSurveyingVC alloc] init];
     _roomSurveyFailVC = [[RentingSurveyFailVC alloc] init];
-    _roomSurveyComplaitVC = [[RentingSurveyComplaitVC alloc] init];
+//    _roomSurveyComplaitVC = [[RentingSurveyComplaitVC alloc] init];
     _roomSurveySuccessVC = [[RentingSurveySuccessVC alloc] init];
     // 添加为self的子控制器
     [self addChildViewController:_roomSurveyWaitVC];
     [self addChildViewController:_roomSurveyingVC];
     [self addChildViewController:_roomSurveyFailVC];
-    [self addChildViewController:_roomSurveyComplaitVC];
+//    [self addChildViewController:_roomSurveyComplaitVC];
     [self addChildViewController:_roomSurveySuccessVC];
     
     _roomSurveyWaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveyingVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveyFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _roomSurveyComplaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+//    _roomSurveyComplaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveySuccessVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 4, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
     [self.scrollView addSubview:_roomSurveyWaitVC.view];
     [self.scrollView addSubview:_roomSurveyingVC.view];
     [self.scrollView addSubview:_roomSurveyFailVC.view];
-    [self.scrollView addSubview:_roomSurveyComplaitVC.view];
+//    [self.scrollView addSubview:_roomSurveyComplaitVC.view];
     [self.scrollView addSubview:_roomSurveySuccessVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;

@@ -695,3 +695,17 @@ static NSString *const RentRecordDisabledList_URL = @"agent/rent/record/disabled
 
 //申诉列表
 static NSString *const RentRecordAppealList_URL = @"agent/rent/record/appeal/list";
+
+#pragma mark -- 租房 - 勘察
+
+//待确认列表
+static NSString *const RentSurveyWaitConfirm_URL = @"agent/rent/survey/waitConfirm";
+
+//勘查中列表
+static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";
+
+//勘察失效列表
+static NSString *const RentSurveyDisabled_URL = @"agent/rent/survey/disabled";
+
+//勘察完成列表
+static NSString *const RentSurveyFinish_URL = @"agent/rent/survey/finish";

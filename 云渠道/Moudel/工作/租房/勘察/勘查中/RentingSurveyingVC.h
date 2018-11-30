@@ -8,6 +8,14 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingSurveyingVCBlock)(void);
+
 @interface RentingSurveyingVC : BaseViewController
+
+@property (nonatomic, strong) NSString *search;
+
+@property (nonatomic, copy) RentingSurveyingVCBlock rentingSurveyingVCBlock;
+
+- (void)RequestMethod;
 
 @end

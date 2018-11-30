@@ -205,10 +205,6 @@
         }];
     };
     
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"13438339177"];
-    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
-    [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
-    cell.phoneL.attributedText = attr;
     cell.roomSurveyingPhoneBlock = ^(NSInteger index) {
         
         //        NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];

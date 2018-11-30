@@ -10,4 +10,7 @@
 
 @interface RentingSurveySuccessVC : BaseViewController
 
+@property (nonatomic, strong) NSString *search;
+
+- (void)RequestMethod;
 @end
