@@ -119,7 +119,7 @@
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
         return;
     }
-    
+    _role = @"";
     for (int i = 0; i < _selectArr.count; i++) {
         
         if ([_selectArr[i] integerValue] == 1) {
