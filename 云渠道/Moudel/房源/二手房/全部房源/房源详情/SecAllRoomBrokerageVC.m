@@ -165,8 +165,23 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        indexPath.row == 1 ? cell.upLine.hidden = YES : NO;
-        indexPath.row == 5 ? cell.downLine.hidden = YES : NO;
+        if (indexPath.row == 1) {
+            
+            cell.upLine.hidden = YES;
+        }else{
+            
+            cell.upLine.hidden = NO;
+        }
+        
+        if (indexPath.row == 5) {
+            
+            cell.downLine.hidden = YES;
+        }else{
+            
+            cell.downLine.hidden = NO;
+        }
+//        indexPath.row == 1 ? cell.upLine.hidden = YES : NO;
+//        indexPath.row == 5 ? cell.downLine.hidden = YES : NO;
         
         cell.titleL.text = _titleArr[indexPath.row - 1];
         switch (indexPath.row) {
