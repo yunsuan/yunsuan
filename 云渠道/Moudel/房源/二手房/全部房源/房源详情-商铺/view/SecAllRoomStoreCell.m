@@ -90,9 +90,9 @@
         _formatL.text = [NSString stringWithFormat:@"适合业态：暂无数据"];
     }
     
-    if ([model.unit_price integerValue]) {
+    if (model.comment.length) {
         
-        _markL.text = [NSString stringWithFormat:@" 其他要求：%@\n",model.price];
+        _markL.text = [NSString stringWithFormat:@" 其他要求：%@\n",model.comment];
     }else{
         
         _markL.text = [NSString stringWithFormat:@"其他要求：暂无数据"];

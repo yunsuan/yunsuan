@@ -98,16 +98,35 @@
     
     if (_dataDic.count) {
         
-        SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataDic];
-        nextVC.surveyId = _surveyId;
-        nextVC.surveyInvalidVCBlock = ^{
-          
-            if (self.surveyingDetailVCBlock) {
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                self.surveyingDetailVCBlock();
+                if ([resposeObject[@"data"] integerValue] == 1) {
+                    
+                    SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataDic];
+                    nextVC.surveyId = _surveyId;
+                    nextVC.surveyInvalidVCBlock = ^{
+                        
+                        if (self.surveyingDetailVCBlock) {
+                            
+                            self.surveyingDetailVCBlock();
+                        }
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                }
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
             }
-        };
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
     }
 }
 
@@ -115,14 +134,33 @@
     
     if (_dataDic) {
         
-        CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.completeSurveyInfoVCBlock = ^{
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
             
-            self.surveyingDetailVCBlock();
-        };
-        nextVC.surveyId = _surveyId;
-        nextVC.dataDic = _dataDic;
-        [self.navigationController pushViewController:nextVC animated:YES];
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"] integerValue] == 1) {
+                    
+                    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                    nextVC.completeSurveyInfoVCBlock = ^{
+                        
+                        self.surveyingDetailVCBlock();
+                    };
+                    nextVC.surveyId = _surveyId;
+                    nextVC.dataDic = _dataDic;
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                }
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
     }
 }
 

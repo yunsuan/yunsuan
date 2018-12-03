@@ -162,46 +162,65 @@
     
     cell.roomSyrveyingConfirmBlock = ^(NSInteger index) {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[index][@"project_id"]} success:^(id resposeObject) {
             
-        }];
-        
-        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"完成勘察信息" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-            nextVC.completeSurveyInfoVCBlock = ^{
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
-                [self RequestMethod];
-                if (self.roomSurveyingBlock) {
+                if ([resposeObject[@"data"] integerValue] == 1) {
                     
-                    self.roomSurveyingBlock();
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+                    
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }];
+                    
+                    UIAlertAction *valid = [UIAlertAction actionWithTitle:@"完成勘察信息" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                        nextVC.completeSurveyInfoVCBlock = ^{
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+                            [self RequestMethod];
+                            if (self.roomSurveyingBlock) {
+                                
+                                self.roomSurveyingBlock();
+                            }
+                        };
+                        nextVC.dataDic = _dataArr[index];
+                        nextVC.surveyId = _dataArr[index][@"survey_id"];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }];
+                    
+                    UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"勘察失效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataArr[index]];
+                        nextVC.surveyId = _dataArr[index][@"survey_id"];
+                        nextVC.surveyInvalidVCBlock = ^{
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }];
+                    
+                    [alert addAction:valid];
+                    [alert addAction:invalid];
+                    [alert addAction:cancel];
+                    [self.navigationController presentViewController:alert animated:YES completion:^{
+                        
+                    }];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
                 }
-            };
-            nextVC.dataDic = _dataArr[index];
-            nextVC.surveyId = _dataArr[index][@"survey_id"];
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"勘察失效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        } failure:^(NSError *error) {
             
-            SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataArr[index]];
-            nextVC.surveyId = _dataArr[index][@"survey_id"];
-            nextVC.surveyInvalidVCBlock = ^{
-              
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        [alert addAction:valid];
-        [alert addAction:invalid];
-        [alert addAction:cancel];
-        [self.navigationController presentViewController:alert animated:YES completion:^{
-            
+            [self showContent:@"网络错误"];
         }];
     };
     

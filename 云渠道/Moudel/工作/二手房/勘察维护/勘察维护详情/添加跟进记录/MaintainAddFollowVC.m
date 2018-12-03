@@ -297,6 +297,19 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+    if (textField == _minPriceTF.textfield) {
+        
+        if ([_minPriceTF.textfield.text integerValue] > [_priceTF.textfield.text integerValue]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"出售底价不能超过挂牌价格" WithDefaultBlack:^{
+                
+                _minPriceTF.textfield.text = self->_priceTF.textfield.text;
+                [_minPriceTF.textfield becomeFirstResponder];
+                return ;
+            }];
+        }
+    }
+    
     if (textField == _intentTF.textfield) {
         
         if ([_intentTF.textfield.text integerValue] > 100) {

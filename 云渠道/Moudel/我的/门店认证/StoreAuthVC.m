@@ -119,7 +119,7 @@
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
         return;
     }
-    
+    _role = @"";
     for (int i = 0; i < _selectArr.count; i++) {
         
         if ([_selectArr[i] integerValue] == 1) {
@@ -185,7 +185,14 @@
     
     UIAlertAction *male = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        _employeeL.text = @"是";
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"您将同时认证到门店相应的公司，确认为本店员工？" WithCancelBlack:^{
+            
+            _employeeL.text = @"否";
+        } WithDefaultBlack:^{
+            
+            _employeeL.text = @"是";
+        }];
     }];
     
     UIAlertAction *female = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

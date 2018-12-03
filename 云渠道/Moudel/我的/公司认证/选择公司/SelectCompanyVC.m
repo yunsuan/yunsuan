@@ -193,8 +193,7 @@
     }
     
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
-        
-        //        NSLog(@"%@",resposeObject);
+    
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -254,11 +253,9 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     if (textField.text) {
-        
+
         _isSearch = YES;
         [BaseRequest GET:GetCompanyList_URL parameters:@{@"company_name":textField.text} success:^(id resposeObject) {
-            
-            //            NSLog(@"%@",resposeObject);
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 

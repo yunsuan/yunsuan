@@ -600,7 +600,7 @@
         [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
         }];
-//        cell.titleL.text = _dataArr[indexPath.item][@"name"];
+        cell.titleL.text = _dataArr[indexPath.item][@"name"];
         
         }
         else
@@ -953,13 +953,14 @@
                 make.height.mas_equalTo(strongSelf->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
                 make.bottom.equalTo(strongSelf->_CollView.mas_bottom).offset(0 *SIZE);
             }];
+            
         };
         [weakSelf.navigationController pushViewController:nextVC animated:YES];
     };
     [_CollView addSubview:_collHeader];
     
     _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
-    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 40 *SIZE);
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
     _facilityLayout.minimumLineSpacing = 20 *SIZE;
     _facilityLayout.minimumInteritemSpacing = 0;
     
