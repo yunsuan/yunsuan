@@ -87,8 +87,6 @@
                     str = [NSString stringWithFormat:@"%@,%@",str,tempArr[i][@"ui_id"]];
                 }
             }
-//            self.addEquipmentVCBlock(tempArr);
-//            [self.navigationController popViewControllerAnimated:YES];
             [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:@{@"house_id":self.houseId,@"type":self.type,@"match_tags":str} success:^(id resposeObject) {
                 
                 NSLog(@"%@",resposeObject);

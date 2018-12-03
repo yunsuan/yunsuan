@@ -192,14 +192,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RoomMaintainModel *model = _dataArr[indexPath.row];
-    MaintainDetailVC *nextVC = [[MaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
-    nextVC.edit = YES;
-    nextVC.maintainDetailVCBlock = ^{
-      
-        [self RequestMethod];
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
+    [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[indexPath.row][@"project_id"]} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] integerValue] == 1) {
+                
+                RoomMaintainModel *model = _dataArr[indexPath.row];
+                MaintainDetailVC *nextVC = [[MaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
+                nextVC.edit = YES;
+                nextVC.maintainDetailVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)initUI{

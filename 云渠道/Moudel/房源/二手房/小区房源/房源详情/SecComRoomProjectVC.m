@@ -391,6 +391,7 @@
                 _subId = @"";
                 [self showContent:@"取消订阅成功"];
                 [_attentBtn setTitle:@"订阅" forState:UIControlStateNormal];
+                [self RequestMethod];
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -411,6 +412,7 @@
                 _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
                 [self showContent:@"订阅成功"];
                 [_attentBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+                [self RequestMethod];
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
