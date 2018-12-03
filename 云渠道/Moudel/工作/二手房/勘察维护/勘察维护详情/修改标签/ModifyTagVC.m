@@ -17,6 +17,7 @@
     NSMutableArray *_dataArr;
     NSArray *_tagArr;
     NSInteger _type;
+    bool _isContain;
 }
 @property (nonatomic, strong) UICollectionView *tagColl;
 
@@ -200,10 +201,17 @@
     
     if (indexPath.section == 0) {
         
-        if ([_dataArr containsObject:_tagArr[(NSUInteger) indexPath.item]]) {
+        _isContain = NO;
+        [_dataArr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            [_dataArr removeObject:_tagArr[(NSUInteger) indexPath.item]];
-        }else{
+            if ([dic[@"id"] integerValue] == [_tagArr[indexPath.item][@"id"] integerValue]) {
+                
+                [_dataArr removeObjectAtIndex:idx];
+                _isContain = YES;
+                *stop = YES;
+            }
+        }];
+        if (!_isContain){
             
             [_dataArr addObject:_tagArr[(NSUInteger) indexPath.item]];
         }

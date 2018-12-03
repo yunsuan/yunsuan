@@ -137,7 +137,7 @@
     _cancelBtn.backgroundColor = YJLoginBtnColor;
     [_cancelBtn setTitle:@"取消认证" forState:UIControlStateNormal];
     [_cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:16 *SIZE];
+    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_cancelBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cancelBtn];
 }

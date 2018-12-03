@@ -210,7 +210,10 @@
 
     }
     
-    if ([UserInfoModel defaultModel].account) {
+    if ([UserInfoModel defaultModel].name) {
+        
+        _nameL.text = [UserInfoModel defaultModel].name;
+    }else{
         
         _nameL.text = [UserInfoModel defaultModel].account;
     }
@@ -321,16 +324,12 @@
           constructionBody:^(id<AFMultipartFormData> formData) {
               [formData appendPartWithFileData:data name:@"headimg" fileName:@"headimg.jpg" mimeType:@"image/jpg"];
     } success:^(id resposeObject) {
-//        NSLog(@"%@",resposeObject);
-        
-//        [self showContent:resposeObject[@"msg"]];
+
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             NSDictionary *dic = @{@"head_img":resposeObject[@"data"]};
             [BaseRequest POST:UpdatePersonal_URL parameters:dic success:^(id resposeObject) {
                 
-//                NSLog(@"%@",resposeObject);
-   
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
                     _headImg.image = img;
