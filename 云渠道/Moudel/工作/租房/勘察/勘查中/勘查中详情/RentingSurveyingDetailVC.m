@@ -61,7 +61,10 @@
 
 - (void)ActionValidBtn:(UIButton *)btn{
     
-    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] init];//WithTitle:@"完成勘察信息"];
+    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+    
+//    nextVC.surveyId = _surveyId;
+//    nextVC.dataDic = _dataDic;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

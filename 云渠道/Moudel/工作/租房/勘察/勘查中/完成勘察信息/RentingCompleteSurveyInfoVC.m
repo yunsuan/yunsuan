@@ -7,72 +7,67 @@
 //
 
 #import "RentingCompleteSurveyInfoVC.h"
-#import "RentingCompleteSurveyInfoVC2.h"
 
+//#import "CompleteSurveyStoreVC.h"
+//#import "CompleteSurveyOfficeVC.h"
+#import "RentingCompleteSurveyHouseVC.h"
+
+//#import "SinglePickView.h"
+
+//#import "SingleContentCell.h"
 #import "BaseFrameHeader.h"
-#import "CompleteSurveyCollCell.h"
+//#import "CompleteSurveyCollCell.h"
 
 #import "BorderTF.h"
 #import "DropDownBtn.h"
 
-@interface RentingCompleteSurveyInfoVC ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface RentingCompleteSurveyInfoVC ()<UIScrollViewDelegate,UITextFieldDelegate>
 {
     
     NSString *_titleStr;
+    
     NSArray *_titleArr;
-    NSArray *_btnArr;
-    NSMutableArray *_selectArr;
-    //    NSArray *_btnImgArr;
 }
+
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIView *codeView;
 
-@property (nonatomic, strong) UILabel *codeL;
+@property (nonatomic, strong) BaseFrameHeader *codeHeader;
+
+@property (nonatomic, strong) UILabel *sourceL;
 
 @property (nonatomic, strong) UIView *contentView;
 
 @property (nonatomic, strong) BaseFrameHeader *titleHeader;
 
-@property (nonatomic, strong) UILabel *titleL;
+@property (nonatomic, strong) UILabel *addressL;
 
-@property (nonatomic, strong) BorderTF *titleTF;
+@property (nonatomic, strong) DropDownBtn *addressBtn;
 
-@property (nonatomic, strong) UILabel *maxPriceL;
+@property (nonatomic, strong) DropDownBtn *addressBtn1;
 
-@property (nonatomic, strong) BorderTF *maxPriceTF;
+@property (nonatomic, strong) BorderTF *addressTF;
 
-@property (nonatomic, strong) UILabel *payL;
+@property (nonatomic, strong) UILabel *roomNumL;
 
-@property (nonatomic, strong) UICollectionView *payColl;
+@property (nonatomic, strong) BorderTF *roomNumTF;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) UILabel *typeL;
 
-@property (nonatomic, strong) UILabel *propertyL;
+@property (nonatomic, strong) DropDownBtn *typeBtn;
 
-@property (nonatomic, strong) UIButton *propertyBtn1;
+@property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) UIImageView *propertyImg1;
+@property (nonatomic, strong) BorderTF *areaTF;
 
-@property (nonatomic, strong) UIButton *propertyBtn2;
+@property (nonatomic, strong) UILabel *buildYearL;
 
-@property (nonatomic, strong) UIImageView *propertyImg2;
+@property (nonatomic, strong) BorderTF *buildYearTF;
 
-@property (nonatomic, strong) UILabel *minPeriodL;
+@property (nonatomic, strong) UILabel *proLimitL;
 
-@property (nonatomic, strong) DropDownBtn *minPeriodBtn;
-
-@property (nonatomic, strong) UILabel *maxPeriodL;
-
-@property (nonatomic, strong) DropDownBtn *maxPeriodBtn;
-
-@property (nonatomic, strong) UILabel *seeWayL;
-
-@property (nonatomic, strong) DropDownBtn *seeWayBtn;
-
-@property (nonatomic, strong) UILabel *timeL;
-
-@property (nonatomic, strong) DropDownBtn *timeBtn;
+@property (nonatomic, strong) BorderTF *proLimitTF;
 
 @property (nonatomic, strong) UILabel *intentL;
 
@@ -85,10 +80,6 @@
 @property (nonatomic, strong) BorderTF *urgentTF;
 
 @property (nonatomic, strong) UISlider *urgentSlider;
-
-@property (nonatomic, strong) UILabel *markL;
-
-@property (nonatomic, strong) UITextView *markTV;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -106,6 +97,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -115,50 +107,178 @@
 
 - (void)initDataSource{
     
-    _selectArr = [@[] mutableCopy];
-    for (int i = 0; i < 6; i++) {
+    _titleArr = @[@"项目地址",@"房号",@"物业类型",@"面积",@"建成年代",@"产权年限",@"卖房意愿度",@"卖房急迫度"];
+    
+    if (self.surveyId) {
         
-        [_selectArr addObject:@0];
+        [self RequestMethod];
+    }else{
+        
+        [self RequestAddressMethod];
     }
-    _btnArr = @[@"整租",@"合租"];
-    _titleArr = @[@"挂牌标题",@"挂牌价格",@"付款方式",@"租赁类型",@"最短租期",@"最长租期",@"看房方式",@"入住时间",@"出租意愿度",@"出租急迫度"];
+}
+
+- (void)RequestAddressMethod{
+    
+    [BaseRequest GET:HouseProjectAddressInfo_URL parameters:@{@"project_id":self.projectID} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            _addressBtn.content.text = resposeObject[@"data"][@"city_name"];
+            _addressBtn1.content.text = resposeObject[@"data"][@"district_name"];
+            _addressTF.textfield.text = resposeObject[@"data"][@"absolute_address"];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestMethod{
+    
+    [BaseRequest GET:HouseRecordSurveyNeedInfo_URL parameters:@{@"survey_id":self.surveyId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)SetData:(NSDictionary *)dic{
+    
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        if ([obj isKindOfClass:[NSNull class]]) {
+            
+            [tempDic setObject:@"" forKey:key];
+        }else{
+            
+            [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+        }
+    }];
+    _addressBtn.content.text = tempDic[@"city_name"];
+    _addressBtn1.content.text = tempDic[@"district_name"];
+    _addressTF.textfield.text = tempDic[@"absolute_address"];
+    _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",tempDic[@"build_name"],tempDic[@"unit_name"],tempDic[@"house_name"]];
+    _typeBtn.content.text = tempDic[@"property_type"];
+    _areaTF.textfield.text = tempDic[@"build_area"];
+    _buildYearTF.textfield.text = tempDic[@""];
+    _proLimitTF.textfield.text = tempDic[@""];
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
-    RentingCompleteSurveyInfoVC2 *nextVC = [[RentingCompleteSurveyInfoVC2 alloc] init];
-    [self.navigationController pushViewController:nextVC animated:YES];
-}
-
-- (void)ActionTagBtn:(UIButton *)btn{
+    [_intentTF endEditing:YES];
+    [_urgentTF endEditing:YES];
     
-//    if (btn.tag < 3) {
+    if (!_intentTF.textfield.text) {
+        
+        return;
+    }
+    if (!_urgentTF.textfield.text) {
+        
+        return;
+    }
+    
+    NSMutableDictionary *tempDic;
+    if (self.surveyId) {
+        tempDic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":self.surveyId,
+                                                                  @"intent":_intentTF.textfield.text,
+                                                                  @"urgency":_urgentTF.textfield.text,
+                                                                  @"property_limit":@"60"
+                                                                  }];
+    }else{
+        
+        NSString *str;
+        if ([self.dataDic[@"JZMJ"] length]) {
+            
+            str = self.dataDic[@"JZMJ"];
+        }else{
+            
+            str = @"0";
+        }
+        NSDictionary *dic = @{@"project_id":self.projectID,
+                              @"build_id":self.buildId,
+                              @"build_name":self.dataDic[@"LDMC"],
+                              @"unit_id":self.unitId,
+                              @"unit_name":self.dataDic[@"DYMC"],
+                              @"house_id":self.dataDic[@"FJID"],
+                              @"house_name":self.dataDic[@"FJMC"],
+                              @"property_type":self.dataDic[@"WYMC"],
+                              @"house_type":self.dataDic[@"HXMC"],
+                              @"floor_num":self.dataDic[@"FLOORNUM"],
+                              @"orientation":@"1",
+                              @"build_area":str,
+                              @"intent":_intentTF.textfield.text,
+                              @"urgency":_urgentTF.textfield.text,
+                              @"property_limit":@"60",
+                              @"name":self.dataDic[@"name"],
+                              @"sex":self.dataDic[@"sex"],
+                              @"tel":self.dataDic[@"tel"],
+                              @"report_type":self.dataDic[@"report_type"]
+                              };
+        tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    }
+    
+    NSString *str = self.dataDic[@"property_type"];
+    if ([self.status isEqualToString:@"direct"]) {
+        
+        str = self.dataDic[@"WYMC"];
+    }
+    if ([str containsString:@"参数"]) {
+        
+        str = [str stringByReplacingOccurrencesOfString:@"参数" withString:@""];
+    }
+    if ([str isEqualToString:@"写字楼"]) {
+        
+//        CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+//        nextVC.completeSurveyOfficeBlock = ^{
 //
-//        if (btn.tag == 1) {
+//            if (self.completeSurveyInfoVCBlock) {
 //
-//            _propertyImg1.image = [UIImage imageNamed:@"selected"];
-//            _propertyImg2.image = [UIImage imageNamed:@"default"];
+//                self.completeSurveyInfoVCBlock();
+//            }
+//        };
+//        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+//        [self.navigationController pushViewController:nextVC animated:YES];
+    }else if ([str isEqualToString:@"商铺"]){
+        
+//        CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+//        nextVC.completeSurveyStoreVCBlock = ^{
 //
-//        }else{
+//            if (self.completeSurveyInfoVCBlock) {
 //
-//            _propertyImg1.image = [UIImage imageNamed:@"default"];
-//            _propertyImg2.image = [UIImage imageNamed:@"selected"];
-//
-//        }
-//    }else{
-//
-//        if (btn.tag == 3) {
-//
-//            _mortgageImg1.image = [UIImage imageNamed:@"selected"];
-//            _mortgageImg2.image = [UIImage imageNamed:@"default"];
-//
-//        }else{
-//
-//            _mortgageImg1.image = [UIImage imageNamed:@"default"];
-//            _mortgageImg2.image = [UIImage imageNamed:@"selected"];
-//
-//        }
-//    }
+//                self.completeSurveyInfoVCBlock();
+//            }
+//        };
+//        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+//        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.rentingCompleteSurveyHouseVCBlock = ^{
+            
+            if (self.rentingCompleteSurveyInfoVCBlock) {
+                
+                self.rentingCompleteSurveyInfoVCBlock();
+            }
+        };
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+    
 }
 
 - (void)ActionSliderChange:(UISlider *)slider{
@@ -193,41 +313,10 @@
     }
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
-    return 6;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
-    if (!cell) {
-        
-        cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
-    }
-    
-    [cell setIsSelect:[_selectArr[indexPath.item] integerValue]];
-    cell.titleL.text = @"押一付三";
-    
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if ([_selectArr[indexPath.item] integerValue]) {
-        
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@0];
-    }else{
-        
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@1];
-    }
-    [collectionView reloadData];
-}
-
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"完成勘察信息";
+    self.titleLabel.text = _titleStr;
     
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.backgroundColor = self.view.backgroundColor;
@@ -238,22 +327,45 @@
     _codeView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_codeView];
     
-    _codeL = [[UILabel alloc] init];
-    _codeL.font = [UIFont systemFontOfSize:13.3*SIZE];
-    _codeL.numberOfLines = 0;
-    _codeL.text = @"房源编号：SCCDPDHPXQ-0302102";
-    _codeL.textColor = YJTitleLabColor;
-    [_codeView addSubview:_codeL];
+    _codeHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+    if ([self.status isEqualToString:@"direct"]) {
+        
+        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
+        //        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+    }else{
+        
+        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+    }
+    [_codeView addSubview:_codeHeader];
+    
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.font = [UIFont systemFontOfSize:13*SIZE];
+    _sourceL.numberOfLines = 0;
+    if ([self.dataDic[@"is_other"] integerValue] == 1) {
+        
+        _sourceL.text = @"来源：自行勘察";
+    }else{
+        
+        if ([self.status isEqualToString:@"direct"]) {
+            
+            _sourceL.text = @"来源：自行勘察";
+        }else{
+            
+            _sourceL.text = @"来源：勘察抢单";
+        }
+    }
+    _sourceL.textColor = YJ86Color;
+    [_codeView addSubview:_sourceL];
     
     _contentView = [[UIView alloc] init];
     _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
     _titleHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
-    _titleHeader.titleL.text = @"挂牌信息";
+    _titleHeader.titleL.text = @"房源信息";
     [_contentView addSubview:_titleHeader];
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 8; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -261,78 +373,50 @@
         label.text = _titleArr[i];
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         
-        BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 257 *SIZE, 33 *SIZE)];
-        textField.textfield.delegate = self;
         switch (i) {
             case 0:
             {
-                _titleL = label;
-                [_contentView addSubview:_titleL];
-                _titleTF = textField;
-                [_contentView addSubview:_titleTF];
+                _addressL = label;
+                [_contentView addSubview:_addressL];
                 break;
             }
             case 1:
             {
-                _maxPriceL = label;
-                _maxPriceTF = textField;
-                [_contentView addSubview:_maxPriceTF];
-                [_contentView addSubview:_maxPriceL];
+                _roomNumL = label;
+                [_contentView addSubview:_roomNumL];
                 break;
             }
             case 2:
             {
-                _payL = label;
-                [_contentView addSubview:_payL];
+                _typeL = label;
+                [_contentView addSubview:_typeL];
                 break;
             }
             case 3:
             {
-                _propertyL = label;
-                [_contentView addSubview:_propertyL];
-                _intentTF = textField;
-                [_contentView addSubview:_intentTF];
+                _areaL = label;
+                [_contentView addSubview:_areaL];
                 break;
             }
             case 4:
             {
-                _minPeriodL = label;
-                [_contentView addSubview:_minPeriodL];
-                _urgentTF = textField;
-                [_contentView addSubview:_urgentTF];
-                _minPeriodBtn = [[DropDownBtn alloc] initWithFrame:textField.frame];
-                [_contentView addSubview:_minPeriodBtn];
+                _buildYearL = label;
+                [_contentView addSubview:_buildYearL];
                 break;
             }
             case 5:
             {
-                _maxPeriodL = label;
-                [_contentView addSubview:_maxPeriodL];
-                _maxPeriodBtn = [[DropDownBtn alloc] initWithFrame:textField.frame];
-                [_contentView addSubview:_maxPeriodBtn];
+                _proLimitL = label;
+                [_contentView addSubview:_proLimitL];
                 break;
             }
             case 6:
-            {
-                _seeWayL = label;
-                [_contentView addSubview:_seeWayL];
-                _timeBtn = [[DropDownBtn alloc] initWithFrame:textField.frame];
-                [_contentView addSubview:_timeBtn];
-                break;
-            }
-            case 7:
-            {
-                _timeL = label;
-                [_contentView addSubview:_timeL];
-                break;
-            }
-            case 8:
             {
                 _intentL = label;
                 [_contentView addSubview:_intentL];
                 break;
             }
-            case 9:
+            case 7:
             {
                 _urgentL = label;
                 [_contentView addSubview:_urgentL];
@@ -343,8 +427,102 @@
         }
     }
     
-    _seeWayBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
-    [_contentView addSubview:_seeWayBtn];
+    for (int i = 0; i < 3; i++) {
+        
+        DropDownBtn *btn;
+        if (i < 2) {
+            
+            btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 33 *SIZE)];
+            btn.backgroundColor = COLOR(238 , 238, 238, 1);
+            btn.userInteractionEnabled = NO;
+            if (i == 0) {
+                
+                _addressBtn = btn;
+                [_contentView addSubview:_addressBtn];
+            }else{
+                
+                _addressBtn1 = btn;
+                [_contentView addSubview:_addressBtn1];
+            }
+        }else{
+            
+            btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
+            btn.backgroundColor = COLOR(238 , 238, 238, 1);
+            _typeBtn = btn;
+            [_contentView addSubview:_typeBtn];
+        }
+    }
+    
+    for (int i = 0; i < 7; i++) {
+        
+        BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
+        textField.textfield.delegate = self;
+        
+        if (i < 5) {
+            
+            textField.backgroundColor = COLOR(238 , 238, 238, 1);
+            textField.userInteractionEnabled = NO;
+            if (i > 1) {
+                
+                if ( i == 2) {
+                    
+                    textField.unitL.text = @"㎡";
+                }else{
+                    
+                    textField.unitL.text = @"年";
+                }
+            }
+        }
+        
+        switch (i) {
+            case 0:
+            {
+                _addressTF = textField;
+                [_contentView addSubview:_addressTF];
+                break;
+            }
+            case 1:
+            {
+                _roomNumTF = textField;
+                [_contentView addSubview:_roomNumTF];
+                break;
+            }
+            case 2:
+            {
+                _areaTF = textField;
+                [_contentView addSubview:_areaTF];
+                break;
+            }
+            case 3:
+            {
+                _buildYearTF = textField;
+                [_contentView addSubview:_buildYearTF];
+                break;
+            }
+            case 4:
+            {
+                _proLimitTF = textField;
+                [_contentView addSubview:_proLimitTF];
+                break;
+            }
+            case 5:
+            {
+                _intentTF = textField;
+                _intentTF.textfield.text = @"0";
+                [_contentView addSubview:_intentTF];
+                break;
+            }
+            case 6:
+            {
+                _urgentTF = textField;
+                _urgentTF.textfield.text = @"0";
+                [_contentView addSubview:_urgentTF];
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
     for (int i = 0; i < 2; i++) {
         
@@ -371,76 +549,25 @@
         }
     }
     
-    for (int i = 0; i < 2; i++) {
-        
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15 *SIZE, 15 *SIZE)];
-        img.image = [UIImage imageNamed:@"default"];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(25 *SIZE, 0, 100 *SIZE, 13 *SIZE)];
-        label.textColor = YJContentLabColor;
-        label.font = [UIFont systemFontOfSize:13 *SIZE];
-        label.text = _btnArr[i];
-        [btn addSubview:label];
-        
-        btn.tag = i + 1;
-        [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
-        //        [btn setImage:[UIImage imageNamed:@"default"] forState:UIControlStateNormal];
-        //        [btn setTitle:_btnArr[i] forState:UIControlStateNormal];
-        switch (i) {
-            case 0:
-            {
-                _propertyImg1 = img;
-                [btn addSubview:_propertyImg1];
-                _propertyBtn1 = btn;
-                [_contentView addSubview:_propertyBtn1];
-                break;
-            }
-            case 1:
-            {
-                _propertyImg2 = img;
-                [btn addSubview:_propertyImg2];
-                _propertyBtn2 = btn;
-                [_contentView addSubview:_propertyBtn2];
-                break;
-            }
-            
-            default:
-                break;
-        }
-    }
-    
-    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.estimatedItemSize = CGSizeMake(120 *SIZE, 20 *SIZE);
-    _flowLayout.minimumLineSpacing = 20 *SIZE;
-    _flowLayout.minimumInteritemSpacing = 0;
-    //    _flowLayout.itemSize = CGSizeMake(140 *SIZE, 20 *SIZE);
-    
-    _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 100 *SIZE) collectionViewLayout:_flowLayout];
-    _payColl.backgroundColor = [UIColor whiteColor];
-    _payColl.allowsMultipleSelection = YES;
-    _payColl.delegate = self;
-    _payColl.dataSource = self;
-    [_payColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
-    [_contentView addSubview:_payColl];
-    
-    _markL = [[UILabel alloc] init];
-    _markL.textColor = YJTitleLabColor;
-    _markL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _markL.text = @"业主自荐:";
-    [_scrollView addSubview:_markL];
-    
-    _markTV = [[UITextView alloc] init];
-    _markTV.delegate = self;
-    [_scrollView addSubview:_markTV];
-    
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
     [_scrollView addSubview:_nextBtn];
+    
+    
+    if ([self.status isEqualToString:@"direct"]) {
+        
+        _addressBtn.content.text = self.dataDic[@"city_name"];
+        _addressBtn1.content.text = self.dataDic[@"district_name"];
+        _addressTF.textfield.text = self.dataDic[@"absolute_address"];
+        _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
+        _typeBtn.content.text = self.dataDic[@"WYMC"];
+        _areaTF.textfield.text = self.dataDic[@"TNMJ"];
+        _buildYearTF.textfield.text = self.dataDic[@""];
+        _proLimitTF.textfield.text = self.dataDic[@""];
+    }
     
     [self MasonryUI];
 }
@@ -458,179 +585,153 @@
     [_codeView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollView).offset(0);
-        make.top.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_scrollView).offset(0 *SIZE);
         make.right.equalTo(_scrollView).offset(0);
         make.width.equalTo(@(SCREEN_Width));
-        //        make.height.equalTo(@(50 *SIZE));
     }];
     
-    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_codeView).offset(10 *SIZE);
-        make.top.equalTo(_codeView).offset(19 *SIZE);
-        make.right.equalTo(_codeView).offset(-10 *SIZE);
-        make.bottom.equalTo(_codeView).offset(-17 *SIZE);
-        //        make.width.equalTo(@(SCREEN_Width));
+        make.left.equalTo(_codeView).offset(28 *SIZE);
+        make.top.equalTo(_codeView).offset(56 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+        make.bottom.equalTo(_codeView).offset(-19 *SIZE);
     }];
     
     [_contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollView).offset(0);
-        make.top.equalTo(_codeView.mas_bottom).offset(7 *SIZE);
+        make.top.equalTo(_codeView.mas_bottom).offset(3 *SIZE);
         make.right.equalTo(_scrollView).offset(0);
         make.width.equalTo(@(SCREEN_Width));
-        //        make.bottom.equalTo(—.mas_top).offset(-28 *SIZE);
     }];
     
-    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_contentView).offset(60 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_contentView).offset(49 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_addressBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(218 *SIZE);
+        make.top.equalTo(_contentView).offset(49 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_addressTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_addressBtn.mas_bottom).offset(7 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+    }];
+    
+    [_roomNumL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_contentView).offset(58 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_roomNumTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_contentView).offset(47 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(22 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_maxPriceL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_titleTF.mas_bottom).offset(31 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_roomNumTF.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_maxPriceTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_titleTF.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_roomNumTF.mas_bottom).offset(22 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_maxPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_typeBtn.mas_bottom).offset(29 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_areaTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_maxPriceTF.mas_bottom).offset(31 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
-    }];
-    
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(28 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_propertyBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
-        make.width.mas_equalTo(130 *SIZE);
-        make.height.mas_equalTo(20 *SIZE);
-    }];
-    
-    [_propertyBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(226 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
-        make.width.mas_equalTo(130 *SIZE);
-        make.height.mas_equalTo(20 *SIZE);
-    }];
-    
-    [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_propertyBtn1.mas_bottom).offset(41 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_minPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_propertyBtn1.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_typeBtn.mas_bottom).offset(22 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_maxPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_buildYearL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(41 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_areaTF.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_maxPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_buildYearTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_areaTF.mas_bottom).offset(22 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_seeWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_proLimitL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_maxPeriodBtn.mas_bottom).offset(41 *SIZE);
+        make.top.equalTo(_buildYearTF.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_seeWayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_proLimitTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_maxPeriodBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_seeWayBtn.mas_bottom).offset(41 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_seeWayBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_buildYearTF.mas_bottom).offset(22 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_intentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_timeBtn.mas_bottom).offset(41 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_proLimitTF.mas_bottom).offset(40 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_intentTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_timeBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_proLimitTF.mas_bottom).offset(29 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
@@ -666,12 +767,11 @@
         make.height.equalTo(@(5 *SIZE));
         make.bottom.equalTo(_contentView.mas_bottom).offset(-25 *SIZE);
     }];
-
     
     [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollView).offset(22 *SIZE);
-        make.top.equalTo(_contentView.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_contentView.mas_bottom).offset(36 *SIZE);
         make.width.equalTo(@(317 *SIZE));
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrollView.mas_bottom).offset(-19 *SIZE);

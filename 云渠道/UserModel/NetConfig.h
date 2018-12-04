@@ -687,19 +687,33 @@ static NSString *const RentRecord_URL = @"agent/rent/record";
 //待抢列表
 static NSString *const RentSurveyWaitGrab_URL = @"agent/rent/survey/waitGrab";
 
+//待抢单详情
+static NSString *const RentRecordWaitGrabDetail_URL = @"agent/rent/record/waitGrab/detail";
+
 //有效列表
 static NSString *const RentRecordValueList_URL = @"agent/rent/record/value/list";
+
+//有效详情
+static NSString *const RentRecordValueDetail_URL = @"agent/rent/record/value/detail";
 
 //无效列表
 static NSString *const RentRecordDisabledList_URL = @"agent/rent/record/disabled/list";
 
+//无效详情
+static NSString *const RentRecordDisabledDetail_URL = @"agent/rent/record/disabled/detail";
+
 //申诉列表
 static NSString *const RentRecordAppealList_URL = @"agent/rent/record/appeal/list";
 
+//申诉详情
+static NSString *const RentRecordAppealDetail_URL = @"agent/rent/record/appeal/detail";
 #pragma mark -- 租房 - 勘察
 
 //待确认列表
 static NSString *const RentSurveyWaitConfirm_URL = @"agent/rent/survey/waitConfirm";
+
+//
+
 
 //勘查中列表
 static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";

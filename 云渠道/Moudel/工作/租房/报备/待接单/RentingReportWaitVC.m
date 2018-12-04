@@ -7,7 +7,7 @@
 //
 
 #import "RentingReportWaitVC.h"
-#import "ReportWaitDetailVC.h"
+#import "RentingReportWaitDetailVC.h"
 
 #import "RoomReportWaitCell.h"
 
@@ -171,7 +171,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] init];
+    RentingReportWaitDetailVC *nextVC = [[RentingReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

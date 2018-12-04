@@ -7,7 +7,7 @@
 //
 
 #import "RentingReportSuccessVC.h"
-#import "ReportSuccessDetailVC.h"
+#import "RentReportSuccessDetailVC.h"
 
 #import "RoomReportSucCell.h"
 
@@ -168,7 +168,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ReportSuccessDetailVC *nextVC = [[ReportSuccessDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"survey_id"]];
+    RentReportSuccessDetailVC *nextVC = [[RentReportSuccessDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"survey_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

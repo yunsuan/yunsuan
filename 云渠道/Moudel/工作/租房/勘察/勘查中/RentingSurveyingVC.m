@@ -169,19 +169,19 @@
         
         UIAlertAction *valid = [UIAlertAction actionWithTitle:@"完成勘察信息" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-//            CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-//            nextVC.completeSurveyInfoVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
-//                [self RequestMethod];
-//                if (self.roomSurveyingBlock) {
-//
-//                    self.roomSurveyingBlock();
-//                }
-//            };
-//            nextVC.dataDic = _dataArr[index];
-//            nextVC.surveyId = _dataArr[index][@"survey_id"];
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.rentingCompleteSurveyInfoVCBlock = ^{
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+                [self RequestMethod];
+                if (self.rentingSurveyingVCBlock) {
+
+                    self.rentingSurveyingVCBlock();
+                }
+            };
+            nextVC.dataDic = _dataArr[index];
+            nextVC.surveyId = _dataArr[index][@"survey_id"];
+            [self.navigationController pushViewController:nextVC animated:YES];
         }];
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"勘察失效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
