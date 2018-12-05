@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingSurveyWaitDetailVCBlock)(void);
+
 @interface RentingSurveyWaitDetailVC : BaseViewController
+
+@property (nonatomic, copy) RentingSurveyWaitDetailVCBlock rentingSurveyWaitDetailVCBlock;
+
+- (instancetype)initWithSurveyId:(NSString *)surveyId;
 
 @end

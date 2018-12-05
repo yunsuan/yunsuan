@@ -224,7 +224,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RentingSurveyingDetailVC *nextVC = [[RentingSurveyingDetailVC alloc] init];
+    RentingSurveyingDetailVC *nextVC = [[RentingSurveyingDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"]];
+    nextVC.rentingSurveyingDetailVCBlock = ^{
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+        [self RequestMethod];
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

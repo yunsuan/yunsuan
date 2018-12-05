@@ -22,7 +22,9 @@
 {
     
     NSArray *_titleArr;
-    NSArray *_contentArr;
+    NSMutableArray *_contentArr;
+    NSString *_surveyId;
+    NSMutableDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITableView *detailTable;
 
@@ -34,57 +36,142 @@
 
 @implementation RentingSurveyingDetailVC
 
+- (instancetype)initWithSurveyId:(NSString *)surveyId
+{
+    self = [super init];
+    if (self) {
+        
+        _surveyId = surveyId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _titleArr = @[@"",@"抢单信息",@"报备信息"];
-    _contentArr = @[@[@"预约勘察时间：2017-10-23  19:00:00"],@[@"抢单时间：2017-10-23  19:00:00",@"经纪人：张三",@"联系电话：18745561223",@"房源真实性判断失效倒计时："],@[@"天鹅湖小区 - 17栋 - 2单元 - 103",@"房源编号：CD - TEH - 20170810 - 1（F）",@"归属门店：MDBHNO1",@"联系人：李四",@"性别：男",@"身份证号：5130291556231203",@"联系电话：13932452456",@"与业主关系：业主本人",@"报备时间：2017-10-23  19:00:00",@"备注：**********************"]];
+    _contentArr = [@[] mutableCopy];
+    _dataDic = [@{} mutableCopy];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)refresh{
     
-    [BaseRequest GET:FlushDate_URL parameters:nil success:^(id resposeObject) {
+    [BaseRequest GET:HouseSurveyTimeOut_URL parameters:nil success:^(id resposeObject) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"secReload" object:nil];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
 
+- (void)RequestMethod{
+    
+    [BaseRequest GET:RentSurveyUnderWayDetail_URL parameters:@{@"survey_id":_surveyId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _dataDic = [NSMutableDictionary dictionaryWithDictionary:data];
+    _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"预约勘察时间：%@",[data[@"reserve_time"] substringWithRange:NSMakeRange(0, 10)]],data[@"timeLimit"]],@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]]];
+    
+    [_detailTable reloadData];
+}
+
 - (void)ActionInValidBtn:(UIButton *)btn{
     
-    SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] init];
-    [self.navigationController pushViewController:nextVC animated:YES];
+    if (_dataDic.count) {
+        
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"] integerValue] == 1) {
+                    
+                    SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataDic];
+                    nextVC.surveyId = _surveyId;
+                    nextVC.surveyInvalidVCBlock = ^{
+                        
+                        if (self.rentingSurveyingDetailVCBlock) {
+                            
+                            self.rentingSurveyingDetailVCBlock();
+                        }
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                }
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (void)ActionValidBtn:(UIButton *)btn{
     
-    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-    
-//    nextVC.surveyId = _surveyId;
-//    nextVC.dataDic = _dataDic;
-    [self.navigationController pushViewController:nextVC animated:YES];
+    if (_dataDic) {
+        
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"] integerValue] == 1) {
+                    
+                    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                    nextVC.rentingCompleteSurveyInfoVCBlock = ^{
+                        
+                        self.rentingSurveyingDetailVCBlock();
+                    };
+                    nextVC.surveyId = _surveyId;
+                    nextVC.dataDic = _dataDic;
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                }
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 3;
+    return _contentArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (section == 0) {
-        
-        return 2;
-    }else if (section == 1){
-        
-        return 3;
-    }else{
-        
-        return [_contentArr[section] count];
-    }
+    return [_contentArr[section] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -142,11 +229,12 @@
             };
             cell.countDownMoreBlock = ^{
                 
-                ModifyRecordVC *nextVC = [[ModifyRecordVC alloc] init];
+                ModifyRecordVC *nextVC = [[ModifyRecordVC alloc] initWithSurveyId:_surveyId];
+                //                nextVC
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
             cell.titleL.textColor = YJTitleLabColor;
-            [cell setcountdownbyendtime:@"1529044650"];
+            [cell setcountdownbyendtime:_contentArr[indexPath.section][indexPath.row]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }else{
@@ -161,7 +249,12 @@
             cell.lineView.hidden = YES;
             cell.surveyingDetailChangeBlock = ^{
                 
-                ModifyTimeVC *nextVC = [[ModifyTimeVC alloc] init];
+                ModifyTimeVC *nextVC = [[ModifyTimeVC alloc] initWithSurveyId:_surveyId];
+                nextVC.modifyTimeVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                nextVC.dataDic = _dataDic;
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
             cell.contentL.text = _contentArr[indexPath.section][indexPath.row];

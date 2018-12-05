@@ -712,11 +712,14 @@ static NSString *const RentRecordAppealDetail_URL = @"agent/rent/record/appeal/d
 //待确认列表
 static NSString *const RentSurveyWaitConfirm_URL = @"agent/rent/survey/waitConfirm";
 
-//
-
+//待确认详情
+static NSString *const RentSurveyWaitConfirmDetail_URL = @"agent/rent/survey/waitConfirm/detail";
 
 //勘查中列表
 static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";
+
+//勘察中详情
+static NSString *const RentSurveyUnderWayDetail_URL = @"agent/rent/survey/underway/detail";
 
 //勘察失效列表
 static NSString *const RentSurveyDisabled_URL = @"agent/rent/survey/disabled";
