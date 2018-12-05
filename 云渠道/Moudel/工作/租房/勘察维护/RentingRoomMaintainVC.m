@@ -7,14 +7,20 @@
 //
 
 #import "RentingRoomMaintainVC.h"
-#import "RentingMaintainDetailVC.h"
-#import "CompleteSurveyInfoVC.h"
-#import "SecdaryCommunityRoomVC.h"
+#import "MaintainDetailVC.h"
+//#import "CompleteSurveyInfoVC.h"
+//#import "SecdaryCommunityRoomVC.h"
+#import "RoomReportAddVC.h"
 
 #import "RoomMaintainCell.h"
 
 @interface RentingRoomMaintainVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
-
+{
+    
+    NSMutableArray *_dataArr;
+    NSString *_search;
+    NSInteger _page;
+}
 
 @property (nonatomic, strong) UITextField *searchBar;
 
@@ -27,22 +33,126 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initUI];
+    [self RequestMethod];
+}
+
+- (void)initDataSource{
+    
+    _dataArr = [@[] mutableCopy];
+}
+
+- (void)RequestMethod{
+    
+    _table.mj_footer.state = MJRefreshStateIdle;
+    _page = 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:_search]) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
+    [BaseRequest GET:RentSurveyList_URL parameters:dic success:^(id resposeObject) {
+        
+        [_table.mj_header endRefreshing];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            [self SetData:resposeObject[@"data"][@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_table.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:_search]) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
+    [BaseRequest GET:HouseSurveyList_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            
+            [self SetData:resposeObject[@"data"][@"data"]];
+            if ([resposeObject[@"data"][@"data"] count] < 15) {
+                
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }else{
+                
+                [_table.mj_footer endRefreshing];
+            }
+        }else{
+            
+            [_table.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_table.mj_footer endRefreshing];
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)SetData:(NSArray *)data{
+    
+    
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
+        
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }];
+        
+        RoomMaintainModel *model = [[RoomMaintainModel alloc] initWithDictionary:tempDic];
+        [_dataArr addObject:model];
+    }
+    
+    [_table reloadData];
 }
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    SecdaryCommunityRoomVC *nextVC = [[SecdaryCommunityRoomVC alloc] init];
-    nextVC.status = @"挂牌信息编辑";
-    nextVC.hidesBottomBarWhenPushed = YES;
+    RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
+    nextVC.status = @"complete";
+    nextVC.roomReportAddHouseBlock = ^(NSDictionary *dic) {
+        
+        [self RequestMethod];
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
-    //    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"挂牌信息编辑"];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    _search = textField.text;
+    [self RequestMethod];
+    return YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 2;
+    return _dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -56,20 +166,13 @@
     
     cell.tag = indexPath.row;
     
-    cell.nameL.text = @"张三";
-    cell.roomL.text = @"天鹅湖小区 - 17栋 - 2单元 - 103";
-    cell.codeL.text = @"房源编号：CD - TEH - 20170810 - 1（F）";
-    cell.numL.text = @"跟进次数：3";
-    cell.timeL.text = @"上次跟进时间：2017-12-15  13:00:00";
+    RoomMaintainModel *model = _dataArr[indexPath.row];
+    cell.model = model;
     
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"13438339177"];
-    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
-    [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
-    cell.phoneL.attributedText = attr;
+    
     cell.roomMaintainPhoneBlock = ^(NSInteger index) {
         
-        //        NSString *phone = [_validArr[index][@"tel"] componentsSeparatedByString:@","][0];
-        NSString *phone = @"13438339177";
+        NSString *phone = model.tel;
         if (phone.length) {
             
             //获取目标号码字符串,转换成URL
@@ -87,8 +190,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] init];
-    [self.navigationController pushViewController:nextVC animated:YES];
+    [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[indexPath.row][@"project_id"]} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] integerValue] == 1) {
+                
+                RoomMaintainModel *model = _dataArr[indexPath.row];
+                MaintainDetailVC *nextVC = [[MaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
+                nextVC.edit = YES;
+                nextVC.maintainDetailVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)initUI{
@@ -108,6 +236,7 @@
     _searchBar.placeholder = @"输入电话/姓名";
     _searchBar.font = [UIFont systemFontOfSize:12 *SIZE];
     _searchBar.layer.cornerRadius = 2 *SIZE;
+    _searchBar.delegate = self;
     _searchBar.returnKeyType = UIReturnKeySearch;
     
     UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
@@ -131,6 +260,10 @@
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
+    _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        [self RequestMethod];
+    }];
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface RentingSurveyFailDetailVC : BaseViewController
 
+- (instancetype)initWithSurveyId:(NSString *)surveyId;
+
 @end

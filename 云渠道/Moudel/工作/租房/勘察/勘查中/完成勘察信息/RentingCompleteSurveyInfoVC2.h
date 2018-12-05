@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentCompleteSurveyInfoVCBlock2)(void);
+
 @interface RentingCompleteSurveyInfoVC2 : BaseViewController
+
+@property (nonatomic, copy) RentCompleteSurveyInfoVCBlock2 rentCompleteSurveyInfoVCBlock2;
+
+@property (nonatomic, strong) NSMutableDictionary *dic;
 
 @end

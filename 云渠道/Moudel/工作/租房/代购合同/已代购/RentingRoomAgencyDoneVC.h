@@ -8,6 +8,14 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingRoomAgencyDoneVCBlock)(void);
+
 @interface RentingRoomAgencyDoneVC : BaseViewController
+
+@property (nonatomic, strong) NSString *search;
+
+@property (nonatomic, copy) RentingRoomAgencyDoneVCBlock rentingRoomAgencyDoneVCBlock;
+
+-(void)postWithpage:(NSString *)page;
 
 @end

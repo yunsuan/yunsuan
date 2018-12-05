@@ -7,6 +7,7 @@
 //
 
 #import "RentingSurveyFailDetailVC.h"
+#import "ReportFailComplaintVC.h"
 
 #import "SingleContentCell.h"
 #import "BaseHeader.h"
@@ -16,6 +17,7 @@
     
     NSArray *_titleArr;
     NSArray *_contentArr;
+    NSString *_surveyId;
 }
 @property (nonatomic, strong) UITableView *detailTable;
 
@@ -25,18 +27,55 @@
 
 @implementation RentingSurveyFailDetailVC
 
+- (instancetype)initWithSurveyId:(NSString *)surveyId
+{
+    self = [super init];
+    if (self) {
+        
+        _surveyId = surveyId;
+    }
+    return self;
+}
+
 -  (void)viewDidLoad {
     [super viewDidLoad];
     
     _titleArr = @[@"失效信息",@"抢单信息",@"报备信息"];
-    _contentArr = @[@[@"失效类型：规定时间内未判断房源真实性申诉",@"失效时间：2017-10-23  19:00:00",@"失效描述：***************************"],@[@"抢单时间：2017-10-23  19:00:00",@"经纪人：张三",@"联系电话：18745561223",@"房源真实性判断失效倒计时："],@[@"天鹅湖小区 - 17栋 - 2单元 - 103",@"房源编号：CD - TEH - 20170810 - 1（F）",@"归属门店：MDBHNO1",@"联系人：李四",@"性别：男",@"身份证号：5130291556231203",@"联系电话：13932452456",@"与业主关系：业主本人",@"报备时间：2017-10-23  19:00:00",@"备注：**********************"]];
+    //    _contentArr = @[@[@"失效类型：规定时间内未判断房源真实性申诉",@"失效时间：2017-10-23  19:00:00",@"失效描述：***************************"],@[@"抢单时间：2017-10-23  19:00:00",@"经纪人：张三",@"联系电话：18745561223",@"房源真实性判断失效倒计时："],@[@"天鹅湖小区 - 17栋 - 2单元 - 103",@"房源编号：CD - TEH - 20170810 - 1（F）",@"归属门店：MDBHNO1",@"联系人：李四",@"性别：男",@"身份证号：5130291556231203",@"联系电话：13932452456",@"与业主关系：业主本人",@"报备时间：2017-10-23  19:00:00",@"备注：**********************"]];
     [self initUI];
+    [self RequestMethod];
+}
+
+- (void)RequestMethod{
+    
+    [BaseRequest GET:RentSurveyDisabledDetail_URL parameters:@{@"survey_id":_surveyId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _contentArr = @[@[[NSString stringWithFormat:@"失效类型：%@",data[@"disabled_state"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]],[NSString stringWithFormat:@"失效描述：%@",data[@"disabled_reason"]]],@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]];
+    
+    [_detailTable reloadData];
 }
 
 - (void)ActionComplaintBtn:(UIButton *)btn{
     
-//    ReportFailComplaintVC *nextVC = [[ReportFailComplaintVC alloc] init];
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    ReportFailComplaintVC *nextVC = [[ReportFailComplaintVC alloc] init];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 -(void)refresh{
@@ -53,18 +92,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 3;
+    return _contentArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (section == 2) {
-        
-        return [_contentArr[section] count];
-    }else{
-        
-        return 3;
-    }
+    return [_contentArr[section] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -117,7 +150,7 @@
     self.titleLabel.text = @"勘察失效详情";
     self.navBackgroundView.hidden = NO;
     
-    _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
+    _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     
     _detailTable.rowHeight = UITableViewAutomaticDimension;
     _detailTable.estimatedRowHeight = 31 *SIZE;
@@ -134,7 +167,7 @@
     [_complaintBtn setTitle:@"申诉" forState:UIControlStateNormal];
     [_complaintBtn setBackgroundColor:COLOR(191, 191, 191, 1)];
     [_complaintBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.view addSubview:_complaintBtn];
+    //    [self.view addSubview:_complaintBtn];
     
 }
 

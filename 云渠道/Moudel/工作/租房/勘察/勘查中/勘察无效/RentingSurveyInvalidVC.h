@@ -8,6 +8,14 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentSurveyInvalidVCBlock)(void);
+
 @interface RentingSurveyInvalidVC : BaseViewController
+
+@property (nonatomic, copy) RentSurveyInvalidVCBlock rentSurveyInvalidVCBlock;
+
+@property (nonatomic, strong) NSString *surveyId;
+
+- (instancetype)initWithData:(NSDictionary *)data;
 
 @end

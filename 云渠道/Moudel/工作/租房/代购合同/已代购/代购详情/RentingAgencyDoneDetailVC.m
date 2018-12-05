@@ -10,6 +10,7 @@
 #import "AgencyDoneCustomerDetailVC.h"
 
 #import "AgencyDoneHeader.h"
+//#import "BaseHeader.h"
 #import "BlueTitleMoreHeader.h"
 #import "SingleContentCell.h"
 #import "NameSexImgCell.h"
@@ -19,12 +20,15 @@
 {
     
     NSInteger _item;
-    NSArray *_titleArr;
-    NSArray *_headerArr;
+    //    NSArray *_titleArr;
+    //    NSArray *_headerArr;
     NSArray *_contentArr;
     NSArray *_contentArr2;
     NSArray *_contentArr3;
     NSInteger _count;
+    NSDictionary *_subDic;
+    NSArray *_customerArr;
+    NSMutableArray *_customerUseArr;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -35,19 +39,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self initDataSource];
     [self initUI];
 }
 
 - (void)initDataSource{
     
-    _count = 2;
-    _titleArr = @[@"",@"联系人1",@"联系人2"];
-    _headerArr = @[@"房源编号：DSBNS1623266320",@"交易编号：SAF4535654316652",@"推荐编号：SAF4535654316652",@"有效",@"已审核",@"已收款",@"交易总价：103万",@"诚意金：20万",@"违约金：2万",@"佣金：2万",@"付款方式：一次性付清",@"约定签约时间：2017-11-11",@"审核人：张三",@"审核时间：2017-11-11"];
-    _contentArr = @[@"名称：张三",@"证件类型：身份证",@"证件号码：5100000000000",@"通讯地址：成都市大禹东路94号"];
-    _contentArr2 = @[@"公司名称：链家",@"门店名称：链家大禹东路",@"门店地址：成都市郫都区大禹东路77号",@"经办人名称：刘芮麟",@"联系电话：15201234567",@"登记日期：2017-11-11"];
-    _contentArr3 =@[@"房源编号：56231245623232153",@"所属小区：成都市郫都区大禹东路77号 云算公馆",@"物业类型：住宅",@"房号：批次-1栋-1单元-102",@"户型：三室一厅",@"产权面积：103m2",@"房屋所有权证号：LJ51416532223",@"国土使用证号：AK51416532223"];
+    _customerUseArr = [NSMutableArray arrayWithObjects:@[], nil];
+    [BaseRequest GET:PurchaseContractDetail_URL parameters:@{@"sub_id":_sub_id} success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue]==200) {
+            _customerArr = resposeObject[@"data"][@"contact_info"];
+            
+            for (int i= 0; i<_customerArr.count; i++) {
+                [_customerUseArr addObject:@[[NSString stringWithFormat:@"名称：%@",_customerArr[i][@"name"]],[NSString stringWithFormat:@"证件类型：%@",_customerArr[i][@"card_type"]],[NSString stringWithFormat:@"证件号码：%@",_customerArr[i][@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_customerArr[i][@"address"]]]];
+            }
+            _count = _customerArr.count;
+            _subDic =resposeObject[@"data"][@"basic_info"];
+            _contentArr2 = @[[NSString stringWithFormat:@"公司名称：%@",resposeObject[@"data"][@"agent_info"][@"company_name"]],[NSString stringWithFormat:@"门店名称：%@",resposeObject[@"data"][@"agent_info"][@"store_name"]],[NSString stringWithFormat:@"门店地址：%@",resposeObject[@"data"][@"agent_info"][@"store_address"]],[NSString stringWithFormat:@"经办人名称：%@",resposeObject[@"data"][@"agent_info"][@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"agent_info"][@"agent_tel"]],[NSString stringWithFormat:@"登记日期：%@",resposeObject[@"data"][@"agent_info"][@"regist_time"]]];
+            
+            _contentArr3 = @[[NSString stringWithFormat:@"房源编号：%@",_subDic[@"house_code"]],[NSString stringWithFormat:@"所属小区：%@",resposeObject[@"data"][@"house_info"][@"project_name"]],[NSString stringWithFormat:@"物业类型：%@",resposeObject[@"data"][@"house_info"][@"property_type"]],[NSString stringWithFormat:@"房号：%@",resposeObject[@"data"][@"house_info"][@"house_info"]],[NSString stringWithFormat:@"户型：%@",resposeObject[@"data"][@"house_info"][@"house_type"]],[NSString stringWithFormat:@"产权面积：%@",resposeObject[@"data"][@"house_info"][@"build_area"]],[NSString stringWithFormat:@"房屋所有权证号：%@",resposeObject[@"data"][@"house_info"][@"permit_code"]],[NSString stringWithFormat:@"国土使用证号：%@",resposeObject[@"data"][@"house_info"][@"land_use_permit_code"]]];
+            [_table reloadData];
+        }
+        else{
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+    
 }
 
 
@@ -55,14 +76,27 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        
-    }];
+    //    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //
+    //
+    //    }];
     
     UIAlertAction *set = [UIAlertAction actionWithTitle:@"挞定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
 //        GetAgencyProtocolVC *nextVC = [[GetAgencyProtocolVC alloc] init];
+//        nextVC.sub_id = _sub_id;
+//        NSString *tel = _customerArr[0][@"tel"];
+//        NSArray *array = [tel componentsSeparatedByString:@","];
+//        NSArray *infoarr = @[[NSString stringWithFormat:@"交易编号：%@",_subDic[@"sub_code"]],@"推荐编号：",[NSString stringWithFormat:@"客户名称：%@",_customerArr[0][@"name"]],[NSString stringWithFormat:@"联系电话：%@",array[0]],[NSString stringWithFormat:@"房源编号：%@",_subDic[@"house_code"]],_contentArr3[1],_contentArr3[3],@"挞定类型:",@"违约金:",@"挞定描述:",@"登记时间:"];
+//        nextVC.infoArr = infoarr;
+//        nextVC.broker = _subDic[@"break_money"];
+//        nextVC.getAgencyProtocolVCBlock = ^{
+//
+//            if (self.agencyDoneDetailVCBlock) {
+//
+//                self.agencyDoneDetailVCBlock();
+//            }
+//        };
 //        [self.navigationController pushViewController:nextVC animated:YES];
     }];
     
@@ -70,7 +104,7 @@
         
     }];
     
-    [alert addAction:protocol];
+    //    [alert addAction:protocol];
     [alert addAction:set];
     [alert addAction:cancel];
     
@@ -84,7 +118,13 @@
     
     if (_item == 0) {
         
-        return _count + 2;
+        if ([_subDic[@"check_state"] integerValue] == 1) {
+            
+            return _count + 1;
+        }else{
+            
+            return _count + 2;
+        }
     }else{
         
         return 1;
@@ -100,7 +140,7 @@
             return 0;
         }else if (section < _count + 1){
             
-            return _contentArr.count;
+            return 4;
         }else{
             
             return 1;
@@ -133,6 +173,11 @@
             header = [[AgencyDoneHeader alloc] initWithReuseIdentifier:@"AgencyDoneHeader"];
             
         }
+        
+        header.validL.hidden = YES;;
+        header.auditL.hidden = YES;;
+        header.payL.hidden = YES;;
+        
         [header.infoBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
         [header.infoBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
         [header.agentBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
@@ -140,21 +185,67 @@
         [header.roomBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
         [header.roomBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
         
+        header.roomCodeL.text =[NSString stringWithFormat:@"房源编号：%@",_subDic[@"house_code"]];
+        header.tradeCodeL.text = [NSString stringWithFormat:@"交易编号：%@",_subDic[@"sub_code"]];
+        //        header.recommendL.text = @"推荐编号：？？？？？？";
+        //        header.validL.text = @"未接";
         
-        header.roomCodeL.text = _headerArr[0];
-        header.tradeCodeL.text = _headerArr[1];
-        header.recommendL.text = _headerArr[2];
-        header.validL.text = _headerArr[3];
-        header.auditL.text = _headerArr[4];
-        header.payL.text = _headerArr[5];
-        header.priceL.text = _headerArr[6];
-        header.SincertyGoldL.text = _headerArr[7];
-        header.breachL.text = _headerArr[8];
-        header.commissionL.text = _headerArr[9];
-        header.payWayL.text = _headerArr[10];
-        header.timeL.text = _headerArr[11];
-        header.reviewL.text = _headerArr[12];
-        header.reviewTimeL.text = _headerArr[13];
+        if ([_subDic[@"check_state"] integerValue] == 1) {
+            
+            header.editBtn.hidden = YES;
+            [header.validL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(header.titleView).offset(10 *SIZE);
+                make.top.equalTo(header.tradeCodeL.mas_bottom).offset(7 *SIZE);
+                make.width.mas_equalTo(40 *SIZE);
+                make.height.mas_equalTo(17 *SIZE);
+                make.bottom.equalTo(header.titleView).offset(-13 *SIZE);
+            }];
+            
+            [header.auditL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(header.validL.mas_right).offset(5 *SIZE);
+                make.top.equalTo(header.tradeCodeL.mas_bottom).offset(7 *SIZE);
+                make.width.mas_equalTo(40 *SIZE);
+                make.height.mas_equalTo(17 *SIZE);
+                make.bottom.equalTo(header.titleView).offset(-13 *SIZE);
+            }];
+            
+            header.validL.hidden = YES;;
+            header.auditL.hidden = NO;;
+            //            header.validL.text = @"有效";
+            header.auditL.text = @"已审核";
+            header.reviewTimeL.text = [NSString stringWithFormat:@"审核时间：%@",_subDic[@"check_time"]];
+        }
+        else{
+            
+            header.editBtn.hidden = NO;
+            header.auditL.hidden = NO;;
+            
+            [header.auditL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(header.titleView).offset(10 *SIZE);
+                make.top.equalTo(header.tradeCodeL.mas_bottom).offset(7 *SIZE);
+                make.width.mas_equalTo(40 *SIZE);
+                make.height.mas_equalTo(17 *SIZE);
+                make.bottom.equalTo(header.titleView).offset(-13 *SIZE);
+            }];
+            header.validL.text = @"";
+            header.auditL.text = @"未审核";
+            header.payL.text = @"";
+        }
+        
+        
+        header.priceL.text = [NSString stringWithFormat:@"交易总价：%@万",_subDic[@"total_price"]];
+        header.SincertyGoldL.text = [NSString stringWithFormat:@"诚意金：%@元",_subDic[@"earnest_money"]];
+        header.breachL.text = [NSString stringWithFormat:@"违约金：%@元",_subDic[@"break_money"]];
+        header.commissionL.text = [NSString stringWithFormat:@"佣金：%@%@",_subDic[@"broker_ratio"],@"%"];
+        header.payWayL.text = [NSString stringWithFormat:@"付款方式：%@",_subDic[@"pay_way"]];
+        header.timeL.text = [NSString stringWithFormat:@"预定签约时间：%@",_subDic[@"appoint_construct_time"]];
+        header.comment.text = [NSString stringWithFormat:@"约定事项：%@",_subDic[@"comment"]];
+        
+        header.reviewL.text = [NSString stringWithFormat:@"审核人：%@",_subDic[@"check_person"]];
+        
         
         if (_item == 0) {
             
@@ -175,24 +266,44 @@
             _item = index;
             [tableView reloadData];
         };
+        
+        header.agencyEditHeaderBlock = ^{
+            
+//            AgencyEditTradeVC *nextVC = [[AgencyEditTradeVC alloc] initWithData:_subDic];
+//            nextVC.agencyEditTradeBlock = ^{
+//
+//                [self initDataSource];
+//            };
+//            [self.navigationController pushViewController:nextVC animated:YES];
+        };
+        
         return header;
     }else{
         
         if (_item == 0) {
             
-            if (section < 3) {
+            if (section < _count+1) {
                 
                 BlueTitleMoreHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BlueTitleMoreHeader"];
                 if (!header) {
                     
                     header = [[BlueTitleMoreHeader alloc] initWithReuseIdentifier:@"BlueTitleMoreHeader"];
                 }
-                
-                header.titleL.text = _titleArr[section];
+                if (section ==1) {
+                    header.titleL.text = @"主权益人";
+                }
+                else{
+                    header.titleL.text = @"附权益人";
+                }
                 header.lineView.backgroundColor = [UIColor whiteColor];
                 header.blueTitleMoreHeaderBlock = ^{
-                    
                     AgencyDoneCustomerDetailVC *nextVC = [[AgencyDoneCustomerDetailVC alloc] init];
+                    nextVC.status = _subDic[@"check_state"];
+                    nextVC.customerDic = _customerArr[section-1];
+                    nextVC.agencyDoneCustomerDetailVCBlock = ^{
+                        
+                        [self initDataSource];
+                    };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };
                 return header;
@@ -208,8 +319,8 @@
                 header = [[BlueTitleMoreHeader alloc] initWithReuseIdentifier:@"BlueTitleMoreHeader"];
             }
             
-            header.titleL.text = _titleArr[section];
-            header.lineView.backgroundColor = [UIColor whiteColor];
+            header.titleL.text = @"2222";
+            header.lineView.backgroundColor = [UIColor blackColor];
             return header;
         }
     }
@@ -241,7 +352,7 @@
     
     if (_item == 0) {
         
-        if (indexPath.section == 3) {
+        if (indexPath.section == _count+1) {
             
             AddPeopleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddPeopleCell"];
             if (!cell) {
@@ -262,11 +373,22 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.lineView.hidden = YES;
+            cell.contentL.text = _customerUseArr[indexPath.section][indexPath.row];
             
-            cell.contentL.text = _contentArr[indexPath.row];
             if (indexPath.row == 0) {
                 
-                cell.sexImg.hidden = NO;
+                if ([_customerArr[indexPath.section-1][@"sex"] integerValue]==0) {
+                    cell.sexImg.hidden = YES;
+                }
+                else if([_customerArr[indexPath.section-1][@"sex"] integerValue]==1)
+                {
+                    cell.sexImg.hidden = NO;
+                    cell.sexImg.image = [UIImage imageNamed:@"man"];
+                }
+                else{
+                    cell.sexImg.hidden = NO;
+                    cell.sexImg.image = [UIImage imageNamed:@"woman"];
+                }
             }else{
                 
                 cell.sexImg.hidden = YES;
@@ -298,6 +420,24 @@
         }
         
         return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_item == 0) {
+        
+        if (indexPath.section == _count+1) {
+            
+//            AgencyEditCustomerDetailVC *nextVC = [[AgencyEditCustomerDetailVC alloc] initWithData:@{}];
+//            nextVC.status = @"添加";
+//            nextVC.subId = _sub_id;
+//            nextVC.agencyAddCustomerDetailVCBlock = ^{
+//                
+//                [self initDataSource];
+//            };
+//            [self.navigationController pushViewController:nextVC animated:YES];
+        }
     }
 }
 

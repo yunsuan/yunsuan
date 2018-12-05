@@ -586,6 +586,9 @@ static NSString *const HouseRecordUI_URL = @"user/house/record/UI";
 //完成勘察
 static NSString *const HouseSurveySuccess_URL = @"agent/house/survey/success";
 
+//直接勘察完成
+static NSString *const HouseRecordAndSurvey_URL = @"agent/house/recordAndSurvey";
+
 //修改图片
 static NSString *const UpdateImgURL = @"agent/house/survey/updateImg";
 
@@ -707,6 +710,9 @@ static NSString *const RentRecordAppealList_URL = @"agent/rent/record/appeal/lis
 
 //申诉详情
 static NSString *const RentRecordAppealDetail_URL = @"agent/rent/record/appeal/detail";
+
+//申诉
+static NSString *const RentRecordAppeal_URL = @"agent/rent/record/appeal";
 #pragma mark -- 租房 - 勘察
 
 //待确认列表
@@ -721,8 +727,17 @@ static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";
 //勘察中详情
 static NSString *const RentSurveyUnderWayDetail_URL = @"agent/rent/survey/underway/detail";
 
+//勘察完成
+static NSString *const RentSurveySuccess_URL = @"agent/rent/survey/success";
+
 //勘察失效列表
 static NSString *const RentSurveyDisabled_URL = @"agent/rent/survey/disabled";
 
+//勘察失效详情
+static NSString *const RentSurveyDisabledDetail_URL = @"agent/rent/survey/disabled/detail";
+
 //勘察完成列表
 static NSString *const RentSurveyFinish_URL = @"agent/rent/survey/finish";
+
+//勘察维护列表
+static NSString *const RentSurveyList_URL = @"agent/rent/survey/list";

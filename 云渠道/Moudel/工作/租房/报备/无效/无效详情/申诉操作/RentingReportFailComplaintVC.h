@@ -10,4 +10,6 @@
 
 @interface RentingReportFailComplaintVC : BaseViewController
 
+- (instancetype)initWithRecordId:(NSString *)recordId;
+
 @end

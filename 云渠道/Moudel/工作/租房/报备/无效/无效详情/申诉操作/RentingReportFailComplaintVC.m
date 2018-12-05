@@ -8,11 +8,16 @@
 
 #import "RentingReportFailComplaintVC.h"
 
+#import "SinglePickView.h"
+
 #import "DropDownBtn.h"
 
 @interface RentingReportFailComplaintVC ()
-
-
+{
+    
+    NSString *_type;
+    NSString *_surveyId;
+}
 @property (nonatomic, strong) UIView *contentView;
 
 @property (nonatomic, strong) UILabel *typeL;
@@ -31,6 +36,16 @@
 
 @implementation RentingReportFailComplaintVC
 
+- (instancetype)initWithRecordId:(NSString *)recordId
+{
+    self = [super init];
+    if (self) {
+        
+        _surveyId = recordId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,12 +57,60 @@
     
     _typeL.text = @"申诉类型:";
     _reasonL.text = @"申诉描述:";
-//    _timeL.text = @"申诉时间：2017/12/12  13:00";
+    //    _timeL.text = @"申诉时间：2017/12/12  13:00";
 }
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
+    if (!_type.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"选择申诉类型"];
+        return;
+    }
     
+    //    if ([self isEmpty:_reasonTV.text]) {
+    //
+    //        [self alertControllerWithNsstring:@"温馨提示" And:@"输入申诉描述"];
+    //        return;
+    //    }
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":_surveyId,
+                                                                               @"type":_type,
+                                                                               @"appeal_type":@"3"
+                                                                               }];
+    if (![self isEmpty:_reasonTV.text]) {
+        
+        [dic setObject:_reasonTV.text forKey:@"comment"];
+    }
+    [BaseRequest POST:RentRecordAppeal_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"申诉成功" WithDefaultBlack:^{
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)ActionTypeBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:24]];
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_type = [NSString stringWithFormat:@"%@",ID];
+        strongSelf.typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+    };
+    [self.view addSubview:view];
 }
 
 - (void)initUI{
@@ -85,6 +148,7 @@
     }
     
     _typeBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 17 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_typeBtn addTarget:self action:@selector(ActionTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_typeBtn];
     
     _reasonTV = [[UITextView alloc] init];

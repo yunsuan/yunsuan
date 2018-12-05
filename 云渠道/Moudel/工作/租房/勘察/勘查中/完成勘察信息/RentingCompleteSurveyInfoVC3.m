@@ -7,68 +7,40 @@
 //
 
 #import "RentingCompleteSurveyInfoVC3.h"
-#import "CompleteSurveyInfoVC4.h"
 
-#import "BaseFrameHeader.h"
+#import "RoomSurveyVC.h"
+#import "SecDistributVC.h"
 
-#import "BorderTF.h"
+#import "TextFieldImgCell.h"
+#import "ChangeImgNameView.h"
+
 #import "DropDownBtn.h"
 
-@interface RentingCompleteSurveyInfoVC3 ()<UIScrollViewDelegate,UITextFieldDelegate>
+@interface RentingCompleteSurveyInfoVC3 ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     
-    NSArray *_titleArr;
-    NSArray *_titleArr2;
+    NSMutableArray *_ImgArr;
+    NSMutableArray *_titleArr;
+    NSMutableArray *_NameUrlArr;
+    //    NSInteger _section;
+    NSInteger _index;
+    UIImagePickerController *_imagePickerController;
+    UIImage *_image;
+    NSString *_imgUrl;
 }
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) DropDownBtn *selectBtn;
 
-@property (nonatomic, strong) UIView *roomView;
+@property (nonatomic, strong) UIView *titleView;
 
-@property (nonatomic, strong) BaseFrameHeader *roomHeader;
+@property (nonatomic, strong) UIView *blueView;
 
-@property (nonatomic, strong) UILabel *addressL;
+@property (nonatomic, strong) UILabel *titleL;
 
-@property (nonatomic, strong) DropDownBtn *addressBtn;
+@property (nonatomic, strong) UIButton *addBtn;
 
-@property (nonatomic, strong) UITextView *addressTV;
+@property (nonatomic, strong) UITableView *imgTable;
 
-@property (nonatomic, strong) UILabel *typeL;
-
-@property (nonatomic, strong) DropDownBtn *typeBtn;
-
-@property (nonatomic, strong) UILabel *roomNumL;
-
-@property (nonatomic, strong) DropDownBtn *roomNumBtn;
-
-@property (nonatomic, strong) UILabel *roomTypeL;
-
-@property (nonatomic, strong) DropDownBtn *roomTypeBtn;
-
-@property (nonatomic, strong) UILabel *areaL;
-
-@property (nonatomic, strong) BorderTF *areaTF;
-
-@property (nonatomic, strong) UILabel *faceL;
-
-@property (nonatomic, strong) DropDownBtn *faceBtn;
-
-@property (nonatomic, strong) UILabel *floorL;
-
-@property (nonatomic, strong) BorderTF *floorTF;
-
-@property (nonatomic, strong) UILabel *yearL;
-
-@property (nonatomic, strong) BorderTF *yearTF;
-
-@property (nonatomic, strong) UILabel *decorateL;
-
-@property (nonatomic, strong) DropDownBtn *decorateBtn;
-
-@property (nonatomic, strong) UILabel *liftL;
-
-@property (nonatomic, strong) DropDownBtn *liftBtn;
-
-@property (nonatomic, strong) UIButton *nextBtn;
+@property (nonatomic, strong) UIButton *doneBtn;
 
 @end
 
@@ -83,369 +55,413 @@
 
 - (void)initDataSource{
     
-    _titleArr2 = @[@"电梯：",@"拿证时间：",@"小区地址：",@"物业类型：",@"房号：",@"户型：",@"面积：",@"朝向：",@"楼层：",@"年代：",@"装修："];
+    _ImgArr = [@[] mutableCopy];
+    _titleArr = [@[] mutableCopy];
+    _NameUrlArr = [@[] mutableCopy];
+    _imagePickerController = [[UIImagePickerController alloc] init];
+    _imagePickerController.delegate = self;
 }
 
-- (void)ActionNextBtn:(UIButton *)btn{
+- (void)ActionDoneBtn:(UIButton *)btn{
     
-    CompleteSurveyInfoVC4 *nextVC = [[CompleteSurveyInfoVC4 alloc] init];
-    [self.navigationController pushViewController:nextVC animated:YES];
+    [_NameUrlArr removeAllObjects];
+    for (int i = 0; i < _ImgArr.count; i++) {
+        
+        NSDictionary *tempDic = @{@"name":_titleArr[i],
+                                  @"img_url":_ImgArr[i][@"img_url"]
+                                  };
+        [_NameUrlArr addObject:tempDic];
+    }
+    
+    if (_NameUrlArr.count) {
+        
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_NameUrlArr
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding];
+        NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.dic setObject:jsonResult forKey:@"img_group"];
+    }
+    
+    NSString *urlStr;
+    if (self.dic[@"survey_id"]) {
+        
+        urlStr = RentSurveySuccess_URL;
+    }else{
+        
+        urlStr = @"agent/house/recordAndSurvey";
+    }
+    [BaseRequest POST:urlStr parameters:self.dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"勘察成功" WithDefaultBlack:^{
+                
+                if (self.rentCompleteSurveyInfoVCBlock3) {
+                    
+                    self.rentCompleteSurveyInfoVCBlock3();
+                }
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[RoomSurveyVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                    if ([vc isKindOfClass:[SecDistributVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            }];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error);
+    }];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return _ImgArr.count + 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 223 *SIZE;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TextFieldImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TextFieldImgCell"];
+    if (!cell) {
+        
+        cell = [[TextFieldImgCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TextFieldImgCell"];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.textFieldImgCellBlock = ^(NSString *str) {
+        
+        if (indexPath.row < _ImgArr.count) {
+            
+            ChangeImgNameView *view = [[ChangeImgNameView alloc] initWithFrame:self.view.frame];
+            view.changeImgNameViewBlock = ^(NSString *str) {
+                
+                [_titleArr replaceObjectAtIndex:indexPath.row withObject:str];
+                [tableView reloadData];
+            };
+            [self.view addSubview:view];
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择图片"];
+        };
+    };
+    
+    if (indexPath.item < _ImgArr.count) {
+        NSString *imageurl = _ImgArr[indexPath.item][@"img_url"];
+        
+        if (imageurl.length>0) {
+            [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_ImgArr[indexPath.item][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                if (error) {
+                    
+                    cell.bigImg.image = [UIImage imageNamed:@"default_3"];
+                }
+            }];
+        }
+        else{
+            cell.bigImg.image = [UIImage imageNamed:@"default_3"];
+        }
+        cell.nameL.text = _titleArr[indexPath.item];
+    }else{
+        
+        cell.bigImg.image = [UIImage imageNamed:@"add20"];
+        cell.nameL.text = @"输入图片名称";
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //    _section = indexPath.section;
+    _index = indexPath.item;
+    
+    BOOL Name = false;
+    for (NSString *str in _titleArr) {
+        
+        if ([str isEqualToString:@"输入图片名称"]) {
+            
+            Name = YES;
+            break;
+        }
+    }
+    if (Name) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入图片名称"];
+    }else{
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self selectPhotoAlbumPhotos];
+        }];
+        UIAlertAction *takePic = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self takingPictures];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertController addAction:takePic];
+        [alertController addAction:photo];
+        [alertController addAction:cancel];
+        [self.navigationController presentViewController:alertController animated:YES completion:^{
+            
+        }];
+    }
+}
+
+
+#pragma mark - 选择头像
+
+- (void)selectPhotoAlbumPhotos {
+    // 获取支持的媒体格式
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    // 判断是否支持需要设置的sourceType
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        // 1、设置图片拾取器上的sourceType
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        // 2、设置支持的媒体格式
+        _imagePickerController.mediaTypes = @[mediaTypes[0]];
+        // 3、其他设置
+        _imagePickerController.allowsEditing = YES; // 如果设置为NO，当用户选择了图片之后不会进入图像编辑界面。
+        // 4、推送图片拾取器控制器
+        [self presentViewController:_imagePickerController animated:YES completion:nil];
+    }
+}
+
+// 拍照
+- (void)takingPictures {
+    // 获取支持的媒体格式
+    NSArray *mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+    
+    // 判断是否支持需要设置的sourceType
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        // 1、设置图片拾取器上的sourceType
+        _imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        // 2、设置支持的媒体格式
+        _imagePickerController.mediaTypes = @[mediaTypes[0]];
+        // 3、其他设置
+        // 设置相机模式
+        _imagePickerController.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        // 设置摄像头：前置/后置
+        _imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+        // 设置闪光模式
+        _imagePickerController.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
+        
+        // 4、推送图片拾取器控制器
+        [self presentViewController:_imagePickerController animated:YES completion:nil];
+        
+    } else {
+        //        NSLog(@"当前设备不支持拍照");
+        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示"
+                                                                                  message:@"当前设备不支持拍照"
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction *action) {
+                                                              //                                                              _uploadButton.hidden = NO;
+                                                          }]];
+        [self presentViewController:alertController
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        if ([info[UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
+            
+            _image = info[UIImagePickerControllerOriginalImage];;
+            
+            if (_index < [_ImgArr count]) {
+                
+                NSData *data = [self resetSizeOfImageData:_image maxSize:150];
+                
+                [BaseRequest Updateimg:UploadFile_URL parameters:@{@"file_name":@"img"
+                                                                   }
+                      constructionBody:^(id<AFMultipartFormData> formData) {
+                          [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+                      } success:^(id resposeObject) {
+                          
+                          if ([resposeObject[@"code"] integerValue] == 200) {
+                              
+                              _imgUrl = resposeObject[@"data"];
+                              NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+                              [tempDic setObject:_imgUrl forKey:@"img_url"];
+                              [_ImgArr replaceObjectAtIndex:_index withObject:tempDic];
+                          }else{
+                              
+                              [self showContent:resposeObject[@"msg"]];
+                          };
+                          [_imgTable reloadData];
+                      } failure:^(NSError *error) {
+                          
+                          [self showContent:@"网络错误"];
+                      }];
+                
+            }else{
+                
+                NSData *data = [self resetSizeOfImageData:_image maxSize:150];
+                
+                [BaseRequest Updateimg:UploadFile_URL parameters:@{@"file_name":@"img"
+                                                                   }
+                      constructionBody:^(id<AFMultipartFormData> formData) {
+                          [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+                      } success:^(id resposeObject) {
+                          
+                          if ([resposeObject[@"code"] integerValue] == 200) {
+                              
+                              _imgUrl = resposeObject[@"data"];
+                              NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+                              [tempDic setObject:_imgUrl forKey:@"img_url"];
+                              [_ImgArr addObject:tempDic];
+                              [_titleArr addObject:@"输入图片名称"];
+                          }else{
+                              
+                              [self showContent:resposeObject[@"msg"]];
+                          };
+                          [_imgTable reloadData];
+                      } failure:^(NSError *error) {
+                          
+                          [self showContent:@"网络错误"];
+                      }];
+                
+            }
+            [self.imgTable reloadData];
+        }
+    }else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
+        
+        _image = info[UIImagePickerControllerOriginalImage];;
+        
+        if (_index < [_ImgArr count]) {
+            
+            NSData *data = [self resetSizeOfImageData:_image maxSize:150];
+            
+            [BaseRequest Updateimg:UploadFile_URL parameters:@{@"file_name":@"img"
+                                                               }
+                  constructionBody:^(id<AFMultipartFormData> formData) {
+                      [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+                  } success:^(id resposeObject) {
+                      
+                      if ([resposeObject[@"code"] integerValue] == 200) {
+                          
+                          _imgUrl = resposeObject[@"data"];
+                          NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+                          [tempDic setObject:_imgUrl forKey:@"img_url"];
+                          [_ImgArr replaceObjectAtIndex:_index withObject:tempDic];
+                      }else{
+                          
+                          [self showContent:resposeObject[@"msg"]];
+                      };
+                      [_imgTable reloadData];
+                  } failure:^(NSError *error) {
+                      
+                      [self showContent:@"网络错误"];
+                  }];
+            
+        }else{
+            
+            NSData *data = [self resetSizeOfImageData:_image maxSize:150];
+            
+            [BaseRequest Updateimg:UploadFile_URL parameters:@{@"file_name":@"img"
+                                                               }
+                  constructionBody:^(id<AFMultipartFormData> formData) {
+                      [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+                  } success:^(id resposeObject) {
+                      
+                      if ([resposeObject[@"code"] integerValue] == 200) {
+                          
+                          _imgUrl = resposeObject[@"data"];
+                          NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+                          [tempDic setObject:_imgUrl forKey:@"img_url"];
+                          [_ImgArr addObject:tempDic];
+                          [_titleArr addObject:@"输入图片名称"];
+                      }else{
+                          
+                          [self showContent:resposeObject[@"msg"]];
+                      };
+                      [_imgTable reloadData];
+                  } failure:^(NSError *error) {
+                      
+                      [self showContent:@"网络错误"];
+                  }];
+            
+        }
+        [self.imgTable reloadData];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        [self.imgTable reloadData];
+        
+    }];
+}
+
+
+// 用户点击了取消按钮
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)initUI{
     
-    self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"完成勘察信息";
+    self.navBackgroundView.hidden = NO;
     
-    _scrollView = [[UIScrollView alloc] init];
-    _scrollView.backgroundColor = self.view.backgroundColor;
-    _scrollView.delegate = self;
-    [self.view addSubview:_scrollView];
+    _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 50 *SIZE)];
+    _titleView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_titleView];
     
+    _blueView = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 7 *SIZE, 13 *SIZE)];
+    _blueView.backgroundColor = YJBlueBtnColor;
+    [_titleView addSubview:_blueView];
     
-    _roomView = [[UIView alloc] init];
-    _roomView.backgroundColor = [UIColor whiteColor];
-    [_scrollView addSubview:_roomView];
-    
-    _roomHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
-    _roomHeader.titleL.text = @"房源信息";
-    [_roomView addSubview:_roomHeader];
-    
-    _addressTV = [[UITextView alloc] init];
-    _addressTV.layer.borderWidth = SIZE;
-    _addressTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
-    _addressTV.layer.cornerRadius = 5 *SIZE;
-    _addressTV.clipsToBounds = YES;
-    _addressTV.backgroundColor = COLOR(238, 238, 238, 1);
-    _addressTV.userInteractionEnabled = NO;
-    //    _addressTV.delegate = self;
-    [_roomView addSubview:_addressTV];
-    
-    for (int i = 0; i < 11; i++) {
-        
-        UILabel *label = [[UILabel alloc] init];
-        label.textColor = YJTitleLabColor;
-        label.adjustsFontSizeToFitWidth = YES;
-        label.text = _titleArr2[i];
-        label.font = [UIFont systemFontOfSize:13 *SIZE];
-        
-        BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 257 *SIZE, 33 *SIZE)];
-        textField.backgroundColor = COLOR(238, 238, 238, 1);
-        textField.userInteractionEnabled = NO;
-        textField.textfield.delegate = self;
-        
-        DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 257 *SIZE, 33 *SIZE)];
-        btn.backgroundColor = COLOR(238, 238, 238, 1);
-        btn.userInteractionEnabled = NO;
-        switch (i) {
-            case 0:
-            {
-                _liftL = label;
-                [_roomView addSubview:_liftL];
-                _liftBtn = btn;
-                _liftBtn.userInteractionEnabled = YES;
-                _liftBtn.backgroundColor = [UIColor whiteColor];
-                [_roomView addSubview:_liftBtn];
-                break;
-            }
-            case 1:
-            {
-//                _timeL = label;
-//                _timeBtn = btn;
-//                _timeBtn.userInteractionEnabled = YES;
-//                _timeBtn.backgroundColor = [UIColor whiteColor];
-//                [_roomView addSubview:_timeBtn];
-//                [_roomView addSubview:_timeL];
-                break;
-            }
-            case 2:
-            {
-                _addressL = label;
-                [_roomView addSubview:_addressL];
-                _addressBtn = btn;
-                [_roomView addSubview:_addressBtn];
-                break;
-            }
-            case 3:
-            {
-                _typeL = label;
-                [_roomView addSubview:_typeL];
-                
-                _typeBtn = btn;
-                [_roomView addSubview:_typeBtn];
-                break;
-            }
-            case 4:
-            {
-                _roomNumL = label;
-                [_roomView addSubview:_roomNumL];
-                _roomNumBtn = btn;
-                [_roomView addSubview:_roomNumBtn];
-                break;
-            }
-            case 5:
-            {
-                _roomTypeL = label;
-                [_roomView addSubview:_roomTypeL];
-                _roomTypeBtn = btn;
-                [_roomView addSubview:_roomTypeBtn];
-                break;
-            }
-            case 6:
-            {
-                _areaL = label;
-                [_roomView addSubview:_areaL];
-                _areaTF = textField;
-                [_roomView addSubview:_areaTF];
-                break;
-            }
-            case 7:
-            {
-                _faceL = label;
-                [_roomView addSubview:_faceL];
-                _faceBtn = btn;
-                [_roomView addSubview:_faceBtn];
-                break;
-            }
-            case 8:
-            {
-                _floorL = label;
-                [_roomView addSubview:_floorL];
-                _floorTF = textField;
-                [_roomView addSubview:_floorTF];
-                break;
-            }
-            case 9:
-            {
-                _yearL = label;
-                [_roomView addSubview:_yearL];
-                _yearTF = textField;
-                [_roomView addSubview:_yearTF];
-                break;
-            }
-            case 10:
-            {
-                _decorateL = label;
-                [_roomView addSubview:_decorateL];
-                _decorateBtn = btn;
-                _decorateBtn.userInteractionEnabled = YES;
-                _decorateBtn.backgroundColor = [UIColor whiteColor];
-                [_roomView addSubview:_decorateBtn];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
-    _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
-    [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-    [_nextBtn setBackgroundColor:YJBlueBtnColor];
-    [_scrollView addSubview:_nextBtn];
-    
-    [self MasonryUI];
-}
-
-- (void)MasonryUI{
-    
-    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.view).offset(0);
-        make.top.equalTo(self.view).offset(NAVIGATION_BAR_HEIGHT);
-        make.right.equalTo(self.view).offset(0);
-        make.bottom.equalTo(self.view).offset(0);
-    }];
-    
-    [_roomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollView).offset(0);
-        make.top.equalTo(_scrollView).offset(0 *SIZE);
-        make.right.equalTo(_scrollView).offset(0);
-        make.width.equalTo(@(SCREEN_Width));
-        //        make.bottom.equalTo(_nextBtn.mas_top).offset(-28 *SIZE);
-    }];
+    _titleL = [[UILabel alloc] initWithFrame:CGRectMake(27 *SIZE, 19 *SIZE, 300 *SIZE, 14 *SIZE)];
+    _titleL.textColor = YJTitleLabColor;
+    _titleL.font = [UIFont systemFontOfSize:15 *SIZE];
+    _titleL.text = @"房源实拍图片";
+    [_titleView addSubview:_titleL];
     
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_roomView).offset(70 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
+    _imgTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 51 *SIZE, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 91 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
+    _imgTable.backgroundColor = self.view.backgroundColor;
+    _imgTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _imgTable.delegate = self;
+    _imgTable.dataSource = self;
+    [self.view addSubview:_imgTable];
     
-    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_roomView).offset(60 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
+    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
+    _doneBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_doneBtn addTarget:self action:@selector(ActionDoneBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_doneBtn setTitle:@"完成勘察" forState:UIControlStateNormal];
+    [_doneBtn setBackgroundColor:YJBlueBtnColor];
+    [self.view addSubview:_doneBtn];
     
-    [_roomNumL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_roomNumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_roomTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_roomNumBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_roomTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_roomNumBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_roomTypeBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_areaTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_roomTypeBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_faceL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_areaTF.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_faceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_areaTF.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_faceBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_floorTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_faceBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_floorTF.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_yearTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_floorTF.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-        //        make.bottom.equalTo(_roomView).offset(-27 *SIZE);
-    }];
-    
-    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_yearTF.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_yearTF.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_liftL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_liftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(9 *SIZE);
-        make.top.equalTo(_liftBtn.mas_bottom).offset(29 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(80 *SIZE);
-        make.top.equalTo(_liftBtn.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_addressTV mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roomView).offset(79 *SIZE);
-        make.top.equalTo(_addressBtn.mas_bottom).offset(30 *SIZE);
-        make.height.mas_equalTo(77 *SIZE);
-        make.width.mas_equalTo(258 *SIZE);
-        make.bottom.equalTo(_roomView.mas_bottom).offset(-27 *SIZE);
-    }];
-    
-    [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_scrollView).offset(22 *SIZE);
-        make.top.equalTo(_roomView.mas_bottom).offset(36 *SIZE);
-        make.width.equalTo(@(317 *SIZE));
-        make.height.equalTo(@(40 *SIZE));
-        make.bottom.equalTo(_scrollView.mas_bottom).offset(-19 *SIZE);
-    }];
 }
 
 @end

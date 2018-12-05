@@ -8,7 +8,7 @@
 
 #import "RentingCompleteSurveyHouseVC.h"
 
-//#import "CompleteSurveyInfoVC2.h"
+#import "RentingCompleteSurveyInfoVC2.h"
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
@@ -114,14 +114,14 @@
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"YYYY/MM/dd"];
     
-    _payArr = [self getDetailConfigArrByConfigState:13];
+    _payArr = [self getDetailConfigArrByConfigState:RENT_HOUSE_RECEIVE_TYPE];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < _payArr.count; i++) {
         
         [_selectArr addObject:@0];
     }
     _btnArr = @[@"整租",@"合租"];
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"可入住时间：",@"其他要求"];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"可入住时间：",@"看房方式：",@"其他要求"];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -151,35 +151,16 @@
         case 2:{
             
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-            __weak __typeof(&*self)weakSelf = self;
+            WS(weakSelf);
             view.dateblock = ^(NSDate *date) {
                 
+                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+                weakSelf.inTimeBtn->str = [weakSelf.formatter stringFromDate:date];
             };
             [self.view addSubview:view];
             break;
         }
         case 3:{
-            
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:DECORATE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-            };
-            [self.view addSubview:view];
-            break;
-        }
-        case 4:{
-            
-            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-            __weak __typeof(&*self)weakSelf = self;
-            view.dateblock = ^(NSDate *date) {
-                
-                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
-            };
-            [self.view addSubview:view];
-            break;
-        }
-        case 5:{
             
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
             WS(weakself);
@@ -189,6 +170,29 @@
                 weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
+            break;
+        }
+        case 4:{
+            
+//            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+//            __weak __typeof(&*self)weakSelf = self;
+//            view.dateblock = ^(NSDate *date) {
+//
+//                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+//            };
+//            [self.view addSubview:view];
+            break;
+        }
+        case 5:{
+            
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.seeWayBtn.content.text = MC;
+//                weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         default:
@@ -258,26 +262,26 @@
 //    [self.dataDic setValue:@(_rentType) forKey:@"property_belong"];
 ////    [self.dataDic setValue:_timeBtn.content.text forKey:@"permit_time"];
 //    
-//    [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
-//    if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
-//        
-//        [self.dataDic setValue:_inTimeBtn.content.text forKey:@"check_in_time"];
-//    }
-//    if (![self isEmpty:_markView.text]) {
-//        
-//        [self.dataDic setValue:_markView.text forKey:@"comment"];
-//    }
+    [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
+    if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
+        
+        [self.dataDic setValue:_inTimeBtn.content.text forKey:@"check_in_time"];
+    }
+    if (![self isEmpty:_markView.text]) {
+        
+        [self.dataDic setValue:_markView.text forKey:@"comment"];
+    }
     
-//    CompleteSurveyInfoVC2 *nextVC = [[CompleteSurveyInfoVC2 alloc] init];
-//    nextVC.completeSurveyInfoVCBlock2 = ^{
-//        
-//        if (self.completeSurveyHouseVCBlock) {
-//            
-//            self.completeSurveyHouseVCBlock();
-//        }
-//    };
-//    nextVC.dic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    RentingCompleteSurveyInfoVC2 *nextVC = [[RentingCompleteSurveyInfoVC2 alloc] init];
+    nextVC.rentCompleteSurveyInfoVCBlock2 = ^{
+        
+        if (self.rentingCompleteSurveyHouseVCBlock) {
+            
+            self.rentingCompleteSurveyHouseVCBlock();
+        }
+    };
+    nextVC.dic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 #pragma mark -- TextField;
@@ -409,12 +413,12 @@
                 [_contentView addSubview:_seeWayL];
                 break;
             }
-//            case 13:
-//            {
-//                _markL = label;
-//                [_contentView addSubview:_markL];
-//                break;
-//            }
+            case 8:
+            {
+                _markL = label;
+                [_contentView addSubview:_markL];
+                break;
+            }
             default:
                 break;
         }
@@ -436,7 +440,7 @@
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _priceTF = textField;
-                _priceTF.unitL.text = @"月/平";
+                _priceTF.unitL.text = @"元";
                 [_contentView addSubview:_priceTF];
                 break;
             }

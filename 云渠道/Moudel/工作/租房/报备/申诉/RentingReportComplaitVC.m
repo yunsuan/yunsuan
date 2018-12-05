@@ -169,7 +169,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ReportComplaintDetailVC *nextVC = [[ReportComplaintDetailVC alloc] init];
+    ReportComplaintDetailVC *nextVC = [[ReportComplaintDetailVC alloc] initWithAppealId:_dataArr[indexPath.row][@"appeal_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

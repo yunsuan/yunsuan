@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingAgencyDoneDetailVCBlock)(void);
+
 @interface RentingAgencyDoneDetailVC : BaseViewController
+
+@property (nonatomic, copy) RentingAgencyDoneDetailVCBlock rentingAgencyDoneDetailVCBlock;
+
+@property (nonatomic , strong) NSString *sub_id;
 
 @end

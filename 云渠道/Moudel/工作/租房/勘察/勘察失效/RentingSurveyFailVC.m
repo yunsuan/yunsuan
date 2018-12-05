@@ -177,7 +177,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RentingSurveyFailDetailVC *nextVC = [[RentingSurveyFailDetailVC alloc] init];
+    RentingSurveyFailDetailVC *nextVC = [[RentingSurveyFailDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

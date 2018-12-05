@@ -7,8 +7,8 @@
 //
 
 #import "RentingReportFailDetailVC.h"
-//#import "RentingReportFailComplaintVC.h"
-#import "ReportFailComplaintVC.h"
+#import "RentingReportFailComplaintVC.h"
+//#import "ReportFailComplaintVC.h"
 
 #import "BrokerageDetailTableCell3.h"
 #import "SingleContentCell.h"
@@ -85,7 +85,7 @@
 
 - (void)ActionComplaintBtn:(UIButton *)btn{
     
-    ReportFailComplaintVC *nextVC = [[ReportFailComplaintVC alloc] initWithSurveyId:_recordId];
+    RentingReportFailComplaintVC *nextVC = [[RentingReportFailComplaintVC alloc] initWithRecordId:_recordId];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
