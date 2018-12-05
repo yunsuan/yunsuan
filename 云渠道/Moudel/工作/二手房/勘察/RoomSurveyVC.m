@@ -211,7 +211,7 @@
     [self.scrollView addSubview:_roomSurveyWaitVC.view];
     [self.scrollView addSubview:_roomSurveyingVC.view];
     [self.scrollView addSubview:_roomSurveyFailVC.view];
-    [self.scrollView addSubview:_roomSurveyComplaitVC.view];
+//    [self.scrollView addSubview:_roomSurveyComplaitVC.view];
     [self.scrollView addSubview:_roomSurveySuccessVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;

@@ -727,6 +727,8 @@ static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";
 //勘察中详情
 static NSString *const RentSurveyUnderWayDetail_URL = @"agent/rent/survey/underway/detail";
 
+//勘察完成所需自动填充字段
+static NSString *const RentRecordSurveyNeedInfo_URL = @"agent/rent/record/surveyNeedInfo";
 //勘察完成
 static NSString *const RentSurveySuccess_URL = @"agent/rent/survey/success";
 
@@ -741,3 +743,6 @@ static NSString *const RentSurveyFinish_URL = @"agent/rent/survey/finish";
 
 //勘察维护列表
 static NSString *const RentSurveyList_URL = @"agent/rent/survey/list";
+
+//勘察维护详情
+static NSString *const RentSurveyDetail_URL = @"agent/rent/survey/detail";

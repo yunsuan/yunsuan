@@ -141,7 +141,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HouseRecordSurveyNeedInfo_URL parameters:@{@"survey_id":self.surveyId} success:^(id resposeObject) {
+    [BaseRequest GET:RentRecordSurveyNeedInfo_URL parameters:@{@"survey_id":self.surveyId} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

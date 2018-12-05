@@ -206,12 +206,12 @@
         
         _rentImg1.image = [UIImage imageNamed:@"selected"];
         _rentImg2.image = [UIImage imageNamed:@"default"];
-        _rentType = 1;
+        _rentType = 245;
     }else{
         
         _rentImg1.image = [UIImage imageNamed:@"default"];
         _rentImg2.image = [UIImage imageNamed:@"selected"];
-        _rentType = 2;
+        _rentType = 246;
     }
 }
 
@@ -219,49 +219,58 @@
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
-//    if ([self isEmpty:_titleTF.textfield.text]) {
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌标题"];
-//        return;
-//    }
-//    if ([self isEmpty:_priceTF.textfield.text]) {
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入出租价格"];
-//        return;
-//    }
-//    
-//    for (int i = 0; i < _selectArr.count; i++) {
-//        
-//        if ([_selectArr[i] integerValue]) {
-//            
-//            if (!_payWay.length) {
-//                
-//                _payWay = [NSString stringWithFormat:@"%@",_payArr[0][@"id"]];
-//            }else{
-//                
-//                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
-//            }
-//        }
-//    }
-//    
-//    if (!_payWay.length) {
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
-//        return;
-//    }
-//    
-//    if (!_seeWayBtn.content.text.length) {
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请看房方式"];
-//        return;
-//    }
-//    [self.dataDic setObject:@(1) forKey:@"type"];
-//    [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
-//    [self.dataDic setValue:_priceTF.textfield.text forKey:@"price"];
-//    [self.dataDic setValue:_payWay forKey:@"pay_way"];
-//    [self.dataDic setValue:@(_rentType) forKey:@"property_belong"];
-////    [self.dataDic setValue:_timeBtn.content.text forKey:@"permit_time"];
-//    
+    if ([self isEmpty:_titleTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌标题"];
+        return;
+    }
+    if ([self isEmpty:_priceTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入出租价格"];
+        return;
+    }
+ 
+    for (int i = 0; i < _selectArr.count; i++) {
+        
+        if ([_selectArr[i] integerValue]) {
+            
+            if (!_payWay.length) {
+                
+                _payWay = [NSString stringWithFormat:@"%@",_payArr[0][@"id"]];
+            }else{
+                
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+            }
+        }
+    }
+
+    if (!_payWay.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+        return;
+    }
+
+    if (!_seeWayBtn.content.text.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请看房方式"];
+        return;
+    }
+    [self.dataDic setObject:@(1) forKey:@"type"];
+    [self.dataDic setObject:@(_rentType) forKey:@"rent_type"];
+    [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
+    [self.dataDic setValue:_priceTF.textfield.text forKey:@"price"];
+    [self.dataDic setValue:_payWay forKey:@"receive_way"];
+
+    if (_minPeriodBtn.content.text.length) {
+        
+        [self.dataDic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
+    }
+    
+    if (_maxPeriodBtn.content.text.length) {
+        
+        [self.dataDic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
+    }
+  
     [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
     if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
         
@@ -522,7 +531,7 @@
         }
     }
     _rentImg1.image = [UIImage imageNamed:@"selected"];
-    _rentType = 1;
+    _rentType = 245;
 
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];

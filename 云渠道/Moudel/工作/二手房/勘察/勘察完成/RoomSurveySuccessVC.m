@@ -48,7 +48,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:HouseSurveyFinish_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RentSurveyFinish_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -87,7 +87,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:HouseSurveyFinish_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RentSurveyFinish_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

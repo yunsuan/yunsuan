@@ -192,6 +192,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+//    RoomMaintainModel *model = _dataArr[indexPath.row];
     [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[indexPath.row][@"project_id"]} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);

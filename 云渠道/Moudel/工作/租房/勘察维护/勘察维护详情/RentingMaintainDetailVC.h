@@ -8,6 +8,16 @@
 
 #import "BaseViewController.h"
 
+#import "RoomMaintainModel.h"
+
+typedef void(^RentingMaintainDetailVCBlock)(void);
+
 @interface RentingMaintainDetailVC : BaseViewController
+
+@property (nonatomic, copy) RentingMaintainDetailVCBlock rentingMaintainDetailVCBlock;
+
+@property (nonatomic, assign) BOOL edit;
+
+- (instancetype)initWithSurveyId:(NSString *)surveyId houseId:(NSString *)houseId type:(NSInteger )type;
 
 @end

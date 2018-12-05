@@ -7,22 +7,26 @@
 //
 
 #import "RentingMaintainDetailVC.h"
-#import "SurveySuccessRoomDetailVC.h"
-#import "SurveySuccessOwnerDetailVC.h"
+
 #import "RoomSoldOutVC.h"
-#import "RentingMaintainAddFollowVC.h"
+#import "MaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
 #import "RoomAgencyAddProtocolVC.h"
-#import "RentingMaintainRoomInfoVC.h"
+#import "MaintainRoomInfoVC.h"
 #import "MaintainCustomVC.h"
 #import "MaintainModifyCustomVC.h"
 #import "ModifyTagVC.h"
-#import "RentingModifyProjectAnalysisVC.h"
+#import "ModifyProjectAnalysisVC.h"
 #import "ModifyProjectImageVC.h"
+#import "AddEquipmentVC.h"
+#import "MaintainFollowDetailVC.h"
+#import "ModifyNerborVC.h"
 
 #import "MaintainCell.h"
+//#import "SingleContentCell.h"
 #import "BlueTitleMoreHeader.h"
-#import "RentingMaintainDetailHeader.h"
+#import "MaintainDetailHeader.h"
+//#import "SurveySuccessImgCell.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "SecAllRoomTableCell2.h"
 #import "MaintainAddFollowHeader.h"
@@ -31,15 +35,26 @@
 #import "MaintainRoomInfoCell.h"
 #import "MaintainRoomInfoCell2.h"
 #import "MaintainRoomInfoCell3.h"
+#import "MaintainRoomInfoEquipMentCell.h"
+#import "MaintainRoomInfoNeiborCell.h"
 
 @interface RentingMaintainDetailVC ()<UITableViewDataSource,UITableViewDelegate>
 {
+    //    NSString *_surveyId;
+    NSString *_houseId;
     NSInteger _item;
-    NSArray *_titleArr;
+    //    NSArray *_titleArr;
     NSArray *_titleArr2;
-    NSArray *_roomInfoArr;
-    NSArray *_headerArr;
-    NSInteger _num;
+    //    NSArray *_roomInfoArr;
+    NSMutableDictionary *_houseDic;
+    NSMutableArray *_peopleArr;
+    //    NSMutableDictionary *_infoDic;
+    NSMutableDictionary *_moreDic;
+    NSMutableArray *_followArr;
+    NSMutableArray *_tagArr;
+    NSMutableArray *_matchArr;
+    NSMutableDictionary *_detailDic;
+    NSInteger _type;
 }
 @property (nonatomic, strong) UITableView *mainTable;
 
@@ -47,43 +62,183 @@
 
 @implementation RentingMaintainDetailVC
 
+- (instancetype)initWithSurveyId:(NSString *)surveyId houseId:(NSString *)houseId type:(NSInteger)type
+{
+    self = [super init];
+    if (self) {
+        
+        //        _surveyId = surveyId;
+        _houseId = houseId;
+        _type = type;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
 }
 
 - (void)initDataSource{
     
-    _num = 3;
-    _titleArr = @[@"",@"联系信息",@"业主信息",@"房源信息",@"房源真实图片"];
-    _titleArr2 = @[@"",@"房源实景图片",@"房源配套",@"房源分析"];
-    _headerArr = @[@"挂牌标题：新希望国际大厦   套三   清水房",@"挂牌价格：500月/平",@"物业类型：住宅",@"户型：二室二厅",@"收款方式：押一付三",@"类型：合租",@"卖房意愿度：45",@"卖房急迫度：45",@"参考价格：400月/平",@"关注人数：23",@"预估卖出周期：3周"];
-    _roomInfoArr = @[@[],@[],@[@"高性价比",@"清水房",@"房东人很好"],@[@[@"房源概括：",@"套二，住家装修，高楼层，对中庭。"],@[@"装修描述：",@"房子是业主自住装修，客厅和卧室铺了木地板，有吊顶，卫生间做的蹲便，贴的瓷砖。"],@[@"备注：",@"希望租客是女生；不养宠物；一经发现存在黄赌毒，甲方有权收回房源；"]]];
+    if (_type == 1) {
+        
+        _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"项目分析",@"其他费项"];
+    }else if (_type == 2){
+        
+        _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"配套设施",@"左云右算",@"房源分析",@"其他费项"];
+    }else if (_type == 3){
+        
+        _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"配套设施",@"左云右算",@"房源分析",@"其他费项"];
+    }
+    
+    _houseDic = [@{} mutableCopy];
+    _peopleArr = [@[] mutableCopy];
+    //    _infoDic = [@{} mutableCopy];
+    _followArr = [@[] mutableCopy];
+    _tagArr = [@[] mutableCopy];
+    _matchArr = [@[] mutableCopy];
+    _detailDic = [@{} mutableCopy];
+    _moreDic = [@{} mutableCopy];
 }
 
+- (void)RequestMethod{
+    
+    [BaseRequest GET:RentSurveyDetail_URL parameters:@{@"house_id":_houseId,@"type":@(_type)} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _detailDic = [NSMutableDictionary dictionaryWithDictionary:data[@"detail"]];
+    [_tagArr removeAllObjects];
+    NSArray *arr = _detailDic[@"house_tags"];
+    for (NSDictionary *dic in arr) {
+        
+        [_tagArr addObject:dic[@"tag_name"]];
+    }
+    if ([data[@"house"] isKindOfClass:[NSDictionary class]]) {
+        
+        _houseDic = [NSMutableDictionary dictionaryWithDictionary:data[@"house"]];
+        [_houseDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([key isEqualToString:@"pay_way"]) {
+                
+                if ([obj isKindOfClass:[NSNull class]]) {
+                    
+                    [_houseDic setObject:@[] forKey:key];
+                }else{
+                    
+                    if ([obj isKindOfClass:[NSString class]]) {
+                        
+                        [_houseDic setObject:@[] forKey:key];
+                    }else{
+                        
+                        [_houseDic setObject:obj forKey:key];
+                    }
+                }
+            }else{
+                
+                if ([obj isKindOfClass:[NSNull class]]) {
+                    
+                    [_houseDic setObject:@"" forKey:key];
+                }else{
+                    
+                    [_houseDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }
+            }
+            
+        }];
+    }
+    
+    if ([data[@"contact"] isKindOfClass:[NSArray class]]) {
+        
+        _peopleArr = [NSMutableArray arrayWithArray:data[@"contact"]];
+    }
+    
+    //    if ([data[@"info"] isKindOfClass:[NSDictionary class]]) {
+    //
+    //        _infoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"info"]];
+    
+    //        [_tagArr removeAllObjects];
+    //        NSArray *arr = _detailDic[@"house_tags"];
+    //        for (NSDictionary *dic in arr) {
+    //
+    //            [_tagArr addObject:dic[@"tag_name"]];
+    //        }
+    //    }
+    _matchArr = [NSMutableArray arrayWithArray:_detailDic[@"match_tags"]];
+    
+    if ([data[@"follow"] isKindOfClass:[NSArray class]]) {
+        
+        _followArr = [NSMutableArray arrayWithArray:data[@"follow"]];
+    }
+    
+    if ([data[@"more"] isKindOfClass:[NSDictionary class]]) {
+        
+        _moreDic = [NSMutableDictionary dictionaryWithDictionary:data[@"more"]];
+    }
+    [_mainTable reloadData];
+}
 - (void)ActionRightBtn:(UIButton *)btn{
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        //        RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] init];
-        //        [self.navigationController pushViewController:nextVC animated:YES];
-    }];
+    //    UIAlertAction *protocol = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //
+    ////        RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] init];
+    ////        [self.navigationController pushViewController:nextVC animated:YES];
+    //    }];
     
     UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] init];
-        [self.navigationController pushViewController:nextVC animated:YES];
-        //        GetAgencyProtocolVC *nextVC = [[GetAgencyProtocolVC alloc] init];
-        //        [self.navigationController pushViewController:nextVC animated:YES];
+        [BaseRequest GET:HouseSubNeedAgent_URL parameters:@{@"store_id":_houseDic[@"store_id"]} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
+                nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:_houseDic];
+                nextVC.roomAgencyAddProtocolVCBlock = ^{
+                    
+                    if (self.rentingMaintainDetailVCBlock) {
+                        
+                        self.rentingMaintainDetailVCBlock();
+                    }
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
     }];
     
     UIAlertAction *soldout = [UIAlertAction actionWithTitle:@"下架房源" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        RoomSoldOutVC *nextVC = [[RoomSoldOutVC alloc] init];
+        RoomSoldOutVC *nextVC = [[RoomSoldOutVC alloc] initWithHouseId:_houseId];
+        nextVC.dataDic = @{@"absolute_address":_moreDic[@"absolute_address"],@"house_code":_moreDic[@"house_code"]};
         [self.navigationController pushViewController:nextVC animated:YES];
     }];
     
@@ -91,15 +246,15 @@
         
     }];
     
-    [alert addAction:protocol];
+    //    [alert addAction:protocol];
     [alert addAction:buy];
     [alert addAction:soldout];
     [alert addAction:cancel];
     
     [self.navigationController presentViewController:alert animated:YES completion:^{
         
+        
     }];
-    
 }
 
 
@@ -111,26 +266,33 @@
         return 1;
     }else if (_item == 1){
         
-        return 4;
+        if (_type == 1) {
+            
+            return 4;
+        }else{
+            
+            return 6;
+        }
+        
     }else{
         
-        return 3;
+        return 2;
     }
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//
-//    return UITableViewAutomaticDimension;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return UITableViewAutomaticDimension;
+}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
         
-        RentingMaintainDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RentingMaintainDetailHeader"];
+        MaintainDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MaintainDetailHeader"];
         if (!header) {
             
-            header = [[RentingMaintainDetailHeader alloc] initWithReuseIdentifier:@"RentingMaintainDetailHeader"];
+            header = [[MaintainDetailHeader alloc] initWithReuseIdentifier:@"MaintainDetailHeader"];
             
         }
         [header.infoBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
@@ -140,19 +302,20 @@
         [header.followBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
         [header.followBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
         
-        header.codeL.text = @"房源编号：SCCDPDHPXQ-0302102";
-        header.projectL.text = @"云算公馆  4栋-3单元-904";
-        header.titleL.text = _headerArr[0];
-        header.priceL.text = _headerArr[1];
-        header.propertyL.text = _headerArr[2];
-        header.houseTypeL.text = _headerArr[3];
-        header.payWayL.text = _headerArr[4];
-        header.typeL.text = _headerArr[5];
-        header.intentL.text = _headerArr[6];
-        header.urgentL.text = _headerArr[7];
-        header.RePriceL.text = _headerArr[8];
-        header.attentL.text = _headerArr[9];
-        header.periodL.text = _headerArr[10];
+        header.dataDic = _houseDic;
+        if (_type == 1) {
+            
+            header.typeL.text = @"住宅";
+            
+        }else if (_type == 2){
+            
+            header.typeL.text = @"商铺";
+            
+        }else if (_type == 3){
+            
+            header.typeL.text = @"写字楼";
+        }
+        
         
         if (_item == 0) {
             
@@ -168,15 +331,17 @@
             [header.followBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
-        header.rentingMaintainTagHeaderBlock = ^(NSInteger index) {
+        header.maintainTagHeaderBlock = ^(NSInteger index) {
             
             _item = index;
             [tableView reloadData];
         };
         
-        header.rentingMaintainDetailHeaderBlock = ^{
+        header.maintainDetailHeaderBlock = ^{
             
-            RentingMaintainRoomInfoVC *nextVC = [[RentingMaintainRoomInfoVC alloc] init];
+            MaintainRoomInfoVC *nextVC = [[MaintainRoomInfoVC alloc] initWithDataDic:_moreDic];
+            nextVC.progressArr = [[NSMutableArray alloc] initWithArray:_detailDic[@"progress"]];
+            nextVC.type = _type;
             [self.navigationController pushViewController:nextVC animated:YES];
         };
         return header;
@@ -196,6 +361,14 @@
             header.titleL.text = _titleArr2[section];
             header.lineView.backgroundColor = [UIColor whiteColor];
             
+            if (self.edit) {
+                
+                header.moreBtn.hidden = NO;
+            }else{
+                
+                header.moreBtn.hidden = YES;
+            }
+            
             [header.moreBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
             [header.moreBtn setTitle:@"" forState:UIControlStateNormal];
             [header.moreBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -205,36 +378,92 @@
                 make.width.mas_equalTo(26 *SIZE);
                 make.height.mas_equalTo(26 *SIZE);
             }];
-            if (section == 4) {
-                
-                header.moreBtn.hidden = YES;
-            }else{
-                
-                header.moreBtn.hidden = NO;
-            }
+            
             header.blueTitleMoreHeaderBlock = ^{
                 
                 if (section == 1) {
                     
-                    ModifyProjectImageVC *nextVC = [[ModifyProjectImageVC alloc] init];
+                    ModifyProjectImageVC *nextVC = [[ModifyProjectImageVC alloc] initWithImgArr:_detailDic[@"img_list"]];
+                    nextVC.modifyProjectImageVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    nextVC.houseId = _houseId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }
                 
                 if (section == 2) {
                     
-                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:@[] type:0];
+                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] type:_type];
+                    //                    nextVC.status = [NSString stringWithFormat:@"%ld",_type];
+                    nextVC.houseId = _houseId;
+                    //                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
+                    nextVC.modifyTagSaveBtnBlock = ^(NSArray *array) {
+                        
+                        [self RequestMethod];
+                    };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };
                 if (section == 3) {
                     
-                    RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] init];
+                    if (_type == 1) {
+                        
+                        ModifyProjectAnalysisVC *nextVC = [[ModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+                        nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.modifyProjectAnalysisVCBlock = ^{
+                            
+                            [self RequestMethod];
+                        };
+                        nextVC.houseId = _houseId;
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:_type];
+                        nextVC.titleStr = @"修改";
+                        nextVC.type = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.houseId = _houseId;
+                        nextVC.data = [NSMutableArray arrayWithArray:_matchArr];
+                        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+                            
+                            _matchArr = [NSMutableArray arrayWithArray:data];
+                            [tableView reloadData];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }
+                if (section == 4) {
+                    
+                    ModifyNerborVC *nextVC = [[ModifyNerborVC alloc] initWithData:_detailDic];
+                    nextVC.houseId = _houseId;
+                    nextVC.type = [NSString stringWithFormat:@"%ld",_type];
+                    nextVC.seeWay = _houseDic[@"check_way"];
+                    nextVC.modifyNerborVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
+                if (section == 5) {
+                    
+                    ModifyProjectAnalysisVC *nextVC = [[ModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+                    nextVC.modifyProjectAnalysisVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+                    nextVC.houseId = _houseId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }
             };
             return header;
         }else{
             
-            if (section == 2) {
+            if (section == 1) {
+                
+                if (!self.edit) {
+                    
+                    return nil;
+                }
                 
                 MaintainAddFollowHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MaintainAddFollowHeader"];
                 if (!header) {
@@ -244,7 +473,15 @@
                 
                 header.maintainAddFollowHeaderBlock = ^{
                     
-                    RentingMaintainAddFollowVC *nextVC = [[RentingMaintainAddFollowVC alloc] init];
+                    MaintainAddFollowVC *nextVC = [[MaintainAddFollowVC alloc] initWithHouseId:_houseId dataDic:_houseDic];
+                    nextVC.maintainAddFollowVCBlock = ^{
+                        
+                        if (self.rentingMaintainDetailVCBlock) {
+                            
+                            self.rentingMaintainDetailVCBlock();
+                        }
+                        [self RequestMethod];
+                    };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };
                 
@@ -267,13 +504,13 @@
                         header.addBtn.hidden = YES;
                         break;
                     }
-//                    case 2:
-//                    {
-//                        header.titleL.text = @"出价情况";
-//                        header.moreBtn.hidden = YES;
-//                        header.addBtn.hidden = YES;
-//                        break;
-//                    }
+                    case 2:
+                    {
+                        header.titleL.text = @"出价情况";
+                        header.moreBtn.hidden = YES;
+                        header.addBtn.hidden = YES;
+                        break;
+                    }
                         
                     default:
                         break;
@@ -291,7 +528,7 @@
         
         if (section == 0) {
             
-            return CGFLOAT_MIN;;
+            return CGFLOAT_MIN;
         }else{
             
             return 8 *SIZE;
@@ -311,30 +548,46 @@
     
     if (_item == 0) {
         
-        return _num;
+        if (self.edit) {
+            
+            return _peopleArr.count + 1;
+        }else{
+            
+            return _peopleArr.count;
+        }
+        
     }else if (_item == 1){
         
         if (section == 0) {
             
             return 0;
-        }else if (section == 1 || section == 2){
+        }else if (section == 5 || section == 3){
             
-            return 1;
+            if (_type == 1) {
+                
+                return 2;
+            }else{
+                
+                if (section == 3) {
+                    
+                    return 1;
+                }else{
+                    
+                    return 2;
+                }
+            }
         }else{
             
-            return [_roomInfoArr[section] count];
+            return 1;
         }
     }else{
         
         if (section == 0) {
             
             return 0;
-        }else if (section == 3){
-            
-            return 2;
         }else{
             
-            return 1;
+            return _followArr.count;
         }
     }
 }
@@ -343,7 +596,7 @@
     
     if (_item == 0) {
         
-        if (indexPath.row == _num - 1) {
+        if (indexPath.row == _peopleArr.count) {
             
             AddPeopleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddPeopleCell"];
             if (!cell) {
@@ -372,7 +625,7 @@
                 cell.upBtn.hidden = NO;
             }
             
-            if (indexPath.row == 1) {
+            if (indexPath.row == _peopleArr.count - 1) {
                 
                 cell.downBtn.hidden = YES;
             }else{
@@ -381,9 +634,9 @@
             }
             
             cell.tag = indexPath.row;
-            cell.nameL.text = @"联系人：张三";
-            cell.typeL.text = @"类型：业主- 主权益人";
-            cell.phoneL.text = @"联系电话：15201234567";
+            
+            cell.dataDic = _peopleArr[indexPath.row];
+            
             [cell.nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
                 
                 make.left.equalTo(cell.contentView).offset(28 *SIZE);
@@ -391,17 +644,73 @@
                 make.width.mas_equalTo(cell.nameL.mj_textWith + 10 *SIZE);
             }];
             
+            if (self.edit) {
+                
+                cell.downBtn.hidden = NO;
+                cell.upBtn.hidden = NO;
+            }else{
+                
+                cell.downBtn.hidden = YES;
+                cell.upBtn.hidden = YES;
+            }
             cell.maintainCellBlock = ^(NSInteger index, NSInteger btn) {
                 if (btn == 0) {
                     
-                    MaintainCustomVC *nextVC = [[MaintainCustomVC alloc] init];
+                    MaintainCustomVC *nextVC = [[MaintainCustomVC alloc] initWithDataDic:_peopleArr[index]];
+                    nextVC.edit = self.edit;
+                    nextVC.maintainCustomVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }else if (btn == 1){
                     
-                    
+                    if (index == 0) {
+                        
+                        
+                    }else{
+                        
+                        [BaseRequest GET:HouseSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index - 1][@"contact_id"]} success:^(id resposeObject) {
+                            
+                            NSLog(@"%@",resposeObject);
+                            if ([resposeObject[@"code"] integerValue] == 200) {
+                                
+                                [_peopleArr exchangeObjectAtIndex:index withObjectAtIndex:(index - 1)];
+                                [_mainTable reloadData];
+                            }else{
+                                
+                                [self showContent:resposeObject[@"msg"]];
+                            }
+                        } failure:^(NSError *error) {
+                            
+                            NSLog(@"%@",error);
+                            [self showContent:@"网络错误"];
+                        }];
+                    }
                 }else{
                     
-                    
+                    if (index == _peopleArr.count - 1) {
+                        
+                        
+                    }else{
+                        
+                        [BaseRequest GET:HouseSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index + 1][@"contact_id"]} success:^(id resposeObject) {
+                            
+                            NSLog(@"%@",resposeObject);
+                            if ([resposeObject[@"code"] integerValue] == 200) {
+                                
+                                [_peopleArr exchangeObjectAtIndex:index withObjectAtIndex:(index + 1)];
+                                [_mainTable reloadData];
+                            }else{
+                                
+                                [self showContent:resposeObject[@"msg"]];
+                            }
+                        } failure:^(NSError *error) {
+                            
+                            NSLog(@"%@",error);
+                            [self showContent:@"网络错误"];
+                        }];
+                    }
                 }
             };
             
@@ -409,59 +718,233 @@
         }
     }else if (_item == 1){
         
-        if (indexPath.section > 2) {
+        if (_type == 1) {
             
-            MaintainRoomInfoCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell3"];
-            if (!cell) {
+            if (indexPath.section > 2) {
                 
-                cell = [[MaintainRoomInfoCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell3"];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            if (indexPath.section == 4) {
+                MaintainRoomInfoCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell3"];
+                if (!cell) {
+                    
+                    cell = [[MaintainRoomInfoCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell3"];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                cell.contentL.textColor = YJBlueBtnColor;
+                if (indexPath.section == 4) {
+                    
+                    cell.contentL.textColor = YJBlueBtnColor;
+                }else{
+                    
+                    cell.contentL.textColor = YJContentLabColor;
+                }
+                
+                if (indexPath.row == 0) {
+                    
+                    cell.titleL.text = @"核心卖点:";
+                    if (_detailDic[@"core_selling"]) {
+                        
+                        cell.contentL.text = _detailDic[@"core_selling"];
+                    }else{
+                        
+                        cell.contentL.text = @"暂无数据";
+                    }
+                    
+                }else{
+                    
+                    cell.titleL.text = @"装修描述:";
+                    if (_detailDic[@"decoration_standard"]) {
+                        
+                        cell.contentL.text = _detailDic[@"decoration_standard"];
+                    }else{
+                        
+                        cell.contentL.text = @"暂无数据";
+                    }
+                }
+                
+                return cell;
             }else{
                 
-                cell.contentL.textColor = YJContentLabColor;
+                if (indexPath.section == 1) {
+                    
+                    MaintainRoomInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell"];
+                    if (!cell) {
+                        
+                        cell = [[MaintainRoomInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    if (_detailDic.count) {
+                        
+                        cell.dataArr = _detailDic[@"img_list"];
+                    }else{
+                        
+                        cell.dataArr = [@[] mutableCopy];
+                    }
+                    
+                    [cell.imgColl reloadData];
+                    return cell;
+                }else{
+                    
+                    MaintainRoomInfoCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell2"];
+                    if (!cell) {
+                        
+                        cell = [[MaintainRoomInfoCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell2"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    if (_detailDic.count) {
+                        
+                        [cell.tagView setData:_tagArr];
+                    }else{
+                        
+                        [cell.tagView setData:@[]];
+                    }
+                    
+                    return cell;
+                }
             }
-            cell.titleL.text = _roomInfoArr[indexPath.section][indexPath.row][0];
-            cell.contentL.text = _roomInfoArr[indexPath.section][indexPath.row][1];
-            
-            return cell;
         }else{
             
-            if (indexPath.section == 1) {
+            if (indexPath.section > 4) {
                 
-                MaintainRoomInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell"];
+                MaintainRoomInfoCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell3"];
                 if (!cell) {
                     
-                    cell = [[MaintainRoomInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell"];
+                    cell = [[MaintainRoomInfoCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell3"];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                cell.dataArr = [NSMutableArray arrayWithArray:@[@"",@"",@"",@""]];
-                [cell.imgColl reloadData];
+                if (indexPath.section == 6) {
+                    
+                    cell.contentL.textColor = YJBlueBtnColor;
+                }else{
+                    
+                    cell.contentL.textColor = YJContentLabColor;
+                    if (indexPath.row == 0) {
+                        
+                        cell.titleL.text = @"核心卖点:";
+                        if (_type == 1) {
+                            
+                            if (_detailDic[@"core_selling"]) {
+                                
+                                cell.contentL.text = _detailDic[@"core_selling"];
+                            }else{
+                                
+                                cell.contentL.text = @"暂无数据";
+                            }
+                        }else{
+                            
+                            if (_detailDic[@"advantage"]) {
+                                
+                                cell.contentL.text = _detailDic[@"advantage"];
+                            }else{
+                                
+                                cell.contentL.text = @"暂无数据";
+                            }
+                        }
+                    }else{
+                        
+                        cell.titleL.text = @"装修描述:";
+                        if (_type == 1) {
+                            
+                            if (_detailDic[@"decoration_standard"]) {
+                                
+                                cell.contentL.text = _detailDic[@"decoration_standard"];
+                            }else{
+                                
+                                cell.contentL.text = @"暂无数据";
+                            }
+                        }else{
+                            
+                            if (_detailDic[@"describe"]) {
+                                
+                                cell.contentL.text = _detailDic[@"describe"];
+                            }else{
+                                
+                                cell.contentL.text = @"暂无数据";
+                            }
+                        }
+                    }
+                }
                 
                 return cell;
             }else{
                 
-                MaintainRoomInfoCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell2"];
-                if (!cell) {
+                if (indexPath.section == 1) {
                     
-                    cell = [[MaintainRoomInfoCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell2"];
+                    MaintainRoomInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell"];
+                    if (!cell) {
+                        
+                        cell = [[MaintainRoomInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    if (_detailDic.count) {
+                        
+                        cell.dataArr = _detailDic[@"img_list"];
+                    }else{
+                        
+                        cell.dataArr = [@[] mutableCopy];
+                    }
+                    
+                    [cell.imgColl reloadData];
+                    
+                    return cell;
+                }else{
+                    
+                    if (indexPath.section == 2) {
+                        
+                        MaintainRoomInfoCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell2"];
+                        if (!cell) {
+                            
+                            cell = [[MaintainRoomInfoCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoCell2"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        if (_detailDic.count) {
+                            
+                            
+                            [cell.tagView setData:_tagArr];
+                        }else{
+                            
+                            [cell.tagView setData:@[]];
+                        }
+                        
+                        
+                        return cell;
+                    }else if (indexPath.section == 3){
+                        
+                        MaintainRoomInfoEquipMentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoEquipMentCell"];
+                        if (!cell) {
+                            
+                            cell = [[MaintainRoomInfoEquipMentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoEquipMentCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        cell.dataArr = [NSMutableArray arrayWithArray:_matchArr];
+                        
+                        return cell;
+                        
+                    }else{
+                        
+                        MaintainRoomInfoNeiborCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoNeiborCell"];
+                        if (!cell) {
+                            
+                            cell = [[MaintainRoomInfoNeiborCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoNeiborCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        cell.type = _type;
+                        cell.seeWayL.text = [NSString stringWithFormat:@"看房方式：%@",_houseDic[@"check_way"]];
+                        cell.dataDic = [NSMutableDictionary dictionaryWithDictionary:_detailDic];
+                        
+                        return cell;
+                    }
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                [cell.tagView setData:@[@"高性价比",@"清水房",@"房东人很好"]];
-                //                [cell.tagView];
-                
-                return cell;
             }
         }
     }else{
         
-        if (indexPath.section == 2) {
+        if (indexPath.section == 1) {
             
             NSString * Identifier = @"CustomDetailTableCell2";
             CustomDetailTableCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
@@ -471,20 +954,9 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            //            NSArray *arr = [self getDetailConfigArrByConfigState:FOLLOW_TYPE];
-            //                [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            //
-            //                    if ([_FollowArr[indexPath.row][@"follow_type"] integerValue] == [obj[@"id"] integerValue]) {
-            //
-            //                        cell.wayL.text = [NSString stringWithFormat:@"跟进方式:%@",obj[@"param"]];
-            //                        *stop = YES;
-            //                    }
-            //                }];
-            
-            //                cell.intentionL.text = [NSString stringWithFormat:@"购买意向度:%@",_FollowArr[indexPath.row][@"intent"]];
-            //                cell.urgentL.text = [NSString stringWithFormat:@"购买紧迫度:%@",_FollowArr[indexPath.row][@"urgency"]];
-            //                cell.contentL.text = _FollowArr[indexPath.row][@"comment"];
-            //                cell.timeL.text = [NSString stringWithFormat:@"跟进时间:%@",_FollowArr[indexPath.row][@"follow_time"]];
+            cell.wayL.text = [NSString stringWithFormat:@"跟进方式：%@",_followArr[indexPath.row][@"follow_type"]];
+            cell.contentL.text = _followArr[indexPath.row][@"comment"];
+            cell.timeL.text = _followArr[indexPath.row][@"follow_time"];
             
             return cell;
         }else{
@@ -515,13 +987,27 @@
     
     if (_item == 0) {
         
-        if (indexPath.row == _num - 1) {
+        if (indexPath.row == _peopleArr.count) {
             
             MaintainModifyCustomVC *nextVC = [[MaintainModifyCustomVC alloc] init];
+            nextVC.houseId = _houseId;
+            nextVC.status = @"添加";
+            nextVC.maintainModifyCustomVCBlock = ^(NSDictionary *dic) {
+                
+                if (self.rentingMaintainDetailVCBlock) {
+                    
+                    self.rentingMaintainDetailVCBlock();
+                }
+                [self RequestMethod];
+            };
             [self.navigationController pushViewController:nextVC animated:YES];
-            //            _num += 1;
-            //            [tableView reloadData];
         }
+    }
+    if (_item == 2) {
+        
+        MaintainFollowDetailVC *nextVC = [[MaintainFollowDetailVC alloc] initWithDataDic:_followArr[indexPath.row]];
+        [self.navigationController pushViewController:nextVC animated:YES];
+        
     }
 }
 
@@ -530,7 +1016,10 @@
     self.titleLabel.text = @"房源详情";
     self.navBackgroundView.hidden = NO;
     
-    self.rightBtn.hidden = NO;
+    if (self.edit) {
+        
+        self.rightBtn.hidden = NO;
+    }
     [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -541,7 +1030,6 @@
     _mainTable.rowHeight = UITableViewAutomaticDimension;
     _mainTable.estimatedRowHeight = 260 *SIZE;
     _mainTable.estimatedSectionHeaderHeight = 476 *SIZE;
-    _mainTable.sectionHeaderHeight = UITableViewAutomaticDimension;
     _mainTable.backgroundColor = self.view.backgroundColor;
     _mainTable.delegate = self;
     _mainTable.dataSource = self;
