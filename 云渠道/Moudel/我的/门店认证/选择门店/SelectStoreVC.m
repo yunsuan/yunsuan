@@ -14,14 +14,15 @@
 #import "SelectStoreCollCell.h"
 #import "SelectStoreCell.h"
 
+#import "LocationManager.h"
 
 @interface SelectStoreVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
 {
     
-//    NSString *_province;
-//    NSString *_city;
-//    NSString *_area;
+    NSString *_province;
+    NSString *_city;
+    NSString *_area;
     NSString *_name;
     NSString *_id;
     NSMutableArray *_dataArr;
@@ -30,7 +31,7 @@
     NSMutableArray *_cityArr;
     NSMutableArray *_areaArr;
     NSMutableArray *_titleArr;
-    NSString *_cityCode;
+//    NSString *_cityCode;
 }
 
 @property (nonatomic, strong) UITableView *selecTable;
@@ -56,13 +57,22 @@
 
 - (void)initDataSource{
     
-    _cityCode = @"110101";
+    if ([LocationManager GetCityCode]) {
+        
+//        _city = [LocationManager GetCityCode];
+        _province = [NSString stringWithFormat:@"%@0000",[[LocationManager GetCityCode] substringToIndex:2]];
+    }else{
+        
+        _province = @"110000";
+    }
+    
+//    _cityCode = @"110101";
     _dataArr = [@[] mutableCopy];
     _selectArr = [@[] mutableCopy];
     
-    _titleArr = [[NSMutableArray alloc] initWithArray:@[@"北京市",@"不限",@"不限"]];
     _cityArr = [@[] mutableCopy];
     _areaArr = [@[] mutableCopy];
+    
     NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
     
     NSError *err;
@@ -71,12 +81,59 @@
                                                     error:&err];
     _cityArr = [NSMutableArray arrayWithArray:_AddressArr[0][@"city"]];
     _areaArr = [NSMutableArray arrayWithArray:_cityArr[0][@"district"]];
+    
+    NSString *str;
+    if ([LocationManager GetCityName]) {
+        
+        str = [NSString stringWithFormat:@"%@0000",[[LocationManager GetCityCode] substringToIndex:2]];
+        for (int i = 0; i < _AddressArr.count; i++) {
+            
+            if ([_province integerValue] == [_AddressArr[i][@"code"] integerValue]) {
+                
+                _cityArr = [NSMutableArray arrayWithArray:_AddressArr[i][@"city"]];
+                break;
+            }
+        }
+    }
+    if ([LocationManager GetCityName]) {
+        
+        NSString *proName;
+        for (int i = 0; i < _AddressArr.count; i++) {
+            
+            if ([str integerValue] == [_AddressArr[i][@"code"] integerValue]) {
+                
+                proName = _AddressArr[i][@"name"];
+                break;
+            }
+        }
+        _titleArr = [[NSMutableArray alloc] initWithArray:@[proName,@"不限",@"不限"]];
+    }else{
+        
+        _titleArr = [[NSMutableArray alloc] initWithArray:@[@"北京",@"不限",@"不限"]];
+    }
 }
 
 - (void)RequestMethod{
     
-
-    [BaseRequest GET:StoreAuthStoreList_URL parameters:@{@"province":_cityCode} success:^(id resposeObject) {
+    NSDictionary *dic;
+    
+    if (_area.length) {
+        
+        dic = @{@"province":_province,
+                @"city":_city,
+                @"district":_area
+                };
+    }else if (_city.length){
+        
+        dic = @{@"province":_province,
+                @"city":_city
+                };
+    }else{
+        
+        dic = @{@"province":_province
+                };
+    }
+    [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
         
         [_dataArr removeAllObjects];
         NSLog(@"%@",resposeObject);
@@ -163,7 +220,9 @@
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_AddressArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
           
-            _cityCode = code;
+            _area = @"";
+            _city = @"";
+            _province = code;
             [_titleArr replaceObjectAtIndex:0 withObject:name];
             [_titleArr replaceObjectAtIndex:1 withObject:@"不限"];
             [_titleArr replaceObjectAtIndex:2 withObject:@"不限"];
@@ -174,10 +233,26 @@
         [self.view addSubview:view];
     }else if (indexPath.item == 1){
     
+        if (!_cityArr.count) {
+            
+            if (_province.length) {
+                
+                for (int i = 0; i < _AddressArr.count; i++) {
+                    
+                    if ([_province integerValue] == [_AddressArr[i][@"code"] integerValue]) {
+                        
+                        _cityArr = [NSMutableArray arrayWithArray:_AddressArr[i][@"city"]];
+                        break;
+                    }
+                }
+            }
+        }
+        
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_cityArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
             
-            _cityCode = code;
+            _area = @"";
+            _city = code;
             [_titleArr replaceObjectAtIndex:1 withObject:name];
             [_titleArr replaceObjectAtIndex:2 withObject:@"不限"];
             _areaArr = [NSMutableArray arrayWithArray:nextArr];
@@ -190,7 +265,7 @@
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_areaArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
             
-            _cityCode = code;
+            _area = code;
             [_titleArr replaceObjectAtIndex:2 withObject:name];
 //            _areaArr = [NSMutableArray arrayWithArray:nextArr];
             [collectionView reloadData];
