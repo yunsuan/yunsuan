@@ -36,4 +36,6 @@
 
 @property (nonatomic, copy) NSString *property_type;
 
+@property (nonatomic, copy) NSString *project_id;
+
 @end
