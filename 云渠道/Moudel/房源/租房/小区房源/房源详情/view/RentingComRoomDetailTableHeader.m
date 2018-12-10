@@ -108,10 +108,10 @@
         _addressL.text = model.absolute_address;
     }
     
-    //    if (model.sale_state) {
-    //
-    //        _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
-    //    }
+    if (model.sale_state) {
+    
+        _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
+    }
     
     //    NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
     //    NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",15]];
@@ -130,27 +130,27 @@
     //        }];
     //    }
     
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
+//    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
     [_wuyeview setData:model.property_type];
-    [self.contentView addSubview:_wuyeview];
+//    [self.contentView addSubview:_wuyeview];
     
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
+//    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
     [_tagview setData:model.project_tags];
-    [self.contentView addSubview:_tagview];
+//    [self.contentView addSubview:_tagview];
     
     
     if (model.average_price) {
         
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考租金 ￥%@元/月",model.average_price]];
-        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 *SIZE] range:NSMakeRange(0, 3)];
-        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 *SIZE] range:NSMakeRange(3, 1)];
-        [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 3)];
+        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 *SIZE] range:NSMakeRange(0, 5)];
+        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 *SIZE] range:NSMakeRange(5, 1)];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 5)];
         _priceL.attributedText = attr;
     }else{
         
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考价格 "]];
-        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 *SIZE] range:NSMakeRange(0, 3)];
-        [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 3)];
+        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 *SIZE] range:NSMakeRange(0, 4)];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 4)];
         _priceL.attributedText = attr;
     }
     
@@ -248,8 +248,8 @@
     [self.contentView addSubview:_statusL];
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_attentBtn setImage:[UIImage imageNamed:@"subs"] forState:UIControlStateNormal];
+//    [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
     _attentBtn.userInteractionEnabled = NO;
     [self.contentView addSubview:_attentBtn];
     
@@ -348,16 +348,16 @@
         
         make.left.equalTo(self.contentView).offset(230 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(14 *SIZE);
-        make.right.equalTo(self.contentView).offset(-15 *SIZE);
+        make.right.equalTo(self.contentView).offset(-43 *SIZE);
     }];
     
-    //    [_attentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(self.contentView).offset(326 *SIZE);
-    //        make.top.equalTo(_titleL.mas_bottom).offset(5 *SIZE);
-    //        make.width.equalTo(@(29 *SIZE));
-    //        make.height.equalTo(@(29 *SIZE));
-    //    }];
+    [_attentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+        make.left.equalTo(self.contentView).offset(326 *SIZE);
+        make.top.equalTo(_titleL.mas_bottom).offset(5 *SIZE);
+        make.width.equalTo(@(29 *SIZE));
+        make.height.equalTo(@(29 *SIZE));
+    }];
     
     [_wuyeview mas_makeConstraints:^(MASConstraintMaker *make) {
         

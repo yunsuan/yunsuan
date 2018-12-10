@@ -74,7 +74,7 @@
     
     if (dataDic[@"price"]) {
         
-        _priceL.text = [NSString stringWithFormat:@"出租价格:%@万",dataDic[@"price"]];
+        _priceL.text = [NSString stringWithFormat:@"出租价格:%@元",dataDic[@"price"]];
     }else{
         
         _priceL.text = [NSString stringWithFormat:@"出租价格:暂无数据"];
