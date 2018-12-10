@@ -36,7 +36,7 @@
 /**
  *  全局
  */
-#define YQDversion @"1.1"
+#define YQDversion @"1.2"
 #define LOGINENTIFIER @"logIndentifier"
 #define LOGINSUCCESS @"logInSuccessdentifier"
 #define redirectUrl @"http://www.ccsoft.com.cn/"
