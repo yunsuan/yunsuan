@@ -8,23 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+#import "RentingAllRoomProjectModel.h"
+
 #import "TagView.h"
 
 @interface RentingAllRoomTableCell : UITableViewCell
 
+@property (nonatomic, strong) RentingAllRoomProjectModel *model;
+
 @property (nonatomic, strong) TagView *tagView;
 
 @property (nonatomic, strong) TagView *tagView2;
-//
-//@property (nonatomic, strong) UILabel *plotL;
-//
-//@property (nonatomic, strong) UILabel *floorL;
-//
-//@property (nonatomic, strong) UILabel *classL;
 
 @property (nonatomic, strong) UILabel *payWayL;
-
-//@property (nonatomic, strong) UILabel *periodL;
 
 @property (nonatomic, strong) UILabel *liftL;
 
@@ -33,8 +29,6 @@
 @property (nonatomic, strong) UILabel *decorateL;
 
 @property (nonatomic, strong) UILabel *faceL;
-
-//@property (nonatomic, strong) UILabel *intakeL;
 
 @property (nonatomic, strong) UILabel *intentL;
 

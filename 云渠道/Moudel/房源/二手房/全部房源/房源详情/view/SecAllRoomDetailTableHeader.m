@@ -45,12 +45,13 @@
     
     _propertyL.text = model.property_type;
     
-    _priceL.text = [NSString stringWithFormat:@"￥%@万",model.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@月/平",model.price];
     
     _typeL.text = model.house_type;
     
     _areaL.text = [NSString stringWithFormat:@"%@㎡",model.build_area];
-
+    _areaTL.text = @"面积";
+    
     if ([model.price_change integerValue] == 0) {
         
         _statusImg.image = [UIImage imageNamed:@""];
@@ -70,6 +71,7 @@
     _propertyL.text = storeModel.property_type;
     
     _priceL.text = [NSString stringWithFormat:@"￥%@元/㎡",storeModel.price];
+    _priceTL.text = @"租金";
     
     _typeL.text = storeModel.house_type;
     
@@ -376,7 +378,7 @@
     _moreView = [[UIView alloc] initWithFrame:CGRectMake(0, 249 *SIZE, SCREEN_Width, 67 *SIZE)];
     _moreView.backgroundColor = [UIColor whiteColor];
 //    NSArray *titleArr = @[@"售价",@"房型",@"产权面积"];
-    NSArray *titleArr = @[@"售价",@"房型",@"产权面积"];
+    NSArray *titleArr = @[@"售价",@"户型",@"产权面积"];
     for (int i = 0; i < 3; i++) {
         
         UIView *line = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_Width / 3 * i, 17 *SIZE, SIZE, 36 *SIZE)];

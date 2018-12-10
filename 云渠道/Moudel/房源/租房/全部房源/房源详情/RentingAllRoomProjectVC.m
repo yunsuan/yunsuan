@@ -10,27 +10,33 @@
 #import <BaiduMapAPI_Map/BMKMapView.h>
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
+#import "YBImageBrowserModel.h"
+#import "YBImageBrowser.h"
 
 #import "RentingAllRoomProjectVC.h"
-#import "RentingAllRoomDetailInfoVC.h"
+#import "SecComRoomDetailVC.h"
+#import "SecAllRoomDetailVC.h"
 
 #import "SecAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
-#import "RentingAllRoomTableCell.h"
-//#import "SecAllRoomTableCell2.h"
+#import "SecAllRoomTableCell.h"
 #import "SecAllRoomTableCell3.h"
-#import "SecAllRoomTableCell4.h"
 #import "RoomDetailTableCell4.h"
-#import "RoomDetailTableCell5.h"
+#import "SecAllRoomTableOtherHouseCell.h"
 
-@interface RentingAllRoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,BMKMapViewDelegate,RoomDetailTableCell4Delegate,BMKPoiSearchDelegate,UIGestureRecognizerDelegate>
+@interface RentingAllRoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,YBImageBrowserDelegate,BMKPoiSearchDelegate,BMKMapViewDelegate,RoomDetailTableCell4Delegate,UIGestureRecognizerDelegate>
 {
-    
     CLLocationCoordinate2D _leftBottomPoint;
     CLLocationCoordinate2D _rightBottomPoint;//地图矩形的顶点
-//    NSString *_phone;
-//    NSString *_phone_url;
     NSString *_name;
+    NSString *_houseId;
+    SecAllRoomProjectModel *_model;
+    NSMutableArray *_imgArr;
+    NSMutableDictionary *_focusDic;
+    NSMutableArray *_houseArr;
+    NSString *_city;
+    NSString *_focusId;
+    NSString *_phone;
 }
 @property (nonatomic, strong) UITableView *roomTable;
 
@@ -46,26 +52,182 @@
 
 @implementation RentingAllRoomProjectVC
 
+- (instancetype)initWithHouseId:(NSString *)houseId city:(NSString *)city
+{
+    self = [super init];
+    if (self) {
+        
+        _houseId = houseId;
+        _city = city;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
+    
 }
 
 - (void)initDataSource{
     
+    _imgArr = [@[] mutableCopy];
+    _model = [[SecAllRoomProjectModel alloc] init];
+    _focusDic = [@{} mutableCopy];
+    _houseArr = [@[] mutableCopy];
 }
+
+- (void)RequestMethod{
+    
+    NSDictionary *dic = @{@"house_id":_houseId,
+                          @"agent_id":[UserModel defaultModel].agent_id,
+                          @"type":@(1)
+                          };
+    [BaseRequest GET:RentHouseDetail_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _phone = [NSString stringWithFormat:@"%@",data[@"agent_info"]];
+    
+    if ([data[@"basic_info"] isKindOfClass:[NSDictionary class]]) {
+        
+        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[@"basic_info"]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                if ([obj isKindOfClass:[NSNumber class]]) {
+                    
+                    [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }
+            }
+        }];
+        _model = [[SecAllRoomProjectModel alloc] initWithDictionary:tempDic];
+    }
+    
+    [_imgArr removeAllObjects];
+    if ([data[@"img"] isKindOfClass:[NSArray class]]) {
+        
+        NSArray *arr = data[@"img"];
+        for ( int i = 0; i < arr.count; i++) {
+            
+            if ([arr[i] isKindOfClass:[NSDictionary class]]) {
+                
+                NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:arr[i]];
+                
+                [_imgArr addObject:tempDic];
+            }
+        }
+    }
+    
+    if ([data[@"focus"] isKindOfClass:[NSDictionary class]]) {
+        
+        if ([data[@"focus"][@"is_focus"] integerValue]) {
+            
+            _focusId = [NSString stringWithFormat:@"%@",data[@"focus"][@"is_focus"]];
+            [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+        }
+        _focusDic = [NSMutableDictionary dictionaryWithDictionary:data[@"focus"]];
+    }
+    _attentBtn.userInteractionEnabled = YES;
+    
+    if ([data[@"other"] isKindOfClass:[NSArray class]]) {
+        
+        _houseArr = [NSMutableArray arrayWithArray:data[@"other"]];
+    }
+    
+    [_roomTable reloadData];
+}
+
 
 - (void)ActionRecommendBtn:(UIButton *)btn{
     
+    if (_phone.length) {
+        
+        //获取目标号码字符串,转换成URL
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_phone]];
+        //调用系统方法拨号
+        [[UIApplication sharedApplication] openURL:url];
+    }else{
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+    }
     //    CustomListVC *nextVC = [[CustomListVC alloc] initWithProjectId:_projectId];
     //    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)ActionAttentBtn:(UIButton *)btn{
     
+    if (_focusId.length) {
+        
+        [BaseRequest GET:PersonalCancelFocusHouse_URL parameters:@{@"focus_id":_focusId} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                _focusId = @"";
+                [self showContent:@"取消关注成功"];
+                [self RequestMethod];
+                [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }else{
+        
+        [BaseRequest GET:PersonalFocusHouse_URL parameters:@{@"house_id":_houseId,@"type":@"1"} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                _focusId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+                [self showContent:@"关注成功"];
+                [self RequestMethod];
+                [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }
+}
+
+#pragma mark -- delegate
+
+- (void)Cell4collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSArray * namearr = @[@"教育",@"公交站点",@"医院",@"购物",@"餐饮"];
+    [self beginSearchWithname:namearr[indexPath.row]];
 }
 
 #pragma mark -- tableview
@@ -84,21 +246,15 @@
     return 1;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//
-//    if (!section) {
-//
-//        return UITableViewAutomaticDimension;
-//    }else{
-//
-//        return 40 *SIZE;
-//    }
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    if (section == 2) {
+        
+        return 0;
+    }
+    return UITableViewAutomaticDimension;
+}
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//    return <#expression#>
-//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
@@ -114,14 +270,59 @@
             
             header = [[SecAllRoomDetailTableHeader alloc] initWithReuseIdentifier:@"SecAllRoomDetailTableHeader"];
         }
-        header.titleL.text = @"FUNX自由青年公寓";
-        //        [header.tagview setData:@[@"学区房",@"地铁房",@"电梯房"]];
-        header.attentL.text = @"关注人数:23";
         
-        header.propertyL.text = @"住宅";
-        header.priceL.text = @"¥16000元/m2";
-        header.typeL.text = @"2室2厅";
-        header.areaL.text = @"99m2";
+        header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
+        
+        header.model = _model;
+        
+        if (_focusDic.count) {
+            
+            header.attentL.text = [NSString stringWithFormat:@"关注人数：%@人",_focusDic[@"num"]];
+        }else{
+            
+            header.attentL.text = @"关注人数：0人";
+        }
+        
+        header.secAllRoomDetailTableHeaderImgBlock = ^(NSInteger num, NSArray *imgArr) {
+            
+            if (imgArr.count) {
+                
+                NSMutableArray *tempArr = [NSMutableArray array];
+                
+                NSMutableArray *tempArr1 = [NSMutableArray array];
+                for (NSDictionary *dic in imgArr) {
+                    
+                    for (NSDictionary *subDic in dic[@"list"]) {
+                        
+                        [tempArr1 addObject:subDic[@"img_url"]];
+                    }
+                }
+                [tempArr1 enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    
+                    YBImageBrowserModel *model = [YBImageBrowserModel new];
+                    model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj]];
+                    [tempArr addObject:model];
+                }];
+                
+                [_imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    
+                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:obj];
+                    [tempDic setObject:obj[@"type"] forKey:@"name"];
+                    
+                    [tempDic setObject:obj[@"list"] forKey:@"data"];
+                    [_imgArr replaceObjectAtIndex:idx withObject:tempDic];
+                    
+                }];
+                YBImageBrowser *browser = [YBImageBrowser new];
+                browser.delegate = self;
+                browser.dataArray = tempArr;
+                browser.albumArr = _imgArr;
+                browser.infoid = _model.info_id;
+                browser.currentIndex = num;
+                [browser show];
+            }
+        };
+        
         return header;
     }else{
         
@@ -136,39 +337,49 @@
         switch (section) {
             case 1:
             {
-                header.titleL.text = @"房源信息";
-                [header.moreBtn setTitle:@"查看全部 >>" forState:UIControlStateNormal];
-                header.secAllRoomDetailMoreBlock = ^{
+                if (_model.house_code.length) {
                     
-                    RentingAllRoomDetailInfoVC *nextVC = [RentingAllRoomDetailInfoVC new];
-                    [self.navigationController pushViewController:nextVC animated:YES];
-                };
+                    header.titleL.text = [NSString stringWithFormat:@"房源信息(%@)",_model.house_code];
+                }else{
+                    
+                    header.titleL.text = @"房源信息";
+                }
+                
+                header.moreBtn.hidden = YES;
+                header.line.hidden = YES;
                 header.addBtn.hidden = YES;
                 break;
             }
-            case 2:{
-                
-                return nil;
+            case 2:
+            {
+                header = nil;
                 break;
             }
             case 3:
             {
-                header.titleL.text = @"房源动态";
-                header.moreBtn.hidden = YES;
+                header.titleL.text = _model.project_name;
+                [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
+                header.secAllRoomDetailMoreBlock = ^{
+                    
+                    if (_model.project_id) {
+                        
+                        SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+                        nextVC.type = @"0";
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+                    }
+                };
                 header.addBtn.hidden = YES;
                 break;
             }
             case 4:
             {
-                header.titleL.text = @"运算公馆";
-                [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
-                header.addBtn.hidden = YES;
-                break;
-            }
-            case 5:
-            {
-                header.titleL.text = @"匹配的客户（23）";
+                header.titleL.text = @"小区其他房源";
                 header.moreBtn.hidden = YES;
+                header.addBtn.hidden = YES;
+                header.line.hidden = YES;
                 break;
             }
             default:
@@ -188,30 +399,17 @@
     
     if (indexPath.section == 1) {
         
-        RentingAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomTableCell"];
+        SecAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell"];
         if (!cell) {
             
-            cell = [[RentingAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomTableCell"];
+            cell = [[SecAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        [cell.tagView setData:@[@"学区房",@"地铁房",@"电梯房"]];
-        [cell.tagView2 setData:@[@"高性价比",@"房东人很好"]];
+        cell.model = _model;
         
-//        cell.plotL.text = @"小区：云算公馆";
-//        cell.floorL.text = @"楼层：32/12层";
-//        cell.classL.text = @"租赁类型：合租";
-        cell.payWayL.text = @"付款方式：押一付三";
-//        cell.periodL.text = @"租期：3~12个月";
-        cell.liftL.text = @"电梯：有";
-        cell.faceL.text = @"朝向：东南";
-        cell.seeL.text = @"看房方式：预约看房";
-        cell.decorateL.text = @"装修：中装";
-//        cell.intakeL.text = @"入住：随时入住";
-        cell.intentL.text = @"出租意愿度：45";
-        cell.urgentL.text = @"出租急迫度：56";
         return cell;
-    }else if (indexPath.section == 2){
+    }if (indexPath.section == 2) {
         
         RoomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell4"];
         if (!cell) {
@@ -237,32 +435,18 @@
                 make.bottom.equalTo(cell.contentView).offset(-59 *SIZE);
             }];
         }
-        //            CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
-        //            [_mapView setCenterCoordinate:cllocation animated:YES];
-        //            BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-        //            annotation.coordinate = cllocation;
-        //            annotation.title = _model.project_name;
-        //            [_mapView addAnnotation:annotation];
-        //            cell.delegate = self;
-        //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }else if (indexPath.section == 3) {
-        
-        SecAllRoomTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell4"];
-        if (!cell) {
-            
-            cell = [[SecAllRoomTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell4"];
-        }
+        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+        [_mapView setCenterCoordinate:cllocation animated:YES];
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        annotation.coordinate = cllocation;
+        annotation.title = _model.project_name;
+        [_mapView addAnnotation:annotation];
+        //                    cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.daysL.text = @"16";
-        cell.allL.text = @"18";
-        cell.intentL.text = @"56";
-        //        cell.recentL.text = @"最近带看2018-03-12 >>";
-        
         return cell;
-    }else if (indexPath.section == 4){
+        
+    }else if (indexPath.section == 3){
         
         SecAllRoomTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell3"];
         if (!cell) {
@@ -271,35 +455,64 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.priceL.text = @"参考均价：8000元/m2";
-        //        cell.timeL.text = @"建筑年代：2017年建";
-        cell.buildL.text = @"楼栋总数：7栋";
-        cell.roomL.text = @"房屋总数：115户";
+        cell.model = _model;
+        
         return cell;
     }else{
         
-        RoomDetailTableCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell5"];
+        SecAllRoomTableOtherHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableOtherHouseCell"];
         if (!cell) {
             
-            cell = [[RoomDetailTableCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell5"];
+            cell = [[SecAllRoomTableOtherHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableOtherHouseCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.nameL.text = @"张三";
-        cell.priceL.text = @"意向总价：80-100万";
-        cell.typeL.text = @"意向户型：三室一厅一卫";
-        cell.areaL.text = @"意向区域：郫都区- 德源大道";
-        cell.intentionRateL.text = @"购买意向度：23";
-        cell.urgentRateL.text = @"购买紧迫度：23";
-        cell.matchRateL.text = @"匹配度：80%";
-        cell.phoneL.text = @"1587374859";
+        if (_houseArr.count) {
+            
+            cell.num = _houseArr.count;
+        }else{
+            
+            cell.num = 1;
+        }
+        
+        if (_houseArr.count) {
+            
+            cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
+            [cell.cellColl reloadData];
+        }else{
+            
+            [cell.cellColl reloadData];
+        }
+        
+        cell.secAllRoomTableOtherHouseCellCollBlock = ^(NSInteger index) {
+            
+            if (_houseArr.count) {
+                
+                SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:_houseArr[index][@"house_id"] city:_city];
+                nextVC.type = [_houseArr[index][@"type"] integerValue];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
+        };
         
         return cell;
+        
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (indexPath.section == 3) {
+        
+        if (_model.project_id.length) {
+            
+            SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+            nextVC.type = @"0";
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+        }
+    }
 }
 
 - (void)initUI{
@@ -319,24 +532,21 @@
     [self.view addSubview:_roomTable];
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _attentBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+    _attentBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 100 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     _attentBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
-    [_attentBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
+    [_attentBtn setBackgroundColor:COLOR(74, 211, 195, 1)];
     [_attentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:_attentBtn];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _recommendBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+    _recommendBtn.frame = CGRectMake(100 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 260 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_recommendBtn setTitle:@"快速推荐" forState:UIControlStateNormal];
+    [_recommendBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
-    //    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
-    
-    //        [self.view addSubview:_recommendBtn];
-    //    }
+    [self.view addSubview:_recommendBtn];
     
 }
 
@@ -360,6 +570,7 @@
 }
 
 - (void)beginSearchWithname:(NSString *)name{
+    
     _name = name;
     _poisearch = [self poisearch];
     BMKBoundSearchOption *boundSearchOption = [[BMKBoundSearchOption alloc]init];
@@ -396,12 +607,12 @@
             [self addAnimatedAnnotationWithName:poi.name withAddress:poi.pt];
         }
         
-        //        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
-        //        [_mapView setCenterCoordinate:cllocation animated:YES];
-        //        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-        //        annotation.coordinate = cllocation;
-        //        annotation.title = _model.project_name;
-        //        [_mapView addAnnotation:annotation];
+        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+        [_mapView setCenterCoordinate:cllocation animated:YES];
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        annotation.coordinate = cllocation;
+        annotation.title = _model.project_name;
+        [_mapView addAnnotation:annotation];
         
     } else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
         NSLog(@"起始点有歧义");
@@ -423,30 +634,30 @@
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
         newAnnotationView.pinColor = BMKPinAnnotationColorRed;
         newAnnotationView.animatesDrop = YES;// 设置该标注点动画显示
-        //        if ([annotation.title isEqualToString:_model.project_name]) {
-        //            newAnnotationView.image = [UIImage imageNamed:@"coordinates"];
-        //        }
-        //        else
-        //        {
-        //            NSArray *arr= @[@"教育",@"公交站点",@"医院",@"购物",@"餐饮"];
-        //            if ([_name isEqualToString:arr[0]]) {
-        //                newAnnotationView.image = [UIImage imageNamed:@"education"];
-        //            }
-        //            else if ([_name isEqualToString:arr[1]]) {
-        //                newAnnotationView.image = [UIImage imageNamed:@"traffic"];
-        //            }
-        //            else if ([_name isEqualToString:arr[2]]) {
-        //                newAnnotationView.image = [UIImage imageNamed:@"hospital"];
-        //            }
-        //            else if ([_name isEqualToString:arr[3]]) {
-        //                newAnnotationView.image = [UIImage imageNamed:@"shopping"];
-        //            }
-        //            else
-        //            {
-        //                newAnnotationView.image = [UIImage imageNamed:@"caterin"];
-        //            }
-        //
-        //        }
+        if ([annotation.title isEqualToString:_model.project_name]) {
+            newAnnotationView.image = [UIImage imageNamed:@"coordinates"];
+        }
+        else
+        {
+            NSArray *arr= @[@"教育",@"公交站点",@"医院",@"购物",@"餐饮"];
+            if ([_name isEqualToString:arr[0]]) {
+                newAnnotationView.image = [UIImage imageNamed:@"education"];
+            }
+            else if ([_name isEqualToString:arr[1]]) {
+                newAnnotationView.image = [UIImage imageNamed:@"traffic"];
+            }
+            else if ([_name isEqualToString:arr[2]]) {
+                newAnnotationView.image = [UIImage imageNamed:@"hospital"];
+            }
+            else if ([_name isEqualToString:arr[3]]) {
+                newAnnotationView.image = [UIImage imageNamed:@"shopping"];
+            }
+            else
+            {
+                newAnnotationView.image = [UIImage imageNamed:@"caterin"];
+            }
+            
+        }
         
         return newAnnotationView;
     }

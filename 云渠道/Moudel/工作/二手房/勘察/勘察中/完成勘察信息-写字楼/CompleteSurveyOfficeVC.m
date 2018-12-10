@@ -251,6 +251,7 @@
                     make.top.equalTo(self->_levelBtn.mas_bottom).offset(30 *SIZE);
                     make.width.mas_equalTo(257 *SIZE);
                     make.height.mas_equalTo(33 *SIZE);
+
                 }];
                 
                 [self->_rentalL mas_makeConstraints:^(MASConstraintMaker *make) {

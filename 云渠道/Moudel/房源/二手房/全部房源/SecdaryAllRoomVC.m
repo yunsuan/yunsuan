@@ -25,17 +25,13 @@
     
     NSInteger _page;
     NSMutableArray *_dataArr;
-//    NSString *_provice;
     NSString *_city;
     NSString *_district;
     NSString *_price;
     NSString *_type;
-//    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
-//    NSString *_status;
     NSMutableArray *_searchArr;
-//    NSArray *_tagsArr;
     NSArray *_propertyArr;
     BOOL _is1;
     BOOL _is2;

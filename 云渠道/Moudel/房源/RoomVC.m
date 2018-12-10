@@ -364,7 +364,9 @@
     
     vc.roomChildVCRentModelBlock = ^(RentingAllTableModel *model) {
         
-        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] init];
+        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
+        nextVC.type = [model.type integerValue];
+        nextVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     

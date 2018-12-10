@@ -219,15 +219,16 @@
         [self.view addSubview:view];
     }else{
         
-        NSMutableArray *arr = [@[] mutableCopy];
-        for (int i = 0; i < [[self getDetailConfigArrByConfigState:SYSTEM_FUNC] count]; i++) {
-            
-            if (i < 2) {
-                
-                [arr addObject:[self getDetailConfigArrByConfigState:SYSTEM_FUNC][i]];
-            }
-        }
-        SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:arr];
+//        NSMutableArray *arr = [@[] mutableCopy];
+//        for (int i = 0; i < [[self getDetailConfigArrByConfigState:SYSTEM_FUNC] count]; i++) {
+//
+//            if (i < 2) {
+//
+//                [arr addObject:[self getDetailConfigArrByConfigState:SYSTEM_FUNC][i]];
+//            }
+//        }
+//        SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:arr];
+        SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:SYSTEM_FUNC]];
         view.selectedBlock = ^(NSString *MC, NSString *ID) {
             
             _needBtn.content.text = [NSString stringWithFormat:@"%@",MC];

@@ -20,6 +20,12 @@
     return self;
 }
 
+- (void)setModel:(RentingAllRoomProjectModel *)model{
+    
+    [_tagView setData:model.project_tags];
+    [_tagView2 setData:model.house_tags];
+}
+
 - (void)initUI{
     
     _tagView = [[TagView alloc] initWithFrame:CGRectMake(10 *SIZE, 15 *SIZE, 300 *SIZE, 20 *SIZE) type:@"1"];

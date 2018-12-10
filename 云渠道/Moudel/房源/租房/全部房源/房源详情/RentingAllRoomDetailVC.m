@@ -8,8 +8,9 @@
 
 #import "RentingAllRoomDetailVC.h"
 #import "RentingAllRoomProjectVC.h"
-#import "SecComRoomBrokerageVC.h"
-#import "RentingComRoomAnalyzeVC.h"
+#import "SecAllRoomBrokerageVC.h"
+//#import "RentingComRoomAnalyzeVC.h"
+#import "SecComRoomAnalyzeVC.h"
 
 #import "RoomDetailCollCell.h"
 
@@ -17,6 +18,8 @@
 {
     
     NSArray *_titleArr;
+    NSString *_houseId;
+    NSString *_city;
 }
 @property (nonatomic, strong) UICollectionView *segmentColl;
 
@@ -28,44 +31,45 @@
 
 @property (nonatomic, strong) RentingAllRoomProjectVC *roomProjectVC;
 
-@property (nonatomic, strong) RentingComRoomAnalyzeVC *roomAnalyzeVC;
+//@property (nonatomic, strong) SecAllRoomStoreVC *roomStoreProjectVC;
+//
+//@property (nonatomic, strong) SecAllRoomOfficeVC *roomOfficeProjectVC;
 
-@property (nonatomic, strong) SecComRoomBrokerageVC *roomBrokerageVC;
+@property (nonatomic, strong) SecComRoomAnalyzeVC *roomAnalyzeVC;
+
+@property (nonatomic, strong) SecAllRoomBrokerageVC *roomBrokerageVC;
 
 @property (nonatomic, strong) TransmitView *transmitView;
 @end
 
 @implementation RentingAllRoomDetailVC
 
-- (void)viewWillAppear:(BOOL)animated{
+- (instancetype)initWithHouseId:(NSString *)houseId city:(NSString *)city
+{
+    self = [super init];
+    if (self) {
+        
+        _houseId = houseId;
+        _city = city;
+    }
+    return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //    [self GetFollowRequestMethod];
     [self.navigationController setNavigationBarHidden:YES animated:YES]; //设置隐藏
 }
 
 - (void)ActionMaskBtn:(UIButton *)btn{
     
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+//        if ([vc isKindOfClass:[SecHouseSearchVC class]]) {
+//
+//            [self.navigationController setNavigationBarHidden:NO animated:YES];
+//        }
+    }
     [self.navigationController popViewControllerAnimated:YES];
-    //    for (UIViewController *vc in self.navigationController.viewControllers) {
-    
-    //        if ([vc isKindOfClass:[HouseSearchVC class]]) {
-    //
-    //            [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //            [self.navigationController popToViewController:vc animated:YES];
-    //        }else{
-    
-    //            if ([vc isKindOfClass:[RoomVC class]]) {
-    //
-    //                [self.navigationController popViewControllerAnimated:YES];
-    //            }
-    //            if ([vc isKindOfClass:[BrokerageDetailVC class]]) {
-    //                [self.navigationController popViewControllerAnimated:YES];
-    //            }
-    //            if ([vc isKindOfClass:[MyAttentionVC class]]) {
-    //                [self.navigationController popViewControllerAnimated:YES];
-    //            }
-    //        }
-    //    }
 }
 
 - (void)viewDidLoad {
@@ -138,7 +142,7 @@
     
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.itemSize = CGSizeMake(66 *SIZE, 43);
+    _flowLayout.itemSize = CGSizeMake(66 *SIZE, 44);
     _flowLayout.minimumLineSpacing = 0;
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -165,15 +169,29 @@
     self.scrollView.bounces = NO;
     
     // 创建控制器
-    _roomProjectVC = [[RentingAllRoomProjectVC alloc] init];
-    
-    _roomBrokerageVC = [[SecComRoomBrokerageVC alloc] init];
-    
-    _roomAnalyzeVC = [[RentingComRoomAnalyzeVC alloc] init];
+    if (self.type == 1) {
+        
+        _roomProjectVC = [[RentingAllRoomProjectVC alloc] initWithHouseId:_houseId city:_city];
+        //        _roomProjectVC.type =
+        [self addChildViewController:_roomProjectVC];
+
+        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
+    }else if (self.type == 2){
+        
+//        _roomStoreProjectVC = [[SecAllRoomStoreVC alloc] initWithHouseId:_houseId city:_city];
+//        [self addChildViewController:_roomStoreProjectVC];
+//
+//        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
+    }else{
+        
+//        _roomOfficeProjectVC = [[SecAllRoomOfficeVC alloc] initWithHouseId:_houseId city:_city];
+//        [self addChildViewController:_roomOfficeProjectVC];
+//
+//        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
+    }
+    _roomBrokerageVC = [[SecAllRoomBrokerageVC alloc] initWithHouseId:_houseId];
     
     //添加子控制器
-    [self addChildViewController:_roomProjectVC];
-    
     [self addChildViewController:_roomBrokerageVC];
 
     [self addChildViewController:_roomAnalyzeVC];
