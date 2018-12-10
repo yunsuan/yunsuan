@@ -109,13 +109,13 @@
     _averageL = [[UILabel alloc] init];
     _averageL.textColor = YJContentLabColor;
     _averageL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _averageL.numberOfLines = 0;
+//    _averageL.numberOfLines = 0;
     [self.contentView addSubview:_averageL];
     
     _typeL = [[UILabel alloc] init];
     _typeL.textColor = YJContentLabColor;
     _typeL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _typeL.numberOfLines = 0;
+//    _typeL.numberOfLines = 0;
     [self.contentView addSubview:_typeL];
     
     _storeL = [[UILabel alloc] init];
@@ -170,6 +170,7 @@
         make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(_priceL.mj_textWith + 5 *SIZE));
+        make.width.mas_lessThanOrEqualTo(120 *SIZE);
     }];
     
     [_statusImg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -181,7 +182,8 @@
     
     [_averageL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_statusImg.mas_right).offset(44 *SIZE);
+        make.left.equalTo(self.contentView).offset(265 *SIZE);
+//        make.left.equalTo(_statusImg.mas_right).offset(44 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];

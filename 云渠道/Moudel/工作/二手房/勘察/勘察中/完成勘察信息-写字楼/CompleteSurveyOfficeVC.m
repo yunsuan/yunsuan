@@ -179,6 +179,7 @@
 
 - (void)initDataSource{
     
+    _isRent = 2;
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"YYYY/MM/dd"];
     _dataArr = [@[] mutableCopy];
@@ -250,7 +251,6 @@
                     make.top.equalTo(self->_levelBtn.mas_bottom).offset(30 *SIZE);
                     make.width.mas_equalTo(257 *SIZE);
                     make.height.mas_equalTo(33 *SIZE);
-                    make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);
                 }];
                 
                 [self->_rentalL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -803,6 +803,7 @@
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _rentalTF = textField;
+                _rentalTF.unitL.frame = CGRectMake(_rentalTF.frame.size.width - 30*SIZE, 10 *SIZE, 25 *SIZE, 14 *SIZE);
                 _rentalTF.unitL.text = @"元/月";
                 [_contentView addSubview:_rentalTF];
                 break;

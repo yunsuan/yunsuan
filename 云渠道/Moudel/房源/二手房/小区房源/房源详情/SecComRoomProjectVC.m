@@ -537,14 +537,14 @@
             header.attentL.text = [NSString stringWithFormat:@"订阅人数:%@",_focusDic[@"num"]];
             if ([_focusDic[@"is_focus"] integerValue]) {
 
-                [header.attentBtn setImage:[UIImage imageNamed:@"Focus_selected"] forState:UIControlStateNormal];
+                [header.attentBtn setImage:[UIImage imageNamed:@"subscribe_click"] forState:UIControlStateNormal];
             }else{
 
-                [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+                [header.attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
             }
         }else{
 
-            [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+            [header.attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
         }
         
         header.secAllDetailHeaderImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {

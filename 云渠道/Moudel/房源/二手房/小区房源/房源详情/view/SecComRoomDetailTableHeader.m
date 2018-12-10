@@ -244,12 +244,13 @@
     _statusL = [[UILabel alloc] init];
     _statusL.textColor = COLOR(27, 152, 255, 1);
     _statusL.font = [UIFont systemFontOfSize:12 *SIZE];
+//    _statusL.text = @"13123123";
     _statusL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_statusL];
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_attentBtn setImage:[UIImage imageNamed:@"subs"] forState:UIControlStateNormal];
+    [_attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
     _attentBtn.userInteractionEnabled = NO;
     [self.contentView addSubview:_attentBtn];
     
@@ -341,23 +342,23 @@
         
         make.left.equalTo(self.contentView).offset(320 *SIZE);
         make.top.equalTo(self.contentView).offset(193 *SIZE);
-        make.right.equalTo(self.contentView).offset(-10 *SIZE);
+        make.width.mas_equalTo(40 *SIZE);
     }];
     
     [_attentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(230 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(14 *SIZE);
-        make.right.equalTo(self.contentView).offset(-15 *SIZE);
+        make.right.equalTo(self.contentView).offset(-43 *SIZE);
     }];
     
-//    [_attentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(self.contentView).offset(326 *SIZE);
-//        make.top.equalTo(_titleL.mas_bottom).offset(5 *SIZE);
-//        make.width.equalTo(@(29 *SIZE));
-//        make.height.equalTo(@(29 *SIZE));
-//    }];
+    [_attentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+
+        make.left.equalTo(self.contentView).offset(326 *SIZE);
+        make.top.equalTo(_titleL.mas_bottom).offset(5 *SIZE);
+        make.width.equalTo(@(29 *SIZE));
+        make.height.equalTo(@(29 *SIZE));
+    }];
     
     [_wuyeview mas_makeConstraints:^(MASConstraintMaker *make) {
         

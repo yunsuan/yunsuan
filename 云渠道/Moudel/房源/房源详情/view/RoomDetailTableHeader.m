@@ -115,31 +115,8 @@
         _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
     }
     
-    NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-    NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",15]];
-    NSArray *tempArr = dic[@"param"];
-    NSMutableArray * arr = [[NSMutableArray alloc] init];
-//    NSArray *subArr = [model.project_tags componentsSeparatedByString:@","];
-
-    for (int i = 0; i < model.project_tags.count; i++) {
-        
-        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            if ([obj[@"id"] integerValue] == [model.project_tags[i] integerValue]) {
-                
-                [arr addObject:obj[@"param"]];
-                *stop = YES;
-            }
-        }];
-    }
-    
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
     [_wuyeview setData:model.property_type];
-    [self.contentView addSubview:_wuyeview];
-    
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
-    [_tagview setData:arr];
-    [self.contentView addSubview:_tagview];
+    [_tagview setData:model.project_tags];
     
     
     if (model.average_price) {
@@ -267,6 +244,11 @@
     _addressL.userInteractionEnabled = YES;
     [_addressL addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action_map)]];
     
+    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
+    [self.contentView addSubview:_wuyeview];
+    
+    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
+    [self.contentView addSubview:_tagview];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _moreBtn.frame = CGRectMake(287 *SIZE, 155 *SIZE + CGRectGetMaxY(_imgScroll.frame), 65 *SIZE, 20 *SIZE);

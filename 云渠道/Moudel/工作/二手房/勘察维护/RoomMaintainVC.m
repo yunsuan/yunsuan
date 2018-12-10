@@ -192,15 +192,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    RoomMaintainModel *model = _dataArr[indexPath.row];
-    [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[indexPath.row][@"project_id"]} success:^(id resposeObject) {
+
+    RoomMaintainModel *model = _dataArr[indexPath.row];
+    [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
+
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"] integerValue] == 1) {
                 
-                RoomMaintainModel *model = _dataArr[indexPath.row];
                 MaintainDetailVC *nextVC = [[MaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
                 nextVC.edit = YES;
                 nextVC.maintainDetailVCBlock = ^{

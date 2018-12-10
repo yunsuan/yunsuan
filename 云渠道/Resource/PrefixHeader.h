@@ -30,13 +30,13 @@
 #import "TransmitView.h"
 
 
-#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
+//#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
 
 
 /**
  *  全局
  */
-#define YQDversion @"1.1"
+#define YQDversion @"1.2"
 #define LOGINENTIFIER @"logIndentifier"
 #define LOGINSUCCESS @"logInSuccessdentifier"
 #define redirectUrl @"http://www.ccsoft.com.cn/"
