@@ -20,6 +20,38 @@
     return self;
 }
 
+- (void)setModel:(RentingComModel *)model{
+    
+    if (model.img_url.length>0) {
+        
+        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.img_url]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            
+            if (error) {
+                
+                _headImg.image =   [UIImage imageNamed:@"default_3"];
+            }
+        }];
+    }else{
+        
+        _headImg.image =   [UIImage imageNamed:@"default_3"];
+    }
+    
+    _titleL.text = model.project_name;
+    _contentL.text = model.absolute_address;
+    NSMutableAttributedString *PriceAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考租金：%@元/平",model.average_price]];;
+    [PriceAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
+    [PriceAttr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11 *SIZE] range:NSMakeRange(0, 5)];
+    _averageL.attributedText = PriceAttr;
+    
+    _codeL.text = [NSString stringWithFormat:@"%@%@",@"小区编号：",model.project_code];
+    NSMutableAttributedString *onSaleAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"在租：%@套",model.on_rent]];
+    [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 2)];
+    [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(onSaleAttr.length - 1, 1)];
+    _onSaleL.attributedText = onSaleAttr;
+    _attionL.text = [NSString stringWithFormat:@"关注人数：%@人",model.subs_num];
+    
+}
+
 - (void)initUI{
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(12 *SIZE, 16 *SIZE, 100 *SIZE, 88 *SIZE)];
@@ -32,13 +64,6 @@
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
     _titleL.numberOfLines = 0;
     [self.contentView addSubview:_titleL];
-    
-//    _classL = [[UILabel alloc] init];
-//    _classL.textColor = YJBlueBtnColor;
-//    _classL.backgroundColor = COLOR(213, 242, 255, 1);
-//    _classL.font = [UIFont systemFontOfSize:10 *SIZE];
-//    _classL.textAlignment = NSTextAlignmentCenter;
-//    [self.contentView addSubview:_classL];
     
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
@@ -56,6 +81,7 @@
     _codeL.textColor = YJContentLabColor;
     _codeL.font = [UIFont systemFontOfSize:11 *SIZE];
     _codeL.numberOfLines = 0;
+    //    _codeL.preferredMaxLayoutWidth = 120 *SIZE;
     [self.contentView addSubview:_codeL];
     
     _onSaleL = [[UILabel alloc] init];
@@ -83,16 +109,8 @@
         
         make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(self.contentView).offset(15 *SIZE);
-        make.right.equalTo(self.contentView).offset(-55 *SIZE);
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
-    
-//    [_classL mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.right.equalTo(self.contentView).offset(-10 *SIZE);
-//        make.top.equalTo(self.contentView).offset(13 *SIZE);
-//        make.width.mas_equalTo(33 *SIZE);
-//        make.height.mas_equalTo(17 *SIZE);
-//    }];
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -140,5 +158,6 @@
     }];
     
 }
+
 
 @end

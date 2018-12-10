@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "TagView.h"
+#import "RentingAllTableModel.h"
 
 @interface RentingCell : UITableViewCell
+
+@property (nonatomic, strong) RentingAllTableModel *model;
 
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UILabel *titleL;
-
-@property (nonatomic, strong) UILabel *classL;
 
 @property (nonatomic, strong) UILabel *contentL;
 
@@ -23,9 +24,13 @@
 
 @property (nonatomic, strong) UIImageView *statusImg;
 
-@property (nonatomic, strong) UILabel *averageL;
+//@property (nonatomic, strong) UILabel *timeL;
+
+@property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) UILabel *typeL;
+
+@property (nonatomic, strong) UILabel *storeL;
 
 @property (nonatomic, strong) TagView *tagView;
 

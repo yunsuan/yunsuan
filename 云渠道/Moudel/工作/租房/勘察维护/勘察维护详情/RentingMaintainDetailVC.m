@@ -25,7 +25,7 @@
 #import "MaintainCell.h"
 //#import "SingleContentCell.h"
 #import "BlueTitleMoreHeader.h"
-#import "MaintainDetailHeader.h"
+#import "RentingMaintainDetailHeader.h"
 //#import "SurveySuccessImgCell.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "SecAllRoomTableCell2.h"
@@ -289,10 +289,10 @@
     
     if (section == 0) {
         
-        MaintainDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MaintainDetailHeader"];
+        RentingMaintainDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RentingMaintainDetailHeader"];
         if (!header) {
             
-            header = [[MaintainDetailHeader alloc] initWithReuseIdentifier:@"MaintainDetailHeader"];
+            header = [[RentingMaintainDetailHeader alloc] initWithReuseIdentifier:@"MaintainDetailHeader"];
             
         }
         [header.infoBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
@@ -304,16 +304,16 @@
         
         header.dataDic = _houseDic;
         if (_type == 1) {
-            
-            header.typeL.text = @"住宅";
-            
+
+            header.propertyL.text = @"物业类型：住宅";
+
         }else if (_type == 2){
-            
-            header.typeL.text = @"商铺";
-            
+
+            header.propertyL.text = @"物业类型：商铺";
+
         }else if (_type == 3){
-            
-            header.typeL.text = @"写字楼";
+
+            header.propertyL.text = @"物业类型：写字楼";
         }
         
         
@@ -331,13 +331,13 @@
             [header.followBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
-        header.maintainTagHeaderBlock = ^(NSInteger index) {
+        header.rentingMaintainTagHeaderBlock = ^(NSInteger index) {
             
             _item = index;
             [tableView reloadData];
         };
         
-        header.maintainDetailHeaderBlock = ^{
+        header.rentingMaintainDetailHeaderBlock = ^{
             
             MaintainRoomInfoVC *nextVC = [[MaintainRoomInfoVC alloc] initWithDataDic:_moreDic];
             nextVC.progressArr = [[NSMutableArray alloc] initWithArray:_detailDic[@"progress"]];

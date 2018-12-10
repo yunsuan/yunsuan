@@ -362,13 +362,13 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     
-    vc.roomChildVCRentModelBlock = ^(SecdaryAllTableModel *model) {
+    vc.roomChildVCRentModelBlock = ^(RentingAllTableModel *model) {
         
         RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] init];
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     
-    vc.roomChildVCRentComModelBlock = ^(SecdaryComModel *model) {
+    vc.roomChildVCRentComModelBlock = ^(RentingComModel *model) {
         
         RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
         nextVC.type = weakvc.typeId;

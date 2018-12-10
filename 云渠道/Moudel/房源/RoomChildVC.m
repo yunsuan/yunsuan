@@ -8,21 +8,23 @@
 
 #import "RoomChildVC.h"
 
-//#import "RoomDetailVC1.h"
-//#import "SecAllRoomDetailVC.h"
-//#import "SecdaryCommunityRoomVC.h"
-//#import "SecdaryAllRoomVC.h"
-
-//#import "RentingCell.h"
-#import "SecdaryAllTableCell.h"
+//新房公司项目cell
 #import "CompanyCell.h"
+//新房全名项目cell
 #import "PeopleCell.h"
-//#import "RoomChildTableHeader.h"
+//二手房房源cell
+#import "SecdaryAllTableCell.h"
+//二手房小区cell
 #import "SecdaryComTableCell.h"
+//租房小区cell
+#import "RentingComTableCell.h"
+//租房房源cell
+#import "RentingCell.h"
+//关注房源cell
 #import "AttentionHouseCell.h"
+//订阅小区cell
 #import "AttentionComCell.h"
 
-//#import "SecdaryComModel.h"
 
 @interface RoomChildVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -205,7 +207,7 @@
             }else if (_AllType == 3){
                 
                 [self SetData:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                if ([resposeObject[@"data"][@"data"] count] < 15) {
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -499,7 +501,7 @@
                         }
                     }
                 }];
-                SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] init];//WithDictionary:tempDic];
+                RentingAllTableModel *model = [[RentingAllTableModel alloc] init];//WithDictionary:tempDic];
                 model.price_change = tempDic[@"price_change"];
                 model.img_url = tempDic[@"img_url"];
                 model.house_id = tempDic[@"house_id"];
@@ -530,7 +532,7 @@
                 }];
                 
                 
-                SecdaryComModel *model = [[SecdaryComModel alloc] initWithDictionary:tempDic];
+                RentingComModel *model = [[RentingComModel alloc] initWithDictionary:tempDic];
                 [_dataArr addObject:model];
             }
         }
@@ -716,26 +718,24 @@
             
             if ([self.param isEqualToString:@"rent"]) {
                 
-                SecdaryAllTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecdaryAllTableCell"];
+                RentingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingCell"];
                 if (!cell) {
                     
-                    cell = [[SecdaryAllTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecdaryAllTableCell"];
+                    cell = [[RentingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingCell"];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                SecdaryAllTableModel *model = _dataArr[indexPath.row];
-                cell.model = model;
+//                SecdaryAllTableModel *model = _dataArr[indexPath.row];
+                cell.model = _dataArr[indexPath.row];
                 
                 return cell;
             }else{
                 
-                SecdaryComTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecdaryComTableCell"];
+                RentingComTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingComTableCell"];
                 if (!cell) {
                     
-                    cell = [[SecdaryComTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecdaryComTableCell"];
+                    cell = [[RentingComTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingComTableCell"];
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 cell.model = _dataArr[indexPath.row];
@@ -797,7 +797,7 @@
         
         if ([self.param isEqualToString:@"rent"]) {
             
-            SecdaryAllTableModel *model = _dataArr[indexPath.row];
+            RentingAllTableModel *model = _dataArr[indexPath.row];
             
             if (self.roomChildVCRentModelBlock) {
                 
@@ -805,7 +805,7 @@
             }
         }else{
             
-            SecdaryComModel *model = _dataArr[indexPath.row];
+            RentingComModel *model = _dataArr[indexPath.row];
             
             if (self.roomChildVCRentComModelBlock) {
                 

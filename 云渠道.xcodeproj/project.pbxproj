@@ -71,6 +71,8 @@
 		0C1A013A20AC28C300665BB9 /* ComfirmValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A013920AC28C300665BB9 /* ComfirmValidVC.m */; };
 		0C1A013D20AC3F7700665BB9 /* ComfirmInValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A013C20AC3F7700665BB9 /* ComfirmInValidVC.m */; };
 		0C1A014020AC566100665BB9 /* DealValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A013F20AC566100665BB9 /* DealValidVC.m */; };
+		0C1EEF9821BE00ED00C770D0 /* RentingComModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EEF9721BE00ED00C770D0 /* RentingComModel.m */; };
+		0C1EEF9C21BE03A800C770D0 /* RentingAllTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EEF9B21BE03A800C770D0 /* RentingAllTableModel.m */; };
 		0C222D4521AF966800EF45B6 /* RentingComRoomDetailTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D4421AF966800EF45B6 /* RentingComRoomDetailTableHeader.m */; };
 		0C222D4B21B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D4A21B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.m */; };
 		0C222D5221B659B700EF45B6 /* RentingReportWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D5121B659B700EF45B6 /* RentingReportWaitDetailVC.m */; };
@@ -716,6 +718,10 @@
 		0C1A013C20AC3F7700665BB9 /* ComfirmInValidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComfirmInValidVC.m; sourceTree = "<group>"; };
 		0C1A013E20AC566100665BB9 /* DealValidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealValidVC.h; sourceTree = "<group>"; };
 		0C1A013F20AC566100665BB9 /* DealValidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DealValidVC.m; sourceTree = "<group>"; };
+		0C1EEF9621BE00ED00C770D0 /* RentingComModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingComModel.h; sourceTree = "<group>"; };
+		0C1EEF9721BE00ED00C770D0 /* RentingComModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingComModel.m; sourceTree = "<group>"; };
+		0C1EEF9A21BE03A800C770D0 /* RentingAllTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllTableModel.h; sourceTree = "<group>"; };
+		0C1EEF9B21BE03A800C770D0 /* RentingAllTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllTableModel.m; sourceTree = "<group>"; };
 		0C222D4321AF966800EF45B6 /* RentingComRoomDetailTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingComRoomDetailTableHeader.h; sourceTree = "<group>"; };
 		0C222D4421AF966800EF45B6 /* RentingComRoomDetailTableHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingComRoomDetailTableHeader.m; sourceTree = "<group>"; };
 		0C222D4921B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingCompleteSurveyHouseVC.h; sourceTree = "<group>"; };
@@ -2257,6 +2263,24 @@
 			path = "添加跟进记录";
 			sourceTree = "<group>";
 		};
+		0C1EEF9521BE00D300C770D0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0C1EEF9621BE00ED00C770D0 /* RentingComModel.h */,
+				0C1EEF9721BE00ED00C770D0 /* RentingComModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		0C1EEF9921BE039400C770D0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0C1EEF9A21BE03A800C770D0 /* RentingAllTableModel.h */,
+				0C1EEF9B21BE03A800C770D0 /* RentingAllTableModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		0C222D4221AF964800EF45B6 /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -3184,6 +3208,7 @@
 		0C9CD44321057BB5004894A3 /* 全部房源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C1EEF9921BE039400C770D0 /* model */,
 				0C9CD45A2105A781004894A3 /* 房源详情 */,
 				0C9CD44421057BB5004894A3 /* view */,
 				0C9CD44921057BD5004894A3 /* RentingAllRoomVC.h */,
@@ -3204,6 +3229,7 @@
 		0C9CD44721057BB5004894A3 /* 小区房源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C1EEF9521BE00D300C770D0 /* model */,
 				0C9CD45321058153004894A3 /* 房源详情 */,
 				0C9CD44F21057E8F004894A3 /* view */,
 				0C9CD44C21057E1E004894A3 /* RentingCommunityRoomVC.h */,
@@ -6368,6 +6394,7 @@
 				102DF9762057A1AE00E1859C /* RoomVC.m in Sources */,
 				0C96D9F7209C52E100B6A8B8 /* NoValidVC.m in Sources */,
 				0C08BF5B206CB344005BB3B4 /* BrokerageCell.m in Sources */,
+				0C1EEF9821BE00ED00C770D0 /* RentingComModel.m in Sources */,
 				105E18F2206B6C340031558D /* NomineeCell.m in Sources */,
 				10174C18207C4EF600D00B9A /* CustomerInfoModel.m in Sources */,
 				100D8F6B218004ED006839EB /* WMScrollView.m in Sources */,
@@ -6425,6 +6452,7 @@
 				0C252222215245DA0031CC44 /* ModifyEquepMentVC.m in Sources */,
 				0CD0BD88219E586700A95A87 /* SystemWorkWaitDetailVC.m in Sources */,
 				0CBD85A7208863C200E7B183 /* TagView2.m in Sources */,
+				0C1EEF9C21BE03A800C770D0 /* RentingAllTableModel.m in Sources */,
 				0C08BF57206C835B005BB3B4 /* BrokerageTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

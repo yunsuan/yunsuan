@@ -11,14 +11,16 @@
 #import "RoomListModel.h"
 #import "SecdaryAllTableModel.h"
 #import "SecdaryComModel.h"
+#import "RentingAllTableModel.h"
+#import "RentingComModel.h"
 
 typedef void(^RoomChildVCSecModelBlock)(SecdaryAllTableModel *model);
 
 typedef void(^RoomChildVCSecComModelBlock)(SecdaryComModel *model);
 
-typedef void(^RoomChildVCRentModelBlock)(SecdaryAllTableModel *model);
+typedef void(^RoomChildVCRentModelBlock)(RentingAllTableModel *model);
 
-typedef void(^RoomChildVCRentComModelBlock)(SecdaryComModel *model);
+typedef void(^RoomChildVCRentComModelBlock)(RentingComModel *model);
 
 typedef void(^RoomChildVCRoomModelBlock)(RoomListModel *model);
 

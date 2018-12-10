@@ -17,15 +17,19 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @interface RentingMaintainDetailHeader : UITableViewHeaderFooterView
 
-@property (nonatomic, strong) RentingMaintainTagHeaderBlock rentingMaintainTagHeaderBlock;
+@property (nonatomic, copy) RentingMaintainTagHeaderBlock rentingMaintainTagHeaderBlock;
 
-@property (nonatomic, strong) RentingMaintainDetailHeaderBlock rentingMaintainDetailHeaderBlock;
+@property (nonatomic, copy) RentingMaintainDetailHeaderBlock rentingMaintainDetailHeaderBlock;
+
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong) UIView *codeView;
 
 @property (nonatomic, strong) UIView *blueView;
 
 @property (nonatomic, strong) UILabel *codeL;
+
+@property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UIButton *editBtn;
 
@@ -41,7 +45,7 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *payWayL;
 
-@property (nonatomic, strong) UILabel *typeL;
+@property (nonatomic, strong) UILabel *rentTypeL;
 
 @property (nonatomic, strong) UILabel *intentL;
 

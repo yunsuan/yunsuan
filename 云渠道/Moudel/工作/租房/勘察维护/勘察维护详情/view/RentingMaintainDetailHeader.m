@@ -45,6 +45,114 @@
     }
 }
 
+- (void)setDataDic:(NSMutableDictionary *)dataDic{
+    
+    if (dataDic[@"house_code"]) {
+        
+        _codeL.text = [NSString stringWithFormat:@"房源编号:%@",dataDic[@"house_code"]];
+    }else{
+        
+        _codeL.text = [NSString stringWithFormat:@"房源编号:暂无数据"];
+    }
+    
+    if (dataDic[@"project_name"]|| dataDic[@"house"]) {
+        
+        _projectL.text = [NSString stringWithFormat:@"%@ %@",dataDic[@"project_name"],dataDic[@"house"]];
+    }else{
+        
+        _projectL.text = @"暂无数据";
+    }
+    
+    
+    if (dataDic[@"title"]) {
+        
+        _titleL.text = [NSString stringWithFormat:@"挂牌标题:%@",dataDic[@"title"]];
+    }else{
+        
+        _titleL.text = [NSString stringWithFormat:@"挂牌标题:暂无数据"];
+    }
+    
+    if (dataDic[@"price"]) {
+        
+        _priceL.text = [NSString stringWithFormat:@"出租价格:%@万",dataDic[@"price"]];
+    }else{
+        
+        _priceL.text = [NSString stringWithFormat:@"出租价格:暂无数据"];
+    }
+    
+    
+    if (dataDic[@"pay_way"]) {
+        
+        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",[dataDic[@"pay_way"] componentsJoinedByString:@","]];
+    }else{
+        
+        _payWayL.text = [NSString stringWithFormat:@"收款方式:暂无数据"];
+    }
+    
+//    if (dataDic[@"property_belong"]) {
+//        
+//        _propertyL.text = [NSString stringWithFormat:@"物业类型:%@",dataDic[@"property_belong"]];
+//    }else{
+//        
+//        _propertyL.text = [NSString stringWithFormat:@"物业类型:暂无数据"];
+//    }
+    
+    if (dataDic[@"property_belong"]) {
+        
+        _houseTypeL.text = [NSString stringWithFormat:@"户型:%@",dataDic[@"property_belong"]];
+    }else{
+        
+        _houseTypeL.text = [NSString stringWithFormat:@"户型:暂无数据"];
+    }
+    
+    if (dataDic[@"property_belong"]) {
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"类型:%@",dataDic[@"property_belong"]];
+    }else{
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"类型:暂无数据"];
+    }
+    
+    
+    if (dataDic[@"intent"]) {
+        
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"卖房意愿度:%@",dataDic[@"intent"]]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(6, attr.length - 6)];
+        _intentL.attributedText = attr;
+    }else{
+        
+        _intentL.text = [NSString stringWithFormat:@"卖房意愿度:暂无数据"];
+    }
+    
+    if (dataDic[@"urgency"]) {
+        
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"卖房急迫度:%@",dataDic[@"urgency"]]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(6, attr.length - 6)];
+        _urgentL.attributedText = attr;
+    }else{
+        
+        _urgentL.text = [NSString stringWithFormat:@"卖房急迫度:暂无数据"];
+    }
+    
+    if (dataDic[@"suggest_price"]) {
+        
+        _RePriceL.text = [NSString stringWithFormat:@"参考价格:%@元/月",dataDic[@"suggest_price"]];
+    }else{
+        
+        _RePriceL.text = [NSString stringWithFormat:@"参考价格:暂无数据"];
+    }
+    
+    if (dataDic[@"focus_num"]) {
+        
+        _attentL.text = [NSString stringWithFormat:@"关注人数:%@",dataDic[@"focus_num"]];
+    }else{
+        
+        _attentL.text = [NSString stringWithFormat:@"关注人数:暂无数据"];
+    }
+    
+    _periodL.text = [NSString stringWithFormat:@"预估卖出周期:暂无数据"];
+}
+
 
 - (void)initUI{
     
@@ -64,6 +172,15 @@
     _codeL.textColor = YJTitleLabColor;
     _codeL.font = [UIFont systemFontOfSize:15 *SIZE];
     [_codeView addSubview:_codeL];
+    
+//    _typeL =  [[UILabel alloc] init];
+//    _typeL.layer.cornerRadius = 2 *SIZE;
+//    _typeL.clipsToBounds = YES;
+//    _typeL.backgroundColor = COLOR(213, 242, 255, 1);
+//    _typeL.textColor = COLOR(64, 169, 255, 1);
+//    _typeL.font = [UIFont systemFontOfSize:10 *SIZE];
+//    _typeL.textAlignment = NSTextAlignmentCenter;
+//    [_codeView addSubview:_typeL];
     
     _projectL =  [[UILabel alloc] init];
     _projectL.textColor = YJ86Color;
@@ -96,26 +213,26 @@
             }
             case 2:
             {
+                _payWayL = label;
+                [self.contentView addSubview:_payWayL];
+                break;
+            }
+            case 3:
+            {
                 _propertyL = label;
                 [self.contentView addSubview:_propertyL];
                 break;
             }
-            case 3:
+            case 4:
             {
                 _houseTypeL = label;
                 [self.contentView addSubview:_houseTypeL];
                 break;
             }
-            case 4:
-            {
-                _payWayL = label;
-                [self.contentView addSubview:_payWayL];
-                break;
-            }
             case 5:
             {
-                _typeL = label;
-                [self.contentView addSubview:_typeL];
+                _rentTypeL = label;
+                [self.contentView addSubview:_rentTypeL];
                 break;
             }
             case 6:
@@ -215,8 +332,15 @@
         make.left.equalTo(_codeView).offset(28 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(_codeView).offset(-50 *SIZE);
-        make.bottom.equalTo(_codeView).offset(-19 *SIZE);
     }];
+    
+//    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_codeView).offset(317 *SIZE);
+//        make.top.equalTo(_codeView).offset(53 *SIZE);
+//        make.right.equalTo(_codeView).offset(-10 *SIZE);
+//        make.height.mas_equalTo(17 *SIZE);
+//    }];
     
     [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -237,7 +361,7 @@
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(19 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        make.right.equalTo(self.contentView).offset(-120 *SIZE);
     }];
     
     [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -261,7 +385,7 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
@@ -271,7 +395,7 @@
     [_intentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_typeL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

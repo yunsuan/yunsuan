@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "RentingComModel.h"
+
 @interface RentingComTableCell : UITableViewCell
+
+@property (nonatomic, strong) RentingComModel *model;
 
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UILabel *titleL;
-
-@property (nonatomic, strong) UILabel *classL;
 
 @property (nonatomic, strong) UILabel *contentL;
 
