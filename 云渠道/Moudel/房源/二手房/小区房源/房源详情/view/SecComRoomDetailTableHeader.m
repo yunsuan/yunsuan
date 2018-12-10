@@ -250,7 +250,7 @@
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_attentBtn setImage:[UIImage imageNamed:@"subscribe_click"] forState:UIControlStateNormal];
+    [_attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
     _attentBtn.userInteractionEnabled = NO;
     [self.contentView addSubview:_attentBtn];
     

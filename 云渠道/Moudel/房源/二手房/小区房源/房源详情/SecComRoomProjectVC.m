@@ -552,7 +552,7 @@
             }
         }else{
 
-            [header.attentBtn setImage:[UIImage imageNamed:@"Focus"] forState:UIControlStateNormal];
+            [header.attentBtn setImage:[UIImage imageNamed:@"subscribe"] forState:UIControlStateNormal];
         }
         
         header.secAllDetailHeaderImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {
