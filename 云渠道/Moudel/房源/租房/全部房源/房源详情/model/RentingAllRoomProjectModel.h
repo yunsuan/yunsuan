@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RentingAllRoomProjectModel : BaseModel
 
+@property (nonatomic, copy) NSString *<#class#>;
+
 @property (nonatomic, copy) NSString *project_id;
 
 @property (nonatomic, copy) NSString *info_id;
