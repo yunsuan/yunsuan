@@ -47,7 +47,12 @@ static NSString *const kACCESSROLE = @"agent";
             });
             return;
         }else{
-            [BaseRequest showConten:responseObject[@"msg"]];
+            
+            if (![responseObject[@"msg"] isEqualToString:@"该项目暂无项目分析"]) {
+                
+                [BaseRequest showConten:responseObject[@"msg"]];
+            }
+            
             return;
         }
       

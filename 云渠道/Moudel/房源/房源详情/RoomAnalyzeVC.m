@@ -62,15 +62,16 @@
             }
         }else if([resposeObject[@"code"] integerValue] == 400){
             
+            
         }
         else{
-            [self showContent:resposeObject[@"msg"]];
+//            [self showContent:resposeObject[@"msg"]];
         }
         [_analyzeTable reloadData];
     } failure:^(NSError *error) {
         
         NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
+//        [self showContent:@"网络错误"];
     }];
 }
 

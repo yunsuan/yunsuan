@@ -270,7 +270,7 @@
 
 - (void)initUI{
     
-    self.titleLabel.text = @"待确认详情";
+    self.titleLabel.text = @"已接单详情";
     self.navBackgroundView.hidden = NO;
     
     _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];

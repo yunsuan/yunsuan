@@ -77,7 +77,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 8;
+    return 6;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section{
@@ -133,9 +133,9 @@
         case 0:
         {
             cell.titleL.text = @"核心卖点";
-            if ([_dataDic[@"core_selling"] length]) {
+            if ([_dataDic[@"advantage"] length]) {
                 
-                cell.contentL.text = _dataDic[@"core_selling"];
+                cell.contentL.text = _dataDic[@"advantage"];
             }else{
                 
                 cell.contentL.text = @"暂无核心卖点信息";
@@ -145,52 +145,52 @@
         case 1:
         {
             cell.titleL.text = @"装修描述";
-            if ([_dataDic[@"decoration_standard"] length]) {
+            if ([_dataDic[@"describe"] length]) {
                 
-                cell.contentL.text = _dataDic[@"decoration_standard"];
+                cell.contentL.text = _dataDic[@"describe"];
             }else{
                 
                 cell.contentL.text = @"暂无装修描述信息";
             }
             break;
         }
+//        case 2:
+//        {
+//            cell.titleL.text = @"户型介绍";
+//            if ([_dataDic[@"sell_point"] length]) {
+//
+//                cell.contentL.text = _dataDic[@"sell_point"];
+//            }else{
+//
+//                cell.contentL.text = @"暂无户型介绍信息";
+//            }
+//            break;
+//        }
+//        case 3:
+//        {
+//            cell.titleL.text = @"其他费项";
+//            if ([_dataDic[@"increase_value"] length]) {
+//
+//                cell.contentL.text = _dataDic[@"increase_value"];
+//            }else{
+//
+//                cell.contentL.text = @"暂无其他费项信息";
+//            }
+//            break;
+//        }
         case 2:
         {
-            cell.titleL.text = @"户型介绍";
-            if ([_dataDic[@"sell_point"] length]) {
-                
-                cell.contentL.text = _dataDic[@"sell_point"];
-            }else{
-                
-                cell.contentL.text = @"暂无户型介绍信息";
-            }
-            break;
-        }
-        case 3:
-        {
-            cell.titleL.text = @"其他费项";
-            if ([_dataDic[@"increase_value"] length]) {
-                
-                cell.contentL.text = _dataDic[@"increase_value"];
-            }else{
-                
-                cell.contentL.text = @"暂无其他费项信息";
-            }
-            break;
-        }
-        case 4:
-        {
             cell.titleL.text = @"项目优势";
-            if ([_dataDic[@"advantage"] length]) {
+            if ([_dataDic[@"project_advantage"] length]) {
                 
-                cell.contentL.text = _dataDic[@"advantage"];
+                cell.contentL.text = _dataDic[@"project_advantage"];
             }else{
                 
                 cell.contentL.text = @"暂无项目优势信息";
             }
             break;
         }
-        case 5:
+        case 3:
         {
             cell.titleL.text = @"周边分析";
             if ([_dataDic[@"rim"] length]) {
@@ -202,7 +202,7 @@
             }
             break;
         }
-        case 6:
+        case 4:
         {
             cell.titleL.text = @"适合人群";
             if ([_dataDic[@"fetch"] length]) {
@@ -214,7 +214,7 @@
             }
             break;
         }
-        case 7:
+        case 5:
         {
             cell.titleL.text = @"升值空间";
             if ([_dataDic[@"increase_value"] length]) {

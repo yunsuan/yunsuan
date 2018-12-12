@@ -135,6 +135,8 @@
 
 - (void)setImgArr:(NSMutableArray *)imgArr{
     
+    _total = 0;
+    [_allArr removeAllObjects];
     if (!imgArr.count) {
         
         UIImageView *img = [[UIImageView alloc] initWithFrame:_imgScroll.frame];
