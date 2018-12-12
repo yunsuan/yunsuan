@@ -405,6 +405,7 @@
         return;
     }
     
+    _payWay = @"";
     for (int i = 0; i < _selectArr.count; i++) {
         
         
