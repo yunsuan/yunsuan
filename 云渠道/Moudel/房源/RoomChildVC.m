@@ -369,20 +369,21 @@
                         }
                     }
                 }];
-                SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] init];//WithDictionary:tempDic];
-                model.price_change = tempDic[@"price_change"];
-                model.img_url = tempDic[@"img_url"];
-                model.house_id = tempDic[@"house_id"];
-                model.title = tempDic[@"title"];
-                model.describe = tempDic[@"describe"];
-                model.price = tempDic[@"price"];
-                model.unit_price = tempDic[@"unit_price"];
-                model.property_type = tempDic[@"property_type"];
-                model.store_name = tempDic[@"store_name"];
-                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
-                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
-                model.type = tempDic[@"type"];
-                model.info_id = tempDic[@"info_id"];
+                SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] initWithDictionary:tempDic];
+//                model.level
+//                model.price_change = tempDic[@"price_change"];
+//                model.img_url = tempDic[@"img_url"];
+//                model.house_id = tempDic[@"house_id"];
+//                model.title = tempDic[@"title"];
+//                model.describe = tempDic[@"describe"];
+//                model.price = tempDic[@"price"];
+//                model.unit_price = tempDic[@"unit_price"];
+//                model.property_type = tempDic[@"property_type"];
+//                model.store_name = tempDic[@"store_name"];
+//                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
+//                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
+//                model.type = tempDic[@"type"];
+//                model.info_id = tempDic[@"info_id"];
                 [_dataArr addObject:model];
             }
         }else{

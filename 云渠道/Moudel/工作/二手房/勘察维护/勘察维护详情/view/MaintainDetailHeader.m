@@ -103,6 +103,14 @@
         _minPriceL.text = [NSString stringWithFormat:@"出售底价:暂无数据"];
     }
     
+    if (dataDic[@"level"]) {
+        
+        _roomLevelL.text = [NSString stringWithFormat:@"房源等级:%@",dataDic[@"level"]];
+    }else{
+        
+        _roomLevelL.text = [NSString stringWithFormat:@"房源等级:暂无数据"];
+    }
+    
     if (dataDic[@"pay_way"]) {
         
         _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",[dataDic[@"pay_way"] componentsJoinedByString:@","]];
@@ -232,6 +240,12 @@
     _singleMinPriceL.font = [UIFont systemFontOfSize:13 *SIZE];
     _singleMinPriceL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_singleMinPriceL];
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJ86Color;
+    _roomLevelL.numberOfLines = 0;
+    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.contentView addSubview:_roomLevelL];
     
     for (int i = 0; i < 13 ; i++) {
         
@@ -438,10 +452,17 @@
         make.right.equalTo(self.contentView).offset(-120 *SIZE);
     }];
     
-    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_minPriceL.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+    
+    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

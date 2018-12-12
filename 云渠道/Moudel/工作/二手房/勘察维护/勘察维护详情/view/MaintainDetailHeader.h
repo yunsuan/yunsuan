@@ -45,6 +45,8 @@ typedef void(^MaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *singleMinPriceL;
 
+@property (nonatomic, strong) UILabel *roomLevelL;
+
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) UILabel *propertyL;

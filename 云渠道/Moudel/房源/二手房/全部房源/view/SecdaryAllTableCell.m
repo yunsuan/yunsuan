@@ -93,8 +93,8 @@
     [self.contentView addSubview:_titleL];
     
     _roomLevelL = [[UILabel alloc] init];
-    _roomLevelL.textColor = YJTitleLabColor;
-    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _roomLevelL.textColor = YJContentLabColor;
+    _roomLevelL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_roomLevelL];
     
     _contentL = [[UILabel alloc] init];
@@ -161,19 +161,19 @@
        
         make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(self.contentView).offset(15 *SIZE);
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
+    }];
+
+    [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(123 *SIZE);
+        make.top.equalTo(_titleL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-45 *SIZE);
     }];
     
     [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(320 *SIZE);
-        make.top.equalTo(self.contentView).offset(15 *SIZE);
-        make.right.equalTo(self.contentView).offset(-10 *SIZE);
-    }];
-    
-    [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
