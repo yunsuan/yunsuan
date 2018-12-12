@@ -179,8 +179,8 @@
         for (int i = 0; i < _total; i++) {
             
             UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, _imgScroll.frame.size.height)];
-            img.backgroundColor = YJTitleLabColor;
-            img.contentMode = UIViewContentModeScaleAspectFill;
+            img.backgroundColor = [UIColor whiteColor];
+            img.contentMode = UIViewContentModeScaleAspectFit;
             img.clipsToBounds = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionImgBtn)];
             [img addGestureRecognizer:tap];
