@@ -45,6 +45,10 @@
 
 @property (nonatomic, strong) DropDownBtn *useBtn;
 
+@property (nonatomic, strong) UILabel *roomLevelL;
+
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
+
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) DropDownBtn *payWayBtn;
@@ -123,6 +127,19 @@
         _urgentTF.textfield.text = [NSString stringWithFormat:@"%li",[_urgentTF.textfield.text integerValue]];
         _urgentSlider.value = (float) ([_urgentTF.textfield.text floatValue] / 100.0 * 100);
     }
+}
+
+- (void)ActionLevelBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
+    };
+    [self.view addSubview:view];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -253,6 +270,14 @@
                 return;
             }
         }
+        
+        if ([self isEmpty:_roomLevelBtn->str]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+            return;
+        }
+        dic[@"level"] = _roomLevelBtn->str;
+        
         if (_priceBtn->str.length) {
             
             dic[@"total_price"] = _priceBtn->str;
@@ -444,6 +469,14 @@
     header.lineView.hidden = YES;
     [_infoView addSubview:header];
     
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJTitleLabColor;
+    _roomLevelL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _roomLevelL.text = @"房源等级";
+    _roomLevelL.adjustsFontSizeToFitWidth = YES;
+    [_infoView addSubview:_roomLevelL];
+    
     for (NSUInteger i = 0; i < 10; i++) {
         
         UILabel *label = [[UILabel alloc] init];
@@ -516,6 +549,11 @@
                 break;
         }
     }
+    
+    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_infoView addSubview:_roomLevelBtn];
+
     
     for (int i = 0; i < 7; i++) {
         
@@ -802,17 +840,33 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(9 *SIZE);
+        make.top.equalTo(_priceBtn.mas_bottom).offset(36 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(81 *SIZE);
+        make.top.equalTo(_priceBtn.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_priceBtn.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_areaTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(80 *SIZE);
-        make.top.equalTo(_priceBtn.mas_bottom).offset(20 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];

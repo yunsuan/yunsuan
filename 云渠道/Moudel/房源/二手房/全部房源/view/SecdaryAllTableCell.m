@@ -37,6 +37,7 @@
     
     
     _titleL.text = model.title;
+    _roomLevelL.text = model.level;
     _contentL.text = model.describe;
     
     if (model.price.length) {
@@ -90,6 +91,11 @@
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
     _titleL.numberOfLines = 0;
     [self.contentView addSubview:_titleL];
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJTitleLabColor;
+    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.contentView addSubview:_roomLevelL];
     
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
@@ -154,6 +160,13 @@
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(self.contentView).offset(123 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
+        make.right.equalTo(self.contentView).offset(-45 *SIZE);
+    }];
+    
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(320 *SIZE);
         make.top.equalTo(self.contentView).offset(15 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];

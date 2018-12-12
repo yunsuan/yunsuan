@@ -55,7 +55,8 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     OFFICE_GRADE=42,//写字楼等级
     BUY_USE=43,//购买用途
     HOUSE_TAGS_SHOP=44,//二手房商铺
-    HOUSE_TAGS_OFFICE=45//二手房写字楼标签
+    HOUSE_TAGS_OFFICE=45,//二手房写字楼标签
+    HOUSE_LEVEL=50//住宅等级
 };
 
 

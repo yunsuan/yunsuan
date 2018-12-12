@@ -63,6 +63,10 @@
 
 @property (nonatomic, strong) UILabel *payL;
 
+@property (nonatomic, strong) UILabel *roomLevelL;
+
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
+
 @property (nonatomic, strong) UICollectionView *payColl;
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
@@ -190,7 +194,7 @@
         [_selectArr addObject:@0];
     }
     _btnArr = @[@"共有",@"非共有",@"有",@"无"];
-    _titleArr = @[@"挂牌标题：",@"挂牌价格：",@"出售底价：",@"收款方式：",@"产权所属：",@"抵押信息：",@"楼层：",@"层高：",@"门宽：",@"房屋所有权证号：",@"拿证时间：",@"级别：",@"当前出租：",@"当前佣金：",@"租约结束时间："];
+    _titleArr = @[@"挂牌标题：",@"挂牌价格：",@"出售底价：",@"收款方式：",@"产权所属：",@"抵押信息：",@"楼层：",@"层高：",@"门宽：",@"房屋所有权证号：",@"拿证时间：",@"级别：",@"当前出租：",@"当前佣金：",@"租约结束时间：",@"房源等级"];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -391,6 +395,19 @@
     [self.view addSubview:view];
 }
 
+- (void)ActionLevelBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
+    };
+    [self.view addSubview:view];
+}
+
 - (void)ActionNextBtn:(UIButton *)btn{
     
     if ([self isEmpty:_titleTF.textfield.text]) {
@@ -401,6 +418,12 @@
     if ([self isEmpty:_maxPriceTF.textfield.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌价格"];
+        return;
+    }
+    
+    if ([self isEmpty:_roomLevelBtn->str]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
         return;
     }
     
@@ -483,6 +506,7 @@
     [self.dataDic setObject:@(3) forKey:@"type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
+    [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
     [self.dataDic setValue:_payWay forKey:@"pay_way"];
     [self.dataDic setValue:@(_propertyBelong) forKey:@"property_belong"];
     [self.dataDic setValue:@(_isMortgage) forKey:@"is_mortgage"];
@@ -645,7 +669,7 @@
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
     
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 16; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -744,6 +768,12 @@
                 [_contentView addSubview:_endTimeL];
                 break;
             }
+            case 15:{
+                
+                _roomLevelL = label;
+                [_contentView addSubview:_roomLevelL];
+                break;
+            }
             default:
                 break;
         }
@@ -813,6 +843,11 @@
                 break;
         }
     }
+    
+    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_roomLevelBtn];
+
     
     for (int i = 0; i < 5; i++) {
         
@@ -1126,10 +1161,26 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(36 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -1137,7 +1188,7 @@
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
