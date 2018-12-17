@@ -687,6 +687,9 @@ static NSString *const RentRecord_URL = @"agent/rent/record";
 
 #pragma mark -- 租房 - 报备
 
+//检测是否具备勘察能力
+static NSString *const RentCapacityCheck_URL = @"agent/rent/capacityCheck";
+
 //待抢列表
 static NSString *const RentSurveyWaitGrab_URL = @"agent/rent/survey/waitGrab";
 
@@ -746,3 +749,7 @@ static NSString *const RentSurveyList_URL = @"agent/rent/survey/list";
 
 //勘察维护详情
 static NSString *const RentSurveyDetail_URL = @"agent/rent/survey/detail";
+
+#pragma mark -- 租房 - 工作 - 勘察维护 --
+
+static NSString *const RentSurveyAddFollow_URL = @"agent/rent/survey/addFollow";

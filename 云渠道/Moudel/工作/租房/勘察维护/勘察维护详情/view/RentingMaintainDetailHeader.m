@@ -113,6 +113,22 @@
         _rentTypeL.text = [NSString stringWithFormat:@"类型:暂无数据"];
     }
     
+    if (dataDic[@"rent_max_comment"]) {
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"最长租期:%@",dataDic[@"rent_max_comment"]];
+    }else{
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"最长租期:暂无数据"];
+    }
+    
+    if (dataDic[@"rent_min_comment"]) {
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"最短租期:%@",dataDic[@"rent_min_comment"]];
+    }else{
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"最短租期:暂无数据"];
+    }
+    
     
     if (dataDic[@"intent"]) {
         
@@ -192,7 +208,7 @@
     //    [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [_codeView addSubview:_editBtn];
     
-    for (int i = 0; i < 11 ; i++) {
+    for (int i = 0; i < 13 ; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
@@ -263,6 +279,18 @@
             {
                 _periodL = label;
                 [self.contentView addSubview:_periodL];
+                break;
+            }
+            case 11:
+            {
+                _maxRent = label;
+                [self.contentView addSubview:_maxRent];
+                break;
+            }
+            case 12:
+            {
+                _minRent = label;
+                [self.contentView addSubview:_minRent];
                 break;
             }
             default:
@@ -392,10 +420,24 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
+    [_maxRent mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+    
+    [_minRent mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_maxRent.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+    
     [_intentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_minRent.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

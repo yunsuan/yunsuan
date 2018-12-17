@@ -9,18 +9,27 @@
 #import "RentingMaintainAddFollowVC.h"
 
 #import "CompleteSurveyCollCell.h"
-#import "BaseFrameHeader.h"
 
+#import "SinglePickView.h"
+#import "BaseFrameHeader.h"
+#import "DateChooseView.h"
 #import "BorderTF.h"
 #import "DropDownBtn.h"
 
 @interface RentingMaintainAddFollowVC ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 {
-    
+    NSString *_houseId;
     NSArray *_titleArr;
+    NSArray *_followArr;
+    NSArray *_payArr;
     NSArray *_btnArr;
     NSMutableArray *_selectArr;
     NSMutableArray *_selectArr2;
+    NSString *_seeWay;
+    NSInteger _follow;
+    NSString *_followTime;
+    NSMutableDictionary *_dataDic;
+    NSString *_payWay;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -98,9 +107,22 @@
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
+@property (nonatomic, strong) NSDateFormatter *formatter;
+
 @end
 
 @implementation RentingMaintainAddFollowVC
+
+- (instancetype)initWithHouseId:(NSString *)houseId dataDic:(NSDictionary *)dataDic
+{
+    self = [super init];
+    if (self) {
+        
+        _houseId = houseId;
+        _dataDic = [NSMutableDictionary dictionaryWithDictionary:dataDic];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,24 +133,130 @@
 
 - (void)initDataSource{
     
+    _followArr = [self getDetailConfigArrByConfigState:23];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < 5; i++) {
         
         [_selectArr addObject:@0];
     }
     
+    _payArr = [self
+               getDetailConfigArrByConfigState:13];
     _selectArr2 = [@[] mutableCopy];
     for (int i = 0; i < 5; i++) {
         
         [_selectArr2 addObject:@0];
     }
+    for (int i = 0; i < _payArr.count; i++) {
+        
+        for (int j = 0; j < [_dataDic[@"pay_way"] count]; j++) {
+            
+            if ([_dataDic[@"pay_way"][j] isEqualToString:_payArr[i][@"param"]]) {
+                
+                [_selectArr2 replaceObjectAtIndex:i withObject:@1];
+            }
+        }
+    }
     _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"卖房意愿度",@"卖房紧急度"];
     _btnArr = @[@"整租",@"合租"];
+    NSDate *date = [NSDate date];
+    _formatter = [[NSDateFormatter alloc] init];
+    [_formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+    _followTime = [_formatter stringFromDate:date];
+//    _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度"];
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
+    if ([self isEmpty:_titleL.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写挂牌标题"];
+        return;
+    }
     
+    if (!_seeWay.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择看房方式"];
+        return;
+    }
+    
+    if ([self isEmpty:_PriceTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写出租价格"];
+        return;
+    }
+    
+    _payWay = @"";
+    for (int i = 0; i < _selectArr2.count; i++) {
+        
+        if ([_selectArr2[i] integerValue] == 1) {
+            
+            if (!_payWay.length) {
+                
+                _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+            }else{
+                
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+            }
+        }
+    }
+    if (!_payWay.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择收款方式"];
+        return;
+    }
+    
+    if ([self isEmpty:_intentTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写卖房意愿度"];
+        return;
+    }
+    
+    if ([self isEmpty:_urgentTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写卖房紧急度"];
+        return;
+    }
+    
+    if ([self isEmpty:_markTV.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写跟进内容"];
+        return;
+    }
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"house_id":_houseId,
+                                                                               @"follow_time":_followTime,
+                                                                               @"follow_type":@([_followArr[_follow][@"id"] integerValue]),
+                                                                               @"title":_titleTF.textfield.text,
+                                                                               @"intent":_intentTF.textfield.text,
+                                                                               @"urgency":_urgentTF.textfield.text,
+                                                                               @"check_way":_seeWay,
+                                                                               @"price":_PriceTF.textfield.text,
+                                                                               @"pay_way":_payWay,
+                                                                               @"comment":_markTV.text}];
+    
+    [BaseRequest POST:RentSurveyAddFollow_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"添加跟进记录成功" WithDefaultBlack:^{
+                
+                if (self.rentingMaintainAddFollowVCBlock) {
+                    
+                    self.rentingMaintainAddFollowVCBlock();
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -245,7 +373,7 @@
     _timeL.textColor = YJTitleLabColor;
     _timeL.adjustsFontSizeToFitWidth = YES;
     _timeL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _timeL.text = @"跟进时间：2017/11/29 14:23";
+    _timeL.text = [NSString stringWithFormat:@"跟进时间:%@",_followTime];
     [_scrollView addSubview:_timeL];
     
     _contentView = [[UIView alloc] init];

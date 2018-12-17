@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingMaintainAddFollowVCBlock)(void);
+
 @interface RentingMaintainAddFollowVC : BaseViewController
+
+@property (nonatomic, copy) RentingMaintainAddFollowVCBlock rentingMaintainAddFollowVCBlock;
+
+- (instancetype)initWithHouseId:(NSString *)houseId dataDic:(NSDictionary *)dataDic;
 
 @end

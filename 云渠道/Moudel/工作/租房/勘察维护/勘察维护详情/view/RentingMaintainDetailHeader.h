@@ -47,6 +47,10 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *rentTypeL;
 
+@property (nonatomic, strong) UILabel *maxRent;
+
+@property (nonatomic, strong) UILabel *minRent;
+
 @property (nonatomic, strong) UILabel *intentL;
 
 @property (nonatomic, strong) UILabel *urgentL;

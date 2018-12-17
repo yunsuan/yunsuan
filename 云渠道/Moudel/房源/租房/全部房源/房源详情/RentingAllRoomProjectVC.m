@@ -123,7 +123,7 @@
                 }
             }
         }];
-        _model = [[SecAllRoomProjectModel alloc] initWithDictionary:tempDic];
+        _model = [[RentingAllRoomProjectModel alloc] initWithDictionary:tempDic];
     }
     
     [_imgArr removeAllObjects];

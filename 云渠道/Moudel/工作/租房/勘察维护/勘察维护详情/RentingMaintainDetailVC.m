@@ -9,7 +9,7 @@
 #import "RentingMaintainDetailVC.h"
 
 #import "RoomSoldOutVC.h"
-#import "MaintainAddFollowVC.h"
+#import "RentingMaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
 #import "RoomAgencyAddProtocolVC.h"
 #import "MaintainRoomInfoVC.h"
@@ -473,8 +473,8 @@
                 
                 header.maintainAddFollowHeaderBlock = ^{
                     
-                    MaintainAddFollowVC *nextVC = [[MaintainAddFollowVC alloc] initWithHouseId:_houseId dataDic:_houseDic];
-                    nextVC.maintainAddFollowVCBlock = ^{
+                    RentingMaintainAddFollowVC *nextVC = [[RentingMaintainAddFollowVC alloc] initWithHouseId:_houseId dataDic:_houseDic];
+                    nextVC.rentingMaintainAddFollowVCBlock = ^{
                         
                         if (self.rentingMaintainDetailVCBlock) {
                             

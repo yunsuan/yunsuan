@@ -25,9 +25,9 @@
     [_tagView setData:model.project_tags];
     [_tagView2 setData:model.house_tags];
     
-    _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",model.check_way];
+    _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[model.receive_way componentsJoinedByString:@","]];
     _seeL.text = [NSString stringWithFormat:@"看房方式：%@",model.check_way];
-//    _liftL.text = mode
+    _liftL.text = [NSString stringWithFormat:@"电梯：%@",@"无"];
     _decorateL.text = [NSString stringWithFormat:@"装修：%@",model.decoration_standard];
     _faceL.text = [NSString stringWithFormat:@"朝向：%@",model.orientation];
     _intentL.text = [NSString stringWithFormat:@"出租意愿度：%@",model.intent];
@@ -46,6 +46,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
+        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         
         switch (i) {

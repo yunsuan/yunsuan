@@ -8,6 +8,7 @@
 
 #import "ReleaseSenceVC.h"
 #import "ReportedVC.h"
+#import "RentReportedVC.h"
 #import "RoomAgencyAddProtocolVC.h"
 #import "CompleteSurveyInfoVC.h"
 #import "ReleaseDirectVC.h"
@@ -630,11 +631,21 @@
 //                [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
-                ReportedVC *nextVC = [[ReportedVC alloc] initWithData:strongSelf->_fjxx buildId:weakSelf.build_id unitId:weakSelf.unit_id];
-                nextVC.comName = weakSelf.comName;
-                nextVC.projectId = weakSelf.project_id;
-                nextVC.status = weakSelf.status;
-                [weakSelf.navigationController pushViewController:nextVC animated:YES];
+                if ([weakSelf.status isEqualToString:@"rent"]) {
+                    
+                    RentReportedVC *nextVC = [[RentReportedVC alloc] initWithData:strongSelf->_fjxx buildId:weakSelf.build_id unitId:weakSelf.unit_id];
+                    nextVC.comName = weakSelf.comName;
+                    nextVC.projectId = weakSelf.project_id;
+                    nextVC.status = weakSelf.status;
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    ReportedVC *nextVC = [[ReportedVC alloc] initWithData:strongSelf->_fjxx buildId:weakSelf.build_id unitId:weakSelf.unit_id];
+                    nextVC.comName = weakSelf.comName;
+                    nextVC.projectId = weakSelf.project_id;
+                    nextVC.status = weakSelf.status;
+                    [weakSelf.navigationController pushViewController:nextVC animated:YES];
+                }
             }
         };
     }

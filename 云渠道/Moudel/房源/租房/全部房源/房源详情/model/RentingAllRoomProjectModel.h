@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *decoration_standard;
 
+@property (nonatomic, copy) NSString *deposit;
+
 @property (nonatomic, copy) NSString *floor_type;
 
 @property (nonatomic, copy) NSString *house_code;
@@ -43,6 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *intent;
 
 @property (nonatomic, copy) NSString *latitude;
+
+@property (nonatomic, copy) NSString *level;
 
 @property (nonatomic, copy) NSString *longitude;
 
@@ -65,6 +69,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *project_total_build;
 
 @property (nonatomic, copy) NSString *property_type;
+
+@property (nonatomic, strong) NSMutableArray *receive_way;
+
+@property (nonatomic, copy) NSString *rent_max_comment;
+
+@property (nonatomic, copy) NSString *rent_min_comment;
+
+@property (nonatomic, copy) NSString *rent_type;
 
 @property (nonatomic, copy) NSString *title;
 
