@@ -17,9 +17,9 @@
 #import "SecComRoomDetailVC.h"
 #import "SecAllRoomDetailVC.h"
 
-#import "SecAllRoomDetailTableHeader.h"
+#import "RentingAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
-#import "SecAllRoomTableCell.h"
+#import "RentingAllRoomTableCell.h"
 #import "SecAllRoomTableCell3.h"
 #import "RoomDetailTableCell4.h"
 #import "SecAllRoomTableOtherHouseCell.h"
@@ -30,7 +30,7 @@
     CLLocationCoordinate2D _rightBottomPoint;//地图矩形的顶点
     NSString *_name;
     NSString *_houseId;
-    SecAllRoomProjectModel *_model;
+    RentingAllRoomProjectModel *_model;
     NSMutableArray *_imgArr;
     NSMutableDictionary *_focusDic;
     NSMutableArray *_houseArr;
@@ -75,7 +75,7 @@
 - (void)initDataSource{
     
     _imgArr = [@[] mutableCopy];
-    _model = [[SecAllRoomProjectModel alloc] init];
+    _model = [[RentingAllRoomProjectModel alloc] init];
     _focusDic = [@{} mutableCopy];
     _houseArr = [@[] mutableCopy];
 }
@@ -265,10 +265,10 @@
     
     if (!section) {
         
-        SecAllRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"SecAllRoomDetailTableHeader"];
+        RentingAllRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RentingAllRoomDetailTableHeader"];
         if (!header) {
             
-            header = [[SecAllRoomDetailTableHeader alloc] initWithReuseIdentifier:@"SecAllRoomDetailTableHeader"];
+            header = [[RentingAllRoomDetailTableHeader alloc] initWithReuseIdentifier:@"RentingAllRoomDetailTableHeader"];
         }
         
         header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
@@ -283,7 +283,7 @@
             header.attentL.text = @"关注人数：0人";
         }
         
-        header.secAllRoomDetailTableHeaderImgBlock = ^(NSInteger num, NSArray *imgArr) {
+        header.rentingAllRoomDetailTableHeaderImgBlock = ^(NSInteger num, NSArray *imgArr) {
             
             if (imgArr.count) {
                 
@@ -399,10 +399,10 @@
     
     if (indexPath.section == 1) {
         
-        SecAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell"];
+        RentingAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomTableCell"];
         if (!cell) {
             
-            cell = [[SecAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell"];
+            cell = [[RentingAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomTableCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         

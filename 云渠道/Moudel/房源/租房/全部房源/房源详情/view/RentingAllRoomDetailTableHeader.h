@@ -1,32 +1,29 @@
 //
-//  SecAllRoomDetailTableHeader.h
+//  RentingAllRoomDetailTableHeader.h
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/6/11.
-//  Copyright © 2018年 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2018/12/17.
+//  Copyright © 2018 xiaoq. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 #import "TagView.h"
 
-#import "SecAllRoomProjectModel.h"
-#import "SecAllRoomStoreModel.h"
-#import "SecAllRoomOfficeModel.h"
+#import "RentingAllRoomProjectModel.h"
 
 
+typedef void(^RentingAllRoomDetailTableHeaderImgBlock)(NSInteger num,NSArray *imgArr);
 
-typedef void(^SecAllRoomDetailTableHeaderImgBlock)(NSInteger num,NSArray *imgArr);
+@interface RentingAllRoomDetailTableHeader : UITableViewHeaderFooterView
 
-@interface SecAllRoomDetailTableHeader : UITableViewHeaderFooterView
+@property (nonatomic, copy) RentingAllRoomDetailTableHeaderImgBlock rentingAllRoomDetailTableHeaderImgBlock;
 
-@property (nonatomic, copy) SecAllRoomDetailTableHeaderImgBlock secAllRoomDetailTableHeaderImgBlock;
+@property (nonatomic, strong) RentingAllRoomProjectModel *model;
 
-@property (nonatomic, strong) SecAllRoomProjectModel *model;
-
-@property (nonatomic, strong) SecAllRoomStoreModel *storeModel;
-
-@property (nonatomic, strong) SecAllRoomOfficeModel *officeModel;
+//@property (nonatomic, strong) SecAllRoomStoreModel *storeModel;
+//
+//@property (nonatomic, strong) SecAllRoomOfficeModel *officeModel;
 
 @property (nonatomic, strong) UIScrollView *imgScroll;
 
