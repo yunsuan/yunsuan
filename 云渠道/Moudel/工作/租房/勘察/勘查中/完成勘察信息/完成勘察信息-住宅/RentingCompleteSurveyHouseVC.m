@@ -174,25 +174,12 @@
         }
         case 4:{
             
-//            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-//            __weak __typeof(&*self)weakSelf = self;
-//            view.dateblock = ^(NSDate *date) {
-//
-//                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
-//            };
-//            [self.view addSubview:view];
+
             break;
         }
         case 5:{
             
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.seeWayBtn.content.text = MC;
-//                weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
-//            };
-//            [self.view addSubview:view];
+
             break;
         }
         default:

@@ -314,8 +314,8 @@
         cell.tag = 1;
         cell.selectImg.image = [UIImage imageNamed:@"default"];
         [cell setIsSelect:[_selectArr[indexPath.item] integerValue]];
-        
-        cell.titleL.text = @"QQ";
+
+        cell.titleL.text = _followArr[indexPath.item][@"param"];
         
         return cell;
     }else{
@@ -326,7 +326,7 @@
             cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
         }
         
-        cell.titleL.text = @"一次性付款";
+        cell.titleL.text = _payArr[indexPath.item][@"param"];
         cell.tag = 0;
         [cell setIsSelect:[_selectArr2[indexPath.item] integerValue]];
         
