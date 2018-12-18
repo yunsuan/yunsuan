@@ -539,7 +539,6 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         };
-        
         return cell;
     }
 }

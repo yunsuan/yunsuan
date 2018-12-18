@@ -8,8 +8,8 @@
 
 #import "RentingCompleteSurveyInfoVC.h"
 
-//#import "CompleteSurveyStoreVC.h"
-//#import "CompleteSurveyOfficeVC.h"
+#import "RentingCompleteSurveyStoreVC.h"
+#import "RentingCompleteSurveyOfficeVC.h"
 #import "RentingCompleteSurveyHouseVC.h"
 
 //#import "SinglePickView.h"
@@ -243,28 +243,28 @@
     }
     if ([str isEqualToString:@"写字楼"]) {
         
-//        CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
-//        nextVC.completeSurveyOfficeBlock = ^{
-//
-//            if (self.completeSurveyInfoVCBlock) {
-//
-//                self.completeSurveyInfoVCBlock();
-//            }
-//        };
-//        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-//        [self.navigationController pushViewController:nextVC animated:YES];
+        RentingCompleteSurveyOfficeVC *nextVC = [[RentingCompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.rentingCompleteSurveyOfficeBlock = ^{
+
+            if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                self.rentingCompleteSurveyInfoVCBlock();
+            }
+        };
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+        [self.navigationController pushViewController:nextVC animated:YES];
     }else if ([str isEqualToString:@"商铺"]){
         
-//        CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
-//        nextVC.completeSurveyStoreVCBlock = ^{
-//
-//            if (self.completeSurveyInfoVCBlock) {
-//
-//                self.completeSurveyInfoVCBlock();
-//            }
-//        };
-//        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-//        [self.navigationController pushViewController:nextVC animated:YES];
+        RentingCompleteSurveyStoreVC *nextVC = [[RentingCompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.rentingCompleteSurveyStoreVCBlock = ^{
+
+            if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                self.rentingCompleteSurveyInfoVCBlock();
+            }
+        };
+        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+        [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
         RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];

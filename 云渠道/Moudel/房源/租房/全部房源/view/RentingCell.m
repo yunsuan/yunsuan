@@ -45,7 +45,7 @@
         _priceL.text = [NSString stringWithFormat:@"%@元/㎡",model.unit_price];
     }else{
         
-        _priceL.text = @"暂无售价信息";
+        _priceL.text = @"暂无价格信息";
     }
     
     if (model.unit_price.length) {

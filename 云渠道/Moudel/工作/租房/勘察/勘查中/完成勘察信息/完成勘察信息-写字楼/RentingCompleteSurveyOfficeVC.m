@@ -1,9 +1,9 @@
 //
-//  RentingCompleteSurveyOfficeVC.m
+//  CompleteSurveyOfficeVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/12/18.
-//  Copyright © 2018 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2018/9/13.
+//  Copyright © 2018年 xiaoq. All rights reserved.
 //
 
 #import "RentingCompleteSurveyOfficeVC.h"
@@ -24,6 +24,7 @@
 
 #import "BorderTF.h"
 #import "DropDownBtn.h"
+
 
 @interface RentingCompleteSurveyOfficeVC ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -189,7 +190,7 @@
         [_selectArr addObject:@0];
     }
     _btnArr = @[@"共有",@"非共有",@"有",@"无"];
-    _titleArr = @[@"挂牌标题：",@"挂牌价格：",@"出售底价：",@"收款方式：",@"产权所属：",@"抵押信息：",@"楼层：",@"层高：",@"门宽：",@"房屋所有权证号：",@"拿证时间：",@"级别：",@"当前出租：",@"当前佣金：",@"租约结束时间："];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"楼层：",@"层高：",@"门宽：",@"级别："];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
