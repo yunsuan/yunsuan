@@ -49,7 +49,7 @@
     _dataArr = [[NSMutableArray alloc] init];
     if ([self.dic[@"type"] integerValue] == 1) {
         
-        _titleArr = @[@"核心卖点",@"装修描述",@"房源标签",@"已选标签"];
+        _titleArr = @[@"房源概述",@"装修描述",@"房屋配套",@"已选配套"];
         _tagArr = [self getDetailConfigArrByConfigState:HOUSE_TAGS_HOUSE];
     }else if ([self.dic[@"type"] integerValue] == 2){
         

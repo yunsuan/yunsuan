@@ -35,12 +35,13 @@
     NSArray *_titleArr;
     NSMutableArray *_selectArr;
     NSArray *_payArr;
-    NSInteger _propertyBelong;
-    NSInteger _isMortgage;
+    
     NSMutableArray *_dataArr;
-    NSInteger _isRent;
+    
     NSString *_payWay;
     NSString *_seeWay;
+    
+    NSInteger _rentType;
 }
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -57,9 +58,9 @@
 
 @property (nonatomic, strong) BorderTF *maxPriceTF;
 
-@property (nonatomic, strong) UILabel *minPriceL;
+@property (nonatomic, strong) UILabel *roomLevelL;
 
-@property (nonatomic, strong) BorderTF *minPriceTF;
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
 
 @property (nonatomic, strong) UILabel *payL;
 
@@ -67,25 +68,15 @@
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
-@property (nonatomic, strong) UILabel *propertyL;
+@property (nonatomic, strong) UILabel *rentTypeL;
 
-@property (nonatomic, strong) UIButton *propertyBtn1;
+@property (nonatomic, strong) UIButton *rentBtn1;
 
-@property (nonatomic, strong) UIImageView *propertyImg1;
+@property (nonatomic, strong) UIImageView *rentImg1;
 
-@property (nonatomic, strong) UIButton *propertyBtn2;
+@property (nonatomic, strong) UIButton *rentBtn2;
 
-@property (nonatomic, strong) UIImageView *propertyImg2;
-
-@property (nonatomic, strong) UILabel *mortgageL;
-
-@property (nonatomic, strong) UIButton *mortgageBtn1;
-
-@property (nonatomic, strong) UIImageView *mortgageImg1;
-
-@property (nonatomic, strong) UIButton *mortgageBtn2;
-
-@property (nonatomic, strong) UIImageView *mortgageImg2;
+@property (nonatomic, strong) UIImageView *rentImg2;
 
 @property (nonatomic, strong) UILabel *floorL;
 
@@ -99,29 +90,17 @@
 
 @property (nonatomic, strong) BorderTF *widthTF;
 
-@property (nonatomic, strong) UILabel *certNumL;
-
-@property (nonatomic, strong) BorderTF *cerNumTF;
-
-@property (nonatomic, strong) UILabel *timeL;
-
-@property (nonatomic, strong) DropDownBtn *timeBtn;
-
 @property (nonatomic, strong) UILabel *levelL;
 
 @property (nonatomic, strong) DropDownBtn *levelBtn;
 
-@property (nonatomic, strong) UILabel *isRentL;
+@property (nonatomic, strong) UILabel *minPeriodL;
 
-@property (nonatomic, strong) DropDownBtn *isRentBtn;
+@property (nonatomic, strong) DropDownBtn *minPeriodBtn;
 
-@property (nonatomic, strong) UILabel *rentalL;
+@property (nonatomic, strong) UILabel *maxPeriodL;
 
-@property (nonatomic, strong) BorderTF *rentalTF;
-
-@property (nonatomic, strong) UILabel *endTimeL;
-
-@property (nonatomic, strong) DropDownBtn *endTimeLBtn;
+@property (nonatomic, strong) DropDownBtn *maxPeriodBtn;
 
 @property (nonatomic, strong) UIView *CollView;
 
@@ -179,18 +158,17 @@
 
 - (void)initDataSource{
     
-    _isRent = 2;
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"YYYY/MM/dd"];
-    _dataArr = [@[] mutableCopy];
-    _payArr = [self getDetailConfigArrByConfigState:13];
+    
+    _payArr = [self getDetailConfigArrByConfigState:RENT_HOUSE_RECEIVE_TYPE];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < _payArr.count; i++) {
         
         [_selectArr addObject:@0];
     }
-    _btnArr = @[@"共有",@"非共有",@"有",@"无"];
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"楼层：",@"层高：",@"门宽：",@"级别："];
+    _btnArr = @[@"整租",@"合租"];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"楼层：",@"层高：",@"门宽：",@"级别：",@"当前出租：",@"房源等级",@"最短租期：",@"最长租期："];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -214,7 +192,7 @@
             __weak __typeof(&*self)weakSelf = self;
             view.dateblock = ^(NSDate *date) {
                 
-                weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+//                weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
             };
             [self.view addSubview:view];
             break;
@@ -233,101 +211,15 @@
         }
         case 3:{
             
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"当前出租" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
             
-            UIAlertAction *rent = [UIAlertAction actionWithTitle:@"已出租" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                self->_isRentBtn.content.text = @"已出租";
-                self->_isRent = 1;
-                
-                self->_rentalL.hidden = NO;
-                self->_rentalTF.hidden = NO;
-                self->_endTimeL.hidden = NO;
-                self->_endTimeLBtn.hidden = NO;
-                
-                [self->_isRentBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(81 *SIZE);
-                    make.top.equalTo(self->_levelBtn.mas_bottom).offset(30 *SIZE);
-                    make.width.mas_equalTo(257 *SIZE);
-                    make.height.mas_equalTo(33 *SIZE);
-                    
-                }];
-                
-                [self->_rentalL mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(9 *SIZE);
-                    make.top.equalTo(self->_isRentBtn.mas_bottom).offset(41 *SIZE);
-                    make.height.mas_equalTo(12 *SIZE);
-                    make.width.mas_equalTo(70 *SIZE);
-                }];
-                
-                [self->_rentalTF mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(81 *SIZE);
-                    make.top.equalTo(self->_isRentBtn.mas_bottom).offset(30 *SIZE);
-                    make.width.mas_equalTo(257 *SIZE);
-                    make.height.mas_equalTo(33 *SIZE);
-                }];
-                
-                [self->_endTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(9 *SIZE);
-                    make.top.equalTo(self->_rentalTF.mas_bottom).offset(41 *SIZE);
-                    make.height.mas_equalTo(12 *SIZE);
-                    make.width.mas_equalTo(70 *SIZE);
-                }];
-                
-                [self->_endTimeLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(81 *SIZE);
-                    make.top.equalTo(self->_rentalTF.mas_bottom).offset(30 *SIZE);
-                    make.width.mas_equalTo(257 *SIZE);
-                    make.height.mas_equalTo(33 *SIZE);
-                    make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);
-                }];
-            }];
-            
-            UIAlertAction *noRent = [UIAlertAction actionWithTitle:@"未出租" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                self->_isRentBtn.content.text = @"未出租";
-                self->_isRent = 2;
-                
-                self->_rentalL.hidden = YES;
-                self->_rentalTF.hidden = YES;
-                self->_endTimeL.hidden = YES;
-                self->_endTimeLBtn.hidden = YES;
-                
-                [self->_isRentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    
-                    make.left.equalTo(self->_contentView).offset(81 *SIZE);
-                    make.top.equalTo(self->_levelBtn.mas_bottom).offset(30 *SIZE);
-                    make.width.mas_equalTo(257 *SIZE);
-                    make.height.mas_equalTo(33 *SIZE);
-                    make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);
-                }];
-            }];
-            
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                
-                
-            }];
-            
-            [alert addAction:rent];
-            [alert addAction:noRent];
-            [alert addAction:cancel];
-            [self.navigationController presentViewController:alert animated:YES completion:^{
-                
-            }];
             break;
         }
         case 4:{
             
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-            __weak __typeof(&*self)weakSelf = self;
+
             view.dateblock = ^(NSDate *date) {
                 
-                weakSelf.endTimeLBtn.content.text = [weakSelf.formatter stringFromDate:date];
             };
             [self.view addSubview:view];
             break;
@@ -351,32 +243,16 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    if (btn.tag < 3) {
+    if (btn.tag == 1) {
         
-        if (btn.tag == 1) {
-            
-            _propertyImg1.image = [UIImage imageNamed:@"selected"];
-            _propertyImg2.image = [UIImage imageNamed:@"default"];
-            _propertyBelong = 1;
-        }else{
-            
-            _propertyImg1.image = [UIImage imageNamed:@"default"];
-            _propertyImg2.image = [UIImage imageNamed:@"selected"];
-            _propertyBelong = 2;
-        }
+        _rentImg1.image = [UIImage imageNamed:@"selected"];
+        _rentImg2.image = [UIImage imageNamed:@"default"];
+        _rentType = 245;
     }else{
         
-        if (btn.tag == 3) {
-            
-            _mortgageImg1.image = [UIImage imageNamed:@"selected"];
-            _mortgageImg2.image = [UIImage imageNamed:@"default"];
-            _isMortgage = 1;
-        }else{
-            
-            _mortgageImg1.image = [UIImage imageNamed:@"default"];
-            _mortgageImg2.image = [UIImage imageNamed:@"selected"];
-            _isMortgage = 2;
-        }
+        _rentImg1.image = [UIImage imageNamed:@"default"];
+        _rentImg2.image = [UIImage imageNamed:@"selected"];
+        _rentType = 246;
     }
 }
 
@@ -388,6 +264,19 @@
         
         strongSelf.seeWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
         strongSelf->_seeWay = [NSString stringWithFormat:@"%@",ID];
+    };
+    [self.view addSubview:view];
+}
+
+- (void)ActionLevelBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
     };
     [self.view addSubview:view];
 }
@@ -404,6 +293,13 @@
         [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌价格"];
         return;
     }
+    
+    if ([self isEmpty:_roomLevelBtn->str]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+        return;
+    }
+    
     
     _payWay = @"";
     for (int i = 0; i < _selectArr.count; i++) {
@@ -444,36 +340,10 @@
         return;
     }
     
-    if ([self isEmpty:_cerNumTF.textfield.text]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入所有权证号"];
-        return;
-    }
-    if (!_timeBtn.content.text.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择拿证时间"];
-        return;
-    }
-    
     if (!_levelBtn.content.text.length) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择级别"];
         return;
-    }
-    
-    if (_isRent == 1) {
-        
-        if ([self isEmpty:_rentalTF.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入当前佣金"];
-            return;
-        }
-        
-        if (!_endTimeLBtn.content.text.length) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请看租约结束时间"];
-            return;
-        }
     }
     
     if (!_seeWay.length) {
@@ -484,29 +354,25 @@
     [self.dataDic setObject:@(3) forKey:@"type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
+    [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
     [self.dataDic setValue:_payWay forKey:@"pay_way"];
-    [self.dataDic setValue:@(_propertyBelong) forKey:@"property_belong"];
-    [self.dataDic setValue:@(_isMortgage) forKey:@"is_mortgage"];
     [self.dataDic setValue:_highTF.textfield.text forKey:@"office_height"];
     [self.dataDic setValue:_widthTF.textfield.text forKey:@"office_width"];
-    [self.dataDic setValue:_cerNumTF.textfield.text forKey:@"permit_code"];
-    [self.dataDic setValue:_timeBtn->str forKey:@"permit_time"];
     [self.dataDic setValue:_floorBtn->str forKey:@"floor_type"];
     [self.dataDic setValue:_levelBtn->str forKey:@"grade"];
-    if (_isRent == 1) {
-        
-        [self.dataDic setObject:@(_isRent) forKey:@"is_rent"];
-        [self.dataDic setObject:_rentalTF.textfield.text forKey:@"rent_money"];
-        [self.dataDic setObject:_endTimeLBtn.content.text forKey:@"rent_over_time"];
-    }else{
-        
-        [self.dataDic setObject:@(_isRent) forKey:@"is_rent"];
-    }
+    
     [self.dataDic setValue:_seeWay forKey:@"check_way"];
-    if (![self isEmpty:_minPriceTF.textfield.text]) {
+
+    if (_minPeriodBtn.content.text.length) {
         
-        [self.dataDic setValue:_minPriceTF.textfield.text forKey:@"minimum"];
+        [self.dataDic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
     }
+    
+    if (_maxPeriodBtn.content.text.length) {
+        
+        [self.dataDic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
+    }
+    
     if (![self isEmpty:_markView.text]) {
         
         [self.dataDic setValue:_markView.text forKey:@"comment"];
@@ -529,39 +395,6 @@
     };
     nextVC.dic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
     [self.navigationController pushViewController:nextVC animated:YES];
-}
-
-
-#pragma mark -- TextField;
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    if (textField == _minPriceTF.textfield) {
-        
-        if (!_maxPriceTF.textfield.text) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请先输入挂牌价格" WithDefaultBlack:^{
-                
-                return ;
-            }];
-        }
-    }
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
-    if (textField == _minPriceTF.textfield) {
-        
-        if ([_minPriceTF.textfield.text integerValue] > [_maxPriceTF.textfield.text integerValue]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"出售底价不能超过挂牌价格" WithDefaultBlack:^{
-                
-                _minPriceTF.textfield.text = self->_maxPriceTF.textfield.text;
-                [_minPriceTF.textfield becomeFirstResponder];
-                return ;
-            }];
-        }
-    }
 }
 
 #pragma mark -- Collection
@@ -646,7 +479,7 @@
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
     
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 11; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -669,80 +502,57 @@
             }
             case 2:
             {
-                _minPriceL = label;
-                [_contentView addSubview:_minPriceL];
-                break;
-            }
-            case 3:
-            {
                 _payL = label;
                 [_contentView addSubview:_payL];
                 break;
             }
+            case 3:
+            {
+                _rentTypeL = label;
+                [_contentView addSubview:_rentTypeL];
+                break;
+            }
             case 4:
-            {
-                _propertyL = label;
-                [_contentView addSubview:_propertyL];
-                break;
-            }
-            case 5:
-            {
-                _mortgageL = label;
-                [_contentView addSubview:_mortgageL];
-                break;
-            }
-            case 6:
             {
                 _floorL = label;
                 [_contentView addSubview:_floorL];
                 break;
             }
-            case 7:
+            case 5:
             {
                 _highL = label;
                 [_contentView addSubview:_highL];
                 break;
             }
-            case 8:
+            case 6:
             {
                 _widthL = label;
                 [_contentView addSubview:_widthL];
                 break;
             }
-            case 9:
-            {
-                _certNumL = label;
-                [_contentView addSubview:_certNumL];
-                break;
-            }
-            case 10:
-            {
-                _timeL = label;
-                [_contentView addSubview:_timeL];
-                break;
-            }
-            case 11:
+            
+            case 7:
             {
                 _levelL = label;
                 [_contentView addSubview:_levelL];
                 break;
             }
-            case 12:
-            {
-                _isRentL = label;
-                [_contentView addSubview:_isRentL];
+            case 8:{
+                
+                _roomLevelL = label;
+                [_contentView addSubview:_roomLevelL];
                 break;
             }
-            case 13:
+            case 9:
             {
-                _rentalL = label;
-                [_contentView addSubview:_rentalL];
+                _minPeriodL = label;
+                [_contentView addSubview:_minPeriodL];
                 break;
             }
-            case 14:
+            case 10:
             {
-                _endTimeL = label;
-                [_contentView addSubview:_endTimeL];
+                _maxPeriodL = label;
+                [_contentView addSubview:_maxPeriodL];
                 break;
             }
             default:
@@ -750,7 +560,7 @@
         }
     }
     
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 4; i++) {
         
         BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 258 *SIZE, 33 *SIZE)];
         textField.textfield.delegate = self;
@@ -772,28 +582,13 @@
             }
             case 2:
             {
-                textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
-                _minPriceTF = textField;
-                _minPriceTF.unitL.text = @"万";
-                [_contentView addSubview:_minPriceTF];
-                break;
-            }
-            case 3:
-            {
-                textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
-                _cerNumTF = textField;
-                [_contentView addSubview:_cerNumTF];
-                break;
-            }
-            case 4:
-            {
                 textField.textfield.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
                 _highTF = textField;
                 _highTF.unitL.text = @"米";
                 [_contentView addSubview:_highTF];
                 break;
             }
-            case 5:
+            case 3:
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _widthTF = textField;
@@ -801,21 +596,17 @@
                 [_contentView addSubview:_widthTF];
                 break;
             }
-            case 6:
-            {
-                textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
-                _rentalTF = textField;
-                _rentalTF.unitL.frame = CGRectMake(_rentalTF.frame.size.width - 30*SIZE, 10 *SIZE, 25 *SIZE, 14 *SIZE);
-                _rentalTF.unitL.text = @"元/月";
-                [_contentView addSubview:_rentalTF];
-                break;
-            }
             default:
                 break;
         }
     }
     
-    for (int i = 0; i < 5; i++) {
+    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_roomLevelBtn];
+    
+    
+    for (int i = 0; i < 4; i++) {
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 0 *SIZE, 257 *SIZE, 33 *SIZE)];
         btn.tag = i;
@@ -829,28 +620,20 @@
             }
             case 1:
             {
-                _timeBtn = btn;
-                [_contentView addSubview:_timeBtn];
-                break;
-            }
-            case 2:
-            {
                 _levelBtn = btn;
                 [_contentView addSubview:_levelBtn];
                 break;
             }
-            case 3:
+            case 2:
             {
-                _isRentBtn = btn;
-                _isRentBtn.content.text = @"未出租";
-                _isRent = 2;
-                [_contentView addSubview:_isRentBtn];
+                _minPeriodBtn = btn;
+                [_contentView addSubview:_minPeriodBtn];
                 break;
             }
-            case 4:
+            case 3:
             {
-                _endTimeLBtn = btn;
-                [_contentView addSubview:_endTimeLBtn];
+                _maxPeriodBtn = btn;
+                [_contentView addSubview:_maxPeriodBtn];
                 break;
             }
             default:
@@ -859,7 +642,7 @@
     }
     
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 2; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -877,45 +660,26 @@
         switch (i) {
             case 0:
             {
-                _propertyImg1 = img;
-                [btn addSubview:_propertyImg1];
-                _propertyBtn1 = btn;
-                [_contentView addSubview:_propertyBtn1];
+                _rentImg1 = img;
+                [btn addSubview:_rentImg1];
+                _rentBtn1 = btn;
+                [_contentView addSubview:_rentBtn1];
                 break;
             }
             case 1:
             {
-                _propertyImg2 = img;
-                [btn addSubview:_propertyImg2];
-                _propertyBtn2 = btn;
-                [_contentView addSubview:_propertyBtn2];
-                break;
-            }
-            case 2:
-            {
-                _mortgageImg1 = img;
-                [btn addSubview:_mortgageImg1];
-                _mortgageBtn1 = btn;
-                [_contentView addSubview:_mortgageBtn1];
-                break;
-            }
-            case 3:
-            {
-                _mortgageImg2 = img;
-                [btn addSubview:_mortgageImg2];
-                _mortgageBtn2 = btn;
-                [_contentView addSubview:_mortgageBtn2];
+                _rentImg2 = img;
+                [btn addSubview:_rentImg2];
+                _rentBtn2 = btn;
+                [_contentView addSubview:_rentBtn2];
                 break;
             }
             default:
                 break;
         }
     }
-    
-    _propertyImg2.image = [UIImage imageNamed:@"selected"];
-    _propertyBelong = 2;
-    _mortgageImg2.image = [UIImage imageNamed:@"selected"];
-    _isMortgage = 2;
+    _rentImg1.image = [UIImage imageNamed:@"selected"];
+    _rentType = 245;
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.estimatedItemSize = CGSizeMake(120 *SIZE, 20 *SIZE);
@@ -1052,11 +816,7 @@
     [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
     [_scrollView addSubview:_nextBtn];
-    
-    self->_rentalL.hidden = YES;
-    self->_rentalTF.hidden = YES;
-    self->_endTimeL.hidden = YES;
-    self->_endTimeLBtn.hidden = YES;
+
     
     [self MasonryUI];
 }
@@ -1111,18 +871,18 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_minPriceL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_maxPriceTF.mas_bottom).offset(31 *SIZE);
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_maxPriceTF.mas_bottom).offset(36 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_minPriceTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_maxPriceTF.mas_bottom).offset(20 *SIZE);
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_maxPriceTF.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
@@ -1130,7 +890,7 @@
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -1138,55 +898,31 @@
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
     
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_payColl.mas_bottom).offset(28 *SIZE);
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_payColl.mas_bottom).offset(28 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_propertyBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_payColl.mas_bottom).offset(23 *SIZE);
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
         make.width.mas_equalTo(130 *SIZE);
         make.height.mas_equalTo(20 *SIZE);
     }];
     
-    [_propertyBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(226 *SIZE);
-        make.top.equalTo(self->_payColl.mas_bottom).offset(23 *SIZE);
-        make.width.mas_equalTo(130 *SIZE);
-        make.height.mas_equalTo(20 *SIZE);
-    }];
-    
-    [_mortgageL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_propertyBtn1.mas_bottom).offset(30 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_mortgageBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_propertyBtn1.mas_bottom).offset(25 *SIZE);
-        make.width.mas_equalTo(130 *SIZE);
-        make.height.mas_equalTo(20 *SIZE);
-    }];
-    
-    [_mortgageBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(226 *SIZE);
-        make.top.equalTo(self->_propertyBtn1.mas_bottom).offset(25 *SIZE);
+        make.left.equalTo(_contentView).offset(226 *SIZE);
+        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
         make.width.mas_equalTo(130 *SIZE);
         make.height.mas_equalTo(20 *SIZE);
     }];
@@ -1194,7 +930,7 @@
     [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_mortgageBtn1.mas_bottom).offset(41 *SIZE);
+        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -1202,7 +938,7 @@
     [_floorBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_mortgageBtn1.mas_bottom).offset(30 *SIZE);
+        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
@@ -1239,7 +975,7 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_certNumL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_levelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
         make.top.equalTo(self->_widthTF.mas_bottom).offset(41 *SIZE);
@@ -1247,7 +983,7 @@
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_cerNumTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_levelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
         make.top.equalTo(self->_widthTF.mas_bottom).offset(30 *SIZE);
@@ -1255,87 +991,38 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_cerNumTF.mas_bottom).offset(41 *SIZE);
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_levelBtn.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_minPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_cerNumTF.mas_bottom).offset(30 *SIZE);
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_levelBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_levelL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_maxPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_timeBtn.mas_bottom).offset(41 *SIZE);
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_levelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_maxPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_timeBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_isRentL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_levelBtn.mas_bottom).offset(41 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_isRentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_levelBtn.mas_bottom).offset(30 *SIZE);
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
         make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);
     }];
-    
-    //    [_rentalL mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-    //        make.top.equalTo(self->_isRentBtn.mas_bottom).offset(41 *SIZE);
-    //        make.height.mas_equalTo(12 *SIZE);
-    //        make.width.mas_equalTo(70 *SIZE);
-    //    }];
-    //
-    //    [_rentalTF mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-    //        make.top.equalTo(self->_isRentBtn.mas_bottom).offset(30 *SIZE);
-    //        make.width.mas_equalTo(257 *SIZE);
-    //        make.height.mas_equalTo(33 *SIZE);
-    //    }];
-    //
-    //    [_endTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-    //        make.top.equalTo(self->_rentalTF.mas_bottom).offset(41 *SIZE);
-    //        make.height.mas_equalTo(12 *SIZE);
-    //        make.width.mas_equalTo(70 *SIZE);
-    //    }];
-    //
-    //    [_endTimeLBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-    //        make.top.equalTo(self->_rentalTF.mas_bottom).offset(30 *SIZE);
-    //        make.width.mas_equalTo(257 *SIZE);
-    //        make.height.mas_equalTo(33 *SIZE);
-    //        make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);
-    //    }];
     
     [_CollView mas_makeConstraints:^(MASConstraintMaker *make) {
         

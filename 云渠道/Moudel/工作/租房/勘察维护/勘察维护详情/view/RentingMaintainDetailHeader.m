@@ -80,6 +80,13 @@
         _priceL.text = [NSString stringWithFormat:@"出租价格:暂无数据"];
     }
     
+    if (dataDic[@"level"]) {
+        
+        _roomLevelL.text = [NSString stringWithFormat:@"房源等级:%@",dataDic[@"level"]];
+    }else{
+        
+        _roomLevelL.text = [NSString stringWithFormat:@"房源等级:暂无数据"];
+    }
     
     if (dataDic[@"pay_way"]) {
         
@@ -115,18 +122,18 @@
     
     if (dataDic[@"rent_max_comment"]) {
         
-        _rentTypeL.text = [NSString stringWithFormat:@"最长租期:%@",dataDic[@"rent_max_comment"]];
+        _maxRent.text = [NSString stringWithFormat:@"最长租期:%@",dataDic[@"rent_max_comment"]];
     }else{
         
-        _rentTypeL.text = [NSString stringWithFormat:@"最长租期:暂无数据"];
+        _maxRent.text = [NSString stringWithFormat:@"最长租期:暂无数据"];
     }
     
     if (dataDic[@"rent_min_comment"]) {
         
-        _rentTypeL.text = [NSString stringWithFormat:@"最短租期:%@",dataDic[@"rent_min_comment"]];
+        _minRent.text = [NSString stringWithFormat:@"最短租期:%@",dataDic[@"rent_min_comment"]];
     }else{
         
-        _rentTypeL.text = [NSString stringWithFormat:@"最短租期:暂无数据"];
+        _minRent.text = [NSString stringWithFormat:@"最短租期:暂无数据"];
     }
     
     
@@ -188,15 +195,7 @@
     _codeL.textColor = YJTitleLabColor;
     _codeL.font = [UIFont systemFontOfSize:15 *SIZE];
     [_codeView addSubview:_codeL];
-    
-//    _typeL =  [[UILabel alloc] init];
-//    _typeL.layer.cornerRadius = 2 *SIZE;
-//    _typeL.clipsToBounds = YES;
-//    _typeL.backgroundColor = COLOR(213, 242, 255, 1);
-//    _typeL.textColor = COLOR(64, 169, 255, 1);
-//    _typeL.font = [UIFont systemFontOfSize:10 *SIZE];
-//    _typeL.textAlignment = NSTextAlignmentCenter;
-//    [_codeView addSubview:_typeL];
+
     
     _projectL =  [[UILabel alloc] init];
     _projectL.textColor = YJ86Color;
@@ -207,6 +206,13 @@
     [_editBtn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];
     //    [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [_codeView addSubview:_editBtn];
+    
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJ86Color;
+    _roomLevelL.numberOfLines = 0;
+    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.contentView addSubview:_roomLevelL];
     
     for (int i = 0; i < 13 ; i++) {
         
@@ -392,10 +398,17 @@
         make.right.equalTo(self.contentView).offset(-120 *SIZE);
     }];
     
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_priceL.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+    
+    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
@@ -423,7 +436,7 @@
     [_maxRent mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
