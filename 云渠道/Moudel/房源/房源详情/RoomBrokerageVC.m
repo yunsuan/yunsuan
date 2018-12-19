@@ -82,7 +82,7 @@
                                                  } failure:^(NSError *error) {
                                                      
                                                      NSLog(@"%@",error);
-                                                     [self showContent:@"网络错误"];
+//                                                     [self showContent:@"网络错误"];
                                                  }];
 }
 

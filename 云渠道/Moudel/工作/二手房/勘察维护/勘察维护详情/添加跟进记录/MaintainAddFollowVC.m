@@ -58,6 +58,10 @@
 
 @property (nonatomic, strong) BorderTF *minPriceTF;
 
+@property (nonatomic, strong) UILabel *roomLevelL;
+
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
+
 @property (nonatomic, strong) UILabel *payL;
 
 @property (nonatomic, strong) UICollectionView *payColl;
@@ -142,8 +146,11 @@
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
     _followTime = [_formatter stringFromDate:date];
-    _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度"];
+    _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度",@"房源等级"];
 }
+
+
+#pragma mark -- ActionMethod --
 
 - (void)ActionSeeWayBtn:(UIButton *)btn{
     
@@ -154,6 +161,19 @@
         
         strongSelf->_seeWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
         strongSelf->_seeWay = [NSString stringWithFormat:@"%@",ID];
+    };
+    [self.view addSubview:view];
+}
+
+- (void)ActionLevelBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
     };
     [self.view addSubview:view];
 }
@@ -199,6 +219,12 @@
     if ([self isEmpty:_minPriceTF.textfield.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写出售底价"];
+        return;
+    }
+    
+    if ([self isEmpty:_roomLevelBtn->str]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
         return;
     }
     
@@ -255,6 +281,7 @@
                                                                                @"check_way":_seeWay,
                                                                                @"price":_priceTF.textfield.text,
                                                                                @"minimum":_minPriceTF.textfield.text,
+                                                                               @"level":_roomLevelBtn->str,
                                                                                @"pay_way":_payWay,
                                                                                @"comment":_markTV.text,
                                                                                @"next_visit_time":_timeBtn.content.text
@@ -452,7 +479,7 @@
     _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 10; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -514,6 +541,12 @@
             {
                 _urgentL = label;
                 [_contentView addSubview:_urgentL];
+                break;
+            }
+            case 9:
+            {
+                _roomLevelL = label;
+                [_contentView addSubview:_roomLevelL];
                 break;
             }
             default:
@@ -596,9 +629,25 @@
             }
         }
         _seeWayBtn.content.text = _dataDic[@"check_way"];
-        
     }
     [_contentView addSubview:_seeWayBtn];
+    
+    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    if (_dataDic.count) {
+        
+        NSArray *arr = [self getDetailConfigArrByConfigState:50];
+        for (int i = 0; i < arr.count; i++) {
+            
+            if ([_dataDic[@"level"] isEqualToString:arr[i][@"param"]]) {
+
+                _roomLevelBtn->str = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
+            }
+        }
+        _roomLevelBtn.content.text = _dataDic[@"level"];
+    }
+    [_contentView addSubview:_roomLevelBtn];
+    
     
     for (int i = 0; i < 2; i++) {
         
@@ -806,10 +855,26 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(36 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_minPriceTF.mas_bottom).offset(33 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
@@ -817,7 +882,7 @@
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_minPriceTF.mas_bottom).offset(33 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(33 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];

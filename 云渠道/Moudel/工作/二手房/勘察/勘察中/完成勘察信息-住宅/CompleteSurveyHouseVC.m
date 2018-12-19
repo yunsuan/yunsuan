@@ -52,6 +52,10 @@
 
 @property (nonatomic, strong) BorderTF *minPriceTF;
 
+@property (nonatomic, strong) UILabel *roomLevelL;
+
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
+
 @property (nonatomic, strong) UILabel *payL;
 
 @property (nonatomic, strong) UICollectionView *payColl;
@@ -229,6 +233,19 @@
     }
 }
 
+- (void)ActionLevelBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
+    };
+    [self.view addSubview:view];
+}
+
 - (void)ActionTagBtn:(UIButton *)btn{
     
     if (btn.tag < 3) {
@@ -285,6 +302,14 @@
         return;
     }
     
+
+    if ([self isEmpty:_roomLevelBtn->str]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+        return;
+    }
+    
+
     _payWay = @"";
     for (int i = 0; i < _selectArr.count; i++) {
         
@@ -344,6 +369,7 @@
     [self.dataDic setObject:@(1) forKey:@"type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
+    [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
     [self.dataDic setValue:_payWay forKey:@"pay_way"];
     [self.dataDic setValue:@(_propertyBelong) forKey:@"property_belong"];
     [self.dataDic setValue:@(_isMortgage) forKey:@"is_mortgage"];
@@ -465,6 +491,13 @@
     _titleHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJTitleLabColor;
+    _roomLevelL.adjustsFontSizeToFitWidth = YES;
+    _roomLevelL.text = @"房源等级";
+    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_contentView addSubview:_roomLevelL];
     
     for (int i = 0; i < 14; i++) {
         
@@ -652,6 +685,10 @@
         }
     }
     
+    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 0 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_roomLevelBtn];
+    
     for (int i = 0; i < 4; i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -806,10 +843,26 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(36 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_minPriceTF.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -817,7 +870,7 @@
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_minPriceTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];

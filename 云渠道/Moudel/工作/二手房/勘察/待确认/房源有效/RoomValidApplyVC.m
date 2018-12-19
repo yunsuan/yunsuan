@@ -82,25 +82,39 @@
                     
                     self.roomValidApplyVCBlock();
                 }
-                NSLog(@"%@",self.navigationController.viewControllers);
-                for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                UIAlertController *alert =[UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否立即勘察房源？" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *alert1 = [UIAlertAction actionWithTitle:@"返回" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     
-                    if ([vc isKindOfClass:[RoomSurveyVC class]]) {
+                    NSLog(@"%@",self.navigationController.viewControllers);
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
                         
-                        [self.navigationController popToViewController:vc animated:YES];
-                        break;
+                        if ([vc isKindOfClass:[RoomSurveyVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                            break;
+                        }
+                        if ([vc isKindOfClass:[RoomSurveyWaitVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                            break;
+                        }
+                        if ([vc isKindOfClass:[SystemoWorkVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                            break;
+                        }
                     }
-                    if ([vc isKindOfClass:[RoomSurveyWaitVC class]]) {
-                        
-                        [self.navigationController popToViewController:vc animated:YES];
-                        break;
-                    }
-                    if ([vc isKindOfClass:[SystemoWorkVC class]]) {
-                        
-                        [self.navigationController popToViewController:vc animated:YES];
-                        break;
-                    }
-                }
+                }];
+                UIAlertAction *alert2 = [UIAlertAction actionWithTitle:@"立即勘察" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                [alert addAction:alert1];
+                [alert addAction:alert2];
+                [self presentViewController:alert animated:YES completion:^{
+                    
+                }];
             }];
         }else{
             

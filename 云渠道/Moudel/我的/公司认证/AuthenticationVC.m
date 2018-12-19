@@ -304,7 +304,15 @@
             //        }
         case 6:
         {
-            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
+//            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
+            
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            __weak __typeof(&*self)weakSelf = self;
+            view.dateblock = ^(NSDate *date) {
+                
+                weakSelf.timeL.text = [weakSelf.formatter stringFromDate:date];
+            };
+            [[[UIApplication sharedApplication] keyWindow] addSubview:view];
             break;
         }
         default:

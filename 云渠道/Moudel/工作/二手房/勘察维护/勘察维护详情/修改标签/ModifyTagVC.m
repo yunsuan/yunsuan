@@ -82,7 +82,7 @@
     }
     NSDictionary *dic = @{@"house_id":self.houseId,
                           @"house_tags":tags,
-                          @"type":[NSString stringWithFormat:@"%ld",_type]
+                          @"type":[NSString stringWithFormat:@"%ld",(long)_type]
                           };
     [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:dic success:^(id resposeObject) {
         

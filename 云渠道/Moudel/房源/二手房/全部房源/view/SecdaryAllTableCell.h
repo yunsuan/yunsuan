@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) UIImageView *statusImg;
 
-//@property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, strong) UILabel *roomLevelL;
 
 @property (nonatomic, strong) UILabel *averageL;
 

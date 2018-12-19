@@ -31,7 +31,7 @@
         
         NSLog(@"%@",dataDic);
         _timeStr = dataDic[@"next_visit_time"];
-        _dataArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"跟进时间：%@",dataDic[@"follow_time"]],[NSString stringWithFormat:@"跟进方式：%@",dataDic[@"check_way"]],[NSString stringWithFormat:@"挂牌标题：%@",dataDic[@"title"]],[NSString stringWithFormat:@"看房方式：%@",dataDic[@"check_way"]],[NSString stringWithFormat:@"挂牌价格：%@",dataDic[@"price"]],[NSString stringWithFormat:@"出售底价：%@",dataDic[@"minimum"]],[NSString stringWithFormat:@"卖房意愿度：%@",dataDic[@"intent"]],[NSString stringWithFormat:@"买房急迫度：%@",dataDic[@"urgency"]],[NSString stringWithFormat:@"跟进内容：%@",dataDic[@"comment"]]]];
+        _dataArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"跟进时间：%@",dataDic[@"follow_time"]],[NSString stringWithFormat:@"跟进方式：%@",dataDic[@"check_way"]],[NSString stringWithFormat:@"挂牌标题：%@",dataDic[@"title"]],[NSString stringWithFormat:@"看房方式：%@",dataDic[@"check_way"]],[NSString stringWithFormat:@"挂牌价格：%@",dataDic[@"price"]],[NSString stringWithFormat:@"出售底价：%@",dataDic[@"minimum"]],[NSString stringWithFormat:@"房源等级：%@",dataDic[@"level"]],[NSString stringWithFormat:@"卖房意愿度：%@",dataDic[@"intent"]],[NSString stringWithFormat:@"买房急迫度：%@",dataDic[@"urgency"]],[NSString stringWithFormat:@"跟进内容：%@",dataDic[@"comment"]]]];
         if ([dataDic[@"pay_way"] count]) {
             
             [_dataArr insertObject:[NSString stringWithFormat:@"收款方式：%@",dataDic[@"pay_way"][0]] atIndex:6];
