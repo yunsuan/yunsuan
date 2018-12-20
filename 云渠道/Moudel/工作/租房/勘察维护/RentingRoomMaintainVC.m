@@ -10,7 +10,7 @@
 #import "RentingMaintainDetailVC.h"
 //#import "CompleteSurveyInfoVC.h"
 //#import "SecdaryCommunityRoomVC.h"
-#import "RoomReportAddVC.h"
+#import "RentingReportAddVC.h"
 
 #import "RoomMaintainCell.h"
 
@@ -134,9 +134,9 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
+    RentingReportAddVC *nextVC = [[RentingReportAddVC alloc] init];
     nextVC.status = @"complete";
-    nextVC.roomReportAddHouseBlock = ^(NSDictionary *dic) {
+    nextVC.rentingRoomReportAddHouseBlock = ^(NSDictionary *dic) {
         
         [self RequestMethod];
     };
