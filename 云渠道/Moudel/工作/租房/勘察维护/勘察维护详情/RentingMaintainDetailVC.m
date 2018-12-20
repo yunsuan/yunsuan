@@ -8,13 +8,13 @@
 
 #import "RentingMaintainDetailVC.h"
 
-#import "RoomSoldOutVC.h"
+#import "RentingRoomSoldOutVC.h"
 #import "RentingMaintainAddFollowVC.h"
-#import "MaintainLookRecordVC.h"
+//#import "MaintainLookRecordVC.h"
 #import "RoomAgencyAddProtocolVC.h"
 #import "RentingMaintainRoomInfoVC.h"
-#import "MaintainCustomVC.h"
-#import "MaintainModifyCustomVC.h"
+#import "RentingMaintainCustomVC.h"
+#import "RentingMaintainModifyCustomVC.h"
 #import "RentingModifyTagVC.h"
 #import "RentingModifyProjectAnalysisVC.h"
 #import "RentingModifyProjectImageVC.h"
@@ -23,10 +23,8 @@
 #import "RentingModifyNerborVC.h"
 
 #import "MaintainCell.h"
-//#import "SingleContentCell.h"
 #import "BlueTitleMoreHeader.h"
 #import "RentingMaintainDetailHeader.h"
-//#import "SurveySuccessImgCell.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "SecAllRoomTableCell2.h"
 #import "MaintainAddFollowHeader.h"
@@ -237,7 +235,7 @@
     
     UIAlertAction *soldout = [UIAlertAction actionWithTitle:@"下架房源" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        RoomSoldOutVC *nextVC = [[RoomSoldOutVC alloc] initWithHouseId:_houseId];
+        RentingRoomSoldOutVC *nextVC = [[RentingRoomSoldOutVC alloc] initWithHouseId:_houseId];
         nextVC.dataDic = @{@"absolute_address":_moreDic[@"absolute_address"],@"house_code":_moreDic[@"house_code"]};
         [self.navigationController pushViewController:nextVC animated:YES];
     }];
@@ -655,9 +653,9 @@
             cell.maintainCellBlock = ^(NSInteger index, NSInteger btn) {
                 if (btn == 0) {
                     
-                    MaintainCustomVC *nextVC = [[MaintainCustomVC alloc] initWithDataDic:_peopleArr[index]];
+                    RentingMaintainCustomVC *nextVC = [[RentingMaintainCustomVC alloc] initWithDataDic:_peopleArr[index]];
                     nextVC.edit = self.edit;
-                    nextVC.maintainCustomVCBlock = ^{
+                    nextVC.rentingMaintainCustomVCBlock = ^{
                         
                         [self RequestMethod];
                     };
@@ -974,8 +972,8 @@
             
             cell.lookRecordBlock = ^{
                 
-                MaintainLookRecordVC *nextVC = [[MaintainLookRecordVC alloc] init];
-                [self.navigationController pushViewController:nextVC animated:YES];
+//                MaintainLookRecordVC *nextVC = [[MaintainLookRecordVC alloc] init];
+//                [self.navigationController pushViewController:nextVC animated:YES];
             };
             return cell;
         }
@@ -988,10 +986,10 @@
         
         if (indexPath.row == _peopleArr.count) {
             
-            MaintainModifyCustomVC *nextVC = [[MaintainModifyCustomVC alloc] init];
+            RentingMaintainModifyCustomVC *nextVC = [[RentingMaintainModifyCustomVC alloc] init];
             nextVC.houseId = _houseId;
             nextVC.status = @"添加";
-            nextVC.maintainModifyCustomVCBlock = ^(NSDictionary *dic) {
+            nextVC.rentingMaintainModifyCustomVCBlock = ^(NSDictionary *dic) {
                 
                 if (self.rentingMaintainDetailVCBlock) {
                     

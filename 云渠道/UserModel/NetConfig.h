@@ -761,3 +761,6 @@ static NSString *const RentSurveyUpdateHouseInfo_URL = @"agent/rent/survey/updat
 
 //修改图片
 static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";
+
+//下架房源
+static NSString *const RentSurveyCncelSale_URL = @"agent/rent/survey/cancelSale";
