@@ -28,18 +28,16 @@
 
 @interface RentingCompleteSurveyOfficeVC ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
-    
-    NSString *_titleStr;
-    
     NSArray *_btnArr;
     NSArray *_titleArr;
     NSMutableArray *_selectArr;
     NSArray *_payArr;
-    
     NSMutableArray *_dataArr;
+    NSArray *_periodArr;
     
     NSString *_payWay;
     NSString *_seeWay;
+    NSString *_titleStr;
     
     NSInteger _rentType;
 }
@@ -168,7 +166,15 @@
         [_selectArr addObject:@0];
     }
     _btnArr = @[@"整租",@"合租"];
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"楼层：",@"层高：",@"门宽：",@"级别：",@"当前出租：",@"房源等级",@"最短租期：",@"最长租期："];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"楼层：",@"层高：",@"门宽：",@"级别：",@"房源等级",@"最短租期：",@"最长租期："];
+    _periodArr = @[@{@"param":@"无限制",@"id":@"0"},
+                   @{@"param":@"一天",@"id":@"1"},
+                   @{@"param":@"七天",@"id":@"7"},
+                   @{@"param":@"一月",@"id":@"30"},
+                   @{@"param":@"二月",@"id":@"60"},
+                   @{@"param":@"半年",@"id":@"180"},
+                   @{@"param":@"一年",@"id":@"360"},
+                   @{@"param":@"两年",@"id":@"720"}];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -188,17 +194,6 @@
         }
         case 1:{
             
-            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-            __weak __typeof(&*self)weakSelf = self;
-            view.dateblock = ^(NSDate *date) {
-                
-//                weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
-            };
-            [self.view addSubview:view];
-            break;
-        }
-        case 2:{
-            
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:OFFICE_GRADE]];
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
@@ -209,29 +204,26 @@
             [self.view addSubview:view];
             break;
         }
-        case 3:{
+        case 2:{
             
-            
-            break;
-        }
-        case 4:{
-            
-            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-
-            view.dateblock = ^(NSDate *date) {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
+                weakself.minPeriodBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                weakself.minPeriodBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
         }
-        case 5:{
+        case 3:{
             
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.seeWayBtn.content.text = MC;
-                weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.maxPeriodBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                weakself.maxPeriodBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
@@ -352,6 +344,7 @@
         return;
     }
     [self.dataDic setObject:@(3) forKey:@"type"];
+    [self.dataDic setObject:@(_rentType) forKey:@"rent_type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
     [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
@@ -360,6 +353,17 @@
     [self.dataDic setValue:_widthTF.textfield.text forKey:@"office_width"];
     [self.dataDic setValue:_floorBtn->str forKey:@"floor_type"];
     [self.dataDic setValue:_levelBtn->str forKey:@"grade"];
+    
+    if (_minPeriodBtn.content.text.length) {
+        
+        [self.dataDic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
+    }
+    
+    if (_maxPeriodBtn.content.text.length) {
+        
+        [self.dataDic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
+    }
+    
     
     [self.dataDic setValue:_seeWay forKey:@"check_way"];
 
@@ -479,7 +483,14 @@
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
     
-    for (int i = 0; i < 11; i++) {
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJTitleLabColor;
+    _roomLevelL.adjustsFontSizeToFitWidth = YES;
+    _roomLevelL.text = @"房源等级";
+    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_contentView addSubview:_roomLevelL];
+    
+    for (int i = 0; i < 10; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -530,26 +541,19 @@
                 [_contentView addSubview:_widthL];
                 break;
             }
-            
             case 7:
             {
                 _levelL = label;
                 [_contentView addSubview:_levelL];
                 break;
             }
-            case 8:{
-                
-                _roomLevelL = label;
-                [_contentView addSubview:_roomLevelL];
-                break;
-            }
-            case 9:
+            case 8:
             {
                 _minPeriodL = label;
                 [_contentView addSubview:_minPeriodL];
                 break;
             }
-            case 10:
+            case 9:
             {
                 _maxPeriodL = label;
                 [_contentView addSubview:_maxPeriodL];

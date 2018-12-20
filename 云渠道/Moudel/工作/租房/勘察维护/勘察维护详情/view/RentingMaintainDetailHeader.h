@@ -23,6 +23,8 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) UILabel *propertyL;
+
 @property (nonatomic, strong) UIView *codeView;
 
 @property (nonatomic, strong) UIView *blueView;
@@ -41,17 +43,19 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *roomLevelL;
 
-@property (nonatomic, strong) UILabel *propertyL;
-
 @property (nonatomic, strong) UILabel *houseTypeL;
 
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) UILabel *rentTypeL;
 
+@property (nonatomic, strong) UILabel *minRent;
+
 @property (nonatomic, strong) UILabel *maxRent;
 
-@property (nonatomic, strong) UILabel *minRent;
+@property (nonatomic, strong) UILabel *seeWayL;
+
+@property (nonatomic, strong) UILabel *inTimeL;
 
 @property (nonatomic, strong) UILabel *intentL;
 

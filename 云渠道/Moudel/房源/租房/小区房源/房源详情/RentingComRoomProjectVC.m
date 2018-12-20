@@ -25,6 +25,7 @@
 #import "OverviewVC.h"
 #import "DealRecordVC.h"
 #import "DistributVC.h"
+#import "RentingComAllRoomListVC.h"
 
 #import "RentingComRoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
@@ -411,11 +412,12 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else if (btnNum == 2){
                 
-                
+                RentingComAllRoomListVC *nextVC = [[RentingComAllRoomListVC alloc] initWithProjectId:_projectId city:_city];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }else if (btnNum == 3){
                 
-                DealRecordVC *nextVC = [[DealRecordVC alloc] init];
-                [self.navigationController pushViewController:nextVC animated:YES];
+//                DealRecordVC *nextVC = [[DealRecordVC alloc] init];
+//                [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
                 OverviewVC *nextVC = [[OverviewVC alloc] init];

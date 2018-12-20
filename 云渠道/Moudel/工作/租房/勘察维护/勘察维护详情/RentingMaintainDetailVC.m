@@ -316,7 +316,6 @@
             header.propertyL.text = @"物业类型：写字楼";
         }
         
-        
         if (_item == 0) {
             
             [header.infoBtn setBackgroundColor:YJBlueBtnColor];

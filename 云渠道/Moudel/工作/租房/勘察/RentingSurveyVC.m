@@ -66,9 +66,9 @@
     RoomReportCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomReportCollCell" forIndexPath:indexPath];
     if (!cell) {
         
-        cell = [[RoomReportCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 5, 40 *SIZE)];
+        cell = [[RoomReportCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 4, 40 *SIZE)];
     }
-    cell.titleL.frame = CGRectMake(0, 14 *SIZE, SCREEN_Width / 5, 11 *SIZE);
+    cell.titleL.frame = CGRectMake(0, 14 *SIZE, SCREEN_Width / 4, 11 *SIZE);
     cell.line.frame = CGRectMake(22 *SIZE, 38 *SIZE, 28 *SIZE, 2 *SIZE);
     cell.titleL.text = _titleArr[indexPath.item];
     
@@ -123,7 +123,6 @@
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    
     _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
     _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
@@ -138,7 +137,7 @@
     self.scrollView.scrollEnabled = NO;
     [self.view addSubview:self.scrollView];
     // 设置scrollView的内容
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 5, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 4, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT);
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
@@ -161,7 +160,7 @@
     _roomSurveyingVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveyFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
 //    _roomSurveyComplaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _roomSurveySuccessVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 4, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _roomSurveySuccessVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
     [self.scrollView addSubview:_roomSurveyWaitVC.view];
     [self.scrollView addSubview:_roomSurveyingVC.view];

@@ -732,6 +732,7 @@ static NSString *const RentSurveyUnderWayDetail_URL = @"agent/rent/survey/underw
 
 //勘察完成所需自动填充字段
 static NSString *const RentRecordSurveyNeedInfo_URL = @"agent/rent/record/surveyNeedInfo";
+
 //勘察完成
 static NSString *const RentSurveySuccess_URL = @"agent/rent/survey/success";
 

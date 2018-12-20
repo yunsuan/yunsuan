@@ -88,21 +88,13 @@
         _roomLevelL.text = [NSString stringWithFormat:@"房源等级:暂无数据"];
     }
     
-    if (dataDic[@"pay_way"]) {
+    if (dataDic[@"receive_way"]) {
         
-        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",[dataDic[@"pay_way"] componentsJoinedByString:@","]];
+        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",dataDic[@"receive_way"]];//[[NSArray arrayWithArray:dataDic[@"receive_way"]] componentsJoinedByString:@","]];
     }else{
         
         _payWayL.text = [NSString stringWithFormat:@"收款方式:暂无数据"];
     }
-    
-//    if (dataDic[@"property_belong"]) {
-//        
-//        _propertyL.text = [NSString stringWithFormat:@"物业类型:%@",dataDic[@"property_belong"]];
-//    }else{
-//        
-//        _propertyL.text = [NSString stringWithFormat:@"物业类型:暂无数据"];
-//    }
     
     if (dataDic[@"property_belong"]) {
         
@@ -112,12 +104,12 @@
         _houseTypeL.text = [NSString stringWithFormat:@"户型:暂无数据"];
     }
     
-    if (dataDic[@"property_belong"]) {
+    if (dataDic[@"rent_type"]) {
         
-        _rentTypeL.text = [NSString stringWithFormat:@"类型:%@",dataDic[@"property_belong"]];
+        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:%@",dataDic[@"rent_type"]];
     }else{
         
-        _rentTypeL.text = [NSString stringWithFormat:@"类型:暂无数据"];
+        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:暂无数据"];
     }
     
     if (dataDic[@"rent_max_comment"]) {
@@ -136,25 +128,32 @@
         _minRent.text = [NSString stringWithFormat:@"最短租期:暂无数据"];
     }
     
+    if (dataDic[@"check_way"]) {
+        
+        _seeWayL.text = [NSString stringWithFormat:@"看房方式:%@",dataDic[@"check_way"]];
+    }else{
+        
+        _seeWayL.text = [NSString stringWithFormat:@"看房方式:暂无数据"];
+    }
     
     if (dataDic[@"intent"]) {
         
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"卖房意愿度:%@",dataDic[@"intent"]]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"出租意愿度:%@",dataDic[@"intent"]]];
         [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(6, attr.length - 6)];
         _intentL.attributedText = attr;
     }else{
         
-        _intentL.text = [NSString stringWithFormat:@"卖房意愿度:暂无数据"];
+        _intentL.text = [NSString stringWithFormat:@"出租意愿度:暂无数据"];
     }
     
     if (dataDic[@"urgency"]) {
         
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"卖房急迫度:%@",dataDic[@"urgency"]]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"出租急迫度:%@",dataDic[@"urgency"]]];
         [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(6, attr.length - 6)];
         _urgentL.attributedText = attr;
     }else{
         
-        _urgentL.text = [NSString stringWithFormat:@"卖房急迫度:暂无数据"];
+        _urgentL.text = [NSString stringWithFormat:@"出租急迫度:暂无数据"];
     }
     
     if (dataDic[@"suggest_price"]) {
@@ -207,14 +206,13 @@
     //    [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [_codeView addSubview:_editBtn];
     
+    _propertyL = [[UILabel alloc] init];
+    _propertyL.textColor = YJ86Color;
+    _propertyL.numberOfLines = 0;
+    _propertyL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.contentView addSubview:_propertyL];
     
-    _roomLevelL = [[UILabel alloc] init];
-    _roomLevelL.textColor = YJ86Color;
-    _roomLevelL.numberOfLines = 0;
-    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
-    [self.contentView addSubview:_roomLevelL];
-    
-    for (int i = 0; i < 13 ; i++) {
+    for (int i = 0; i < 15 ; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
@@ -235,68 +233,81 @@
             }
             case 2:
             {
-                _payWayL = label;
-                [self.contentView addSubview:_payWayL];
+                _roomLevelL = label;
+                [self.contentView addSubview:_roomLevelL];
                 break;
             }
             case 3:
             {
-                _propertyL = label;
-                [self.contentView addSubview:_propertyL];
+                _payWayL = label;
+                [self.contentView addSubview:_payWayL];
                 break;
             }
             case 4:
-            {
-                _houseTypeL = label;
-                [self.contentView addSubview:_houseTypeL];
-                break;
-            }
-            case 5:
             {
                 _rentTypeL = label;
                 [self.contentView addSubview:_rentTypeL];
                 break;
             }
+            case 5:
+            {
+                _houseTypeL = label;
+                [self.contentView addSubview:_houseTypeL];
+                break;
+            }
             case 6:
             {
-                _intentL = label;
-                [self.contentView addSubview:_intentL];
+                _minRent = label;
+                [self.contentView addSubview:_minRent];
                 break;
             }
             case 7:
-            {
-                _urgentL = label;
-                [self.contentView addSubview:_urgentL];
-                break;
-            }
-            case 8:
-            {
-                _RePriceL = label;
-                [self.contentView addSubview:_RePriceL];
-                break;
-            }
-            case 9:
-            {
-                _attentL = label;
-                [self.contentView addSubview:_attentL];
-                break;
-            }
-            case 10:
-            {
-                _periodL = label;
-                [self.contentView addSubview:_periodL];
-                break;
-            }
-            case 11:
             {
                 _maxRent = label;
                 [self.contentView addSubview:_maxRent];
                 break;
             }
+            case 8:
+            {
+                _seeWayL = label;
+                [self.contentView addSubview:_seeWayL];
+                break;
+            }
+            case 9:
+            {
+                _inTimeL = label;
+                [self.contentView addSubview:_inTimeL];
+                break;
+            }
+            case 10:
+            {
+                _intentL = label;
+                [self.contentView addSubview:_intentL];
+                break;
+            }
+            
+            case 11:
+            {
+                _urgentL = label;
+                [self.contentView addSubview:_urgentL];
+                break;
+            }
             case 12:
             {
-                _minRent = label;
-                [self.contentView addSubview:_minRent];
+                _RePriceL = label;
+                [self.contentView addSubview:_RePriceL];
+                break;
+            }
+            case 13:
+            {
+                _attentL = label;
+                [self.contentView addSubview:_attentL];
+                break;
+            }
+            case 14:
+            {
+                _periodL = label;
+                [self.contentView addSubview:_periodL];
                 break;
             }
             default:
@@ -368,13 +379,6 @@
         make.right.equalTo(_codeView).offset(-50 *SIZE);
     }];
     
-//    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_codeView).offset(317 *SIZE);
-//        make.top.equalTo(_codeView).offset(53 *SIZE);
-//        make.right.equalTo(_codeView).offset(-10 *SIZE);
-//        make.height.mas_equalTo(17 *SIZE);
-//    }];
     
     [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -404,18 +408,12 @@
         make.top.equalTo(_priceL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
-    
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
-    }];
+
     
     [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_propertyL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
@@ -433,24 +431,38 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_maxRent mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_minRent mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_minRent mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_maxRent mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_minRent.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
+    
+    [_seeWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_maxRent.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
+//    [_inTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(28 *SIZE);
+//        make.top.equalTo(_seeWayL.mas_bottom).offset(19 *SIZE);
+//        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//    }];
+    
     [_intentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_minRent.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_seeWayL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

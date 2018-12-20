@@ -28,7 +28,7 @@
     _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[model.receive_way componentsJoinedByString:@","]];
     _seeL.text = [NSString stringWithFormat:@"看房方式：%@",model.check_way];
     _liftL.text = [NSString stringWithFormat:@"电梯：%@",@"无"];
-    _decorateL.text = [NSString stringWithFormat:@"装修：%@",model.decoration_standard];
+    _decorateL.text = [NSString stringWithFormat:@"装修：%@",model.decoration];
     _faceL.text = [NSString stringWithFormat:@"朝向：%@",model.orientation];
     _intentL.text = [NSString stringWithFormat:@"出租意愿度：%@",model.intent];
     _urgentL.text = [NSString stringWithFormat:@"出租急迫度：%@",model.urgency];

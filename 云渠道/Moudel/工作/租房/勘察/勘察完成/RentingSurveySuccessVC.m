@@ -60,7 +60,7 @@
                 
             }else{
                 
-                
+
                 [_mainTable.mj_header endRefreshing];
                 _mainTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
@@ -176,14 +176,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] init];
+    RoomMaintainModel *model = _dataArr[indexPath.row];
+    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
+    nextVC.edit = YES;
+    nextVC.rentingMaintainDetailVCBlock = ^{
+        
+        [self RequestMethod];
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
     
     _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height) style:UITableViewStylePlain];
-    
     _mainTable.rowHeight = UITableViewAutomaticDimension;
     _mainTable.estimatedRowHeight = 87 *SIZE;
     _mainTable.backgroundColor = self.view.backgroundColor;

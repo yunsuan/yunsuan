@@ -8,7 +8,7 @@
 
 #import "RentingCompleteSurveyInfoVC3.h"
 
-#import "RentingSurveyingVC.h"
+#import "RentingSurveyVC.h"
 #import "SecDistributVC.h"
 
 #import "TextFieldImgCell.h"
@@ -108,7 +108,7 @@
                 }
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    if ([vc isKindOfClass:[RentingSurveyingVC class]]) {
+                    if ([vc isKindOfClass:[RentingSurveyVC class]]) {
                         
                         [self.navigationController popToViewController:vc animated:YES];
                     }

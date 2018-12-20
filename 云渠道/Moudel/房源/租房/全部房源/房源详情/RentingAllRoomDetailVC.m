@@ -8,8 +8,9 @@
 
 #import "RentingAllRoomDetailVC.h"
 #import "RentingAllRoomProjectVC.h"
+#import "RentingAllRoomStoreVC.h"
+#import "RentingAllRoomOfficeVC.h"
 #import "SecAllRoomBrokerageVC.h"
-//#import "RentingComRoomAnalyzeVC.h"
 #import "SecComRoomAnalyzeVC.h"
 
 #import "RoomDetailCollCell.h"
@@ -31,9 +32,9 @@
 
 @property (nonatomic, strong) RentingAllRoomProjectVC *roomProjectVC;
 
-//@property (nonatomic, strong) SecAllRoomStoreVC *roomStoreProjectVC;
-//
-//@property (nonatomic, strong) SecAllRoomOfficeVC *roomOfficeProjectVC;
+@property (nonatomic, strong) RentingAllRoomStoreVC *roomStoreProjectVC;
+
+@property (nonatomic, strong) RentingAllRoomOfficeVC *roomOfficeProjectVC;
 
 @property (nonatomic, strong) SecComRoomAnalyzeVC *roomAnalyzeVC;
 
@@ -172,22 +173,24 @@
     if (self.type == 1) {
         
         _roomProjectVC = [[RentingAllRoomProjectVC alloc] initWithHouseId:_houseId city:_city];
-        //        _roomProjectVC.type =
         [self addChildViewController:_roomProjectVC];
 
         _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
+        [self.scrollView addSubview:_roomProjectVC.view];
     }else if (self.type == 2){
         
-//        _roomStoreProjectVC = [[SecAllRoomStoreVC alloc] initWithHouseId:_houseId city:_city];
-//        [self addChildViewController:_roomStoreProjectVC];
-//
-//        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
+        _roomStoreProjectVC = [[RentingAllRoomStoreVC alloc] initWithHouseId:_houseId city:_city];
+        [self addChildViewController:_roomStoreProjectVC];
+
+        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
+        [self.scrollView addSubview:_roomStoreProjectVC.view];
     }else{
         
-//        _roomOfficeProjectVC = [[SecAllRoomOfficeVC alloc] initWithHouseId:_houseId city:_city];
-//        [self addChildViewController:_roomOfficeProjectVC];
-//
-//        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
+        _roomOfficeProjectVC = [[RentingAllRoomOfficeVC alloc] initWithHouseId:_houseId city:_city];
+        [self addChildViewController:_roomOfficeProjectVC];
+
+        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
+        [self.scrollView addSubview:_roomOfficeProjectVC.view];
     }
     _roomBrokerageVC = [[SecAllRoomBrokerageVC alloc] initWithHouseId:_houseId];
     
@@ -202,7 +205,7 @@
 
     _roomAnalyzeVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
-    [self.scrollView addSubview:_roomProjectVC.view];
+    
     [self.scrollView addSubview:_roomBrokerageVC.view];
     [self.scrollView addSubview:_roomAnalyzeVC.view];
     
