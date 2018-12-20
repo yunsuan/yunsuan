@@ -753,4 +753,11 @@ static NSString *const RentSurveyDetail_URL = @"agent/rent/survey/detail";
 
 #pragma mark -- 租房 - 工作 - 勘察维护 --
 
+//添加跟进记录
 static NSString *const RentSurveyAddFollow_URL = @"agent/rent/survey/addFollow";
+
+//修改房源信息
+static NSString *const RentSurveyUpdateHouseInfo_URL = @"agent/rent/survey/updateHouseInfo";
+
+//修改图片
+static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";

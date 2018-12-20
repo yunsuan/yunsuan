@@ -48,7 +48,7 @@ static NSString *const kACCESSROLE = @"agent";
             return;
         }else{
             
-            if (![responseObject[@"msg"] isEqualToString:@"该项目暂无项目分析"]) {
+            if (![responseObject[@"msg"] isEqualToString:@"该项目暂无项目分析"] || ![responseObject[@"msg"] isEqualToString:@"未找到房源信息"]) {
                 
                 [BaseRequest showConten:responseObject[@"msg"]];
             }

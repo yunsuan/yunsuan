@@ -141,7 +141,7 @@
     }
     
     _payArr = [self
-               getDetailConfigArrByConfigState:13];
+               getDetailConfigArrByConfigState:48];
     _selectArr2 = [@[] mutableCopy];
     for (int i = 0; i < 5; i++) {
         
@@ -157,7 +157,7 @@
             }
         }
     }
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"付款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"卖房意愿度",@"卖房紧急度"];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"收款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"出租意愿度",@"出租紧急度"];
     _btnArr = @[@"整租",@"合租"];
     NSDate *date = [NSDate date];
     _formatter = [[NSDateFormatter alloc] init];

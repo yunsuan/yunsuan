@@ -7,8 +7,8 @@
 //
 
 #import "RentReportedVC.h"
-#import "SecComRoomDetailVC.h"
-#import "RoomReportVC.h"
+#import "RentingComRoomDetailVC.h"
+#import "RentingReportVC.h"
 #import "CompleteSurveyInfoVC.h"
 
 #import "BaseFrameHeader.h"
@@ -302,10 +302,10 @@
                     
                     for (UIViewController *vc in self.navigationController.viewControllers) {
                         
-                        if ([vc isKindOfClass:[SecComRoomDetailVC class]]) {
+                        if ([vc isKindOfClass:[RentingComRoomDetailVC class]]) {
                             
                             [self.navigationController popToViewController:vc animated:YES];
-                        }else if ([vc isKindOfClass:[RoomReportVC class]]){
+                        }else if ([vc isKindOfClass:[RentingReportVC class]]){
                             
                             [self.navigationController popToViewController:vc animated:YES];
                         }
@@ -324,10 +324,10 @@
                     
                     for (UIViewController *vc in self.navigationController.viewControllers) {
                         
-                        if ([vc isKindOfClass:[SecComRoomDetailVC class]]) {
+                        if ([vc isKindOfClass:[RentingComRoomDetailVC class]]) {
                             
                             [self.navigationController popToViewController:vc animated:YES];
-                        }else if ([vc isKindOfClass:[RoomReportVC class]]){
+                        }else if ([vc isKindOfClass:[RentingReportVC class]]){
                             
                             [self.navigationController popToViewController:vc animated:YES];
                         }

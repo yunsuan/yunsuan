@@ -10,4 +10,10 @@
 
 @interface RentingMaintainRoomInfoVC : BaseViewController
 
+@property (nonatomic, assign) NSInteger type;
+
+@property (nonatomic, strong) NSMutableArray *progressArr;
+
+- (instancetype)initWithDataDic:(NSDictionary *)data;
+
 @end

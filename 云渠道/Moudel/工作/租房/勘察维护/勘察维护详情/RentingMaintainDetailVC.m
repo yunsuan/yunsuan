@@ -12,15 +12,15 @@
 #import "RentingMaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
 #import "RoomAgencyAddProtocolVC.h"
-#import "MaintainRoomInfoVC.h"
+#import "RentingMaintainRoomInfoVC.h"
 #import "MaintainCustomVC.h"
 #import "MaintainModifyCustomVC.h"
-#import "ModifyTagVC.h"
-#import "ModifyProjectAnalysisVC.h"
-#import "ModifyProjectImageVC.h"
+#import "RentingModifyTagVC.h"
+#import "RentingModifyProjectAnalysisVC.h"
+#import "RentingModifyProjectImageVC.h"
 #import "AddEquipmentVC.h"
 #import "MaintainFollowDetailVC.h"
-#import "ModifyNerborVC.h"
+#import "RentingModifyNerborVC.h"
 
 #import "MaintainCell.h"
 //#import "SingleContentCell.h"
@@ -338,7 +338,7 @@
         
         header.rentingMaintainDetailHeaderBlock = ^{
             
-            MaintainRoomInfoVC *nextVC = [[MaintainRoomInfoVC alloc] initWithDataDic:_moreDic];
+            RentingMaintainRoomInfoVC *nextVC = [[RentingMaintainRoomInfoVC alloc] initWithDataDic:_moreDic];
             nextVC.progressArr = [[NSMutableArray alloc] initWithArray:_detailDic[@"progress"]];
             nextVC.type = _type;
             [self.navigationController pushViewController:nextVC animated:YES];
@@ -382,8 +382,8 @@
                 
                 if (section == 1) {
                     
-                    ModifyProjectImageVC *nextVC = [[ModifyProjectImageVC alloc] initWithImgArr:_detailDic[@"img_list"]];
-                    nextVC.modifyProjectImageVCBlock = ^{
+                    RentingModifyProjectImageVC *nextVC = [[RentingModifyProjectImageVC alloc] initWithImgArr:_detailDic[@"img_list"]];
+                    nextVC.rentingModifyProjectImageVCBlock = ^{
                         
                         [self RequestMethod];
                     };
@@ -393,11 +393,11 @@
                 
                 if (section == 2) {
                     
-                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] type:_type];
+                    RentingModifyTagVC *nextVC = [[RentingModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] type:_type];
                     //                    nextVC.status = [NSString stringWithFormat:@"%ld",_type];
                     nextVC.houseId = _houseId;
                     //                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
-                    nextVC.modifyTagSaveBtnBlock = ^(NSArray *array) {
+                    nextVC.rentingModifyTagSaveBtnBlock = ^(NSArray *array) {
                         
                         [self RequestMethod];
                     };
@@ -407,9 +407,9 @@
                     
                     if (_type == 1) {
                         
-                        ModifyProjectAnalysisVC *nextVC = [[ModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+                        RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] initWithData:_detailDic];
                         nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
-                        nextVC.modifyProjectAnalysisVCBlock = ^{
+                        nextVC.rentingModifyProjectAnalysisVCBlock = ^{
                             
                             [self RequestMethod];
                         };
@@ -432,11 +432,11 @@
                 }
                 if (section == 4) {
                     
-                    ModifyNerborVC *nextVC = [[ModifyNerborVC alloc] initWithData:_detailDic];
+                    RentingModifyNerborVC *nextVC = [[RentingModifyNerborVC alloc] initWithData:_detailDic];
                     nextVC.houseId = _houseId;
                     nextVC.type = [NSString stringWithFormat:@"%ld",_type];
                     nextVC.seeWay = _houseDic[@"check_way"];
-                    nextVC.modifyNerborVCBlock = ^{
+                    nextVC.rentingModifyNerborVCBlock = ^{
                         
                         [self RequestMethod];
                     };
@@ -444,8 +444,8 @@
                 }
                 if (section == 5) {
                     
-                    ModifyProjectAnalysisVC *nextVC = [[ModifyProjectAnalysisVC alloc] initWithData:_detailDic];
-                    nextVC.modifyProjectAnalysisVCBlock = ^{
+                    RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+                    nextVC.rentingModifyProjectAnalysisVCBlock = ^{
                         
                         [self RequestMethod];
                     };

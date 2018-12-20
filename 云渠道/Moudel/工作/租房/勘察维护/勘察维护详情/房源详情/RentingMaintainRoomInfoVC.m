@@ -9,19 +9,63 @@
 #import "RentingMaintainRoomInfoVC.h"
 
 #import "BaseHeader.h"
-#import "SingleContentCell.h"
+#import "TitleContentBaseCell.h"
 #import "BrokerageDetailTableCell3.h"
 
 @interface RentingMaintainRoomInfoVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSArray *_contentArr;
+    NSArray *_dataArr;
+    NSArray *_titleArr;
+    NSMutableDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITableView *table;
 
 @end
 
 @implementation RentingMaintainRoomInfoVC
+
+- (instancetype)initWithDataDic:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        
+        _dataDic = [NSMutableDictionary dictionaryWithDictionary:data];
+        [_dataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [_dataDic setObject:@"" forKey:key];
+            }else{
+                
+                if ([obj isKindOfClass:[NSNumber class]]) {
+                    
+                    [_dataDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }else{
+                    
+                    [_dataDic setObject:obj forKey:key];
+                }
+            }
+        }];
+        
+        [_dataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSArray class]]) {
+                
+                if (![obj count]) {
+                    
+                    [_dataDic setObject:@"暂无数据" forKey:key];
+                }
+                
+            }else if (![obj length]) {
+                
+                [_dataDic setObject:@"暂无数据" forKey:key];
+            }
+        }];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,30 +76,47 @@
 
 - (void)initDataSource{
     
-    _contentArr = @[@"房屋所有权证号:65623665562632",@"小区地址：郫都区大禹东路94号 云算公馆",@"出租价格：500月/平",@"物业类型：住宅",@"户型：二室二厅",@"收款方式：押一付三",@"租赁类型：合租",@"最短租期：一个月",@"最长租期：无限",@"入住时间：2018-10-01",@"楼层：18",@"朝向：南",@"装修：简装",@"电梯：有",@"出租意愿度：45",@"出租急迫度：45"];
+    _titleArr = @[@"挂牌信息",@"房源信息",@"物业信息"];
+    
+    if (_type == 1) {
+        
+        _dataArr = @[@[@"挂牌价格",@"单价",@"收款方式",@"看房方式"],@[@"房源编号",@"小区地址",@"物业类型",@"面积",@"朝向",@"楼层",@"建成年代"]];
+        
+        _contentArr = @[@[[NSString stringWithFormat:@"%@万",_dataDic[@"price"]],[NSString stringWithFormat:@"%@元/㎡",_dataDic[@"unit_price"]],_dataDic[@"pay_way"],_dataDic[@"check_way"]],@[_dataDic[@"house_code"],_dataDic[@"absolute_address"],@"住宅",[NSString stringWithFormat:@"%@㎡",_dataDic[@"build_area"]],_dataDic[@"orientation"],_dataDic[@"floor_type"],[NSString stringWithFormat:@"%@",_dataDic[@"build_year"]]]];
+    }else if (_type == 2) {
+        
+        _dataArr = @[@[@"挂牌价格",@"单价",@"收款方式",@"看房方式",@"上架时间"],@[@"房源编号",@"地址",@"物业类型",@"面积",@"门宽",@"层高",@"层数",@"适合业态",@"限制业态",@"建成年代"],@[@"物业信息",@"物业费",@"供暖方式",@"供水类型",@"供电类型"]];
+        _contentArr = @[@[[NSString stringWithFormat:@"%@万",_dataDic[@"price"]],[NSString stringWithFormat:@"%@元/㎡",_dataDic[@"unit_price"]],_dataDic[@"pay_way"],_dataDic[@"check_way"],_dataDic[@"create_time"]],@[_dataDic[@"house_code"],_dataDic[@"absolute_address"],@"商铺",[NSString stringWithFormat:@"%@㎡",_dataDic[@"build_area"]],[NSString stringWithFormat:@"%@m",_dataDic[@"shop_width"]],[NSString stringWithFormat:@"%@m",_dataDic[@"shop_height"]],[NSString stringWithFormat:@"%@",_dataDic[@"floor"]],_dataDic[@"shop_type"],_dataDic[@"limit_shop_type"],[NSString stringWithFormat:@"%@",_dataDic[@"build_year"]]],@[_dataDic[@"property_company_name"],[NSString stringWithFormat:@"%@元/月",_dataDic[@"property_cost"]],_dataDic[@"heat_supply"],_dataDic[@"water_supply"],_dataDic[@"power_supply"]]];
+    }else{
+        
+        _dataArr = @[@[@"挂牌价格",@"单价",@"收款方式",@"看房方式",@"上架时间"],@[@"房源编号",@"地址",@"物业类型",@"面积",@"门宽",@"层高",@"楼层",@"建成年代"],@[@"物业信息",@"物业费",@"供暖方式",@"供水类型",@"供电类型"]];
+        _contentArr = @[@[[NSString stringWithFormat:@"%@万",_dataDic[@"price"]],[NSString stringWithFormat:@"%@元/㎡",_dataDic[@"unit_price"]],_dataDic[@"pay_way"],_dataDic[@"check_way"],_dataDic[@"create_time"]],@[_dataDic[@"house_code"],_dataDic[@"absolute_address"],@"写字楼",[NSString stringWithFormat:@"%@㎡",_dataDic[@"build_area"]],[NSString stringWithFormat:@"%@m",_dataDic[@"office_width"]],[NSString stringWithFormat:@"%@m",_dataDic[@"office_height"]],[NSString stringWithFormat:@"%@",_dataDic[@"floor_type"]],[NSString stringWithFormat:@"%@",_dataDic[@"build_year"]]],@[_dataDic[@"property_company_name"],[NSString stringWithFormat:@"%@元/月",_dataDic[@"property_cost"]],_dataDic[@"heat_supply"],_dataDic[@"water_supply"],_dataDic[@"power_supply"]]];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 2;
+    return _dataArr.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (section == 0) {
+    if (section == _dataArr.count) {
         
-        return _contentArr.count;
+        return self.progressArr.count;
+    }else{
+        
+        return [_dataArr[section] count];
     }
-    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    if (section == 0) {
+    if (section == _dataArr.count) {
         
-        return UITableViewAutomaticDimension;
+        return 0;
     }
-    return 0;
+    return 40 *SIZE;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -73,17 +134,18 @@
     BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
     if (!header) {
         
-        header = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+        header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
-    
-    header.titleL.text = @"房源编号：SCCDPDHPXQ-0302102";
-    
+    if (section < _dataArr.count) {
+        
+        header.titleL.text = _titleArr[section];
+    }
     return header;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == _dataArr.count) {
         
         BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
         if (!cell) {
@@ -91,7 +153,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.titleL.text = @"报备  ——  报备时间：2017-10-08 18:00";
+        cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",self.progressArr[indexPath.row][@"name"],self.progressArr[indexPath.row][@"time"]];
         if (indexPath.row == 0) {
             
             cell.upLine.hidden = YES;
@@ -99,7 +161,7 @@
             
             cell.upLine.hidden = NO;
         }
-        if (indexPath.row == 3) {
+        if (indexPath.row == self.progressArr.count - 1) {
             
             cell.downLine.hidden = YES;
         }else{
@@ -109,15 +171,16 @@
         return cell;
     }else{
         
-        SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
+        TitleContentBaseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TitleContentBaseCell"];
         if (!cell) {
             
-            cell = [[SingleContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SingleContentCell"];
+            cell = [[TitleContentBaseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TitleContentBaseCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.contentL.text = _contentArr[indexPath.row];
-        cell.lineView.hidden = YES;
+        cell.titleL.text = _dataArr[indexPath.section][indexPath.row];
+        cell.contentL.text = _contentArr[indexPath.section][indexPath.row];
+        
         return cell;
     }
 }
@@ -128,8 +191,9 @@
     self.navBackgroundView.hidden = NO;
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
-    _table.estimatedRowHeight = 50 *SIZE;
     _table.rowHeight = UITableViewAutomaticDimension;
+    _table.estimatedRowHeight = 40 *SIZE;
+    _table.sectionHeaderHeight = UITableViewAutomaticDimension;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.backgroundColor = self.view.backgroundColor;
     _table.delegate = self;

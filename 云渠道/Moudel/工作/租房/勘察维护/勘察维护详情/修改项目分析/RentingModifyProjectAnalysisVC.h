@@ -8,6 +8,16 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingModifyProjectAnalysisVCBlock)(void);
+
 @interface RentingModifyProjectAnalysisVC : BaseViewController
+
+@property (nonatomic, copy) RentingModifyProjectAnalysisVCBlock rentingModifyProjectAnalysisVCBlock;
+
+@property (nonatomic, strong) NSString *houseId;
+
+@property (nonatomic, strong) NSString *typeId;
+
+- (instancetype)initWithData:(NSDictionary *)dic;
 
 @end
