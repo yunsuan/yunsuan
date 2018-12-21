@@ -143,7 +143,6 @@
     _searchBar.returnKeyType = UIReturnKeySearch;
     
     UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
-    //    rightImg.backgroundColor = [UIColor whiteColor];
     rightImg.image = [UIImage imageNamed:@"search"];
     _searchBar.rightView = rightImg;
     _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;
@@ -193,25 +192,21 @@
         [weakSelf.scrollView setContentOffset:CGPointMake(0, 3 *SCREEN_Width) animated:NO];
     };
     _roomSurveyFailVC = [[RoomSurveyFailVC alloc] init];
-//    _roomSurveyComplaitVC = [[RoomSurveyComplaitVC alloc] init];
     _roomSurveySuccessVC = [[RoomSurveySuccessVC alloc] init];
     // 添加为self的子控制器
     [self addChildViewController:_roomSurveyWaitVC];
     [self addChildViewController:_roomSurveyingVC];
     [self addChildViewController:_roomSurveyFailVC];
-//    [self addChildViewController:_roomSurveyComplaitVC];
     [self addChildViewController:_roomSurveySuccessVC];
     
     _roomSurveyWaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveyingVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveyFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-//    _roomSurveyComplaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _roomSurveySuccessVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
     [self.scrollView addSubview:_roomSurveyWaitVC.view];
     [self.scrollView addSubview:_roomSurveyingVC.view];
     [self.scrollView addSubview:_roomSurveyFailVC.view];
-//    [self.scrollView addSubview:_roomSurveyComplaitVC.view];
     [self.scrollView addSubview:_roomSurveySuccessVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;

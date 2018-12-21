@@ -206,7 +206,7 @@
     
     UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        [BaseRequest GET:HouseSubNeedAgent_URL parameters:@{@"store_id":_houseDic[@"store_id"]} success:^(id resposeObject) {
+        [BaseRequest GET:RentSubNeedAgent_URL parameters:nil success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {

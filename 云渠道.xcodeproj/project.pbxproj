@@ -200,6 +200,9 @@
 		0C997B7521CB839900F805AA /* RentingMaintainModifyCustomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B7421CB839900F805AA /* RentingMaintainModifyCustomVC.m */; };
 		0C997B7821CB849100F805AA /* RentingMaintainCustomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B7721CB849100F805AA /* RentingMaintainCustomVC.m */; };
 		0C997B7C21CB868600F805AA /* RentingRoomSoldOutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B7B21CB868600F805AA /* RentingRoomSoldOutVC.m */; };
+		0C997B8021CC8AC800F805AA /* RentingRoomAgencyAddProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B7F21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.m */; };
+		0C997B8321CC950B00F805AA /* RentingAnalysisHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B8221CC950B00F805AA /* RentingAnalysisHeaderView.m */; };
+		0C997B8621CC962E00F805AA /* RentingAnalysisFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B8521CC962E00F805AA /* RentingAnalysisFooterView.m */; };
 		0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */; };
 		0C9B01B1215DFDF20055A9A8 /* SecAllRoomOfficeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B0215DFDF20055A9A8 /* SecAllRoomOfficeModel.m */; };
 		0C9B01B4215E0B6D0055A9A8 /* SecAllRoomCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B3215E0B6D0055A9A8 /* SecAllRoomCollCell.m */; };
@@ -990,6 +993,12 @@
 		0C997B7721CB849100F805AA /* RentingMaintainCustomVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingMaintainCustomVC.m; sourceTree = "<group>"; };
 		0C997B7A21CB868600F805AA /* RentingRoomSoldOutVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingRoomSoldOutVC.h; sourceTree = "<group>"; };
 		0C997B7B21CB868600F805AA /* RentingRoomSoldOutVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingRoomSoldOutVC.m; sourceTree = "<group>"; };
+		0C997B7E21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingRoomAgencyAddProtocolVC.h; sourceTree = "<group>"; };
+		0C997B7F21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingRoomAgencyAddProtocolVC.m; sourceTree = "<group>"; };
+		0C997B8121CC950B00F805AA /* RentingAnalysisHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAnalysisHeaderView.h; sourceTree = "<group>"; };
+		0C997B8221CC950B00F805AA /* RentingAnalysisHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAnalysisHeaderView.m; sourceTree = "<group>"; };
+		0C997B8421CC962E00F805AA /* RentingAnalysisFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAnalysisFooterView.h; sourceTree = "<group>"; };
+		0C997B8521CC962E00F805AA /* RentingAnalysisFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAnalysisFooterView.m; sourceTree = "<group>"; };
 		0C9B01AB215DCD130055A9A8 /* SelectStoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectStoreVC.h; sourceTree = "<group>"; };
 		0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectStoreVC.m; sourceTree = "<group>"; };
 		0C9B01AF215DFDF20055A9A8 /* SecAllRoomOfficeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomOfficeModel.h; sourceTree = "<group>"; };
@@ -2752,6 +2761,7 @@
 		0C2883B8210EB1CB00F69C5F /* 勘察维护详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C997B7D21CC8AB600F805AA /* 添加代购合同 */,
 				0C997B7921CB867400F805AA /* 下架房源 */,
 				0C997B7221CB837F00F805AA /* 修改业主信息 */,
 				0C997B6E21CB815400F805AA /* 修改标签 */,
@@ -3243,6 +3253,15 @@
 			path = "下架房源";
 			sourceTree = "<group>";
 		};
+		0C997B7D21CC8AB600F805AA /* 添加代购合同 */ = {
+			isa = PBXGroup;
+			children = (
+				0C997B7E21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.h */,
+				0C997B7F21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.m */,
+			);
+			path = "添加代购合同";
+			sourceTree = "<group>";
+		};
 		0C9B01AE215DFDDB0055A9A8 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3459,6 +3478,10 @@
 				0C9CD46C2105CD12004894A3 /* RentingComRoomAnalyzeColCell2.m */,
 				0C997B4521C73F4900F805AA /* RentingAllRoomDetailTableHeader.h */,
 				0C997B4621C73F4900F805AA /* RentingAllRoomDetailTableHeader.m */,
+				0C997B8121CC950B00F805AA /* RentingAnalysisHeaderView.h */,
+				0C997B8221CC950B00F805AA /* RentingAnalysisHeaderView.m */,
+				0C997B8421CC962E00F805AA /* RentingAnalysisFooterView.h */,
+				0C997B8521CC962E00F805AA /* RentingAnalysisFooterView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -6339,6 +6362,7 @@
 				0CA37B922089DE27005609C7 /* AddressTableCell.m in Sources */,
 				0C288388210967B600F69C5F /* RentingSurveyWaitVC.m in Sources */,
 				0C15A1E7211304C500544F2E /* GetWorkCell.m in Sources */,
+				0C997B8021CC8AC800F805AA /* RentingRoomAgencyAddProtocolVC.m in Sources */,
 				0C6B6350211C255700ABB506 /* SecdaryComModel.m in Sources */,
 				0C3AD56E206A11830059CE02 /* RoomDetailTableCell5.m in Sources */,
 				0CEF348221807C1500419D5E /* SystemWorkWaitTableCell.m in Sources */,
@@ -6558,6 +6582,7 @@
 				0C3062F820CE639A004D1996 /* SecComRoomBrokerageVC.m in Sources */,
 				0CD909DB20D89AB600061B4A /* SurveySuccessDetailHeaderCollCell.m in Sources */,
 				0CA37B802089C3C9005609C7 /* BoxViewCell.m in Sources */,
+				0C997B8321CC950B00F805AA /* RentingAnalysisHeaderView.m in Sources */,
 				0CDD6FF720CFAECF00D6609C /* ReportView.m in Sources */,
 				10174C04207214CA00D00B9A /* BuildingInfoVC.m in Sources */,
 				0C0BED4020A40E42005A16A1 /* GZQGifFooter.m in Sources */,
@@ -6590,6 +6615,7 @@
 				1069FFC6205795BE00E11F52 /* AppDelegate.m in Sources */,
 				0CD90A1820DA293500061B4A /* MaintainDetailVC.m in Sources */,
 				0CA37B7920897F16005609C7 /* AddTagCollFooter.m in Sources */,
+				0C997B8621CC962E00F805AA /* RentingAnalysisFooterView.m in Sources */,
 				0CF04F5C207B5B9D00A45F4A /* CompleteCustomVC1.m in Sources */,
 				0C0BED5720A992E1005A16A1 /* BMChineseSort.m in Sources */,
 				0C15A1DE21129B5F00544F2E /* ModifyProjectImageVC.m in Sources */,

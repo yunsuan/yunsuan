@@ -592,7 +592,7 @@ static NSString *const HouseRecordAndSurvey_URL = @"agent/house/recordAndSurvey"
 //修改图片
 static NSString *const UpdateImgURL = @"agent/house/survey/updateImg";
 
-#pragma mark -- 勘察维护 --
+#pragma mark -- 二手房-勘察维护 --
 //勘察维护列表
 static NSString *const HouseSurveyList_URL = @"agent/house/survey/list";
 
@@ -630,7 +630,7 @@ static NSString *const HouseSurveyCancelSale_URL = @"agent/house/survey/cancelSa
 //static NSString *const HouseSurveyCheckCancel_URL = @"agent/house/survey/checkCancel";
 
 
-#pragma mark -- 代购合同 --
+#pragma mark -- 二手房-代购合同 --
 
 //获取经办人信息
 static NSString *const HouseSubNeedAgent_URL = @"agent/house/sub/need/agent";
@@ -681,6 +681,9 @@ static NSString *const RentHouseList_URL = @"user/rent/house/list";
 
 //房源详情
 static NSString *const RentHouseDetail_URL =  @"user/rent/house/detail";
+
+//房源分析
+static NSString *const RentHouseGetHouseAnalyse_URL = @"user/rent/house/getHouseAnalyse";
 
 //报备租房
 static NSString *const RentRecord_URL = @"agent/rent/record";
@@ -764,3 +767,13 @@ static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";
 
 //下架房源
 static NSString *const RentSurveyCncelSale_URL = @"agent/rent/survey/cancelSale";
+
+#pragma mark -- 租房-代购合同
+//获取经办人信息
+static NSString *const RentSubNeedAgent_URL = @"agent/rent/sub/need/agent";
+
+//代购所需字段
+static NSString *const RentSubNeedInfo_URL = @"agent/rent/sub/need/info";
+
+//添加代购合同
+static NSString *const RentAddPurchaseContract_URL = @"agent/rent/sub";

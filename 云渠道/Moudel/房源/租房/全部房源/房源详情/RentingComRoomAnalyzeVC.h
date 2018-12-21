@@ -10,4 +10,6 @@
 
 @interface RentingComRoomAnalyzeVC : BaseViewController
 
+- (instancetype)initWithHouseId:(NSString *)houseId type:(NSInteger )type;
+
 @end

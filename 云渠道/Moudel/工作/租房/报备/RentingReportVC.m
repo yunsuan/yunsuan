@@ -12,6 +12,7 @@
 #import "RentingReportSuccessVC.h"
 #import "RentingReportFailVC.h"
 #import "RentingReportWaitVC.h"
+#import "RentingReportAddVC.h"
 
 #import "RoomReportCollCell.h"
 
@@ -55,9 +56,14 @@
 
 - (void)action_add{
     
-//    SecdaryCommunityRoomVC *nextVC = [[SecdaryCommunityRoomVC alloc] init];
-//    nextVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    RentingReportAddVC *nextVC = [[RentingReportAddVC alloc] init];
+    nextVC.hidesBottomBarWhenPushed = YES;
+    nextVC.rentingRoomReportAddHouseBlock = ^(NSDictionary *dic) {
+      
+        [_roomReportWaitVC RequestMethod];
+        [_roomReportSuccessVC RequestMethod];
+    };
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 

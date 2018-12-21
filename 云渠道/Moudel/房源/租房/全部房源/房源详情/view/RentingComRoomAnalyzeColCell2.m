@@ -39,7 +39,7 @@
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(self.contentView).offset(7 *SIZE);
         make.width.mas_equalTo(311 *SIZE);
-        make.height.mas_equalTo(self.contentL.heightAnchor);
+//        make.height.mas_equalTo(self.contentL.heightAnchor);
         make.right.equalTo(self.contentView).offset(-21 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-27 *SIZE);
     }];

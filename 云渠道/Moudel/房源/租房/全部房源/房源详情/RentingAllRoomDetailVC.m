@@ -11,7 +11,8 @@
 #import "RentingAllRoomStoreVC.h"
 #import "RentingAllRoomOfficeVC.h"
 #import "SecAllRoomBrokerageVC.h"
-#import "SecComRoomAnalyzeVC.h"
+//#import "SecComRoomAnalyzeVC.h"
+#import "RentingComRoomAnalyzeVC.h"
 
 #import "RoomDetailCollCell.h"
 
@@ -36,7 +37,7 @@
 
 @property (nonatomic, strong) RentingAllRoomOfficeVC *roomOfficeProjectVC;
 
-@property (nonatomic, strong) SecComRoomAnalyzeVC *roomAnalyzeVC;
+@property (nonatomic, strong) RentingComRoomAnalyzeVC *roomAnalyzeVC;
 
 @property (nonatomic, strong) SecAllRoomBrokerageVC *roomBrokerageVC;
 
@@ -175,21 +176,21 @@
         _roomProjectVC = [[RentingAllRoomProjectVC alloc] initWithHouseId:_houseId city:_city];
         [self addChildViewController:_roomProjectVC];
 
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
+        _roomAnalyzeVC = [[RentingComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
         [self.scrollView addSubview:_roomProjectVC.view];
     }else if (self.type == 2){
         
         _roomStoreProjectVC = [[RentingAllRoomStoreVC alloc] initWithHouseId:_houseId city:_city];
         [self addChildViewController:_roomStoreProjectVC];
 
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
+        _roomAnalyzeVC = [[RentingComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
         [self.scrollView addSubview:_roomStoreProjectVC.view];
     }else{
         
         _roomOfficeProjectVC = [[RentingAllRoomOfficeVC alloc] initWithHouseId:_houseId city:_city];
         [self addChildViewController:_roomOfficeProjectVC];
 
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
+        _roomAnalyzeVC = [[RentingComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
         [self.scrollView addSubview:_roomOfficeProjectVC.view];
     }
     _roomBrokerageVC = [[SecAllRoomBrokerageVC alloc] initWithHouseId:_houseId];
