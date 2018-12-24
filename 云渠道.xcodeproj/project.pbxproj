@@ -177,6 +177,9 @@
 		0C96D9F7209C52E100B6A8B8 /* NoValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96D9F6209C52E100B6A8B8 /* NoValidVC.m */; };
 		0C96DA01209C6A6700B6A8B8 /* QuickAddCustomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96DA00209C6A6700B6A8B8 /* QuickAddCustomVC.m */; };
 		0C96DA04209C6C0B00B6A8B8 /* QuickAddRequireVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C96DA03209C6C0B00B6A8B8 /* QuickAddRequireVC.m */; };
+		0C997B9421CCDAF600F805AA /* RecommendHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B9321CCDAF600F805AA /* RecommendHouseCell.m */; };
+		0C997B9821CCDC7300F805AA /* RecommendHouseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B9721CCDC7300F805AA /* RecommendHouseModel.m */; };
+		0C997B9B21CCE14900F805AA /* LDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B9A21CCE14900F805AA /* LDetailViewController.m */; };
 		0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */; };
 		0C9B01B1215DFDF20055A9A8 /* SecAllRoomOfficeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B0215DFDF20055A9A8 /* SecAllRoomOfficeModel.m */; };
 		0C9B01B4215E0B6D0055A9A8 /* SecAllRoomCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B3215E0B6D0055A9A8 /* SecAllRoomCollCell.m */; };
@@ -921,6 +924,12 @@
 		0C96DA00209C6A6700B6A8B8 /* QuickAddCustomVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddCustomVC.m; sourceTree = "<group>"; };
 		0C96DA02209C6C0B00B6A8B8 /* QuickAddRequireVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickAddRequireVC.h; sourceTree = "<group>"; };
 		0C96DA03209C6C0B00B6A8B8 /* QuickAddRequireVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddRequireVC.m; sourceTree = "<group>"; };
+		0C997B9221CCDAF600F805AA /* RecommendHouseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendHouseCell.h; sourceTree = "<group>"; };
+		0C997B9321CCDAF600F805AA /* RecommendHouseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendHouseCell.m; sourceTree = "<group>"; };
+		0C997B9621CCDC7300F805AA /* RecommendHouseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendHouseModel.h; sourceTree = "<group>"; };
+		0C997B9721CCDC7300F805AA /* RecommendHouseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendHouseModel.m; sourceTree = "<group>"; };
+		0C997B9921CCE14900F805AA /* LDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDetailViewController.h; sourceTree = "<group>"; };
+		0C997B9A21CCE14900F805AA /* LDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDetailViewController.m; sourceTree = "<group>"; };
 		0C9B01AB215DCD130055A9A8 /* SelectStoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectStoreVC.h; sourceTree = "<group>"; };
 		0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectStoreVC.m; sourceTree = "<group>"; };
 		0C9B01AF215DFDF20055A9A8 /* SecAllRoomOfficeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomOfficeModel.h; sourceTree = "<group>"; };
@@ -2970,6 +2979,27 @@
 			path = "快速推荐客源";
 			sourceTree = "<group>";
 		};
+		0C997B9121CCDABB00F805AA /* 推荐 */ = {
+			isa = PBXGroup;
+			children = (
+				0C997B9921CCE14900F805AA /* LDetailViewController.h */,
+				0C997B9A21CCE14900F805AA /* LDetailViewController.m */,
+				0C997B9521CCDC5D00F805AA /* model */,
+				0C997B9221CCDAF600F805AA /* RecommendHouseCell.h */,
+				0C997B9321CCDAF600F805AA /* RecommendHouseCell.m */,
+			);
+			path = "推荐";
+			sourceTree = "<group>";
+		};
+		0C997B9521CCDC5D00F805AA /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0C997B9621CCDC7300F805AA /* RecommendHouseModel.h */,
+				0C997B9721CCDC7300F805AA /* RecommendHouseModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		0C9B01AE215DFDDB0055A9A8 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -4936,6 +4966,7 @@
 		102DF96A2057A0A200E1859C /* 房源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C997B9121CCDABB00F805AA /* 推荐 */,
 				0CAF4DD0219E5EB60009873E /* 关注 */,
 				0CD7B5C72147AF50009517F2 /* view1 */,
 				0C9CD43E21057494004894A3 /* 租房 */,
@@ -5954,6 +5985,7 @@
 				105E18EF206B6BE90031558D /* RecommendCell.m in Sources */,
 				0CB6BAF52074982000921C75 /* HouseTypeDetailVC.m in Sources */,
 				0C02360120BFC94C00B255AA /* DynamicDetailVC.m in Sources */,
+				0C997B9B21CCE14900F805AA /* LDetailViewController.m in Sources */,
 				0CD90AB020E2487800061B4A /* RoomAgencyAddProtocolCell4.m in Sources */,
 				0C9CD41220FF4841004894A3 /* AddPeopleCell.m in Sources */,
 				0CD90A3220DA5C9400061B4A /* MaintainAddFollowVC.m in Sources */,
@@ -5997,6 +6029,7 @@
 				10174BF220720C9A00D00B9A /* AdressChooseView.m in Sources */,
 				0CDD706220D390A200D6609C /* SurveyWaitDetailVC.m in Sources */,
 				0CBD857720848EC700E7B183 /* LevelView.m in Sources */,
+				0C997B9821CCDC7300F805AA /* RecommendHouseModel.m in Sources */,
 				10255A6D21A53D000042738C /* YBImageBrowserView.m in Sources */,
 				0C9CD44E21057E1E004894A3 /* RentingCommunityRoomVC.m in Sources */,
 				0C314A452184361E00F69F09 /* AgencyEditCustomerDetailVC.m in Sources */,
@@ -6119,6 +6152,7 @@
 				0CB6BAF120736D7B00921C75 /* FollowRecordVC.m in Sources */,
 				1069FFC9205795BE00E11F52 /* ViewController.m in Sources */,
 				0CC19CFA206E21110007CC5F /* SelectCompanyVC.m in Sources */,
+				0C997B9421CCDAF600F805AA /* RecommendHouseCell.m in Sources */,
 				1044B40420A05179002D9BAE /* TypeZeroVC.m in Sources */,
 				0C07BFD82060FB1C007F31EC /* CustomerTableModel.m in Sources */,
 				0C2D02AE20AD51A7002F1B4E /* AppealComplaintingVC.m in Sources */,

@@ -15,7 +15,6 @@ typedef void(^confirmBtnBlock)(NSInteger index);
 
 @interface RecommendCell : UITableViewCell
 
-
 @property (nonatomic, copy) confirmBtnBlock confirmBtnBlock;
 
 @property (nonatomic, strong) UIButton *confirmBtn;

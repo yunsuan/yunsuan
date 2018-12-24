@@ -8,11 +8,6 @@
 
 #import "RoomChildVC.h"
 
-//#import "RoomDetailVC1.h"
-//#import "SecAllRoomDetailVC.h"
-//#import "SecdaryCommunityRoomVC.h"
-//#import "SecdaryAllRoomVC.h"
-
 //#import "RentingCell.h"
 #import "SecdaryAllTableCell.h"
 #import "CompanyCell.h"
@@ -21,8 +16,7 @@
 #import "SecdaryComTableCell.h"
 #import "AttentionHouseCell.h"
 #import "AttentionComCell.h"
-
-//#import "SecdaryComModel.h"
+#import "RecommendHouseCell.h"
 
 @interface RoomChildVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -105,7 +99,13 @@
         }
     }else if (_AllType == 1){
         
-        _urlString = UserFocusNews_URL;
+        if ([self.status isEqualToString:@"关注"]) {
+            
+            _urlString = UserFocusNews_URL;
+        }else{
+            
+            _urlString = UserFocusNews_URL;
+        }
     }else{
         
         _urlString = ProjectList_URL;
@@ -521,24 +521,39 @@
         }
         case 1:{
             
-            if ([_dataArr[indexPath.row] isKindOfClass:[SecdaryComModel class]]) {
+            if ([self.status isEqualToString:@"关注"]) {
                 
-                AttentionComCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionComCell"];
-                if (!cell) {
+                if ([_dataArr[indexPath.row] isKindOfClass:[SecdaryComModel class]]) {
                     
-                    cell = [[AttentionComCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionComCell"];
+                    AttentionComCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionComCell"];
+                    if (!cell) {
+                        
+                        cell = [[AttentionComCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionComCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    cell.model = _dataArr[indexPath.row];
+                    return cell;
+                    break;
+                }else{
+                    
+                    AttentionHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionHouseCell"];
+                    if (!cell) {
+                        
+                        cell = [[AttentionHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionHouseCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    cell.model = _dataArr[indexPath.row];
+                    return cell;
+                    break;
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                cell.model = _dataArr[indexPath.row];
-                return cell;
-                break;
             }else{
                 
-                AttentionHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionHouseCell"];
+                RecommendHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendHouseCell"];
                 if (!cell) {
                     
-                    cell = [[AttentionHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionHouseCell"];
+                    cell = [[RecommendHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendHouseCell"];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -650,24 +665,34 @@
         }
     }else if (_AllType == 1){
         
-        if ([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]) {
-
-            AttentionHouseModel *model = _dataArr[indexPath.row];
+        if ([self.status isEqualToString:@"关注"]) {
             
-            if ([model.detail_get integerValue] == 1) {
+            if ([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]) {
                 
-                if (self.roomChildVCSecModelBlock) {
+                AttentionHouseModel *model = _dataArr[indexPath.row];
+                
+                if ([model.detail_get integerValue] == 1) {
                     
-                    self.roomChildVCSecModelBlock(model);
+                    if (self.roomChildVCSecModelBlock) {
+                        
+                        self.roomChildVCSecModelBlock(model);
+                    }
+                }
+            }else{
+                
+                SecdaryComModel *model = _dataArr[indexPath.row];
+                
+                if (self.roomChildVCSecComModelBlock) {
+                    
+                    self.roomChildVCSecComModelBlock(model);
                 }
             }
         }else{
-
-            SecdaryComModel *model = _dataArr[indexPath.row];
             
-            if (self.roomChildVCSecComModelBlock) {
+            LDetailViewController *vc = [[LDetailViewController alloc] init];
+            if (self.roomChildVCRoomVCBlock) {
                 
-                self.roomChildVCSecComModelBlock(model);
+                self.roomChildVCRoomVCBlock(vc);
             }
         }
     }else{

@@ -304,7 +304,7 @@
     if ([((NSString *)dic[@"tag"]) containsString:@"新房"]) {
         
         vc = [[RoomChildVC alloc] initWithType:2];
-    }else if(/*[((NSString *)dic[@"tag"]) containsString:@"推荐"] || */[((NSString *)dic[@"tag"]) containsString:@"关注"]) {
+    }else if([((NSString *)dic[@"tag"]) containsString:@"推荐"] || [((NSString *)dic[@"tag"]) containsString:@"关注"]) {
         
         vc = [[RoomChildVC alloc] initWithType:1];
     }else{
@@ -346,6 +346,11 @@
     //            nextVC.hidesBottomBarWhenPushed = YES;
     //            [self.navigationController pushViewController:nextVC animated:YES];
     //        };
+    
+    vc.roomChildVCRoomVCBlock = ^(LDetailViewController *vc) {
+      
+        [self.navigationController pushViewController:vc animated:YES];
+    };
     
     __weak RoomChildVC *weakvc = vc;
     vc.roomChildVCSecComModelBlock = ^(SecdaryComModel *model) {
