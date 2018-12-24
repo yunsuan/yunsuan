@@ -203,6 +203,9 @@
 		0C997B8021CC8AC800F805AA /* RentingRoomAgencyAddProtocolVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B7F21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.m */; };
 		0C997B8321CC950B00F805AA /* RentingAnalysisHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B8221CC950B00F805AA /* RentingAnalysisHeaderView.m */; };
 		0C997B8621CC962E00F805AA /* RentingAnalysisFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997B8521CC962E00F805AA /* RentingAnalysisFooterView.m */; };
+		0C997BE221D0789400F805AA /* WWSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997BDC21D0789400F805AA /* WWSliderView.m */; };
+		0C997BE321D0789400F805AA /* WWSliderKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997BDD21D0789400F805AA /* WWSliderKnobLayer.m */; };
+		0C997BE421D0789400F805AA /* WWSliderTrackLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997BE121D0789400F805AA /* WWSliderTrackLayer.m */; };
 		0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */; };
 		0C9B01B1215DFDF20055A9A8 /* SecAllRoomOfficeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B0215DFDF20055A9A8 /* SecAllRoomOfficeModel.m */; };
 		0C9B01B4215E0B6D0055A9A8 /* SecAllRoomCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B3215E0B6D0055A9A8 /* SecAllRoomCollCell.m */; };
@@ -999,6 +1002,12 @@
 		0C997B8221CC950B00F805AA /* RentingAnalysisHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAnalysisHeaderView.m; sourceTree = "<group>"; };
 		0C997B8421CC962E00F805AA /* RentingAnalysisFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAnalysisFooterView.h; sourceTree = "<group>"; };
 		0C997B8521CC962E00F805AA /* RentingAnalysisFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAnalysisFooterView.m; sourceTree = "<group>"; };
+		0C997BDC21D0789400F805AA /* WWSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWSliderView.m; sourceTree = "<group>"; };
+		0C997BDD21D0789400F805AA /* WWSliderKnobLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWSliderKnobLayer.m; sourceTree = "<group>"; };
+		0C997BDE21D0789400F805AA /* WWSliderTrackLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWSliderTrackLayer.h; sourceTree = "<group>"; };
+		0C997BDF21D0789400F805AA /* WWSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWSliderView.h; sourceTree = "<group>"; };
+		0C997BE021D0789400F805AA /* WWSliderKnobLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWSliderKnobLayer.h; sourceTree = "<group>"; };
+		0C997BE121D0789400F805AA /* WWSliderTrackLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWSliderTrackLayer.m; sourceTree = "<group>"; };
 		0C9B01AB215DCD130055A9A8 /* SelectStoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectStoreVC.h; sourceTree = "<group>"; };
 		0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectStoreVC.m; sourceTree = "<group>"; };
 		0C9B01AF215DFDF20055A9A8 /* SecAllRoomOfficeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomOfficeModel.h; sourceTree = "<group>"; };
@@ -3260,6 +3269,19 @@
 				0C997B7F21CC8AC700F805AA /* RentingRoomAgencyAddProtocolVC.m */,
 			);
 			path = "添加代购合同";
+			sourceTree = "<group>";
+		};
+		0C997BDB21D0789400F805AA /* TwoSliderView */ = {
+			isa = PBXGroup;
+			children = (
+				0C997BDC21D0789400F805AA /* WWSliderView.m */,
+				0C997BDD21D0789400F805AA /* WWSliderKnobLayer.m */,
+				0C997BDE21D0789400F805AA /* WWSliderTrackLayer.h */,
+				0C997BDF21D0789400F805AA /* WWSliderView.h */,
+				0C997BE021D0789400F805AA /* WWSliderKnobLayer.h */,
+				0C997BE121D0789400F805AA /* WWSliderTrackLayer.m */,
+			);
+			path = TwoSliderView;
 			sourceTree = "<group>";
 		};
 		0C9B01AE215DFDDB0055A9A8 /* model */ = {
@@ -5545,6 +5567,7 @@
 		106900032057974200E11F52 /* 第三方SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0C997BDB21D0789400F805AA /* TwoSliderView */,
 				100D8F712180189B006839EB /* HNChannelView */,
 				100D8F5E218004ED006839EB /* WMPageController */,
 				0CAEDF1520B55C8100AA3C97 /* Bugtags-iOS-3.0.1 */,
@@ -6137,6 +6160,7 @@
 				0CDD705A20D36A6500D6609C /* RoomSurveyingVC.m in Sources */,
 				0CC19CFC206E21110007CC5F /* SelectCompanyCollCell.m in Sources */,
 				0CA37B7020889028005609C7 /* AddTagView.m in Sources */,
+				0C997BE221D0789400F805AA /* WWSliderView.m in Sources */,
 				0CD90ABD20E609B700061B4A /* ModifyTimeVC.m in Sources */,
 				0CBD859720871B6900E7B183 /* RoomDetailModel.m in Sources */,
 				0CDD701320D0001D00D6609C /* RoomReportCollCell.m in Sources */,
@@ -6167,6 +6191,7 @@
 				0CDD702720D2655100D6609C /* RoomReportComplaintCell.m in Sources */,
 				0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */,
 				0C9B01CF216F47EE0055A9A8 /* RoomTypeCollHeader.m in Sources */,
+				0C997BE321D0789400F805AA /* WWSliderKnobLayer.m in Sources */,
 				0C96CE6C21940A080049C1AC /* SecWorkSuccessVC.m in Sources */,
 				0CD90A4620DB3CFA00061B4A /* MaintainLookCell.m in Sources */,
 				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
@@ -6191,6 +6216,7 @@
 				0CDD702320D2628600D6609C /* RoomReportFailCell.m in Sources */,
 				0CF04F3A207B074500A45F4A /* RecommendCell3.m in Sources */,
 				0C2883A72109A56100F69C5F /* RentingSurveyFailDetailVC.m in Sources */,
+				0C997BE421D0789400F805AA /* WWSliderTrackLayer.m in Sources */,
 				0C15A1E22113031E00544F2E /* GetWorkVC.m in Sources */,
 				1044B40720A56857002D9BAE /* WaitAnimation.m in Sources */,
 				0C9B01D2217033360055A9A8 /* RoomTypeViewCollCell.m in Sources */,

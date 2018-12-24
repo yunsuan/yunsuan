@@ -17,6 +17,7 @@
 #import "CustomDetailTableCell4.h"
 #import "AddTagVC.h"
 #import "AddTagView.h"
+#import "WWSliderView.h"
 
 @interface AddRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
 {
@@ -42,7 +43,7 @@
 
 @property (nonatomic, strong) DropDownBtn *houseTypeBtn;
 
-@property (nonatomic, strong) DropDownBtn *priceBtn;
+@property (nonatomic, strong) WWSliderView *priceBtn;
 
 @property (nonatomic, strong) DropDownBtn *areaBtn;
 
@@ -352,14 +353,14 @@
         }
         case 4:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.priceBtn.content.text = MC;
+//                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 5:
@@ -482,10 +483,10 @@
             
             dic[@"property_type"] = _houseTypeBtn->str;
         }
-        if (_priceBtn->str.length) {
-            
-            dic[@"total_price"] = _priceBtn->str;
-        }
+//        if (_priceBtn->str.length) {
+//
+//            dic[@"total_price"] = _priceBtn->str;
+//        }
         if (_areaBtn->str.length) {
             
             dic[@"area"] = _areaBtn->str;
@@ -602,10 +603,10 @@
             
             dic[@"property_type"] = _houseTypeBtn->str;
         }
-        if (_priceBtn->str.length) {
-            
-            dic[@"total_price"] = _priceBtn->str;
-        }
+//        if (_priceBtn->str.length) {
+//
+//            dic[@"total_price"] = _priceBtn->str;
+//        }
         if (_areaBtn->str.length) {
             
             dic[@"area"] = _areaBtn->str;
@@ -947,7 +948,8 @@
                 }
                 case 4:
                 {
-                    _priceBtn = btn;
+//                    _priceBtn = btn;
+                    _priceBtn = [[WWSliderView alloc] initWithFrame:btn.frame sliderColor:COLOR(255, 224, 177, 1) leftSmallColor:YJBackColor leftBigColor:COLOR(255, 224, 177, 1) rightSmallColor:YJBackColor rightBigColor:COLOR(255, 224, 177, 1)];
                     [_infoView addSubview:_priceBtn];
                     break;
                 }
@@ -1201,18 +1203,18 @@
     
     if (_model.total_price.length) {
         
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
-
-            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
-
-                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
-                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-                break;
-            }
-        }
+//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
+//        NSArray *typeArr = dic[@"param"];
+//        for (NSUInteger i = 0; i < typeArr.count; i++) {
+//
+//            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
+//
+//                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+//                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+//                break;
+//            }
+//        }
     }
 
     
