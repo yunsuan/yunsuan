@@ -245,6 +245,15 @@
     _waitTable.dataSource = self;
     _waitTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_waitTable];
+    _waitTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        [self RequestMethod];
+    }];
+    
+    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        
+        [self RequestAddMethod];
+    }];
 }
 
 @end

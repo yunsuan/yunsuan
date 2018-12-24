@@ -9,7 +9,7 @@
 #import "RentReportedVC.h"
 #import "RentingComRoomDetailVC.h"
 #import "RentingReportVC.h"
-#import "CompleteSurveyInfoVC.h"
+#import "RentingCompleteSurveyInfoVC.h"
 
 #import "BaseFrameHeader.h"
 #import "ReportView.h"
@@ -336,8 +336,8 @@
                 
                 view.reportSuccussViewconfirmBlock = ^{
                     
-                    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-                    nextVC.completeSurveyInfoVCBlock = ^{
+                    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                    nextVC.rentingCompleteSurveyInfoVCBlock = ^{
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
                         [self RequestMethod];

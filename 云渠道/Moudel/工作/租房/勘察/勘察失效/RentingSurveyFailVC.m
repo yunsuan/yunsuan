@@ -192,6 +192,15 @@
     _failTable.dataSource = self;
     _failTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_failTable];
+    _failTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        [self RequestMethod];
+    }];
+    
+    _failTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        
+        [self RequestAddMethod];
+    }];
 }
 
 @end
