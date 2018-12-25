@@ -278,12 +278,17 @@
         NSString *pro = [cityid substringToIndex:2];
         pro = [NSString stringWithFormat:@"%@0000",pro];
         NSString *proName;
-        for (NSDictionary *dic in proArr) {
-            
-            if([dic[@"code"] isEqualToString:pro]){
+        if ([pro isEqualToString:@"000000"]) {
+            proName = @"海外";
+        }
+        else{
+            for (NSDictionary *dic in proArr) {
                 
-                proName = dic[@"name"];
-                break;
+                if([dic[@"code"] isEqualToString:pro]){
+                    
+                    proName = dic[@"name"];
+                    break;
+                }
             }
         }
         
