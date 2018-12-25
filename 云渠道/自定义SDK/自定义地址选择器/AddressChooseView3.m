@@ -10,7 +10,7 @@
 #define PICKERHEIGHT 216
 #define BGHEIGHT     256
 
-//#define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
+#define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
 
 @interface AddressChooseView3()<UIPickerViewDelegate,UIPickerViewDataSource>
 
@@ -35,7 +35,7 @@
 /**
  记录市选中的位置
  */
-//@property(nonatomic, assign) NSInteger selected;
+@property(nonatomic, assign) NSInteger selected;
 
 @property (nonatomic, strong) NSArray *proArr;;
 
@@ -144,7 +144,7 @@
 - (instancetype)initWithFrame:(CGRect)frame withdata:(NSArray *)data
 {
     if (self = [super initWithFrame:frame]) {
-//        self.selected = 0;
+        self.selected = 0;
         [self loadDatas];
         [self initSuViews];
         
@@ -166,7 +166,7 @@
     if ([UserModel defaultModel].cityArr.count) {
         
         _cityArray = [UserModel defaultModel].cityArr;
-        [self getAreaArrayBycity:_cityArray[0][@"city_code"]];
+        [self getAreaArrayBycity:_cityArray[0][@"city_code"] name:_cityArray[0][@"city_name"]];
         self.cityStr = self.cityArray[0][@"city_name"];
         self.cityid = self.cityArray[0][@"city_code"];
         self.areaStr = self.areaArray[0][@"name"];
@@ -181,7 +181,7 @@
                 
                 if (_cityArray.count) {
                     
-                    [self getAreaArrayBycity:_cityArray[0][@"city_code"]];
+                    [self getAreaArrayBycity:_cityArray[0][@"city_code"] name:self.cityArray[0][@"city_name"]];
                     self.cityStr = self.cityArray[0][@"city_name"];
                     self.cityid = self.cityArray[0][@"city_code"];
                     self.areaStr = self.areaArray[0][@"name"];
@@ -197,21 +197,35 @@
     }
 }
 
--(void)getAreaArrayBycity:(NSString *)code
+-(void)getAreaArrayBycity:(NSString *)code name:(NSString *)name
 {
-    NSMutableArray * tempArr;
-    for (NSDictionary *proDic in _proArr) {
+    
+    if ([code hasPrefix:@"00"]) {
+        NSString *areacode  = [code substringToIndex:4];
+        areacode = [NSString stringWithFormat:@"%@01",areacode];
         
-        for (NSDictionary *cityDic in proDic[@"city"]) {
+        self.areaArray = @[@{ @"code":areacode,
+                              @"name": name}];
+    }
+    else{
+        
+        NSMutableArray * tempArr;
+        for (NSDictionary *proDic in _proArr) {
             
-            if ([cityDic[@"code"] integerValue] == [code integerValue]) {
+            for (NSDictionary *cityDic in proDic[@"city"]) {
                 
-                tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
-                _areaArray = tempArr;
-                break;
+                if ([cityDic[@"code"] integerValue] == [code integerValue]) {
+                    
+                    tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
+                    self.areaArray = tempArr;
+                    break;
+                }
+                
             }
         }
+        
     }
+    
 }
 
 
@@ -255,8 +269,10 @@
 {
     if (component == 0) {
         return self.cityArray.count;
+    }else
+    {
+        return self.areaArray.count;
     }
-    return self.areaArray.count;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -277,20 +293,19 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (component == 0) {//选择市
-
-
+        self.selected = row;
+        
         self.cityStr = self.cityArray[row][@"city_name"];
         self.cityid = self.cityArray[row][@"city_code"];
         
-//        [self.pickerView reloadComponent:1];
+        //        [self.pickerView reloadComponent:1];
         [self.pickerView selectRow:0 inComponent:1 animated:YES];
-
         
-        [self getAreaArrayBycity:self.cityArray[row][@"city_code"]];
+        [self getAreaArrayBycity:self.cityArray[row][@"city_code"] name:self.cityArray[row][@"city_name"]];
         self.areaStr = self.areaArray[0][@"name"];
         self.areaid = self.areaArray[0][@"code"];
         [self.pickerView reloadComponent:1];
-
+        
     }else{
         
         self.areaStr = self.areaArray[row][@"name"];
@@ -320,7 +335,7 @@
 {
     [self hidePickerView];
     if (self.addressChooseView3ConfirmBlock != nil) {
-
+        
         self.addressChooseView3ConfirmBlock(self.cityStr, self.areaStr, self.cityid, self.areaid);
     }
 }
