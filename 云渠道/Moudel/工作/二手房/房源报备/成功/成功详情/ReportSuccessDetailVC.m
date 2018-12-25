@@ -85,13 +85,13 @@
     
     _endtime = [NSString stringWithFormat:@"%@",data[@"timeLimit"]];
     _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    _state = data[@"current_state"];
+    _state = [NSString stringWithFormat:@"%@",data[@"current_state_name"]];//data[@"current_state"];
     [_detailTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (_contentArr.count) {
             
@@ -115,7 +115,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (section < _contentArr.count) {
             
@@ -141,7 +141,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (section == _contentArr.count) {
             
@@ -170,7 +170,7 @@
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (section == 0) {
             
@@ -215,7 +215,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (indexPath.section < _contentArr.count) {
             
