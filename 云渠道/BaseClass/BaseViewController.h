@@ -61,7 +61,6 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     RENT_HOUSE_RECEIVE_TYPE=48,//租房住宅收款类型
     RENT_SHOP_OFFICE_RECEIVE_TYPE=49,//租房商铺写字收款类型
     HOUSE_LEVEL=50//住宅等级
-
 };
 
 

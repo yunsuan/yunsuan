@@ -169,7 +169,6 @@
     RoomMaintainModel *model = _dataArr[indexPath.row];
     cell.model = model;
     
-    
     cell.roomMaintainPhoneBlock = ^(NSInteger index) {
         
         NSString *phone = model.tel;

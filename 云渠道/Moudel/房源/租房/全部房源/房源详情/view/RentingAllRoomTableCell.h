@@ -20,18 +20,34 @@
 
 @property (nonatomic, strong) TagView *tagView2;
 
+@property (nonatomic, strong) UILabel *depositL;
+
+@property (nonatomic, strong) UILabel *roomLevelL;
+
 @property (nonatomic, strong) UILabel *payWayL;
 
-@property (nonatomic, strong) UILabel *liftL;
-
-@property (nonatomic, strong) UILabel *seeL;
+@property (nonatomic, strong) UILabel *rentTypeL;
 
 @property (nonatomic, strong) UILabel *decorateL;
 
-@property (nonatomic, strong) UILabel *faceL;
+@property (nonatomic, strong) UILabel *floorL;
+
+@property (nonatomic, strong) UILabel *liftL;
+
+@property (nonatomic, strong) UILabel *minPeriodL;
+
+@property (nonatomic, strong) UILabel *maxPeriodL;
+
+@property (nonatomic, strong) UILabel *inTimeL;
+
+@property (nonatomic, strong) UILabel *seeL;
 
 @property (nonatomic, strong) UILabel *intentL;
 
 @property (nonatomic, strong) UILabel *urgentL;
+
+@property (nonatomic, strong) UIView *markView;
+
+@property (nonatomic, strong) UILabel *markL;
 
 @end

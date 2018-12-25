@@ -69,7 +69,7 @@
         cell = [[RoomReportCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 4, 40 *SIZE)];
     }
     cell.titleL.frame = CGRectMake(0, 14 *SIZE, SCREEN_Width / 4, 11 *SIZE);
-    cell.line.frame = CGRectMake(22 *SIZE, 38 *SIZE, 28 *SIZE, 2 *SIZE);
+    cell.line.frame = CGRectMake(22 *SIZE, 38 *SIZE, 46 *SIZE, 2 *SIZE);
     cell.titleL.text = _titleArr[indexPath.item];
     
     return cell;

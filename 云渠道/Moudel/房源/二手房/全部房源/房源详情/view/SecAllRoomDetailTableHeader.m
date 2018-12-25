@@ -45,7 +45,7 @@
     
     _propertyL.text = model.property_type;
     
-    _priceL.text = [NSString stringWithFormat:@"￥%@月/平",model.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@万",model.price];
     
     _typeL.text = model.house_type;
     

@@ -40,13 +40,15 @@
     _numL.text = [NSString stringWithFormat:@"跟进次数：%@",model.follow_num];
     _timeL.text = [NSString stringWithFormat:@"上次跟进时间：%@",model.last_follow_time];
     
-    NSArray *arr = [model.tel componentsSeparatedByString:@","];
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:arr[0]];
-//    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:model.tel];
-    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
-    [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
-    _phoneL.attributedText = attr;
-
+    if (model.tel.length) {
+        
+        NSArray *arr = [model.tel componentsSeparatedByString:@","];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:arr[0]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
+        [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
+        _phoneL.attributedText = attr;
+    }
+    
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);

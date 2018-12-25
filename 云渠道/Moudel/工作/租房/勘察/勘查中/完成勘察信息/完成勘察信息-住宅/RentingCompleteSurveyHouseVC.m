@@ -211,14 +211,28 @@
         }
         case 4:{
             
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:FLOOR_TYPE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:FLOOR_TYPE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.liftBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//                weakself.liftBtn->str = [NSString stringWithFormat:@"%@",ID];
+//            };
+//            [self.view addSubview:view];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否有电梯" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            UIAlertAction *liftY = [UIAlertAction actionWithTitle:@"有电梯" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
-                weakself.liftBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-                weakself.liftBtn->str = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
+                _liftBtn.content.text = @"有电梯";
+            }];
+            UIAlertAction *liftN = [UIAlertAction actionWithTitle:@"无电梯" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                _liftBtn.content.text = @"无电梯";
+            }];
+            [alert addAction:liftY];
+            [alert addAction:liftN];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+                
+            }];
             break;
         }
         case 5:{

@@ -215,9 +215,9 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setObject:_projectId forKey:@"project_id"];
     [dic setObject:[UserModelArchiver unarchive].agent_id forKey:@"agent_id"];
-    //    [dic setObject:@"1" forKey:@"agent_id"];
+
     [BaseRequest GET:ProjectDetail_URL parameters:dic success:^(id resposeObject) {
-        //        NSLog(@"%@",resposeObject);
+
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
