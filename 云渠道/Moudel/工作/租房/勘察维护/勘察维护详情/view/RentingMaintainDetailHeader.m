@@ -80,12 +80,28 @@
         _priceL.text = [NSString stringWithFormat:@"出租价格:暂无数据"];
     }
     
+    if (dataDic[@"deposit"]) {
+        
+        _depositL.text = [NSString stringWithFormat:@"押金:%@元",dataDic[@"deposit"]];
+    }else{
+        
+        _depositL.text = [NSString stringWithFormat:@"押金:暂无数据"];
+    }
+    
     if (dataDic[@"level"]) {
         
         _roomLevelL.text = [NSString stringWithFormat:@"房源等级:%@",dataDic[@"level"]];
     }else{
         
         _roomLevelL.text = [NSString stringWithFormat:@"房源等级:暂无数据"];
+    }
+    
+    if (dataDic[@"rent_type"]) {
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:%@",dataDic[@"rent_type"]];
+    }else{
+        
+        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:暂无数据"];
     }
     
     if (dataDic[@"receive_way"]) {
@@ -96,21 +112,13 @@
         _payWayL.text = [NSString stringWithFormat:@"收款方式:暂无数据"];
     }
     
-    if (dataDic[@"property_belong"]) {
-        
-        _houseTypeL.text = [NSString stringWithFormat:@"户型:%@",dataDic[@"property_belong"]];
-    }else{
-        
-        _houseTypeL.text = [NSString stringWithFormat:@"户型:暂无数据"];
-    }
-    
-    if (dataDic[@"rent_type"]) {
-        
-        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:%@",dataDic[@"rent_type"]];
-    }else{
-        
-        _rentTypeL.text = [NSString stringWithFormat:@"租赁类型:暂无数据"];
-    }
+//    if (dataDic[@"property_belong"]) {
+//
+//        _houseTypeL.text = [NSString stringWithFormat:@"户型:%@",dataDic[@"property_belong"]];
+//    }else{
+//
+//        _houseTypeL.text = [NSString stringWithFormat:@"户型:暂无数据"];
+//    }
     
     if (dataDic[@"rent_max_comment"]) {
         
@@ -212,7 +220,7 @@
     _propertyL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.contentView addSubview:_propertyL];
     
-    for (int i = 0; i < 15 ; i++) {
+    for (int i = 0; i < 14 ; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
@@ -233,14 +241,14 @@
             }
             case 2:
             {
-                _roomLevelL = label;
-                [self.contentView addSubview:_roomLevelL];
+                _depositL = label;
+                [self.contentView addSubview:_depositL];
                 break;
             }
             case 3:
             {
-                _payWayL = label;
-                [self.contentView addSubview:_payWayL];
+                _roomLevelL = label;
+                [self.contentView addSubview:_roomLevelL];
                 break;
             }
             case 4:
@@ -251,8 +259,8 @@
             }
             case 5:
             {
-                _houseTypeL = label;
-                [self.contentView addSubview:_houseTypeL];
+                _payWayL = label;
+                [self.contentView addSubview:_payWayL];
                 break;
             }
             case 6:
@@ -275,36 +283,30 @@
             }
             case 9:
             {
-                _inTimeL = label;
-                [self.contentView addSubview:_inTimeL];
-                break;
-            }
-            case 10:
-            {
                 _intentL = label;
                 [self.contentView addSubview:_intentL];
                 break;
             }
             
-            case 11:
+            case 10:
             {
                 _urgentL = label;
                 [self.contentView addSubview:_urgentL];
                 break;
             }
-            case 12:
+            case 11:
             {
                 _RePriceL = label;
                 [self.contentView addSubview:_RePriceL];
                 break;
             }
-            case 13:
+            case 12:
             {
                 _attentL = label;
                 [self.contentView addSubview:_attentL];
                 break;
             }
-            case 14:
+            case 13:
             {
                 _periodL = label;
                 [self.contentView addSubview:_periodL];
@@ -402,15 +404,29 @@
         make.right.equalTo(self.contentView).offset(-120 *SIZE);
     }];
     
-    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_depositL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_priceL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
+    
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(28 *SIZE);
+        make.top.equalTo(_depositL.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+    }];
 
     
-    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(28 *SIZE);
+//        make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
+//        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//    }];
+    
+    [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_roomLevelL.mas_bottom).offset(19 *SIZE);
@@ -420,21 +436,14 @@
     [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_houseTypeL.mas_bottom).offset(19 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
-    }];
-    
-    [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
     [_minRent mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     

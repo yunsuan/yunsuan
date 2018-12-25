@@ -29,9 +29,9 @@
     _roomLevelL.text = [NSString stringWithFormat:@"房源等级：%@",model.level];
     _payWayL.text = [NSString stringWithFormat:@"收款方式：%@",[model.receive_way componentsJoinedByString:@","]];
     _rentTypeL.text = [NSString stringWithFormat:@"租赁类型：%@",model.rent_type];
-    _decorateL.text = [NSString stringWithFormat:@"装修：%@",model.decoration];
-    _floorL.text = [NSString stringWithFormat:@"楼层：%@",model.floor_type];
-    _liftL.text = [NSString stringWithFormat:@"电梯：%@",@""];
+//    _decorateL.text = [NSString stringWithFormat:@"装修：%@",model.decoration];
+//    _floorL.text = [NSString stringWithFormat:@"楼层：%@",model.floor_type];
+//    _liftL.text = [NSString stringWithFormat:@"电梯：%@",@""];
     _minPeriodL.text = [NSString stringWithFormat:@"最短租期：%@",@""];
     _maxPeriodL.text = [NSString stringWithFormat:@"最长租期：%@",@""];
     _inTimeL.text = [NSString stringWithFormat:@"可入住时间：%@",model.check_in_time];
@@ -55,7 +55,7 @@
     _markView.backgroundColor = COLOR(244, 244, 244, 1);
     [self.contentView addSubview:_markView];
     
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 12; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
@@ -88,67 +88,67 @@
                 [self.contentView addSubview:_rentTypeL];
                 break;
             }
+//            case 4:{
+//
+//                _decorateL = label;
+//                [self.contentView addSubview:_decorateL];
+//                break;
+//            }
+//            case 5:{
+//
+//                _floorL = label;
+//                [self.contentView addSubview:_floorL];
+//                break;
+//            }
+//            case 6:{
+//
+//                _liftL = label;
+//                [self.contentView addSubview:_liftL];
+//                break;
+//            }
             case 4:{
-                
-                _decorateL = label;
-                [self.contentView addSubview:_decorateL];
-                break;
-            }
-            case 5:{
-                
-                _floorL = label;
-                [self.contentView addSubview:_floorL];
-                break;
-            }
-            case 6:{
-                
-                _liftL = label;
-                [self.contentView addSubview:_liftL];
-                break;
-            }
-            case 7:{
                 
                 _depositL = label;
                 [self.contentView addSubview:_depositL];
                 break;
             }
-            case 8:{
+            case 5:{
                 
                 _minPeriodL = label;
                 [self.contentView addSubview:_minPeriodL];
                 break;
             }
-            case 9:{
+            case 6:{
                 
                 _maxPeriodL = label;
                 [self.contentView addSubview:_maxPeriodL];
                 break;
             }
-            case 10:{
+            case 7:{
                 
                 _inTimeL = label;
                 [self.contentView addSubview:_inTimeL];
                 break;
             }
-            case 11:{
+            case 8:{
                 
                 _seeL = label;
                 [self.contentView addSubview:_seeL];
                 break;
             }
-            case 12:{
+            case 9:{
                 
                 _intentL = label;
                 [self.contentView addSubview:_intentL];
                 break;
             }
-            case 13:{
+            case 10:{
                 
                 _urgentL = label;
                 [self.contentView addSubview:_urgentL];
                 break;
             }
-            case 14:{
+            case 11:{
                 
                 _markL = label;
                 [_markView addSubview:_markL];
@@ -192,39 +192,39 @@
         make.width.equalTo(@(150 *SIZE));
     }];
     
-    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(150 *SIZE));
-    }];
-    
-    [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(200 *SIZE);
-        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(150 *SIZE));
-    }];
-    
-    [_liftL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_decorateL.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(150 *SIZE));
-        
-    }];
+//    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(10 *SIZE);
+//        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
+//        make.width.equalTo(@(150 *SIZE));
+//    }];
+//
+//    [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(200 *SIZE);
+//        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
+//        make.width.equalTo(@(150 *SIZE));
+//    }];
+//
+//    [_liftL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(10 *SIZE);
+//        make.top.equalTo(_decorateL.mas_bottom).offset(19 *SIZE);
+//        make.width.equalTo(@(150 *SIZE));
+//
+//    }];
     
     [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_liftL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(150 *SIZE));
     }];
     
     [_maxPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(self.contentView).offset(200 *SIZE);
-        make.top.equalTo(_liftL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_rentTypeL.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(150 *SIZE));
     }];
     

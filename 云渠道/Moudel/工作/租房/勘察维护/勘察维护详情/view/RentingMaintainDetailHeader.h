@@ -41,6 +41,8 @@ typedef void(^RentingMaintainDetailHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *priceL;
 
+@property (nonatomic, strong) UILabel *depositL;
+
 @property (nonatomic, strong) UILabel *roomLevelL;
 
 @property (nonatomic, strong) UILabel *houseTypeL;

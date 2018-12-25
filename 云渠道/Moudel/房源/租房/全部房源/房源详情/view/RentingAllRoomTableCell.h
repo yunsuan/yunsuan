@@ -28,12 +28,6 @@
 
 @property (nonatomic, strong) UILabel *rentTypeL;
 
-@property (nonatomic, strong) UILabel *decorateL;
-
-@property (nonatomic, strong) UILabel *floorL;
-
-@property (nonatomic, strong) UILabel *liftL;
-
 @property (nonatomic, strong) UILabel *minPeriodL;
 
 @property (nonatomic, strong) UILabel *maxPeriodL;

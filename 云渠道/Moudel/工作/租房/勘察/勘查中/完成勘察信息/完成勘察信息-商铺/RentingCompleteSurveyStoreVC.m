@@ -53,15 +53,17 @@
 
 @property (nonatomic, strong) BorderTF *maxPriceTF;
 
+@property (nonatomic, strong) UILabel *transferL;
+
+@property (nonatomic, strong) BorderTF *transferTF;
+
+@property (nonatomic, strong) UILabel *depositL;
+
+@property (nonatomic, strong) BorderTF *depositTF;
+
 @property (nonatomic, strong) UILabel *roomLevelL;
 
 @property (nonatomic, strong) DropDownBtn *roomLevelBtn;
-
-@property (nonatomic, strong) UILabel *payL;
-
-@property (nonatomic, strong) UICollectionView *payColl;
-
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UILabel *rentTypeL;
 
@@ -73,21 +75,11 @@
 
 @property (nonatomic, strong) UIImageView *rentImg2;
 
-@property (nonatomic, strong) UILabel *highL;
+@property (nonatomic, strong) UILabel *payL;
 
-@property (nonatomic, strong) BorderTF *highTF;
+@property (nonatomic, strong) UICollectionView *payColl;
 
-@property (nonatomic, strong) UILabel *widthL;
-
-@property (nonatomic, strong) BorderTF *widthTF;
-
-@property (nonatomic, strong) UILabel *typeL;
-
-@property (nonatomic, strong) DropDownBtn *typeBtn;
-
-@property (nonatomic, strong) UILabel *commercialL;
-
-@property (nonatomic, strong) DropDownBtn *commercialBtn;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UILabel *minPeriodL;
 
@@ -96,6 +88,30 @@
 @property (nonatomic, strong) UILabel *maxPeriodL;
 
 @property (nonatomic, strong) DropDownBtn *maxPeriodBtn;
+
+@property (nonatomic, strong) UILabel *highL;
+
+@property (nonatomic, strong) BorderTF *highTF;
+
+@property (nonatomic, strong) UILabel *widthL;
+
+@property (nonatomic, strong) BorderTF *widthTF;
+
+@property (nonatomic, strong) UILabel *inTimeL;
+
+@property (nonatomic, strong) DropDownBtn *inTimeBtn;
+
+@property (nonatomic, strong) UILabel *commercialL;
+
+@property (nonatomic, strong) DropDownBtn *commercialBtn;
+
+@property (nonatomic, strong) UILabel *typeL;
+
+@property (nonatomic, strong) DropDownBtn *typeBtn;
+
+@property (nonatomic, strong) UILabel *rentFreeL;
+
+@property (nonatomic, strong) DropDownBtn *rentFreeBtn;
 
 @property (nonatomic, strong) UIView *CollView;
 
@@ -165,7 +181,7 @@
     }
     
     _btnArr = @[@"整租",@"合租"];
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"收款方式：",@"租赁类型：",@"层高：",@"门宽：",@"商铺类型：",@"适合业态：",@"最短租期：",@"最长租期："];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"转让费：",@"押金：",@"房源等级：",@"租赁类型：",@"收款方式：",@"最短租期：",@"最长租期：",@"层高：",@"门宽：",@"可入住时间：",@"商铺类型：",@"适合业态：",@"免租期："];
     _periodArr = @[@{@"param":@"无限制",@"id":@"0"},
                    @{@"param":@"一天",@"id":@"1"},
                    @{@"param":@"七天",@"id":@"7"},
@@ -491,14 +507,14 @@
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
     
-    _roomLevelL = [[UILabel alloc] init];
-    _roomLevelL.textColor = YJTitleLabColor;
-    _roomLevelL.adjustsFontSizeToFitWidth = YES;
-    _roomLevelL.text = @"房源等级";
-    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
-    [_contentView addSubview:_roomLevelL];
+//    _roomLevelL = [[UILabel alloc] init];
+//    _roomLevelL.textColor = YJTitleLabColor;
+//    _roomLevelL.adjustsFontSizeToFitWidth = YES;
+//    _roomLevelL.text = @"房源等级";
+//    _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
+//    [_contentView addSubview:_roomLevelL];
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -521,50 +537,80 @@
             }
             case 2:
             {
-                _payL = label;
-                [_contentView addSubview:_payL];
+                _transferL = label;
+                [_contentView addSubview:_transferL];
                 break;
             }
             case 3:
+            {
+                _depositL = label;
+                [_contentView addSubview:_depositL];
+                break;
+            }
+            case 4:
+            {
+                _roomLevelL = label;
+                [_contentView addSubview:_roomLevelL];
+                break;
+            }
+            case 5:
             {
                 _rentTypeL = label;
                 [_contentView addSubview:_rentTypeL];
                 break;
             }
-            case 4:
-            {
-                _highL = label;
-                [_contentView addSubview:_highL];
-                break;
-            }
-            case 5:
-            {
-                _widthL = label;
-                [_contentView addSubview:_widthL];
-                break;
-            }
             case 6:
             {
-                _typeL = label;
-                [_contentView addSubview:_typeL];
+                _payL = label;
+                [_contentView addSubview:_payL];
                 break;
             }
             case 7:
-            {
-                _commercialL = label;
-                [_contentView addSubview:_commercialL];
-                break;
-            }
-            case 8:
             {
                 _minPeriodL = label;
                 [_contentView addSubview:_minPeriodL];
                 break;
             }
-            case 9:
+            case 8:
             {
                 _maxPeriodL = label;
                 [_contentView addSubview:_maxPeriodL];
+                break;
+            }
+            case 9:
+            {
+                _highL = label;
+                [_contentView addSubview:_highL];
+                break;
+            }
+            case 10:
+            {
+                _widthL = label;
+                [_contentView addSubview:_widthL];
+                break;
+            }
+            case 11:
+            {
+                _inTimeL = label;
+                [_contentView addSubview:_inTimeL];
+                break;
+            }
+            case 12:
+            {
+                _typeL = label;
+                [_contentView addSubview:_typeL];
+                break;
+            }
+            case 13:
+            {
+                _commercialL = label;
+                [_contentView addSubview:_commercialL];
+                break;
+            }
+            case 14:
+            {
+                _rentFreeL = label;
+                [_contentView addSubview:_rentFreeL];
                 break;
             }
             default:
@@ -572,7 +618,7 @@
         }
     }
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 6; i++) {
         
         BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 258 *SIZE, 33 *SIZE)];
         textField.textfield.delegate = self;
@@ -594,12 +640,28 @@
             }
             case 2:
             {
+                textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
+                _transferTF = textField;
+                _transferTF.unitL.text = @"万";
+                [_contentView addSubview:_transferTF];
+                break;
+            }
+            case 3:
+            {
+                textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
+                _depositTF = textField;
+                _depositTF.unitL.text = @"万";
+                [_contentView addSubview:_depositTF];
+                break;
+            }
+            case 4:
+            {
                 _highTF = textField;
                 _highTF.unitL.text = @"米";
                 [_contentView addSubview:_highTF];
                 break;
             }
-            case 3:
+            case 5:
             {
                 _widthTF = textField;
                 _widthTF.unitL.text = @"米";
@@ -611,11 +673,7 @@
         }
     }
     
-    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 0 *SIZE, 257 *SIZE, 33 *SIZE)];
-    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_contentView addSubview:_roomLevelBtn];
-    
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 7; i++) {
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 0 *SIZE, 257 *SIZE, 33 *SIZE)];
         btn.tag = i;
@@ -623,28 +681,46 @@
         switch (i) {
             case 0:
             {
-                _typeBtn = btn;
-                [_contentView addSubview:_typeBtn];
+                _roomLevelBtn = btn;
+                [_contentView addSubview:_roomLevelBtn];
                 break;
             }
             case 1:
-            {
-                _commercialBtn = btn;
-                [_contentView addSubview:_commercialBtn];
-                break;
-            }
-            case 2:
             {
                 _minPeriodBtn = btn;
                 _minPeriodBtn.content.text = @"无限制";
                 [_contentView addSubview:_minPeriodBtn];
                 break;
             }
-            case 3:
+            case 2:
             {
                 _maxPeriodBtn = btn;
                 _maxPeriodBtn.content.text = @"无限制";
                 [_contentView addSubview:_maxPeriodBtn];
+                break;
+            }
+            case 3:
+            {
+                _inTimeBtn = btn;
+                [_contentView addSubview:_inTimeBtn];
+                break;
+            }
+            case 4:
+            {
+                _typeBtn = btn;
+                [_contentView addSubview:_typeBtn];
+                break;
+            }
+            case 5:
+            {
+                _commercialBtn = btn;
+                [_contentView addSubview:_commercialBtn];
+                break;
+            }
+            case 6:
+            {
+                _rentFreeBtn = btn;
+                [_contentView addSubview:_rentFreeBtn];
                 break;
             }
             default:
@@ -880,10 +956,42 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_transferL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(self->_maxPriceTF.mas_bottom).offset(31 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_transferTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(self->_maxPriceTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_depositL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(self->_transferTF.mas_bottom).offset(31 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_depositTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(self->_transferTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_maxPriceTF.mas_bottom).offset(36 *SIZE);
+        make.top.equalTo(_depositTF.mas_bottom).offset(36 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
@@ -891,31 +999,15 @@
     [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_maxPriceTF.mas_bottom).offset(25 *SIZE);
+        make.top.equalTo(_depositTF.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_roomLevelBtn.mas_bottom).offset(31 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
     
     [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(28 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -923,7 +1015,7 @@
     [_rentBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(23 *SIZE);
         make.width.mas_equalTo(130 *SIZE);
         make.height.mas_equalTo(20 *SIZE);
     }];
@@ -931,15 +1023,63 @@
     [_rentBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(226 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(23 *SIZE);
         make.width.mas_equalTo(130 *SIZE);
         make.height.mas_equalTo(20 *SIZE);
+    }];
+    
+    [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(31 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(31 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
+    }];
+    
+    [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_payColl.mas_bottom).offset(41 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_minPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_payColl.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_maxPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(41 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_maxPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_highL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
-        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(41 *SIZE);
+        make.top.equalTo(self->_maxPeriodBtn.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
@@ -947,7 +1087,7 @@
     [_highTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
-        make.top.equalTo(self->_rentBtn2.mas_bottom).offset(30 *SIZE);
+        make.top.equalTo(self->_maxPeriodBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
@@ -968,7 +1108,7 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_inTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
         make.top.equalTo(self->_widthTF.mas_bottom).offset(41 *SIZE);
@@ -976,10 +1116,26 @@
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_inTimeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
         make.top.equalTo(self->_widthTF.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(self->_inTimeBtn.mas_bottom).offset(41 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(self->_inTimeBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
@@ -1000,34 +1156,18 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentFreeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_commercialBtn.mas_bottom).offset(41 *SIZE);
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(self->_commercialBtn.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_minPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentFreeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_commercialBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_maxPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(41 *SIZE);
-        make.height.mas_equalTo(12 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_maxPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_minPeriodBtn.mas_bottom).offset(30 *SIZE);
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(self->_commercialBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
         make.bottom.equalTo(self->_contentView).offset(-31 *SIZE);

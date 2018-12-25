@@ -53,6 +53,14 @@
 
 @property (nonatomic, strong) BorderTF *PriceTF;
 
+@property (nonatomic, strong) UILabel *depositL;
+
+@property (nonatomic, strong) BorderTF *depositTF;
+
+@property (nonatomic, strong) UILabel *roomLevelL;
+
+@property (nonatomic, strong) DropDownBtn *roomLevelBtn;
+
 @property (nonatomic, strong) UILabel *payL;
 
 @property (nonatomic, strong) UICollectionView *payColl;
@@ -157,7 +165,7 @@
             }
         }
     }
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"收款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"出租意愿度",@"出租紧急度"];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"押金：",@"房源等级：",@"收款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"出租意愿度",@"出租紧急度"];
     _btnArr = @[@"整租",@"合租"];
     NSDate *date = [NSDate date];
     _formatter = [[NSDateFormatter alloc] init];
@@ -391,7 +399,7 @@
     _titleHeader.titleL.text = @"挂牌信息";
     [_contentView addSubview:_titleHeader];
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 12; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -414,47 +422,59 @@
             }
             case 2:
             {
+                _depositL = label;
+                [_contentView addSubview:_depositL];
+                break;
+            }
+            case 3:
+            {
+                _roomLevelL = label;
+                [_contentView addSubview:_roomLevelL];
+                break;
+            }
+            case 4:
+            {
                 _payL = label;
                 [_contentView addSubview:_payL];
                 break;
             }
-            case 3:
+            case 5:
             {
                 _propertyL = label;
                 [_contentView addSubview:_propertyL];
                 break;
             }
-            case 4:
+            case 6:
             {
                 _minPeriodL = label;
                 [_contentView addSubview:_minPeriodL];
                 break;
             }
-            case 5:
+            case 7:
             {
                 _maxPeriodL = label;
                 [_contentView addSubview:_maxPeriodL];
                 break;
             }
-            case 6:
+            case 8:
             {
                 _seeWayL = label;
                 [_contentView addSubview:_seeWayL];
                 break;
             }
-            case 7:
+            case 9:
             {
                 _inTimeL = label;
                 [_contentView addSubview:_inTimeL];
                 break;
             }
-            case 8:
+            case 10:
             {
                 _intentL = label;
                 [_contentView addSubview:_intentL];
                 break;
             }
-            case 9:
+            case 11:
             {
                 _urgentL = label;
                 [_contentView addSubview:_urgentL];
@@ -465,7 +485,7 @@
         }
     }
     
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         
         BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 257 *SIZE, 33 *SIZE)];
         textField.textfield.delegate = self;
@@ -490,13 +510,21 @@
             }
             case 2:
             {
+                _depositTF = textField;
+                [_contentView addSubview:_depositTF];
+                _roomLevelBtn = btn;
+                [_contentView addSubview:_roomLevelBtn];
+                break;
+            }
+            case 3:
+            {
                 _intentTF = textField;
                 [_contentView addSubview:_intentTF];
                 _seeWayBtn = btn;
                 [_contentView addSubview:_seeWayBtn];
                 break;
             }
-            case 3:
+            case 4:
             {
                 _urgentTF = textField;
                 [_contentView addSubview:_urgentTF];
@@ -711,10 +739,42 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+    [_depositL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_PriceTF.mas_bottom).offset(35 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_depositTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_PriceTF.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_depositTF.mas_bottom).offset(35 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_depositTF.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_PriceTF.mas_bottom).offset(33 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(33 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
@@ -722,7 +782,7 @@
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_PriceTF.mas_bottom).offset(33 *SIZE);
+        make.top.equalTo(_roomLevelBtn.mas_bottom).offset(33 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
