@@ -16,9 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *build_area;
 
+@property (nonatomic, copy) NSString *check_in_time;
+
 @property (nonatomic, copy) NSString *check_way;
 
 @property (nonatomic, copy) NSString *comment;
+
+@property (nonatomic, copy) NSString *contact_tel;
+
+@property (nonatomic, copy) NSString *current_shop_name;
+
+@property (nonatomic, copy) NSString *deposit;
 
 @property (nonatomic, copy) NSString *describe;
 
@@ -36,13 +44,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *is_rent;
 
+@property (nonatomic, copy) NSString *latitude;
+
 @property (nonatomic, copy) NSString *left_shop;
+
+@property (nonatomic, copy) NSString *level;
+
+@property (nonatomic, copy) NSString *limit_shop_type;
+
+@property (nonatomic, copy) NSString *longitude;
 
 @property (nonatomic, strong) NSMutableArray *match_tags;
 
 @property (nonatomic, copy) NSString *orientation;
 
-@property (nonatomic, copy) NSString *permit_time;
+//@property (nonatomic, copy) NSString *permit_time;
 
 @property (nonatomic, copy) NSString *price;
 
@@ -64,9 +80,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *property_type;
 
+@property (nonatomic, copy) NSMutableArray *receive_way;
+
+@property (nonatomic, copy) NSString *reference_rent;
+
+@property (nonatomic, copy) NSString *rent_free_month;
+
+@property (nonatomic, copy) NSString *rent_max_comment;
+
+@property (nonatomic, copy) NSString *rent_min_comment;
+
 @property (nonatomic, copy) NSString *rent_money;
 
 @property (nonatomic, copy) NSString *rent_over_time;
+
+@property (nonatomic, copy) NSString *rent_type;
 
 @property (nonatomic, copy) NSString *right_shop;
 
@@ -78,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *title;
 
-@property (nonatomic, copy) NSString *reference_rent;
+@property (nonatomic, copy) NSString *transfer_money;
 
 @property (nonatomic, copy) NSString *unit_price;
 
@@ -86,11 +114,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *info_id;
 
-@property (nonatomic, copy) NSString *latitude;
-
-@property (nonatomic, copy) NSString *longitude;
-
-@property (nonatomic, copy) NSString *contact_tel;
 
 @end
 

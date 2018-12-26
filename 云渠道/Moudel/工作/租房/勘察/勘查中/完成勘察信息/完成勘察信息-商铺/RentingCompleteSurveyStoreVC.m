@@ -31,6 +31,7 @@
     NSArray *_payArr;
     NSMutableArray *_dataArr;
     NSArray *_periodArr;
+    NSArray *_freeArr;
     
     NSString *_payWay;
     NSString *_titleStr;
@@ -190,36 +191,31 @@
                    @{@"param":@"半年",@"id":@"180"},
                    @{@"param":@"一年",@"id":@"360"},
                    @{@"param":@"两年",@"id":@"720"}];
+    _freeArr = @[@{@"param":@"无免租期",@"id":@"0"},
+                   @{@"param":@"一个月",@"id":@"1"},
+                   @{@"param":@"二个月",@"id":@"2"},
+                   @{@"param":@"三个月",@"id":@"3"},
+                   @{@"param":@"六个月",@"id":@"6"},
+                   @{@"param":@"九个月",@"id":@"9"},
+                   @{@"param":@"十二个月",@"id":@"12"}];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
     
     switch (btn.tag) {
-        case 0:
-        {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:SHOP_TYPE]];
-            WS(weakself);
+        case 0:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+            SS(strongSelf);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.typeBtn.content.text = MC;
-                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
             break;
         }
         case 1:{
-            
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:FORMAT_TAG]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.commercialBtn.content.text = MC;
-                weakself.commercialBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
-            break;
-        }
-        case 2:{
             
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
             WS(weakself);
@@ -231,7 +227,7 @@
             [self.view addSubview:view];
             break;
         }
-        case 3:{
+        case 2:{
             
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
             WS(weakself);
@@ -239,6 +235,65 @@
                 
                 weakself.maxPeriodBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 weakself.maxPeriodBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 3:{
+            
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            __weak __typeof(&*self)weakSelf = self;
+            view.dateblock = ^(NSDate *date) {
+                
+                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 4:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:SHOP_TYPE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.typeBtn.content.text = MC;
+                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 5:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:FORMAT_TAG]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.commercialBtn.content.text = MC;
+                weakself.commercialBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 6:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_freeArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.rentFreeBtn.content.text = MC;
+                weakself.rentFreeBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 7:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.seeWayBtn.content.text = MC;
+                weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -263,31 +318,6 @@
     }
 }
 
-- (void)ActionSeeWayBtn:(UIButton *)btn{
-    
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:31]];
-    SS(strongSelf);
-    view.selectedBlock = ^(NSString *MC, NSString *ID) {
-        
-        strongSelf.seeWayBtn.content.text = MC;
-        strongSelf.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
-    };
-    [self.view addSubview:view];
-}
-
-- (void)ActionLevelBtn:(UIButton *)btn{
-    
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
-    
-    SS(strongSelf);
-    view.selectedBlock = ^(NSString *MC, NSString *ID) {
-        
-        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
-    };
-    [self.view addSubview:view];
-}
-
 - (void)ActionNextBtn:(UIButton *)btn{
     
     if ([self isEmpty:_titleTF.textfield.text]) {
@@ -298,6 +328,18 @@
     if ([self isEmpty:_maxPriceTF.textfield.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌价格"];
+        return;
+    }
+    
+    if ([self isEmpty:_transferTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入转让费"];
+        return;
+    }
+    
+    if ([self isEmpty:_roomLevelBtn->str]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
         return;
     }
     
@@ -318,12 +360,7 @@
     
     if (!_payWay.length) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
-        return;
-    }
-    if ([self isEmpty:_roomLevelBtn->str]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择收款方式"];
         return;
     }
     
@@ -357,14 +394,12 @@
     [self.dataDic setObject:@(_rentType) forKey:@"rent_type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
-    [self.dataDic setValue:_payWay forKey:@"pay_way"];
-    [self.dataDic setValue:_highTF.textfield.text forKey:@"shop_height"];
-    [self.dataDic setValue:_widthTF.textfield.text forKey:@"shop_width"];
-    [self.dataDic setValue:_typeBtn->str forKey:@"shop_type"];
-    [self.dataDic setValue:_commercialBtn->str forKey:@"format_tags"];
-    
-    [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
-
+    if (_depositTF.textfield.text.length) {
+        
+        [self.dataDic setObject:_depositTF.textfield.text forKey:@"deposit"];
+    }
+    [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
+    [self.dataDic setValue:_payWay forKey:@"receive_way"];
     if (_minPeriodBtn.content.text.length) {
         
         [self.dataDic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
@@ -374,7 +409,17 @@
         
         [self.dataDic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
     }
+    if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
+        
+        [self.dataDic setValue:_inTimeBtn.content.text forKey:@"check_in_time"];
+    }
+    [self.dataDic setValue:_highTF.textfield.text forKey:@"shop_height"];
+    [self.dataDic setValue:_widthTF.textfield.text forKey:@"shop_width"];
+    [self.dataDic setValue:_typeBtn->str forKey:@"shop_type"];
+    [self.dataDic setValue:_commercialBtn->str forKey:@"format_tags"];
     
+    [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
+
     if (![self isEmpty:_markView.text]) {
         
         [self.dataDic setValue:_markView.text forKey:@"comment"];
@@ -634,7 +679,7 @@
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _maxPriceTF = textField;
-                _maxPriceTF.unitL.text = @"万";
+                _maxPriceTF.unitL.text = @"元/月";
                 [_contentView addSubview:_maxPriceTF];
                 break;
             }
@@ -642,7 +687,7 @@
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _transferTF = textField;
-                _transferTF.unitL.text = @"万";
+                _transferTF.unitL.text = @"元";
                 [_contentView addSubview:_transferTF];
                 break;
             }
@@ -650,7 +695,7 @@
             {
                 textField.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 _depositTF = textField;
-                _depositTF.unitL.text = @"万";
+                _depositTF.unitL.text = @"元";
                 [_contentView addSubview:_depositTF];
                 break;
             }
@@ -702,6 +747,7 @@
             case 3:
             {
                 _inTimeBtn = btn;
+                _inTimeBtn.content.text = @"随时入住";
                 [_contentView addSubview:_inTimeBtn];
                 break;
             }
@@ -886,7 +932,8 @@
     }
     
     _seeWayBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 118 *SIZE, 257 *SIZE, 33 *SIZE)];
-    [_seeWayBtn addTarget:self action:@selector(ActionSeeWayBtn:) forControlEvents:UIControlEventTouchUpInside];
+    _seeWayBtn.tag = 7;
+    [_seeWayBtn addTarget:self action:@selector(ActionDropBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nearView addSubview:_seeWayBtn];
     
     _markView = [[UITextView alloc] initWithFrame:CGRectMake(79 *SIZE, 171 *SIZE, 258 *SIZE, 100 *SIZE)];

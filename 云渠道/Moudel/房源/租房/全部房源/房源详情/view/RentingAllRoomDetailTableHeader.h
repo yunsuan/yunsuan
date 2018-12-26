@@ -11,6 +11,8 @@
 #import "TagView.h"
 
 #import "RentingAllRoomProjectModel.h"
+#import "RentingAllRoomStoreModel.h"
+#import "RentingAllRoomOfficeModel.h"
 
 
 typedef void(^RentingAllRoomDetailTableHeaderImgBlock)(NSInteger num,NSArray *imgArr);
@@ -21,9 +23,9 @@ typedef void(^RentingAllRoomDetailTableHeaderImgBlock)(NSInteger num,NSArray *im
 
 @property (nonatomic, strong) RentingAllRoomProjectModel *model;
 
-//@property (nonatomic, strong) SecAllRoomStoreModel *storeModel;
-//
-//@property (nonatomic, strong) SecAllRoomOfficeModel *officeModel;
+@property (nonatomic, strong) RentingAllRoomStoreModel *storeModel;
+
+@property (nonatomic, strong) RentingAllRoomOfficeModel *officeModel;
 
 @property (nonatomic, strong) UIScrollView *imgScroll;
 

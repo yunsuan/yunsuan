@@ -27,7 +27,7 @@
 -(UITextField *)textfield
 {
     if (!_textfield) {
-        _textfield = [[UITextField alloc]initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE, self.frame.size.width - 35*SIZE, 14*SIZE)];
+        _textfield = [[UITextField alloc]initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE, self.frame.size.width - 40*SIZE, 14*SIZE)];
         _textfield.textColor = YJContentLabColor;
         _textfield.font = [UIFont systemFontOfSize:(CGFloat) (13.3 * SIZE)];
     }
@@ -38,7 +38,7 @@
     
     if (!_unitL) {
         
-        _unitL = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 35*SIZE, 10 *SIZE, 30 *SIZE, 14 *SIZE)];
+        _unitL = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 40*SIZE, 10 *SIZE, 35 *SIZE, 14 *SIZE)];
         _unitL.textColor = YJContentLabColor;
         _unitL.font = [UIFont systemFontOfSize:13 *SIZE];
     }

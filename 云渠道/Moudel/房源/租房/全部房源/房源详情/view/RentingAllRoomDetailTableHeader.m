@@ -45,7 +45,7 @@
     
     _propertyL.text = model.property_type;
     
-    _priceL.text = [NSString stringWithFormat:@"￥%@月/平",model.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@元/平",model.price];
     
     _typeL.text = model.house_type;
     
@@ -64,55 +64,56 @@
     }
 }
 
-//- (void)setStoreModel:(SecAllRoomStoreModel *)storeModel{
-//
-//    _titleL.text = storeModel.title;
-//
-//    _propertyL.text = storeModel.property_type;
-//
-//    _priceL.text = [NSString stringWithFormat:@"￥%@元/㎡",storeModel.price];
-//    _priceTL.text = @"租金";
-//
-//    _typeL.text = storeModel.house_type;
-//
-//    _areaL.text = [NSString stringWithFormat:@"%@㎡",storeModel.build_area];
-//
-//    if ([storeModel.price_change integerValue] == 0) {
-//
-//        _statusImg.image = [UIImage imageNamed:@""];
-//    }else if ([storeModel.price_change integerValue] == 1){
-//
-//        _statusImg.image = [UIImage imageNamed:@"rising"];
-//    }else{
-//
-//        _statusImg.image = [UIImage imageNamed:@"falling"];
-//    }
-//}
-//
-//- (void)setOfficeModel:(SecAllRoomOfficeModel *)officeModel{
-//
-//    _titleL.text = officeModel.title;
-//
-//    _propertyL.text = officeModel.property_type;
-//
-//    _priceL.text = [NSString stringWithFormat:@"￥%@万元",officeModel.price];
-//
-//    _typeL.text = officeModel.grade;
-//    _typeTL.text = @"级别";
-//
-//    _areaL.text = [NSString stringWithFormat:@"%@㎡",officeModel.build_area];
-//    _areaTL.text = @"面积";
-//    if ([officeModel.price_change integerValue] == 0) {
-//
-//        _statusImg.image = [UIImage imageNamed:@""];
-//    }else if ([officeModel.price_change integerValue] == 1){
-//
-//        _statusImg.image = [UIImage imageNamed:@"rising"];
-//    }else{
-//
-//        _statusImg.image = [UIImage imageNamed:@"falling"];
-//    }
-//}
+- (void)setStoreModel:(RentingAllRoomStoreModel *)storeModel{
+
+    _titleL.text = storeModel.title;
+
+    _propertyL.text = storeModel.property_type;
+
+    _priceL.text = [NSString stringWithFormat:@"￥%@元/㎡",storeModel.price];
+
+    _typeL.text = storeModel.house_type;
+    _typeTL.text = @"商铺类型";
+
+    _areaL.text = [NSString stringWithFormat:@"%@㎡",storeModel.build_area];
+    _areaTL.text = @"面积";
+    
+    if ([storeModel.price_change integerValue] == 0) {
+
+        _statusImg.image = [UIImage imageNamed:@""];
+    }else if ([storeModel.price_change integerValue] == 1){
+
+        _statusImg.image = [UIImage imageNamed:@"rising"];
+    }else{
+
+        _statusImg.image = [UIImage imageNamed:@"falling"];
+    }
+}
+
+- (void)setOfficeModel:(RentingAllRoomOfficeModel *)officeModel{
+
+    _titleL.text = officeModel.title;
+
+    _propertyL.text = officeModel.property_type;
+
+    _priceL.text = [NSString stringWithFormat:@"￥%@万元",officeModel.price];
+
+    _typeL.text = officeModel.grade;
+    _typeTL.text = @"级别";
+
+    _areaL.text = [NSString stringWithFormat:@"%@㎡",officeModel.build_area];
+    _areaTL.text = @"面积";
+    if ([officeModel.price_change integerValue] == 0) {
+
+        _statusImg.image = [UIImage imageNamed:@""];
+    }else if ([officeModel.price_change integerValue] == 1){
+
+        _statusImg.image = [UIImage imageNamed:@"rising"];
+    }else{
+
+        _statusImg.image = [UIImage imageNamed:@"falling"];
+    }
+}
 
 #pragma  mark -- 点击事件 --
 - (void)ActionAttentBtn:(UIButton *)btn{

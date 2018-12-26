@@ -223,10 +223,12 @@
             UIAlertAction *liftY = [UIAlertAction actionWithTitle:@"有电梯" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
                 _liftBtn.content.text = @"有电梯";
+                _liftBtn->str = @"1";
             }];
             UIAlertAction *liftN = [UIAlertAction actionWithTitle:@"无电梯" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
                 _liftBtn.content.text = @"无电梯";
+                _liftBtn->str = @"0";
             }];
             [alert addAction:liftY];
             [alert addAction:liftN];
@@ -390,7 +392,7 @@
     
     if (_liftBtn.content.text.length) {
         
-        [self.dataDic setObject:_liftBtn.content.text forKey:@"floor_type"];
+        [self.dataDic setObject:_liftBtn.content.text forKey:@"is_elevator"];
     }
     
     if (_minPeriodBtn.content.text.length) {

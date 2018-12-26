@@ -42,7 +42,7 @@
     
     if (model.unit_price.length) {
         
-        _priceL.text = [NSString stringWithFormat:@"%@元/㎡",model.unit_price];
+        _priceL.text = [NSString stringWithFormat:@"%@元/月",model.unit_price];
     }else{
         
         _priceL.text = @"暂无价格信息";

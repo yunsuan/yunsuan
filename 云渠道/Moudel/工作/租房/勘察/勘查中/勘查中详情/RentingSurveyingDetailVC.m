@@ -132,7 +132,7 @@
 
 - (void)ActionValidBtn:(UIButton *)btn{
     
-    if (_dataDic) {
+    if (_dataDic.count) {
         
         [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
             

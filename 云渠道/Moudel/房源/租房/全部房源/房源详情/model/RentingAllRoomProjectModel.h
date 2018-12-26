@@ -50,6 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *longitude;
 
+@property (nonatomic, strong) NSMutableArray *match_tags;
+
 @property (nonatomic, copy) NSString *orientation;
 
 @property (nonatomic, copy) NSString *price;
