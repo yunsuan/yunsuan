@@ -45,7 +45,7 @@
     
     _propertyL.text = model.property_type;
     
-    _priceL.text = [NSString stringWithFormat:@"￥%@元/平",model.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@元/月",model.price];
     
     _typeL.text = model.house_type;
     
@@ -70,9 +70,9 @@
 
     _propertyL.text = storeModel.property_type;
 
-    _priceL.text = [NSString stringWithFormat:@"￥%@元/㎡",storeModel.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@元/月",storeModel.price];
 
-    _typeL.text = storeModel.house_type;
+    _typeL.text = storeModel.shop_type;
     _typeTL.text = @"商铺类型";
 
     _areaL.text = [NSString stringWithFormat:@"%@㎡",storeModel.build_area];
@@ -96,7 +96,7 @@
 
     _propertyL.text = officeModel.property_type;
 
-    _priceL.text = [NSString stringWithFormat:@"￥%@万元",officeModel.price];
+    _priceL.text = [NSString stringWithFormat:@"￥%@元/月",officeModel.price];
 
     _typeL.text = officeModel.grade;
     _typeTL.text = @"级别";

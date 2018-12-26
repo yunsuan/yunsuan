@@ -25,17 +25,31 @@
     [_tagView setData:model.project_tags];
     [_tagView2 setData:model.house_tags];
     
-    _transferL.text = [NSString stringWithFormat:@"转让费：%@",model.transfer_money];
-    _depositL.text = [NSString stringWithFormat:@"押金：%@",model.deposit];
+    _transferL.text = [NSString stringWithFormat:@"转让费：%@元",model.transfer_money];
+    _depositL.text = [NSString stringWithFormat:@"押金：%@元",model.deposit];
     _roomLevelL.text = [NSString stringWithFormat:@"房源等级：%@",model.level];
     _rentTypeL.text = [NSString stringWithFormat:@"租赁类型：%@",model.rent_type];
     _payWayL.text = [NSString stringWithFormat:@"收款方式：%@",[model.receive_way componentsJoinedByString:@","]];
     _minPeriodL.text = [NSString stringWithFormat:@"最短租期：%@",model.rent_min_comment];
     _maxPeriodL.text = [NSString stringWithFormat:@"最长租期：%@",model.rent_max_comment];
-    _inTimeL.text = [NSString stringWithFormat:@"可入住时间：%@",model.check_in_time];
+    if ([model.check_in_time containsString:@"0000"]) {
+        
+        _inTimeL.text = @"可入住时间：随时入住";
+    }else{
+        
+        _inTimeL.text = [NSString stringWithFormat:@"可入住时间：%@",model.check_in_time];
+    }
+    
     _seeL.text = [NSString stringWithFormat:@"看房方式：%@",model.check_way];
-    _rentFreeL.text = [NSString stringWithFormat:@"免租期：%@",model.rent_free_month];
-    _commercailL.text = [NSString stringWithFormat:@"适合业态：%@",model.shop_type];
+    if ([model.rent_free_month integerValue] == 0) {
+        
+        _rentFreeL.text = @"免租期：无";
+    }else{
+        
+        _rentFreeL.text = [NSString stringWithFormat:@"免租期：%@",model.rent_free_month];
+    }
+    
+    _commercailL.text = [NSString stringWithFormat:@"适合业态：%@",model.format_tags];
     _intentL.text = [NSString stringWithFormat:@"出租意愿度：%@",model.intent];
     _urgentL.text = [NSString stringWithFormat:@"出租急迫度：%@",model.urgency];
     _markL.text = [NSString stringWithFormat:@"%@",model.comment];
@@ -57,7 +71,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
-        label.numberOfLines = 0;
+//        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         
         switch (i) {

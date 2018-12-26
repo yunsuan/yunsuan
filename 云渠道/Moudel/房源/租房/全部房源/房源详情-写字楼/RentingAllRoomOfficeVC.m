@@ -18,10 +18,10 @@
 #import "RentingAllRoomOfficeVC.h"
 #import "SecComRoomDetailVC.h"
 
-#import "SecAllRoomDetailTableHeader.h"
+#import "RentingAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
 
-#import "SecAllRoomTableCell.h"
+#import "RentingAllRoomOfficeCell.h"
 #import "RoomDetailTableCell4.h"
 #import "SecAllRoomTableOtherHouseCell.h"
 #import "SecAllRoomStoreDetailCell.h"
@@ -36,7 +36,7 @@
     NSString *_name;
     NSString *_houseId;
     NSString *_city;
-    SecAllRoomOfficeModel *_model;
+    RentingAllRoomOfficeModel *_model;
     NSMutableArray *_imgArr;
     NSMutableDictionary *_focusDic;
     NSMutableArray *_houseArr;
@@ -81,7 +81,7 @@
 - (void)initDataSource{
     
     _imgArr = [@[] mutableCopy];
-    _model = [[SecAllRoomOfficeModel alloc] init];
+    _model = [[RentingAllRoomOfficeModel alloc] init];
     _focusDic = [@{} mutableCopy];
     _houseArr = [@[] mutableCopy];
     //    _albumArr = [@[] mutableCopy];
@@ -139,7 +139,7 @@
                 }
             }
         }];
-        _model = [[SecAllRoomOfficeModel alloc] initWithDictionary:tempDic];
+        _model = [[RentingAllRoomOfficeModel alloc] initWithDictionary:tempDic];
     }
     
     [_imgArr removeAllObjects];
@@ -276,10 +276,10 @@
     
     if (!section) {
         
-        SecAllRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"SecAllRoomDetailTableHeader"];
+        RentingAllRoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RentingAllRoomDetailTableHeader"];
         if (!header) {
             
-            header = [[SecAllRoomDetailTableHeader alloc] initWithReuseIdentifier:@"SecAllRoomDetailTableHeader"];
+            header = [[RentingAllRoomDetailTableHeader alloc] initWithReuseIdentifier:@"RentingAllRoomDetailTableHeader"];
         }
         
         header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
@@ -293,7 +293,7 @@
             header.attentL.text = @"关注人数：0人";
         }
         
-        header.secAllRoomDetailTableHeaderImgBlock = ^(NSInteger num, NSArray *imgArr) {
+        header.rentingAllRoomDetailTableHeaderImgBlock = ^(NSInteger num, NSArray *imgArr) {
             
             NSMutableArray *tempArr = [NSMutableArray array];
             
@@ -408,14 +408,14 @@
     
     if (indexPath.section == 1) {
         
-        SecAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell"];
+        RentingAllRoomOfficeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomOfficeCell"];
         if (!cell) {
             
-            cell = [[SecAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell"];
+            cell = [[RentingAllRoomOfficeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomOfficeCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.officeModel = _model;
+        cell.model = _model;
         
         return cell;
     }else if (indexPath.section == 2){

@@ -174,7 +174,7 @@
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"YYYY/MM/dd"];
     
-    _payArr = [self getDetailConfigArrByConfigState:RENT_HOUSE_RECEIVE_TYPE];
+    _payArr = [self getDetailConfigArrByConfigState:RENT_SHOP_OFFICE_RECEIVE_TYPE];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < _payArr.count; i++) {
         
@@ -394,6 +394,7 @@
     [self.dataDic setObject:@(_rentType) forKey:@"rent_type"];
     [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
     [self.dataDic setValue:_maxPriceTF.textfield.text forKey:@"price"];
+    [self.dataDic setObject:_transferTF.textfield.text forKey:@"transfer_money"];
     if (_depositTF.textfield.text.length) {
         
         [self.dataDic setObject:_depositTF.textfield.text forKey:@"deposit"];
@@ -766,6 +767,7 @@
             case 6:
             {
                 _rentFreeBtn = btn;
+                _rentFreeBtn.content.text = @"无免租期";
                 [_contentView addSubview:_rentFreeBtn];
                 break;
             }
@@ -859,7 +861,7 @@
     [_CollView addSubview:_collHeader];
     
     _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
-    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 40 *SIZE);
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
     _facilityLayout.minimumLineSpacing = 20 *SIZE;
     _facilityLayout.minimumInteritemSpacing = 0;
     
@@ -1225,8 +1227,6 @@
         make.left.equalTo(self->_scrollView).offset(0);
         make.top.equalTo(self->_contentView.mas_bottom).offset(6 *SIZE);
         make.width.mas_equalTo(360 *SIZE);
-        //        make.height.mas_equalTo(33 *SIZE);
-        //        make.bottom.equalTo(_contentView).offset(-31 *SIZE);
     }];
     
     [_facilityColl mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1234,7 +1234,7 @@
         make.left.equalTo(self->_CollView).offset(0 *SIZE);
         make.top.equalTo(self->_CollView).offset(40 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
-        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE);
+        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
         make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
     }];
     

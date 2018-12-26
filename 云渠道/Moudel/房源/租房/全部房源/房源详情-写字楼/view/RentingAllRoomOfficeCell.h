@@ -35,13 +35,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *maxPeriodL;
 
+@property (nonatomic, strong) UILabel *floorL;
+
 @property (nonatomic, strong) UILabel *inTimeL;
 
 @property (nonatomic, strong) UILabel *seeL;
 
 @property (nonatomic, strong) UILabel *rentFreeL;
 
-@property (nonatomic, strong) UILabel *commercailL;
+@property (nonatomic, strong) UILabel *accommodateL;
 
 @property (nonatomic, strong) UILabel *intentL;
 
