@@ -735,7 +735,7 @@
 		0C15A1EF2117E33A00544F2E /* BaseFrameHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseFrameHeader.h; sourceTree = "<group>"; };
 		0C15A1F02117E33A00544F2E /* BaseFrameHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseFrameHeader.m; sourceTree = "<group>"; };
 		0C15A1F32118348A00544F2E /* RentingMaintainAddFollowVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingMaintainAddFollowVC.h; sourceTree = "<group>"; };
-		0C15A1F42118348A00544F2E /* RentingMaintainAddFollowVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingMaintainAddFollowVC.m; sourceTree = "<group>"; };
+		0C15A1F42118348A00544F2E /* RentingMaintainAddFollowVC.m */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.c.objc; path = RentingMaintainAddFollowVC.m; sourceTree = "<group>"; };
 		0C1A013820AC28C300665BB9 /* ComfirmValidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComfirmValidVC.h; sourceTree = "<group>"; };
 		0C1A013920AC28C300665BB9 /* ComfirmValidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComfirmValidVC.m; sourceTree = "<group>"; };
 		0C1A013B20AC3F7700665BB9 /* ComfirmInValidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComfirmInValidVC.h; sourceTree = "<group>"; };

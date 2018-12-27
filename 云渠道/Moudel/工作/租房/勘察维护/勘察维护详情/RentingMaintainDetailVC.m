@@ -471,6 +471,7 @@
                 header.maintainAddFollowHeaderBlock = ^{
                     
                     RentingMaintainAddFollowVC *nextVC = [[RentingMaintainAddFollowVC alloc] initWithHouseId:_houseId dataDic:_houseDic];
+                    nextVC.type = _type;
                     nextVC.rentingMaintainAddFollowVCBlock = ^{
                         
                         if (self.rentingMaintainDetailVCBlock) {

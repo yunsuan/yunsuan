@@ -14,6 +14,8 @@ typedef void(^RentingMaintainAddFollowVCBlock)(void);
 
 @property (nonatomic, copy) RentingMaintainAddFollowVCBlock rentingMaintainAddFollowVCBlock;
 
+@property (nonatomic, assign) NSInteger type;
+
 - (instancetype)initWithHouseId:(NSString *)houseId dataDic:(NSDictionary *)dataDic;
 
 @end

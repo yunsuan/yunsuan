@@ -27,9 +27,12 @@
     NSMutableArray *_selectArr2;
     NSString *_seeWay;
     NSInteger _follow;
+    NSInteger _rentType;
     NSString *_followTime;
     NSMutableDictionary *_dataDic;
     NSString *_payWay;
+    
+    NSArray *_periodArr;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -67,15 +70,15 @@
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
-@property (nonatomic, strong) UILabel *propertyL;
+@property (nonatomic, strong) UILabel *rentTypeL;
 
-@property (nonatomic, strong) UIButton *propertyBtn1;
+@property (nonatomic, strong) UIButton *rentBtn1;
 
-@property (nonatomic, strong) UIImageView *propertyImg1;
+@property (nonatomic, strong) UIImageView *rentImg1;
 
-@property (nonatomic, strong) UIButton *propertyBtn2;
+@property (nonatomic, strong) UIButton *rentBtn2;
 
-@property (nonatomic, strong) UIImageView *propertyImg2;
+@property (nonatomic, strong) UIImageView *rentImg2;
 
 @property (nonatomic, strong) UILabel *minPeriodL;
 
@@ -143,15 +146,23 @@
     
     _followArr = [self getDetailConfigArrByConfigState:23];
     _selectArr = [@[] mutableCopy];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < _followArr.count; i++) {
         
         [_selectArr addObject:@0];
     }
-    
-    _payArr = [self
-               getDetailConfigArrByConfigState:48];
+   
+   if (self.type == 1) {
+      
+      _payArr = [self
+                 getDetailConfigArrByConfigState:48];
+   }else{
+      
+      _payArr = [self
+                 getDetailConfigArrByConfigState:49];
+   }
+   
     _selectArr2 = [@[] mutableCopy];
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < _payArr.count; i++) {
         
         [_selectArr2 addObject:@0];
     }
@@ -167,6 +178,16 @@
     }
     _titleArr = @[@"挂牌标题：",@"出租价格：",@"押金：",@"房源等级：",@"收款方式：",@"租赁类型：",@"最短租期：",@"最长租期：",@"看房方式：",@"入住时间",@"出租意愿度",@"出租紧急度"];
     _btnArr = @[@"整租",@"合租"];
+    _periodArr = @[@{@"param":@"无限制",@"id":@"0"},
+                   @{@"param":@"一天",@"id":@"1"},
+                   @{@"param":@"七天",@"id":@"7"},
+                   @{@"param":@"一月",@"id":@"30"},
+                   @{@"param":@"二月",@"id":@"60"},
+                   @{@"param":@"半年",@"id":@"180"},
+                   @{@"param":@"一年",@"id":@"360"},
+                   @{@"param":@"两年",@"id":@"720"}];
+    
+    
     NSDate *date = [NSDate date];
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
@@ -182,17 +203,17 @@
         return;
     }
     
-    if (!_seeWay.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择看房方式"];
-        return;
-    }
-    
     if ([self isEmpty:_PriceTF.textfield.text]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写出租价格"];
         return;
     }
+   
+   if ([self isEmpty:_roomLevelBtn->str]) {
+      
+      [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+      return;
+   }
     
     _payWay = @"";
     for (int i = 0; i < _selectArr2.count; i++) {
@@ -212,6 +233,12 @@
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择收款方式"];
         return;
+    }
+   
+    if (!_seeWayBtn.content.text.length) {
+      
+       [self alertControllerWithNsstring:@"温馨提示" And:@"请选择看房方式"];
+       return;
     }
     
     if ([self isEmpty:_intentTF.textfield.text]) {
@@ -238,38 +265,134 @@
                                                                                @"title":_titleTF.textfield.text,
                                                                                @"intent":_intentTF.textfield.text,
                                                                                @"urgency":_urgentTF.textfield.text,
-                                                                               @"check_way":_seeWay,
+                                                                               @"check_way":_seeWayBtn->str,
                                                                                @"price":_PriceTF.textfield.text,
-                                                                               @"pay_way":_payWay,
+                                                                               @"receive_way":_payWay,
                                                                                @"comment":_markTV.text}];
-    
-    [BaseRequest POST:RentSurveyAddFollow_URL parameters:dic success:^(id resposeObject) {
+   if (_minPeriodBtn.content.text.length) {
+      
+      [dic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
+   }
+   
+   if (_maxPeriodBtn.content.text.length) {
+      
+      [dic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
+   }
+   
+   if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
+      
+      [dic setValue:_inTimeBtn.content.text forKey:@"check_in_time"];
+   }
+   if (_depositTF.textfield.text.length) {
+      
+      [dic setObject:_depositTF.textfield.text forKey:@"deposit"];
+   }
+   [BaseRequest POST:RentSurveyAddFollow_URL parameters:dic success:^(id resposeObject) {
         
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
+      NSLog(@"%@",resposeObject);
+      if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"添加跟进记录成功" WithDefaultBlack:^{
+         [self alertControllerWithNsstring:@"温馨提示" And:@"添加跟进记录成功" WithDefaultBlack:^{
                 
-                if (self.rentingMaintainAddFollowVCBlock) {
+               if (self.rentingMaintainAddFollowVCBlock) {
                     
-                    self.rentingMaintainAddFollowVCBlock();
-                }
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-        }else{
+                  self.rentingMaintainAddFollowVCBlock();
+               }
+               [self.navigationController popViewControllerAnimated:YES];
+         }];
+      }else{
             
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
+         [self showContent:resposeObject[@"msg"]];
+      }
+   } failure:^(NSError *error) {
         
-        NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
-    }];
+      NSLog(@"%@",error);
+      [self showContent:@"网络错误"];
+   }];
+   
+}
+
+- (void)ActionDropBtn:(UIButton *)btn{
+    
+    switch (btn.tag) {
+    
+        case 0:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.minPeriodBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                weakself.minPeriodBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 1:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_periodArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.maxPeriodBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                weakself.maxPeriodBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 2:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
+            SS(strongSelf);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 3:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:CHECK_WAY]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.seeWayBtn.content.text = MC;
+                weakself.seeWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 4:{
+            
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            __weak __typeof(&*self)weakSelf = self;
+            view.dateblock = ^(NSDate *date) {
+                
+                weakSelf.inTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    
+    if (btn.tag == 1) {
+        
+        _rentImg1.image = [UIImage imageNamed:@"selected"];
+        _rentImg2.image = [UIImage imageNamed:@"default"];
+        _rentType = 245;
+    }else{
+        
+        _rentImg1.image = [UIImage imageNamed:@"default"];
+        _rentImg2.image = [UIImage imageNamed:@"selected"];
+        _rentType = 246;
+    }
 }
 
 - (void)ActionSliderChange:(UISlider *)slider{
@@ -305,8 +428,14 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
-    return 5;
+   
+    if (collectionView == _wayColl) {
+       
+       return _followArr.count;
+    }else{
+       
+       return _payArr.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -440,8 +569,8 @@
             }
             case 5:
             {
-                _propertyL = label;
-                [_contentView addSubview:_propertyL];
+                _rentTypeL = label;
+                [_contentView addSubview:_rentTypeL];
                 break;
             }
             case 6:
@@ -491,44 +620,103 @@
         textField.textfield.delegate = self;
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(ActionDropBtn:) forControlEvents:UIControlEventTouchUpInside];
         switch (i) {
             case 0:
             {
                 _titleTF = textField;
+                if (_dataDic.count) {
+                  
+                   _titleTF.textfield.text = _dataDic[@"title"];
+                }
                 [_contentView addSubview:_titleTF];
                 _minPeriodBtn = btn;
+                _minPeriodBtn.content.text = @"无限制";
+                if (_dataDic.count) {
+                  
+                   _minPeriodBtn.content.text = _dataDic[@"rent_min_comment"];
+                }
                 [_contentView addSubview:_minPeriodBtn];
                 break;
             }
             case 1:
             {
-                 _PriceTF = textField;
+                _PriceTF = textField;
+                _PriceTF.unitL.text = @"元/月";
+                if (_dataDic.count) {
+                  
+                   _titleTF.textfield.text = _dataDic[@"price"];
+                }
                 [_contentView addSubview:_PriceTF];
                 _maxPeriodBtn = btn;
+                _maxPeriodBtn.content.text = @"无限制";
+                if (_dataDic.count) {
+                  
+                   _minPeriodBtn.content.text = _dataDic[@"rent_min_comment"];
+                }
                 [_contentView addSubview:_maxPeriodBtn];
                 break;
             }
             case 2:
             {
                 _depositTF = textField;
+                _depositTF.unitL.text = @"元";
+                if (_dataDic.count) {
+                  
+                   _depositTF.textfield.text = _dataDic[@"deposit"];
+                }
                 [_contentView addSubview:_depositTF];
                 _roomLevelBtn = btn;
+                if (_dataDic.count) {
+                  
+                   NSArray *arr = [self getDetailConfigArrByConfigState:50];
+                   for (int i = 0; i < arr.count; i++) {
+                     
+                      if ([_dataDic[@"level"] isEqualToString:arr[i][@"param"]]) {
+                        
+                         _roomLevelBtn->str = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
+                      }
+                   }
+                   _roomLevelBtn.content.text = _dataDic[@"level"];
+                }
                 [_contentView addSubview:_roomLevelBtn];
                 break;
             }
             case 3:
             {
                 _intentTF = textField;
+                if (_dataDic.count) {
+                  
+                   _intentTF.textfield.text = _dataDic[@"intent"];
+                }
                 [_contentView addSubview:_intentTF];
                 _seeWayBtn = btn;
+                if (_dataDic.count) {
+                  
+                   NSArray *arr = [self getDetailConfigArrByConfigState:31];
+                   for (int i = 0; i < arr.count; i++) {
+                     
+                      if ([_dataDic[@"check_way"] isEqualToString:arr[i][@"param"]]) {
+                        
+                         _seeWay = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
+                      }
+                   }
+                   _seeWayBtn.content.text = _dataDic[@"check_way"];
+                }
                 [_contentView addSubview:_seeWayBtn];
                 break;
             }
             case 4:
             {
                 _urgentTF = textField;
+                if (_dataDic.count) {
+                  
+                   _urgentTF.textfield.text = _dataDic[@"urgency"];
+                }
                 [_contentView addSubview:_urgentTF];
                 _inTimeBtn = btn;
+                _inTimeBtn.content.text = @"随时入住";
                 [_contentView addSubview:_inTimeBtn];
                 break;
             }
@@ -554,12 +742,18 @@
         if (i == 0) {
             
             _intentSlider = slider;
-            
+            if (_dataDic.count) {
+              
+               [_intentSlider setValue:[_dataDic[@"intent"] integerValue]];
+            }
             [_contentView addSubview:_intentSlider];
         }else{
             
             _urgentSlider = slider;
-            
+            if (_dataDic.count) {
+              
+               [_urgentSlider setValue:[_dataDic[@"urgency"] integerValue]];
+            }
             [_contentView addSubview:_urgentSlider];
         }
     }
@@ -584,18 +778,18 @@
         switch (i) {
             case 0:
             {
-                _propertyImg1 = img;
-                [btn addSubview:_propertyImg1];
-                _propertyBtn1 = btn;
-                [_contentView addSubview:_propertyBtn1];
+                _rentImg1 = img;
+                [btn addSubview:_rentImg1];
+                _rentBtn1 = btn;
+                [_contentView addSubview:_rentBtn1];
                 break;
             }
             case 1:
             {
-                _propertyImg2 = img;
-                [btn addSubview:_propertyImg2];
-                _propertyBtn2 = btn;
-                [_contentView addSubview:_propertyBtn2];
+                _rentImg2 = img;
+                [btn addSubview:_rentImg2];
+                _rentBtn2 = btn;
+                [_contentView addSubview:_rentBtn2];
                 break;
             }
                 
@@ -603,6 +797,8 @@
                 break;
         }
     }
+    _rentImg1.image = [UIImage imageNamed:@"selected"];
+    _rentType = 245;
     
     _layout = [[UICollectionViewFlowLayout alloc] init];
     _layout.estimatedItemSize = CGSizeMake(120 *SIZE, 20 *SIZE);
@@ -645,6 +841,10 @@
     
     _markTV = [[UITextView alloc] init];
     _markTV.delegate = self;
+    if (_dataDic.count) {
+      
+       _markTV.text = _dataDic[@"comment"];
+    }
     [_timeView addSubview:_markTV];
 
     
@@ -787,7 +987,7 @@
         make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
     
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
         make.top.equalTo(_payColl.mas_bottom).offset(28 *SIZE);
@@ -795,7 +995,7 @@
         make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_propertyBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
         make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
@@ -803,7 +1003,7 @@
         make.height.mas_equalTo(20 *SIZE);
     }];
     
-    [_propertyBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_rentBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(226 *SIZE);
         make.top.equalTo(_payColl.mas_bottom).offset(23 *SIZE);
@@ -814,7 +1014,7 @@
     [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_propertyBtn1.mas_bottom).offset(41 *SIZE);
+        make.top.equalTo(_rentBtn1.mas_bottom).offset(41 *SIZE);
         make.height.mas_equalTo(12 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
@@ -822,7 +1022,7 @@
     [_minPeriodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
-        make.top.equalTo(_propertyBtn1.mas_bottom).offset(30 *SIZE);
+        make.top.equalTo(_rentBtn1.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
