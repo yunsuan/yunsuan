@@ -13,6 +13,7 @@
 #import "SecdaryComModel.h"
 #import "RentingAllTableModel.h"
 #import "RentingComModel.h"
+#import "RecommendInfoModel.h"
 
 typedef void(^RoomChildVCSecModelBlock)(SecdaryAllTableModel *model);
 
@@ -24,8 +25,12 @@ typedef void(^RoomChildVCRentComModelBlock)(RentingComModel *model);
 
 typedef void(^RoomChildVCRoomModelBlock)(RoomListModel *model);
 
+typedef void(^RoomChildVCRecommendBlock)(RecommendInfoModel *model);
+
 //typedef void(^RoomChildVC)(<#arguments#>);
 @interface RoomChildVC : BaseViewController
+
+@property (nonatomic, copy) RoomChildVCRecommendBlock roomChildVCRecommendBlock;
 
 @property (nonatomic, copy) RoomChildVCRentModelBlock roomChildVCRentModelBlock;
 

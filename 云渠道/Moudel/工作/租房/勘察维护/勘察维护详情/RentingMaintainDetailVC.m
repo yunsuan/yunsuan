@@ -11,7 +11,7 @@
 #import "RentingRoomSoldOutVC.h"
 #import "RentingMaintainAddFollowVC.h"
 //#import "MaintainLookRecordVC.h"
-#import "RoomAgencyAddProtocolVC.h"
+#import "RentingRoomAgencyAddProtocolVC.h"
 #import "RentingMaintainRoomInfoVC.h"
 #import "RentingMaintainCustomVC.h"
 #import "RentingMaintainModifyCustomVC.h"
@@ -211,10 +211,10 @@
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
+                RentingRoomAgencyAddProtocolVC *nextVC = [[RentingRoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
                 nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
                 nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:_houseDic];
-                nextVC.roomAgencyAddProtocolVCBlock = ^{
+                nextVC.rentingRoomAgencyAddProtocolVCBlock = ^{
                     
                     if (self.rentingMaintainDetailVCBlock) {
                         

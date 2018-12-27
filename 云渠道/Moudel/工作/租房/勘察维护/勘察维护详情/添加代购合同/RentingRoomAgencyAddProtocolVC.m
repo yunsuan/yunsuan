@@ -16,10 +16,10 @@
 //#import "RoomSurveySuccessVC.h"
 #import "RentingSurveySuccessVC.h"
 
-#import "RoomAgencyAddProtocolCell.h"
-#import "RoomAgencyAddProtocolCell2.h"
-#import "RoomAgencyAddProtocolCell3.h"
-#import "RoomAgencyAddProtocolCell4.h"
+#import "RentingRoomAgencyAddProtocolCell.h"
+#import "RentingRoomAgencyAddProtocolCell2.h"
+#import "RentingRoomAgencyAddProtocolCell3.h"
+#import "RentingRoomAgencyAddProtocolCell4.h"
 #import "RoomAgencyAddProtocolCell5.h"
 #import "BlueTitleMoreHeader.h"
 
@@ -192,7 +192,7 @@
         return;
     }
     
-    RoomAgencyAddProtocolCell4 *cell = (RoomAgencyAddProtocolCell4 *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+    RentingRoomAgencyAddProtocolCell4 *cell = (RentingRoomAgencyAddProtocolCell4 *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     
     if ([self isEmpty:cell.priceTF.textfield.text]) {
         
@@ -218,13 +218,13 @@
         [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
     }
     
-    if (!cell.payWayBtn->str.length) {
-        
-        [_tradeDic setObject:@"" forKey:@"pay_way"];
-    }else{
-        
-        [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-    }
+//    if (!cell.payWayBtn->str.length) {
+//
+//        [_tradeDic setObject:@"" forKey:@"pay_way"];
+//    }else{
+//
+//        [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+//    }
     
     if (!cell.signTimeBtn->str.length) {
         
@@ -242,7 +242,7 @@
         _tradeDic[@"comment"] = @"";
     }
     
-    if (![_tradeDic[@"total_price"] length] || ![_tradeDic[@"earnest_money"] length] || ![_tradeDic[@"break_money"] length] || ![_tradeDic[@"pay_way"] length] || ![_tradeDic[@"appoint_construct_time"] length]) {
+    if (![_tradeDic[@"total_price"] length] || ![_tradeDic[@"earnest_money"] length] || ![_tradeDic[@"break_money"] length] || ![_tradeDic[@"appoint_construct_time"] length]) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写交易信息"];
         return;
@@ -258,7 +258,7 @@
                          @"broker_ratio":_roomDic[@"broker_ratio"],
                          @"pay_way":_tradeDic[@"pay_way"],
                          @"appoint_construct_time":_tradeDic[@"appoint_construct_time"],
-                         @"permit_code":_roomDic[@"permit_code"],
+//                         @"permit_code":_roomDic[@"permit_code"],
                          //                         @"land_use_permit_code":_roomDic[@"land_use_permit_code"],
                          @"company_id":self.handleDic[@"company_id"],
                          @"project_id":self.handleDic[@"project_id"],
@@ -434,19 +434,19 @@
             return cell;
         }else{
             
-            RoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell"];
+            RentingRoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingRoomAgencyAddProtocolCell"];
             if (!cell) {
                 
-                cell = [[RoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell"];
+                cell = [[RentingRoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingRoomAgencyAddProtocolCell"];
             }
             
             cell.tag = indexPath.row;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.nameL.text = @"主权益人名称：";
-            cell.nameL.text = @"附权益人名称：";
+//            cell.nameL.text = @"主权益人名称：";
+//            cell.nameL.text = @"附权益人名称：";
             cell.dic = _dataArr[indexPath.row];
             //加号添加客户
-            cell.roomAgencyAddProtocolCellBlock = ^(NSInteger index) {
+            cell.rentingRoomAgencyAddProtocolCellBlock = ^(NSInteger index) {
 
                 SelectCustomVC *nextVC = [[SelectCustomVC alloc] init];
                 nextVC.selectCustomVCBlock = ^(CustomerTableModel * _Nonnull model) {
@@ -467,7 +467,7 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
             //选择男女
-            cell.roomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
+            cell.rentingRoomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
                 
                 [cell.nameTF.textfield resignFirstResponder];
                 [cell.phoneTF.textfield resignFirstResponder];
@@ -499,7 +499,7 @@
                 }];
                 
             };
-            cell.RoomAgencyBlock = ^(NSInteger index, NSDictionary *datadic) {
+            cell.rentingRoomAgencyBlock = ^(NSInteger index, NSDictionary *datadic) {
                 
                 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
                 if (datadic[@"name"]) {
@@ -532,7 +532,7 @@
             };
             
             //选择证件类型
-            cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
+            cell.rentingRoomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
                 
                 [cell.nameTF.textfield resignFirstResponder];
                 [cell.phoneTF.textfield resignFirstResponder];
@@ -554,18 +554,18 @@
     else if(indexPath.section == 1)
     {
         
-        RoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell2"];
+        RentingRoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingRoomAgencyAddProtocolCell2"];
         if (!cell) {
             
-            cell = [[RoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell2"];
+            cell = [[RentingRoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingRoomAgencyAddProtocolCell2"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (self.handleDic.count) {
             
             [cell setDataByDic:self.handleDic];
         }
-        __weak RoomAgencyAddProtocolCell2 *weakcell = cell;
-        cell.roomAgencyAddProtocolCell2TimeBlock = ^{
+        __weak RentingRoomAgencyAddProtocolCell2 *weakcell = cell;
+        cell.rentingRoomAgencyAddProtocolCell2TimeBlock = ^{
             
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
             view.dateblock = ^(NSDate *date) {
@@ -576,7 +576,7 @@
             };
             [self.view addSubview:view];
         };
-        cell.roomAgencyAddProtocolCell2SexBlock = ^{
+        cell.rentingRoomAgencyAddProtocolCell2SexBlock = ^{
             
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -601,7 +601,7 @@
             
             }];
         };
-        cell.roomAgencyCell2Block = ^{
+        cell.rentingRoomAgencyCell2Block = ^{
             
             if (cell.datadic[@"agent_name"]) {
             
@@ -616,10 +616,10 @@
         return cell;
     }else if (indexPath.section == 2){
         
-        RoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell3"];
+        RentingRoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingRoomAgencyAddProtocolCell3"];
         if (!cell) {
             
-            cell = [[RoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell3"];
+            cell = [[RentingRoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingRoomAgencyAddProtocolCell3"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([_roomDic count]) {
@@ -627,7 +627,7 @@
             [cell setDataByDic:_roomDic];
         }
         WS(weakSelf);
-        cell.changeblock = ^{
+        cell.rentingChangeblock = ^{
             
             if (_housedic.count) {
             
@@ -650,7 +650,7 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         };
-        cell.roomAgencyCell3Block = ^(NSString *homeland) {
+        cell.rentingRoomAgencyCell3Block = ^(NSString *homeland) {
            
             [_roomDic setObject:homeland forKey:@"land_use_permit_code"];
         };
@@ -659,10 +659,10 @@
         
     }else{
         
-        RoomAgencyAddProtocolCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell4"];
+        RentingRoomAgencyAddProtocolCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingRoomAgencyAddProtocolCell4"];
         if (!cell) {
            
-            cell = [[RoomAgencyAddProtocolCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell4"];
+            cell = [[RentingRoomAgencyAddProtocolCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingRoomAgencyAddProtocolCell4"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (_roomDic.count) {
@@ -675,7 +675,7 @@
             [_tradeDic setObject:@"0" forKey:@"broker_ratio"];
         }
         cell.tradeDic = _tradeDic;
-        cell.roomAgencyAddProtocolCell4TimeBlock = ^{
+        cell.rentingRoomAgencyAddProtocolCell4TimeBlock = ^{
             
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
             [view.pickerView setMinimumDate:[NSDate date]];
@@ -692,11 +692,11 @@
             };
             [self.view addSubview:view];
         };
-        cell.roomAgencyAddProtocolCell4PayBlock = ^{
-            
+        cell.rentingRoomAgencyAddProtocolCell4PayBlock = ^{
+
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
-            
+
                 cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
                 [_tradeDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"pay_way"];
@@ -704,7 +704,7 @@
             };
             [self.view addSubview:view];
         };
-        cell.roomAgencylCell4Block = ^(NSMutableDictionary *data) {
+        cell.rentingRoomAgencylCell4Block = ^(NSMutableDictionary *data) {
             
             if (data[@"total_price"]) {
                
@@ -737,7 +737,7 @@
             
             for (int i = 0; i < _dataArr.count; i++) {
                 
-                RoomAgencyAddProtocolCell *cell = (RoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                RentingRoomAgencyAddProtocolCell *cell = (RentingRoomAgencyAddProtocolCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
                 
                 if ([self isEmpty:cell.addressTF.textfield.text] || [self isEmpty:cell.certNumTF.textfield.text] || [self isEmpty:cell.nameTF.textfield.text] || [self isEmpty:cell.phoneTF.textfield.text] || ![_dataArr[i][@"card_type"] length]|| ![_dataArr[i][@"sex"] length]) {
                     

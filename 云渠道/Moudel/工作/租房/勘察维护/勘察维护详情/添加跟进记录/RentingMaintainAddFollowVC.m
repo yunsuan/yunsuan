@@ -116,6 +116,10 @@
 
 @property (nonatomic, strong) UITextView *markTV;
 
+@property (nonatomic, strong) UILabel *nextTimeL;
+
+@property (nonatomic, strong) DropDownBtn *timeBtn;
+
 @property (nonatomic, strong) UIButton *nextBtn;
 
 @property (nonatomic, strong) NSDateFormatter *formatter;
@@ -168,9 +172,9 @@
     }
     for (int i = 0; i < _payArr.count; i++) {
         
-        for (int j = 0; j < [_dataDic[@"pay_way"] count]; j++) {
+        for (int j = 0; j < [_dataDic[@"receive_way"] count]; j++) {
             
-            if ([_dataDic[@"pay_way"][j] isEqualToString:_payArr[i][@"param"]]) {
+            if ([_dataDic[@"receive_way"][j] isEqualToString:_payArr[i][@"param"]]) {
                 
                 [_selectArr2 replaceObjectAtIndex:i withObject:@1];
             }
@@ -258,7 +262,13 @@
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写跟进内容"];
         return;
     }
-    
+   
+   if (!_timeBtn.content.text.length) {
+      
+      [self alertControllerWithNsstring:@"温馨提示" And:@"请选择下次回访时间"];
+      return;
+   }
+   
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"house_id":_houseId,
                                                                                @"follow_time":_followTime,
                                                                                @"follow_type":@([_followArr[_follow][@"id"] integerValue]),
@@ -268,7 +278,9 @@
                                                                                @"check_way":_seeWayBtn->str,
                                                                                @"price":_PriceTF.textfield.text,
                                                                                @"receive_way":_payWay,
-                                                                               @"comment":_markTV.text}];
+                                                                               @"comment":_markTV.text,
+                                                                               @"next_visit_time":_timeBtn.content.text
+                                                                               }];
    if (_minPeriodBtn.content.text.length) {
       
       [dic setObject:_minPeriodBtn.content.text forKey:@"rent_min_comment"];
@@ -646,7 +658,7 @@
                 _PriceTF.unitL.text = @"元/月";
                 if (_dataDic.count) {
                   
-                   _titleTF.textfield.text = _dataDic[@"price"];
+                   _PriceTF.textfield.text = _dataDic[@"price"];
                 }
                 [_contentView addSubview:_PriceTF];
                 _maxPeriodBtn = btn;
@@ -694,6 +706,7 @@
                 _seeWayBtn = btn;
                 if (_dataDic.count) {
                   
+                   
                    NSArray *arr = [self getDetailConfigArrByConfigState:31];
                    for (int i = 0; i < arr.count; i++) {
                      
@@ -846,6 +859,17 @@
        _markTV.text = _dataDic[@"comment"];
     }
     [_timeView addSubview:_markTV];
+   
+    _nextTimeL = [[UILabel alloc] init];
+    _nextTimeL.textColor = YJTitleLabColor;
+    _nextTimeL.adjustsFontSizeToFitWidth = YES;
+    _nextTimeL.text = @"下次回访时间:";
+    _nextTimeL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_timeView addSubview:_nextTimeL];
+   
+    _timeBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(79  *SIZE, 142 *SIZE, 258 *SIZE, 33 *SIZE)];
+    [_timeBtn addTarget:self action:@selector(ActionTimeBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_timeView addSubview:_timeBtn];
 
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1146,11 +1170,27 @@
         make.width.equalTo(@(360 *SIZE));
         make.height.equalTo(@(117 *SIZE));
     }];
+   
+   [_nextTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+      
+      make.left.equalTo(_timeView).offset(9 *SIZE);
+      make.top.equalTo(_timeView).offset(154 *SIZE);
+      make.width.equalTo(@(70 *SIZE));
+      make.height.equalTo(@(10 *SIZE));
+   }];
+   
+   [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+      
+      make.left.equalTo(_timeView).offset(79 *SIZE);
+      make.top.equalTo(_timeView).offset(142 *SIZE);
+      make.width.equalTo(@(258 *SIZE));
+      make.height.equalTo(@(33 *SIZE));
+   }];
     
     [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollView).offset(22 *SIZE);
-        make.top.equalTo(_timeView.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_timeBtn.mas_bottom).offset(28 *SIZE);
         make.width.equalTo(@(317 *SIZE));
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrollView.mas_bottom).offset(-19 *SIZE);

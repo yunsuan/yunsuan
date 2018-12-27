@@ -195,6 +195,9 @@ static NSString *const ClientMatching_URL = @"agent/matching/client";
 
 #pragma mark ---  房源  ---
 
+//推荐
+static NSString *const ProjectRecommendInfo_URL = @"user/project/recommendInfo";
+
 //获取源标签
 static NSString *const ProjectResources_URL = @"user/project/resources";
 
@@ -766,7 +769,7 @@ static NSString *const RentSurveyUpdateHouseInfo_URL = @"agent/rent/survey/updat
 static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";
 
 //下架房源
-static NSString *const RentSurveyCncelSale_URL = @"agent/rent/survey/cancelSale";
+static NSString *const RentSurveyCancelSale_URL = @"agent/rent/survey/cancelSale";
 
 #pragma mark -- 租房-代购合同
 //获取经办人信息

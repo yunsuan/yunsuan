@@ -69,7 +69,8 @@
     _titlearr = [UserModel defaultModel].tagSelectArr;
     
     if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
-      [self StartLocation];
+      
+        [self StartLocation];
     }else{
         [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"510100"];
@@ -99,7 +100,7 @@
         [_cityBtn setTitle:cityname forState:UIControlStateNormal];
         _city = citycode;
         _cityName = cityname;
-        
+        [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
     } Faild:^{
         [self alertControllerWithNsstring:@"定位失败" And:@"是否要重新定位" WithCancelBlack:^{
             
@@ -258,7 +259,6 @@
     [_moreBtn setImage:[UIImage imageNamed:@"add_50"] forState:UIControlStateNormal];
     [self.view addSubview:_moreBtn];
     
-    
 }
 
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
@@ -306,7 +306,7 @@
     if ([((NSString *)dic[@"tag"]) containsString:@"新房"]) {
         
         vc = [[RoomChildVC alloc] initWithType:2];
-    }else if(/*[((NSString *)dic[@"tag"]) containsString:@"推荐"] || */[((NSString *)dic[@"tag"]) containsString:@"关注"]) {
+    }else if([((NSString *)dic[@"tag"]) containsString:@"推荐"] || [((NSString *)dic[@"tag"]) containsString:@"关注"]) {
         
         vc = [[RoomChildVC alloc] initWithType:1];
     }else if([((NSString *)dic[@"tag"]) containsString:@"租房"]){
@@ -360,6 +360,10 @@
         nextVC.type = weakvc.typeId;
         nextVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
+    vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {
+        
     };
     
     vc.roomChildVCRentModelBlock = ^(RentingAllTableModel *model) {

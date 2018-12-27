@@ -85,7 +85,7 @@
                           @"disabled_state":_reasonId,
                           @"disabled_reason":_reasonTV.text
                           };
-    [BaseRequest POST:RentSurveyCncelSale_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest POST:RentSurveyCancelSale_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
