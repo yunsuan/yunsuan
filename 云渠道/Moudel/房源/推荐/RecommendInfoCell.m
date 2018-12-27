@@ -69,8 +69,11 @@
     [self.contentView addSubview:_contentL];
     
     _sourceL = [[UILabel alloc] init];
-    _sourceL.textColor = YJContentLabColor;
+    _sourceL.textColor = [UIColor whiteColor];
     _sourceL.backgroundColor = YJBlueBtnColor;
+    _sourceL.layer.cornerRadius = 2 *SIZE;
+    _sourceL.clipsToBounds = YES;
+    _sourceL.textAlignment = NSTextAlignmentCenter;
     _sourceL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.contentView addSubview:_sourceL];
     
