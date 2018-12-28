@@ -160,74 +160,67 @@
     
     cell.roomSyrveyWaitComfirmBlock = ^(NSInteger index) {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataArr[index][@"project_id"]} success:^(id resposeObject) {
             
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"] integerValue] == 1) {
+                    
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+                    
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }];
+                    
+                    UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        RentingValidApplyVC *nextVC = [[RentingValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+                        nextVC.rentingValidApplyVCBlock = ^{
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }];
+                    
+                    UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        RentingInvalidApplyVC *nextVC = [[RentingInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+                        nextVC.rentingInvalidApplyVCBlock = ^{
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }];
+                    
+                    [alert addAction:valid];
+                    [alert addAction:invalid];
+                    [alert addAction:cancel];
+                    [self.navigationController presentViewController:alert animated:YES completion:^{
+                        
+                    }];
+                }else{
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                }
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
         }];
         
-        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-//            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-//            nextVC.roomValidApplyVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
-//                [self RequestMethod];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-//            RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-//            nextVC.roomInvalidApplyVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-//                [self RequestMethod];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        [alert addAction:valid];
-        [alert addAction:invalid];
-        [alert addAction:cancel];
-        [self.navigationController presentViewController:alert animated:YES completion:^{
-            
-        }];
     };
+
     
-    cell.roomSyrveyWaitComfirmBlock = ^(NSInteger index) {
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        
-        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            RentingValidApplyVC *nextVC = [[RentingValidApplyVC alloc] init];
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            RentingInvalidApplyVC *nextVC = [[RentingInvalidApplyVC alloc] init];
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        [alert addAction:valid];
-        [alert addAction:invalid];
-        [alert addAction:cancel];
-        [self.navigationController presentViewController:alert animated:YES completion:^{
-            
-        }];
-    };
-    
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"13438339177"];
-    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
-    [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
-    cell.phoneL.attributedText = attr;
+//    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:@"13438339177"];
+//    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
+//    [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
+//    cell.phoneL.attributedText = attr;
     cell.roomSurveyWaitPhoneBlock = ^(NSInteger index) {
         
         NSString *phone = _dataArr[index][@"tel"];
@@ -248,7 +241,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RentingSurveyWaitDetailVC *nextVC = [[RentingSurveyWaitDetailVC alloc] init];
+    RentingSurveyWaitDetailVC *nextVC = [[RentingSurveyWaitDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"]];
+    nextVC.rentingSurveyWaitDetailVCBlock = ^{
+      
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+        [self RequestMethod];
+        if (self.rentingSurveyWaitVCBlock) {
+            
+            self.rentingSurveyWaitVCBlock();
+        }
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

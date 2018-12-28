@@ -18,6 +18,8 @@ typedef void(^GetWorkCellBlock)(NSInteger index);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) UILabel *sourceL;
+
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UILabel *codeL;

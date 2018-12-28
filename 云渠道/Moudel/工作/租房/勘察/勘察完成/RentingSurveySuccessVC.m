@@ -176,9 +176,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RoomMaintainModel *model = _dataArr[indexPath.row];
-    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] initWithSurveyId:model.survey_id houseId:model.house_id type:[model.type integerValue]];
-    nextVC.edit = YES;
+//    RoomMaintainModel *model = _dataArr[indexPath.row];
+    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] houseId:_dataArr[indexPath.row][@"house_id"] type:[_dataArr[indexPath.row][@"type"] integerValue]];
+    nextVC.edit = [_dataArr[indexPath.row][@"edit"] integerValue] ? YES:NO;
     nextVC.rentingMaintainDetailVCBlock = ^{
         
         [self RequestMethod];

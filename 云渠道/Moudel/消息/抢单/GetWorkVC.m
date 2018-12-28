@@ -98,13 +98,13 @@
     
     cell.getWorkCellBlock = ^(NSInteger index) {
         
-        [BaseRequest GET:HouseGrabRecord_URL parameters:@{@"record_id":_dataArr[index][@"record_id"]} success:^(id resposeObject) {
+        [BaseRequest GET:HouseGrabRecord_URL parameters:@{@"record_id":_dataArr[index][@"record_id"],@"type":_dataArr[index][@"type"]} success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [self alertControllerWithNsstring:@"温馨提示" And:@"抢单成功" WithDefaultBlack:^{
-                   
+                    
                     [self RequestMethod];
                 }];
             }else{
@@ -124,6 +124,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     GetWorkDetailVC *nextVC = [[GetWorkDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
+    nextVC.type = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"type"]];
     nextVC.getWorkDetailVCBlock = ^{
       
         [self RequestMethod];

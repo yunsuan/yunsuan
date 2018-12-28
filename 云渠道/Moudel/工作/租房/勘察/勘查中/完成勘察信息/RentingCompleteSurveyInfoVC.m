@@ -120,7 +120,7 @@
 
 - (void)RequestAddressMethod{
     
-    [BaseRequest GET:HouseProjectAddressInfo_URL parameters:@{@"project_id":self.projectID} success:^(id resposeObject) {
+    [BaseRequest GET:RentProjectAddressInfo_URL parameters:@{@"project_id":self.projectID} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

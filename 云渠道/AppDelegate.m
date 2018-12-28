@@ -149,6 +149,15 @@ static NSString *const kQQAPPID = @"1106811849";
         } failure:^(NSError *error) {
             
         }];
+    
+    [BaseRequest GET:HouseRecordUI_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            [UserModel defaultModel].houseArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+            [UserModelArchiver archive];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
         
 //    });
     //完成勘察UI

@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 
+typedef void(^RentingValidApplyVCBlock)(void);
+
 @interface RentingValidApplyVC : BaseViewController
+
+@property (nonatomic, copy) RentingValidApplyVCBlock rentingValidApplyVCBlock;
+
+- (instancetype)initWithData:(NSDictionary *)data SurveyId:(NSString *)surveyId;
 
 @end

@@ -9,7 +9,7 @@
 #import "RentingCompleteSurveyStoreVC.h"
 
 #import "RentingCompleteSurveyInfoVC2.h"
-#import "AddEquipmentVC.h"
+#import "RentingAddEquipmentVC.h"
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
@@ -496,26 +496,21 @@
         }
         
         
+        cell.titleL.text = _dataArr[indexPath.item][@"name"];
         NSString *imageurl = _dataArr[indexPath.item][@"url"];
+        
         if (imageurl.length>0) {
             
-            [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,imageurl]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 
-                if ([_selectArr[indexPath.item] integerValue]) {
-                    
-                    cell.typeImg.image = image;
-                }else{
-                    
-                    cell.typeImg.image = [cell grayscaleImageForImage:image];
-                }
             }];
+            cell.titleL.text = _dataArr[indexPath.item][@"name"];
+            
         }
         else{
 #warning 默认图片？？
         }
-        
-        
-        
+ 
         return cell;
     }
 }
@@ -841,9 +836,9 @@
     SS(strongSelf);
     _collHeader.blueTitleMoreHeaderBlock = ^{
         
-        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:2];
+        RentingAddEquipmentVC *nextVC = [[RentingAddEquipmentVC alloc] initWithType:2];
         nextVC.data = strongSelf->_dataArr;
-        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+        nextVC.rentingAddEquipmentVCBlock = ^(NSArray * _Nonnull data) {
             
             strongSelf->_dataArr = [NSMutableArray arrayWithArray:data];
             [strongSelf->_facilityColl reloadData];

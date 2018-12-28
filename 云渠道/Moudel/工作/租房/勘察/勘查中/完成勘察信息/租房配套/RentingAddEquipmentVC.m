@@ -1,16 +1,16 @@
 //
-//  AddEquipmentVC.m
+//  RentingAddEquipmentVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/9/19.
-//  Copyright © 2018年 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2018/12/28.
+//  Copyright © 2018 xiaoq. All rights reserved.
 //
 
-#import "AddEquipmentVC.h"
+#import "RentingAddEquipmentVC.h"
 
 #import "StoreViewCollCell.h"
 
-@interface AddEquipmentVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface RentingAddEquipmentVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     
     NSMutableArray *_dataArr;
@@ -24,23 +24,41 @@
 
 @end
 
-@implementation AddEquipmentVC
+@implementation RentingAddEquipmentVC
 
 - (instancetype)initWithType:(NSInteger)type
 {
     self = [super init];
     if (self) {
         
-        if (type == 1) {
+        _dataArr = [@[] mutableCopy];
+        
+        [BaseRequest GET:RentRecordUI_URL parameters:@{@"type":@(type)} success:^(id resposeObject) {
             
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].storeArr];
-        }else if(type == 2){
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                _dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+                for (int i = 0; i < _dataArr.count; i++) {
+                    
+                    [_selectArr addObject:@(0)];
+                }
+                if (self.data.count) {
+                    
+                    for (int i = 0; i < self.data.count; i++) {
+                        
+                        _selectArr[[_dataArr indexOfObject:self.data[i]]] = @(1);
+                    }
+                }
+                [_coll reloadData];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
             
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].officeArr];
-        }else{
-            
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].houseArr];
-        }
+            [self showContent:@"网络错误"];
+            NSLog(@"%@",error);
+        }];
     }
     return self;
 }
@@ -49,28 +67,17 @@
     [super viewDidLoad];
     
     _selectArr = [@[] mutableCopy];
-    for (int i = 0; i < _dataArr.count; i++) {
-        
-        [_selectArr addObject:@(0)];
-    }
-    if (self.data.count) {
-    
-        for (int i = 0; i < self.data.count; i++) {
-            
-            _selectArr[[_dataArr indexOfObject:self.data[i]]] = @(1);
-        }
-    }
     
     [self initUI];
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
-    if (self.addEquipmentVCBlock) {
+    if (self.rentingAddEquipmentVCBlock) {
         
         if (self.titleStr.length) {
             
-//            NSMutableArray *matchArr = [@[] mutableCopy];
+            //            NSMutableArray *matchArr = [@[] mutableCopy];
             NSMutableArray *tempArr = [@[] mutableCopy];
             for (int i = 0; i < _selectArr.count; i++) {
                 
@@ -95,9 +102,9 @@
                 NSLog(@"%@",resposeObject);
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    self.addEquipmentVCBlock(tempArr);
+                    self.rentingAddEquipmentVCBlock(tempArr);
                     [self.navigationController popViewControllerAnimated:YES];
-
+                    
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -107,39 +114,39 @@
                 NSLog(@"%@",error);
                 [self showContent:@"网络错误"];
             }];
-//            if ([self.type integerValue] == 2) {
-//
-//                [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:@{@"house_id":self.houseId,@"type":self.type,@"match_tags":@""} success:^(id resposeObject) {
-//
-//                    NSLog(@"%@",resposeObject);
-//                    if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//                    }else{
-//
-//
-//                    }
-//                } failure:^(NSError *error) {
-//
-//                    NSLog(@"%@",error);
-//                }];
-//            }else{
-//
-//                [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:@{@"house_id":self.houseId,@"type":self.type,@"match_tags":@""} success:^(id resposeObject) {
-//
-//                    NSLog(@"%@",resposeObject);
-//                    if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//                    }else{
-//
-//
-//                    }
-//                } failure:^(NSError *error) {
-//
-//                    NSLog(@"%@",error);
-//                }];
-//            }
+            //            if ([self.type integerValue] == 2) {
+            //
+            //                [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:@{@"house_id":self.houseId,@"type":self.type,@"match_tags":@""} success:^(id resposeObject) {
+            //
+            //                    NSLog(@"%@",resposeObject);
+            //                    if ([resposeObject[@"code"] integerValue] == 200) {
+            //
+            //
+            //                    }else{
+            //
+            //
+            //                    }
+            //                } failure:^(NSError *error) {
+            //
+            //                    NSLog(@"%@",error);
+            //                }];
+            //            }else{
+            //
+            //                [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:@{@"house_id":self.houseId,@"type":self.type,@"match_tags":@""} success:^(id resposeObject) {
+            //
+            //                    NSLog(@"%@",resposeObject);
+            //                    if ([resposeObject[@"code"] integerValue] == 200) {
+            //
+            //
+            //                    }else{
+            //
+            //
+            //                    }
+            //                } failure:^(NSError *error) {
+            //
+            //                    NSLog(@"%@",error);
+            //                }];
+            //            }
         }else{
             
             NSMutableArray *tempArr = [@[] mutableCopy];
@@ -150,7 +157,7 @@
                     [tempArr addObject:_dataArr[i]];
                 }
             }
-            self.addEquipmentVCBlock(tempArr);
+            self.rentingAddEquipmentVCBlock(tempArr);
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
@@ -172,16 +179,16 @@
     NSString *imageurl = _dataArr[indexPath.item][@"url"];
     if (imageurl.length>0) {
         
-    [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        
-        if ([_selectArr[indexPath.item] integerValue]) {
+        [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
-            cell.typeImg.image = image;
-        }else{
-            
-            cell.typeImg.image = [cell grayscaleImageForImage:image];
-        }
-    }];
+            if ([_selectArr[indexPath.item] integerValue]) {
+                
+                cell.typeImg.image = image;
+            }else{
+                
+                cell.typeImg.image = [cell grayscaleImageForImage:image];
+            }
+        }];
     }
     else{
 #warning 默认图片？？
@@ -237,4 +244,5 @@
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
     [self.view addSubview:_nextBtn];
 }
+
 @end

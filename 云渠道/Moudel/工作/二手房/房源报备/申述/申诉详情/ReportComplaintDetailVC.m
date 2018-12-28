@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _titleArr = @[@"申诉信息",@"失效信息",@"抢单信息",@"报备信息"];
+    _titleArr = @[@"申诉信息",@"报备信息",@"抢单信息",@"失效信息"];
 //    _contentArr = @[@[@"申诉类型：规定时间内未判断房源真实性申诉",@"申诉时间：2017-10-23  19:00:00",@"申诉描述：***************************"],@[@"失效类型：业主不售房源",@"失效时间：2017-10-23  19:00:00",@"失效描述：***************************"],@[@"抢单时间：2017-10-23  19:00:00",@"经纪人：李四",@"联系电话：13932452456"],@[@"天鹅湖小区",@"房源编号：CD - TEH - 20170810 - 1（F）",@"归属门店：MDBHNO1",@"联系人：李四",@"性别：男",@"身份证号：5130291556231203",@"联系电话：13932452456",@"与业主关系：业主本人",@"报备时间：2017-10-23  19:00:00",@"备注：**********************"]];
     [self initUI];
     [self RequestMethod];
@@ -69,7 +69,7 @@
 - (void)SetData:(NSDictionary *)data{
     
     _status = data[@"appeal_solve_info"];
-    _contentArr = @[@[[NSString stringWithFormat:@"申诉类型：%@",data[@"appeal_type"]],[NSString stringWithFormat:@"申诉时间：%@",data[@"appeal_time"]],[NSString stringWithFormat:@"申诉描述：%@",data[@"appeal_comment"]]],@[[NSString stringWithFormat:@"失效类型：%@",data[@"disabled_state"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]],[NSString stringWithFormat:@"失效描述：%@",data[@"disabled_reason"]]],@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]];
+    _contentArr = @[@[[NSString stringWithFormat:@"申诉类型：%@",data[@"appeal_type"]],[NSString stringWithFormat:@"申诉时间：%@",data[@"appeal_time"]],[NSString stringWithFormat:@"申诉描述：%@",data[@"appeal_comment"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"失效类型：%@",data[@"disabled_state"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]],[NSString stringWithFormat:@"失效描述：%@",data[@"disabled_reason"]]]];
     
     [_detailTable reloadData];
 }

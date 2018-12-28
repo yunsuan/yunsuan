@@ -8,6 +8,7 @@
 
 #import "RentingAgencyDoneDetailVC.h"
 #import "AgencyDoneCustomerDetailVC.h"
+#import "RentingCancelAgencyProtocolVC.h"
 
 #import "AgencyDoneHeader.h"
 //#import "BaseHeader.h"
@@ -83,21 +84,21 @@
     
     UIAlertAction *set = [UIAlertAction actionWithTitle:@"挞定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-//        GetAgencyProtocolVC *nextVC = [[GetAgencyProtocolVC alloc] init];
-//        nextVC.sub_id = _sub_id;
-//        NSString *tel = _customerArr[0][@"tel"];
-//        NSArray *array = [tel componentsSeparatedByString:@","];
-//        NSArray *infoarr = @[[NSString stringWithFormat:@"交易编号：%@",_subDic[@"sub_code"]],@"推荐编号：",[NSString stringWithFormat:@"客户名称：%@",_customerArr[0][@"name"]],[NSString stringWithFormat:@"联系电话：%@",array[0]],[NSString stringWithFormat:@"房源编号：%@",_subDic[@"house_code"]],_contentArr3[1],_contentArr3[3],@"挞定类型:",@"违约金:",@"挞定描述:",@"登记时间:"];
-//        nextVC.infoArr = infoarr;
-//        nextVC.broker = _subDic[@"break_money"];
-//        nextVC.getAgencyProtocolVCBlock = ^{
-//
-//            if (self.agencyDoneDetailVCBlock) {
-//
-//                self.agencyDoneDetailVCBlock();
-//            }
-//        };
-//        [self.navigationController pushViewController:nextVC animated:YES];
+        RentingCancelAgencyProtocolVC *nextVC = [[RentingCancelAgencyProtocolVC alloc] init];
+        nextVC.sub_id = _sub_id;
+        NSString *tel = _customerArr[0][@"tel"];
+        NSArray *array = [tel componentsSeparatedByString:@","];
+        NSArray *infoarr = @[[NSString stringWithFormat:@"交易编号：%@",_subDic[@"sub_code"]],@"推荐编号：",[NSString stringWithFormat:@"客户名称：%@",_customerArr[0][@"name"]],[NSString stringWithFormat:@"联系电话：%@",array[0]],[NSString stringWithFormat:@"房源编号：%@",_subDic[@"house_code"]],_contentArr3[1],_contentArr3[3],@"挞定类型:",@"违约金:",@"挞定描述:",@"登记时间:"];
+        nextVC.infoArr = infoarr;
+        nextVC.broker = _subDic[@"break_money"];
+        nextVC.rentingCancelAgencyProtocolVCBlock = ^{
+
+            if (self.rentingAgencyDoneDetailVCBlock) {
+
+                self.rentingAgencyDoneDetailVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

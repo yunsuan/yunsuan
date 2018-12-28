@@ -85,7 +85,7 @@
     
     for (int i = 0; i < 2; i++) {
         
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(99 *SIZE + i * 141 *SIZE, 44 *SIZE, SIZE, 36 *SIZE)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(113 *SIZE * (i + 1), 44 *SIZE, SIZE, 36 *SIZE)];
         view.backgroundColor = YJBackColor;
         [_whiteView addSubview:view];
     }
@@ -139,44 +139,44 @@
         
         make.left.equalTo(_whiteView).offset(0 *SIZE);
         make.top.equalTo(_whiteView).offset(69 *SIZE);
-        make.width.mas_equalTo(110 *SIZE);
+        make.width.mas_equalTo(113 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-19 *SIZE);
     }];
     
     [_leftImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(40 *SIZE);
+        make.left.equalTo(_whiteView).offset(44 *SIZE);
         make.top.equalTo(_whiteView).offset(36 *SIZE);
         make.width.mas_equalTo(25 *SIZE);
     }];
     
     [_centerL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(110 *SIZE);
+        make.left.equalTo(_whiteView).offset(114 *SIZE);
         make.top.equalTo(_whiteView).offset(69 *SIZE);
-        make.width.mas_equalTo(120 *SIZE);
+        make.width.mas_equalTo(113 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-19 *SIZE);
     }];
     
     [_centerImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(160 *SIZE);
+        make.left.equalTo(_whiteView).offset(157 *SIZE);
         make.top.equalTo(_whiteView).offset(36 *SIZE);
         make.width.mas_equalTo(25 *SIZE);
     }];
     
     [_rightImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(274 *SIZE);
+        make.left.equalTo(_whiteView).offset(271 *SIZE);
         make.top.equalTo(_whiteView).offset(36 *SIZE);
         make.width.mas_equalTo(25 *SIZE);
     }];
     
     [_rightL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(230 *SIZE);
+        make.left.equalTo(_whiteView).offset(228 *SIZE);
         make.top.equalTo(_whiteView).offset(69 *SIZE);
-        make.width.mas_equalTo(110 *SIZE);
+        make.width.mas_equalTo(113 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-19 *SIZE);
     }];
     

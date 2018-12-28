@@ -80,7 +80,7 @@
 
 - (void)AddressRequestMethod{
     
-    [BaseRequest GET:HouseProjectAddressInfo_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+    [BaseRequest GET:RentProjectAddressInfo_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
         
         
         NSLog(@"%@",resposeObject);

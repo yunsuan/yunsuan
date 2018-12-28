@@ -19,6 +19,7 @@
 @property (nonatomic , strong) NSDictionary *Configdic;
 @property (nonatomic, strong) NSMutableArray *storeArr;
 @property (nonatomic, strong) NSMutableArray *officeArr;
+@property (nonatomic, strong) NSMutableArray *houseArr;
 @property (nonatomic, strong) NSMutableDictionary *tagDic;
 @property (nonatomic, strong) NSMutableArray *tagAllArr;
 @property (nonatomic, strong) NSMutableArray *tagSelectArr;

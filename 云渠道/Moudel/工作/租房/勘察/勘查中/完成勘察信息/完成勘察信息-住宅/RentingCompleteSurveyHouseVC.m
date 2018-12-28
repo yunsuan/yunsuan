@@ -9,10 +9,13 @@
 #import "RentingCompleteSurveyHouseVC.h"
 
 #import "RentingCompleteSurveyInfoVC2.h"
+#import "RentingAddEquipmentVC.h"
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
+#import "BlueTitleMoreHeader.h"
 
+#import "StoreViewCollCell.h"
 //#import "SingleContentCell.h"
 #import "BaseFrameHeader.h"
 #import "CompleteSurveyCollCell.h"
@@ -29,6 +32,7 @@
     NSArray *_titleArr;
     NSMutableArray *_selectArr;
     NSArray *_payArr;
+    NSMutableArray *_dataArr;
     NSInteger _rentType;
     NSString *_payWay;
     
@@ -112,6 +116,14 @@
 @property (nonatomic, strong) UIButton *nextBtn;
 
 @property (nonatomic, strong) NSDateFormatter *formatter;
+
+@property (nonatomic, strong) UIView *CollView;
+
+@property (nonatomic, strong) BlueTitleMoreHeader *collHeader;
+
+@property (nonatomic, strong) UICollectionViewFlowLayout *facilityLayout;
+
+@property (nonatomic, strong) UICollectionView *facilityColl;
 
 @end
 
@@ -414,7 +426,22 @@
         
         [self.dataDic setValue:_markView.text forKey:@"comment"];
     }
-    
+    if (_dataArr.count) {
+        
+        NSString *str;
+        for (int i = 0; i < _dataArr.count; i++) {
+            
+            if (i == 0) {
+                
+                str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+            }else{
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+            }
+        }
+        if(str)
+            [self.dataDic setObject:str forKey:@"match_tags"];
+    }
     RentingCompleteSurveyInfoVC2 *nextVC = [[RentingCompleteSurveyInfoVC2 alloc] init];
     nextVC.rentCompleteSurveyInfoVCBlock2 = ^{
         
@@ -452,33 +479,72 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return _payArr.count;
+    if (collectionView == _payColl) {
+        
+        return _payArr.count;
+    }else{
+        
+        return _dataArr.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
-    if (!cell) {
+    
+    if (collectionView == _payColl) {
         
-        cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
+        CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
+        if (!cell) {
+            
+            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
+        }
+        
+        [cell setIsSelect:[_selectArr[indexPath.item] integerValue]];
+        cell.titleL.text = _payArr[indexPath.item][@"param"];
+        
+        return cell;
+    }else{
+        
+        StoreViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StoreViewCollCell" forIndexPath:indexPath];
+        if (!cell) {
+            
+            cell = [[StoreViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 72 *SIZE, 72 *SIZE)];
+        }
+        
+        cell.titleL.text = _dataArr[indexPath.item][@"name"];
+        NSString *imageurl = _dataArr[indexPath.item][@"url"];
+        
+        if (imageurl.length>0) {
+            
+            [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+            }];
+            cell.titleL.text = _dataArr[indexPath.item][@"name"];
+            
+        }
+        else{
+#warning 默认图片？？
+        }
+        
+        
+        
+        return cell;
     }
-    
-    [cell setIsSelect:[_selectArr[indexPath.item] integerValue]];
-    cell.titleL.text = _payArr[indexPath.item][@"param"];
-    
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([_selectArr[indexPath.item] integerValue]) {
+    if (collectionView == _payColl) {
         
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@0];
-    }else{
-        
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+        if ([_selectArr[indexPath.item] integerValue]) {
+            
+            [_selectArr replaceObjectAtIndex:indexPath.item withObject:@0];
+        }else{
+            
+            [_selectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+        }
+        [collectionView reloadData];
     }
-    [collectionView reloadData];
 }
 
 - (void)initUI{
@@ -754,6 +820,49 @@
     _rentImg1.image = [UIImage imageNamed:@"selected"];
     _rentType = 245;
 
+    _CollView = [[UIView alloc] init];
+    _CollView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_CollView];
+    
+    _collHeader = [[BlueTitleMoreHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+    _collHeader.titleL.text = @"配套设施";
+    [_collHeader.moreBtn setTitle:@"" forState:UIControlStateNormal];
+    [_collHeader.moreBtn setImage:[UIImage imageNamed:@"add_40"] forState:UIControlStateNormal];
+    
+    WS(weakSelf);
+    SS(strongSelf);
+    _collHeader.blueTitleMoreHeaderBlock = ^{
+        
+        RentingAddEquipmentVC *nextVC = [[RentingAddEquipmentVC alloc] initWithType:1];
+        nextVC.data = strongSelf->_dataArr;
+        nextVC.rentingAddEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+            
+            strongSelf->_dataArr = [NSMutableArray arrayWithArray:data];
+            [strongSelf->_facilityColl reloadData];
+            [strongSelf->_facilityColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(strongSelf->_CollView).offset(0 *SIZE);
+                make.top.equalTo(strongSelf->_CollView).offset(40 *SIZE);
+                make.width.mas_equalTo(SCREEN_Width);
+                make.height.mas_equalTo(strongSelf->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+                make.bottom.equalTo(strongSelf->_CollView.mas_bottom).offset(0 *SIZE);
+            }];
+        };
+        [weakSelf.navigationController pushViewController:nextVC animated:YES];
+    };
+    [_CollView addSubview:_collHeader];
+    
+    _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
+    _facilityLayout.minimumLineSpacing = 20 *SIZE;
+    _facilityLayout.minimumInteritemSpacing = 0;
+    
+    _facilityColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40 *SIZE, SCREEN_Width, 87 *SIZE) collectionViewLayout:_facilityLayout];
+    _facilityColl.backgroundColor = [UIColor whiteColor];
+    _facilityColl.delegate = self;
+    _facilityColl.dataSource = self;
+    [_facilityColl registerClass:[StoreViewCollCell class] forCellWithReuseIdentifier:@"StoreViewCollCell"];
+    [_CollView addSubview:_facilityColl];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.estimatedItemSize = CGSizeMake(120 *SIZE, 20 *SIZE);
@@ -1053,10 +1162,26 @@
         make.bottom.equalTo(_contentView.mas_bottom).offset(-29 *SIZE);
     }];
     
+    [_CollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_scrollView).offset(0);
+        make.top.equalTo(self->_contentView.mas_bottom).offset(6 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+    }];
+    
+    [_facilityColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_CollView).offset(0 *SIZE);
+        make.top.equalTo(self->_CollView).offset(40 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+        make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
+    }];
+    
     [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollView).offset(22 *SIZE);
-        make.top.equalTo(_contentView.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_CollView.mas_bottom).offset(28 *SIZE);
         make.width.equalTo(@(317 *SIZE));
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrollView.mas_bottom).offset(-19 *SIZE);

@@ -19,6 +19,7 @@
 
 #import "RentingAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
+#import "SecAllRoomStoreEquipCell.h"
 #import "RentingAllRoomTableCell.h"
 #import "SecAllRoomTableCell3.h"
 #import "RoomDetailTableCell4.h"
@@ -234,7 +235,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -350,12 +351,17 @@
                 header.addBtn.hidden = YES;
                 break;
             }
-            case 2:
-            {
+            case 2:{
+                
                 header = nil;
                 break;
             }
             case 3:
+            {
+                header = nil;
+                break;
+            }
+            case 4:
             {
                 header.titleL.text = _model.project_name;
                 [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
@@ -374,7 +380,7 @@
                 header.addBtn.hidden = YES;
                 break;
             }
-            case 4:
+            case 5:
             {
                 header.titleL.text = @"小区其他房源";
                 header.moreBtn.hidden = YES;
@@ -409,7 +415,19 @@
         cell.model = _model;
         
         return cell;
-    }if (indexPath.section == 2) {
+    }else if (indexPath.section == 2) {
+        
+        SecAllRoomStoreEquipCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomStoreEquipCell"];
+        if (!cell) {
+            
+            cell = [[SecAllRoomStoreEquipCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomStoreEquipCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.dataArr = _model.match_tags;
+        [cell.coll reloadData];
+        return cell;
+    }else if (indexPath.section == 3) {
         
         RoomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell4"];
         if (!cell) {
@@ -446,7 +464,7 @@
         
         return cell;
         
-    }else if (indexPath.section == 3){
+    }else if (indexPath.section == 4){
         
         SecAllRoomTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell3"];
         if (!cell) {
@@ -501,7 +519,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 3) {
+    if (indexPath.section == 4) {
         
         if (_model.project_id.length) {
             

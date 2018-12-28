@@ -53,7 +53,7 @@
     _dataDic = [@{} mutableCopy];
     if (_type == 1) {
         
-        _titleArr = @[@"房屋配套",@"房源概述",@"装修描述",@"项目优势",@"周边分析",@"适合人群",@"升值空间"];
+        _titleArr = @[@"房源概述",@"装修描述",@"项目优势",@"周边分析",@"适合人群",@"升值空间"];
     }else if (_type == 2){
         
         _titleArr = @[@"铺面优势",@"商铺描述",@"项目优势",@"周边分析",@"适合人群",@"升值空间"];
@@ -108,19 +108,19 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 
-    if (_type == 1) {
-        
-        if (section == 0) {
-            
-            return 13;
-        }else{
-            
-            return 1;
-        }
-    }else{
-        
+//    if (_type == 1) {
+//
+//        if (section == 0) {
+//
+//            return 13;
+//        }else{
+//
+//            return 1;
+//        }
+//    }else{
+//
         return 1;
-    }
+//    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -173,33 +173,33 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (_type == 1) {
-        
-        if (indexPath.section == 0) {
-            
-            RentingComRoomAnalyzeColCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RentingComRoomAnalyzeColCell" forIndexPath:indexPath];
-            if (!cell) {
-                
-                cell = [[RentingComRoomAnalyzeColCell alloc] initWithFrame:CGRectMake(0, 0, 50 *SIZE, 60 *SIZE)];
-            }
-            cell.bigImg.image = [UIImage imageNamed:@"Focus_selected"];
-            cell.titleL.text = @"床";
-            
-            return cell;
-        }else{
-            
-            RentingComRoomAnalyzeColCell2 *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RentingComRoomAnalyzeColCell2" forIndexPath:indexPath];
-            if (!cell) {
-                
-                cell = [[RentingComRoomAnalyzeColCell2 alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width *SIZE, 60 *SIZE)];
-            }
-            //        cell.contentL.text = @"房子是业主自住装修，客厅和卧室铺了木地板，有吊顶，卫生间做的蹲便，贴的瓷砖。";
-            
-            cell.contentL.text = _contentArr[indexPath.section - 1];
-            return cell;
-        }
-    }else{
-        
+//    if (_type == 1) {
+//
+//        if (indexPath.section == 0) {
+//
+//            RentingComRoomAnalyzeColCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RentingComRoomAnalyzeColCell" forIndexPath:indexPath];
+//            if (!cell) {
+//
+//                cell = [[RentingComRoomAnalyzeColCell alloc] initWithFrame:CGRectMake(0, 0, 50 *SIZE, 60 *SIZE)];
+//            }
+//            cell.bigImg.image = [UIImage imageNamed:@"Focus_selected"];
+//            cell.titleL.text = @"床";
+//
+//            return cell;
+//        }else{
+//
+//            RentingComRoomAnalyzeColCell2 *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RentingComRoomAnalyzeColCell2" forIndexPath:indexPath];
+//            if (!cell) {
+//
+//                cell = [[RentingComRoomAnalyzeColCell2 alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width *SIZE, 60 *SIZE)];
+//            }
+//            //        cell.contentL.text = @"房子是业主自住装修，客厅和卧室铺了木地板，有吊顶，卫生间做的蹲便，贴的瓷砖。";
+//
+//            cell.contentL.text = _contentArr[indexPath.section - 1];
+//            return cell;
+//        }
+//    }else{
+    
         RentingComRoomAnalyzeColCell2 *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RentingComRoomAnalyzeColCell2" forIndexPath:indexPath];
         if (!cell) {
             
@@ -209,7 +209,7 @@
         
         cell.contentL.text = _contentArr[indexPath.section];
         return cell;
-    }
+//    }
 }
 
 - (void)initUI{

@@ -9,7 +9,7 @@
 #import "RentingCompleteSurveyOfficeVC.h"
 
 #import "RentingCompleteSurveyInfoVC2.h"
-#import "AddEquipmentVC.h"
+#import "RentingAddEquipmentVC.h"
 
 #import "SinglePickView.h"
 //#import "CompleteSurveyStoreCollView.h"
@@ -867,9 +867,9 @@
     SS(strongSelf);
     _collHeader.blueTitleMoreHeaderBlock = ^{
         
-        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:2];
+        RentingAddEquipmentVC *nextVC = [[RentingAddEquipmentVC alloc] initWithType:3];
         nextVC.data = strongSelf->_dataArr;
-        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+        nextVC.rentingAddEquipmentVCBlock = ^(NSArray * _Nonnull data) {
             
             strongSelf->_dataArr = [NSMutableArray arrayWithArray:data];
             [strongSelf->_facilityColl reloadData];

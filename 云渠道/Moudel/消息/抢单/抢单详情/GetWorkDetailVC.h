@@ -14,6 +14,8 @@ typedef void(^GetWorkDetailVCBlock)(void);
 
 @property (nonatomic, copy) GetWorkDetailVCBlock getWorkDetailVCBlock;
 
+@property (nonatomic, strong) NSString *type;
+
 - (instancetype)initWithRecordId:(NSString *)recordId;
 
 @end

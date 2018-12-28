@@ -31,7 +31,13 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
+    NSString *str = dataDic[@"property_type"];
+    if ([str containsString:@"参数"]) {
+        
+        str = [str substringWithRange:NSMakeRange(0, str.length - 2)];
+    }
+    _sourceL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",str];
     _codeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
     _communicateL.text = [NSString stringWithFormat:@"小区名称：%@",dataDic[@"house_info"]];
     _timeL.text = [NSString stringWithFormat:@"报备日期：%@",dataDic[@"record_time"]];
@@ -43,6 +49,11 @@
     _typeL.textColor = YJ86Color;
     _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_typeL];
+    
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.textColor = YJ86Color;
+    _sourceL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_sourceL];
     
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJTitleLabColor;
@@ -85,11 +96,18 @@
         make.right.equalTo(self.contentView).offset(-9 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(10 *SIZE);
-        make.right.equalTo(self.contentView).offset(-100 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(135 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
     }];
     
     [_communicateL mas_makeConstraints:^(MASConstraintMaker *make) {

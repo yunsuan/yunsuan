@@ -8,9 +8,20 @@
 
 #import "RentingInvalidApplyVC.h"
 
+#import "RentingSurveyVC.h"
+#import "SystemoWorkVC.h"
+
+#import "SinglePickView.h"
+
 #import "DropDownBtn.h"
 
 @interface RentingInvalidApplyVC ()
+{
+    
+    NSString *_type;
+    NSDictionary *_dataDic;
+    NSString *_surveyId;
+}
 
 @property (nonatomic, strong) UIView *contentView;
 
@@ -34,6 +45,17 @@
 
 @implementation RentingInvalidApplyVC
 
+- (instancetype)initWithData:(NSDictionary *)data SurveyId:(NSString *)surveyId
+{
+    self = [super init];
+    if (self) {
+        
+        _surveyId = surveyId;
+        _dataDic = data;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,16 +65,76 @@
 
 - (void)initDataSource{
     
-    _roomL.text = @"天鹅湖小区 - 17栋 - 2单元 - 103";
-    _codeL.text = @"房源编号：CD - TEH - 20170810 - 1（F）";
-    _storeL.text = @"归属门店：MDBHNO1";
+    _roomL.text = [NSString stringWithFormat:@"%@",_dataDic[@"house"]];
+    _codeL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+    _storeL.text = [NSString stringWithFormat:@"归属门店：%@",_dataDic[@"store_name"]];
     _typeL.text = @"无效类型:";
     _reasonL.text = @"无效描述:";
 }
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
+    if (!_type.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择无效类型"];
+        return;
+    }
     
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":_surveyId,
+                                                                               @"disabled_state":_type
+                                                                               }];
+    if (![self isEmpty:_reasonTV.text]) {
+        
+        [dic setObject:_reasonTV.text forKey:@"disabled_reason"];
+    }
+    [BaseRequest GET:RentRecordDisabled_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"房源失效成功" WithDefaultBlack:^{
+                
+                if (self.rentingInvalidApplyVCBlock) {
+                    
+                    self.rentingInvalidApplyVCBlock();
+                }
+                NSLog(@"%@",self.navigationController.viewControllers);
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[RentingSurveyVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                        break;
+                    }
+                    if ([vc isKindOfClass:[SystemoWorkVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                        break;
+                    }
+                }
+            }];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error);
+    }];
+}
+
+- (void)ActionTypeBtn:(UIButton *)btn{
+    
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:32]];
+    
+    SS(strongSelf);
+    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+        
+        strongSelf->_type = [NSString stringWithFormat:@"%@",ID];
+        strongSelf.typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+    };
+    [self.view addSubview:view];
 }
 
 - (void)initUI{
@@ -101,6 +183,7 @@
     }
     
     _typeBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 114 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_typeBtn addTarget:self action:@selector(ActionTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_typeBtn];
     
     _reasonTV = [[UITextView alloc] init];

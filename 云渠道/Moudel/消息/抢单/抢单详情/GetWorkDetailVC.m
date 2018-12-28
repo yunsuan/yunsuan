@@ -48,21 +48,41 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HouseRecordDetail_URL parameters:@{@"record_id":_recordId} success:^(id resposeObject) {
+    if ([self.type integerValue] == 1) {
         
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
+        [BaseRequest GET:HouseRecordDetail_URL parameters:@{@"record_id":_recordId} success:^(id resposeObject) {
             
-            [self SetData:resposeObject[@"data"]];
-        }else{
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
             
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }else{
         
-        NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
-    }];
+        [BaseRequest GET:RentRecordDetail_URL parameters:@{@"record_id":_recordId} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (void)SetData:(NSDictionary *)data{
@@ -79,23 +99,23 @@
 
 - (void)ActionValidBtn:(UIButton *)btn{
     
-    [BaseRequest GET:HouseGrabRecord_URL parameters:@{@"record_id":_recordId} success:^(id resposeObject) {
+    [BaseRequest GET:HouseGrabRecord_URL parameters:@{@"record_id":_recordId,@"type":self.type} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [self alertControllerWithNsstring:@"温馨提示" And:@"抢单成功" WithDefaultBlack:^{
-               
+                
                 if (self.getWorkDetailVCBlock) {
                     
                     self.getWorkDetailVCBlock();
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }];
-//            SurveyWaitDetailVC *nextVC = [[SurveyWaitDetailVC alloc] initWithSurveyId:_recordId];
-//            [self.navigationController pushViewController:nextVC animated:YES];
-//            RentingSurveyWaitDetailVC *nextVC = [[RentingSurveyWaitDetailVC alloc] init];
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            //            SurveyWaitDetailVC *nextVC = [[SurveyWaitDetailVC alloc] initWithSurveyId:_recordId];
+            //            [self.navigationController pushViewController:nextVC animated:YES];
+            //            RentingSurveyWaitDetailVC *nextVC = [[RentingSurveyWaitDetailVC alloc] init];
+            //            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
             [self showContent:resposeObject[@"msg"]];

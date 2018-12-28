@@ -116,15 +116,15 @@
                 
                 if ([resposeObject[@"data"] integerValue] == 1) {
                     
-//                    RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
-//                    nextVC.roomInvalidApplyVCBlock = ^{
-//
-//                        if (self.surveyWaitDetailVCBlock) {
-//
-//                            self.surveyWaitDetailVCBlock();
-//                        }
-//                    };
-//                    [self.navigationController pushViewController:nextVC animated:YES];
+                    RentingInvalidApplyVC *nextVC = [[RentingInvalidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+                    nextVC.rentingInvalidApplyVCBlock = ^{
+
+                        if (self.rentingSurveyWaitDetailVCBlock) {
+
+                            self.rentingSurveyWaitDetailVCBlock();
+                        }
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 }else{
                     
                     [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
@@ -151,16 +151,16 @@
                 
                 if ([resposeObject[@"data"] integerValue] == 1) {
                     
-//                    RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
-//                    nextVC.roomValidApplyVCBlock = ^{
-//
-//                        if (self.surveyWaitDetailVCBlock) {
-//
-//                            self.surveyWaitDetailVCBlock();
-//                            [self.navigationController popViewControllerAnimated:YES];
-//                        }
-//                    };
-//                    [self.navigationController pushViewController:nextVC animated:YES];
+                    RentingValidApplyVC *nextVC = [[RentingValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+                    nextVC.rentingValidApplyVCBlock = ^{
+
+                        if (self.rentingSurveyWaitDetailVCBlock) {
+
+                            self.rentingSurveyWaitDetailVCBlock();
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 }else{
                     
                     [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];

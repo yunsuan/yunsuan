@@ -73,17 +73,17 @@
 
 - (void)SetData:(NSDictionary *)data{
     
-    _contentArr = @[@[[NSString stringWithFormat:@"抢单时间:%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]];
+    _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"抢单时间:%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]]];
     
     _endtime = [NSString stringWithFormat:@"%@",data[@"timeLimit"]];
     _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    _state = data[@"current_state"];
+    _state = [NSString stringWithFormat:@"%@",data[@"current_state"]];
     [_detailTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (_contentArr.count) {
             
@@ -107,7 +107,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (section < _contentArr.count) {
             
@@ -133,7 +133,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (section == 2) {
             
@@ -162,9 +162,9 @@
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
-        if (section == 0) {
+        if (section == 1) {
             
             header.titleL.text = @"抢单信息";
         }else{
@@ -175,7 +175,7 @@
         if (section == 0) {
             
             header.titleL.text = @"失效倒计时";
-        }else if (section == 1) {
+        }else if (section == 2) {
             
             header.titleL.text = @"抢单信息";
         }else{
@@ -201,7 +201,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (![_state isEqualToString:@"待确认"] && ![_state isEqualToString:@"勘察中"]) {
+    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
         
         if (indexPath.section < _contentArr.count) {
             

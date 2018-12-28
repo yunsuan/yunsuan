@@ -671,6 +671,16 @@ static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
 
 #pragma mark -- 租房 --
 
+#pragma mark -- 租房-消息
+//抢单列表
+static NSString *const RentRecordList_URL = @"agent/rent/record/list";
+
+//抢单详情
+static NSString *const RentRecordDetail_URL = @"agent/rent/record/detail";
+
+//抢单
+static NSString *const RentGrabRecord_URL = @"agent/rent/grabRecord";
+
 #pragma mark -- 租房-房源
 
 //项目列表
@@ -692,6 +702,9 @@ static NSString *const RentHouseGetHouseAnalyse_URL = @"user/rent/house/getHouse
 static NSString *const RentRecord_URL = @"agent/rent/record";
 
 #pragma mark -- 租房 - 报备
+
+//项目地址信息
+static NSString *const RentProjectAddressInfo_URL = @"user/rent/project/addressInfo";
 
 //检测是否具备勘察能力
 static NSString *const RentCapacityCheck_URL = @"agent/rent/capacityCheck";
@@ -730,6 +743,12 @@ static NSString *const RentSurveyWaitConfirm_URL = @"agent/rent/survey/waitConfi
 //待确认详情
 static NSString *const RentSurveyWaitConfirmDetail_URL = @"agent/rent/survey/waitConfirm/detail";
 
+//勘察确认
+static NSString *const RentRecordValue_URL = @"agent/rent/record/value";
+
+//勘察失效
+static NSString *const RentRecordDisabled_URL = @"agent/rent/record/disabled";
+
 //勘查中列表
 static NSString *const RentSurveyUnderWay_URL = @"agent/rent/survey/underway";
 
@@ -738,6 +757,9 @@ static NSString *const RentSurveyUnderWayDetail_URL = @"agent/rent/survey/underw
 
 //勘察完成所需自动填充字段
 static NSString *const RentRecordSurveyNeedInfo_URL = @"agent/rent/record/surveyNeedInfo";
+
+//获取租房配套
+static NSString *const RentRecordUI_URL = @"user/rent/record/UI";
 
 //勘察完成
 static NSString *const RentSurveySuccess_URL = @"agent/rent/survey/success";
@@ -771,7 +793,7 @@ static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";
 //下架房源
 static NSString *const RentSurveyCancelSale_URL = @"agent/rent/survey/cancelSale";
 
-#pragma mark -- 租房-代购合同
+#pragma mark -- 租房-定租合同
 //获取经办人信息
 static NSString *const RentSubNeedAgent_URL = @"agent/rent/sub/need/agent";
 
@@ -780,3 +802,12 @@ static NSString *const RentSubNeedInfo_URL = @"agent/rent/sub/need/info";
 
 //添加代购合同
 static NSString *const RentAddPurchaseContract_URL = @"agent/rent/sub";
+
+//挞定
+static NSString *const RentSubBreach_URL = @"agent/rent/sub/breach";
+
+//挞定列表
+static NSString *const RentSubBreachList_URL = @"agent/rent/sub/breach/list";
+
+//挞定详情
+static NSString *const RentSubBreachDetail_URL = @"agent/rent/sub/breach/detail";
