@@ -857,16 +857,16 @@
                 }
             }else{
                 
-                RecommendInfoModel *model = _dataArr[indexPath.row];
                 
-                if (self.roomChildVCRecommendBlock) {
-                    
-                    self.roomChildVCRecommendBlock(model);
-                }
             }
         }else{
             
+            RecommendInfoModel *model = _dataArr[indexPath.row];
             
+            if (self.roomChildVCRecommendBlock) {
+                
+                self.roomChildVCRecommendBlock(model);
+            }
         }
     }else if(_AllType == 3){
         

@@ -16,7 +16,7 @@ typedef void(^SystemWorkConfirmDetailVCBlock)(void);
 
 @property (nonatomic, copy) SystemWorkConfirmDetailVCBlock systemWorkConfirmDetailVCBlock;
 
-- (instancetype)initWithSurveyId:(NSString *)surveyId;
+- (instancetype)initWithSurveyId:(NSString *)surveyId type:(NSString *)type;
 @end
 
 NS_ASSUME_NONNULL_END

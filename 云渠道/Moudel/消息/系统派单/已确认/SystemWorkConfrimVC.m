@@ -225,7 +225,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"]];
+    SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] type:_dataArr[indexPath.row][@"type"]];
     nextVC.systemWorkConfirmDetailVCBlock = ^{
         
         [self RequestMethod];

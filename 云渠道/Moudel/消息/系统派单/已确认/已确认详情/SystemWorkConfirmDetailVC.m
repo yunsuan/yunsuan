@@ -23,6 +23,7 @@
     
     NSArray *_titleArr;
     NSString *_surveyId;
+    NSString *_type;
     NSDictionary *_dataDic;
     NSString *_phone;
 }
@@ -36,12 +37,13 @@
 
 @implementation SystemWorkConfirmDetailVC
 
-- (instancetype)initWithSurveyId:(NSString *)surveyId
+- (instancetype)initWithSurveyId:(NSString *)surveyId type:(NSString *)type
 {
     self = [super init];
     if (self) {
         
         _surveyId = surveyId;
+        _type = type;
     }
     return self;
 }
@@ -66,7 +68,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HouseSurveyWaitConfirmDetail_URL parameters:@{@"survey_id":_surveyId} success:^(id resposeObject) {
+    [BaseRequest GET:HouseSurveyWaitConfirmDetail_URL parameters:@{@"survey_id":_surveyId,@"type":_type} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

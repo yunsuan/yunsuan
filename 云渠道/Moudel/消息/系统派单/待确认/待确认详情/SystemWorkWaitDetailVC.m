@@ -51,7 +51,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HousePushWaitDetail_URL parameters:@{@"push_id":_pushId} success:^(id resposeObject) {
+    [BaseRequest GET:HousePushWaitDetail_URL parameters:@{@"push_id":_pushId,@"type":_type} success:^(id resposeObject) {
 
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -95,7 +95,7 @@
                     
 //                    [self RequestMethod];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
-                    SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]]];
+                    SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]] type:resposeObject[@"data"][@"type"]];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];
             }else{

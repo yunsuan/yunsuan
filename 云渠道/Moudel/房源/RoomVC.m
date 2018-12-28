@@ -20,6 +20,7 @@
 #import "SecHouseSearchVC.h"
 #import "RentingComRoomDetailVC.h"
 #import "RentingAllRoomDetailVC.h"
+#import "RecommendInfoVC.h"
 
 #import "HouseSearchVC.h"
 
@@ -344,14 +345,6 @@
         
     };
     
-    //        vc.roomChildVCSecComModelBlock = ^(SecdaryComModel *model) {
-    //
-    //            SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:model.project_id city:_city];
-    //            nextVC.type = vc.typeId;
-    //            nextVC.hidesBottomBarWhenPushed = YES;
-    //            [self.navigationController pushViewController:nextVC animated:YES];
-    //        };
-    
     __weak RoomChildVC *weakvc = vc;
     vc.roomChildVCSecComModelBlock = ^(SecdaryComModel *model) {
         
@@ -364,6 +357,8 @@
     
     vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {
         
+        RecommendInfoVC *vc = [[RecommendInfoVC alloc] initWithUrlStr:model.content_url titleStr:model.title];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     
     vc.roomChildVCRentModelBlock = ^(RentingAllTableModel *model) {
