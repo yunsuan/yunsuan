@@ -14,9 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *detail_get;
 
-@property (nonatomic, strong) NSString *comment;
+@property (nonatomic, strong) NSMutableArray *commentList;
 
 @property (nonatomic, strong) NSString *create_time;
+
+@property (nonatomic, strong) NSString *type;
 
 @end
 

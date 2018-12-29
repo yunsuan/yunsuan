@@ -1,14 +1,14 @@
 //
-//  AttentionComCell.m
+//  AttentionRentingComCell.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/11/16.
+//  Created by 谷治墙 on 2018/12/29.
 //  Copyright © 2018 xiaoq. All rights reserved.
 //
 
-#import "AttentionComCell.h"
+#import "AttentionRentingComCell.h"
 
-@implementation AttentionComCell
+@implementation AttentionRentingComCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -20,7 +20,7 @@
     return self;
 }
 
-- (void)setModel:(AttetionComModel *)model{
+- (void)setModel:(RentingComModel *)model{
     
     if (model.img_url.length>0) {
         
@@ -38,30 +38,18 @@
     
     _titleL.text = model.project_name;
     _contentL.text = model.absolute_address;
-    NSMutableAttributedString *PriceAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"均价：%@元/平",model.average_price]];;
-    [PriceAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 3)];
-    [PriceAttr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11 *SIZE] range:NSMakeRange(0, 3)];
+    NSMutableAttributedString *PriceAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考租金：%@元/平",model.average_price]];;
+    [PriceAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
+    [PriceAttr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11 *SIZE] range:NSMakeRange(0, 5)];
     _averageL.attributedText = PriceAttr;
     
     _codeL.text = [NSString stringWithFormat:@"%@%@",@"小区编号：",model.project_code];
-    NSMutableAttributedString *onSaleAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"在售：%@套",model.on_sale]];
+    NSMutableAttributedString *onSaleAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"在租：%@套",model.on_rent]];
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 2)];
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(onSaleAttr.length - 1, 1)];
     _onSaleL.attributedText = onSaleAttr;
     _attionL.text = [NSString stringWithFormat:@"关注人数：%@人",model.subs_num];
     
-    for (int i = 0; i < model.commentList.count; i++) {
-        
-        NSDictionary *dic = model.commentList[i];
-        if (i == 0) {
-            
-            _reasonL.text = [NSString stringWithFormat:@"%@",dic[@"msg"]];
-        }else{
-            
-            _reasonL.text = [NSString stringWithFormat:@"%@\n%@",_reasonL.text,dic[@"msg"]];
-        }
-    }
-//    _reasonL.text = [model.commentList componentsJoinedByString:@","];
 }
 
 - (void)initUI{

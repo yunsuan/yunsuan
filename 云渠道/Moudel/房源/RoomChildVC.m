@@ -21,9 +21,11 @@
 //租房房源cell
 #import "RentingCell.h"
 //关注房源cell
-#import "AttentionHouseCell.h"
+#import "AttentionHouseCell.h" //二手房
+#import "AttentionRentingHouseCell.h" // 租房
 //订阅小区cell
-#import "AttentionComCell.h"
+#import "AttentionComCell.h" //二手房
+#import "AttentionRentingComCell.h" //租房
 //推荐cell
 #import "RecommendInfoCell.h"
 
@@ -137,9 +139,14 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
     [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     
+    [dic setObject:@"asc" forKey:@"sort_type"];
     if (_AllType == 1) {
         
-        
+        if ([self.status isEqualToString:@"关注"]) {
+            
+            [dic removeObjectForKey:@"page"];
+            [dic removeObjectForKey:@"sort_type"];
+        }
     }else{
         
         if ([self.param isEqualToString:@"houseProject"]) {
@@ -190,7 +197,6 @@
         
         
     }
-    [dic setObject:@"asc" forKey:@"sort_type"];
     
     [BaseRequest GET:_urlString parameters:dic success:^(id resposeObject) {
         
@@ -487,27 +493,56 @@
                 
                 if (tempDic[@"project_id"]) {
                     
-                    AttetionComModel *model = [[AttetionComModel alloc] initWithDictionary:tempDic];
-                    [_dataArr addObject:model];
+                    if ([tempDic[@"type"] integerValue] == 0) {
+                        
+//                        AttetionComModel *model = [[AttetionComModel alloc] initWithDictionary:tempDic];
+//                        [_dataArr addObject:model];
+
+                    }else if ([tempDic[@"type"] integerValue] == 1){
+                        
+                        AttetionComModel *model = [[AttetionComModel alloc] initWithDictionary:tempDic];
+                        [_dataArr addObject:model];
+
+                    }else{
+                        
+                        AttetionRentingComModel *model = [[AttetionRentingComModel alloc] initWithDictionary:tempDic];
+                        [_dataArr addObject:model];
+
+                    }
                 }else{
                     
-                    AttentionHouseModel *model = [[AttentionHouseModel alloc] init];//WithDictionary:tempDic];
-                    model.price_change = tempDic[@"price_change"];
-                    model.img_url = tempDic[@"img_url"];
-                    model.house_id = tempDic[@"house_id"];
-                    model.title = tempDic[@"title"];
-                    model.describe = tempDic[@"describe"];
-                    model.price = tempDic[@"price"];
-                    model.unit_price = tempDic[@"unit_price"];
-                    model.property_type = tempDic[@"property_type"];
-                    model.store_name = tempDic[@"store_name"];
-                    model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
-                    model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
-                    model.type = tempDic[@"type"];
-                    model.comment = tempDic[@"comment"];
-                    model.create_time = tempDic[@"create_time"];
-                    model.detail_get = tempDic[@"detail_get"];
-                    [_dataArr addObject:model];
+                    if ([tempDic[@"type"] integerValue] == 0) {
+                        
+                        
+                    }else if ([tempDic[@"type"] integerValue] == 1){
+                        
+                        AttentionHouseModel *model = [[AttentionHouseModel alloc] initWithDictionary:tempDic];
+                        [_dataArr addObject:model];
+
+                    }else{
+                        
+                        AtteionRentingHouseModel *model = [[AtteionRentingHouseModel alloc] initWithDictionary:tempDic];
+                        [_dataArr addObject:model];
+
+                    }
+                    
+//                    AttentionHouseModel *model = [[AttentionHouseModel alloc] init];//WithDictionary:tempDic];
+//                    model.price_change = tempDic[@"price_change"];
+//                    model.img_url = tempDic[@"img_url"];
+//                    model.house_id = tempDic[@"house_id"];
+//                    model.title = tempDic[@"title"];
+//                    model.describe = tempDic[@"describe"];
+//                    model.price = tempDic[@"price"];
+//                    model.unit_price = tempDic[@"unit_price"];
+//                    model.property_type = tempDic[@"property_type"];
+//                    model.store_name = tempDic[@"store_name"];
+//                    model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
+//                    model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
+//                    model.type = tempDic[@"type"];
+//                    model.comment = tempDic[@"comment"];
+//                    model.create_time = tempDic[@"create_time"];
+//                    model.detail_get = tempDic[@"detail_get"];
+//                    [_dataArr addObject:model];
                 }
             }
         }else{
@@ -671,7 +706,19 @@
             
             if ([self.status isEqualToString:@"关注"]) {
                 
-                if ([_dataArr[indexPath.row] isKindOfClass:[SecdaryComModel class]]) {
+                if ([_dataArr[indexPath.row] isKindOfClass:[AttetionRentingComModel class]]) {
+                    
+                    AttentionRentingComCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionRentingComCell"];
+                    if (!cell) {
+                        
+                        cell = [[AttentionRentingComCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionRentingComCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    cell.model = _dataArr[indexPath.row];
+                    return cell;
+                    break;
+                }else if([_dataArr[indexPath.row] isKindOfClass:[AttetionComModel class]]){
                     
                     AttentionComCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionComCell"];
                     if (!cell) {
@@ -683,7 +730,7 @@
                     cell.model = _dataArr[indexPath.row];
                     return cell;
                     break;
-                }else{
+                }else if([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]){
                     
                     AttentionHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionHouseCell"];
                     if (!cell) {
@@ -695,6 +742,21 @@
                     cell.model = _dataArr[indexPath.row];
                     return cell;
                     break;
+                }else if ([_dataArr[indexPath.row] isKindOfClass:[AtteionRentingHouseModel class]]){
+                    
+                    AttentionRentingHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttentionRentingHouseCell"];
+                    if (!cell) {
+                        
+                        cell = [[AttentionRentingHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AttentionRentingHouseCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    cell.model = _dataArr[indexPath.row];
+                    return cell;
+                    break;
+                }else{
+                    
+                    
                 }
             }else{
                 
@@ -844,21 +906,61 @@
         
         if ([self.status isEqualToString:@"关注"]) {
             
-            if ([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]) {
+            if ([_dataArr[indexPath.row] isKindOfClass:[AttetionRentingComModel class]]) {
+                
+                AttetionRentingComModel *model = _dataArr[indexPath.row];
+                if (self.roomChildVCAttentionRentComModelBlock) {
+                    
+                    self.roomChildVCAttentionRentComModelBlock(model);
+                }
+            }else if([_dataArr[indexPath.row] isKindOfClass:[AttetionComModel class]]){
+                
+                AttetionComModel *model = _dataArr[indexPath.row];
+                if (self.roomChildVCAttentionSecComModelBlock) {
+                    
+                    self.roomChildVCAttentionSecComModelBlock(model);
+                }
+            }else if([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]){
                 
                 AttentionHouseModel *model = _dataArr[indexPath.row];
                 
                 if ([model.detail_get integerValue] == 1) {
                     
-                    if (self.roomChildVCSecModelBlock) {
+                    if (self.roomChildVCAttentionSecModelBlock) {
                         
-                        self.roomChildVCSecModelBlock(model);
+                        self.roomChildVCAttentionSecModelBlock(model);
+                    }
+                }
+
+            }else if ([_dataArr[indexPath.row] isKindOfClass:[AtteionRentingHouseModel class]]){
+                
+                AtteionRentingHouseModel *model = _dataArr[indexPath.row];
+                if ([model.detail_get integerValue] == 1) {
+                    
+                    if (self.roomChildVCAttentionRentModelBlock) {
+                        
+                        self.roomChildVCAttentionRentModelBlock(model);
                     }
                 }
             }else{
                 
                 
             }
+//            if ([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]) {
+//
+//                AttentionHouseModel *model = _dataArr[indexPath.row];
+//
+//                if ([model.detail_get integerValue] == 1) {
+//
+//                    if (self.roomChildVCSecModelBlock) {
+//
+//                        self.roomChildVCSecModelBlock(model);
+//                    }
+//                }
+//            }else{
+//
+//
+//            }
         }else{
             
             RecommendInfoModel *model = _dataArr[indexPath.row];

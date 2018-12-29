@@ -283,11 +283,8 @@
         }else{
             
             ((RoomChildVC *)viewController).city = _city;
-            if (![((RoomChildVC *)viewController).status isEqualToString:@"推荐"]) {
-                
-                [(RoomChildVC *) viewController RequestMethod];
-            }
             
+            [(RoomChildVC *) viewController RequestMethod];
         }
     }
     else{
@@ -345,8 +342,25 @@
         
     };
     
+    vc.roomChildVCAttentionSecModelBlock = ^(AttentionHouseModel *model) {
+        
+        SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
+        nextVC.type = [model.type integerValue];
+        nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
     __weak RoomChildVC *weakvc = vc;
     vc.roomChildVCSecComModelBlock = ^(SecdaryComModel *model) {
+        
+        SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
+        
+        nextVC.type = weakvc.typeId;
+        nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
+    vc.roomChildVCAttentionSecComModelBlock = ^(AttetionComModel *model) {
         
         SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
         
@@ -369,12 +383,28 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     
+    vc.roomChildVCAttentionRentModelBlock = ^(AtteionRentingHouseModel *model) {
+        
+        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
+        nextVC.type = [model.type integerValue];
+        nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
     vc.roomChildVCRentComModelBlock = ^(RentingComModel *model) {
         
         RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
         nextVC.type = weakvc.typeId;
         [self.navigationController pushViewController:nextVC animated:YES];
     };
+    
+    vc.roomChildVCAttentionRentComModelBlock = ^(AttetionRentingComModel *model) {
+        
+        RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:model.project_id infoid:model.info_id city:_city];
+        nextVC.type = weakvc.typeId;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
+    
     return vc;
     
 }
