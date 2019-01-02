@@ -105,7 +105,7 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"区域：",@"意向总价：",@"意向面积：",@"购买用途：",@"付款方式：",@"已使用年限：",@"等级：",@"购房意向度：",@"购房紧迫度：",@"其他要求："];
+    _titleArr = @[@"区域：",@"意向总价：",@"意向面积：",@"购买用途",@"付款方式：",@"已使用年限：",@"等级：",@"租房意向度：",@"租房紧迫度：",@"其他要求："];
     
 }
 
@@ -588,7 +588,7 @@
             case 3:
             {
                 _useBtn = btn;
-                [_infoView addSubview:_useBtn];
+//                [_infoView addSubview:_useBtn];
                 break;
             }
             case 4:
@@ -877,32 +877,32 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_useL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_useL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_infoView).offset(10 *SIZE);
+//        make.top.equalTo(_areaTF.mas_bottom).offset(31 *SIZE);
+//        make.width.mas_equalTo(70 *SIZE);
+//    }];
+//
+//    [_useBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_infoView).offset(80 *SIZE);
+//        make.top.equalTo(_areaTF.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(258 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
+    
+    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
         make.top.equalTo(_areaTF.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_useBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_infoView).offset(80 *SIZE);
-        make.top.equalTo(_areaTF.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(258 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_useBtn.mas_bottom).offset(31 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
     [_payWayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(80 *SIZE);
-        make.top.equalTo(_useBtn.mas_bottom).offset(20 *SIZE);
+        make.top.equalTo(_areaTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];

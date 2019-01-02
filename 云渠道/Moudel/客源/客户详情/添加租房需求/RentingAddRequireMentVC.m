@@ -882,9 +882,9 @@
             }
             case 7:
             {
-                _purposeL = label;
-                _purposeL.text = @"置业目的:";
-                [_infoView addSubview:_purposeL];
+//                _purposeL = label;
+//                _purposeL.text = @"置业目的:";
+//                [_infoView addSubview:_purposeL];
                 break;
             }
             case 8:
@@ -972,7 +972,7 @@
                 case 7:
                 {
                     _purposeBtn = btn;
-                    [_infoView addSubview:_purposeBtn];
+//                    [_infoView addSubview:_purposeBtn];
                     break;
                 }
                 case 8:
@@ -1485,31 +1485,31 @@
         make.top.equalTo(_floorTF1.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
-        make.bottom.equalTo(_purposeBtn.mas_top).offset(-19 *SIZE);
+//        make.bottom.equalTo(_purposeBtn.mas_top).offset(-19 *SIZE);
     }];
     
-    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_standardTF.mas_bottom).offset(29 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_payWayL.mas_top).offset(-42 *SIZE);
-    }];
-    
-    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_infoView).offset(81 *SIZE);
-        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-        make.bottom.equalTo(_payWayBtn.mas_top).offset(-19 *SIZE);
-    }];
+//    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_infoView).offset(10 *SIZE);
+//        make.top.equalTo(_standardTF.mas_bottom).offset(29 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//        //        make.bottom.equalTo(_payWayL.mas_top).offset(-42 *SIZE);
+//    }];
+//
+//    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_infoView).offset(81 *SIZE);
+//        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//        make.bottom.equalTo(_payWayBtn.mas_top).offset(-19 *SIZE);
+//    }];
     
     [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_purposeBtn.mas_bottom).offset(29 *SIZE);
+        make.top.equalTo(_standardTF.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
         //        make.bottom.equalTo(_intentionL.mas_top).offset(-49 *SIZE);
@@ -1518,7 +1518,7 @@
     [_payWayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(81 *SIZE);
-        make.top.equalTo(_purposeBtn.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
         make.bottom.equalTo(_intentionTF.mas_top).offset(-19 *SIZE);
