@@ -104,22 +104,6 @@
     //    [self RequestMethod];
 }
 
-//- (void)SearchRequest{
-//
-//    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
-//
-//        //        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//            [self SetSearch:resposeObject[@"data"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        //        NSLog(@"%@",error);
-//    }];
-//}
-
 - (void)SetSearch:(NSDictionary *)data{
     
     [_searchArr removeAllObjects];
@@ -128,24 +112,6 @@
         [_searchArr addObject:key];
     }];
 }
-//
-//- (void)SetData:(NSArray *)data{
-//
-//    for (int i = 0; i < data.count; i++) {
-//
-//        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
-//        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//            if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                [tempDic setObject:@"" forKey:key];
-//            }
-//        }];
-//
-//    }
-//
-//    [self.MainTableView reloadData];
-//}
 
 - (void)RequestMethod{
     
@@ -181,7 +147,7 @@
         [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
     }
     [dic setObject:_asc forKey:@"sort_type"];
-    [BaseRequest GET:HouseProjectList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RentProjectList_URL parameters:dic success:^(id resposeObject) {
         
         
         NSLog(@"%@",resposeObject);

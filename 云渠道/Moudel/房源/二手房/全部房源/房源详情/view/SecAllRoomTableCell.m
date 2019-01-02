@@ -75,12 +75,12 @@
         _floorL.text = [NSString stringWithFormat:@"楼层：暂无数据"];
     }
     
-    if (model.check_in_time.length) {
+    if (model.check_in_time.length && ![model.check_in_time containsString:@"0000"]) {
         
         _inTimeL.text = [NSString stringWithFormat:@"可入住时间：%@后",model.check_in_time];
     }else{
         
-        _inTimeL.text = [NSString stringWithFormat:@"可入住时间：暂无数据"];
+        _inTimeL.text = [NSString stringWithFormat:@"可入住时间：随时入住"];
     }
     
     if ([model.property_limit integerValue]) {

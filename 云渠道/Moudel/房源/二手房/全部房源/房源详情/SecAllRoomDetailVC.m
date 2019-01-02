@@ -10,7 +10,7 @@
 #import "SecAllRoomProjectVC.h"
 #import "SecAllRoomStoreVC.h"
 #import "SecAllRoomOfficeVC.h"
-#import "SecComRoomAnalyzeVC.h"
+#import "SecAllRoomAnalyzeVC.h"
 #import "SecAllRoomBrokerageVC.h"
 #import "SecHouseSearchVC.h"
 
@@ -37,7 +37,7 @@
 
 @property (nonatomic, strong) SecAllRoomOfficeVC *roomOfficeProjectVC;
 
-@property (nonatomic, strong) SecComRoomAnalyzeVC *roomAnalyzeVC;
+@property (nonatomic, strong) SecAllRoomAnalyzeVC *roomAnalyzeVC;
 
 @property (nonatomic, strong) SecAllRoomBrokerageVC *roomBrokerageVC;
 
@@ -184,26 +184,25 @@
 //        _roomProjectVC.type = 
         [self addChildViewController:_roomProjectVC];
         
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
+        _roomAnalyzeVC = [[SecAllRoomAnalyzeVC alloc] initWithHouseId:_houseId type:1];
     }else if (self.type == 2){
         
         _roomStoreProjectVC = [[SecAllRoomStoreVC alloc] initWithHouseId:_houseId city:_city];
         [self addChildViewController:_roomStoreProjectVC];
         
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
+        _roomAnalyzeVC = [[SecAllRoomAnalyzeVC alloc] initWithHouseId:_houseId type:2];
     }else{
         
         _roomOfficeProjectVC = [[SecAllRoomOfficeVC alloc] initWithHouseId:_houseId city:_city];
         [self addChildViewController:_roomOfficeProjectVC];
         
-        _roomAnalyzeVC = [[SecComRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
+        _roomAnalyzeVC = [[SecAllRoomAnalyzeVC alloc] initWithHouseId:_houseId type:3];
     }
     _roomBrokerageVC = [[SecAllRoomBrokerageVC alloc] initWithHouseId:_houseId];
     
     
     
     //添加子控制器
-    
     
     [self addChildViewController:_roomBrokerageVC];
     

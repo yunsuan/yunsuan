@@ -223,6 +223,7 @@
 		0C997C2921D7232400F805AA /* AtteionRentingHouseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997C2821D7232400F805AA /* AtteionRentingHouseModel.m */; };
 		0C997C2C21D7234200F805AA /* AttentionRentingHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997C2B21D7234200F805AA /* AttentionRentingHouseCell.m */; };
 		0C997C2F21D760AE00F805AA /* RecommendTransmitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997C2E21D760AE00F805AA /* RecommendTransmitView.m */; };
+		0C997C3221D7919100F805AA /* SecAllRoomAnalyzeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C997C3121D7919100F805AA /* SecAllRoomAnalyzeVC.m */; };
 		0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */; };
 		0C9B01B1215DFDF20055A9A8 /* SecAllRoomOfficeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B0215DFDF20055A9A8 /* SecAllRoomOfficeModel.m */; };
 		0C9B01B4215E0B6D0055A9A8 /* SecAllRoomCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B01B3215E0B6D0055A9A8 /* SecAllRoomCollCell.m */; };
@@ -1059,6 +1060,8 @@
 		0C997C2B21D7234200F805AA /* AttentionRentingHouseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttentionRentingHouseCell.m; sourceTree = "<group>"; };
 		0C997C2D21D760AE00F805AA /* RecommendTransmitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendTransmitView.h; sourceTree = "<group>"; };
 		0C997C2E21D760AE00F805AA /* RecommendTransmitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendTransmitView.m; sourceTree = "<group>"; };
+		0C997C3021D7919100F805AA /* SecAllRoomAnalyzeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomAnalyzeVC.h; sourceTree = "<group>"; };
+		0C997C3121D7919100F805AA /* SecAllRoomAnalyzeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecAllRoomAnalyzeVC.m; sourceTree = "<group>"; };
 		0C9B01AB215DCD130055A9A8 /* SelectStoreVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectStoreVC.h; sourceTree = "<group>"; };
 		0C9B01AC215DCD130055A9A8 /* SelectStoreVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectStoreVC.m; sourceTree = "<group>"; };
 		0C9B01AF215DFDF20055A9A8 /* SecAllRoomOfficeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomOfficeModel.h; sourceTree = "<group>"; };
@@ -2997,6 +3000,8 @@
 				0C30630B20CE79A9004D1996 /* SecAllRoomProjectVC.m */,
 				0CFAA33A219143EA00BF6D35 /* SecAllRoomBrokerageVC.h */,
 				0CFAA33B219143EA00BF6D35 /* SecAllRoomBrokerageVC.m */,
+				0C997C3021D7919100F805AA /* SecAllRoomAnalyzeVC.h */,
+				0C997C3121D7919100F805AA /* SecAllRoomAnalyzeVC.m */,
 			);
 			path = "房源详情";
 			sourceTree = "<group>";
@@ -6589,6 +6594,7 @@
 				10AEEE7521A2A0B20049625B /* MyTeamTableHeader.m in Sources */,
 				0C08BF69206CC543005BB3B4 /* BrokerageDetailTableCell3.m in Sources */,
 				0CF04F92207CAFB000A45F4A /* PYSearchConst.m in Sources */,
+				0C997C3221D7919100F805AA /* SecAllRoomAnalyzeVC.m in Sources */,
 				0C997BFD21D4E38900F805AA /* RecommendInfoCell.m in Sources */,
 				0CDD705720D3697E00D6609C /* RoomSurveyFailVC.m in Sources */,
 				105E18B720637D310031558D /* UnpaidBrokerageVC.m in Sources */,
