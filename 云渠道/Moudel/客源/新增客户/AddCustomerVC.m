@@ -10,6 +10,9 @@
 #import "AddRequireMentVC.h"
 #import "AddStoreRequireMentVC.h"
 #import "AddOfficeRequireMentVC.h"
+#import "RentingAddRequireMentVC.h"
+#import "RentingAddStoreRequireMentVC.h"
+#import "RentingAddOfficeRequireMentVC.h"
 
 #import "SinglePickView.h"
 #import "DropDownBtn.h"
@@ -416,7 +419,7 @@
     }
     [_scrollview addSubview:_typeBtn];
     
-    if ([_needBtn.content.text isEqualToString:@"二手房"]) {
+    if ([_needBtn.content.text isEqualToString:@"二手房"] || [_needBtn.content.text isEqualToString:@"租房"]) {
         
         _typeBtn.hidden = NO;
         _typeL.hidden = NO;
@@ -677,7 +680,7 @@
         make.height.equalTo(@(33 *SIZE));
     }];
     
-    if ([_needBtn.content.text isEqualToString:@"二手房"]) {
+    if ([_needBtn.content.text isEqualToString:@"二手房"] || [_needBtn.content.text isEqualToString:@"租房"]) {
         
         [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
             
@@ -1097,7 +1100,7 @@
             nextVC.status = @"addCustom";
             nextVC.infoModel = _Customerinfomodel;
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+        }else if([_needBtn.content.text isEqualToString:@"二手房"]){
             
             if ([_typeBtn.content.text isEqualToString:@"商铺"]) {
                 
@@ -1117,6 +1120,28 @@
                 AddRequireMentVC *nextVC = [[AddRequireMentVC alloc] init];
                 nextVC.status = @"addCustom";
                 nextVC.infoModel = _Customerinfomodel;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
+        }else{
+            
+            if ([_typeBtn.content.text isEqualToString:@"商铺"]) {
+                
+                RentingAddStoreRequireMentVC *nextVC = [[RentingAddStoreRequireMentVC alloc] init];
+                nextVC.status = @"addCustom";
+//                nextVC.infoModel = _Customerinfomodel;
+                [self.navigationController pushViewController:nextVC animated:YES];
+                
+            }else if ([_typeBtn.content.text isEqualToString:@"写字楼"]){
+                
+                RentingAddOfficeRequireMentVC *nextVC = [[RentingAddOfficeRequireMentVC alloc] init];
+                nextVC.status = @"addCustom";
+//                nextVC.infoModel = _Customerinfomodel;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                RentingAddRequireMentVC *nextVC = [[RentingAddRequireMentVC alloc] init];
+                nextVC.status = @"addCustom";
+//                nextVC.infoModel = _Customerinfomodel;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }

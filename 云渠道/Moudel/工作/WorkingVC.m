@@ -150,9 +150,20 @@
     [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
 }
 
+- (void)ActionRightBtn:(UIButton *)btn{
+    
+    
+}
+
 -(void)initUI
 {
+    
+    self.rightBtn.hidden = NO;
+    [self.rightBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:self.MainTableView];
+    
     self.MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
         [self reloadType];

@@ -130,6 +130,7 @@
     // 创建锚点
     CGPoint anchorPoint;
     if ([gr isKindOfClass:[UIPinchGestureRecognizer class]]) { // 捏合手势
+        
         if (gr.numberOfTouches == 2) {
             // 当触摸开始时，获取两个触摸点
             CGPoint point1 = [gr locationOfTouch:0 inView:gr.view];
@@ -153,6 +154,9 @@
         // 如果旋转了
         anchorPoint.x = point.x / width;
         anchorPoint.y = point.y / height;
+    }else{
+        
+        
     };
     return [self py_setAnchorPoint:anchorPoint forView:self];
 }
