@@ -374,7 +374,7 @@
     _fjxx = _datasouce[row][@"LIST"][column];
     _headarr = @[@"房源",@"价格",[NSString stringWithFormat:@"物业：%@",_fjxx[@"WYMC"]]];
     _titlearr = @[@[@"房号：",@"楼栋：",@"单元：",@"楼层："],@[@"计价规则：",@"单价：",@"总价："],@[@"建筑面积：",@"套内面积：",@"户型信息："]];
-    _contentarr = @[@[_fjxx[@"FJMC"],_fjxx[@"LDMC"],_fjxx[@"DYMC"],_fjxx[@"FLOORNUM"]],@[_fjxx[@"JJGZ"],_fjxx[@"JZDJ"],_fjxx[@"FJZJ"]],@[_fjxx[@"JZMJ"],_fjxx[@"TNMJ"],_fjxx[@"HXMC"]]];
+    _contentarr = @[@[_fjxx[@"FJMC"],_fjxx[@"LDMC"],_fjxx[@"DYMC"],_fjxx[@"FLOORNUM"]],@[_fjxx[@"JJGZ"],[NSString stringWithFormat:@"%@元/㎡",_fjxx[@"JZDJ"]],[NSString stringWithFormat:@"%@元",_fjxx[@"FJZJ"]]],@[[NSString stringWithFormat:@"%@㎡",_fjxx[@"JZMJ"]],[NSString stringWithFormat:@"%@㎡",_fjxx[@"TNMJ"]],_fjxx[@"HXMC"]]];
 
     [self.view addSubview:self.maskView1];
     [self.view addSubview:self.detailView];
@@ -550,7 +550,7 @@
         _detailView.layer.cornerRadius = 3.3*SIZE;
         UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 18*SIZE, 266.7*SIZE, 20*SIZE)];
         lab.textColor = YJTitleLabColor;
-        lab.text = @"云算公馆";
+        lab.text = self.titleStr;
         lab.textAlignment = NSTextAlignmentCenter;
         lab.font = [UIFont boldSystemFontOfSize:20*SIZE];
         [_detailView addSubview:lab];

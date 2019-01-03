@@ -1007,6 +1007,7 @@
     if (_item == 2) {
         
         MaintainFollowDetailVC *nextVC = [[MaintainFollowDetailVC alloc] initWithDataDic:_followArr[indexPath.row]];
+        nextVC.levelStr = _houseDic[@"level"];
         [self.navigationController pushViewController:nextVC animated:YES];
         
     }

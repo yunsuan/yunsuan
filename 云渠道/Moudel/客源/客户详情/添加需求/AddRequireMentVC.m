@@ -955,6 +955,7 @@
                 {
 //                    _priceBtn = btn;
                     _priceBtn = [[WWSliderView alloc] initWithFrame:btn.frame sliderColor:COLOR(255, 224, 177, 1) leftSmallColor:YJBackColor leftBigColor:COLOR(255, 224, 177, 1) rightSmallColor:YJBackColor rightBigColor:COLOR(255, 224, 177, 1)];
+//                    _priceBtn
                     [_infoView addSubview:_priceBtn];
                     break;
                 }

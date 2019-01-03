@@ -135,7 +135,10 @@
         HousedistributVC *next_vc = [[HousedistributVC alloc]init];
         next_vc.project_id = _projiect_id;
         next_vc.build_id = _dylist[sender.tag-1000][@"LDID"];
-        next_vc.unit_id =@"0";
+        next_vc.unit_id = @"0";
+        next_vc.LDdic = _lddic;
+        next_vc.titleStr = self.titleStr;
+        next_vc.titleinfo = [NSString stringWithFormat:@"%@详情",_lddic[@"build_info"][@"build_name"]];
         [self.navigationController pushViewController:next_vc animated:YES];
     }
     

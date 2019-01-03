@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MaintainFollowDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *levelStr;
+
 - (instancetype)initWithDataDic:(NSDictionary *)dataDic;
 
 @end

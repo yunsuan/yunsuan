@@ -936,6 +936,7 @@
         nextVC.urlfor3d = _model.total_float_url_panorama;
         nextVC.img_name = _model.total_float_url_phone;
         nextVC.projiect_id = _projectId;
+        nextVC.titleStr = _model.project_name;
         [self.navigationController pushViewController:nextVC animated:YES];
     }
     if (indexPath.section == 2) {

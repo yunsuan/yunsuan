@@ -48,7 +48,7 @@
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 2)];
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(onSaleAttr.length - 1, 1)];
     _onSaleL.attributedText = onSaleAttr;
-    _attionL.text = [NSString stringWithFormat:@"关注人数：%@人",model.subs_num];
+    _attionL.text = [NSString stringWithFormat:@"订阅人数：%@人",model.subs_num];
     
 }
 

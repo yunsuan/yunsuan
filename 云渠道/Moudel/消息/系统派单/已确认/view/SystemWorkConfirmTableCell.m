@@ -36,7 +36,7 @@
     _typeL.text = [NSString stringWithFormat:@"类型：%@",DisableDic[@"type_name"]];
     _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",DisableDic[@"property_type"]];
     _nameL.text = [NSString stringWithFormat:@"小区名称：%@",DisableDic[@"house"]];
-    _getTimeL.text = [NSString stringWithFormat:@"失效类型：%@",DisableDic[@"disabled_time"]];
+    _getTimeL.text = [NSString stringWithFormat:@"失效类型：%@",DisableDic[@"disabled_state"]];
     _timeL.textColor = YJ170Color;
     _timeL.text = [NSString stringWithFormat:@"失效时间：%@",DisableDic[@"disabled_time"]];
 }

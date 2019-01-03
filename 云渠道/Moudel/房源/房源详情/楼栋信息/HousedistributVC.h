@@ -24,6 +24,8 @@
 @property (nonatomic , strong)NSDictionary *LDdic;
 @property (nonatomic , strong)NSString *titleinfo;
 
+@property (nonatomic, strong) NSString *titleStr;
+
 //status 0 有返回按钮
 @property(nonatomic,strong)NSString * statusStr;
 

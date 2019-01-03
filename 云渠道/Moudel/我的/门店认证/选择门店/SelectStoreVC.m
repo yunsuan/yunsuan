@@ -16,7 +16,7 @@
 
 #import "LocationManager.h"
 
-@interface SelectStoreVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+@interface SelectStoreVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UITextFieldDelegate>
 
 {
     
@@ -31,6 +31,7 @@
     NSMutableArray *_cityArr;
     NSMutableArray *_areaArr;
     NSMutableArray *_titleArr;
+    BOOL _isSearch;
 //    NSString *_cityCode;
 }
 
@@ -111,6 +112,56 @@
         
         _titleArr = [[NSMutableArray alloc] initWithArray:@[@"北京",@"不限",@"不限"]];
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    if (textField.text) {
+        
+        _isSearch = YES;
+        
+        NSDictionary *dic;
+        
+        if (_area.length) {
+            
+            dic = @{@"province":_province,
+                    @"city":_city,
+                    @"district":_area,
+                    @"store_name":textField.text
+                    };
+        }else if (_city.length){
+            
+            dic = @{@"province":_province,
+                    @"city":_city,
+                    @"store_name":textField.text
+                    };
+        }else{
+            
+            dic = @{@"province":_province,
+                    @"store_name":textField.text
+                    };
+        }
+        [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
+            
+            [_dataArr removeAllObjects];
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            NSLog(@"%@",error.localizedDescription);
+        }];
+    }else{
+        
+        [self showContent:@"请输入公司名称"];
+    }
+    return YES;
 }
 
 - (void)RequestMethod{
@@ -220,6 +271,7 @@
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_AddressArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
           
+            _isSearch = NO;
             _area = @"";
             _city = @"";
             _province = code;
@@ -251,6 +303,7 @@
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_cityArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
             
+            _isSearch = NO;
             _area = @"";
             _city = code;
             [_titleArr replaceObjectAtIndex:1 withObject:name];
@@ -265,6 +318,7 @@
         StoreAddressView *view = [[StoreAddressView alloc] initWithFrame:self.view.frame withdata:_areaArr];
         view.storeAddressViewBlock = ^(NSString * _Nonnull code, NSString * _Nonnull name, NSArray * _Nonnull nextArr) {
             
+            _isSearch = NO;
             _area = code;
             [_titleArr replaceObjectAtIndex:2 withObject:name];
 //            _areaArr = [NSMutableArray arrayWithArray:nextArr];
@@ -358,7 +412,7 @@
     _searchBar.rightView = rightImg;
     _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;
     _searchBar.clearButtonMode = UITextFieldViewModeWhileEditing;
-//    _searchBar.delegate = self;
+    _searchBar.delegate = self;
     [whiteView addSubview:_searchBar];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];

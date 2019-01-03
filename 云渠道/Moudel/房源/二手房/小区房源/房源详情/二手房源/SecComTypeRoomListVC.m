@@ -105,6 +105,7 @@
         model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
         model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
         model.type = tempDic[@"type"];
+        model.level = tempDic[@"level"];
         [_dataArr addObject:model];
     }
     

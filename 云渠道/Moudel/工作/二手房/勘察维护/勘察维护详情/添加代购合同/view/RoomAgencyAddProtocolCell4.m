@@ -57,6 +57,41 @@
     }else{
         
         _commisionTF.textfield.text = @"0%";
+        
+        _commisionL.hidden = YES;
+        _commisionTF.hidden = YES;
+//        [_commisionL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(self.contentView).offset(9 *SIZE);
+//            make.top.equalTo(_breachTF.mas_bottom).offset(31 *SIZE);
+//            make.width.mas_equalTo(70 *SIZE);
+//        }];
+//
+//        [_commisionTF mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(self.contentView).offset(81 *SIZE);
+//            make.top.equalTo(_breachTF.mas_bottom).offset(20 *SIZE);
+//            make.width.mas_equalTo(257 *SIZE);
+//            make.height.mas_equalTo(33 *SIZE);
+//            //        make.bottom.equalTo(self.contentView).offset(-20 *SIZE);
+//        }];
+        
+        [_payWayL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(9 *SIZE);
+            make.top.equalTo(_breachTF.mas_bottom).offset(31 *SIZE);
+            make.width.mas_equalTo(70 *SIZE);
+        }];
+        
+        [_payWayBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(81 *SIZE);
+            make.top.equalTo(_breachTF.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(257 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+            //        make.bottom.equalTo(self.contentView).offset(-20 *SIZE);
+        }];
+        
     }
     
     

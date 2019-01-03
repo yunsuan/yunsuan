@@ -502,6 +502,7 @@
             case 4:
             {
                 _proLimitTF = textField;
+                _proLimitTF.textfield.text = @"60";
                 [_contentView addSubview:_proLimitTF];
                 break;
             }
@@ -509,6 +510,7 @@
             {
                 _intentTF = textField;
                 _intentTF.textfield.text = @"0";
+                _intentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_contentView addSubview:_intentTF];
                 break;
             }
@@ -516,6 +518,7 @@
             {
                 _urgentTF = textField;
                 _urgentTF.textfield.text = @"0";
+                _urgentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_contentView addSubview:_urgentTF];
                 break;
             }

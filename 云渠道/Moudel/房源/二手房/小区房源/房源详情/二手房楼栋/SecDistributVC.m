@@ -132,6 +132,7 @@
             next_vc.project_id = _projiect_id;
             next_vc.build_id = _dylist[sender.tag-1000][@"LDID"];
             next_vc.unit_id = @"0";
+//            next_vc.titleStr = self.tit
             [self.navigationController pushViewController:next_vc animated:YES];
         }
     }

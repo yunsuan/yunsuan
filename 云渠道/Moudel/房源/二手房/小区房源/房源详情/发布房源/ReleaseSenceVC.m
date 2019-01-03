@@ -122,7 +122,7 @@
 -(void)initheader
 {
     
-    [self.view addSubview:self.dropbtn];
+//    [self.view addSubview:self.dropbtn];
     
 }
 
@@ -179,7 +179,7 @@
     _contentView.clipsToBounds = YES;
     _SMCinameSeatScrollViewDelegate = self;
     
-    self.myScrollView = [[SMScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+33.3*SIZE, 360*SIZE, SCREEN_Height-NAVIGATION_BAR_HEIGHT-33.3*SIZE)];
+    self.myScrollView = [[SMScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height-NAVIGATION_BAR_HEIGHT)];
     self.myScrollView.maximumZoomScale = 2;
     self.myScrollView.delegate = self;
     self.myScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -258,8 +258,8 @@
     
     self.centerLineView.hidden = YES;
     
-    [self.view addSubview:self.maskView];
-    [self.view addSubview:self.tanchuanView];
+//    [self.view addSubview:self.maskView];
+//    [self.view addSubview:self.tanchuanView];
 }
 
 - (void)drawSeat{
