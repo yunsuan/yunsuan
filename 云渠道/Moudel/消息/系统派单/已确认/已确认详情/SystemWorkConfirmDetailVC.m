@@ -26,6 +26,7 @@
     NSString *_type;
     NSDictionary *_dataDic;
     NSString *_phone;
+    NSString *_houseCode;
 }
 @property (nonatomic, strong) UITableView *detailTable;
 
@@ -89,6 +90,7 @@
     
     _dataDic = data;
     _titleArr = @[@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]],data[@"timeLimit"]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]];
+    _houseCode = data[@"house_code"];
     [_detailTable reloadData];
 }
 
@@ -144,6 +146,7 @@
         UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
             RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+            nextVC.houseCode = _houseCode;
             nextVC.roomValidApplyVCBlock = ^{
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];

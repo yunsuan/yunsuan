@@ -12,6 +12,8 @@
 #import "RentingSurveyWaitVC.h"
 #import "SystemoWorkVC.h"
 
+#import "RentingCompleteSurveyInfoVC.h"
+
 #import "DateChooseView.h"
 
 #import "DropDownBtn.h"
@@ -133,6 +135,15 @@
                 }];
                 UIAlertAction *alert2 = [UIAlertAction actionWithTitle:@"立即勘察" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
+                    RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                    nextVC.rentingCompleteSurveyInfoVCBlock = ^{
+                        
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+                    
+                    };
+//                    nextVC.dataDic = _dataArr[index];
+                    nextVC.surveyId = _surveyId;
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 }];
                 [alert addAction:alert1];
                 [alert addAction:alert2];

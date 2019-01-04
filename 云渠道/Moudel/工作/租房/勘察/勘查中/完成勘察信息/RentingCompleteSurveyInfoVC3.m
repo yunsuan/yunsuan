@@ -10,6 +10,7 @@
 
 #import "RentingSurveyVC.h"
 #import "SecDistributVC.h"
+#import "SystemoWorkVC.h"
 
 #import "TextFieldImgCell.h"
 #import "ChangeImgNameView.h"
@@ -113,6 +114,11 @@
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                     if ([vc isKindOfClass:[SecDistributVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                    
+                    if ([vc isKindOfClass:[SystemoWorkVC class]]) {
                         
                         [self.navigationController popToViewController:vc animated:YES];
                     }

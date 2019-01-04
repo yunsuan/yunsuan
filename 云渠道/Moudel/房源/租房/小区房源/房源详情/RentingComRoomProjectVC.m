@@ -420,7 +420,7 @@
 //                [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
-                OverviewVC *nextVC = [[OverviewVC alloc] init];
+                OverviewVC *nextVC = [[OverviewVC alloc] initWithinfoid:_info_id];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         };

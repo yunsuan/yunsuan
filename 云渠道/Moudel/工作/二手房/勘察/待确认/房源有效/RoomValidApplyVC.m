@@ -10,6 +10,7 @@
 #import "RoomSurveyVC.h"
 #import "RoomSurveyWaitVC.h"
 #import "SystemoWorkVC.h"
+#import "CompleteSurveyInfoVC.h"
 
 #import "DateChooseView.h"
 
@@ -109,6 +110,20 @@
                 }];
                 UIAlertAction *alert2 = [UIAlertAction actionWithTitle:@"立即勘察" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     
+                    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                    nextVC.completeSurveyInfoVCBlock = ^{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+//                        [self RequestMethod];
+//                        if (self.roomSurveyingBlock) {
+//
+//                            self.roomSurveyingBlock();
+//                        }
+                    };
+//                    nex
+//                    nextVC.dataDic = _dataArr[index];
+                    nextVC.surveyId = _surveyId;
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 }];
                 [alert addAction:alert1];
                 [alert addAction:alert2];

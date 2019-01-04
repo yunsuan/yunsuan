@@ -282,6 +282,9 @@
                     if ([obj isKindOfClass:[NSNull class]]) {
                         
                         tempDic[key] = @"";
+                    }else{
+                        
+                        [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
                     }
                 }
             }];

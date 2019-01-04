@@ -14,6 +14,8 @@ typedef void(^RoomValidApplyVCBlock)(void);
 
 @property (nonatomic, copy) RoomValidApplyVCBlock roomValidApplyVCBlock;
 
+@property (nonatomic, strong) NSString *houseCode;
+
 - (instancetype)initWithData:(NSDictionary *)data SurveyId:(NSString *)surveyId;
 
 @end
