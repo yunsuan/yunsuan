@@ -136,7 +136,7 @@
         _houseDic = [NSMutableDictionary dictionaryWithDictionary:data[@"house"]];
         [_houseDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
-            if ([key isEqualToString:@"pay_way"]) {
+            if ([key isEqualToString:@"pay_way"] || [key isEqualToString:@"receive_way"] ) {
                 
                 if ([obj isKindOfClass:[NSNull class]]) {
                     
@@ -668,7 +668,7 @@
                         
                     }else{
                         
-                        [BaseRequest GET:HouseSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index - 1][@"contact_id"]} success:^(id resposeObject) {
+                        [BaseRequest GET:RentSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index - 1][@"contact_id"]} success:^(id resposeObject) {
                             
                             NSLog(@"%@",resposeObject);
                             if ([resposeObject[@"code"] integerValue] == 200) {
@@ -692,7 +692,7 @@
                         
                     }else{
                         
-                        [BaseRequest GET:HouseSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index + 1][@"contact_id"]} success:^(id resposeObject) {
+                        [BaseRequest GET:RentSurveyContactChangeSort_URL parameters:@{@"contact_id":_peopleArr[index][@"contact_id"],@"another_contact_id":_peopleArr[index + 1][@"contact_id"]} success:^(id resposeObject) {
                             
                             NSLog(@"%@",resposeObject);
                             if ([resposeObject[@"code"] integerValue] == 200) {

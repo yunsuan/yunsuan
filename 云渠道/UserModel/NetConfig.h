@@ -773,19 +773,28 @@ static NSString *const RentSurveyDisabledDetail_URL = @"agent/rent/survey/disabl
 //勘察完成列表
 static NSString *const RentSurveyFinish_URL = @"agent/rent/survey/finish";
 
+#pragma mark -- 租房 - 工作 - 勘察维护 --
+
 //勘察维护列表
 static NSString *const RentSurveyList_URL = @"agent/rent/survey/list";
 
 //勘察维护详情
 static NSString *const RentSurveyDetail_URL = @"agent/rent/survey/detail";
 
-#pragma mark -- 租房 - 工作 - 勘察维护 --
-
 //添加跟进记录
 static NSString *const RentSurveyAddFollow_URL = @"agent/rent/survey/addFollow";
 
 //修改房源信息
 static NSString *const RentSurveyUpdateHouseInfo_URL = @"agent/rent/survey/updateHouseInfo";
+
+//添加联系人
+static NSString *const RentSurveyAddContact_URL = @"agent/rent/survey/addContact";
+
+//修改联系人
+static NSString *const RentSurveyUpdateContact_URL = @"agent/rent/survey/updateContact";
+
+//联系人修改排序
+static NSString *const RentSurveyContactChangeSort_URL = @"agent/rent/survey/contact/changeSort";
 
 //修改图片
 static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";

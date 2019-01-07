@@ -605,6 +605,7 @@
                 model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
                 model.type = tempDic[@"type"];
                 model.info_id = tempDic[@"info_id"];
+                model.level = tempDic[@"level"];
                 [_dataArr addObject:model];
             }
         }else{

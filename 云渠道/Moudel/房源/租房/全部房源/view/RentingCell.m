@@ -22,7 +22,8 @@
 
 - (void)setModel:(RentingAllTableModel *)model{
     
-    if (model.img_url.length>0) {
+    if (model.img_url.length > 0) {
+        
         [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.img_url]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (error) {
@@ -30,14 +31,13 @@
                 _headImg.image = [UIImage imageNamed:@"default_3"];
             }
         }];
-    }
-    else{
+    }else{
+       
         _headImg.image = [UIImage imageNamed:@"default_3"];
     }
     
-    
-    
     _titleL.text = model.title;
+    _roomLevelL.text = model.level;
     _contentL.text = model.describe;
     
     if (model.unit_price.length) {
@@ -91,6 +91,11 @@
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
     _titleL.numberOfLines = 0;
     [self.contentView addSubview:_titleL];
+    
+    _roomLevelL = [[UILabel alloc] init];
+    _roomLevelL.textColor = YJContentLabColor;
+    _roomLevelL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [self.contentView addSubview:_roomLevelL];
     
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
@@ -162,6 +167,13 @@
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(123 *SIZE);
+        make.top.equalTo(_titleL.mas_bottom).offset(8 *SIZE);
+        make.right.equalTo(self.contentView).offset(-45 *SIZE);
+    }];
+    
+    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(320 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];

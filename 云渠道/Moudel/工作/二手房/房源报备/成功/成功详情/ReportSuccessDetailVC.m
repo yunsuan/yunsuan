@@ -85,7 +85,7 @@
     
     _endtime = [NSString stringWithFormat:@"%@",data[@"timeLimit"]];
     _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    _state = [NSString stringWithFormat:@"%@",data[@"current_state_name"]];//data[@"current_state"];
+    _state = [NSString stringWithFormat:@"%@",data[@"current_state"]];//data[@"current_state"];
     [_detailTable reloadData];
 }
 

@@ -164,6 +164,12 @@
     
     // 创建控制器
     _roomAgencyDoneVC = [[RentingRoomAgencyDoneVC alloc] init];
+    WS(weakSelf);
+    _roomAgencyDoneVC.rentingRoomAgencyDoneVCBlock = ^{
+      
+        [weakSelf.roomAgencyDoneVC postWithpage:@"1"];
+        [weakSelf.roomAgencyProtocolVC RequestMethod];
+    };
     _roomAgencyProtocolVC = [[RentingRoomAgencyCancelVC alloc] init];
     
     // 添加为self的子控制器

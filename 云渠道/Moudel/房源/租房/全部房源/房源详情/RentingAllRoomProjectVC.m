@@ -14,8 +14,8 @@
 #import "YBImageBrowser.h"
 
 #import "RentingAllRoomProjectVC.h"
-#import "SecComRoomDetailVC.h"
-#import "SecAllRoomDetailVC.h"
+#import "RentingComRoomDetailVC.h"
+#import "RentingAllRoomDetailVC.h"
 
 #import "RentingAllRoomDetailTableHeader.h"
 #import "SecAllRoomDetailTableHeader2.h"
@@ -38,6 +38,8 @@
     NSString *_city;
     NSString *_focusId;
     NSString *_phone;
+    
+    NSInteger _numOfSec;
 }
 @property (nonatomic, strong) UITableView *roomTable;
 
@@ -75,6 +77,7 @@
 
 - (void)initDataSource{
     
+    _numOfSec = 6;
     _imgArr = [@[] mutableCopy];
     _model = [[RentingAllRoomProjectModel alloc] init];
     _focusDic = [@{} mutableCopy];
@@ -235,7 +238,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 6;
+    _numOfSec = 6;
+    if (!_houseArr.count) {
+        
+        _numOfSec = _numOfSec - 1;
+    }
+    if (!_model.match_tags.count) {
+        
+        _numOfSec = _numOfSec - 1;
+    }
+    return _numOfSec;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -335,63 +347,118 @@
         header.moreBtn.hidden = NO;
         header.addBtn.hidden = NO;
         
-        switch (section) {
-            case 1:
-            {
-                if (_model.house_code.length) {
-                    
-                    header.titleL.text = [NSString stringWithFormat:@"房源信息(%@)",_model.house_code];
-                }else{
-                    
-                    header.titleL.text = @"房源信息";
-                }
-                
-                header.moreBtn.hidden = YES;
-                header.line.hidden = YES;
-                header.addBtn.hidden = YES;
-                break;
-            }
-            case 2:{
-                
-                header = nil;
-                break;
-            }
-            case 3:
-            {
-                header = nil;
-                break;
-            }
-            case 4:
-            {
-                header.titleL.text = _model.project_name;
-                [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
-                header.secAllRoomDetailMoreBlock = ^{
-                    
-                    if (_model.project_id) {
+        if (_model.match_tags.count) {
+            
+            switch (section) {
+                case 1:
+                {
+                    if (_model.house_code.length) {
                         
-                        SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
-                        nextVC.type = @"0";
-                        [self.navigationController pushViewController:nextVC animated:YES];
+                        header.titleL.text = [NSString stringWithFormat:@"房源信息(%@)",_model.house_code];
                     }else{
                         
-                        [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+                        header.titleL.text = @"房源信息";
                     }
-                };
-                header.addBtn.hidden = YES;
-                break;
+                    
+                    header.moreBtn.hidden = YES;
+                    header.line.hidden = YES;
+                    header.addBtn.hidden = YES;
+                    break;
+                }
+                case 2:{
+                    
+                    header = nil;
+                    break;
+                }
+                case 3:
+                {
+                    header = nil;
+                    break;
+                }
+                case 4:
+                {
+                    header.titleL.text = _model.project_name;
+                    [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
+                    header.secAllRoomDetailMoreBlock = ^{
+                        
+                        if (_model.project_id) {
+                            
+                            RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+                            nextVC.type = @"0";
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+                        }
+                    };
+                    header.addBtn.hidden = YES;
+                    break;
+                }
+                case 5:
+                {
+                    header.titleL.text = @"小区其他房源";
+                    header.moreBtn.hidden = YES;
+                    header.addBtn.hidden = YES;
+                    header.line.hidden = YES;
+                    break;
+                }
+                default:
+                    break;
             }
-            case 5:
-            {
-                header.titleL.text = @"小区其他房源";
-                header.moreBtn.hidden = YES;
-                header.addBtn.hidden = YES;
-                header.line.hidden = YES;
-                break;
+        }else{
+            
+            switch (section) {
+                case 1:
+                {
+                    if (_model.house_code.length) {
+                        
+                        header.titleL.text = [NSString stringWithFormat:@"房源信息(%@)",_model.house_code];
+                    }else{
+                        
+                        header.titleL.text = @"房源信息";
+                    }
+                    
+                    header.moreBtn.hidden = YES;
+                    header.line.hidden = YES;
+                    header.addBtn.hidden = YES;
+                    break;
+                }
+                case 2:
+                {
+                    header = nil;
+                    break;
+                }
+                case 3:
+                {
+                    header.titleL.text = _model.project_name;
+                    [header.moreBtn setTitle:@"小区详情 >>" forState:UIControlStateNormal];
+                    header.secAllRoomDetailMoreBlock = ^{
+                        
+                        if (_model.project_id) {
+                            
+                            RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+                            nextVC.type = @"0";
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+                        }
+                    };
+                    header.addBtn.hidden = YES;
+                    break;
+                }
+                case 4:
+                {
+                    header.titleL.text = @"小区其他房源";
+                    header.moreBtn.hidden = YES;
+                    header.addBtn.hidden = YES;
+                    header.line.hidden = YES;
+                    break;
+                }
+                default:
+                    break;
             }
-            default:
-                break;
         }
-        
         return header;
     }
 }
@@ -403,132 +470,249 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 1) {
+    if (_model.match_tags.count) {
         
-        RentingAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomTableCell"];
-        if (!cell) {
+        if (indexPath.section == 1) {
             
-            cell = [[RentingAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomTableCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.model = _model;
-        
-        return cell;
-    }else if (indexPath.section == 2) {
-        
-        SecAllRoomStoreEquipCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomStoreEquipCell"];
-        if (!cell) {
+            RentingAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomTableCell"];
+            if (!cell) {
+                
+                cell = [[RentingAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomTableCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell = [[SecAllRoomStoreEquipCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomStoreEquipCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.dataArr = _model.match_tags;
-        [cell.coll reloadData];
-        return cell;
-    }else if (indexPath.section == 3) {
-        
-        RoomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell4"];
-        if (!cell) {
+            cell.model = _model;
             
-            cell = [[RoomDetailTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell4"];
-            cell.delegate = self;
-            [cell.contentView addSubview:self.mapView];
-            UIGestureRecognizer *gestur = [[UIGestureRecognizer alloc]init];
-            gestur.delegate=self;
-            [_roomTable addGestureRecognizer:gestur];
+            return cell;
+        }else if (indexPath.section == 2) {
             
-            UIGestureRecognizer *gestur1 = [[UIGestureRecognizer alloc]init];
-            gestur1.delegate=self;
-            [_mapView addGestureRecognizer:gestur1];
+            SecAllRoomStoreEquipCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomStoreEquipCell"];
+            if (!cell) {
+                
+                cell = [[SecAllRoomStoreEquipCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomStoreEquipCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            cell.dataArr = _model.match_tags;
+            [cell.coll reloadData];
+            return cell;
+        }else if (indexPath.section == 3) {
             
-            [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(cell.contentView).offset(0);
-                make.top.equalTo(cell.contentView).offset(33 *SIZE);
-                make.right.equalTo(cell.contentView).offset(0);
-                make.width.equalTo(@(360 *SIZE));
-                make.height.equalTo(@(187 *SIZE));
-                make.bottom.equalTo(cell.contentView).offset(-59 *SIZE);
-            }];
-        }
-        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
-        [_mapView setCenterCoordinate:cllocation animated:YES];
-        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-        annotation.coordinate = cllocation;
-        annotation.title = _model.project_name;
-        [_mapView addAnnotation:annotation];
-        //                    cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-        
-    }else if (indexPath.section == 4){
-        
-        SecAllRoomTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell3"];
-        if (!cell) {
+            RoomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell4"];
+            if (!cell) {
+                
+                cell = [[RoomDetailTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell4"];
+                cell.delegate = self;
+                [cell.contentView addSubview:self.mapView];
+                UIGestureRecognizer *gestur = [[UIGestureRecognizer alloc]init];
+                gestur.delegate=self;
+                [_roomTable addGestureRecognizer:gestur];
+                
+                UIGestureRecognizer *gestur1 = [[UIGestureRecognizer alloc]init];
+                gestur1.delegate=self;
+                [_mapView addGestureRecognizer:gestur1];
+                
+                
+                [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(cell.contentView).offset(0);
+                    make.top.equalTo(cell.contentView).offset(33 *SIZE);
+                    make.right.equalTo(cell.contentView).offset(0);
+                    make.width.equalTo(@(360 *SIZE));
+                    make.height.equalTo(@(187 *SIZE));
+                    make.bottom.equalTo(cell.contentView).offset(-59 *SIZE);
+                }];
+            }
+            CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+            [_mapView setCenterCoordinate:cllocation animated:YES];
+            BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+            annotation.coordinate = cllocation;
+            annotation.title = _model.project_name;
+            [_mapView addAnnotation:annotation];
+            //                    cell.delegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell = [[SecAllRoomTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell3"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.model = _model;
-        
-        return cell;
-    }else{
-        
-        SecAllRoomTableOtherHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableOtherHouseCell"];
-        if (!cell) {
+            return cell;
             
-            cell = [[SecAllRoomTableOtherHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableOtherHouseCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        if (_houseArr.count) {
+        }else if (indexPath.section == 4){
             
+            SecAllRoomTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell3"];
+            if (!cell) {
+                
+                cell = [[SecAllRoomTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.model = _model;
+            
+            return cell;
+        }else{
+            
+            SecAllRoomTableOtherHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableOtherHouseCell"];
+            if (!cell) {
+                
+                cell = [[SecAllRoomTableOtherHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableOtherHouseCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            //        if (_houseArr.count) {
+            //
+            //            cell.num = _houseArr.count;
+            //        }else{
+            //
+            //            cell.num = 1;
+            //        }
             cell.num = _houseArr.count;
-        }else{
-            
-            cell.num = 1;
-        }
-        
-        if (_houseArr.count) {
-            
-            cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
-            [cell.cellColl reloadData];
-        }else{
-            
-            [cell.cellColl reloadData];
-        }
-        
-        cell.secAllRoomTableOtherHouseCellCollBlock = ^(NSInteger index) {
             
             if (_houseArr.count) {
                 
-                SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:_houseArr[index][@"house_id"] city:_city];
-                nextVC.type = [_houseArr[index][@"type"] integerValue];
-                [self.navigationController pushViewController:nextVC animated:YES];
+                cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
+                [cell.cellColl reloadData];
+            }else{
+                
+                [cell.cellColl reloadData];
             }
-        };
+            
+            cell.secAllRoomTableOtherHouseCellCollBlock = ^(NSInteger index) {
+                
+                if (_houseArr.count) {
+                    
+                    RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:_houseArr[index][@"house_id"] city:_city];
+                    nextVC.type = [_houseArr[index][@"type"] integerValue];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
+            };
+            
+            return cell;
+            
+        }
+    }else{
         
-        return cell;
-        
+        if (indexPath.section == 1) {
+            
+            RentingAllRoomTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RentingAllRoomTableCell"];
+            if (!cell) {
+                
+                cell = [[RentingAllRoomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RentingAllRoomTableCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.model = _model;
+            
+            return cell;
+        }else if (indexPath.section == 2) {
+            
+            RoomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell4"];
+            if (!cell) {
+                
+                cell = [[RoomDetailTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell4"];
+                cell.delegate = self;
+                [cell.contentView addSubview:self.mapView];
+                UIGestureRecognizer *gestur = [[UIGestureRecognizer alloc]init];
+                gestur.delegate=self;
+                [_roomTable addGestureRecognizer:gestur];
+                
+                UIGestureRecognizer *gestur1 = [[UIGestureRecognizer alloc]init];
+                gestur1.delegate=self;
+                [_mapView addGestureRecognizer:gestur1];
+                
+                
+                [_mapView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(cell.contentView).offset(0);
+                    make.top.equalTo(cell.contentView).offset(33 *SIZE);
+                    make.right.equalTo(cell.contentView).offset(0);
+                    make.width.equalTo(@(360 *SIZE));
+                    make.height.equalTo(@(187 *SIZE));
+                    make.bottom.equalTo(cell.contentView).offset(-59 *SIZE);
+                }];
+            }
+            CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+            [_mapView setCenterCoordinate:cllocation animated:YES];
+            BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+            annotation.coordinate = cllocation;
+            annotation.title = _model.project_name;
+            [_mapView addAnnotation:annotation];
+            //                    cell.delegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+            
+        }else if (indexPath.section == 3){
+            
+            SecAllRoomTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableCell3"];
+            if (!cell) {
+                
+                cell = [[SecAllRoomTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.model = _model;
+            
+            return cell;
+        }else{
+            
+            SecAllRoomTableOtherHouseCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomTableOtherHouseCell"];
+            if (!cell) {
+                
+                cell = [[SecAllRoomTableOtherHouseCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomTableOtherHouseCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.num = _houseArr.count;
+            
+            if (_houseArr.count) {
+                
+                cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
+                [cell.cellColl reloadData];
+            }else{
+                
+                [cell.cellColl reloadData];
+            }
+            
+            cell.secAllRoomTableOtherHouseCellCollBlock = ^(NSInteger index) {
+                
+                if (_houseArr.count) {
+                    
+                    RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:_houseArr[index][@"house_id"] city:_city];
+                    nextVC.type = [_houseArr[index][@"type"] integerValue];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
+            };
+            
+            return cell;
+            
+        }
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 4) {
+    if (_model.match_tags.count) {
         
-        if (_model.project_id.length) {
+        if (indexPath.section == 4) {
             
-            SecComRoomDetailVC *nextVC = [[SecComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
-            nextVC.type = @"0";
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+            if (_model.project_id.length) {
+                
+                RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+                nextVC.type = @"0";
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+            }
+        }
+    }else{
+        
+        if (indexPath.section == 3) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+            if (_model.project_id.length) {
+                
+                RentingComRoomDetailVC *nextVC = [[RentingComRoomDetailVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id city:_city];
+                nextVC.type = @"0";
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到小区信息"];
+            }
         }
     }
 }

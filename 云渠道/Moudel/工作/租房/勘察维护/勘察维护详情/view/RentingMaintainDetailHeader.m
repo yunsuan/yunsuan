@@ -106,10 +106,9 @@
     
     if (dataDic[@"receive_way"]) {
         
-//        NSArray *arr = [NSArray arrayWithArray:dataDic[@"receive_way"]];
-//        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",[arr componentsJoinedByString:@","]];
-//        _payWayL.text = [NSArray arrayWithArray:[dataDic[@"receive_way"] componentsJoinedByString:@","]];
-        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",dataDic[@"receive_way"]];
+        NSArray *arr = [NSArray arrayWithArray:dataDic[@"receive_way"]];
+        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",[arr componentsJoinedByString:@","]];
+//        _payWayL.text = [NSString stringWithFormat:@"收款方式:%@",dataDic[@"receive_way"]];
     }else{
         
         _payWayL.text = [NSString stringWithFormat:@"收款方式:暂无数据"];

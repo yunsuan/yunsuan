@@ -342,7 +342,10 @@
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
                         [self RequestMethod];
                     };
-                    nextVC.dataDic = resposeObject[@"data"];
+                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
+                    [tempDic setObject:@"1" forKey:@"is_other"];
+                    nextVC.status = @"direct";
+                    nextVC.dataDic = tempDic;
                     nextVC.surveyId = resposeObject[@"data"][@"survey_id"];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };

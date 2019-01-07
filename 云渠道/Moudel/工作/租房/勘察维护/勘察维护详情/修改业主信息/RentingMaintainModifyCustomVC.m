@@ -142,7 +142,7 @@
     if ([self.status isEqualToString:@"添加"]) {
         
         [dic setObject:self.houseId forKey:@"house_id"];
-        [BaseRequest POST:HouseSurveyAddContact_URL parameters:dic success:^(id resposeObject) {
+        [BaseRequest POST:RentSurveyAddContact_URL parameters:dic success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
@@ -173,7 +173,7 @@
         }];
     }else{
         [dic setObject:self.contactId forKey:@"contact_id"];
-        [BaseRequest POST:HouseSurveyUpdateContact_URL parameters:dic success:^(id resposeObject) {
+        [BaseRequest POST:RentSurveyUpdateContact_URL parameters:dic success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
