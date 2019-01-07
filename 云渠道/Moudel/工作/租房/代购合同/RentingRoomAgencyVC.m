@@ -54,6 +54,21 @@
 //    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    if (_scrollView.contentOffset.x == 0) {
+        
+        _roomAgencyDoneVC.search = textField.text;
+        [_roomAgencyDoneVC postWithpage:@"1"];
+    }else{
+        
+        _roomAgencyProtocolVC.search = textField.text;
+        [_roomAgencyProtocolVC RequestMethod];
+    }
+    return YES;
+}
+
 #pragma mark -- collectionview
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     

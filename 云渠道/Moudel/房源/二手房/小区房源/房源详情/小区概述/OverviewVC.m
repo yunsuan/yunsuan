@@ -97,8 +97,8 @@
     }];
     
     NSArray *arr1 = @[tempData[@"project_name"],tempData[@"sale_state"],tempData[@"developer_name"],[NSString stringWithFormat:@"%@-%@-%@",tempData[@"province_name"],tempData[@"city_name"],tempData[@"district_name"]],tempData[@"decoration_company"],tempData[@"absolute_address"]];
-    NSArray *arr2 = @[tempData[@"build_type"],[NSString stringWithFormat:@"%@",tempData[@"average_price"]],[NSString stringWithFormat:@"%@万-%@万",tempData[@"min_price"],tempData[@"max_price"]],[NSString stringWithFormat:@"%@ ",tempData[@"covered_area"]],tempData[@"decoration_standard"],[NSString stringWithFormat:@"%@",tempData[@"floor_space"]],[NSString stringWithFormat:@"%@",tempData[@"plot_retio"]],[NSString stringWithFormat:@"%@",tempData[@"greening_rate"]],[NSString stringWithFormat:@"%@",tempData[@"households_num"]],[NSString stringWithFormat:@"%@",tempData[@"parking_num"]]];
-    NSArray *arr3 = @[[tempData[@"property"] componentsJoinedByString:@","],tempData[@"property_company_name"],[NSString stringWithFormat:@"%@",tempData[@"property_cost"]],tempData[@"heat_supply"],tempData[@"water_supply"],tempData[@"power_supply"]];
+    NSArray *arr2 = @[tempData[@"build_type"],[NSString stringWithFormat:@"%@元/㎡",tempData[@"average_price"]],[NSString stringWithFormat:@"%@万-%@万",tempData[@"min_price"],tempData[@"max_price"]],[NSString stringWithFormat:@"%@㎡ ",tempData[@"covered_area"]],tempData[@"decoration_standard"],[NSString stringWithFormat:@"%@㎡",tempData[@"floor_space"]],[NSString stringWithFormat:@"%@",tempData[@"plot_retio"]],[NSString stringWithFormat:@"%@",tempData[@"greening_rate"]],[NSString stringWithFormat:@"%@",tempData[@"households_num"]],[NSString stringWithFormat:@"%@",tempData[@"parking_num"]]];
+    NSArray *arr3 = @[[tempData[@"property"] componentsJoinedByString:@","],tempData[@"property_company_name"],[NSString stringWithFormat:@"%@元/㎡",tempData[@"property_cost"]],tempData[@"heat_supply"],tempData[@"water_supply"],tempData[@"power_supply"]];
 
     [_contentArr addObject:arr1];
     [_contentArr addObject:arr2];

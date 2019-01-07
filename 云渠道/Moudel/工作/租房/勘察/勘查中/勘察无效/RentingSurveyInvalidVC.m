@@ -8,7 +8,7 @@
 
 #import "RentingSurveyInvalidVC.h"
 
-//#import "RoomSurveyVC.h"
+#import "RentingSurveyingVC.h"
 
 #import "SinglePickView.h"
 
@@ -89,10 +89,10 @@
                 }
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-//                    if ([vc isKindOfClass:[RoomSurveyVC class]]) {
-//                        
-//                        [self.navigationController popToViewController:vc animated:YES];
-//                    }
+                    if ([vc isKindOfClass:[RentingSurveyingVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
                 }
             }];
         }else{

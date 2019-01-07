@@ -56,7 +56,7 @@
 
 - (void)ActionTypeBtn:(UIButton *)btn{
     
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:33]];
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:RENT_DISABLED_RESON]];
     
     SS(strongSelf);
     view.selectedBlock = ^(NSString *MC, NSString *ID) {

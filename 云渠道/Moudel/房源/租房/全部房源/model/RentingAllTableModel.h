@@ -38,6 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *info_id;
 
+@property (nonatomic, copy) NSString *level;
+
 @end
 
 NS_ASSUME_NONNULL_END

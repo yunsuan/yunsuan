@@ -38,6 +38,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"secReload" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"RoomSurveying" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"SurveyInvlid" object:nil];
     _page = 1;
     _dataArr = [@[] mutableCopy];
 }

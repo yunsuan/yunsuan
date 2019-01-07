@@ -1,40 +1,39 @@
 //
-//  RentingComAllRoomListVC.m
+//  RentingComTypeRoomListVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/12/19.
-//  Copyright © 2018 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2019/1/7.
+//  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "RentingComAllRoomListVC.h"
+#import "RentingComTypeRoomListVC.h"
 #import "RentingAllRoomDetailVC.h"
 
 #import "RentingCell.h"
 
-@interface RentingComAllRoomListVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface RentingComTypeRoomListVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSInteger _page;
     NSMutableArray *_dataArr;
     NSString *_city;
     NSString *_projectId;
+    NSString *_name;
 }
 @property (nonatomic , strong) UITableView *MainTableView;
 
 @end
 
-@implementation RentingComAllRoomListVC
+@implementation RentingComTypeRoomListVC
 
-- (instancetype)initWithProjectId:(NSString *)projectId city:(NSString *)city
+- (instancetype)initWithProjectId:(NSString *)projectId city:(NSString *)city name:(nonnull NSString *)name
 {
     self = [super init];
     if (self) {
         
         _projectId = projectId;
-        if (_city.length) {
-            
-            _city = city;
-        }
+        _city = city;
+        _name = name;
     }
     return self;
 }
@@ -53,6 +52,7 @@
     
     _dataArr = [@[] mutableCopy];
     _page = 1;
+    
 }
 
 - (void)SetData:(NSArray *)data{
@@ -117,11 +117,8 @@
         self.MainTableView.mj_footer.state = MJRefreshStateIdle;
     }
     
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-    if (_city.length) {
-        
-        [dic setObject:_city forKey:@"city"];
-    }
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"house_type_name":_name}];
+    [dic setObject:_city forKey:@"city"];
     [dic setObject:_projectId forKey:@"project_id"];
     [BaseRequest GET:RentHouseList_URL parameters:dic success:^(id resposeObject) {
         
@@ -151,21 +148,17 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-    if (_city.length) {
-        
-        [dic setObject:_city forKey:@"city"];
-    }
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"house_type_name":_name}];
+    [dic setObject:_city forKey:@"city"];
     [dic setObject:_projectId forKey:@"project_id"];
     [BaseRequest GET:HouseHouseList_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count]) {
+            if ([resposeObject[@"data"] count]) {
                 
                 [self SetData:resposeObject[@"data"][@"data"]];
-                //                [self.MainTableView.mj_footer endRefreshing];
             }else{
                 
                 self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
@@ -219,20 +212,10 @@
 {
     
     RentingAllTableModel *model = _dataArr[indexPath.row];
-    if ([self.status isEqualToString:@"protocol"]) {
-        
-        if (self.rentingComAllRoomListVCBlock) {
-            
-            self.rentingComAllRoomListVCBlock(model);
-        }
-        [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        
-        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
-        nextVC.type = [model.type integerValue];
-        nextVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:nextVC animated:YES];
-    }
+    RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
+    nextVC.type = [model.type integerValue];
+    nextVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
@@ -243,6 +226,7 @@
     
     
     [self.view addSubview:self.MainTableView];
+    //    self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
 }
 
 #pragma mark  ---  懒加载   ---
@@ -260,7 +244,6 @@
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
             
-            _page = 1;
             [self RequestMethod];
         }];
         

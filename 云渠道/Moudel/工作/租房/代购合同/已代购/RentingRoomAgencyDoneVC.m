@@ -51,7 +51,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:PurchaseContractList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RentPurchaseContractList_URL parameters:dic success:^(id resposeObject) {
         [_table.mj_footer endRefreshing];
         [_table.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] ==200) {

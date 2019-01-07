@@ -37,6 +37,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"secReload" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"RoomSurveying" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"SurveyInvlid" object:nil];
     _page = 1;
     _dataArr = [@[] mutableCopy];
 }
@@ -186,14 +187,14 @@
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"勘察失效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-//            SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataArr[index]];
-//            nextVC.surveyId = _dataArr[index][@"survey_id"];
-//            nextVC.surveyInvalidVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-//                [self RequestMethod];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataArr[index]];
+            nextVC.surveyId = _dataArr[index][@"survey_id"];
+            nextVC.surveyInvalidVCBlock = ^{
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }];
         
         [alert addAction:valid];

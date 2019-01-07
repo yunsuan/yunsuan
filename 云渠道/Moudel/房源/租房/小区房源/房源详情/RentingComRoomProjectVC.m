@@ -15,7 +15,8 @@
 
 #import "RentingComRoomProjectVC.h"
 #import "BuildingInfoVC.h"
-#import "SecHouseTypeDetailVC.h"
+//#import "SecHouseTypeDetailVC.h"
+
 #import "DynamicListVC.h"
 #import "CustomMatchListVC.h"
 #import "BuildingAlbumVC.h"
@@ -26,6 +27,7 @@
 #import "DealRecordVC.h"
 #import "DistributVC.h"
 #import "RentingComAllRoomListVC.h"
+#import "RentingComTypeRoomListVC.h"
 
 #import "RentingComRoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
@@ -540,27 +542,6 @@
     switch (indexPath.section) {
         case 0:
         case 1:
-            //        {
-            //
-            //            RoomDetailTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomDetailTableCell"];
-            //            if (!cell) {
-            //
-            //                cell = [[RoomDetailTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell"];
-            //            }
-            //            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            //
-            //            if (_model.developer_name) {
-            //
-            //                cell.developL.text = _model.developer_name;
-            //            }
-            //            cell.openL.text = _buildDic[@"open_time"];
-            //            cell.payL.text = _buildDic[@"handing_room_time"];
-            //
-            //            cell.moreBtn.tag = indexPath.section;
-            //            [cell.moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
-            //            return cell;
-            //            break;
-            //        }
         case 2:
         {
             
@@ -620,12 +601,13 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            if (_houseArr.count > 3) {
+            
+            if (_houseArr.count) {
                 
                 cell.num = _houseArr.count;
             }else{
                 
-                cell.num = 3;
+                cell.num = 1;
             }
             if (_houseArr.count) {
                 
@@ -640,8 +622,8 @@
                 
                 if (_houseArr.count > index) {
                     
-//                    SecComTypeRoomListVC *nextVC = [[SecComTypeRoomListVC alloc] initWithProjectId:_projectId city:_city name:_houseArr[index][@"house_type_name"]];
-//                    [self.navigationController pushViewController:nextVC animated:YES];
+                    RentingComTypeRoomListVC *nextVC = [[RentingComTypeRoomListVC alloc] initWithProjectId:_projectId city:_city name:_houseArr[index][@"house_type_name"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 }
             };
             
@@ -748,6 +730,12 @@
     
     if (indexPath.section == 3) {
         
+        SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+        nextVC.projiect_id = _projectId;
+        nextVC.img_name = _model.total_float_url_phone;
+        nextVC.status = @"rent";
+        nextVC.comName = _model.project_name;
+        [self.navigationController pushViewController:nextVC animated:YES];
         //        DistributVC *nextVC = [[DistributVC alloc] init];
         ////        nextVC.img_name = _model.total_float_url_phone;
         //        nextVC.projiect_id = _projectId;

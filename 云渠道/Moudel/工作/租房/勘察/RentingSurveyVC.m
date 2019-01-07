@@ -55,6 +55,41 @@
     _titleArr = @[@"待确认",@"勘察中",@"勘察失败",@"勘察完成"];
 }
 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
+    switch (index) {
+        case 0:
+        {
+            _roomSurveyWaitVC.search = textField.text;
+            [_roomSurveyWaitVC RequestMethod];
+            break;
+        }
+        case 1:
+        {
+            _roomSurveyingVC.search = textField.text;
+            [_roomSurveyingVC RequestMethod];
+            break;
+        }
+        case 2:
+        {
+            _roomSurveyFailVC.search = textField.text;
+            [_roomSurveyFailVC RequestMethod];
+            break;
+        }
+        case 3:
+        {
+            _roomSurveySuccessVC.search = textField.text;
+            [_roomSurveySuccessVC RequestMethod];
+            break;
+        }
+        default:
+            break;
+    }
+    return YES;
+}
+
 #pragma mark -- collectionview
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
@@ -94,7 +129,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 40 *SIZE)];
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
     whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
@@ -122,7 +157,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
+    _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
     _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
     _segmentColl.dataSource = self;

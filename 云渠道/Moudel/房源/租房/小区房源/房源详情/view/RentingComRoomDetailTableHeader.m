@@ -108,27 +108,11 @@
         _addressL.text = model.absolute_address;
     }
     
-    if (model.sale_state) {
+//    if (model.sale_state) {
+//    
+//        _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
+//    }
     
-        _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
-    }
-    
-    //    NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-    //    NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",15]];
-    //    NSArray *tempArr = dic[@"param"];
-    //    NSMutableArray * arr = [[NSMutableArray alloc] init];
-    //    NSArray *subArr = [model.project_tags componentsSeparatedByString:@","];
-    //    for (int i = 0; i < subArr.count; i++) {
-    //
-    //        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    //
-    //            if ([obj[@"id"] integerValue] == [subArr[i] integerValue]) {
-    //
-    //                [arr addObject:obj[@"param"]];
-    //                *stop = YES;
-    //            }
-    //        }];
-    //    }
     
 //    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
     [_wuyeview setData:model.property_type];
@@ -365,7 +349,7 @@
         make.top.equalTo(_titleL.mas_bottom).offset(11 *SIZE);
         make.width.equalTo(@(200 *SIZE));
         make.height.equalTo(@(20 *SIZE));
-        make.top.equalTo(_tagview.mas_top).offset(-9 *SIZE);
+        make.bottom.equalTo(_tagview.mas_top).offset(-9 *SIZE);
     }];
     
     [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {

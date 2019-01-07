@@ -7,7 +7,7 @@
 //
 
 #import "RentingRoomAgencyCancelVC.h"
-#import "AgencyProtocolDetailVC.h"
+#import "RentingCancelProtocolDetailVC.h"
 
 #import "RoomAgencyProtocolCell.h"
 
@@ -124,7 +124,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    AgencyProtocolDetailVC *nextVC = [[AgencyProtocolDetailVC alloc] init];
+    RentingCancelProtocolDetailVC *nextVC = [[RentingCancelProtocolDetailVC alloc] init];
     nextVC.sub_id = _dataArr[indexPath.row][@"sub_id"];
     [self.navigationController pushViewController:nextVC animated:YES];
 }

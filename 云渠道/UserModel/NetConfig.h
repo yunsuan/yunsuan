@@ -811,3 +811,9 @@ static NSString *const RentSubBreachList_URL = @"agent/rent/sub/breach/list";
 
 //挞定详情
 static NSString *const RentSubBreachDetail_URL = @"agent/rent/sub/breach/detail";
+
+//代购合同列表
+static NSString *const RentPurchaseContractList_URL = @"agent/rent/sub/list";
+
+//代购合同详情
+static NSString *const RentPurchaseContractDetail_URL = @"agent/rent/sub/detail";

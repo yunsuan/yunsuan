@@ -38,7 +38,7 @@
     
     _titleL.text = model.project_name;
     _contentL.text = model.absolute_address;
-    NSMutableAttributedString *PriceAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考租金：%@元/平",model.average_price]];;
+    NSMutableAttributedString *PriceAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"参考租金：%@元/月",model.average_price]];;
     [PriceAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
     [PriceAttr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:11 *SIZE] range:NSMakeRange(0, 5)];
     _averageL.attributedText = PriceAttr;
@@ -48,7 +48,7 @@
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 2)];
     [onSaleAttr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(onSaleAttr.length - 1, 1)];
     _onSaleL.attributedText = onSaleAttr;
-    _attionL.text = [NSString stringWithFormat:@"关注人数：%@人",model.subs_num];
+    _attionL.text = [NSString stringWithFormat:@"订阅人数：%@人",model.subs_num];
     
 }
 

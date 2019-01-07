@@ -100,11 +100,11 @@
     
     if (dataDic[@"tel"]) {
         
-//        NSArray *arr = [dataDic[@"tel"] componentsSeparatedByString:@","];
-//        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:arr[0]];
-//        [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
-//        [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
-//        _phoneL.attributedText = attr;
+        NSArray *arr = [dataDic[@"tel"] componentsSeparatedByString:@","];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:arr[0]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, attr.length)];
+        [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, attr.length)];
+        _phoneL.attributedText = attr;
     }else{
         
         _phoneL.attributedText = [[NSMutableAttributedString alloc] initWithString:@""];

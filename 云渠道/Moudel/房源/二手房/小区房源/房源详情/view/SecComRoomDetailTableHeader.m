@@ -130,13 +130,13 @@
 //        }];
 //    }
 
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
+//    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
     [_wuyeview setData:model.property_type];
-    [self.contentView addSubview:_wuyeview];
+//    [self.contentView addSubview:_wuyeview];
 
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
+//    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
     [_tagview setData:model.project_tags];
-    [self.contentView addSubview:_tagview];
+//    [self.contentView addSubview:_tagview];
 
 
     if (model.average_price) {
@@ -366,7 +366,7 @@
         make.top.equalTo(_titleL.mas_bottom).offset(11 *SIZE);
         make.width.equalTo(@(200 *SIZE));
         make.height.equalTo(@(20 *SIZE));
-        make.top.equalTo(_tagview.mas_top).offset(-9 *SIZE);
+        make.bottom.equalTo(_tagview.mas_top).offset(-9 *SIZE);
     }];
     
     [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {

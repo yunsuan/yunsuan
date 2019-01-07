@@ -47,7 +47,7 @@
 - (void)initDataSource{
     
     _customerUseArr = [NSMutableArray arrayWithObjects:@[], nil];
-    [BaseRequest GET:PurchaseContractDetail_URL parameters:@{@"sub_id":_sub_id} success:^(id resposeObject) {
+    [BaseRequest GET:RentPurchaseContractDetail_URL parameters:@{@"sub_id":_sub_id} success:^(id resposeObject) {
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue]==200) {
             _customerArr = resposeObject[@"data"][@"contact_info"];
