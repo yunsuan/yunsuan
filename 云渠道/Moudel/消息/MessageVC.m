@@ -12,6 +12,7 @@
 #import "WorkMessageVC.h"
 #import "GetWorkVC.h"
 #import "SystemoWorkVC.h"
+#import "LookWorkVC.h"
 
 @interface MessageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -30,7 +31,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(post) name:@"reloadMessList" object:nil];
     
-    _data = @[@[@"systemmessage",@"系统消息",@"未读消息0条"],@[@"worknews",@"工作消息",@"未读消息0条"],@[@"Grabtheorder",@"勘察抢单",@"未读消息0条"],@[@"Grabtheorder",@"系统派单",@"未读消息0条"]];
+    _data = @[@[@"systemmessage",@"系统消息",@"未读消息0条"],@[@"worknews",@"工作消息",@"未读消息0条"],@[@"Grabtheorder",@"勘察抢单",@"未读消息0条"],@[@"Grabtheorder",@"系统派单",@"未读消息0条"],@[@"Grabtheorder",@"带看派单",@"未读消息0条"]];
     
     [self initUI];
 
@@ -44,7 +45,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 4;
+    return _data.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -83,9 +84,13 @@
         
         GetWorkVC *next_vc = [[GetWorkVC alloc]init];
         [self.navigationController pushViewController:next_vc animated:YES];
-    }else{
+    }else if(indexPath.row == 3){
         
         SystemoWorkVC *next_vc = [[SystemoWorkVC alloc]init];
+        [self.navigationController pushViewController:next_vc animated:YES];
+    }else{
+        
+        LookWorkVC *next_vc = [[LookWorkVC alloc]init];
         [self.navigationController pushViewController:next_vc animated:YES];
     }
 }
@@ -128,7 +133,7 @@
                 
                 work = 0;
             }
-            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"系统派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
+            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"系统派单",[NSString stringWithFormat:@"待确认消息%ld条",work]],@[@"Grabtheorder",@"带看派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
     
             [_messageTable reloadData];
             [_messageTable.mj_header endRefreshing];
