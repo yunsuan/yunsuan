@@ -10,12 +10,15 @@
 
 #import "BaseHeader.h"
 #import "RoomBrokerageTableHeader.h"
+#import "SingleContentCell.h"
+#import "BrokerageDetailTableCell3.h"
 
 @interface LookDealDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSString *_lookId;
     NSMutableArray *_proArr;
+    NSArray *_Pace;
 }
 
 @property (nonatomic, strong) UITableView *detailTable;
@@ -71,25 +74,15 @@
             header = [[RoomBrokerageTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 51 *SIZE)];
         }
         
-        header.titleL.text = [NSString stringWithFormat:@"%@至%@",_model.dataarr[section][@"act_start"],_model.dataarr[section][@"act_end"]];
+        header.titleL.text = [NSString stringWithFormat:@"%@ 带看记录",_proArr[section][@""]];
         header.dropBtn.tag = section;
-        if ([_selectArr[section] integerValue]) {
-            
-            [header.dropBtn setImage:[UIImage imageNamed:@"uparrow"] forState:UIControlStateNormal];
-        }else{
-            
-            [header.dropBtn setImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
-        }
+        
         header.dropBtnBlock = ^(NSInteger index) {
-            if ([_selectArr[index] integerValue]) {
-                
-                [_selectArr replaceObjectAtIndex:index withObject:@0];
-            }else{
-                _selectArr = [NSMutableArray arrayWithArray:@[@1,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0,@0]];
-                [_selectArr replaceObjectAtIndex:index withObject:@1];
-            }
+            
             [tableView reloadData];
         };
+        
+        return header;
     }else{
         
         BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
@@ -110,6 +103,77 @@
         }
         
         return header;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        
+        SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
+        if (!cell) {
+            
+            cell = [[SingleContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SingleContentCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.lineView.hidden = YES;
+        
+        cell.contentL.text = [NSString stringWithFormat:@"成交时间：%@",@""];
+        
+        return cell;
+    }else if (indexPath.section == 1){
+        
+        SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
+        if (!cell) {
+            
+            cell = [[SingleContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SingleContentCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.lineView.hidden = YES;
+        
+        cell.contentL.text = @"";
+        
+        return cell;
+    }else if (indexPath.section == 2){
+        
+        SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
+        if (!cell) {
+            
+            cell = [[SingleContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SingleContentCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.lineView.hidden = YES;
+        
+        cell.contentL.text = @"";
+        
+        return cell;
+    }else{
+        
+        BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+        if (!cell) {
+            cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+        if (indexPath.row == 0) {
+            
+            cell.upLine.hidden = YES;
+        }else{
+            
+            cell.upLine.hidden = NO;
+        }
+        if (indexPath.row == _Pace.count - 1) {
+            
+            cell.downLine.hidden = YES;
+        }else{
+            
+            cell.downLine.hidden = NO;
+        }
+        return cell;
     }
 }
 
