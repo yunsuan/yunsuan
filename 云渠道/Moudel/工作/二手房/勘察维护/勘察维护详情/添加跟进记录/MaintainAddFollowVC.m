@@ -189,11 +189,13 @@
     UIAlertAction *pub = [UIAlertAction actionWithTitle:@"公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _publicBtn.content.text = @"公开";
+        _publicBtn->str = @"0";
     }];
     
     UIAlertAction *private = [UIAlertAction actionWithTitle:@"不公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _publicBtn.content.text = @"不公开";
+        _publicBtn->str = @"1";
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -373,7 +375,7 @@
             
             _intentTF.textfield.text = @"100";
         }
-        _intentTF.textfield.text = [NSString stringWithFormat:@"%d",[_intentTF.textfield.text integerValue]];
+        _intentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentTF.textfield.text integerValue]];
         _intentSlider.value =  [_intentTF.textfield.text floatValue] / 100.0 * 100;
     }else if (textField == _urgentTF.textfield){
         
@@ -381,7 +383,7 @@
             
             _urgentTF.textfield.text = @"100";
         }
-        _urgentTF.textfield.text = [NSString stringWithFormat:@"%d",[_urgentTF.textfield.text integerValue]];
+        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
         _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
     }
     if (textField == _minPriceTF.textfield) {
@@ -654,6 +656,18 @@
     _publicBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
     [_publicBtn addTarget:self action:@selector(ActionPublicBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_publicBtn];
+    if (_dataDic.count) {
+        
+        if ([_dataDic[@"hides"] integerValue] == 1) {
+            
+            _publicBtn.content.text = @"不公开";
+            _publicBtn->str = @"1";
+        }else{
+            
+            _publicBtn.content.text = @"公开";
+            _publicBtn->str = @"0";
+        }
+    }
     
     _seeWayBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
     [_seeWayBtn addTarget:self action:@selector(ActionSeeWayBtn:) forControlEvents:UIControlEventTouchUpInside];
