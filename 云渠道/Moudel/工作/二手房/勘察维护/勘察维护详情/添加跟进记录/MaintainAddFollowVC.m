@@ -36,6 +36,10 @@
 
 @property (nonatomic, strong) UILabel *timeL;
 
+@property (nonatomic, strong) UILabel *publicL;
+
+@property (nonatomic, strong) DropDownBtn *publicBtn;
+
 @property (nonatomic, strong) UILabel *wayL;
 
 @property (nonatomic, strong) UICollectionView *wayColl;
@@ -146,7 +150,7 @@
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
     _followTime = [_formatter stringFromDate:date];
-    _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度",@"房源等级"];
+    _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"公开房源：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度",@"房源等级"];
 }
 
 
@@ -176,6 +180,32 @@
         strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
     };
     [self.view addSubview:view];
+}
+
+- (void)ActionPublicBtn:(UIButton *)btn{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否公开房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *pub = [UIAlertAction actionWithTitle:@"公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _publicBtn.content.text = @"公开";
+    }];
+    
+    UIAlertAction *private = [UIAlertAction actionWithTitle:@"不公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _publicBtn.content.text = @"不公开";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+//        _publicBtn.content.text = @"否";
+    }];
+    
+    [alert addAction:pub];
+    [alert addAction:private];
+    [alert addAction:cancel];
+    
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)ActionTimeBtn:(UIButton *)btn{
@@ -343,7 +373,7 @@
             
             _intentTF.textfield.text = @"100";
         }
-        _intentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentTF.textfield.text integerValue]];
+        _intentTF.textfield.text = [NSString stringWithFormat:@"%d",[_intentTF.textfield.text integerValue]];
         _intentSlider.value =  [_intentTF.textfield.text floatValue] / 100.0 * 100;
     }else if (textField == _urgentTF.textfield){
         
@@ -351,7 +381,7 @@
             
             _urgentTF.textfield.text = @"100";
         }
-        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
+        _urgentTF.textfield.text = [NSString stringWithFormat:@"%d",[_urgentTF.textfield.text integerValue]];
         _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
     }
     if (textField == _minPriceTF.textfield) {
@@ -479,14 +509,13 @@
     _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 11; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
         label.adjustsFontSizeToFitWidth = YES;
         label.text = _titleArr[i];
         label.font = [UIFont systemFontOfSize:13 *SIZE];
-        
         
         switch (i) {
             case 0:
@@ -503,47 +532,53 @@
             }
             case 2:
             {
+                _publicL = label;
+                [_contentView addSubview:_publicL];
+                break;
+            }
+            case 3:
+            {
                 _titleL = label;
                 [_contentView addSubview:_titleL];
                 break;
             }
-            case 3:
+            case 4:
             {
                 _seeWayL = label;
                 [_contentView addSubview:_seeWayL];
                 break;
             }
-            case 4:
+            case 5:
             {
                 _priceL = label;
                 [_contentView addSubview:_priceL];
                 break;
             }
-            case 5:
+            case 6:
             {
                 _minPriceL = label;
                 [_contentView addSubview:_minPriceL];
                 break;
             }
-            case 6:
+            case 7:
             {
                 _payL = label;
                 [_contentView addSubview:_payL];
                 break;
             }
-            case 7:
+            case 8:
             {
                 _intentL = label;
                 [_contentView addSubview:_intentL];
                 break;
             }
-            case 8:
+            case 9:
             {
                 _urgentL = label;
                 [_contentView addSubview:_urgentL];
                 break;
             }
-            case 9:
+            case 10:
             {
                 _roomLevelL = label;
                 [_contentView addSubview:_roomLevelL];
@@ -615,6 +650,10 @@
                 break;
         }
     }
+    
+    _publicBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_publicBtn addTarget:self action:@selector(ActionPublicBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_publicBtn];
     
     _seeWayBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
     [_seeWayBtn addTarget:self action:@selector(ActionSeeWayBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -791,7 +830,7 @@
         make.height.mas_equalTo(_wayColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
     }];
     
-    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_publicL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
         make.top.equalTo(_wayColl.mas_bottom).offset(35 *SIZE);
@@ -799,10 +838,26 @@
         make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_publicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(81 *SIZE);
         make.top.equalTo(_wayColl.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_publicBtn.mas_bottom).offset(35 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_publicBtn.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
