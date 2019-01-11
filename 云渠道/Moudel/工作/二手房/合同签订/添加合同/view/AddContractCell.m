@@ -103,8 +103,8 @@
                 case 1:
                 {
                     tf.unitL.text = @"万";
-                    _codeTF = tf;
-                    [self.contentView addSubview:_codeTF];
+                    _priceTF = tf;
+                    [self.contentView addSubview:_priceTF];
                     break;
                 }
                 case 2:

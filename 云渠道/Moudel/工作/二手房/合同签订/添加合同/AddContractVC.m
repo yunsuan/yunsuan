@@ -15,6 +15,7 @@
 #import "RoomAgencyAddProtocolCell2.h"
 #import "RoomAgencyAddProtocolCell3.h"
 #import "AddContractCell.h"
+#import "AddContractCell2.h"
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
@@ -478,6 +479,17 @@
         if (!cell) {
             
             cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
+        
+    }else if (indexPath.section == 5){
+        
+        AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
+        if (!cell) {
+            
+            cell = [[AddContractCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell2"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         

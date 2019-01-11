@@ -40,6 +40,7 @@
         
         _unitL = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 40*SIZE, 10 *SIZE, 35 *SIZE, 14 *SIZE)];
         _unitL.textColor = YJContentLabColor;
+        _unitL.textAlignment = NSTextAlignmentRight;
         _unitL.font = [UIFont systemFontOfSize:13 *SIZE];
     }
     return _unitL;

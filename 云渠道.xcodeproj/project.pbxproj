@@ -476,6 +476,8 @@
 		0CED0BF921E72F9E0016A029 /* ContractSignListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0BF821E72F9E0016A029 /* ContractSignListCell.m */; };
 		0CED0BFD21E740380016A029 /* AddContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0BFC21E740380016A029 /* AddContractVC.m */; };
 		0CED0C0421E8370C0016A029 /* AddContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0321E8370C0016A029 /* AddContractCell.m */; };
+		0CED0C0721E85F340016A029 /* AddContractCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0621E85F340016A029 /* AddContractCell2.m */; };
+		0CED0C0A21E85F440016A029 /* AddContractCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0921E85F440016A029 /* AddContractCell3.m */; };
 		0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2821A5422600997B76 /* CustomerListVC.m */; };
 		0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */; };
 		0CEF347821806BC900419D5E /* SystemoWorkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347721806BC900419D5E /* SystemoWorkVC.m */; };
@@ -1603,6 +1605,10 @@
 		0CED0BFC21E740380016A029 /* AddContractVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractVC.m; sourceTree = "<group>"; };
 		0CED0C0221E8370C0016A029 /* AddContractCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell.h; sourceTree = "<group>"; };
 		0CED0C0321E8370C0016A029 /* AddContractCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell.m; sourceTree = "<group>"; };
+		0CED0C0521E85F340016A029 /* AddContractCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell2.h; sourceTree = "<group>"; };
+		0CED0C0621E85F340016A029 /* AddContractCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell2.m; sourceTree = "<group>"; };
+		0CED0C0821E85F440016A029 /* AddContractCell3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell3.h; sourceTree = "<group>"; };
+		0CED0C0921E85F440016A029 /* AddContractCell3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell3.m; sourceTree = "<group>"; };
 		0CED5B2721A5422600997B76 /* CustomerListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerListVC.h; sourceTree = "<group>"; };
 		0CED5B2821A5422600997B76 /* CustomerListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerListVC.m; sourceTree = "<group>"; };
 		0CED5B2A21A7C72800997B76 /* ReleaseDirectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseDirectVC.h; sourceTree = "<group>"; };
@@ -5384,6 +5390,10 @@
 			children = (
 				0CED0C0221E8370C0016A029 /* AddContractCell.h */,
 				0CED0C0321E8370C0016A029 /* AddContractCell.m */,
+				0CED0C0521E85F340016A029 /* AddContractCell2.h */,
+				0CED0C0621E85F340016A029 /* AddContractCell2.m */,
+				0CED0C0821E85F440016A029 /* AddContractCell3.h */,
+				0CED0C0921E85F440016A029 /* AddContractCell3.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7185,6 +7195,7 @@
 				0C997BF321D4B0C200F805AA /* RentingRoomAgencyAddProtocolCell2.m in Sources */,
 				0C9CD4602105A8DB004894A3 /* RentingAllRoomProjectVC.m in Sources */,
 				0C30631320CE88A8004D1996 /* SecAllRoomTableCell2.m in Sources */,
+				0CED0C0A21E85F440016A029 /* AddContractCell3.m in Sources */,
 				0C25223D215CDB9F0031CC44 /* SecAllRoomStoreCell.m in Sources */,
 				0CBD858C2085F90500E7B183 /* RoomProjectVC.m in Sources */,
 				0CAF4DD3219E5ED40009873E /* AttentionHouseCell.m in Sources */,
@@ -7379,6 +7390,7 @@
 				0C15A1DE21129B5F00544F2E /* ModifyProjectImageVC.m in Sources */,
 				10866682218952A8002473E0 /* CYLTabBar.m in Sources */,
 				105E18982060EE710031558D /* TagView.m in Sources */,
+				0CED0C0721E85F340016A029 /* AddContractCell2.m in Sources */,
 				0C314A4021842DED00F69F09 /* AgencyEditTradeVC.m in Sources */,
 				0C9CD459210581A1004894A3 /* RentingComRoomProjectVC.m in Sources */,
 				10DBB1F4207CCACE00CFE59D /* KyoCinameSeatScrollView.m in Sources */,
