@@ -18,6 +18,8 @@
 #import "RoomMaintainVC.h"
 #import "CustomLookVC.h"
 #import "CustomRecommendVC.h"
+#import "LookMaintainVC.h"
+#import "ContractSignVC.h"
 
 //租房
 #import "RentingReportVC.h"
@@ -93,7 +95,7 @@
                     
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
                     
-                    _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
+                    _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
                 }
            
                 [_MainTableView reloadData];
@@ -119,7 +121,7 @@
                 _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
 
-                _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
+                _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
 
@@ -143,8 +145,8 @@
 {
    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadType) name:@"reloadType" object:nil];
-    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"代购合同",@"客户推荐",@"客户带看",@"合同签订"];
-    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"contract",@"contract",@"signing"];
+    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"代购合同",@"客户推荐",@"客户带看",@"带看维护",@"合同签订"];
+    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"contract",@"takelook",@"contract",@"signing"];
 }
 
 - (void)reloadType{
@@ -190,7 +192,7 @@
         }
     }else{
 
-        return 6;
+        return 8;
     }
 }
 
@@ -382,9 +384,17 @@
             
             CustomRecommendVC *nextVC = [[CustomRecommendVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+        }else if (indexPath.row == 5){
             
             CustomLookVC *nextVC = [[CustomLookVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else if (indexPath.row == 6){
+            
+            LookMaintainVC *nextVC = [[LookMaintainVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            ContractSignVC *nextVC = [[ContractSignVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }
     }

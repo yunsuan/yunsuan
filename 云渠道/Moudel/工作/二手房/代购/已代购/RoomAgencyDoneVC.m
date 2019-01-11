@@ -14,7 +14,6 @@
 {
     NSArray *_dataArr;
     NSString *_page;
-//    NSString *_content;
 }
 
 @property (nonatomic, strong) UITableView *table;

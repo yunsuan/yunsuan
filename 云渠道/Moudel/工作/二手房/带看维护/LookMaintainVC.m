@@ -1,16 +1,16 @@
 //
-//  RecommendWaitVC.m
+//  LookMaintainVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/9.
+//  Created by 谷治墙 on 2019/1/10.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "RecommendWaitVC.h"
+#import "LookMaintainVC.h"
 
-#import "RecommendWaitCell.h"
+#import "CustomLookConfirmCell.h"
 
-@interface RecommendWaitVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface LookMaintainVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSInteger _page;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation RecommendWaitVC
+@implementation LookMaintainVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -132,10 +132,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RecommendWaitCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendWaitCell"];
+    CustomLookConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomLookConfirmCell"];
     if (!cell) {
         
-        cell = [[RecommendWaitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendWaitCell"];
+        cell = [[CustomLookConfirmCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomLookConfirmCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
