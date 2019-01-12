@@ -89,11 +89,7 @@
     }
 }
 
-
-
-
--(void)StartLocation
-{
+- (void)StartLocation{
     
     LocationManager *manager =  [LocationManager Manager];
     [manager startLocationSuccess:^(NSString *cityname, NSString *citycode) {
@@ -111,12 +107,6 @@
         }];
     }];
 }
-
-
-
-
-
-
 
 #pragma mark -- Method
 

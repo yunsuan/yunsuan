@@ -49,6 +49,10 @@
 
 @property (nonatomic, strong) BaseFrameHeader *titleHeader;
 
+@property (nonatomic, strong) UILabel *publicL;
+
+@property (nonatomic, strong) DropDownBtn *publicBtn;
+
 @property (nonatomic, strong) UILabel *titleL;
 
 @property (nonatomic, strong) BorderTF *titleTF;
@@ -187,7 +191,7 @@
         [_selectArr addObject:@0];
     }
     _btnArr = @[@"整租",@"合租"];
-    _titleArr = @[@"挂牌标题：",@"出租价格：",@"转让费：",@"押金：",@"房源等级",@"租赁类型：",@"付款方式：",@"最短租期：",@"最长租期：",@"楼层：",@"层高：",@"门宽：",@"可入住时间：",@"级别：",@"容纳工位：",@"免租期："];
+    _titleArr = @[@"挂牌标题：",@"出租价格：",@"转让费：",@"押金：",@"房源等级",@"租赁类型：",@"付款方式：",@"最短租期：",@"最长租期：",@"楼层：",@"层高：",@"门宽：",@"可入住时间：",@"级别：",@"容纳工位：",@"免租期：",@"公开房源"];
     _periodArr = @[@{@"param":@"无限制",@"id":@"0"},
                    @{@"param":@"一天",@"id":@"1"},
                    @{@"param":@"七天",@"id":@"7"},
@@ -323,6 +327,34 @@
     }
 }
 
+- (void)ActionPublicBtn:(UIButton *)btn{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否公开房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *pub = [UIAlertAction actionWithTitle:@"公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _publicBtn.content.text = @"公开";
+        _publicBtn->str = @"0";
+    }];
+    
+    UIAlertAction *private = [UIAlertAction actionWithTitle:@"不公开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _publicBtn.content.text = @"不公开";
+        _publicBtn->str = @"1";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        //        _publicBtn.content.text = @"否";
+    }];
+    
+    [alert addAction:pub];
+    [alert addAction:private];
+    [alert addAction:cancel];
+    
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)ActionNextBtn:(UIButton *)btn{
     
     if ([self isEmpty:_titleTF.textfield.text]) {
@@ -408,6 +440,7 @@
         
         [self.dataDic setObject:_depositTF.textfield.text forKey:@"deposit"];
     }
+    [self.dataDic setObject:_publicBtn->str forKey:@"hide"];
     [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
     [self.dataDic setValue:_payWay forKey:@"receive_way"];
     if (_minPeriodBtn.content.text.length) {
@@ -565,7 +598,7 @@
     _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
     [_contentView addSubview:_roomLevelL];
     
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 17; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -670,6 +703,12 @@
                 [_contentView addSubview:_rentFreeL];
                 break;
             }
+            case 16:
+            {
+                _publicL = label;
+                [_contentView addSubview:_publicL];
+                break;
+            }
             default:
                 break;
         }
@@ -744,6 +783,21 @@
 //    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
 //    [_contentView addSubview:_roomLevelBtn];
     
+    _publicBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
+    [_publicBtn addTarget:self action:@selector(ActionPublicBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_publicBtn];
+    if (_dataDic.count) {
+        
+        if ([_dataDic[@"hides"] integerValue] == 1) {
+            
+            _publicBtn.content.text = @"不公开";
+            _publicBtn->str = @"1";
+        }else{
+            
+            _publicBtn.content.text = @"公开";
+            _publicBtn->str = @"0";
+        }
+    }
     
     for (int i = 0; i < 7; i++) {
         
@@ -1001,7 +1055,7 @@
         make.width.equalTo(@(SCREEN_Width));
     }];
     
-    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_publicL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(9 *SIZE);
         make.top.equalTo(self->_contentView).offset(58 *SIZE);
@@ -1009,10 +1063,26 @@
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_publicBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
         make.top.equalTo(self->_contentView).offset(47 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(9 *SIZE);
+        make.top.equalTo(_publicBtn.mas_bottom).offset(35 *SIZE);
+        make.height.mas_equalTo(12 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_contentView).offset(81 *SIZE);
+        make.top.equalTo(_publicBtn.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];

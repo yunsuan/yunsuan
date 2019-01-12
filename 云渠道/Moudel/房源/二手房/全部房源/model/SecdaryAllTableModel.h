@@ -10,6 +10,8 @@
 
 @interface SecdaryAllTableModel : BaseModel
 
+@property (nonatomic, copy) NSString *hide;
+
 @property (nonatomic, copy) NSString *level;
 
 @property (nonatomic, copy) NSString *type;

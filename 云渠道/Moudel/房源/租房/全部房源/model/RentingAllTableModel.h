@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RentingAllTableModel : BaseModel
 
+@property (nonatomic, copy) NSString *hide;
+
 @property (nonatomic, copy) NSString *type;
 
 @property (nonatomic, copy) NSString *describe;

@@ -16,6 +16,10 @@
 
 @property (nonatomic, strong) UIImageView *headImg;
 
+@property (nonatomic, strong) UIView *hideView;
+
+@property (nonatomic, strong) UILabel *hideL;
+
 @property (nonatomic, strong) UILabel *titleL;
 
 @property (nonatomic, strong) UILabel *contentL;

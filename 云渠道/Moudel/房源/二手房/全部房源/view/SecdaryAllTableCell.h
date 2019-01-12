@@ -17,6 +17,10 @@
 
 @property (nonatomic, strong) SecdaryAllTableModel *model;
 
+@property (nonatomic, strong) UIView *hideView;
+
+@property (nonatomic, strong) UILabel *hideL;
+
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UILabel *titleL;

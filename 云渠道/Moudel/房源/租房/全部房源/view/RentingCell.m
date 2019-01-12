@@ -36,6 +36,15 @@
         _headImg.image = [UIImage imageNamed:@"default_3"];
     }
     
+    if ([model.hide integerValue] == 0) {
+        
+        _hideView.hidden = YES;
+    }else{
+        
+        _hideView.hidden = NO;
+    }
+    
+//    _titleL.text = [NSString stringWithFormat:@"%@(%@)",model.title,[model.hide integerValue] == 0?@"公开":@"非公开"];
     _titleL.text = model.title;
     _roomLevelL.text = model.level;
     _contentL.text = model.describe;
@@ -85,6 +94,20 @@
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
     _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
+    
+    _hideView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100 *SIZE, 88 *SIZE)];
+    _hideView.backgroundColor = [UIColor blackColor];
+    _hideView.alpha = 0.4;
+    _hideView.hidden = YES;
+    [_headImg addSubview:_hideView];
+    
+    _hideL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100 *SIZE, 88 *SIZE)];
+//    _hideL.backgroundColor = YJBackColor;
+    _hideL.textColor = [UIColor whiteColor];
+    _hideL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _hideL.textAlignment = NSTextAlignmentCenter;
+    _hideL.text = @"非公开";
+    [_hideView addSubview:_hideL];
     
     _titleL = [[UILabel alloc] init];
     _titleL.textColor = YJTitleLabColor;

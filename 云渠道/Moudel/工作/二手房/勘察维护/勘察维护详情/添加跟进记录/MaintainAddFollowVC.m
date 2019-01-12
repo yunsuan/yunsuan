@@ -308,7 +308,7 @@
                                                                                @"follow_time":_followTime,
                                                                                @"follow_type":@([_followArr[_follow][@"id"] integerValue]),
                                                                                @"title":_titleTF.textfield.text,
-                                                                               @"intent":_intentTF.textfield.text,
+                                                            @"hide":_publicBtn->str,                @"intent":_intentTF.textfield.text,
                                                                                @"urgency":_urgentTF.textfield.text,
                                                                                @"check_way":_seeWay,
                                                                                @"price":_priceTF.textfield.text,
@@ -413,20 +413,6 @@
         }
     }
 }
-
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//
-//    if (textField == _minPriceTF.textfield) {
-//
-//        if ([_minPriceTF.textfield.text integerValue] > [_maxPriceTF.textfield.text integerValue]) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"最低价格不能超过p挂牌价格" WithDefaultBlack:^{
-//
-//                return ;
-//            }];
-//        }
-//    }
-//}
 
 #pragma mark -- collection
 
