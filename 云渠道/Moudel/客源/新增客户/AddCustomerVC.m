@@ -8,6 +8,8 @@
 
 #import "AddCustomerVC.h"
 #import "AddRequireMentVC.h"
+
+#import "AddHouseRequireMentVC.h"
 #import "AddStoreRequireMentVC.h"
 #import "AddOfficeRequireMentVC.h"
 #import "RentingAddRequireMentVC.h"
@@ -1117,7 +1119,7 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
-                AddRequireMentVC *nextVC = [[AddRequireMentVC alloc] init];
+                AddHouseRequireMentVC *nextVC = [[AddHouseRequireMentVC alloc] init];
                 nextVC.status = @"addCustom";
                 nextVC.infoModel = _Customerinfomodel;
                 [self.navigationController pushViewController:nextVC animated:YES];

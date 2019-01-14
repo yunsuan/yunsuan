@@ -22,15 +22,22 @@
 #import <Bugtags/Bugtags.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
 
+
+//#define UmengAppkey @"5ac9debcb27b0a2147000050"
+//#define QQAPPID @"1106811849"
+//#define QQAppkey @"Yik2oC5WcDQ5IOrpc"
+//#define WechatAppId @"wx3e34d92e8b8cb53e"
+//#define WechatSecret @"200ee15186843d67c0d9ba6a66f3a6ba"
+//#define JpushAppKey @"2dd909361c253b51e0cd05a9"
 //云渠道百度地图
-//static NSString *const kBaiduSDK = @"HFkm6kre5vprHrNAXGF4eZXNx9rEX3pt";
+static NSString *const kBaiduSDK = @"HFkm6kre5vprHrNAXGF4eZXNx9rEX3pt";
 //云中介百度地图
-static NSString *const kBaiduSDK = @"h7fphBWBFsYPImk01SmFvMr5k4ELf7ae";
+//static NSString *const kBaiduSDK = @"h7fphBWBFsYPImk01SmFvMr5k4ELf7ae";
 
 //云渠道极光
-//static NSString *const kJpushAPPKey = @"2dd909361c253b51e0cd05a9";
+static NSString *const kJpushAPPKey = @"2dd909361c253b51e0cd05a9";
 //云中介极光
-static NSString *const kJpushAPPKey = @"9c68e106ec6a106956e5d700";
+//static NSString *const kJpushAPPKey = @"9c68e106ec6a106956e5d700";
 
 
 //云渠道U盟以及qq，微信

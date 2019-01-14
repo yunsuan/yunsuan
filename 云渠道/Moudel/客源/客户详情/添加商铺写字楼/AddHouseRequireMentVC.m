@@ -1,16 +1,15 @@
 //
-//  RentingAddRequireMentVC.m
+//  AddHouseRequireMentVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/2.
+//  Created by 谷治墙 on 2019/1/14.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "RentingAddRequireMentVC.h"
+#import "AddHouseRequireMentVC.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
-//#import "AdressChooseView.h"
 #import "AddressChooseView3.h"
 #import "CustomerListVC.h"
 #import "CustomDetailVC.h"
@@ -20,7 +19,7 @@
 #import "AddTagView.h"
 #import "WWSliderView.h"
 
-@interface RentingAddRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
+@interface AddHouseRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
 {
     
     NSMutableArray *_stairArr;
@@ -45,14 +44,11 @@
 //@property (nonatomic, strong) DropDownBtn *houseTypeBtn;
 
 //@property (nonatomic, strong) WWSliderView *priceBtn;
-
 @property (nonatomic, strong) DropDownBtn *priceBtn;
 
 @property (nonatomic, strong) DropDownBtn *areaBtn;
 
 @property (nonatomic, strong) DropDownBtn *typeBtn;
-
-//@property (nonatomic, strong) DropDownBtn *faceBtn;
 
 @property (nonatomic, strong) DropDownBtn *purposeBtn;
 
@@ -67,8 +63,6 @@
 @property (nonatomic, strong) UILabel *areaL;
 
 @property (nonatomic, strong) UILabel *typeL;
-
-//@property (nonatomic, strong) UILabel *faceL;
 
 @property (nonatomic, strong) UILabel *floorL;
 
@@ -96,8 +90,6 @@
 
 @property (nonatomic, strong) UISlider *urgentSlider;
 
-//@property (nonatomic, strong) UIView *sectionLine;
-
 @property (nonatomic, strong) AddTagView *tagView;
 
 @property (nonatomic, strong) UITextView *markTV;
@@ -108,7 +100,7 @@
 
 @end
 
-@implementation RentingAddRequireMentVC
+@implementation AddHouseRequireMentVC
 
 - (instancetype)initWithCustomRequireModel:(CustomRequireModel *)model
 {
@@ -137,7 +129,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //    [self.navigationController setNavigationBarHidden:NO animated:YES];
     // 开启返回手势
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
@@ -147,9 +138,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldDidchange:) name:UITextFieldTextDidChangeNotification object:_intentionTF.textfield];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldDidchange:) name:UITextFieldTextDidChangeNotification object:_urgentTF.textfield];
     
     [self initDataSource];
     [self initUI];
@@ -165,27 +153,6 @@
         [_stairArr addObject:@{@"id":@(i),@"param":str}];
     }
 }
-
-//- (void)TextFieldDidchange:(UITextField *)textField{
-//
-////    if (textField == _intentionTF.textfield) {
-////
-////        if ([_intentionTF.textfield.text integerValue] > 100) {
-////
-////            _intentionTF.textfield.text = @"100";
-////        }
-////        _intentionTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentionTF.textfield.text integerValue]];
-////        _intentionSlider.value =  [_intentionTF.textfield.text floatValue] / 100.0 * 100;
-////    }else if (textField == _urgentTF.textfield){
-////
-////        if ([_urgentTF.textfield.text integerValue] > 100) {
-////
-////            _urgentTF.textfield.text = @"100";
-////        }
-////        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
-////        _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
-////    }
-//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
@@ -229,43 +196,6 @@
         default:
             break;
     }
-    //    AdressChooseView *addressChooseView= [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
-    //    WS(weakself);
-    //    addressChooseView.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
-    //
-    //        if (_btnNum == 1) {
-    //
-    //            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //            weakself.addressBtn.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //            _addBtn.hidden = NO;
-    //        }else if (_btnNum == 2){
-    //
-    //            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-    //
-    //                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-    //
-    //                }];
-    //            }else{
-    //
-    //                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //                weakself.addressBtn2.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //                _addBtn.hidden = NO;
-    //            }
-    //        }else{
-    //
-    //            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]] || [weakself.addressBtn2.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-    //
-    //                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-    //
-    //                }];
-    //            }else{
-    //
-    //                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //                weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //                _addBtn.hidden = NO;
-    //            }
-    //        }
-    //    };
     
     AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
     WS(weakself);
@@ -362,7 +292,7 @@
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
-            
+                
                 weakself.priceBtn.content.text = MC;
                 weakself.priceBtn->str = [NSString stringWithFormat:@"%@ 万", ID];
             };
@@ -509,10 +439,7 @@
             
             dic[@"floor_max"] = _floorTF2->str;
         }
-        //        if (_houseTypeBtn.str.length) {
-        //
-        //            [dic setObject:_houseTypeBtn.str forKey:@"ladder_ratio"];
-        //        }
+
         if (_standardTF->str.length) {
             
             dic[@"decorate"] = _standardTF->str;
@@ -561,12 +488,9 @@
         _nextBtn.userInteractionEnabled = NO;
         [BaseRequest POST:AddCustomer_URL parameters:dic success:^(id resposeObject) {
             
-            //            NSLog(@"%@",resposeObject);
-            
             _nextBtn.userInteractionEnabled = YES;
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                //                [self showContent:@"添加成功"];
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
                     if ([vc isKindOfClass:[CustomerListVC class]]) {
@@ -610,7 +534,7 @@
 //            dic[@"property_type"] = _houseTypeBtn->str;
 //        }
         if (_priceBtn->str.length) {
-        
+            
             dic[@"total_price"] = _priceBtn->str;
         }
         if (_areaBtn->str.length) {
@@ -668,8 +592,7 @@
         }
         _nextBtn.userInteractionEnabled = NO;
         [BaseRequest POST:UpdateNeed_URL parameters:dic success:^(id resposeObject) {
-            
-            //            NSLog(@"%@",resposeObject);
+
             _nextBtn.userInteractionEnabled = YES;
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
@@ -687,9 +610,9 @@
                 [self showContent:resposeObject[@"msg"]];
             }
         } failure:^(NSError *error) {
+            
             _nextBtn.userInteractionEnabled = YES;
             [self showContent:@"网络错误"];
-            //            NSLog(@"%@",error);
         }];
     }
 }
@@ -721,6 +644,7 @@
             }];
             _addressBtn2.hidden = NO;
             
+            
             [_priceL mas_remakeConstraints:^(MASConstraintMaker *make) {
                 
                 make.left.equalTo(_infoView).offset(10 *SIZE);
@@ -735,23 +659,7 @@
                 make.top.equalTo(_addressBtn2.mas_bottom).offset(19 *SIZE);
                 make.width.equalTo(@(258 *SIZE));
                 make.height.equalTo(@(33 *SIZE));
-                make.bottom.equalTo(_areaBtn.mas_top).offset(-19 *SIZE);
             }];
-//            [_houseTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_infoView).offset(10 *SIZE);
-//                make.top.equalTo(_addressBtn2.mas_bottom).offset(29 *SIZE);
-//                make.width.equalTo(@(70 *SIZE));
-//                make.height.equalTo(@(13 *SIZE));
-//            }];
-//
-//            [_houseTypeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_infoView).offset(81 *SIZE);
-//                make.top.equalTo(_addressBtn2.mas_bottom).offset(19 *SIZE);
-//                make.width.equalTo(@(258 *SIZE));
-//                make.height.equalTo(@(33 *SIZE));
-//            }];
         }else{
             
             [self showContent:@"请选择意向区域"];
@@ -793,23 +701,7 @@
                 make.top.equalTo(_addressBtn3.mas_bottom).offset(19 *SIZE);
                 make.width.equalTo(@(258 *SIZE));
                 make.height.equalTo(@(33 *SIZE));
-                make.bottom.equalTo(_areaBtn.mas_top).offset(-19 *SIZE);
             }];
-//            [_houseTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_infoView).offset(10 *SIZE);
-//                make.top.equalTo(_addressBtn3.mas_bottom).offset(29 *SIZE);
-//                make.width.equalTo(@(70 *SIZE));
-//                make.height.equalTo(@(13 *SIZE));
-//            }];
-//
-//            [_houseTypeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_infoView).offset(81 *SIZE);
-//                make.top.equalTo(_addressBtn3.mas_bottom).offset(19 *SIZE);
-//                make.width.equalTo(@(258 *SIZE));
-//                make.height.equalTo(@(33 *SIZE));
-//            }];
         }
     }
 }
@@ -828,7 +720,7 @@
         
         self.titleLabel.text = @"添加需求";
     }
-    //    self.titleLabel.text = @"添加客户";
+
     self.navBackgroundView.hidden = NO;
     self.line.hidden = YES;
     
@@ -915,9 +807,9 @@
             }
             case 7:
             {
-//                _purposeL = label;
-//                _purposeL.text = @"置业目的:";
-//                [_infoView addSubview:_purposeL];
+                _purposeL = label;
+                _purposeL.text = @"置业目的:";
+                [_infoView addSubview:_purposeL];
                 break;
             }
             case 8:
@@ -986,7 +878,6 @@
                 case 4:
                 {
                     _priceBtn = btn;
-//                    _priceBtn = [[WWSliderView alloc] initWithFrame:btn.frame sliderColor:COLOR(255, 224, 177, 1) leftSmallColor:YJBackColor leftBigColor:COLOR(255, 224, 177, 1) rightSmallColor:YJBackColor rightBigColor:COLOR(255, 224, 177, 1)];
                     [_infoView addSubview:_priceBtn];
                     break;
                 }
@@ -1005,7 +896,7 @@
                 case 7:
                 {
                     _purposeBtn = btn;
-//                    [_infoView addSubview:_purposeBtn];
+                    [_infoView addSubview:_purposeBtn];
                     break;
                 }
                 case 8:
@@ -1240,18 +1131,18 @@
     
     if (_model.total_price.length) {
         
-        //        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        //        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
-        //        NSArray *typeArr = dic[@"param"];
-        //        for (NSUInteger i = 0; i < typeArr.count; i++) {
-        //
-        //            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
-        //
-        //                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
-        //                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-        //                break;
-        //            }
-        //        }
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
+        NSArray *typeArr = dic[@"param"];
+        for (NSUInteger i = 0; i < typeArr.count; i++) {
+            
+            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
+                
+                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+                break;
+            }
+        }
     }
     
     
@@ -1401,7 +1292,6 @@
 //        make.top.equalTo(_addressBtn.mas_bottom).offset(19 *SIZE);
 //        make.width.equalTo(@(258 *SIZE));
 //        make.height.equalTo(@(33 *SIZE));
-//        //        make.bottom.equalTo(_areaBtn.mas_top).offset(-19 *SIZE);
 //    }];
     
     
@@ -1428,7 +1318,6 @@
         make.top.equalTo(_priceBtn.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_typeL.mas_top).offset(-38 *SIZE);
     }];
     
     [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1446,7 +1335,6 @@
         make.top.equalTo(_areaBtn.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_faceL.mas_top).offset(-40 *SIZE);
     }];
     
     [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1458,31 +1346,12 @@
         make.bottom.equalTo(_floorTF1.mas_top).offset(-19 *SIZE);
     }];
     
-    //    [_faceL mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(_infoView).offset(10 *SIZE);
-    //        make.top.equalTo(_typeBtn.mas_bottom).offset(29 *SIZE);
-    //        make.width.equalTo(@(70 *SIZE));
-    //        make.height.equalTo(@(13 *SIZE));
-    ////        make.bottom.equalTo(_floorL.mas_top).offset(-39 *SIZE);
-    //    }];
-    //
-    //    [_faceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-    //
-    //        make.left.equalTo(_infoView).offset(81 *SIZE);
-    //        make.top.equalTo(_typeBtn.mas_bottom).offset(19 *SIZE);
-    //        make.width.equalTo(@(258 *SIZE));
-    //        make.height.equalTo(@(33 *SIZE));
-    //        make.bottom.equalTo(_floorTF1.mas_top).offset(-19 *SIZE);
-    //    }];
-    
     [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
         make.top.equalTo(_typeBtn.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_standardL.mas_top).offset(-45 *SIZE);
     }];
     
     [_floorTF1 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1509,7 +1378,6 @@
         make.top.equalTo(_floorTF1.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_purposeL.mas_top).offset(-40 *SIZE);
     }];
     
     [_standardTF mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1518,40 +1386,38 @@
         make.top.equalTo(_floorTF1.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
-//        make.bottom.equalTo(_purposeBtn.mas_top).offset(-19 *SIZE);
+        make.bottom.equalTo(_purposeBtn.mas_top).offset(-19 *SIZE);
     }];
     
-//    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_infoView).offset(10 *SIZE);
-//        make.top.equalTo(_standardTF.mas_bottom).offset(29 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//        //        make.bottom.equalTo(_payWayL.mas_top).offset(-42 *SIZE);
-//    }];
-//
-//    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_infoView).offset(81 *SIZE);
-//        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//        make.bottom.equalTo(_payWayBtn.mas_top).offset(-19 *SIZE);
-//    }];
-    
-    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
         make.top.equalTo(_standardTF.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_intentionL.mas_top).offset(-49 *SIZE);
+    }];
+    
+    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(81 *SIZE);
+        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+        make.bottom.equalTo(_payWayBtn.mas_top).offset(-19 *SIZE);
+    }];
+    
+    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(10 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
     }];
     
     [_payWayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(81 *SIZE);
-        make.top.equalTo(_standardTF.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(19 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
         make.bottom.equalTo(_intentionTF.mas_top).offset(-19 *SIZE);
@@ -1563,7 +1429,6 @@
         make.top.equalTo(_payWayBtn.mas_bottom).offset(29 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_urgentL.mas_top).offset(-84 *SIZE);
     }];
     
     [_intentionTF mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1581,7 +1446,6 @@
         make.top.equalTo(_intentionTF.mas_bottom).offset(73 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
-        //        make.bottom.equalTo(_infoView.mas_bottom).offset(-79 *SIZE);
     }];
     
     [_urgentTF mas_makeConstraints:^(MASConstraintMaker *make) {

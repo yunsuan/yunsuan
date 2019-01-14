@@ -9,13 +9,18 @@
 #import "CustomDetailVC.h"
 
 #import "AddRequireMentVC.h"
+
+#import "AddHouseRequireMentVC.h"
 #import "AddStoreRequireMentVC.h"
 #import "AddOfficeRequireMentVC.h"
+
+#import "RentingAddRequireMentVC.h"
+#import "RentingAddStoreRequireMentVC.h"
+#import "RentingAddOfficeRequireMentVC.h"
+
 #import "FollowRecordVC.h"
 #import "AddCustomerVC.h"
-//#import "RoomMatchListVC.h"
 #import "QuickRoomVC.h"
-//#import "AddTagVC.h"
 #import "RecommendedStatusVC.h"
 #import "CustomSearchVC.h"
 #import "CustomerListVC.h"
@@ -575,16 +580,44 @@
 
                 if ([_customModel.client_property_type isEqualToString:@"商铺"]) {
 
-                    AddStoreRequireMentVC *nextVC = [[AddStoreRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    if ([_model.client_type isEqualToString:@"租房"]) {
+                        
+                        RentingAddStoreRequireMentVC *nextVC = [[RentingAddStoreRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        AddStoreRequireMentVC *nextVC = [[AddStoreRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                    
                 }else if ([_customModel.client_property_type isEqualToString:@"写字楼"]){
 
-                    AddOfficeRequireMentVC *nextVC = [[AddOfficeRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    if ([_model.client_type isEqualToString:@"租房"]) {
+                        
+                        RentingAddOfficeRequireMentVC *nextVC = [[RentingAddOfficeRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        AddOfficeRequireMentVC *nextVC = [[AddOfficeRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                    
                 }else{
 
-                    AddRequireMentVC *nextVC = [[AddRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                    if ([_model.client_type isEqualToString:@"新房"]) {
+                        
+                        AddRequireMentVC *nextVC = [[AddRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else if([_model.client_type isEqualToString:@"租房"]){
+                        
+                        RentingAddRequireMentVC *nextVC = [[RentingAddRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        AddHouseRequireMentVC *nextVC = [[AddHouseRequireMentVC alloc] initWithCustomRequireModel:_dataArr[index]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                    
                 }
             };
             cell.type = _customModel.client_type;

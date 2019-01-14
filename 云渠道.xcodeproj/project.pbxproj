@@ -459,6 +459,7 @@
 		0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B68206B9E33001ADD73 /* PersonalTableCell.m */; };
 		0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */; };
 		0CEBDE3720AEAC92004BAF7A /* QuickAddAndRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3620AEAC92004BAF7A /* QuickAddAndRecommendVC.m */; };
+		0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */; };
 		0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */; };
 		0CEC62E5208DE786006EC0BD /* RoomBrokerageTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62E4208DE786006EC0BD /* RoomBrokerageTableHeader.m */; };
 		0CEC62EB208DEB86006EC0BD /* RoomBrokerageTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62EA208DEB86006EC0BD /* RoomBrokerageTableCell2.m */; };
@@ -1572,6 +1573,8 @@
 		0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView3.m; sourceTree = "<group>"; };
 		0CEBDE3520AEAC92004BAF7A /* QuickAddAndRecommendVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickAddAndRecommendVC.h; sourceTree = "<group>"; };
 		0CEBDE3620AEAC92004BAF7A /* QuickAddAndRecommendVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddAndRecommendVC.m; sourceTree = "<group>"; };
+		0CEC314B21EC3A85002B307F /* AddHouseRequireMentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddHouseRequireMentVC.h; sourceTree = "<group>"; };
+		0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddHouseRequireMentVC.m; sourceTree = "<group>"; };
 		0CEC62DD208DDA62006EC0BD /* RoomBrokerageTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBrokerageTableCell.h; sourceTree = "<group>"; };
 		0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomBrokerageTableCell.m; sourceTree = "<group>"; };
 		0CEC62E3208DE786006EC0BD /* RoomBrokerageTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomBrokerageTableHeader.h; sourceTree = "<group>"; };
@@ -2644,6 +2647,8 @@
 				0C25222F215397370031CC44 /* AddStoreRequireMentVC.m */,
 				0C252231215397430031CC44 /* AddOfficeRequireMentVC.h */,
 				0C252232215397430031CC44 /* AddOfficeRequireMentVC.m */,
+				0CEC314B21EC3A85002B307F /* AddHouseRequireMentVC.h */,
+				0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */,
 			);
 			path = "添加商铺写字楼";
 			sourceTree = "<group>";
@@ -7154,6 +7159,7 @@
 				0C9CD3F920FDD2EF004894A3 /* SecHouseTypeDetailVC.m in Sources */,
 				0CC19D01206E21500007CC5F /* ExperienceVC.m in Sources */,
 				1016245E2088640300AD53DE /* YJChooseViewCell.m in Sources */,
+				0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */,
 				0C2883942109685100F69C5F /* RentingSurveyComplaitVC.m in Sources */,
 				0C252229215254670031CC44 /* SecAllRoomStoreEquipCell.m in Sources */,
 				0C9B01CC216EF2660055A9A8 /* SelectCustomVC.m in Sources */,
@@ -7652,7 +7658,7 @@
 					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yunsuankeji.yunzhongjie;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -7686,7 +7692,7 @@
 					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.yunsuankeji.yunzhongjie;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
