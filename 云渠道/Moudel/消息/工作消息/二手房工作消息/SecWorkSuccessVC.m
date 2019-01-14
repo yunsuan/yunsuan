@@ -44,7 +44,7 @@
         
         _endtime = [NSString stringWithFormat:@"%@",dataDic[@"timeLimit"]];
         _processArr = [NSMutableArray arrayWithArray:dataDic[@"process"]];
-        _state = dataDic[@"current_state"];
+        _state = dataDic[@"current_state_name"];
     }
     return self;
 }

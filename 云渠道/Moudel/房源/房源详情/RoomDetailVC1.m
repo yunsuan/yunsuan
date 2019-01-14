@@ -151,7 +151,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.maskButton addTarget:self action:@selector(ActionLeftBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.rightBtn.hidden = YES;
+    self.rightBtn.hidden = NO;
     [self.rightBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.rightBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];

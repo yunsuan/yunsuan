@@ -401,7 +401,6 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    
     CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
     cell.customerTableCellPhoneTapBlock = ^(NSString *phone) {
         

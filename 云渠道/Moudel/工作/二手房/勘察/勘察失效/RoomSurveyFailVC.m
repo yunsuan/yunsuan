@@ -115,11 +115,9 @@
 
 - (void)SetData:(NSArray *)data{
     
-    [_dataArr addObjectsFromArray:data];
-    
-    for (int i = 0; i < _dataArr.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
-        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[i]];
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
@@ -131,7 +129,7 @@
             }
         }];
         
-        [_dataArr replaceObjectAtIndex:i withObject:tempDic];
+        [_dataArr addObject:tempDic];
     }
     
     [_failTable reloadData];

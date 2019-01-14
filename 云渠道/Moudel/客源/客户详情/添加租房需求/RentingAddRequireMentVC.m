@@ -166,27 +166,6 @@
     }
 }
 
-//- (void)TextFieldDidchange:(UITextField *)textField{
-//
-////    if (textField == _intentionTF.textfield) {
-////
-////        if ([_intentionTF.textfield.text integerValue] > 100) {
-////
-////            _intentionTF.textfield.text = @"100";
-////        }
-////        _intentionTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentionTF.textfield.text integerValue]];
-////        _intentionSlider.value =  [_intentionTF.textfield.text floatValue] / 100.0 * 100;
-////    }else if (textField == _urgentTF.textfield){
-////
-////        if ([_urgentTF.textfield.text integerValue] > 100) {
-////
-////            _urgentTF.textfield.text = @"100";
-////        }
-////        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
-////        _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
-////    }
-//}
-
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
     if (textField == _intentionTF.textfield) {
@@ -229,43 +208,6 @@
         default:
             break;
     }
-    //    AdressChooseView *addressChooseView= [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
-    //    WS(weakself);
-    //    addressChooseView.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
-    //
-    //        if (_btnNum == 1) {
-    //
-    //            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //            weakself.addressBtn.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //            _addBtn.hidden = NO;
-    //        }else if (_btnNum == 2){
-    //
-    //            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-    //
-    //                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-    //
-    //                }];
-    //            }else{
-    //
-    //                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //                weakself.addressBtn2.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //                _addBtn.hidden = NO;
-    //            }
-    //        }else{
-    //
-    //            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]] || [weakself.addressBtn2.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-    //
-    //                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-    //
-    //                }];
-    //            }else{
-    //
-    //                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-    //                weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-    //                _addBtn.hidden = NO;
-    //            }
-    //        }
-    //    };
     
     AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
     WS(weakself);
@@ -347,14 +289,7 @@
         }
         case 3:
         {
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:PROPERTY_TYPE]];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.houseTypeBtn.content.text = MC;
-//                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@", ID];
-//            };
-//            [self.view addSubview:view];
+
             break;
         }
         case 4:
@@ -363,8 +298,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
             
-                weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@ 万", ID];
+                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@ 万", MC];
+                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -375,8 +310,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@ ㎡", ID];
+                weakself.areaBtn.content.text = [NSString stringWithFormat:@"%@ ㎡", MC];
+                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -1240,31 +1175,31 @@
     
     if (_model.total_price.length) {
         
-        //        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        //        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
-        //        NSArray *typeArr = dic[@"param"];
-        //        for (NSUInteger i = 0; i < typeArr.count; i++) {
-        //
-        //            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
-        //
-        //                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
-        //                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-        //                break;
-        //            }
-        //        }
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
+        NSArray *typeArr = dic[@"param"];
+        for (NSUInteger i = 0; i < typeArr.count; i++) {
+        
+            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
+        
+                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
+                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+                break;
+            }
+        }
     }
     
     
-    if ([_model.area integerValue]) {
+    if ([_model.area length]) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.area integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
                 
-                _areaBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _areaBtn.content.text = [NSString stringWithFormat:@"%@ ㎡",typeArr[i][@"param"]];
                 _areaBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }

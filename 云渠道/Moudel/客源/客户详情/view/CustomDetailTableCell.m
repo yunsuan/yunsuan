@@ -83,26 +83,16 @@
     
     if (model.total_price.length) {
         
-        _priceL.text = [NSString stringWithFormat:@"总价：%@",model.total_price];
+        _priceL.text = [NSString stringWithFormat:@"总价：%@万",model.total_price];
         
     }else{
         
         _priceL.text = @"总价：";
     }
     
-    if ([model.area integerValue]) {
+    if ([model.area length]) {
         
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
-            
-            if ([typeArr[i][@"id"] integerValue] == [model.area integerValue]) {
-                
-                _areaL.text = [NSString stringWithFormat:@"面积：%@",typeArr[i][@"param"]];
-                break;
-            }
-        }
+        _areaL.text = [NSString stringWithFormat:@"面积：%@ ㎡",model.area];
         
     }else{
         

@@ -74,7 +74,7 @@
     
     if (model.total_price.length) {
         
-        _priceL.text = [NSString stringWithFormat:@"意向总价：%@",model.total_price];
+        _priceL.text = [NSString stringWithFormat:@"意向总价：%@ 万",model.total_price];
     }else{
         
         _priceL.text = @"意向总价：";

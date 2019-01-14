@@ -293,8 +293,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@ 万", ID];
+                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@ 万",MC];
+                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -305,8 +305,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@ ㎡", ID];
+                weakself.areaBtn.content.text = [NSString stringWithFormat:@"%@ ㎡",MC];
+                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -1138,31 +1138,30 @@
             
             if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
                 
-                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
                 _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }
         }
     }
     
-    
-    if ([_model.area integerValue]) {
+    if ([_model.area length]) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.area integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
                 
-                _areaBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _areaBtn.content.text = [NSString stringWithFormat:@"%@㎡",typeArr[i][@"param"]];
                 _areaBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }
         }
     }
     
-    if ([_model.house_type integerValue]) {
+    if ([_model.house_type length]) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
@@ -1170,7 +1169,7 @@
         NSUInteger i;
         for (i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.house_type integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.house_type]) {
                 
                 _typeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
                 _typeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];

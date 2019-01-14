@@ -1130,20 +1130,20 @@
                 
                 RentingAddStoreRequireMentVC *nextVC = [[RentingAddStoreRequireMentVC alloc] init];
                 nextVC.status = @"addCustom";
-//                nextVC.infoModel = _Customerinfomodel;
+                nextVC.infoModel = _Customerinfomodel;
                 [self.navigationController pushViewController:nextVC animated:YES];
                 
             }else if ([_typeBtn.content.text isEqualToString:@"写字楼"]){
                 
                 RentingAddOfficeRequireMentVC *nextVC = [[RentingAddOfficeRequireMentVC alloc] init];
                 nextVC.status = @"addCustom";
-//                nextVC.infoModel = _Customerinfomodel;
+                nextVC.infoModel = _Customerinfomodel;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
                 RentingAddRequireMentVC *nextVC = [[RentingAddRequireMentVC alloc] init];
                 nextVC.status = @"addCustom";
-//                nextVC.infoModel = _Customerinfomodel;
+                nextVC.infoModel = _Customerinfomodel;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }

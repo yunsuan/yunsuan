@@ -8,7 +8,8 @@
 
 #import "RentingSurveyInvalidVC.h"
 
-#import "RentingSurveyingVC.h"
+//#import "RentingSurveyingVC.h"
+#import "RentingSurveyVC.h"
 
 #import "SinglePickView.h"
 
@@ -62,13 +63,7 @@
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择无效类型"];
         return;
     }
-    
-    //    if ([self isEmpty:_reasonTV.text]) {
-    //
-    //        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择无效描述"];
-    //        return;
-    //    }
-    //
+
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"survey_id":self.surveyId,
                                                                                @"disabled_state":_type
                                                                                }];
@@ -76,7 +71,7 @@
         
         [dic setObject:_reasonTV.text forKey:@"disabled_reason"];
     }
-    [BaseRequest GET:RentSurveyDisabledDetail_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RentRecordDisabled_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -89,7 +84,7 @@
                 }
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    if ([vc isKindOfClass:[RentingSurveyingVC class]]) {
+                    if ([vc isKindOfClass:[RentingSurveyVC class]]) {
                         
                         [self.navigationController popToViewController:vc animated:YES];
                     }
@@ -108,7 +103,7 @@
 
 - (void)ActionTypeBtn:(UIButton *)btn{
     
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:32]];
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:RENT_DISABLED_TYPE]];
     
     SS(strongSelf);
     view.selectedBlock = ^(NSString *MC, NSString *ID) {

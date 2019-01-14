@@ -776,23 +776,23 @@
             
             if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
                 
-                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
                 _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }
         }
     }
     
-    if ([_model.area integerValue]) {
+    if ([_model.area length]) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.area integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
                 
-                _areaTF.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _areaTF.content.text = [NSString stringWithFormat:@"%@㎡",typeArr[i][@"param"]];
                 _areaTF->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }

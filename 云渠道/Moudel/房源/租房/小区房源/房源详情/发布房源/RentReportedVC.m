@@ -344,8 +344,9 @@
                     };
                     NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
                     [tempDic setObject:@"1" forKey:@"is_other"];
-                    nextVC.status = @"direct";
+                    nextVC.status = @"NO";
                     nextVC.dataDic = tempDic;
+                    nextVC.comName = self.comName;
                     nextVC.surveyId = resposeObject[@"data"][@"survey_id"];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 };

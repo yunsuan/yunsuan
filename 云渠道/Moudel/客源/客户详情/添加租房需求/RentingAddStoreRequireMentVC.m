@@ -395,34 +395,6 @@
                     weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
                     weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
                 }
-                //                    _addBtn.hidden = NO;
-                //                }else if (_btnNum == 2){
-                //
-                //                    if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]]) {
-                //
-                //                        [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-                //
-                //                        }];
-                //                    }else{
-                //
-                //                        weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
-                //                        weakself.addressBtn2.str = [NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid];
-                //                        _addBtn.hidden = NO;
-                //                    }
-                //                }else{
-                //
-                //                    if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]] || [weakself.addressBtn2.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid]]) {
-                //
-                //                        [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-                //
-                //                        }];
-                //                    }else{
-                //
-                //                        weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
-                //                        weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",pro,cityid,areaid];
-                //                        _addBtn.hidden = NO;
-                //                    }
-                //                }
             };
             [self.view addSubview:addressChooseView];
             break;
@@ -437,7 +409,7 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.priceBtn.content.text = MC;
+                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@ 万",MC];
                 weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
@@ -449,7 +421,7 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.areaTF.content.text = MC;
+                weakself.areaTF.content.text = [NSString stringWithFormat:@"%@ ㎡",MC];;
                 weakself.areaTF->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];

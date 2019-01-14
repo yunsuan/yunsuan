@@ -38,8 +38,10 @@
     NSArray *_imglist;
     NSArray *_countdata;
     NSArray *_secondArr;
+    NSArray *_rentArr;
     NSArray *_secondImgArr;
     NSArray *_secCountData;
+    NSArray *_rentCountData;
 }
 
 @property (nonatomic , strong) UITableView *MainTableView;
@@ -92,6 +94,8 @@
                     
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
                     
+                    _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
+                    
                     _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
                 }
                 
@@ -111,6 +115,9 @@
                 }
                 
                 _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
+                
+                _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
+                
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
                 
@@ -136,6 +143,7 @@
         [UserModelArchiver archive];
     }
     _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"代购合同",@"合同签订"];
+    _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同",@"合同签订"];
     _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"signing"];
 }
 
@@ -244,16 +252,6 @@
     }
     
     header.titleL.text = [UserModel defaultModel].workArr[section];
-//    if (section == 0) {
-//
-//
-//    }else if (section == 1){
-//
-//        header.titleL.text = @"二手房";
-//    }else{
-//
-//        header.titleL.text = @"租房";
-//    }
     return header;
 }
 
@@ -294,8 +292,9 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        cell.titlelab.text = _secondArr[indexPath.row];
-        cell.headimg.image = [UIImage imageNamed:_secondImgArr[indexPath.row]];
+        [cell setTitle:_rentArr[indexPath.row] content:_rentCountData[indexPath.row] img:_secondImgArr[indexPath.row]];
+//        cell.titlelab.text = _rentArr[indexPath.row];
+//        cell.headimg.image = [UIImage imageNamed:_secondImgArr[indexPath.row]];
         return cell;
     }
 }
@@ -382,6 +381,10 @@
         _MainTableView.backgroundColor = YJBackColor;
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
+        _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+            
+            [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
+        }];
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     }
     return _MainTableView;

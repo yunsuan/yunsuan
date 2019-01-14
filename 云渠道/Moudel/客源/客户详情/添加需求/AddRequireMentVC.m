@@ -9,7 +9,6 @@
 #import "AddRequireMentVC.h"
 #import "DropDownBtn.h"
 #import "BorderTF.h"
-//#import "AdressChooseView.h"
 #import "AddressChooseView3.h"
 #import "CustomerListVC.h"
 #import "CustomDetailVC.h"
@@ -94,8 +93,6 @@
 
 @property (nonatomic, strong) UISlider *urgentSlider;
 
-//@property (nonatomic, strong) UIView *sectionLine;
-
 @property (nonatomic, strong) AddTagView *tagView;
 
 @property (nonatomic, strong) UITextView *markTV;
@@ -103,8 +100,6 @@
 @property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic, strong) UIButton *nextBtn;
-
-//@property (nonatomic, strong) AdressChooseView *addressChooseView;
 
 @end
 
@@ -137,8 +132,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    // 开启返回手势
+
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }
@@ -147,9 +141,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldDidchange:) name:UITextFieldTextDidChangeNotification object:_intentionTF.textfield];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TextFieldDidchange:) name:UITextFieldTextDidChangeNotification object:_urgentTF.textfield];
     
     [self initDataSource];
     [self initUI];
@@ -165,27 +156,6 @@
         [_stairArr addObject:@{@"id":@(i),@"param":str}];
     }
 }
-
-//- (void)TextFieldDidchange:(UITextField *)textField{
-//
-////    if (textField == _intentionTF.textfield) {
-////
-////        if ([_intentionTF.textfield.text integerValue] > 100) {
-////
-////            _intentionTF.textfield.text = @"100";
-////        }
-////        _intentionTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentionTF.textfield.text integerValue]];
-////        _intentionSlider.value =  [_intentionTF.textfield.text floatValue] / 100.0 * 100;
-////    }else if (textField == _urgentTF.textfield){
-////
-////        if ([_urgentTF.textfield.text integerValue] > 100) {
-////
-////            _urgentTF.textfield.text = @"100";
-////        }
-////        _urgentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_urgentTF.textfield.text integerValue]];
-////        _urgentSlider.value =  [_urgentTF.textfield.text floatValue] / 100.0 * 100;
-////    }
-//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
@@ -229,43 +199,6 @@
         default:
             break;
     }
-//    AdressChooseView *addressChooseView= [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
-//    WS(weakself);
-//    addressChooseView.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
-//
-//        if (_btnNum == 1) {
-//
-//            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-//            weakself.addressBtn.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-//            _addBtn.hidden = NO;
-//        }else if (_btnNum == 2){
-//
-//            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-//
-//                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-//
-//                }];
-//            }else{
-//
-//                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-//                weakself.addressBtn2.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-//                _addBtn.hidden = NO;
-//            }
-//        }else{
-//
-//            if ([weakself.addressBtn.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]] || [weakself.addressBtn2.str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid]]) {
-//
-//                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-//
-//                }];
-//            }else{
-//
-//                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-//                weakself.addressBtn3.str = [NSString stringWithFormat:@"%@-%@-%@",proviceid,cityid,areaid];
-//                _addBtn.hidden = NO;
-//            }
-//        }
-//    };
     
     AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
     WS(weakself);
@@ -363,8 +296,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
 
-                weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@ 万", ID];
+                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@ 万",MC];
+                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -375,8 +308,8 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@ ㎡", ID];
+                weakself.areaBtn.content.text = [NSString stringWithFormat:@"%@㎡",MC];
+                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
             break;
@@ -560,13 +493,11 @@
         
         _nextBtn.userInteractionEnabled = NO;
         [BaseRequest POST:AddCustomer_URL parameters:dic success:^(id resposeObject) {
-           
-//            NSLog(@"%@",resposeObject);
+
  
             _nextBtn.userInteractionEnabled = YES;
             if ([resposeObject[@"code"] integerValue] == 200) {
-                
-//                [self showContent:@"添加成功"];
+
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
                     if ([vc isKindOfClass:[CustomerListVC class]]) {
@@ -797,7 +728,7 @@
         
         self.titleLabel.text = @"添加需求";
     }
-//    self.titleLabel.text = @"添加客户";
+
     self.navBackgroundView.hidden = NO;
     self.line.hidden = YES;
     
@@ -955,8 +886,6 @@
                 case 4:
                 {
                     _priceBtn = btn;
-//                    _priceBtn = [[WWSliderView alloc] initWithFrame:btn.frame sliderColor:COLOR(255, 224, 177, 1) leftSmallColor:YJBackColor leftBigColor:COLOR(255, 224, 177, 1) rightSmallColor:YJBackColor rightBigColor:COLOR(255, 224, 177, 1)];
-//                    _priceBtn
                     [_infoView addSubview:_priceBtn];
                     break;
                 }
@@ -1192,14 +1121,14 @@
             }
         }
 
-    if ([_model.property_type integerValue]) {
+    if (_model.property_type.length) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",16]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.property_type integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.property_type]) {
                 
                 _houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
                 _houseTypeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
@@ -1217,7 +1146,7 @@
 
             if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
 
-                _priceBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
                 _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }
@@ -1225,23 +1154,23 @@
     }
 
     
-    if ([_model.area integerValue]) {
+    if ([_model.area length]) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.area integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
                 
-                _areaBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+                _areaBtn.content.text = [NSString stringWithFormat:@"%@㎡",typeArr[i][@"param"]];
                 _areaBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
                 break;
             }
         }
     }
     
-    if ([_model.house_type integerValue]) {
+    if (_model.house_type.length) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
@@ -1249,7 +1178,7 @@
         NSUInteger i;
         for (i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"id"] integerValue] == [_model.house_type integerValue]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.house_type]) {
                 
                 _typeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
                 _typeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];

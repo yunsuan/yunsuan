@@ -9,7 +9,7 @@
 #import "RentingSurveyingVC.h"
 #import "RentingSurveyingDetailVC.h"
 #import "RentingCompleteSurveyInfoVC.h"
-#import "SurveyInvalidVC.h"
+#import "RentingSurveyInvalidVC.h"
 
 #import "RoomSurveyingCell.h"
 
@@ -119,11 +119,9 @@
 
 - (void)SetData:(NSArray *)data{
     
-    [_dataArr addObjectsFromArray:data];
-    
-    for (int i = 0; i < _dataArr.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
-        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[i]];
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
@@ -135,7 +133,7 @@
             }
         }];
         
-        [_dataArr replaceObjectAtIndex:i withObject:tempDic];
+        [_dataArr addObject:tempDic];
     }
     
     [_waitTable reloadData];
@@ -187,9 +185,9 @@
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"勘察失效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataArr[index]];
+            RentingSurveyInvalidVC *nextVC = [[RentingSurveyInvalidVC alloc] initWithData:_dataArr[index]];
             nextVC.surveyId = _dataArr[index][@"survey_id"];
-            nextVC.surveyInvalidVCBlock = ^{
+            nextVC.rentSurveyInvalidVCBlock = ^{
 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
                 [self RequestMethod];
@@ -237,7 +235,7 @@
 
 - (void)initUI{
     
-    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 80 *SIZE) style:UITableViewStylePlain];
     
     _waitTable.rowHeight = UITableViewAutomaticDimension;
     _waitTable.estimatedRowHeight = 87 *SIZE;

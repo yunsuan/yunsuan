@@ -79,7 +79,7 @@
 
 - (void)initUI{
     
-    _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 80 *SIZE) style:UITableViewStylePlain];
     
     _mainTable.rowHeight = UITableViewAutomaticDimension;
     _mainTable.estimatedRowHeight = 87 *SIZE;
