@@ -226,7 +226,14 @@
                 make.width.equalTo(@(cell.rankL.mj_textWith + 5 *SIZE));
             }];
             [cell SetLevel:[_roomModel.cycle integerValue]];
-            cell.ruleL.text = _model.bsicarr[indexPath.section][@"basic"];
+            if ([_model.bsicarr[indexPath.section][@"basic"] isKindOfClass:[NSNull class]]) {
+                
+                cell.ruleL.text = @"";
+            }else{
+                
+                cell.ruleL.text = _model.bsicarr[indexPath.section][@"basic"];
+            }
+            
             NSMutableArray *arr = _model.breakerinfo;
             cell.standL.text = arr[indexPath.section];
             

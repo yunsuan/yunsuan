@@ -10,6 +10,8 @@
 
 #import "RoomValidApplyVC.h"
 #import "RoomInvalidApplyVC.h"
+#import "RentingValidApplyVC.h"
+#import "RentingSurveyInvalidVC.h"
 
 #import "SystemWorkConfirmDetailVC.h"
 
@@ -160,24 +162,51 @@
         
         UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-            nextVC.roomValidApplyVCBlock = ^{
+            NSDictionary *dic = _dataArr[index];
+            if ([dic[@"type_name"] isEqualToString:@"租房"]) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                RentingValidApplyVC *nextVC = [[RentingValidApplyVC alloc] initWithData:dic SurveyId:_dataArr[index][@"survey_id"]];
+                nextVC.rentingValidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+                nextVC.roomValidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
+
         }];
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-            nextVC.roomInvalidApplyVCBlock = ^{
+            NSDictionary *dic = _dataArr[index];
+            if ([dic[@"type_name"] isEqualToString:@"租房"]) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                RentingSurveyInvalidVC *nextVC = [[RentingSurveyInvalidVC alloc] initWithData:dic];
+                nextVC.rentSurveyInvalidVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+                nextVC.roomInvalidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }];
         
         [alert addAction:valid];
@@ -191,41 +220,10 @@
     return cell;
 }
 
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//    return YES;
-//}
-//
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//    return UITableViewCellEditingStyleDelete;
-//}
-//
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//    [self alertControllerWithNsstring:@"温馨提示" And:@"你确定要拒绝派单吗？" WithCancelBlack:^{
-//
-//        [BaseRequest POST:HouseRecordPushRefuse_URL parameters:@{@"push_id":_dataArr[indexPath.row][@"push_id"],@"type":_dataArr[indexPath.row][@"type"]} success:^(id resposeObject) {
-//
-//            if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//            }else{
-//
-//                [self showContent:resposeObject[@"msg"]];
-//            }
-//        } failure:^(NSError *error) {
-//
-//            [self showContent:@"网络错误"];
-//        }];
-//    } WithDefaultBlack:^{
-//
-//    }];
-//}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] type:_dataArr[indexPath.row][@"type"]];
+    nextVC.typeName = _dataArr[indexPath.row][@"type_name"];
     nextVC.systemWorkConfirmDetailVCBlock = ^{
         
         [self RequestMethod];

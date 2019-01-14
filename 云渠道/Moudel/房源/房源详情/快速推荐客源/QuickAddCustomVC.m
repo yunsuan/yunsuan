@@ -15,7 +15,7 @@
 #import "CustomerInfoModel.h"
 #import "QuickAddRequireVC.h"
 
-@interface QuickAddCustomVC ()
+@interface QuickAddCustomVC ()<UITextFieldDelegate>
 {
     NSInteger _numAdd;
     NSString *_projectId;
@@ -28,10 +28,35 @@
 @property (nonatomic , strong) DropDownBtn *sex;
 @property (nonatomic , strong) BorderTF *name;
 @property (nonatomic , strong) DropDownBtn *birth;
-@property (nonatomic , strong) BorderTF *tel1;
-@property (nonatomic, strong) UIButton *addBtn;
-@property (nonatomic , strong) BorderTF *tel2;
-@property (nonatomic , strong) BorderTF *tel3;
+
+@property (nonatomic, strong) UITextField *phoneTF1;
+
+@property (nonatomic, strong) UITextField *phoneTF2;
+
+@property (nonatomic, strong) UITextField *phoneTF3;
+
+@property (nonatomic, strong) UITextField *phoneTF4;
+
+@property (nonatomic, strong) UITextField *phoneTF5;
+
+@property (nonatomic, strong) UITextField *phoneTF6;
+
+@property (nonatomic, strong) UITextField *phoneTF7;
+
+@property (nonatomic, strong) UITextField *phoneTF8;
+
+@property (nonatomic, strong) UITextField *phoneTF9;
+
+@property (nonatomic, strong) UITextField *phoneTF10;
+
+@property (nonatomic, strong) UITextField *phoneTF11;
+
+@property (nonatomic, strong) UILabel *hideL;
+
+@property (nonatomic, strong) UIImageView *hideImg;
+
+@property (nonatomic, strong) UILabel *hideReportL;
+
 @property (nonatomic , strong) DropDownBtn *numclass;
 @property (nonatomic , strong) BorderTF *num;
 @property (nonatomic , strong) DropDownBtn *adress;
@@ -82,80 +107,61 @@
     _Customerinfomodel.sex = @"0";
 }
 
+#pragma mark -- TextFieldDelegate
 
-- (void)ActionAddBtn:(UIButton *)btn{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    if (_numAdd == 0 ) {
+    
+    if (range.location > 0) {
         
-        if ([self checkTel:_tel1.textfield.text]) {
+        textField.text = [textField.text substringToIndex:1];
+        
+        if (textField == _phoneTF1) {
             
-            _numAdd += 1;
-            [_tel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel1.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-            _tel2.hidden = NO;
+            [_phoneTF2 becomeFirstResponder];
+        }else if (textField == _phoneTF2) {
             
+            [_phoneTF3 becomeFirstResponder];
+        }else if (textField == _phoneTF3) {
             
-            [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(9 *SIZE);
-                make.top.equalTo(_tel2.mas_bottom).offset(30 *SIZE);
-                make.width.equalTo(@(65 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
-            
-            [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-        }else{
-            
-            [self showContent:@"请填写正确的电话号码"];
+            [_phoneTF4 becomeFirstResponder];
         }
-        
-    }else{
-        
-        if ([self checkTel:_tel2.textfield.text]) {
+        else if (textField == _phoneTF4) {
             
-            _numAdd += 1;
-            [_tel3 mas_makeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-            _tel3.hidden = NO;
-            
-            
-            [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(9 *SIZE);
-                make.top.equalTo(_tel3.mas_bottom).offset(30 *SIZE);
-                make.width.equalTo(@(65 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
-            
-            [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_scrollview).offset(80 *SIZE);
-                make.top.equalTo(_tel3.mas_bottom).offset(19 *SIZE);
-                make.width.equalTo(@(258 *SIZE));
-                make.height.equalTo(@(33 *SIZE));
-            }];
-        }else{
-            
-            [self showContent:@"请填写正确的电话号码"];
+            [_phoneTF5 becomeFirstResponder];
         }
+        else if (textField == _phoneTF5) {
+            
+            [_phoneTF6 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF6) {
+            
+            [_phoneTF7 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF7) {
+            
+            [_phoneTF8 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF8) {
+            
+            [_phoneTF9 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF9) {
+            
+            [_phoneTF10 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF10) {
+            
+            [_phoneTF11 becomeFirstResponder];
+        }else if (textField == _phoneTF11) {
+            
+            [_phoneTF11 endEditing:YES];
+        }
+        return NO;
     }
+    return YES;
 }
+
 
 -(void)initUI
 {
@@ -214,30 +220,150 @@
     tellab1.font = [UIFont systemFontOfSize:13.3*SIZE];
     tellab1.textColor = YJTitleLabColor;
     [_scrollview addSubview:tellab1];
-    _tel1 = [[BorderTF alloc]initWithFrame:CGRectMake(80.3*SIZE, 146*SIZE, 257.7*SIZE, 33.3*SIZE)];
-    _tel1.textfield.placeholder = @"必填";
-    _tel1.textfield.keyboardType = UIKeyboardTypePhonePad;
-    [_scrollview addSubview:_tel1];
     
-    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addBtn.frame = CGRectMake(313 *SIZE, 162 *SIZE, 25 *SIZE, 25 *SIZE);
-    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
-    //    [_scrollview addSubview:_addBtn];
+    for (int i = 0; i < 11; i++) {
+        
+        UITextField *borderTF = [[UITextField alloc] initWithFrame:CGRectMake(80 *SIZE, 75 *SIZE, 19 *SIZE, 24 *SIZE)];
+        borderTF.textColor = YJContentLabColor;
+        borderTF.keyboardType = UIKeyboardTypePhonePad;
+        borderTF.font = [UIFont systemFontOfSize:13.3*SIZE];
+        borderTF.layer.cornerRadius = 5*SIZE;
+        borderTF.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+        borderTF.layer.borderWidth = 1*SIZE;
+        borderTF.textAlignment = NSTextAlignmentCenter;
+        switch (i) {
+            case 0:
+            {
+                _phoneTF1 = borderTF;
+                _phoneTF1.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF1];
+                break;
+            }
+            case 1:
+            {
+                _phoneTF2 = borderTF;
+                _phoneTF2.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF2];
+                break;
+            }
+            case 2:
+            {
+                _phoneTF3 = borderTF;
+                _phoneTF3.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF3];
+                break;
+            }
+            case 3:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF4 = borderTF;
+                _phoneTF4.delegate = self;
+                _phoneTF4.text = @"X";
+                
+                [_scrollview addSubview:_phoneTF4];
+                break;
+            }
+            case 4:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF5 = borderTF;
+                _phoneTF5.delegate = self;
+                _phoneTF5.text = @"X";
+                
+                [_scrollview addSubview:_phoneTF5];
+                break;
+            }
+            case 5:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF6 = borderTF;
+                _phoneTF6.delegate = self;
+                _phoneTF6.text = @"X";
+                
+                [_scrollview addSubview:_phoneTF6];
+                break;
+            }
+            case 6:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF7 = borderTF;
+                _phoneTF7.delegate = self;
+                _phoneTF7.text = @"X";
+                
+                [_scrollview addSubview:_phoneTF7];
+                break;
+            }
+            case 7:
+            {
+                _phoneTF8 = borderTF;
+                _phoneTF8.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF8];
+                break;
+            }
+            case 8:
+            {
+                _phoneTF9 = borderTF;
+                _phoneTF9.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF9];
+                break;
+            }
+            case 9:
+            {
+                _phoneTF10 = borderTF;
+                _phoneTF10.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF10];
+                break;
+            }
+            case 10:
+            {
+                _phoneTF11 = borderTF;
+                _phoneTF11.delegate = self;
+                
+                [_scrollview addSubview:_phoneTF11];
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
-    _tel2 = [[BorderTF alloc]initWithFrame:CGRectMake(80.3*SIZE, 196*SIZE, 257.7*SIZE, 33.3*SIZE)];
-    _tel2.textfield.placeholder = @"选填";
-    _tel2.hidden = YES;
-    _tel2.textfield.keyboardType = UIKeyboardTypePhonePad;
-    [_scrollview addSubview:_tel2];
+    for(int i = 0; i < 2; i++){
+        
+        UILabel *label = [[UILabel alloc] init];
+        label.textColor = YJTitleLabColor;
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        switch (i) {
+            case 0:
+            {
+                
+                _hideL = label;
+                _hideL.font = [UIFont systemFontOfSize:11 *SIZE];
+                _hideL.textColor = YJ170Color;
+                _hideL.text = @"只需输入手机号前三位后四位";
+                [_scrollview addSubview:_hideL];
+                break;
+            }
+            case 1:
+            {
+                _hideReportL = label;
+                _hideReportL.font = [UIFont systemFontOfSize:10 *SIZE];
+                _hideReportL.textColor = COLOR(255, 165, 29, 1);
+                _hideReportL.text = @"隐号报备";
+                [_scrollview addSubview:_hideReportL];
+                break;
+            }
+        }
+    }
     
-    
-    _tel3 = [[BorderTF alloc]initWithFrame:CGRectMake(80.3*SIZE, 246*SIZE, 257.7*SIZE, 33.3*SIZE)];
-    _tel3.textfield.placeholder = @"选填";
-    _tel3.hidden = YES;
-    _tel3.textfield.keyboardType = UIKeyboardTypePhonePad;
-    [_scrollview addSubview:_tel3];
-    
+    _hideImg = [[UIImageView alloc] init];
+    _hideImg.image = [UIImage imageNamed:@"eye"];
+    [_scrollview addSubview:_hideImg];
     
     //证件类型
     _numclasslab = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 306*SIZE, 100*SIZE, 14*SIZE)];
@@ -301,18 +427,122 @@
         make.bottom.equalTo(self.view).offset(0);
     }];
     
-    [_tel1 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_phoneTF1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollview).offset(81 *SIZE);
         make.top.equalTo(_scrollview).offset(158 *SIZE);
-        make.width.equalTo(@(217 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF1.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF2.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF3.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF4.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF5.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF6.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF8 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF7.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF9 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF8.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF10 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF9.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_phoneTF11 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_phoneTF10.mas_right).offset(4 *SIZE);
+        make.top.equalTo(_scrollview).offset(158 *SIZE);
+        make.width.equalTo(@(19 *SIZE));
+        make.height.equalTo(@(24 *SIZE));
+    }];
+    
+    [_hideL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(80 *SIZE);
+        make.top.equalTo(_phoneTF1.mas_bottom).offset(14 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+        make.height.mas_equalTo(10 *SIZE);
+    }];
+    
+    [_hideImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(271 *SIZE);
+        make.top.equalTo(_phoneTF1.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(14 *SIZE);
+        make.height.mas_equalTo(6 *SIZE);
+    }];
+    
+    [_hideReportL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(299 *SIZE);
+        make.top.equalTo(_phoneTF1.mas_bottom).offset(14 *SIZE);
+        make.width.mas_equalTo(50 *SIZE);
+        make.height.mas_equalTo(10 *SIZE);
     }];
     
     [_numclasslab mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollview).offset(9 *SIZE);
-        make.top.equalTo(_tel1.mas_bottom).offset(30 *SIZE);
+        make.top.equalTo(_hideReportL.mas_bottom).offset(30 *SIZE);
         make.width.equalTo(@(65 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
@@ -320,8 +550,8 @@
     [_numclass mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollview).offset(80 *SIZE);
-        make.top.equalTo(_tel1.mas_bottom).offset(19 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
+        make.top.equalTo(_hideReportL.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(257 *SIZE));
         make.height.equalTo(@(33 *SIZE));
     }];
     
@@ -446,30 +676,44 @@
         [self showContent:@"请输入姓名！"];
         return;
     }
-    if (![self checkTel:_tel1.textfield.text]) {
+    
+    NSString *tel;
+    if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
         
-        [self showContent:@"请输入正确的电话号码"];
-        return;
+        [self alertControllerWithNsstring:@"温馨提示" And:@"电话号码不完整"];
+    }else{
+        
+        if (!_phoneTF4.text.length) {
+            
+            _phoneTF4.text = @"X";
+        }
+        if (!_phoneTF5.text.length){
+            
+            _phoneTF5.text = @"X";
+        }
+        if (!_phoneTF6.text.length){
+            
+            _phoneTF6.text = @"X";
+        }
+        if (!_phoneTF7.text.length){
+            
+            _phoneTF7.text = @"X";
+        }
+        
+        if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+            
+            _phoneTF4.text = @"X";
+            _phoneTF5.text = @"X";
+            _phoneTF6.text = @"X";
+            _phoneTF7.text = @"X";
+        }
+        
+        tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
     }
     
     _Customerinfomodel.name = _name.textfield.text;
     
-    if ([self checkTel:_tel1.textfield.text]) {
-        
-        _Customerinfomodel.tel = _tel1.textfield.text;
-    }else{
-        
-        [self showContent:@"请填写正确的电话号码"];
-        return;
-    }
-    if (_numAdd == 1 && [self checkTel:_tel2.textfield.text]) {
-        
-        _Customerinfomodel.tel = [NSString stringWithFormat:@"%@,%@",_tel1.textfield.text,_tel2.textfield.text];
-    }
-    if (_numAdd > 1 && [self checkTel:_tel2.textfield.text]) {
-        
-        _Customerinfomodel.tel = [NSString stringWithFormat:@"%@,%@,%@",_tel1.textfield.text,_tel2.textfield.text,_tel3.textfield.text];
-    }
+    _Customerinfomodel.tel = tel;
     _Customerinfomodel.card_id = _num.textfield.text;
     _Customerinfomodel.address = _detailadress.text;
     

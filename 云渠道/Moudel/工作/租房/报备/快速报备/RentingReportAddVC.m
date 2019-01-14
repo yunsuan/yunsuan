@@ -528,7 +528,7 @@
             nextVC.img_name = model.img_url;
             nextVC.status = @"挂牌信息编辑";
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else if ([self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"]){
+        }else if ([self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"] || [self.status isEqualToString:@"completeRent"]){
             
             SecDistributVC *nextVC = [[SecDistributVC alloc] init];
             nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {

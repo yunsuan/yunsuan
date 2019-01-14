@@ -28,6 +28,8 @@ typedef void(^ReleaseDirectVCBlock)(void);
 
 @property (nonatomic, strong) NSString *comName;
 
+@property (nonatomic, strong) NSString *status;
+
 @end
 
 NS_ASSUME_NONNULL_END

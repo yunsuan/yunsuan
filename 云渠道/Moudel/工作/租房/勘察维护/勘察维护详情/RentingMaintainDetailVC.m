@@ -19,6 +19,7 @@
 #import "RentingModifyProjectAnalysisVC.h"
 #import "RentingModifyProjectImageVC.h"
 #import "AddEquipmentVC.h"
+#import "RentingAddEquipmentVC.h"
 #import "MaintainFollowDetailVC.h"
 #import "RentingModifyNerborVC.h"
 
@@ -410,12 +411,12 @@
 //                        [self.navigationController pushViewController:nextVC animated:YES];
 //                    }else{
                     
-                        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:_type];
+                        RentingAddEquipmentVC *nextVC = [[RentingAddEquipmentVC alloc] initWithType:_type];
                         nextVC.titleStr = @"修改";
                         nextVC.type = [NSString stringWithFormat:@"%ld",_type];
                         nextVC.houseId = _houseId;
                         nextVC.data = [NSMutableArray arrayWithArray:_matchArr];
-                        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+                        nextVC.rentingAddEquipmentVCBlock = ^(NSArray * _Nonnull data) {
                             
                             _matchArr = [NSMutableArray arrayWithArray:data];
                             [tableView reloadData];

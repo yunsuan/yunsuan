@@ -22,9 +22,7 @@
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
 
-@interface QuickAddRequireVC ()
-
-<UITextViewDelegate>
+@interface QuickAddRequireVC ()<UITextFieldDelegate,UITextViewDelegate>
 {
     
     NSMutableArray *_stairArr;
@@ -742,16 +740,17 @@
     view.backgroundColor = YJBlueBtnColor;
     [_infoView addSubview:view];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(32 *SIZE, 18 *SIZE, 80 *SIZE, 15 *SIZE)];
-    label.textColor = YJTitleLabColor;
-    label.font = [UIFont systemFontOfSize:15 *SIZE];
-    label.text = @"需求信息";
-    [_infoView addSubview:label];
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(32 *SIZE, 18 *SIZE, 80 *SIZE, 15 *SIZE)];
+    label1.textColor = YJTitleLabColor;
+    label1.font = [UIFont systemFontOfSize:15 *SIZE];
+    label1.text = @"需求信息";
+    [_infoView addSubview:label1];
     
     _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _addBtn.frame = CGRectMake(313 *SIZE, 56 *SIZE, 25 *SIZE, 25 *SIZE);
     [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
+    _addBtn.hidden = YES;
     [_infoView addSubview:_addBtn];
     
     for(int i = 0; i < 13; i++){
@@ -838,7 +837,7 @@
                 break;
             }
             default:
-            break;
+                break;
         }
         
         if (i < 12) {
@@ -929,13 +928,14 @@
                     [_infoView addSubview:_standardTF];
                 }
                 default:
-                break;
+                    break;
             }
         }
         
         if (i < 5) {
             
             BorderTF *TF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
+            TF.textfield.delegate = self;
             switch (i) {
                 case 0:
                 {
@@ -955,6 +955,7 @@
                 case 3:
                 {
                     _intentionTF = TF;
+                    
                     _intentionTF.textfield.textAlignment = NSTextAlignmentRight;
                     _intentionTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
                     [_infoView addSubview:_intentionTF];
@@ -970,7 +971,7 @@
                     break;
                 }
                 default:
-                break;
+                    break;
             }
         }
         
@@ -989,20 +990,19 @@
             if (i == 0) {
                 
                 _intentionSlider = slider;
+                
                 [_infoView addSubview:_intentionSlider];
             }else{
                 
                 _urgentSlider = slider;
+                
                 [_infoView addSubview:_urgentSlider];
             }
         }
-        
-        
+
     }
     
-    
     _tagView = [[AddTagView alloc] initWithFrame:CGRectMake(0, 757 *SIZE, SCREEN_Width, 127 *SIZE)];
-    
     [_tagView reloadInputViews];
     WS(weak);
     _tagView.addBtnBlock = ^{

@@ -114,14 +114,9 @@
                     nextVC.completeSurveyInfoVCBlock = ^{
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
-//                        [self RequestMethod];
-//                        if (self.roomSurveyingBlock) {
-//
-//                            self.roomSurveyingBlock();
-//                        }
+
                     };
-//                    nex
-//                    nextVC.dataDic = _dataArr[index];
+
                     nextVC.surveyId = _surveyId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];

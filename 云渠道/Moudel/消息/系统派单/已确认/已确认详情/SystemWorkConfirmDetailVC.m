@@ -9,6 +9,10 @@
 #import "SystemWorkConfirmDetailVC.h"
 #import "RoomInvalidApplyVC.h"
 #import "RoomValidApplyVC.h"
+
+#import "RentingValidApplyVC.h"
+#import "RentingSurveyInvalidVC.h"
+
 //#import "SystemWorkWaitVC.h"
 //#import "SystemWorkConfrimVC.h"
 #import "SystemoWorkVC.h"
@@ -145,25 +149,49 @@
         
         UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
-            nextVC.houseCode = _houseCode;
-            nextVC.roomValidApplyVCBlock = ^{
+            if ([self.typeName isEqualToString:@"租房"]) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                RentingValidApplyVC *nextVC = [[RentingValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+                nextVC.rentingValidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+                nextVC.houseCode = _houseCode;
+                nextVC.roomValidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }];
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
-            nextVC.roomInvalidApplyVCBlock = ^{
+            if ([self.typeName isEqualToString:@"租房"]) {
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                RentingSurveyInvalidVC *nextVC = [[RentingSurveyInvalidVC alloc] initWithData:_dataDic];
+                nextVC.rentSurveyInvalidVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataDic SurveyId:_surveyId];
+                nextVC.roomInvalidApplyVCBlock = ^{
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }];
         
         [alert addAction:valid];

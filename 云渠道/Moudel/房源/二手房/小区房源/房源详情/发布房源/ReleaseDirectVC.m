@@ -8,6 +8,7 @@
 
 #import "ReleaseDirectVC.h"
 #import "CompleteSurveyInfoVC.h"
+#import "RentingCompleteSurveyInfoVC.h"
 
 #import "BaseFrameHeader.h"
 #import "BorderTF.h"
@@ -133,21 +134,41 @@
     [dic setValue:_phoneTF.textfield.text forKey:@"tel"];
     [dic setValue:_reporterType forKey:@"report_type"];
     
-    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-    nextVC.status = @"direct";
-    nextVC.dataDic = dic;
-    nextVC.projectID = self.projectID;
-    nextVC.buildId = self.buildId;
-    nextVC.unitId = self.unitId;
-    nextVC.comName = self.comName;
-    nextVC.completeSurveyInfoVCBlock = ^{
+    if ([self.status isEqualToString:@"completeRent"]) {
         
-        if (self.releaseDirectVCBlock) {
+        RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.status = @"direct";
+        nextVC.dataDic = dic;
+        nextVC.projectID = self.projectID;
+        nextVC.buildId = self.buildId;
+        nextVC.unitId = self.unitId;
+        nextVC.comName = self.comName;
+        nextVC.rentingCompleteSurveyInfoVCBlock = ^{
             
-            self.releaseDirectVCBlock();
-        }
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
+            if (self.releaseDirectVCBlock) {
+                
+                self.releaseDirectVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.status = @"direct";
+        nextVC.dataDic = dic;
+        nextVC.projectID = self.projectID;
+        nextVC.buildId = self.buildId;
+        nextVC.unitId = self.unitId;
+        nextVC.comName = self.comName;
+        nextVC.completeSurveyInfoVCBlock = ^{
+            
+            if (self.releaseDirectVCBlock) {
+                
+                self.releaseDirectVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 - (void)initUI{

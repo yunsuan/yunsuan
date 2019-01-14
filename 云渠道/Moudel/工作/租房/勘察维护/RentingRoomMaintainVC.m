@@ -135,7 +135,7 @@
 - (void)ActionAddBtn:(UIButton *)btn{
     
     RentingReportAddVC *nextVC = [[RentingReportAddVC alloc] init];
-    nextVC.status = @"complete";
+    nextVC.status = @"completeRent";
     nextVC.rentingRoomReportAddHouseBlock = ^(NSDictionary *dic) {
         
         [self RequestMethod];

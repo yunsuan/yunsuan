@@ -94,7 +94,7 @@
         urlStr = RentSurveySuccess_URL;
     }else{
         
-        urlStr = @"agent/house/recordAndSurvey";
+        urlStr = @"agent/rent/recordAndSurvey";
     }
     [BaseRequest POST:urlStr parameters:self.dic success:^(id resposeObject) {
         

@@ -14,6 +14,8 @@ typedef void(^SystemWorkConfirmDetailVCBlock)(void);
 
 @interface SystemWorkConfirmDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *typeName;
+
 @property (nonatomic, copy) SystemWorkConfirmDetailVCBlock systemWorkConfirmDetailVCBlock;
 
 - (instancetype)initWithSurveyId:(NSString *)surveyId type:(NSString *)type;

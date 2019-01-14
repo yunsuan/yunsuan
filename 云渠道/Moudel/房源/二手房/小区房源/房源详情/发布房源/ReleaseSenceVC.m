@@ -610,7 +610,7 @@
                         [weakSelf.navigationController popToViewController:vc animated:YES];
                     }
                 }
-            }else if ([weakSelf.status isEqualToString:@"complete"]){
+            }else if ([weakSelf.status isEqualToString:@"complete"] || [weakSelf.status isEqualToString:@"completeRent"]){
                 
                 ReleaseDirectVC *nextVC = [[ReleaseDirectVC alloc] init];
                 nextVC.dataDic = weakSelf.fjxx;
@@ -618,17 +618,9 @@
                 nextVC.buildId = weakSelf.build_id;
                 nextVC.unitId = weakSelf.unit_id;
                 nextVC.comName = weakSelf.comName;
+                nextVC.status = weakSelf.status;
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
-
-//                CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-//                nextVC.status = @"direct";
-//                nextVC.dataDic = weakSelf.fjxx;
-//                nextVC.projectID = weakSelf.project_id;
-//                nextVC.buildId = weakSelf.build_id;
-//                nextVC.unitId = weakSelf.unit_id;
-//                nextVC.comName = self.comName;
-////                nextVC.surveyId = //缺少勘察ID,直接勘察，需要新接口
-//                [weakSelf.navigationController pushViewController:nextVC animated:YES];
+                
             }else{
                 
                 if ([weakSelf.status isEqualToString:@"rent"]) {
