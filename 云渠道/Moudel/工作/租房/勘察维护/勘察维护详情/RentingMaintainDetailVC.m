@@ -38,15 +38,11 @@
 
 @interface RentingMaintainDetailVC ()<UITableViewDataSource,UITableViewDelegate>
 {
-    //    NSString *_surveyId;
     NSString *_houseId;
     NSInteger _item;
-    //    NSArray *_titleArr;
     NSArray *_titleArr2;
-    //    NSArray *_roomInfoArr;
     NSMutableDictionary *_houseDic;
     NSMutableArray *_peopleArr;
-    //    NSMutableDictionary *_infoDic;
     NSMutableDictionary *_moreDic;
     NSMutableArray *_followArr;
     NSMutableArray *_tagArr;
@@ -65,7 +61,6 @@
     self = [super init];
     if (self) {
         
-        //        _surveyId = surveyId;
         _houseId = houseId;
         _type = type;
     }
@@ -84,7 +79,7 @@
     
     if (_type == 1) {
         
-        _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"项目分析",@"其他费项"];
+        _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"配套设施",@"项目分析",@"其他费项"];
     }else if (_type == 2){
         
         _titleArr2 = @[@"",@"房源实景图片",@"房源标签",@"配套设施",@"左云右算",@"房源分析",@"其他费项"];
@@ -266,7 +261,7 @@
         
         if (_type == 1) {
             
-            return 4;
+            return 5;
         }else{
             
             return 6;
@@ -403,18 +398,18 @@
                 };
                 if (section == 3) {
                     
-                    if (_type == 1) {
-                        
-                        RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] initWithData:_detailDic];
-                        nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
-                        nextVC.rentingModifyProjectAnalysisVCBlock = ^{
-                            
-                            [self RequestMethod];
-                        };
-                        nextVC.houseId = _houseId;
-                        [self.navigationController pushViewController:nextVC animated:YES];
-                    }else{
-                        
+//                    if (_type == 1) {
+//
+//                        RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+//                        nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+//                        nextVC.rentingModifyProjectAnalysisVCBlock = ^{
+//
+//                            [self RequestMethod];
+//                        };
+//                        nextVC.houseId = _houseId;
+//                        [self.navigationController pushViewController:nextVC animated:YES];
+//                    }else{
+                    
                         AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:_type];
                         nextVC.titleStr = @"修改";
                         nextVC.type = [NSString stringWithFormat:@"%ld",_type];
@@ -426,19 +421,32 @@
                             [tableView reloadData];
                         };
                         [self.navigationController pushViewController:nextVC animated:YES];
-                    }
+//                    }
                 }
                 if (section == 4) {
                     
-                    RentingModifyNerborVC *nextVC = [[RentingModifyNerborVC alloc] initWithData:_detailDic];
-                    nextVC.houseId = _houseId;
-                    nextVC.type = [NSString stringWithFormat:@"%ld",_type];
-                    nextVC.seeWay = _houseDic[@"check_way"];
-                    nextVC.rentingModifyNerborVCBlock = ^{
+                    if (_type == 1) {
                         
-                        [self RequestMethod];
-                    };
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                        RentingModifyProjectAnalysisVC *nextVC = [[RentingModifyProjectAnalysisVC alloc] initWithData:_detailDic];
+                        nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.rentingModifyProjectAnalysisVCBlock = ^{
+                            
+                            [self RequestMethod];
+                        };
+                        nextVC.houseId = _houseId;
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                    
+                        RentingModifyNerborVC *nextVC = [[RentingModifyNerborVC alloc] initWithData:_detailDic];
+                        nextVC.houseId = _houseId;
+                        nextVC.type = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.seeWay = _houseDic[@"check_way"];
+                        nextVC.rentingModifyNerborVCBlock = ^{
+                            
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
                 }
                 if (section == 5) {
                     
@@ -563,7 +571,7 @@
             
             if (_type == 1) {
                 
-                return 2;
+                return 1;
             }else{
                 
                 if (section == 3) {
@@ -576,6 +584,13 @@
             }
         }else{
             
+            if (section == 4) {
+                
+                if (_type == 1) {
+                    
+                    return 2;
+                }
+            }
             return 1;
         }
     }else{
@@ -718,7 +733,7 @@
         
         if (_type == 1) {
             
-            if (indexPath.section > 2) {
+            if (indexPath.section > 3) {
                 
                 MaintainRoomInfoCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoCell3"];
                 if (!cell) {
@@ -779,6 +794,18 @@
                     }
                     
                     [cell.imgColl reloadData];
+                    return cell;
+                }else if (indexPath.section == 3){
+                    
+                    MaintainRoomInfoEquipMentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MaintainRoomInfoEquipMentCell"];
+                    if (!cell) {
+                        
+                        cell = [[MaintainRoomInfoEquipMentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MaintainRoomInfoEquipMentCell"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    cell.dataArr = [NSMutableArray arrayWithArray:_matchArr];
+                    
                     return cell;
                 }else{
                     
