@@ -364,7 +364,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
 
                 weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.priceBtn->str = [NSString stringWithFormat:@"%@ 万", ID];
             };
             [self.view addSubview:view];
             break;
@@ -376,7 +376,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
                 weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.areaBtn->str = [NSString stringWithFormat:@"%@ ㎡", ID];
             };
             [self.view addSubview:view];
             break;

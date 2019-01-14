@@ -30,7 +30,7 @@
 
 #import "WorkingCell.h"
 #import "BaseHeader.h"
-#import "HNChannelView.h"
+#import "WorkSelectView.h"
 
 @interface WorkingVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -66,7 +66,6 @@
     self.navBackgroundView.hidden = NO;
     self.leftButton.hidden = YES;
     self.titleLabel.text = @"工作";
-    self.leftButton.hidden = YES;
     [self initDateSouce];
     [self initUI];
     
@@ -131,39 +130,90 @@
 -(void)initDateSouce
 {
     
+    if (![UserModel defaultModel].workArr.count) {
+        
+        [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
+        [UserModelArchiver archive];
+    }
     _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"代购合同",@"合同签订"];
     _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"signing"];
 }
 
 -(void)initUI
 {
+    self.rightBtn.hidden = NO;
+    [self.rightBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightBtn setImage:[UIImage imageNamed:@"add_50"] forState:UIControlStateNormal];
     [self.view addSubview:self.MainTableView];
 }
+
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    
+    WorkSelectView *view = [[WorkSelectView alloc] initWithFrame:CGRectMake(0, SCREEN_Height, SCREEN_Width, SCREEN_Height -STATUS_BAR_HEIGHT)];
+    
+    view.clickblook = ^(int selctnum) {
+//        _titlearr = [UserModel defaultModel].tagSelectArr;
+//
+//        self.selectIndex = selctnum;
+//        [self reloadData];
+    };
+    
+    view.hideblook = ^{
+        
+        [_MainTableView reloadData];
+//        _titlearr = [UserModel defaultModel].tagSelectArr;
+//        //        self.selectIndex = 0;
+//        [self reloadData];
+//        [self forceLayoutSubviews];
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
+    [view show];
+}
+
 
 #pragma mark  ---  delegate   ---
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-    
+    if ([[UserModel defaultModel].workArr[section] isEqualToString:@"新房"]) {
+        
         if ([[UserModelArchiver unarchive].agent_identity integerValue]==1) {
-    
+            
             return 3;
         }
         else{
-
+            
             return 1;
         }
-    }else{
     
+//    }else if ([[UserModel defaultModel].workArr[section] isEqualToString:@"二手房"]){
+//
+//
+    }else{
+        
         return 4;
     }
+//    if (section == 0) {
+//
+//        if ([[UserModelArchiver unarchive].agent_identity integerValue]==1) {
+//
+//            return 3;
+//        }
+//        else{
+//
+//            return 1;
+//        }
+//    }else{
+//
+//        return 4;
+//    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    return 3;
+    return [UserModel defaultModel].workArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -192,23 +242,25 @@
         
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
-    if (section == 0) {
-        
-        header.titleL.text = @"新房";
-    }else if (section == 1){
-        
-        header.titleL.text = @"二手房";
-    }else{
-        
-        header.titleL.text = @"租房";
-    }
+    
+    header.titleL.text = [UserModel defaultModel].workArr[section];
+//    if (section == 0) {
+//
+//
+//    }else if (section == 1){
+//
+//        header.titleL.text = @"二手房";
+//    }else{
+//
+//        header.titleL.text = @"租房";
+//    }
     return header;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.section == 0) {
+    if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"新房"]) {
         
         static NSString *CellIdentifier = @"WorkingCell";
         
@@ -219,7 +271,7 @@
         }
         [cell setTitle:_namelist[indexPath.row] content:_countdata[indexPath.row] img:_imglist[indexPath.row]];
         return cell;
-    }else if (indexPath.section == 1){
+    }else if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"二手房"]){
         
         static NSString *CellIdentifier = @"WorkingCell";
         
@@ -252,7 +304,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.section == 0) {
+    if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"新房"]) {
     
         if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
             if (indexPath.row == 0) {
@@ -277,7 +329,7 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }
-    }else if(indexPath.section == 2){
+    }else if([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"租房"]){
     
         if (indexPath.row == 0) {
     

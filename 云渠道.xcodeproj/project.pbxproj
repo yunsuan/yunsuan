@@ -478,6 +478,7 @@
 		0CED0C0421E8370C0016A029 /* AddContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0321E8370C0016A029 /* AddContractCell.m */; };
 		0CED0C0721E85F340016A029 /* AddContractCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0621E85F340016A029 /* AddContractCell2.m */; };
 		0CED0C0A21E85F440016A029 /* AddContractCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0921E85F440016A029 /* AddContractCell3.m */; };
+		0CED0C0E21E9DBA80016A029 /* WorkSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED0C0D21E9DBA80016A029 /* WorkSelectView.m */; };
 		0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2821A5422600997B76 /* CustomerListVC.m */; };
 		0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */; };
 		0CEF347821806BC900419D5E /* SystemoWorkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347721806BC900419D5E /* SystemoWorkVC.m */; };
@@ -1609,6 +1610,8 @@
 		0CED0C0621E85F340016A029 /* AddContractCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell2.m; sourceTree = "<group>"; };
 		0CED0C0821E85F440016A029 /* AddContractCell3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell3.h; sourceTree = "<group>"; };
 		0CED0C0921E85F440016A029 /* AddContractCell3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell3.m; sourceTree = "<group>"; };
+		0CED0C0C21E9DBA80016A029 /* WorkSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkSelectView.h; sourceTree = "<group>"; };
+		0CED0C0D21E9DBA80016A029 /* WorkSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkSelectView.m; sourceTree = "<group>"; };
 		0CED5B2721A5422600997B76 /* CustomerListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerListVC.h; sourceTree = "<group>"; };
 		0CED5B2821A5422600997B76 /* CustomerListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerListVC.m; sourceTree = "<group>"; };
 		0CED5B2A21A7C72800997B76 /* ReleaseDirectVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseDirectVC.h; sourceTree = "<group>"; };
@@ -5398,6 +5401,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		0CED0C0B21E9DB5D0016A029 /* 选择工作 */ = {
+			isa = PBXGroup;
+			children = (
+				0CED0C0C21E9DBA80016A029 /* WorkSelectView.h */,
+				0CED0C0D21E9DBA80016A029 /* WorkSelectView.m */,
+			);
+			path = "选择工作";
+			sourceTree = "<group>";
+		};
 		0CEF347521806B9C00419D5E /* 系统派单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6388,6 +6400,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0CED0C0B21E9DB5D0016A029 /* 选择工作 */,
 				10B3930621AF88FF00DE73AB /* 定位管理 */,
 				10AEEE8921A3E6A20049625B /* 选择置业顾问 */,
 				0CD90A2720DA58FA00061B4A /* 可修改弹出框 */,
@@ -6979,6 +6992,7 @@
 				0C3062EB20CE4E13004D1996 /* SecdaryAllTableCell.m in Sources */,
 				0C997C2C21D7234200F805AA /* AttentionRentingHouseCell.m in Sources */,
 				0CC19CFD206E21110007CC5F /* SelectCompanyTableCell.m in Sources */,
+				0CED0C0E21E9DBA80016A029 /* WorkSelectView.m in Sources */,
 				0C2883C6210EF5A600F69C5F /* RentingRoomAgencyVC.m in Sources */,
 				10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */,
 				0CD90A7F20E0DCA600061B4A /* RoomReportAddVC.m in Sources */,
