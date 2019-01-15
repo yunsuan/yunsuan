@@ -70,7 +70,6 @@
         
         if (self.titleStr.length) {
             
-//            NSMutableArray *matchArr = [@[] mutableCopy];
             NSMutableArray *tempArr = [@[] mutableCopy];
             for (int i = 0; i < _selectArr.count; i++) {
                 

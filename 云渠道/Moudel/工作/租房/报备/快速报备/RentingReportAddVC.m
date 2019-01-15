@@ -530,19 +530,90 @@
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if ([self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"] || [self.status isEqualToString:@"completeRent"]){
             
-            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+            if ([self.status isEqualToString:@"completeRent"]) {
                 
-                if (self.rentingRoomReportAddHouseBlock) {
+                [BaseRequest GET:RentCapacityCheck_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
                     
-                    self.rentingRoomReportAddHouseBlock(dic);
-                }
-            };
-            nextVC.projiect_id = model.project_id;
-            nextVC.img_name = model.img_url;
-            nextVC.status = self.status;
-            nextVC.comName = model.project_name;
-            [self.navigationController pushViewController:nextVC animated:YES];
+                    NSLog(@"%@",resposeObject);
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"] integerValue] == 1) {
+                            
+                            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                                
+                                if (self.rentingRoomReportAddHouseBlock) {
+                                    
+                                    self.rentingRoomReportAddHouseBlock(dic);
+                                }
+                            };
+                            nextVC.projiect_id = model.project_id;
+                            nextVC.img_name = model.img_url;
+                            nextVC.status = self.status;
+                            nextVC.comName = model.project_name;
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                        }
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }else if ([self.status isEqualToString:@"complete"]){
+                
+                [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
+                    
+                    NSLog(@"%@",resposeObject);
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"] integerValue] == 1) {
+                            
+                            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                                
+                                if (self.rentingRoomReportAddHouseBlock) {
+                                    
+                                    self.rentingRoomReportAddHouseBlock(dic);
+                                }
+                            };
+                            nextVC.projiect_id = model.project_id;
+                            nextVC.img_name = model.img_url;
+                            nextVC.status = self.status;
+                            nextVC.comName = model.project_name;
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                        }
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }else{
+                
+                SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                    
+                    if (self.rentingRoomReportAddHouseBlock) {
+                        
+                        self.rentingRoomReportAddHouseBlock(dic);
+                    }
+                };
+                nextVC.projiect_id = model.project_id;
+                nextVC.img_name = model.img_url;
+                nextVC.status = self.status;
+                nextVC.comName = model.project_name;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }else if ([self.status isEqualToString:@"selectSec"]){
             
             RentingComAllRoomListVC *nextVC = [[RentingComAllRoomListVC alloc] initWithProjectId:model.project_id city:@""];

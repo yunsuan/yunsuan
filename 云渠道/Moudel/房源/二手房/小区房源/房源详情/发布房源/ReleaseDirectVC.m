@@ -87,6 +87,8 @@
 
 - (void)ActionShipBtn:(UIButton *)btn{
     
+    [_contactTF.textfield endEditing:YES];
+    [_phoneTF.textfield endEditing:YES];
     SinglePickView *view = [[SinglePickView alloc]initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:30]];
     
     view.selectedBlock = ^(NSString *MC, NSString *ID) {

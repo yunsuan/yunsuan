@@ -564,19 +564,56 @@
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if ([self.status isEqualToString:@"protocol"] || [self.status isEqualToString:@"complete"]){
             
-            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+            if ([self.status isEqualToString:@"complete"]) {
                 
-                if (self.roomReportAddHouseBlock) {
+                [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
                     
-                    self.roomReportAddHouseBlock(dic);
-                }
-            };
-            nextVC.projiect_id = model.project_id;
-            nextVC.img_name = model.img_url;
-            nextVC.status = self.status;
-            nextVC.comName = model.project_name;
-            [self.navigationController pushViewController:nextVC animated:YES];
+                    NSLog(@"%@",resposeObject);
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"] integerValue] == 1) {
+                            
+                            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                                
+                                if (self.roomReportAddHouseBlock) {
+                                    
+                                    self.roomReportAddHouseBlock(dic);
+                                }
+                            };
+                            nextVC.projiect_id = model.project_id;
+                            nextVC.img_name = model.img_url;
+                            nextVC.status = self.status;
+                            nextVC.comName = model.project_name;
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                        }
+                    }else{
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }else{
+                
+                SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                    
+                    if (self.roomReportAddHouseBlock) {
+                        
+                        self.roomReportAddHouseBlock(dic);
+                    }
+                };
+                nextVC.projiect_id = model.project_id;
+                nextVC.img_name = model.img_url;
+                nextVC.status = self.status;
+                nextVC.comName = model.project_name;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }else if ([self.status isEqualToString:@"selectSec"]){
             
             SecComAllRoomListVC *nextVC = [[SecComAllRoomListVC alloc] initWithProjectId:model.project_id city:@""];

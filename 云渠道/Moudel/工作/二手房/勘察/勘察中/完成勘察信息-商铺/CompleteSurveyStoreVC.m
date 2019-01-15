@@ -178,9 +178,7 @@
  
     [self initDataSource];
     [self initUI];
-//    _storeCollView.dataArr = [NSMutableArray arrayWithArray:@[@"",@"",@""]];
-//    [_storeCollView.coll reloadData];
-//    [_storeCollView reloadInputViews];
+
 }
 
 - (void)initDataSource{
@@ -651,14 +649,20 @@
             
             [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,imageurl]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 
-                if ([_selectArr[indexPath.item] integerValue]) {
-                    
-                    cell.typeImg.image = image;
-                }else{
-                    
-                    cell.typeImg.image = [cell grayscaleImageForImage:image];
-                }
+//                if (error) {
+//
+//                    cell.typeImg.image = [UIImage imageNamed:@""];
+//                }
+//                cell.typeImg.image = image;
+//                if ([_selectArr[indexPath.item] integerValue]) {
+//
+//                    cell.typeImg.image = image;
+//                }else{
+//
+//                    cell.typeImg.image = [cell grayscaleImageForImage:image];
+//                }
             }];
+            cell.titleL.text = _dataArr[indexPath.item][@"name"];
         }
         else{
 #warning 默认图片？？
@@ -1039,7 +1043,7 @@
     [_CollView addSubview:_collHeader];
     
     _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
-    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 40 *SIZE);
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
     _facilityLayout.minimumLineSpacing = 20 *SIZE;
     _facilityLayout.minimumInteritemSpacing = 0;
     
@@ -1443,7 +1447,7 @@
         make.left.equalTo(self->_CollView).offset(0 *SIZE);
         make.top.equalTo(self->_CollView).offset(40 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
-        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE);
+        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
         make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
     }];
     
