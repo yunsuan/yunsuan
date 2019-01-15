@@ -97,19 +97,19 @@ static CGFloat labelHeight = 40;
             HNChannelModel *model = [[HNChannelModel alloc]init];
             model.name = wself.myChannelArr[i];
             model.isMyChannel = YES;
-            if ([wself.myChannelArr[i] isEqualToString:@"推荐"]||[wself.myChannelArr[i] isEqualToString:@"关注"]) {
-                model.isRegular = YES;
-            }
-            else{
-                model.isRegular = NO;
-            }
+//            if ([wself.myChannelArr[i] isEqualToString:@"推荐"]||[wself.myChannelArr[i] isEqualToString:@"关注"]) {
+//                model.isRegular = YES;
+//            }
+//            else{
+//                model.isRegular = NO;
+//            }
             [wself.datas addObject:model];
         }
         for (int i = 0 ; i < wself.recommendChannelArr.count; i++) {
             HNChannelModel *model = [[HNChannelModel alloc]init];
             model.name = wself.recommendChannelArr[i];
             model.isMyChannel = NO;
-            model.isRegular = NO;
+//            model.isRegular = NO;
             [wself.datas addObject:model];
             
         }
@@ -229,12 +229,12 @@ static CGFloat labelHeight = 40;
         for (HNButton *btn in wself.subviews) {
             if (![btn isKindOfClass:[HNButton class]]) continue;
             if (btn.model.isMyChannel) {
-                if (btn.model.isRegular) {
-                    btn.deleImageView.hidden = YES;
-                }
-                else{
+//                if (btn.model.isRegular) {
+//                    btn.deleImageView.hidden = YES;
+//                }
+//                else{
                 btn.deleImageView.hidden = NO;
-                }
+//                }
             }else {
                 btn.deleImageView.hidden = YES;
             }
@@ -277,11 +277,11 @@ static CGFloat labelHeight = 40;
 }
 - (void)removeBtn:(HNButton *)removeBtn {
  
-    if (removeBtn.model.isRegular) {
-        
-        return;
-    }
-    else{
+//    if (removeBtn.model.isRegular) {
+//
+//        return;
+//    }
+//    else{
     __weak typeof(self) wself = self;
     [self.datas removeObject:removeBtn.model];
     [self.datas insertObject:removeBtn.model atIndex:self.divisionModel.tag];
@@ -305,17 +305,18 @@ static CGFloat labelHeight = 40;
         }
         [self refreshBtn];
     });
-    }
+//    }
     
 }
 
 - (void)refreshBtn {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         for (HNChannelModel *model in self.datas) {
             [UIView animateWithDuration:0.25 animations:^{
                 model.btn.frame = model.frame;
             }];
-            model.btn.deleImageView.hidden = model.hideDeleBtn||model.isRegular;
+            model.btn.deleImageView.hidden = model.hideDeleBtn;
             [model.btn reloadData];
         }
     });
@@ -344,10 +345,10 @@ static CGFloat labelHeight = 40;
 
 #pragma mark - 交换两个按钮的位置
 - (void)adjustCenterForBtn:(HNButton *)btn withGes:(UILongPressGestureRecognizer *)ges{
-    if (btn.model.isRegular) {
-        return;
-    }
-    else{
+//    if (btn.model.isRegular) {
+//        return;
+//    }
+//    else{
     CGPoint newPoint = [ges locationInView:self];
     btn.center = newPoint;
     __weak typeof(self) wself = self;
@@ -387,7 +388,7 @@ static CGFloat labelHeight = 40;
         });
         }
     }];
-    }
+//    }
 }
 - (void)newLocationTagForBtn:(HNButton *)moveBtn locationBlock:(void(^)(HNChannelModel* targetModel))locationBlock {
     HNChannelModel *moveBtnModel = moveBtn.model;
