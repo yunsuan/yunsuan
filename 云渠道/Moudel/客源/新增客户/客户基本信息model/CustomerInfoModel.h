@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *client_type;
 @property (nonatomic, strong) NSString *client_property_type;
+@property (nonatomic, strong) NSString *is_hide_tel;
 @property (nonatomic , strong) NSString *name;
 @property (nonatomic , strong) NSString *sex;
 @property (nonatomic , strong) NSString *tel;

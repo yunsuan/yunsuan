@@ -126,6 +126,7 @@
 		0C2883DE21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2883DD21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.m */; };
 		0C288FBE21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C288FBD21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m */; };
 		0C288FC221EDBF6100A142F6 /* CompleteTelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C288FC121EDBF6100A142F6 /* CompleteTelView.m */; };
+		0C288FC821EDEB1300A142F6 /* RecommendUpdateCustomerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C288FC721EDEB1300A142F6 /* RecommendUpdateCustomerVC.m */; };
 		0C2D02AE20AD51A7002F1B4E /* AppealComplaintingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2D02AD20AD51A7002F1B4E /* AppealComplaintingVC.m */; };
 		0C2D02B120AD51BA002F1B4E /* AppealComplaintedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2D02B020AD51BA002F1B4E /* AppealComplaintedVC.m */; };
 		0C3062E320CE4ADD004D1996 /* SecdaryAllRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3062E220CE4ADD004D1996 /* SecdaryAllRoomVC.m */; };
@@ -918,6 +919,8 @@
 		0C288FBD21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAgencyEditTradeVC.m; sourceTree = "<group>"; };
 		0C288FC021EDBF6100A142F6 /* CompleteTelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteTelView.h; sourceTree = "<group>"; };
 		0C288FC121EDBF6100A142F6 /* CompleteTelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteTelView.m; sourceTree = "<group>"; };
+		0C288FC621EDEB1300A142F6 /* RecommendUpdateCustomerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendUpdateCustomerVC.h; sourceTree = "<group>"; };
+		0C288FC721EDEB1300A142F6 /* RecommendUpdateCustomerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendUpdateCustomerVC.m; sourceTree = "<group>"; };
 		0C2D02AC20AD51A7002F1B4E /* AppealComplaintingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppealComplaintingVC.h; sourceTree = "<group>"; };
 		0C2D02AD20AD51A7002F1B4E /* AppealComplaintingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppealComplaintingVC.m; sourceTree = "<group>"; };
 		0C2D02AF20AD51BA002F1B4E /* AppealComplaintedVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppealComplaintedVC.h; sourceTree = "<group>"; };
@@ -6274,6 +6277,8 @@
 				105E18F5206B8FDB0031558D /* AddCustomerVC.m */,
 				0CEBDE3520AEAC92004BAF7A /* QuickAddAndRecommendVC.h */,
 				0CEBDE3620AEAC92004BAF7A /* QuickAddAndRecommendVC.m */,
+				0C288FC621EDEB1300A142F6 /* RecommendUpdateCustomerVC.h */,
+				0C288FC721EDEB1300A142F6 /* RecommendUpdateCustomerVC.m */,
 			);
 			path = "新增客户";
 			sourceTree = "<group>";
@@ -7470,6 +7475,7 @@
 				10866682218952A8002473E0 /* CYLTabBar.m in Sources */,
 				105E18982060EE710031558D /* TagView.m in Sources */,
 				0CED0C0721E85F340016A029 /* AddContractCell2.m in Sources */,
+				0C288FC821EDEB1300A142F6 /* RecommendUpdateCustomerVC.m in Sources */,
 				0C314A4021842DED00F69F09 /* AgencyEditTradeVC.m in Sources */,
 				0C9CD459210581A1004894A3 /* RentingComRoomProjectVC.m in Sources */,
 				10DBB1F4207CCACE00CFE59D /* KyoCinameSeatScrollView.m in Sources */,

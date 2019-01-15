@@ -7,10 +7,14 @@
 //
 
 #import "QuickSearchVC.h"
+
+#import "CustomDetailVC.h"
+#import "RecommendUpdateCustomerVC.h"
+
+#import "RoomListModel.h"
+
 #import "CompanyCell.h"
 #import "PeopleCell.h"
-#import "RoomListModel.h"
-#import "CustomDetailVC.h"
 #import "SelectWorkerView.h"
 #import "ReportCustomSuccessView.h"
 #import "ReportCustomConfirmView.h"
@@ -384,6 +388,26 @@
         [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [weakSelf.customerTableModel.tel containsString:@"X"]) {
+                    
+                    [weakSelf.selectWorkerView removeFromSuperview];
+                    [self.selectWorkerView removeFromSuperview];
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithCancelBlack:^{
+                        
+                        
+                    } WithDefaultBlack:^{
+                        
+                        RecommendUpdateCustomerVC *nextVC = [[RecommendUpdateCustomerVC alloc] initWithClientId:_model.client_id];
+                        nextVC.recommendUpdateCustomerVCBlock = ^{
+                            
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                        
+                    }];
+                    return ;
+                }
                 
                 if ([resposeObject[@"data"][@"rows"] count]) {
                     

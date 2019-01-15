@@ -442,10 +442,6 @@
             
             dic[@"floor_max"] = _floorTF2->str;
         }
-//        if (_houseTypeBtn.str.length) {
-//
-//            [dic setObject:_houseTypeBtn.str forKey:@"ladder_ratio"];
-//        }
         if (_standardTF->str.length) {
             
             dic[@"decorate"] = _standardTF->str;

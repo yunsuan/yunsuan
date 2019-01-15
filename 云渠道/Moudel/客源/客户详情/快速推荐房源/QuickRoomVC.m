@@ -7,19 +7,16 @@
 //
 
 #import "QuickRoomVC.h"
-//#import "RoomDetailVC1.h"
 #import "CompanyCell.h"
 #import "PeopleCell.h"
 #import "BoxView.h"
 #import "BoxAddressView.h"
-//#import "RoomCollCell.h"
 #import "QuickSearchVC.h"
 #import "PYSearchViewController.h"
 #import "MoreView.h"
-//#import "RoomListModel.h"
-//#import "AdressChooseView.h"
 #import "CustomDetailVC.h"
 #import "CityVC.h"
+#import "RecommendUpdateCustomerVC.h"
 
 #import "SelectWorkerView.h"
 #import "ReportCustomSuccessView.h"
@@ -95,7 +92,6 @@
     self = [super init];
     if (self) {
         
-        //        _city = @"510100";
         _model = model;
     }
     return self;
@@ -917,6 +913,25 @@
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
+                    if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [weakSelf.customerTableModel.tel containsString:@"X"]) {
+                        
+                        [weakSelf.selectWorkerView removeFromSuperview];
+                        [self.selectWorkerView removeFromSuperview];
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithCancelBlack:^{
+                            
+                            
+                        } WithDefaultBlack:^{
+                            
+                            RecommendUpdateCustomerVC *nextVC = [[RecommendUpdateCustomerVC alloc] initWithClientId:_model.client_id];
+                            nextVC.recommendUpdateCustomerVCBlock = ^{
+                                
+                                [self RequestMethod];
+                            };
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                            
+                        }];
+                        return ;
+                    }
                     if ([resposeObject[@"data"][@"rows"] count]) {
                         
                         weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];

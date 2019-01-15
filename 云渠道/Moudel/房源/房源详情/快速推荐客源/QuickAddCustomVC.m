@@ -19,9 +19,13 @@
 {
     NSInteger _numAdd;
     NSString *_projectId;
-    
+    BOOL _isHide;
+    NSString *_tel4;
+    NSString *_tel5;
+    NSString *_tel6;
+    NSString *_tel7;
 }
-@property (nonatomic , strong) UIScrollView *scrollview;
+@property (nonatomic, strong) UIScrollView *scrollview;
 @property (nonatomic, strong) UILabel *numclasslab;
 @property (nonatomic, strong) UILabel *numlab;
 @property (nonatomic, strong) UILabel *adresslab;
@@ -56,6 +60,8 @@
 @property (nonatomic, strong) UIImageView *hideImg;
 
 @property (nonatomic, strong) UILabel *hideReportL;
+
+@property (nonatomic, strong) UIButton *hideBtn;
 
 @property (nonatomic , strong) DropDownBtn *numclass;
 @property (nonatomic , strong) BorderTF *num;
@@ -95,10 +101,9 @@
     self.navBackgroundView.hidden = NO;
     
     self.titleLabel.text = @"添加客户";
-    
+    _isHide = NO;
     [self initDataSouce];
     [self initUI];
-    
 }
 
 -(void)initDataSouce
@@ -107,10 +112,46 @@
     _Customerinfomodel.sex = @"0";
 }
 
+- (void)ActionHideBtn:(UIButton *)btn{
+    
+    _isHide = !_isHide;
+    if (!_isHide) {
+        
+        _phoneTF4.text = _tel4;
+        _phoneTF5.text = _tel5;
+        _phoneTF6.text = _tel6;
+        _phoneTF7.text = _tel7;
+        _hideReportL.text = @"隐号报备";
+    }else{
+        
+        _phoneTF4.text = @"X";
+        _phoneTF5.text = @"X";
+        _phoneTF6.text = @"X";
+        _phoneTF7.text = @"X";
+        _hideReportL.text = @"显号报备";
+    }
+}
+
 #pragma mark -- TextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
+    if (textField == _phoneTF4) {
+        
+        _tel4 = string;
+    }
+    else if (textField == _phoneTF5) {
+        
+        _tel5 = string;
+    }
+    else if (textField == _phoneTF6) {
+        
+        _tel6 = string;
+    }
+    else if (textField == _phoneTF7) {
+        
+        _tel7 = string;
+    }
     
     if (range.location > 0) {
         
@@ -261,7 +302,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF4 = borderTF;
                 _phoneTF4.delegate = self;
-                _phoneTF4.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF4.text = @"X";
+                }else{
+                    
+                    _phoneTF4.text = _tel4;
+                }
                 
                 [_scrollview addSubview:_phoneTF4];
                 break;
@@ -271,7 +318,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF5 = borderTF;
                 _phoneTF5.delegate = self;
-                _phoneTF5.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF5.text = @"X";
+                }else{
+                    
+                    _phoneTF5.text = _tel5;
+                }
                 
                 [_scrollview addSubview:_phoneTF5];
                 break;
@@ -281,7 +334,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF6 = borderTF;
                 _phoneTF6.delegate = self;
-                _phoneTF6.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF6.text = @"X";
+                }else{
+                    
+                    _phoneTF6.text = _tel6;
+                }
                 
                 [_scrollview addSubview:_phoneTF6];
                 break;
@@ -291,7 +350,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF7 = borderTF;
                 _phoneTF7.delegate = self;
-                _phoneTF7.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF7.text = @"X";
+                }else{
+                    
+                    _phoneTF7.text = _tel7;
+                }
                 
                 [_scrollview addSubview:_phoneTF7];
                 break;
@@ -364,6 +429,10 @@
     _hideImg = [[UIImageView alloc] init];
     _hideImg.image = [UIImage imageNamed:@"eye"];
     [_scrollview addSubview:_hideImg];
+    
+    _hideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_hideBtn addTarget:self action:@selector(ActionHideBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollview addSubview:_hideBtn];
     
     //证件类型
     _numclasslab = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 306*SIZE, 100*SIZE, 14*SIZE)];
@@ -537,6 +606,14 @@
         make.top.equalTo(_phoneTF1.mas_bottom).offset(14 *SIZE);
         make.width.mas_equalTo(50 *SIZE);
         make.height.mas_equalTo(10 *SIZE);
+    }];
+    
+    [_hideBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(266 *SIZE);
+        make.top.equalTo(_phoneTF1.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(90 *SIZE);
+        make.height.mas_equalTo(20 *SIZE);
     }];
     
     [_numclasslab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -716,6 +793,7 @@
     _Customerinfomodel.tel = tel;
     _Customerinfomodel.card_id = _num.textfield.text;
     _Customerinfomodel.address = _detailadress.text;
+    _Customerinfomodel.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
     
     QuickAddRequireVC *nextVC = [[QuickAddRequireVC alloc] initWithProjectId:_projectId];
     nextVC.status = @"addCustom";

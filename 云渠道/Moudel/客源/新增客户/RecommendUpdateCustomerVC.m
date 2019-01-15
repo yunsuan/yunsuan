@@ -1,30 +1,23 @@
 //
-//  AddCustomerVC.m
+//  RecommendUpdateCustomerVC.m
 //  云渠道
 //
-//  Created by xiaoq on 2018/3/28.
-//  Copyright © 2018年 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2019/1/15.
+//  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "AddCustomerVC.h"
-#import "AddRequireMentVC.h"
+#import "RecommendUpdateCustomerVC.h"
 
-#import "AddHouseRequireMentVC.h"
-#import "AddStoreRequireMentVC.h"
-#import "AddOfficeRequireMentVC.h"
-#import "RentingAddRequireMentVC.h"
-#import "RentingAddStoreRequireMentVC.h"
-#import "RentingAddOfficeRequireMentVC.h"
+#import "CustomerModel.h"
 
 #import "SinglePickView.h"
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 #import "DateChooseView.h"
 #import "AdressChooseView.h"
-//#import "CustomerModel.h"
 
 
-@interface AddCustomerVC ()<UITextFieldDelegate>
+@interface RecommendUpdateCustomerVC ()<UITextFieldDelegate>
 {
     NSInteger _numAdd;
     CustomerModel *_model;
@@ -33,6 +26,7 @@
     NSString *_tel5;
     NSString *_tel6;
     NSString *_tel7;
+    NSString *_clientId;
 }
 @property (nonatomic , strong) UIScrollView *scrollview;
 @property (nonatomic, strong) UILabel *nameL;
@@ -88,24 +82,19 @@
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic , strong) UIButton *surebtn;
-@property (nonatomic , strong) CustomerInfoModel *Customerinfomodel;
 
--(void)initUI;
+@property (nonatomic , strong) CustomerInfoModel *customerinfomodel;
 
--(void)initDataSouce;
-
-- (void)ActionAddBtn;
 @end
 
-@implementation AddCustomerVC
+@implementation RecommendUpdateCustomerVC
 
-- (instancetype)initWithModel:(CustomerModel *)model
+- (instancetype)initWithClientId:(NSString *)clientId
 {
     self = [super init];
     if (self) {
         
-        _model = [[CustomerModel alloc] init];
-        _model = model;
+        _clientId = clientId;
     }
     return self;
 }
@@ -123,30 +112,256 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.navBackgroundView.hidden = NO;
-    if (_model.client_id) {
-        
-        self.titleLabel.text = @"修改信息";
-    }else{
-        
-        self.titleLabel.text = @"添加客户";
-        _isHide = NO;
-    }
+    
+    self.titleLabel.text = @"客户详情";
+
     [self initDataSouce];
     [self initUI];
-
+    [self RequestMethod];
 }
 
 -(void)initDataSouce
 {
-    _Customerinfomodel = [[CustomerInfoModel alloc]init];
-    _Customerinfomodel.sex = @"0";
+    _customerinfomodel = [[CustomerInfoModel alloc]init];
+    _customerinfomodel.sex = @"0";
 }
 
-- (void)ActionAddBtn {
+
+- (void)RequestMethod{
     
+    [BaseRequest GET:GetCliendInfo_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
+        
+        //        NSLog(@"%@",resposeObject);
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
+                
+                if ([resposeObject[@"data"][@"basic"] isKindOfClass:[NSDictionary class]]) {
+                    
+                    [self setCustomModel:resposeObject[@"data"][@"basic"]];
+                }
+            }
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
+
+- (void)setCustomModel:(NSDictionary *)dic{
+    
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+    [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        if ([obj isKindOfClass:[NSNull class]]) {
+            
+            tempDic[key] = @"";
+            
+        }
+        
+    }];
+    _model = [[CustomerModel alloc] initWithDictionary:tempDic];
+
+    _isHide = _model.is_hide_tel;
+    if (_isHide) {
+        
+        _hideReportL.text = @"显号报备";
+    }else{
+        
+        _hideReportL.text = @"隐号报备";
+    }
+    _name.textfield.text = _model.name;
+    if ([_model.sex integerValue] == 1) {
+        
+        _sex.content.text = @"男";
+        _customerinfomodel.sex = _model.sex;
+    }else if ([_model.sex integerValue] == 2){
+        
+        _customerinfomodel.sex = _model.sex;
+        _sex.content.text = @"女";
+    }
+    if (_model.birth) {
+        
+        _birth.content.text = _model.birth;
+    }
+    NSArray *telArr = [_model.tel componentsSeparatedByString:@","];
+    if (telArr.count) {
+        
+        _phoneTF1.text = [telArr[0] substringWithRange:NSMakeRange(0, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF2.text = [telArr[0] substringWithRange:NSMakeRange(1, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF3.text = [telArr[0] substringWithRange:NSMakeRange(2, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+    }else{
+        
+        if (_isHide) {
+            
+            _phoneTF4.text = @"X";
+        }else{
+            
+            _phoneTF4.text = _tel4;
+        }
+    }
+    if (telArr.count) {
+        
+        _phoneTF5.text = [telArr[0] substringWithRange:NSMakeRange(4, 1)];
+    }else{
+        
+        if (_isHide) {
+            
+            _phoneTF5.text = @"X";
+        }else{
+            
+            _phoneTF5.text = _tel7;
+        }
+    }
+    if (telArr.count) {
+        
+        _phoneTF6.text = [telArr[0] substringWithRange:NSMakeRange(5, 1)];
+    }else{
+        
+        if (_isHide) {
+            
+            _phoneTF6.text = @"X";
+        }else{
+            
+            _phoneTF6.text = _tel7;
+        }
+    }
+    if (telArr.count) {
+        
+        _phoneTF7.text = [telArr[0] substringWithRange:NSMakeRange(6, 1)];
+    }else{
+        
+        if (_isHide) {
+            
+            _phoneTF7.text = @"X";
+        }else{
+            
+            _phoneTF7.text = _tel7;
+        }
+    }
+    if (telArr.count) {
+        
+        _phoneTF8.text = [telArr[0] substringWithRange:NSMakeRange(7, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF9.text = [telArr[0] substringWithRange:NSMakeRange(8, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF10.text = [telArr[0] substringWithRange:NSMakeRange(9, 1)];
+    }
+    if (telArr.count) {
+        
+        _phoneTF11.text = [telArr[0] substringWithRange:NSMakeRange(10, 1)];
+    }
+    if (_model.card_type.length) {
+        
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",2]];
+        NSArray *typeArr = dic[@"param"];
+        for (NSUInteger i = 0; i < typeArr.count; i++) {
+            
+            if ([typeArr[i][@"param"] isEqualToString:_model.card_type]) {
+                
+                _customerinfomodel.card_type = typeArr[i][@"id"];
+                _numclass.content.text = typeArr[i][@"param"];
+                break;
+            }
+        }
+    }
+    if (_model.card_id) {
+        
+        _num.textfield.text = _model.card_id;
+    }
+    NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+    
+    NSError *err;
+    NSArray *provice = [NSJSONSerialization JSONObjectWithData:JSONData
+                                                       options:NSJSONReadingMutableContainers
+                                                         error:&err];
+    
+    if (_model.province && _model.city && _model.district) {
+        
+        for (NSUInteger i = 0; i < provice.count; i++) {
+            
+            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
+                
+                NSArray *city = provice[i][@"city"];
+                for (NSUInteger j = 0; j < city.count; j++) {
+                    
+                    if([city[j][@"code"] integerValue] == [_model.city integerValue]){
+                        
+                        NSArray *area = city[j][@"district"];
+                        
+                        for (NSUInteger k = 0; k < area.count; k++) {
+                            
+                            if([area[k][@"code"] integerValue] == [_model.district integerValue]){
+                                
+                                _adress.content.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[j][@"name"],area[k][@"name"]];
+                                _customerinfomodel.province = _model.province;
+                                _customerinfomodel.city = _model.city;
+                                _customerinfomodel.district = _model.district;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }else if (_model.province && _model.city){
+        
+        for (NSUInteger i = 0; i < provice.count; i++) {
+            
+            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
+                
+                NSArray *city = provice[i][@"city"];
+                for (NSUInteger j = 0; j < city.count; j++) {
+                    
+                    if([city[j][@"code"] integerValue] == [_model.city integerValue]){
+                        
+                        _adress.content.text = [NSString stringWithFormat:@"%@-%@",provice[i][@"name"],city[j][@"name"]];
+                        _customerinfomodel.province = _model.province;
+                        _customerinfomodel.city = _model.city;
+                    }
+                }
+            }
+        }
+    }else if (_model.province){
+        
+        for (NSUInteger i = 0; i < provice.count; i++) {
+            
+            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
+                
+                _adress.content.text = [NSString stringWithFormat:@"%@",provice[i][@"name"]];
+                _customerinfomodel.province = _model.province;
+            }
+        }
+    }else{
+        
+        
+    }
+    if (_model.address) {
+        
+        _detailadress.text = _model.address;
+    }
+}
+
 
 
 - (void)ActionNeedBtn:(UIButton *)btn{
@@ -154,7 +369,7 @@
     if (btn.tag == 2) {
         
         SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:@[@{@"param":@"住宅",
-            @"id":@"1"
+                                                                                                   @"id":@"1"
                                                                                                    },@{@"param":@"商铺",
                                                                                                        @"id":@"2"
                                                                                                        },@{@"param":@"写字楼",
@@ -164,8 +379,8 @@
             
             _typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
             _typeBtn->str = [NSString stringWithFormat:@"%@", ID];
-            _Customerinfomodel.client_property_type = [NSString stringWithFormat:@"%@",ID];
-
+            _customerinfomodel.client_property_type = [NSString stringWithFormat:@"%@",ID];
+            
         };
         [self.view addSubview:view];
     }else{
@@ -391,38 +606,14 @@
     [_scrollview addSubview:_needL];
     
     _needBtn = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat) 80.3*SIZE, 46*SIZE, 257 *SIZE,(CGFloat)  33.3*SIZE)];
-    if (self.status == 1) {
-        
+    _needBtn.backgroundColor = YJBackColor;
+    _needBtn.userInteractionEnabled = NO;
+
         _needBtn.content.text = @"新房";
         _needBtn->str = @"184";
-    }else if (self.status == 2){
-        
-        _needBtn.content.text = @"二手房";
-        _needBtn->str = @"185";
-    }else{
-        
-        _needBtn.content.text = @"租房";
-        _needBtn->str = @"186";
-    }
+
     [_needBtn addTarget:self action:@selector(ActionNeedBtn:) forControlEvents:UIControlEventTouchUpInside];
-    if (_model.client_type) {
-        
-        _needBtn.content.text = _model.client_type;
-        
-        NSArray *typeArr = [self getDetailConfigArrByConfigState:SYSTEM_FUNC];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
-            
-            if ([typeArr[i][@"param"] isEqualToString:_model.client_type]) {
-                
-                _needBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-                break;
-            }
-        }
-    }else{
-        
-        _needBtn.backgroundColor = YJBackColor;
-        _needBtn.userInteractionEnabled = NO;
-    }
+
     [_scrollview addSubview:_needBtn];
     
     _typeL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 56*SIZE, 100*SIZE, 14*SIZE)];
@@ -441,13 +632,13 @@
         _typeBtn.content.text = _model.client_property_type;
         if ([_model.client_property_type isEqualToString:@"商铺"]) {
             
-            _Customerinfomodel.client_property_type = @"2";
+            _customerinfomodel.client_property_type = @"2";
         }else if ([_model.client_property_type isEqualToString:@"写字楼"]){
             
-            _Customerinfomodel.client_property_type = @"3";
+            _customerinfomodel.client_property_type = @"3";
         }else{
             
-            _Customerinfomodel.client_property_type = @"1";
+            _customerinfomodel.client_property_type = @"1";
         }
     }
     [_scrollview addSubview:_typeBtn];
@@ -478,15 +669,7 @@
     [_scrollview addSubview:_sexL];
     
     _sex = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat) 251.3*SIZE,  46*SIZE, (CGFloat) 86.7*SIZE, (CGFloat) 33.3*SIZE)];
-    if ([_model.sex integerValue] == 1) {
-        
-        _sex.content.text = @"男";
-        _Customerinfomodel.sex = _model.sex;
-    }else if ([_model.sex integerValue] == 2){
-        
-        _Customerinfomodel.sex = _model.sex;
-        _sex.content.text = @"女";
-    }
+
     [_sex addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_sex];
     
@@ -498,14 +681,10 @@
     [_scrollview addSubview:_birthL];
     
     _birth = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 96*SIZE,(CGFloat) 257.7*SIZE, (CGFloat)33.3*SIZE)];
-    if (_model.birth) {
-        
-        _birth.content.text = _model.birth;
-    }
+
     [_birth addTarget:self action:@selector(action_brith) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_birth];
     
-    NSArray *telArr = [_model.tel componentsSeparatedByString:@","];
     //电话
     _telL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 169*SIZE, 100*SIZE, 14*SIZE)];
     _telL.text = @"联系号码:";
@@ -528,11 +707,7 @@
             {
                 _phoneTF1 = borderTF;
                 _phoneTF1.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF1.text = [telArr[0] substringWithRange:NSMakeRange(0, 1)];
-                }
-                
+
                 [_scrollview addSubview:_phoneTF1];
                 break;
             }
@@ -540,11 +715,7 @@
             {
                 _phoneTF2 = borderTF;
                 _phoneTF2.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF2.text = [telArr[0] substringWithRange:NSMakeRange(1, 1)];
-                }
-                
+
                 [_scrollview addSubview:_phoneTF2];
                 break;
             }
@@ -552,11 +723,7 @@
             {
                 _phoneTF3 = borderTF;
                 _phoneTF3.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF3.text = [telArr[0] substringWithRange:NSMakeRange(2, 1)];
-                }
-                
+
                 [_scrollview addSubview:_phoneTF3];
                 break;
             }
@@ -565,20 +732,7 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF4 = borderTF;
                 _phoneTF4.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
-                }else{
-                    
-                    if (_isHide) {
-                        
-                        _phoneTF4.text = @"X";
-                    }else{
-                        
-                        _phoneTF4.text = _tel4;
-                    }
-                }
-                
+
                 [_scrollview addSubview:_phoneTF4];
                 break;
             }
@@ -587,20 +741,7 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF5 = borderTF;
                 _phoneTF5.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF5.text = [telArr[0] substringWithRange:NSMakeRange(4, 1)];
-                }else{
-                    
-                    if (_isHide) {
-                        
-                        _phoneTF5.text = @"X";
-                    }else{
-                        
-                        _phoneTF5.text = _tel7;
-                    }
-                }
-                
+
                 [_scrollview addSubview:_phoneTF5];
                 break;
             }
@@ -609,20 +750,7 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF6 = borderTF;
                 _phoneTF6.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF6.text = [telArr[0] substringWithRange:NSMakeRange(5, 1)];
-                }else{
-                    
-                    if (_isHide) {
-                        
-                        _phoneTF6.text = @"X";
-                    }else{
-                        
-                        _phoneTF6.text = _tel7;
-                    }
-                }
-                
+
                 [_scrollview addSubview:_phoneTF6];
                 break;
             }
@@ -631,19 +759,6 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF7 = borderTF;
                 _phoneTF7.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF7.text = [telArr[0] substringWithRange:NSMakeRange(6, 1)];
-                }else{
-                    
-                    if (_isHide) {
-                        
-                        _phoneTF7.text = @"X";
-                    }else{
-                        
-                        _phoneTF7.text = _tel7;
-                    }
-                }
                 
                 [_scrollview addSubview:_phoneTF7];
                 break;
@@ -652,10 +767,6 @@
             {
                 _phoneTF8 = borderTF;
                 _phoneTF8.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF8.text = [telArr[0] substringWithRange:NSMakeRange(7, 1)];
-                }
                 
                 [_scrollview addSubview:_phoneTF8];
                 break;
@@ -664,10 +775,6 @@
             {
                 _phoneTF9 = borderTF;
                 _phoneTF9.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF9.text = [telArr[0] substringWithRange:NSMakeRange(8, 1)];
-                }
                 
                 [_scrollview addSubview:_phoneTF9];
                 break;
@@ -676,10 +783,6 @@
             {
                 _phoneTF10 = borderTF;
                 _phoneTF10.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF10.text = [telArr[0] substringWithRange:NSMakeRange(9, 1)];
-                }
                 
                 [_scrollview addSubview:_phoneTF10];
                 break;
@@ -688,10 +791,6 @@
             {
                 _phoneTF11 = borderTF;
                 _phoneTF11.delegate = self;
-                if (telArr.count) {
-                    
-                    _phoneTF11.text = [telArr[0] substringWithRange:NSMakeRange(10, 1)];
-                }
                 
                 [_scrollview addSubview:_phoneTF11];
                 break;
@@ -737,30 +836,7 @@
     _hideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_hideBtn addTarget:self action:@selector(ActionHideBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollview addSubview:_hideBtn];
-    
-//    _tel1 = [[BorderTF alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 146*SIZE,(CGFloat) 257.7*SIZE, (CGFloat)33.3*SIZE)];
-//    _tel1.textfield.placeholder = @"必填";
-//    if (telArr.count) {
-//
-//        _tel1.textfield.text = telArr[0];
-//    }
-//    _tel1.textfield.keyboardType = UIKeyboardTypePhonePad;
-//    [_scrollview addSubview:_tel1];
-//
-//    _tel2 = [[BorderTF alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 196*SIZE, (CGFloat)257.7*SIZE,(CGFloat) 33.3*SIZE)];
-//    _tel2.textfield.placeholder = @"选填";
-//    _tel2.hidden = YES;
-//    _tel2.textfield.keyboardType = UIKeyboardTypePhonePad;
-//    [_scrollview addSubview:_tel2];
-    
 
-//    _tel3 = [[BorderTF alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 246*SIZE,(CGFloat) 257.7*SIZE,(CGFloat) 33.3*SIZE)];
-//    _tel3.textfield.placeholder = @"选填";
-//    _tel3.hidden = YES;
-//    _tel3.textfield.keyboardType = UIKeyboardTypePhonePad;
-//    [_scrollview addSubview:_tel3];
-    
-    
     //证件类型
     _numclasslab = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 306*SIZE, 100*SIZE, 14*SIZE)];
     _numclasslab.text = @"证件类型:";
@@ -770,21 +846,7 @@
     
     _numclass = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 296*SIZE,(CGFloat) 257.7*SIZE,(CGFloat) 33.3*SIZE)];
     [_numclass addTarget:self action:@selector(action_numclass) forControlEvents:UIControlEventTouchUpInside];
-    if (_model.card_type.length) {
-        
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",2]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
-            
-            if ([typeArr[i][@"param"] isEqualToString:_model.card_type]) {
-                
-                _Customerinfomodel.card_type = typeArr[i][@"id"];
-                _numclass.content.text = typeArr[i][@"param"];
-                break;
-            }
-        }
-    }
+
     [_scrollview addSubview:_numclass];
     
     //证件号
@@ -798,10 +860,7 @@
     _num = [[BorderTF alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 346*SIZE, (CGFloat)257.7*SIZE,(CGFloat) 33.3*SIZE)];
     
     _num.textfield.keyboardType = UIKeyboardTypeDefault;
-    if (_model.card_id) {
-        
-        _num.textfield.text = _model.card_id;
-    }
+
     [_scrollview addSubview:_num];
     
     //地址
@@ -814,74 +873,8 @@
     _adress = [[DropDownBtn alloc]initWithFrame:CGRectMake((CGFloat)80.3*SIZE, 396*SIZE, (CGFloat)257.7*SIZE,(CGFloat) 33.3*SIZE)];
     [_adress addTarget:self action:@selector(action_address) forControlEvents:UIControlEventTouchUpInside];
     
-    NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
-    
-    NSError *err;
-    NSArray *provice = [NSJSONSerialization JSONObjectWithData:JSONData
-                                                       options:NSJSONReadingMutableContainers
-                                                         error:&err];
-    
-    if (_model.province && _model.city && _model.district) {
-        
-        for (NSUInteger i = 0; i < provice.count; i++) {
-            
-            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
-                
-                NSArray *city = provice[i][@"city"];
-                for (NSUInteger j = 0; j < city.count; j++) {
-                    
-                    if([city[j][@"code"] integerValue] == [_model.city integerValue]){
-                        
-                        NSArray *area = city[j][@"district"];
-                        
-                        for (NSUInteger k = 0; k < area.count; k++) {
-                            
-                            if([area[k][@"code"] integerValue] == [_model.district integerValue]){
-                                
-                                _adress.content.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[j][@"name"],area[k][@"name"]];
-                                _Customerinfomodel.province = _model.province;
-                                _Customerinfomodel.city = _model.city;
-                                _Customerinfomodel.district = _model.district;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }else if (_model.province && _model.city){
-        
-        for (NSUInteger i = 0; i < provice.count; i++) {
-            
-            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
-                
-                NSArray *city = provice[i][@"city"];
-                for (NSUInteger j = 0; j < city.count; j++) {
-                    
-                    if([city[j][@"code"] integerValue] == [_model.city integerValue]){
-                        
-                        _adress.content.text = [NSString stringWithFormat:@"%@-%@",provice[i][@"name"],city[j][@"name"]];
-                        _Customerinfomodel.province = _model.province;
-                        _Customerinfomodel.city = _model.city;
-                    }
-                }
-            }
-        }
-    }else if (_model.province){
-        
-        for (NSUInteger i = 0; i < provice.count; i++) {
-            
-            if([provice[i][@"code"] integerValue] == [_model.province integerValue]){
-                
-                _adress.content.text = [NSString stringWithFormat:@"%@",provice[i][@"name"]];
-                _Customerinfomodel.province = _model.province;
-            }
-        }
-    }else{
-        
-        
-    }
     [_scrollview addSubview:_adress];
-
+    
     
     _detailadress = [[UITextView alloc]initWithFrame:CGRectMake((CGFloat) (90.3*SIZE),456*SIZE,(CGFloat) 237.7*SIZE,(CGFloat) 66.7*SIZE)];
     _detailadress.textColor = YJTitleLabColor;
@@ -890,10 +883,7 @@
     _detailadress.layer.borderWidth = SIZE;
     _detailadress.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _detailadress.font = [UIFont systemFontOfSize:(CGFloat)13.3*SIZE];
-    if (_model.address) {
-        
-        _detailadress.text = _model.address;
-    }
+    
     [_scrollview addSubview:_detailadress];
     
     [_scrollview addSubview:self.surebtn];
@@ -921,7 +911,7 @@
     }];
     
     [_needBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-       
+        
         make.left.equalTo(_scrollview).offset(80 *SIZE);
         make.top.equalTo(_scrollview).offset(46 *SIZE);
         make.width.equalTo(@(257 *SIZE));
@@ -945,7 +935,7 @@
             make.width.equalTo(@(258 *SIZE));
             make.height.equalTo(@(33 *SIZE));
         }];
-
+        
         [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
             
             make.left.equalTo(_scrollview).offset(10 *SIZE);
@@ -1159,7 +1149,7 @@
     }];
     
     [_numclasslab mas_makeConstraints:^(MASConstraintMaker *make) {
-       
+        
         make.left.equalTo(_scrollview).offset(9 *SIZE);
         make.top.equalTo(_hideReportL.mas_bottom).offset(30 *SIZE);
         make.width.equalTo(@(65 *SIZE));
@@ -1226,12 +1216,12 @@
 
 -(void)action_sex
 {
-
-//    [_tel1.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
-//    [_tel3.textfield endEditing:YES];
+    
+    //    [_tel1.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
+    //    [_tel3.textfield endEditing:YES];
     [_name.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
     [_num.textfield endEditing:YES];
     [_detailadress endEditing:YES];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -1239,13 +1229,13 @@
     UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _sex.content.text = @"男";
-        _Customerinfomodel.sex = @"1";
+        _customerinfomodel.sex = @"1";
     }];
     
     UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _sex.content.text = @"女";
-        _Customerinfomodel.sex =@"2";
+        _customerinfomodel.sex =@"2";
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -1262,37 +1252,37 @@
 
 -(void)action_brith
 {
-//    [_tel1.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
-//    [_tel3.textfield endEditing:YES];
+    //    [_tel1.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
+    //    [_tel3.textfield endEditing:YES];
     [_name.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
     [_num.textfield endEditing:YES];
     [_detailadress endEditing:YES];
     DateChooseView *view = [[DateChooseView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
     view.dateblock = ^(NSDate *date) {
-//        NSLog(@"%@",[self gettime:date]);
+        //        NSLog(@"%@",[self gettime:date]);
         _birth.content.text = [self gettime:date];
-        _Customerinfomodel.birth = _birth.content.text;
+        _customerinfomodel.birth = _birth.content.text;
     };
     [self.view addSubview:view];
 }
 
 -(void)action_numclass
 {
-//    [_tel1.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
-//    [_tel3.textfield endEditing:YES];
+    //    [_tel1.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
+    //    [_tel3.textfield endEditing:YES];
     [_name.textfield endEditing:YES];
-//    [_tel2.textfield endEditing:YES];
+    //    [_tel2.textfield endEditing:YES];
     [_num.textfield endEditing:YES];
     [_detailadress endEditing:YES];
     SinglePickView *view = [[SinglePickView alloc]initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:CARD_TYPE]];
     
     view.selectedBlock = ^(NSString *MC, NSString *ID) {
-    
+        
         _numclass.content.text = MC;
-        _Customerinfomodel.card_type = ID;
+        _customerinfomodel.card_type = ID;
     };
     [self.view addSubview:view];
 }
@@ -1306,9 +1296,9 @@
     [self.view addSubview:view];
     view.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
         self.adress.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
-        _Customerinfomodel.province = proviceid;
-        _Customerinfomodel.city = cityid;
-        _Customerinfomodel.district = areaid;
+        _customerinfomodel.province = proviceid;
+        _customerinfomodel.city = cityid;
+        _customerinfomodel.district = areaid;
     };
 }
 
@@ -1324,7 +1314,7 @@
         return;
     }else{
         
-        _Customerinfomodel.client_type = _needBtn->str;
+        _customerinfomodel.client_type = _needBtn->str;
     }
     
     if ([_needBtn.content.text isEqualToString:@"二手房"]) {
@@ -1397,34 +1387,34 @@
             return;
         }
     }
-
+    
     
     if (_model.client_id) {
         
-        _Customerinfomodel.name = _name.textfield.text;
+        _customerinfomodel.name = _name.textfield.text;
         
         if (tel) {
             
-            _Customerinfomodel.tel = tel;
+            _customerinfomodel.tel = tel;
         }
         
         if (![self isEmpty:_num.textfield.text]) {
             
-            _Customerinfomodel.card_id = _num.textfield.text;
+            _customerinfomodel.card_id = _num.textfield.text;
         }
         
         if (![self isEmpty:_detailadress.text]) {
             
-            _Customerinfomodel.address = _detailadress.text;
+            _customerinfomodel.address = _detailadress.text;
         }
-
-        _Customerinfomodel.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
+        
+        _customerinfomodel.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
         NSMutableDictionary *dic;
-        dic = _Customerinfomodel.modeltodic;
+        dic = _customerinfomodel.modeltodic;
         dic[@"client_id"] = _model.client_id;
         
         [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-           
+            
             if ([[NSString stringWithFormat:@"%@",obj] isEqualToString:@""]) {
                 
                 [dic removeObjectForKey:key];
@@ -1432,83 +1422,24 @@
         }];
         
         [BaseRequest POST:UpdateClient_URL parameters:dic success:^(id resposeObject) {
-           
+            
             if ([resposeObject[@"code"] integerValue] ==200) {
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
+                if (self.recommendUpdateCustomerVCBlock) {
+                    
+                    self.recommendUpdateCustomerVCBlock();
+                }
             }
             else{
-         
+                
                 [self showContent:resposeObject[@"msg"]];
             }
         }failure:^(NSError *error) {
             
             [self showContent:@"网络出错"];
         }];
-    }else{
-        
-        _Customerinfomodel.name = _name.textfield.text;
-        if (tel) {
-            
-            _Customerinfomodel.tel = tel;
-        }
-        
-        _Customerinfomodel.card_id = _num.textfield.text;
-        _Customerinfomodel.address = _detailadress.text;
-        _Customerinfomodel.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
-        
-        if ([_needBtn.content.text isEqualToString:@"新房"]) {
-            
-            AddRequireMentVC *nextVC = [[AddRequireMentVC alloc] init];
-            nextVC.status = @"addCustom";
-            nextVC.infoModel = _Customerinfomodel;
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }else if([_needBtn.content.text isEqualToString:@"二手房"]){
-            
-            if ([_typeBtn.content.text isEqualToString:@"商铺"]) {
-                
-                AddStoreRequireMentVC *nextVC = [[AddStoreRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-                
-            }else if ([_typeBtn.content.text isEqualToString:@"写字楼"]){
-                
-                AddOfficeRequireMentVC *nextVC = [[AddOfficeRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else{
-                
-                AddHouseRequireMentVC *nextVC = [[AddHouseRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }
-        }else{
-            
-            if ([_typeBtn.content.text isEqualToString:@"商铺"]) {
-                
-                RentingAddStoreRequireMentVC *nextVC = [[RentingAddStoreRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-                
-            }else if ([_typeBtn.content.text isEqualToString:@"写字楼"]){
-                
-                RentingAddOfficeRequireMentVC *nextVC = [[RentingAddOfficeRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else{
-                
-                RentingAddRequireMentVC *nextVC = [[RentingAddRequireMentVC alloc] init];
-                nextVC.status = @"addCustom";
-                nextVC.infoModel = _Customerinfomodel;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }
-        }
     }
 }
 
@@ -1522,18 +1453,12 @@
         _surebtn.layer.masksToBounds = YES;
         _surebtn.layer.cornerRadius = (CGFloat)1.7*SIZE;
         
-        if (_model.name) {
-            
-            [_surebtn setTitle:@"确定" forState:UIControlStateNormal];
-        }else{
-            [_surebtn setTitle:@"下一步" forState:UIControlStateNormal];
-        }
+        [_surebtn setTitle:@"确定" forState:UIControlStateNormal];
         [_surebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _surebtn.titleLabel.font = [UIFont systemFontOfSize:(CGFloat) (15.3 * SIZE)];
         [_surebtn addTarget:self action:@selector(action_sure) forControlEvents:UIControlEventTouchUpInside];
     }
     return _surebtn;
 }
-
 
 @end

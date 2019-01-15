@@ -14,6 +14,8 @@
 #import "SelectWorkerView.h"
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
+#import "AddCustomerVC.h"
+#import "RecommendUpdateCustomerVC.h"
 
 
 @interface CustomListVC() <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
@@ -443,6 +445,25 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
+                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [model.tel containsString:@"X"]) {
+                    
+                    [weakSelf.selectWorkerView removeFromSuperview];
+                    [self.selectWorkerView removeFromSuperview];
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithCancelBlack:^{
+                        
+                        
+                    } WithDefaultBlack:^{
+                        
+                        RecommendUpdateCustomerVC *nextVC = [[RecommendUpdateCustomerVC alloc] initWithClientId:model.client_id];
+                        nextVC.recommendUpdateCustomerVCBlock = ^{
+                          
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    
+                    }];
+                    return ;
+                }
                 if ([resposeObject[@"data"][@"rows"] count]) {
                     
                     weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
@@ -483,10 +504,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-
+    
 }
 
 - (void)initUI{
+    
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 62 *SIZE + STATUS_BAR_HEIGHT)];
     whiteView.backgroundColor = [UIColor whiteColor];

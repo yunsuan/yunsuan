@@ -24,6 +24,11 @@
     //    CustomerModel *_model;
     NSInteger _state;
     NSInteger _selected;
+    BOOL _isHide;
+    NSString *_tel4;
+    NSString *_tel5;
+    NSString *_tel6;
+    NSString *_tel7;
 }
 
 @property (nonatomic, strong) SelectWorkerView *selectWorkerView;
@@ -68,6 +73,8 @@
 
 @property (nonatomic, strong) UILabel *hideReportL;
 
+@property (nonatomic, strong) UIButton *hideBtn;
+
 @property (nonatomic , strong) DropDownBtn *numclass;
 @property (nonatomic , strong) BorderTF *num;
 @property (nonatomic , strong) DropDownBtn *adress;
@@ -97,6 +104,7 @@
     self.navBackgroundView.hidden = NO;
     
     self.titleLabel.text = @"添加客户";
+    _isHide = NO;
     [self initDataSouce];
     [self initUI];
     
@@ -110,96 +118,50 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-//    [_name.textfield endEditing:YES];
-////    [_tel2.textfield endEditing:YES];
-//    [_num.textfield endEditing:YES];
-//    [_detailadress endEditing:YES];
-//    if (_numAdd == 0 ) {
-//
-//        if ([self checkTel:_tel1.textfield.text]) {
-//
-//            _numAdd += 1;
-//            [_tel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_scrollview).offset(80 *SIZE);
-//                make.top.equalTo(_tel1.mas_bottom).offset(19 *SIZE);
-//                make.width.equalTo(@(258 *SIZE));
-//                make.height.equalTo(@(33 *SIZE));
-//            }];
-//            _tel2.hidden = NO;
-//
-//
-//            [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_scrollview).offset(9 *SIZE);
-//                make.top.equalTo(_tel2.mas_bottom).offset(30 *SIZE);
-//                make.width.equalTo(@(65 *SIZE));
-//                make.height.equalTo(@(13 *SIZE));
-//            }];
-//
-//            [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                make.left.equalTo(_scrollview).offset(80 *SIZE);
-//                make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-//                make.width.equalTo(@(258 *SIZE));
-//                make.height.equalTo(@(33 *SIZE));
-//            }];
-//        }else{
-//
-//            [self showContent:@"请填写正确的电话号码"];
-//        }
-//
-//    }else{
-//
-//        if ([_tel2.textfield.text isEqualToString:_tel1.textfield.text]) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"请不要输入相同电话号码" WithDefaultBlack:^{
-//
-//
-//            }];
-//        }else{
-//
-//            if ([self checkTel:_tel2.textfield.text]) {
-//
-//                _numAdd += 1;
-//                [_tel3 mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//                    make.left.equalTo(_scrollview).offset(80 *SIZE);
-//                    make.top.equalTo(_tel2.mas_bottom).offset(19 *SIZE);
-//                    make.width.equalTo(@(258 *SIZE));
-//                    make.height.equalTo(@(33 *SIZE));
-//                }];
-//                _tel3.hidden = NO;
-//
-//
-//                [_numclasslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                    make.left.equalTo(_scrollview).offset(9 *SIZE);
-//                    make.top.equalTo(_tel3.mas_bottom).offset(30 *SIZE);
-//                    make.width.equalTo(@(65 *SIZE));
-//                    make.height.equalTo(@(13 *SIZE));
-//                }];
-//
-//                [_numclass mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//                    make.left.equalTo(_scrollview).offset(80 *SIZE);
-//                    make.top.equalTo(_tel3.mas_bottom).offset(19 *SIZE);
-//                    make.width.equalTo(@(258 *SIZE));
-//                    make.height.equalTo(@(33 *SIZE));
-//                }];
-//            }else{
-//
-//                [self showContent:@"请填写正确的电话号码"];
-//            }
-//        }
-//    }
 }
 
+
+- (void)ActionHideBtn:(UIButton *)btn{
+    
+    _isHide = !_isHide;
+    if (!_isHide) {
+        
+        _phoneTF4.text = _tel4;
+        _phoneTF5.text = _tel5;
+        _phoneTF6.text = _tel6;
+        _phoneTF7.text = _tel7;
+        _hideReportL.text = @"隐号报备";
+    }else{
+        
+        _phoneTF4.text = @"X";
+        _phoneTF5.text = @"X";
+        _phoneTF6.text = @"X";
+        _phoneTF7.text = @"X";
+        _hideReportL.text = @"显号报备";
+    }
+}
 
 #pragma mark -- TextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
+    
+    if (textField == _phoneTF4) {
+        
+        _tel4 = string;
+    }
+    else if (textField == _phoneTF5) {
+        
+        _tel5 = string;
+    }
+    else if (textField == _phoneTF6) {
+        
+        _tel6 = string;
+    }
+    else if (textField == _phoneTF7) {
+        
+        _tel7 = string;
+    }
     
     if (range.location > 0) {
         
@@ -351,7 +313,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF4 = borderTF;
                 _phoneTF4.delegate = self;
-                _phoneTF4.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF4.text = @"X";
+                }else{
+                    
+                    _phoneTF4.text = _tel4;
+                }
                 
                 [_scrollview addSubview:_phoneTF4];
                 break;
@@ -361,7 +329,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF5 = borderTF;
                 _phoneTF5.delegate = self;
-                _phoneTF5.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF5.text = @"X";
+                }else{
+                    
+                    _phoneTF5.text = _tel5;
+                }
                 
                 [_scrollview addSubview:_phoneTF5];
                 break;
@@ -371,7 +345,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF6 = borderTF;
                 _phoneTF6.delegate = self;
-                _phoneTF6.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF6.text = @"X";
+                }else{
+                    
+                    _phoneTF6.text = _tel6;
+                }
                 
                 [_scrollview addSubview:_phoneTF6];
                 break;
@@ -381,7 +361,13 @@
                 borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
                 _phoneTF7 = borderTF;
                 _phoneTF7.delegate = self;
-                _phoneTF7.text = @"X";
+                if (_isHide) {
+                    
+                    _phoneTF7.text = @"X";
+                }else{
+                    
+                    _phoneTF7.text = _tel7;
+                }
                 
                 [_scrollview addSubview:_phoneTF7];
                 break;
@@ -454,6 +440,10 @@
     _hideImg = [[UIImageView alloc] init];
     _hideImg.image = [UIImage imageNamed:@"eye"];
     [_scrollview addSubview:_hideImg];
+    
+    _hideBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_hideBtn addTarget:self action:@selector(ActionHideBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollview addSubview:_hideBtn];
     
     
     //证件类型
@@ -641,6 +631,14 @@
         make.top.equalTo(_phoneTF1.mas_bottom).offset(14 *SIZE);
         make.width.mas_equalTo(50 *SIZE);
         make.height.mas_equalTo(10 *SIZE);
+    }];
+    
+    [_hideBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(266 *SIZE);
+        make.top.equalTo(_phoneTF1.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(90 *SIZE);
+        make.height.mas_equalTo(20 *SIZE);
     }];
     
     [_numclasslab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -835,37 +833,48 @@
     }
     
     NSString *tel;
-    if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
+    if (_isHide) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"电话号码不完整"];
+        if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"电话号码不完整"];
+        }else{
+            
+            if (!_phoneTF4.text.length) {
+                
+                _phoneTF4.text = @"X";
+            }
+            if (!_phoneTF5.text.length){
+                
+                _phoneTF5.text = @"X";
+            }
+            if (!_phoneTF6.text.length){
+                
+                _phoneTF6.text = @"X";
+            }
+            if (!_phoneTF7.text.length){
+                
+                _phoneTF7.text = @"X";
+            }
+            
+            if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+                
+                _phoneTF4.text = @"X";
+                _phoneTF5.text = @"X";
+                _phoneTF6.text = @"X";
+                _phoneTF7.text = @"X";
+            }
+            
+            tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
+        }
     }else{
         
-        if (!_phoneTF4.text.length) {
-            
-            _phoneTF4.text = @"X";
-        }
-        if (!_phoneTF5.text.length){
-            
-            _phoneTF5.text = @"X";
-        }
-        if (!_phoneTF6.text.length){
-            
-            _phoneTF6.text = @"X";
-        }
-        if (!_phoneTF7.text.length){
-            
-            _phoneTF7.text = @"X";
-        }
-        
-        if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
-            
-            _phoneTF4.text = @"X";
-            _phoneTF5.text = @"X";
-            _phoneTF6.text = @"X";
-            _phoneTF7.text = @"X";
-        }
-        
         tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
+        if (![self checkTel:tel]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入正确的电话号码"];
+            return;
+        }
     }
     
     if (_name.textfield.text.length > 5) {
@@ -878,7 +887,7 @@
     
     
     _Customerinfomodel.name = _name.textfield.text;
-    
+    _Customerinfomodel.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
     _Customerinfomodel.tel = tel;
     _Customerinfomodel.card_id = _num.textfield.text;
     _Customerinfomodel.address = _detailadress.text;
@@ -932,7 +941,6 @@
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    
                     ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
                     NSDictionary *tempDic = @{@"project":weakSelf.roomDetailModel.project_name,
                                               @"sex":strongSelf->_Customerinfomodel.sex,
@@ -941,6 +949,7 @@
                                               };
                     reportCustomSuccessView.state = strongSelf->_state;
                     reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                    
                     reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
@@ -966,9 +975,15 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
+            if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && _isHide) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全号码"];
+                return ;
+            }
             if ([resposeObject[@"data"][@"rows"] count]) {
                 weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
                 _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+            
                 _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
                 weakSelf.selectWorkerView.advicerSelect = _selected;
                 [weakSelf.view addSubview:weakSelf.selectWorkerView];
