@@ -76,7 +76,7 @@
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    _equipColl = [[UICollectionView alloc] initWithFrame:CGRectMake(19 *SIZE, 0, SCREEN_Width, 60 *SIZE) collectionViewLayout:_flowLayout];
+    _equipColl = [[UICollectionView alloc] initWithFrame:CGRectMake(19 *SIZE, 0, SCREEN_Width - 38 *SIZE, 60 *SIZE) collectionViewLayout:_flowLayout];
     _equipColl.backgroundColor = self.contentView.backgroundColor;
     _equipColl.showsVerticalScrollIndicator = NO;
     _equipColl.showsHorizontalScrollIndicator = NO;

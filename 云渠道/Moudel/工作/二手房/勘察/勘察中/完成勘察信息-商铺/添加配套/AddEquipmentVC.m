@@ -33,13 +33,13 @@
         
         if (type == 1) {
             
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].storeArr];
+            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].houseArr];
         }else if(type == 2){
             
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].officeArr];
+            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].storeArr];
         }else{
             
-            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].houseArr];
+            _dataArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].officeArr];
         }
     }
     return self;

@@ -23,7 +23,17 @@
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _codeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
-    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
+    
+    NSString *str = dataDic[@"type_name"];
+    if ([str containsString:@"参数"]) {
+        
+        str = [str substringWithRange:NSMakeRange(0, str.length - 2)];
+        _typeL.text = str;
+    }else{
+        
+        _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
+    }
+//
     _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
     _nameL.text = [NSString stringWithFormat:@"小区名称：%@",dataDic[@"house"]];
     _timeL.text = [NSString stringWithFormat:@"接单截止时间：%@",dataDic[@"disabled_time"]];
