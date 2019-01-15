@@ -99,11 +99,17 @@ static CGFloat labelHeight = 40;
             HNChannelModel *model = [[HNChannelModel alloc]init];
             model.name = wself.myChannelArr[i];
             model.isMyChannel = YES;
-            if (/*wself.myChannelArr.count == 1*/ i == 0) {
-
+//            if (wself.myChannelArr.count == 1) {
+//
+//                model.isRegular = YES;
+//            }else{
+//
+//                model.isRegular = NO;
+//            }
+            if (wself.myChannelArr.count == 1) {
                 model.isRegular = YES;
-            }else{
-
+            }
+            else{
                 model.isRegular = NO;
             }
             [wself.datas addObject:model];
@@ -222,11 +228,9 @@ static CGFloat labelHeight = 40;
     if (!show) {
         for (HNButton *btn in wself.subviews) {
             if (![btn isKindOfClass:[HNButton class]]) continue;
-            if (btn.model.isMyChannel) {
+
                 btn.deleImageView.hidden = YES;
-            }else {
-                btn.deleImageView.hidden = YES;
-            }
+            
         }
     }else {
         for (HNButton *btn in wself.subviews) {
@@ -254,6 +258,9 @@ static CGFloat labelHeight = 40;
     [self.datas removeObject:addbtn.model];
     [self.datas insertObject:addbtn.model atIndex:self.divisionModel.tag + 1];
     addbtn.model.isMyChannel = YES;
+    HNChannelModel *firstmodel = self.datas[0];
+    firstmodel.isRegular = NO;
+    
     int divisionIndex = self.divisionModel.tag + 1;
     BOOL editBtnSelected = wself.header1.editBtn.selected;
     dispatch_async(_queue, ^{
@@ -268,6 +275,7 @@ static CGFloat labelHeight = 40;
                 channelModel.frame = RECOMMEND_FRAME(index);
                 channelModel.hideDeleBtn = YES;
             }
+            
             if (i == divisionIndex) {
                 self.divisionModel = channelModel;
             }
@@ -280,13 +288,18 @@ static CGFloat labelHeight = 40;
 - (void)removeBtn:(HNButton *)removeBtn {
 
     if (removeBtn.model.isRegular) {
-        
+
         return;
     }
     else{
         __weak typeof(self) wself = self;
         [self.datas removeObject:removeBtn.model];
         [self.datas insertObject:removeBtn.model atIndex:self.divisionModel.tag];
+        if (self.divisionModel.tag-1 ==0) {
+            HNChannelModel *firstmodel = self.datas[0];
+            firstmodel.isRegular = YES;
+            firstmodel.hideDeleBtn = YES;
+        }
         removeBtn.model.isMyChannel = NO;
         int divisionIndex = self.divisionModel.tag - 1;
         dispatch_async(_queue, ^{
@@ -320,7 +333,7 @@ static CGFloat labelHeight = 40;
             [UIView animateWithDuration:0.25 animations:^{
                 model.btn.frame = model.frame;
             }];
-            model.btn.deleImageView.hidden = model.hideDeleBtn||model.isRegular;
+            model.btn.deleImageView.hidden = model.hideDeleBtn;
             [model.btn reloadData];
         }
     });
