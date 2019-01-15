@@ -721,7 +721,12 @@
 -(void)initUI
 {
     
-    self.rightBtn.hidden = NO;
+    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
+        self.rightBtn.hidden = NO;
+    }else{
+        self.rightBtn.hidden = YES;
+    }
+  
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(action_add) forControlEvents:UIControlEventTouchUpInside];
     
