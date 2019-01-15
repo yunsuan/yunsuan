@@ -56,6 +56,14 @@ typedef void(^ReportCustomConfirmViewBlock)(void);
 
 @property (nonatomic, strong) UILabel *phone11;
 
+@property (nonatomic, strong) UITextField *phoneTF4;
+
+@property (nonatomic, strong) UITextField *phoneTF5;
+
+@property (nonatomic, strong) UITextField *phoneTF6;
+
+@property (nonatomic, strong) UITextField *phoneTF7;
+
 @property (nonatomic, strong) UILabel *hideL;
 
 @property (nonatomic, strong) UIImageView *hideReportImg;

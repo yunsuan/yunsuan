@@ -68,10 +68,7 @@
 @property (nonatomic, strong) UIImageView *hideImg;
 
 @property (nonatomic, strong) UILabel *hideReportL;
-//@property (nonatomic , strong) BorderTF *tel1;
-////@property (nonatomic, strong) UIButton *addBtn;
-//@property (nonatomic , strong) BorderTF *tel2;
-//@property (nonatomic , strong) BorderTF *tel3;
+
 @property (nonatomic , strong) DropDownBtn *numclass;
 @property (nonatomic , strong) BorderTF *num;
 @property (nonatomic , strong) DropDownBtn *adress;
@@ -120,7 +117,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldEditChanged:) name:@"UITextFieldTextDidChangeNotification" object:_name.textfield];
     self.navBackgroundView.hidden = NO;
     if (_model.client_id) {
         

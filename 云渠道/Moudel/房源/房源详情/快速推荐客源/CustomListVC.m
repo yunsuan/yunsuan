@@ -483,15 +483,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    CustomerTableModel *model = _dataArr[indexPath.row];
-    //    CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
-    //    nextVC.hidesBottomBarWhenPushed = YES;
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+
 }
 
 - (void)initUI{
-    
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:_searchBar];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 62 *SIZE + STATUS_BAR_HEIGHT)];
     whiteView.backgroundColor = [UIColor whiteColor];

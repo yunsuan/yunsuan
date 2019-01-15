@@ -8,6 +8,10 @@
 
 #import "ReportCustomConfirmView.h"
 
+@interface ReportCustomConfirmView ()<UITextFieldDelegate>
+
+@end
+
 @implementation ReportCustomConfirmView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -84,6 +88,32 @@
         make.top.equalTo(_projectL.mas_bottom).offset(19 *SIZE);
         make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
     }];
+}
+
+#pragma mark -- TextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    
+    if (range.location > 0) {
+        
+        textField.text = [textField.text substringToIndex:1];
+        
+        if (textField == _phoneTF4) {
+            
+            [_phoneTF5 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF5) {
+            
+            [_phoneTF6 becomeFirstResponder];
+        }
+        else if (textField == _phoneTF6) {
+            
+            [_phoneTF7 becomeFirstResponder];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 - (void)initUI{
@@ -257,6 +287,60 @@
     _hideReportL.text = @"隐号报备";
     [_whiteView addSubview:_hideReportL];
     
+    for (int i = 0; i < 4; i++) {
+        
+        UITextField *borderTF = [[UITextField alloc] initWithFrame:CGRectMake(80 *SIZE, 75 *SIZE, 19 *SIZE, 24 *SIZE)];
+        borderTF.textColor = YJContentLabColor;
+        borderTF.keyboardType = UIKeyboardTypePhonePad;
+        borderTF.font = [UIFont systemFontOfSize:13.3*SIZE];
+        borderTF.layer.cornerRadius = 5*SIZE;
+        borderTF.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+        borderTF.layer.borderWidth = 1*SIZE;
+        borderTF.textAlignment = NSTextAlignmentCenter;
+        switch (i) {
+            case 0:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF4 = borderTF;
+                _phoneTF4.delegate = self;
+
+                [_whiteView addSubview:_phoneTF4];
+                break;
+            }
+            case 1:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF5 = borderTF;
+                _phoneTF5.delegate = self;
+                
+                
+                [_whiteView addSubview:_phoneTF5];
+                break;
+            }
+            case 2:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF6 = borderTF;
+                _phoneTF6.delegate = self;
+                
+                [_whiteView addSubview:_phoneTF6];
+                break;
+            }
+            case 3:
+            {
+                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
+                _phoneTF7 = borderTF;
+                _phoneTF7.delegate = self;
+                
+                
+                [_whiteView addSubview:_phoneTF7];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
     _cancenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancenBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_cancenBtn addTarget:self action:@selector(ActionCancelBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -426,16 +510,48 @@
     
     [_hideReportL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(191 *SIZE);
+        make.left.equalTo(_whiteView).offset(20 *SIZE);
         make.top.equalTo(_phoneL.mas_bottom).offset(12 *SIZE);
         make.width.mas_equalTo(50 *SIZE);
         make.height.mas_equalTo(9 *SIZE);
     }];
     
+    [_phoneTF4 mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_whiteView).offset(50 *SIZE);
+        make.top.equalTo(_hideReportL.mas_bottom).offset(12 *SIZE);
+        make.width.mas_equalTo(19 *SIZE);
+        make.height.mas_equalTo(24 *SIZE);
+    }];
+    
+    [_phoneTF5 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(80 *SIZE);
+        make.top.equalTo(_hideReportL.mas_bottom).offset(12 *SIZE);
+        make.width.mas_equalTo(19 *SIZE);
+        make.height.mas_equalTo(24 *SIZE);
+    }];
+    
+    [_phoneTF6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(110 *SIZE);
+        make.top.equalTo(_hideReportL.mas_bottom).offset(12 *SIZE);
+        make.width.mas_equalTo(19 *SIZE);
+        make.height.mas_equalTo(24 *SIZE);
+    }];
+    
+    [_phoneTF7 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(140 *SIZE);
+        make.top.equalTo(_hideReportL.mas_bottom).offset(12 *SIZE);
+        make.width.mas_equalTo(19 *SIZE);
+        make.height.mas_equalTo(24 *SIZE);
+    }];
+    
     [_cancenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(0 *SIZE);
-        make.top.equalTo(_hideL.mas_bottom).offset(38 *SIZE);
+        make.top.equalTo(_phoneTF4.mas_bottom).offset(38 *SIZE);
         make.bottom.equalTo(_whiteView).offset(0 *SIZE);
         make.width.mas_equalTo(125 *SIZE);
         make.height.mas_equalTo(43 *SIZE);
@@ -444,7 +560,7 @@
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(125 *SIZE);
-        make.top.equalTo(_hideL.mas_bottom).offset(38 *SIZE);
+        make.top.equalTo(_phoneTF4.mas_bottom).offset(38 *SIZE);
         make.bottom.equalTo(_whiteView).offset(0 *SIZE);
         make.width.mas_equalTo(125 *SIZE);
         make.height.mas_equalTo(43 *SIZE);
