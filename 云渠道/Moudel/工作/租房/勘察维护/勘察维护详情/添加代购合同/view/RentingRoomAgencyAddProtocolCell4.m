@@ -88,7 +88,7 @@
                 _priceTF = textField;
                 _priceTF.textfield.tag = 1001;
                 [_priceTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
-                _priceTF.unitL.text = @"万";
+                _priceTF.unitL.text = @"元";
                 [self.contentView addSubview:_priceTF];
                 break;
             }

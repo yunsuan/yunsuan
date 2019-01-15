@@ -200,7 +200,7 @@
     ////        [self.navigationController pushViewController:nextVC animated:YES];
     //    }];
     
-    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转定租" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [BaseRequest GET:RentSubNeedAgent_URL parameters:nil success:^(id resposeObject) {
             

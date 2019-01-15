@@ -7,8 +7,10 @@
 //
 
 #import "RentingAgencyDoneDetailVC.h"
-#import "AgencyDoneCustomerDetailVC.h"
+#import "RentAgencyDoneCustomerDetailVC.h"
 #import "RentingCancelAgencyProtocolVC.h"
+#import "RentAgencyEditCustomerDetailVC.h"
+#import "RentingAgencyEditTradeVC.h"
 
 #import "AgencyDoneHeader.h"
 //#import "BaseHeader.h"
@@ -117,18 +119,24 @@
 #pragma mark -- tableView;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    if (_item == 0) {
+    if (_count) {
         
-        if ([_subDic[@"check_state"] integerValue] == 1) {
+        if (_item == 0) {
             
-            return _count + 1;
+            if ([_subDic[@"check_state"] integerValue] == 1) {
+                
+                return _count + 1;
+            }else{
+                
+                return _count + 2;
+            }
         }else{
             
-            return _count + 2;
+            return 1;
         }
     }else{
         
-        return 1;
+        return 0;
     }
 }
 
@@ -237,7 +245,7 @@
         }
         
         
-        header.priceL.text = [NSString stringWithFormat:@"交易总价：%@万",_subDic[@"total_price"]];
+        header.priceL.text = [NSString stringWithFormat:@"交易总价：%@元",_subDic[@"total_price"]];
         header.SincertyGoldL.text = [NSString stringWithFormat:@"诚意金：%@元",_subDic[@"earnest_money"]];
         header.breachL.text = [NSString stringWithFormat:@"违约金：%@元",_subDic[@"break_money"]];
         header.commissionL.text = [NSString stringWithFormat:@"佣金：%@%@",_subDic[@"broker_ratio"],@"%"];
@@ -270,12 +278,12 @@
         
         header.agencyEditHeaderBlock = ^{
             
-//            AgencyEditTradeVC *nextVC = [[AgencyEditTradeVC alloc] initWithData:_subDic];
-//            nextVC.agencyEditTradeBlock = ^{
-//
-//                [self initDataSource];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            RentingAgencyEditTradeVC *nextVC = [[RentingAgencyEditTradeVC alloc] initWithData:_subDic];
+            nextVC.rentingAgencyEditTradeVCBlock = ^{
+
+                [self initDataSource];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         };
         
         return header;
@@ -298,10 +306,10 @@
                 }
                 header.lineView.backgroundColor = [UIColor whiteColor];
                 header.blueTitleMoreHeaderBlock = ^{
-                    AgencyDoneCustomerDetailVC *nextVC = [[AgencyDoneCustomerDetailVC alloc] init];
+                    RentAgencyDoneCustomerDetailVC *nextVC = [[RentAgencyDoneCustomerDetailVC alloc] init];
                     nextVC.status = _subDic[@"check_state"];
                     nextVC.customerDic = _customerArr[section-1];
-                    nextVC.agencyDoneCustomerDetailVCBlock = ^{
+                    nextVC.rentAgencyDoneCustomerDetailVCBlock = ^{
                         
                         [self initDataSource];
                     };
@@ -430,14 +438,14 @@
         
         if (indexPath.section == _count+1) {
             
-//            AgencyEditCustomerDetailVC *nextVC = [[AgencyEditCustomerDetailVC alloc] initWithData:@{}];
-//            nextVC.status = @"添加";
-//            nextVC.subId = _sub_id;
-//            nextVC.agencyAddCustomerDetailVCBlock = ^{
-//                
-//                [self initDataSource];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            RentAgencyEditCustomerDetailVC *nextVC = [[RentAgencyEditCustomerDetailVC alloc] initWithData:@{}];
+            nextVC.status = @"添加";
+            nextVC.subId = _sub_id;
+            nextVC.rentAgencyAddCustomerDetailVCBlock = ^{
+                
+                [self initDataSource];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }
     }
 }
@@ -445,7 +453,7 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"代购详情";
+    self.titleLabel.text = @"定租详情";
     
     self.rightBtn.hidden = NO;
     [self.rightBtn setImage:[UIImage imageNamed:@"add_1"] forState:UIControlStateNormal];

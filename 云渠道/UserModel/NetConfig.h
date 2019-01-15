@@ -826,3 +826,12 @@ static NSString *const RentPurchaseContractList_URL = @"agent/rent/sub/list";
 
 //代购合同详情
 static NSString *const RentPurchaseContractDetail_URL = @"agent/rent/sub/detail";
+
+//修改合同
+static NSString *const PurchaseRentSub_URL = @"agent/rent/sub";
+
+//修改联系人
+static NSString *const RentSubClientUpdate_URL = @"agent/rent/sub/client/update";
+
+//添加联系人
+static NSString *const RentSubClientAdd_URL = @"agent/rent/sub/client/add";

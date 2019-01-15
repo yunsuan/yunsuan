@@ -85,7 +85,7 @@
                           @"house_tags":tags,
                           @"type":[NSString stringWithFormat:@"%ld",(long)_type]
                           };
-    [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest POST:RentSurveyUpdateHouseInfo_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {

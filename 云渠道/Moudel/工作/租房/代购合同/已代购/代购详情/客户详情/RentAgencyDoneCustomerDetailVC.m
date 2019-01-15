@@ -1,27 +1,27 @@
 //
-//  AgencyDoneCustomerDetailVC.m
+//  RentAgencyDoneCustomerDetailVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/7/18.
-//  Copyright © 2018年 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2019/1/15.
+//  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "AgencyDoneCustomerDetailVC.h"
+#import "RentAgencyDoneCustomerDetailVC.h"
 
-#import "AgencyEditCustomerDetailVC.h"
+#import "RentAgencyEditCustomerDetailVC.h"
 
 #import "SingleContentCell.h"
 
-@interface AgencyDoneCustomerDetailVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface RentAgencyDoneCustomerDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
-//    NSArray *_contentArr;
+    //    NSArray *_contentArr;
     NSMutableArray *_customerArr;
 }
 @property (nonatomic, strong) UITableView *table;
 
 @end
 
-@implementation AgencyDoneCustomerDetailVC
+@implementation RentAgencyDoneCustomerDetailVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,10 +33,10 @@
 - (void)initDataSource{
     
     _customerArr = [[NSMutableArray alloc]init];
-    [_customerArr addObject:[NSString stringWithFormat:@"推荐编号："]];
+//    [_customerArr addObject:[NSString stringWithFormat:@"推荐编号："]];
     [_customerArr addObject:[NSString stringWithFormat:@"姓名：%@",_customerDic[@"name"]]];
     if ([_customerDic[@"sex"] integerValue]==0) {
-         [_customerArr addObject:@"性别："];
+        [_customerArr addObject:@"性别："];
     }
     else if([_customerDic[@"sex"] integerValue]==1)
     {
@@ -58,12 +58,12 @@
 
 - (void)ActionRightBtn:(UIButton *)btn{
     
- 
-    AgencyEditCustomerDetailVC *nextVC = [[AgencyEditCustomerDetailVC alloc] initWithData:_customerDic];
-    nextVC.agencyEditCustomerDetailVCBlock = ^(NSDictionary * _Nonnull dic) {
-      
+    
+    RentAgencyEditCustomerDetailVC *nextVC = [[RentAgencyEditCustomerDetailVC alloc] initWithData:_customerDic];
+    nextVC.rentAgencyEditCustomerDetailVCBlock = ^(NSDictionary * _Nonnull dic) {
+        
         [_customerArr removeAllObjects];
-//        [_customerArr addObject:[NSString stringWithFormat:@"推荐编号：？？？？？"]];
+        //        [_customerArr addObject:[NSString stringWithFormat:@"推荐编号：？？？？？"]];
         [_customerArr addObject:[NSString stringWithFormat:@"姓名：%@",dic[@"name"]]];
         if ([dic[@"sex"] integerValue]==0) {
             [_customerArr addObject:@"性别："];
@@ -84,9 +84,9 @@
         [_customerArr addObject:[NSString stringWithFormat:@"证件号：%@",dic[@"card_id"]]];
         [_customerArr addObject:[NSString stringWithFormat:@"通讯地址：%@",dic[@"address"]]];
         [_table reloadData];
-        if (self.agencyDoneCustomerDetailVCBlock) {
+        if (self.rentAgencyDoneCustomerDetailVCBlock) {
             
-            self.agencyDoneCustomerDetailVCBlock();
+            self.rentAgencyDoneCustomerDetailVCBlock();
         }
     };
     [self.navigationController pushViewController:nextVC animated:YES];
@@ -134,5 +134,4 @@
     _table.dataSource = self;
     [self.view addSubview:_table];
 }
-
 @end
