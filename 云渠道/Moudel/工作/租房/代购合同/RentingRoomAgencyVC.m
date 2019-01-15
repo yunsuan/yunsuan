@@ -44,7 +44,7 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"已代购",@"挞定"];
+    _titleArr = @[@"已定租",@"挞定"];
 }
 
 - (void)action_add{
@@ -103,7 +103,7 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"代购";
+    self.titleLabel.text = @"定租";
     self.line.hidden = YES;
     
     self.rightBtn.hidden = NO;
