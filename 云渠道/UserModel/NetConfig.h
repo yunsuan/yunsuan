@@ -681,6 +681,12 @@ static NSString *const RentRecordDetail_URL = @"agent/rent/record/detail";
 //抢单
 static NSString *const RentGrabRecord_URL = @"agent/rent/grabRecord";
 
+//二手房失效详情
+static NSString *const MessageWordRentDisabledDetail_URL = @"agent/message/work/rentDisabledDetail";
+
+//二手房有效信息详情
+static NSString *const MessageWordRentValueDetail_URL = @"agent/message/work/rentValueDetail";
+
 #pragma mark -- 租房-房源
 
 //项目列表

@@ -518,7 +518,7 @@
     [self.dataDic setValue:_highTF.textfield.text forKey:@"shop_height"];
     [self.dataDic setValue:_widthTF.textfield.text forKey:@"shop_width"];
     [self.dataDic setValue:_cerNumTF.textfield.text forKey:@"permit_code"];
-    [self.dataDic setValue:_timeBtn->str forKey:@"permit_time"];
+    [self.dataDic setValue:_timeBtn.content.text forKey:@"permit_time"];
     [self.dataDic setValue:_typeBtn->str forKey:@"shop_type"];
     [self.dataDic setValue:_commercialBtn->str forKey:@"format_tags"];
     [self.dataDic setObject:_publicBtn->str forKey:@"hide"];

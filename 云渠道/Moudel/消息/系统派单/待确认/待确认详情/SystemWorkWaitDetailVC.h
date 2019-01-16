@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SystemWorkWaitDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *typeName;
+
 - (instancetype)initWithPushId:(NSString *)pushId type:(NSString *)type;
 
 @end

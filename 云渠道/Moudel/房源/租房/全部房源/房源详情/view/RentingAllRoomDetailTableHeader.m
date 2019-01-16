@@ -68,7 +68,13 @@
 
     _titleL.text = storeModel.title;
 
-    _propertyL.text = storeModel.property_type;
+    if ([storeModel.property_type containsString:@"参数"]) {
+        
+        _propertyL.text = [storeModel.property_type substringWithRange:NSMakeRange(0, storeModel.property_type.length -2)];
+    }else{
+        
+        _propertyL.text = storeModel.property_type;
+    }
 
     _priceL.text = [NSString stringWithFormat:@"￥%@元/月",storeModel.price];
 
@@ -94,7 +100,13 @@
 
     _titleL.text = officeModel.title;
 
-    _propertyL.text = officeModel.property_type;
+    if ([officeModel.property_type containsString:@"参数"]) {
+        
+        _propertyL.text = [officeModel.property_type substringWithRange:NSMakeRange(0, officeModel.property_type.length -2)];
+    }else{
+        
+        _propertyL.text = officeModel.property_type;
+    }
 
     _priceL.text = [NSString stringWithFormat:@"￥%@元/月",officeModel.price];
 

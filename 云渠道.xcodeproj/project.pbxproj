@@ -184,6 +184,8 @@
 		0C6B6354211C3E7B00ABB506 /* SecAllRoomDetailHeaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6B6353211C3E7B00ABB506 /* SecAllRoomDetailHeaderModel.m */; };
 		0C6B635821216B2300ABB506 /* SecAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6B635721216B2300ABB506 /* SecAllRoomProjectModel.m */; };
 		0C6B635C21218B0600ABB506 /* RoomMaintainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6B635B21218B0600ABB506 /* RoomMaintainModel.m */; };
+		0C73B04C21EF847F005F71F1 /* RentWorkFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */; };
+		0C73B04F21EF84BA005F71F1 /* RentWorkSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
@@ -1031,6 +1033,10 @@
 		0C6B635721216B2300ABB506 /* SecAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C6B635A21218B0600ABB506 /* RoomMaintainModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomMaintainModel.h; sourceTree = "<group>"; };
 		0C6B635B21218B0600ABB506 /* RoomMaintainModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomMaintainModel.m; sourceTree = "<group>"; };
+		0C73B04A21EF847F005F71F1 /* RentWorkFailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentWorkFailVC.h; sourceTree = "<group>"; };
+		0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentWorkFailVC.m; sourceTree = "<group>"; };
+		0C73B04D21EF84BA005F71F1 /* RentWorkSuccessVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentWorkSuccessVC.h; sourceTree = "<group>"; };
+		0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentWorkSuccessVC.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
@@ -2294,6 +2300,7 @@
 		0C0B82492064FF6400238D4F /* 工作消息 */ = {
 			isa = PBXGroup;
 			children = (
+				0C73B04921EF846D005F71F1 /* 租房工作消息 */,
 				0C96CE66219409D40049C1AC /* 二手房工作消息 */,
 				105E18DF206B41780031558D /* cell */,
 				0C0B824A2064FF6400238D4F /* WorkMessageVC.h */,
@@ -3395,6 +3402,17 @@
 				0C6B635B21218B0600ABB506 /* RoomMaintainModel.m */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		0C73B04921EF846D005F71F1 /* 租房工作消息 */ = {
+			isa = PBXGroup;
+			children = (
+				0C73B04A21EF847F005F71F1 /* RentWorkFailVC.h */,
+				0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */,
+				0C73B04D21EF84BA005F71F1 /* RentWorkSuccessVC.h */,
+				0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */,
+			);
+			path = "租房工作消息";
 			sourceTree = "<group>";
 		};
 		0C74EB0B21BE57EB0036915D /* model */ = {
@@ -6898,6 +6916,7 @@
 				0C997B7121CB816300F805AA /* RentingModifyTagVC.m in Sources */,
 				10AEEE8E21A3E6A30049625B /* WorkerPickView.m in Sources */,
 				0CF04F47207B367100A45F4A /* ComplaintVC.m in Sources */,
+				0C73B04C21EF847F005F71F1 /* RentWorkFailVC.m in Sources */,
 				0C2D02B120AD51BA002F1B4E /* AppealComplaintedVC.m in Sources */,
 				0CEF348921816A0500419D5E /* SystemWorkConfirmTableCell.m in Sources */,
 				0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */,
@@ -7108,6 +7127,7 @@
 				0C1A013D20AC3F7700665BB9 /* ComfirmInValidVC.m in Sources */,
 				0CBD85A0208835C800E7B183 /* CustomDetailTableCell4.m in Sources */,
 				10AEEE7621A2A0B20049625B /* MyTeamTableCell2.m in Sources */,
+				0C73B04F21EF84BA005F71F1 /* RentWorkSuccessVC.m in Sources */,
 				0C9CD44821057BB6004894A3 /* RentingCell.m in Sources */,
 				10174BF220720C9A00D00B9A /* AdressChooseView.m in Sources */,
 				0CDD706220D390A200D6609C /* SurveyWaitDetailVC.m in Sources */,

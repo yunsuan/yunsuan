@@ -59,7 +59,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJ86Color;
-        label.numberOfLines = 0;
+//        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         
         switch (i) {

@@ -96,6 +96,7 @@
 //                    [self RequestMethod];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
                     SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]] type:resposeObject[@"data"][@"type"]];
+                    nextVC.typeName = self.typeName;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];
             }else{

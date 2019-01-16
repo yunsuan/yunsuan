@@ -318,12 +318,16 @@
         
         _rentImg1.image = [UIImage imageNamed:@"selected"];
         _rentImg2.image = [UIImage imageNamed:@"default"];
-        _rentType = 245;
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",47]];
+        _rentType = [dic[@"param"][0][@"id"] integerValue];
     }else{
         
         _rentImg1.image = [UIImage imageNamed:@"default"];
         _rentImg2.image = [UIImage imageNamed:@"selected"];
-        _rentType = 246;
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",47]];
+        _rentType = [dic[@"param"][1][@"id"] integerValue];
     }
 }
 
@@ -894,7 +898,9 @@
         }
     }
     _rentImg1.image = [UIImage imageNamed:@"selected"];
-    _rentType = 245;
+    NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+    NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",47]];
+    _rentType = [dic[@"param"][0][@"id"] integerValue];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.estimatedItemSize = CGSizeMake(120 *SIZE, 20 *SIZE);

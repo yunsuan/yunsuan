@@ -24,7 +24,7 @@
     
     _codeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
     
-    NSString *str = dataDic[@"type_name"];
+    NSString *str = dataDic[@"property_type"];
     if ([str containsString:@"参数"]) {
         
         str = [str substringWithRange:NSMakeRange(0, str.length - 2)];

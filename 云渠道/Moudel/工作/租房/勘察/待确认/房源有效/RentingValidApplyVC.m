@@ -138,10 +138,10 @@
                     RentingCompleteSurveyInfoVC *nextVC = [[RentingCompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
                     nextVC.rentingCompleteSurveyInfoVCBlock = ^{
                         
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
                     
                     };
-//                    nextVC.dataDic = _dataArr[index];
+                    nextVC.dataDic = _dataDic;
                     nextVC.surveyId = _surveyId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];
