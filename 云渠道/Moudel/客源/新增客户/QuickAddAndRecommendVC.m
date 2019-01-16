@@ -126,6 +126,11 @@
     _isHide = !_isHide;
     if (!_isHide) {
         
+        _phoneTF4.userInteractionEnabled = YES;
+        _phoneTF5.userInteractionEnabled = YES;
+        _phoneTF6.userInteractionEnabled = YES;
+        _phoneTF7.userInteractionEnabled = YES;
+        
         _phoneTF4.text = _tel4;
         _phoneTF5.text = _tel5;
         _phoneTF6.text = _tel6;
@@ -133,10 +138,15 @@
         _hideReportL.text = @"隐号报备";
     }else{
         
-        _phoneTF4.text = @"X";
-        _phoneTF5.text = @"X";
-        _phoneTF6.text = @"X";
-        _phoneTF7.text = @"X";
+        _phoneTF4.userInteractionEnabled = NO;
+        _phoneTF5.userInteractionEnabled = NO;
+        _phoneTF6.userInteractionEnabled = NO;
+        _phoneTF7.userInteractionEnabled = NO;
+        
+        _phoneTF4.text = @"*";
+        _phoneTF5.text = @"*";
+        _phoneTF6.text = @"*";
+        _phoneTF7.text = @"*";
         _hideReportL.text = @"显号报备";
     }
 }
@@ -315,7 +325,7 @@
                 _phoneTF4.delegate = self;
                 if (_isHide) {
                     
-                    _phoneTF4.text = @"X";
+                    _phoneTF4.text = @"*";
                 }else{
                     
                     _phoneTF4.text = _tel4;
@@ -331,7 +341,7 @@
                 _phoneTF5.delegate = self;
                 if (_isHide) {
                     
-                    _phoneTF5.text = @"X";
+                    _phoneTF5.text = @"*";
                 }else{
                     
                     _phoneTF5.text = _tel5;
@@ -347,7 +357,7 @@
                 _phoneTF6.delegate = self;
                 if (_isHide) {
                     
-                    _phoneTF6.text = @"X";
+                    _phoneTF6.text = @"*";
                 }else{
                     
                     _phoneTF6.text = _tel6;
@@ -363,7 +373,7 @@
                 _phoneTF7.delegate = self;
                 if (_isHide) {
                     
-                    _phoneTF7.text = @"X";
+                    _phoneTF7.text = @"*";
                 }else{
                     
                     _phoneTF7.text = _tel7;
@@ -842,27 +852,27 @@
             
             if (!_phoneTF4.text.length) {
                 
-                _phoneTF4.text = @"X";
+                _phoneTF4.text = @"*";
             }
             if (!_phoneTF5.text.length){
                 
-                _phoneTF5.text = @"X";
+                _phoneTF5.text = @"*";
             }
             if (!_phoneTF6.text.length){
                 
-                _phoneTF6.text = @"X";
+                _phoneTF6.text = @"*";
             }
             if (!_phoneTF7.text.length){
                 
-                _phoneTF7.text = @"X";
+                _phoneTF7.text = @"*";
             }
             
-            if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+            if ([_phoneTF4.text isEqualToString:@"*"] || [_phoneTF5.text isEqualToString:@"*"] || [_phoneTF6.text isEqualToString:@"*"] || [_phoneTF7.text isEqualToString:@"*"]) {
                 
-                _phoneTF4.text = @"X";
-                _phoneTF5.text = @"X";
-                _phoneTF6.text = @"X";
-                _phoneTF7.text = @"X";
+                _phoneTF4.text = @"*";
+                _phoneTF5.text = @"*";
+                _phoneTF6.text = @"*";
+                _phoneTF7.text = @"*";
             }
             
             tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_tel4,_tel5,_tel6,_tel7,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];

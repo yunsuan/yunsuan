@@ -160,7 +160,7 @@
         if ([model.is_hide_tel integerValue]) {
             
             NSString *str = arr[0];
-            _phoneL.text = [str stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"XXXX"];
+            _phoneL.text = [str stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
         }else{
             
             _phoneL.text = arr[0];

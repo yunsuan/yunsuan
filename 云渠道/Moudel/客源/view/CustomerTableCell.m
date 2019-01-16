@@ -137,7 +137,7 @@
         [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, attr.length)];
         if ([model.is_hide_tel integerValue]) {
             
-            NSMutableAttributedString *Xstr = [[NSMutableAttributedString alloc] initWithString:@"XXXX"];
+            NSMutableAttributedString *Xstr = [[NSMutableAttributedString alloc] initWithString:@"****"];
             [Xstr addAttributes:attribtDic range:NSMakeRange(0, Xstr.length)];
             [Xstr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, Xstr.length)];
             [attr replaceCharactersInRange:NSMakeRange(3, 4) withAttributedString:Xstr];

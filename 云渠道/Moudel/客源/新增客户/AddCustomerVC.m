@@ -125,10 +125,19 @@
     [super viewDidLoad];
 
     self.navBackgroundView.hidden = NO;
+
     if (_model.client_id) {
         
         self.titleLabel.text = @"修改信息";
         _isHide = [_model.is_hide_tel boolValue];
+        if (_isHide) {
+            
+            _hideReportL.text = @"显号报备";
+            _phoneTF4.userInteractionEnabled = NO;
+            _phoneTF5.userInteractionEnabled = NO;
+            _phoneTF6.userInteractionEnabled = NO;
+            _phoneTF7.userInteractionEnabled = NO;
+        }
     }else{
         
         self.titleLabel.text = @"添加客户";
@@ -136,7 +145,6 @@
     }
     [self initDataSouce];
     [self initUI];
-
 }
 
 -(void)initDataSouce
@@ -273,6 +281,11 @@
     _isHide = !_isHide;
     if (!_isHide) {
         
+        _phoneTF4.userInteractionEnabled = YES;
+        _phoneTF5.userInteractionEnabled = YES;
+        _phoneTF6.userInteractionEnabled = YES;
+        _phoneTF7.userInteractionEnabled = YES;
+        
         _phoneTF4.text = _tel4;
         _phoneTF5.text = _tel5;
         _phoneTF6.text = _tel6;
@@ -280,10 +293,15 @@
         _hideReportL.text = @"隐号报备";
     }else{
         
-        _phoneTF4.text = @"X";
-        _phoneTF5.text = @"X";
-        _phoneTF6.text = @"X";
-        _phoneTF7.text = @"X";
+        _phoneTF4.userInteractionEnabled = NO;
+        _phoneTF5.userInteractionEnabled = NO;
+        _phoneTF6.userInteractionEnabled = NO;
+        _phoneTF7.userInteractionEnabled = NO;
+        
+        _phoneTF4.text = @"*";
+        _phoneTF5.text = @"*";
+        _phoneTF6.text = @"*";
+        _phoneTF7.text = @"*";
         _hideReportL.text = @"显号报备";
         
     }
@@ -572,7 +590,7 @@
 //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
                     if (_isHide) {
                         
-                        _phoneTF4.text = @"X";
+                        _phoneTF4.text = @"*";
                     }else{
                         
                         _phoneTF4.text = _tel4;
@@ -581,7 +599,7 @@
                     
                     if (_isHide) {
                         
-                        _phoneTF4.text = @"X";
+                        _phoneTF4.text = @"*";
                     }else{
                         
                         _phoneTF4.text = _tel4;
@@ -602,7 +620,7 @@
                     //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
                     if (_isHide) {
                         
-                        _phoneTF5.text = @"X";
+                        _phoneTF5.text = @"*";
                     }else{
                         
                         _phoneTF5.text = _tel5;
@@ -611,7 +629,7 @@
                     
                     if (_isHide) {
                         
-                        _phoneTF5.text = @"X";
+                        _phoneTF5.text = @"*";
                     }else{
                         
                         _phoneTF5.text = _tel5;
@@ -632,7 +650,7 @@
                     //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
                     if (_isHide) {
                         
-                        _phoneTF6.text = @"X";
+                        _phoneTF6.text = @"*";
                     }else{
                         
                         _phoneTF6.text = _tel6;
@@ -641,7 +659,7 @@
                     
                     if (_isHide) {
                         
-                        _phoneTF6.text = @"X";
+                        _phoneTF6.text = @"*";
                     }else{
                         
                         _phoneTF6.text = _tel6;
@@ -662,7 +680,7 @@
                     //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
                     if (_isHide) {
                         
-                        _phoneTF7.text = @"X";
+                        _phoneTF7.text = @"*";
                     }else{
                         
                         _phoneTF7.text = _tel7;
@@ -671,7 +689,7 @@
                     
                     if (_isHide) {
                         
-                        _phoneTF7.text = @"X";
+                        _phoneTF7.text = @"*";
                     }else{
                         
                         _phoneTF7.text = _tel7;
@@ -755,7 +773,13 @@
                 _hideReportL = label;
                 _hideReportL.font = [UIFont systemFontOfSize:10 *SIZE];
                 _hideReportL.textColor = COLOR(255, 165, 29, 1);
-                _hideReportL.text = @"隐号报备";
+                if (_isHide) {
+                    
+                    _hideReportL.text = @"显号报备";
+                }else{
+                    
+                    _hideReportL.text = @"隐号报备";
+                }
                 [_scrollview addSubview:_hideReportL];
                 break;
             }
@@ -1396,27 +1420,27 @@
             
             if (!_phoneTF4.text.length) {
                 
-                _phoneTF4.text = @"X";
+                _phoneTF4.text = @"*";
             }
             if (!_phoneTF5.text.length){
                 
-                _phoneTF5.text = @"X";
+                _phoneTF5.text = @"*";
             }
             if (!_phoneTF6.text.length){
                 
-                _phoneTF6.text = @"X";
+                _phoneTF6.text = @"*";
             }
             if (!_phoneTF7.text.length){
                 
-                _phoneTF7.text = @"X";
+                _phoneTF7.text = @"*";
             }
             
-            if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+            if ([_phoneTF4.text isEqualToString:@"*"] || [_phoneTF5.text isEqualToString:@"*"] || [_phoneTF6.text isEqualToString:@"*"] || [_phoneTF7.text isEqualToString:@"*"]) {
                 
-                _phoneTF4.text = @"X";
-                _phoneTF5.text = @"X";
-                _phoneTF6.text = @"X";
-                _phoneTF7.text = @"X";
+                _phoneTF4.text = @"*";
+                _phoneTF5.text = @"*";
+                _phoneTF6.text = @"*";
+                _phoneTF7.text = @"*";
             }
             
             tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_tel4,_tel5,_tel6,_tel7,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
