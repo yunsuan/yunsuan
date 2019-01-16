@@ -8,7 +8,6 @@
 
 #import "SelectStoreVC.h"
 
-//#import "SinglePickView.h"
 #import "StoreAddressView.h"
 
 #import "SelectStoreCollCell.h"
@@ -32,6 +31,7 @@
     NSMutableArray *_areaArr;
     NSMutableArray *_titleArr;
     BOOL _isSearch;
+    NSInteger _page;
 //    NSString *_cityCode;
 }
 
@@ -60,14 +60,12 @@
     
     if ([LocationManager GetCityCode]) {
         
-//        _city = [LocationManager GetCityCode];
         _province = [NSString stringWithFormat:@"%@0000",[[LocationManager GetCityCode] substringToIndex:2]];
     }else{
         
         _province = @"110000";
     }
     
-//    _cityCode = @"110101";
     _dataArr = [@[] mutableCopy];
     _selectArr = [@[] mutableCopy];
     
@@ -116,6 +114,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
+    _page = 1;
     if (textField.text) {
         
         _isSearch = YES;
@@ -166,6 +165,8 @@
 
 - (void)RequestMethod{
     
+    _page = 1;
+    _selecTable.mj_footer.state = MJRefreshStateIdle;
     NSDictionary *dic;
     
     if (_area.length) {
@@ -188,8 +189,14 @@
         
         [_dataArr removeAllObjects];
         NSLog(@"%@",resposeObject);
+        
+        [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
+            if ([resposeObject[@"data"][@"data"] count] < 15) {
+                
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
             [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
@@ -197,6 +204,118 @@
         }
     } failure:^(NSError *error) {
         
+        [_selecTable.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error.localizedDescription);
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    NSDictionary *dic;
+    
+    _page += 1;
+    if (_area.length) {
+        
+        dic = @{@"province":_province,
+                @"city":_city,
+                @"district":_area
+                };
+    }else if (_city.length){
+        
+        dic = @{@"province":_province,
+                @"city":_city
+                };
+    }else{
+        
+        dic = @{@"province":_province
+                };
+    }
+    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+    [tempDic setObject:@(_page) forKey:@"page"];
+    
+    [BaseRequest GET:StoreAuthStoreList_URL parameters:tempDic success:^(id resposeObject) {
+        
+        [_dataArr removeAllObjects];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"][@"data"] count] < 15) {
+                
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }else{
+                
+                [_selecTable.mj_footer endRefreshing];
+            }
+            [self SetData:resposeObject[@"data"][@"data"]];
+        }else{
+            
+            [_selecTable.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_selecTable.mj_footer endRefreshing];
+        [self showContent:@"网络错误"];
+        NSLog(@"%@",error.localizedDescription);
+    }];
+}
+
+- (void)SearchRequest{
+    
+    NSDictionary *dic;
+    
+    if (_area.length) {
+        
+        dic = @{@"province":_province,
+                @"city":_city,
+                @"district":_area,
+                @"store_name":_searchBar.text
+                };
+    }else if (_city.length){
+        
+        dic = @{@"province":_province,
+                @"city":_city,
+                @"store_name":_searchBar.text
+                };
+    }else{
+        
+        dic = @{@"province":_province,
+                @"store_name":_searchBar.text
+                };
+    }
+    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+    [tempDic setObject:@(_page) forKey:@"page"];
+    
+    if (_page == 1) {
+        
+        _selecTable.mj_footer.state = MJRefreshStateIdle;
+    }
+    
+    [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
+        
+        [_dataArr removeAllObjects];
+        NSLog(@"%@",resposeObject);
+        [_selecTable.mj_header endRefreshing];
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"][@"data"] count] < 15) {
+                
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }else{
+                
+                [_selecTable.mj_footer endRefreshing];
+            }
+            [self SetData:resposeObject[@"data"][@"data"]];
+        }else{
+            
+            [_selecTable.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_selecTable.mj_header endRefreshing];
+        [_selecTable.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
         NSLog(@"%@",error.localizedDescription);
     }];
@@ -438,21 +557,29 @@
     _selecTable.dataSource = self;
     _selecTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_selecTable];
-//    _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
-//
-//        [self RequestMethod];
-//    }];
-//
-//    _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
-//
+    _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+
+        _page = 1;
 //        if (_isSearch) {
-//
-//            [self RequestMethodAdd];
+        
+            [self SearchRequest];
 //        }else{
 //
-//            [self SearchRequest];
+//            [self RequestMethod];
 //        }
-//    }];
+    }];
+
+    _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+
+//        if (_isSearch) {
+        
+            [self SearchRequest];
+//        }else{
+//            
+//            [self RequestAddMethod];
+//        }
+
+    }];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
