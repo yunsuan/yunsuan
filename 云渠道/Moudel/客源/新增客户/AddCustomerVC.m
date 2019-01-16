@@ -1496,13 +1496,13 @@
         dic = _Customerinfomodel.modeltodic;
         dic[@"client_id"] = _model.client_id;
         
-        [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-           
-            if ([[NSString stringWithFormat:@"%@",obj] isEqualToString:@""]) {
-                
-                [dic removeObjectForKey:key];
-            }
-        }];
+//        [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//           
+//            if ([[NSString stringWithFormat:@"%@",obj] isEqualToString:@""]) {
+//                
+//                [dic removeObjectForKey:key];
+//            }
+//        }];
         
         [BaseRequest POST:UpdateClient_URL parameters:dic success:^(id resposeObject) {
            

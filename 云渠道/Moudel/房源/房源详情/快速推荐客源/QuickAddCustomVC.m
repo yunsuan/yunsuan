@@ -506,28 +506,21 @@
         if (_workArr.count) {
             
             WorkerPickView *view = [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_workArr];
-            WS(weakSelf);
             view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
                 
-                //                        weakSelf.nameL.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                //                        weakSelf.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",RYDH];
-                //                        weakSelf.ID = [NSString stringWithFormat:@"%@",ID];
+                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                _workId = [NSString stringWithFormat:@"%@",ID];
+
             };
             [self.view addSubview:view];
         }else{
             
             
         }
-//        if (!_workerPickView) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到置业顾问"];
-//        }else{
-//
-//            [self.view addSubview:_workerPickView];
-//        }
+
     }else{
         
-
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择项目"];
     }
 }
 
@@ -1280,10 +1273,15 @@
                 [dic removeObjectForKey:key];
             }
         }];
-//        if (![dic[@"birth"] length]) {
-//
-//            [dic removeObjectForKey:@"birth"];
-//        }
+//        NSString *birthStr = ;
+        if ([dic[@"birth"] isEqualToString:@"0000-00-00"]) {
+            
+            [dic removeObjectForKey:@"birth"];
+        }
+////        if (![dic[@"birth"] length]) {
+////
+////            [dic removeObjectForKey:@"birth"];
+////        }
 
         [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
             
