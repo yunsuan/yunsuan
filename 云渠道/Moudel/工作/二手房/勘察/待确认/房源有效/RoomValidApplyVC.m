@@ -116,7 +116,7 @@
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
 
                     };
-
+                    nextVC.dataDic = _dataDic;
                     nextVC.surveyId = _surveyId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];

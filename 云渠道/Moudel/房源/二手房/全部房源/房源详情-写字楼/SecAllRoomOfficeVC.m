@@ -329,6 +329,7 @@
             browser.albumArr = _imgArr;
             browser.infoid = _model.info_id;
             browser.currentIndex = num;
+            browser.toolBar.titleLabel.text = @"房源相册";
             [browser show];
         };
         

@@ -249,6 +249,16 @@
         
         return 0;
     }
+    if (section == 3) {
+        
+        if (_model.match_tags.count) {
+            
+            return 1;
+        }else{
+            
+            return 0;
+        }
+    }
     return 1;
 }
 
@@ -322,6 +332,7 @@
             browser.albumArr = _imgArr;
             browser.infoid = _model.info_id;
             browser.currentIndex = num;
+            browser.toolBar.titleLabel.text = @"房源相册";
             [browser show];
         };
         

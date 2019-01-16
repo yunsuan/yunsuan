@@ -18,6 +18,8 @@
 
 #import "SecWorkFailVC.h"
 #import "SecWorkSuccessVC.h"
+#import "RentWorkFailVC.h"
+#import "RentWorkSuccessVC.h"
 
 @interface WorkMessageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -272,6 +274,182 @@
             [self.navigationController pushViewController:nextVC animated:YES];
         }
             break;
+        case 12:{
+            
+            [BaseRequest GET:MessageWordRentValueDetail_URL parameters:@{@"survey_id":_data[indexPath.row][@"survey_id"],@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if ([resposeObject[@"data"][@"disabled_state"] integerValue] == 0) {
+                        
+                        RentWorkSuccessVC *nextVC = [[RentWorkSuccessVC alloc] initWithData:resposeObject[@"data"]];
+                        nextVC.rentWorkSuccessVCBlock = ^{
+                            
+                            if (self.workMessageVCBlock) {
+                                
+                                self.workMessageVCBlock();
+                            }
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        SecWorkFailVC *nextVC = [[SecWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
+        case 13:{
+            
+            [BaseRequest GET:MessageWordRentValueDetail_URL parameters:@{@"survey_id":_data[indexPath.row][@"survey_id"],@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if ([resposeObject[@"data"][@"disabled_state"] integerValue] == 0) {
+                        
+                        RentWorkSuccessVC *nextVC = [[RentWorkSuccessVC alloc] initWithData:resposeObject[@"data"]];
+                        nextVC.rentWorkSuccessVCBlock = ^{
+                            
+                            if (self.workMessageVCBlock) {
+                                
+                                self.workMessageVCBlock();
+                            }
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        SecWorkFailVC *nextVC = [[SecWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
+        case 14:{
+            
+            [BaseRequest GET:MessageWordRentValueDetail_URL parameters:@{@"survey_id":_data[indexPath.row][@"survey_id"],@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if ([resposeObject[@"data"][@"disabled_state"] integerValue] == 0) {
+                        
+                        RentWorkSuccessVC *nextVC = [[RentWorkSuccessVC alloc] initWithData:resposeObject[@"data"]];
+                        nextVC.rentWorkSuccessVCBlock = ^{
+                            
+                            if (self.workMessageVCBlock) {
+                                
+                                self.workMessageVCBlock();
+                            }
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        SecWorkFailVC *nextVC = [[SecWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
+        case 15:{
+            
+            RentWorkFailVC *nextVC = [[RentWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+            [self.navigationController pushViewController:nextVC animated:YES];
+            break;
+        }
+        case 16:{
+            
+            [BaseRequest GET:MessageWordRentValueDetail_URL parameters:@{@"survey_id":_data[indexPath.row][@"survey_id"],@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if ([resposeObject[@"data"][@"disabled_state"] integerValue] == 0) {
+                        
+                        RentWorkSuccessVC *nextVC = [[RentWorkSuccessVC alloc] initWithData:resposeObject[@"data"]];
+                        nextVC.rentWorkSuccessVCBlock = ^{
+                            
+                            if (self.workMessageVCBlock) {
+                                
+                                self.workMessageVCBlock();
+                            }
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        SecWorkFailVC *nextVC = [[SecWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
+        case 17:{
+            
+            [BaseRequest GET:MessageWordRentValueDetail_URL parameters:@{@"survey_id":_data[indexPath.row][@"survey_id"],@"message_id":_data[indexPath.row][@"message_id"]} success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if ([resposeObject[@"data"][@"disabled_state"] integerValue] == 0) {
+                        
+                        RentWorkSuccessVC *nextVC = [[RentWorkSuccessVC alloc] initWithData:resposeObject[@"data"]];
+                        nextVC.rentWorkSuccessVCBlock = ^{
+                            
+                            if (self.workMessageVCBlock) {
+                                
+                                self.workMessageVCBlock();
+                            }
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        SecWorkFailVC *nextVC = [[SecWorkFailVC alloc] initWithSurveyId:_data[indexPath.row][@"survey_id"] messageId:_data[indexPath.row][@"message_id"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
         default:
         {
             
@@ -305,8 +483,8 @@
                 NSLog(@"%@",error);
                 [self showContent:@"网络错误"];
             }];
-        }
             break;
+        }
     }
 }
 

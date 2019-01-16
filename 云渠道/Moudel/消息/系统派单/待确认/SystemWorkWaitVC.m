@@ -162,6 +162,12 @@
                         [self RequestMethod];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
                         SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]] type:resposeObject[@"data"][@"type"]];
+                        NSString *str = _dataArr[index][@"type_name"];
+                        if ([str containsString:@"参数"]) {
+                            
+                            str = [str substringWithRange:NSMakeRange(0, str.length - 2)];
+                        }
+                        nextVC.typeName = str;
                         [self.navigationController pushViewController:nextVC animated:YES];
                     }];
                 }else{
@@ -218,6 +224,12 @@
 //    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
 //    [self.navigationController pushViewController:nextVC animated:YES];
     SystemWorkWaitDetailVC *nextVC = [[SystemWorkWaitDetailVC alloc] initWithPushId:_dataArr[indexPath.row][@"push_id"] type:_dataArr[indexPath.row][@"type"]];
+    NSString *str = _dataArr[indexPath.row][@"type_name"];
+    if ([str containsString:@"参数"]) {
+        
+        str = [str substringWithRange:NSMakeRange(0, str.length - 2)];
+    }
+    nextVC.typeName = str;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

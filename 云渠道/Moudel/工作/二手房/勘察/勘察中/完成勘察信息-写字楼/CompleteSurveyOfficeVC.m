@@ -548,7 +548,7 @@
     [self.dataDic setValue:_highTF.textfield.text forKey:@"office_height"];
     [self.dataDic setValue:_widthTF.textfield.text forKey:@"office_width"];
     [self.dataDic setValue:_cerNumTF.textfield.text forKey:@"permit_code"];
-    [self.dataDic setValue:_timeBtn->str forKey:@"permit_time"];
+    [self.dataDic setValue:_timeBtn.content.text forKey:@"permit_time"];
     [self.dataDic setValue:_floorBtn->str forKey:@"floor_type"];
     [self.dataDic setValue:_levelBtn->str forKey:@"grade"];
     [self.dataDic setObject:_publicBtn->str forKey:@"hide"];
@@ -1033,7 +1033,7 @@
     SS(strongSelf);
     _collHeader.blueTitleMoreHeaderBlock = ^{
         
-        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:2];
+        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:3];
         nextVC.data = strongSelf->_dataArr;
         nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
           

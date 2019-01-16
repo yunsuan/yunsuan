@@ -194,62 +194,67 @@
     
     RentingRoomAgencyAddProtocolCell4 *cell = (RentingRoomAgencyAddProtocolCell4 *)[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     
-    if ([self isEmpty:cell.priceTF.textfield.text]) {
-        
-        [_tradeDic setObject:@"" forKey:@"total_price"];
-    }else{
-        
-        [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
-    }
-    
-    if ([self isEmpty:cell.sincerityTF.textfield.text]) {
-        
-        [_tradeDic setObject:@"" forKey:@"earnest_money"];
-    }else{
-        
-        [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
-    }
-    
-    if ([self isEmpty:cell.breachTF.textfield.text]) {
-        
-        [_tradeDic setObject:@"" forKey:@"break_money"];
-    }else{
-        
-        [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
-    }
-    
-//    if (!cell.payWayBtn->str.length) {
-//
-//        [_tradeDic setObject:@"" forKey:@"pay_way"];
-//    }else{
-//
-//        [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
-//    }
-    
-    if (!cell.signTimeBtn->str.length) {
-        
-        [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
-    }else{
-        
-        _tradeDic[@"appoint_construct_time"] = cell.signTimeBtn->str;
-    }
-    
-    if (![self isEmpty:cell.eventTV.text]) {
-        
-        _tradeDic[@"comment"] = cell.eventTV.text;
-    }else{
-        
-        _tradeDic[@"comment"] = @"";
-    }
-    
-    if (![_tradeDic[@"total_price"] length] || ![_tradeDic[@"earnest_money"] length] || ![_tradeDic[@"break_money"] length] || ![_tradeDic[@"appoint_construct_time"] length]) {
+    if (!cell) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请填写交易信息"];
         return;
+    }else{
+        
+        if ([self isEmpty:cell.priceTF.textfield.text]) {
+            
+            [_tradeDic setObject:@"" forKey:@"total_price"];
+        }else{
+            
+            [_tradeDic setObject:cell.priceTF.textfield.text forKey:@"total_price"];
+        }
+        
+        if ([self isEmpty:cell.sincerityTF.textfield.text]) {
+            
+            [_tradeDic setObject:@"" forKey:@"earnest_money"];
+        }else{
+            
+            [_tradeDic setObject:cell.sincerityTF.textfield.text forKey:@"earnest_money"];
+        }
+        
+        if ([self isEmpty:cell.breachTF.textfield.text]) {
+            
+            [_tradeDic setObject:@"" forKey:@"break_money"];
+        }else{
+            
+            [_tradeDic setObject:cell.breachTF.textfield.text forKey:@"break_money"];
+        }
+        
+        //    if (!cell.payWayBtn->str.length) {
+        //
+        //        [_tradeDic setObject:@"" forKey:@"pay_way"];
+        //    }else{
+        //
+        //        [_tradeDic setObject:cell.payWayBtn->str forKey:@"pay_way"];
+        //    }
+        
+        if (!cell.signTimeBtn->str.length) {
+            
+            [_tradeDic setObject:@"" forKey:@"appoint_construct_time"];
+        }else{
+            
+            _tradeDic[@"appoint_construct_time"] = cell.signTimeBtn->str;
+        }
+        
+        if (![self isEmpty:cell.eventTV.text]) {
+            
+            _tradeDic[@"comment"] = cell.eventTV.text;
+        }else{
+            
+            _tradeDic[@"comment"] = @"";
+        }
+        
+        if (![_tradeDic[@"total_price"] length] || ![_tradeDic[@"earnest_money"] length] || ![_tradeDic[@"break_money"] length] || ![_tradeDic[@"appoint_construct_time"] length]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写交易信息"];
+            return;
+        }
     }
-    
-    
-    
+ 
     NSDictionary *dic =@{
                          @"house_id":_houseId,
                          @"total_price":_tradeDic[@"total_price"],

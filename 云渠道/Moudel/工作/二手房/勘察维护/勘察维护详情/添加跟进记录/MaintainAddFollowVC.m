@@ -213,6 +213,12 @@
 - (void)ActionTimeBtn:(UIButton *)btn{
     
     DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+    [view.pickerView setMinimumDate:[NSDate date]];
+    [view.pickerView setCalendar:[NSCalendar currentCalendar]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setDay:15];//设置最大时间为：当前时间推后10天
+    [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
     view.dateblock = ^(NSDate *date) {
         
         _timeBtn.content.text = [_formatter stringFromDate:date];
@@ -644,7 +650,7 @@
     [_contentView addSubview:_publicBtn];
     if (_dataDic.count) {
         
-        if ([_dataDic[@"hides"] integerValue] == 1) {
+        if ([_dataDic[@"hide"] integerValue] == 1) {
             
             _publicBtn.content.text = @"不公开";
             _publicBtn->str = @"1";
