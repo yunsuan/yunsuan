@@ -15,13 +15,11 @@
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
 #import "AddCustomerVC.h"
-#import "RecommendUpdateCustomerVC.h"
 
 
 @interface CustomListVC() <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
     
     NSMutableArray *_dataArr;
-//    NSMutableArray *_tempArr;
     NSString *_projectId;
     NSInteger _page;
     BOOL _isSearch;
@@ -58,6 +56,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"reloadCustom" object:nil];
     
     [self initUI];
     [self RequestMethod];
@@ -325,6 +325,16 @@
                     
                     [tempDic setObject:@"" forKey:key];
                 }
+            }else{
+                
+                if ([key isEqualToString:@"region"]) {
+                    
+                    
+                }else{
+                    
+                    [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }
+                
             }
         }];
         
@@ -350,10 +360,10 @@
 //action
 -(void)action_add
 {
-    QuickAddCustomVC *next_vc = [[QuickAddCustomVC alloc]initWithProjectId:_projectId];
-    next_vc.projectName = self.model.project_name;
-    [self.navigationController pushViewController:next_vc animated:YES];
-    
+
+    QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectId] clientId:@""];
+    nextVC.projectName = _model.project_name;
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -391,114 +401,9 @@
     cell.recommendBtnBlock5 = ^(NSInteger index) {
         
         CustomMatchModel *model = _dataArr[index];
-        self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
-        SS(strongSelf);
-        WS(weakSelf);
-        self.selectWorkerView.selectWorkerRecommendBlock = ^{
-            
-            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
-            if (weakSelf.selectWorkerView.nameL.text) {
-                
-                [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
-            }
-            
-            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-            NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
-                                      @"sex":model.sex,
-                                      @"tel":model.tel,
-                                      @"name":model.name
-                                      };
-            reportCustomConfirmView.state = strongSelf->_state;
-            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                
-                [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
-                    
-                    if ([resposeObject[@"code"] integerValue] == 200) {
-                        
-                        ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
-                        NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
-                                                  @"sex":model.sex,
-                                                  @"tel":model.tel,
-                                                  @"name":model.name
-                                                  };
-                        reportCustomSuccessView.state = strongSelf->_state;
-                        reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                        reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
-                            [weakSelf.navigationController popViewControllerAnimated:YES];
-                        };
-                        [weakSelf.view addSubview:reportCustomSuccessView];
-                    }
-                    else{
-                        
-                        [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                    }
-                } failure:^(NSError *error) {
-                    
-                    [weakSelf showContent:@"网络错误"];
-                }];
-            };
-            [weakSelf.view addSubview:reportCustomConfirmView];
-        };
-        [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":strongSelf->_projectId} success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [model.is_hide_tel integerValue]) {
-                    
-                    [weakSelf.selectWorkerView removeFromSuperview];
-                    [self.selectWorkerView removeFromSuperview];
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithCancelBlack:^{
-                        
-                        
-                    } WithDefaultBlack:^{
-                        
-                        RecommendUpdateCustomerVC *nextVC = [[RecommendUpdateCustomerVC alloc] initWithClientId:model.client_id];
-                        nextVC.recommendUpdateCustomerVCBlock = ^{
-                          
-                            [self RequestMethod];
-                        };
-                        [self.navigationController pushViewController:nextVC animated:YES];
-                    
-                    }];
-                    return ;
-                }
-                if ([resposeObject[@"data"][@"rows"] count]) {
-                    
-                    weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
-                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                    weakSelf.selectWorkerView.advicerSelect = _selected;
-                    [weakSelf.view addSubview:weakSelf.selectWorkerView];
-                }else{
-                    
-                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                    
-                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-                    NSDictionary *dic = @{@"project":weakSelf.model.project_name,
-                                          @"sex":model.sex,
-                                          @"tel":model.tel,
-                                          @"name":model.name
-                                          };
-                    reportCustomConfirmView.state = strongSelf->_state;
-                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                        
-                        [weakSelf RecommendRequest:model];
-                    };
-                    [weakSelf.view addSubview:reportCustomConfirmView];
-                }
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectId] clientId:model.client_id];
+        nextVC.projectName = _model.project_name;
+        [self.navigationController pushViewController:nextVC animated:YES];
     };
     return cell;
 }

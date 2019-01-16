@@ -1441,6 +1441,22 @@
                 _phoneTF5.text = @"*";
                 _phoneTF6.text = @"*";
                 _phoneTF7.text = @"*";
+                if (!_tel4.length) {
+                    
+                    _tel4 = @"0";
+                }
+                if (!_tel5.length) {
+                    
+                    _tel5 = @"0";
+                }
+                if (!_tel6.length) {
+                    
+                    _tel6 = @"0";
+                }
+                if (!_tel7.length) {
+                    
+                    _tel7 = @"0";
+                }
             }
             
             tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_tel4,_tel5,_tel6,_tel7,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];

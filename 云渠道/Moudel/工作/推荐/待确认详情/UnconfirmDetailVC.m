@@ -96,11 +96,11 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self initDataSouce];
     [self initUI];
     [self post];
-    
 }
 
 
@@ -108,6 +108,8 @@
 {
     _titleArr = @[@"推荐信息"];
     _data =@[];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(post) name:@"reloadCustom" object:nil];
 }
 
 - (void)ActionConfirmBtn:(UIButton *)btn{

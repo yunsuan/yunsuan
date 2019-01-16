@@ -9,7 +9,7 @@
 #import "QuickSearchVC.h"
 
 #import "CustomDetailVC.h"
-#import "RecommendUpdateCustomerVC.h"
+#import "QuickAddCustomVC.h"
 
 #import "RoomListModel.h"
 
@@ -325,123 +325,11 @@
 {
     
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
-        
+    
         RoomListModel *model = _dataArr[indexPath.row];
-        self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
-        SS(strongSelf);
-        WS(weakSelf);
-        self.selectWorkerView.selectWorkerRecommendBlock = ^{
-            
-            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
-            if (weakSelf.selectWorkerView.nameL.text) {
-                
-                [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
-            }
-            
-            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-            NSDictionary *tempDic = @{@"project":model.project_name,
-                                      @"sex":weakSelf.customerTableModel.sex,
-                                      @"tel":weakSelf.customerTableModel.tel,
-                                      @"name":weakSelf.customerTableModel.name
-                                      };
-            reportCustomConfirmView.state = strongSelf->_state;
-            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                
-                [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
-                    
-                    
-                    if ([resposeObject[@"code"] integerValue] == 200) {
-                        
-                        ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
-                        NSDictionary *tempDic = @{@"project":model.project_name,
-                                                  @"sex":weakSelf.customerTableModel.sex,
-                                                  @"tel":weakSelf.customerTableModel.tel,
-                                                  @"name":weakSelf.customerTableModel.name
-                                                  };
-                        reportCustomSuccessView.state = strongSelf->_state;
-                        reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                        reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
-                            
-                            for (UIViewController *vc in weakSelf.navigationController.viewControllers) {
-                                
-                                if ([vc isKindOfClass:[CustomDetailVC class]]) {
-                                    
-                                    [weakSelf.navigationController popToViewController:vc animated:YES];
-                                }
-                            }
-                        };
-                        [weakSelf.view addSubview:reportCustomSuccessView];                    }
-                    else{
-                        
-                        [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                    }
-                } failure:^(NSError *error) {
-                    
-                    NSLog(@"%@",error);
-                    [weakSelf showContent:@"网络错误"];
-                }];
-            };
-            [weakSelf.view addSubview:reportCustomConfirmView];
-            
-        };
-        [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":model.project_id} success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [weakSelf.customerTableModel.is_hide_tel boolValue]) {
-                    
-                    [weakSelf.selectWorkerView removeFromSuperview];
-                    [self.selectWorkerView removeFromSuperview];
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithCancelBlack:^{
-                        
-                        
-                    } WithDefaultBlack:^{
-                        
-                        RecommendUpdateCustomerVC *nextVC = [[RecommendUpdateCustomerVC alloc] initWithClientId:_model.client_id];
-                        nextVC.recommendUpdateCustomerVCBlock = ^{
-                            
-                            [self RequestMethod];
-                        };
-                        [self.navigationController pushViewController:nextVC animated:YES];
-                        
-                    }];
-                    return ;
-                }
-                
-                if ([resposeObject[@"data"][@"rows"] count]) {
-                    
-                    weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
-                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                    weakSelf.selectWorkerView.advicerSelect = _selected;
-                    [self.view addSubview:weakSelf.selectWorkerView];
-                }else{
-                    
-                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":model.project_id,@"client_need_id":strongSelf->_model.need_id,@"client_id":strongSelf->_model.client_id}];
-                    
-                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-                    NSDictionary *tempDic = @{@"project":model.project_name,
-                                              @"sex":self.customerTableModel.sex,
-                                              @"tel":self.customerTableModel.tel,
-                                              @"name":self.customerTableModel.name
-                                              };
-                    reportCustomConfirmView.state = strongSelf->_state;
-                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                        
-                        [self RequestRecommend:dic projectName:model.project_name];
-                    };
-                    [weakSelf.view addSubview:reportCustomConfirmView];
-                }
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",model.project_id] clientId:_model.client_id];
+        nextVC.projectName = model.project_name;
+        [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"到访确认人不可推荐客户"];

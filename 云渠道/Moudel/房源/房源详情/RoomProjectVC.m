@@ -15,6 +15,7 @@
 #import "DistributVC.h"
 #import "DynamicDetailVC.h"
 #import "CustomListVC.h"
+#import "QuickAddCustomVC.h"
 
 #import "RoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
@@ -443,6 +444,16 @@
                 }
             }else{
                 
+                if (section == 4) {
+                    
+                    if (_houseArr.count) {
+                        
+                        return 1;
+                    }else{
+                        
+                        return 0;
+                    }
+                }
                 return 1;
             }
         }
@@ -488,7 +499,7 @@
         
         if (_focusDic.count) {
             
-            header.attentL.text = [NSString stringWithFormat:@"关注人数:%@",_focusDic[@"num"]];
+            header.attentL.text = [NSString stringWithFormat:@"订阅人数:%@",_focusDic[@"num"]];
             if ([_focusDic[@"is_focus"] integerValue]) {
                 
                 [header.attentBtn setImage:[UIImage imageNamed:@"Focus_selected"] forState:UIControlStateNormal];
@@ -510,26 +521,7 @@
                 [tempArr addObject:model];
             }];
             if (_albumArr.count) {
-                //
-                //                NSMutableArray *tempArr = [NSMutableArray array];
-                //                for (int i = 0; i < _albumArr.count; i++) {
-                //
-                //                    NSArray *arr = _albumArr[i][@"data"];
-                //                    for (int j = 0; j < arr.count; j++) {
-                //
-                //                        YBImageBrowserModel *model = [YBImageBrowserModel new];
-                //                        model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,arr[j][@"img_url"]]];
-                //                        [tempArr addObject:model];
-                //                    }
-                //                }
-                
-                //                [_albumArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                //
-                //                    YBImageBrowserModel *model = [YBImageBrowserModel new];
-                //                    model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
-                //                    [tempArr addObject:model];
-                //                }];
-                
+
                 YBImageBrowser *browser = [YBImageBrowser new];
                 browser.delegate = self;
                 browser.dataArray = tempArr;
@@ -553,18 +545,6 @@
                                     NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"][i]];
                                     
                                     [_albumArr addObject:tempDic];
-                                    
-                                    //                                    NSMutableArray *tempArr = [NSMutableArray array];
-                                    //                                    for (int i = 0; i < _albumArr.count; i++) {
-                                    //
-                                    //                                        NSArray *arr = _albumArr[i][@"data"];
-                                    //                                        for (int j = 0; j < arr.count; j++) {
-                                    //
-                                    //                                            YBImageBrowserModel *model = [YBImageBrowserModel new];
-                                    //                                            model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,arr[j][@"img_url"]]];
-                                    //                                            [tempArr addObject:model];
-                                    //                                        }
-                                    //                                    }
                                     
                                     YBImageBrowser *browser = [YBImageBrowser new];
                                     browser.delegate = self;
@@ -594,7 +574,6 @@
                     
                     [BaseRequest GET:CancelFocusProject_URL parameters:@{@"sub_id":_focusDic[@"is_focus"]} success:^(id resposeObject) {
                         
-                        
                         NSLog(@"%@",resposeObject);
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
@@ -618,7 +597,6 @@
                         
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
-//                            _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
                             [self RequestMethod];
                         }else{
                             [self showContent:resposeObject[@"msg"]];
@@ -734,13 +712,14 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            if (_houseArr.count) {
-                
-                cell.num = _houseArr.count;
-            }else{
-                
-                cell.num = 3;
-            }
+//            if (_houseArr.count) {
+//
+//
+//            }else{
+//
+//                cell.num = 3;
+//            }
+            cell.num = _houseArr.count;
             if (_houseArr.count) {
                 
                 cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
@@ -816,101 +795,11 @@
             cell.model = _peopleArr[indexPath.row];
             cell.recommendBtn.tag = indexPath.row;
             cell.recommendBtnBlock5 = ^(NSInteger index) {
-                
+              
                 CustomMatchModel *model = _peopleArr[index];
-                self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
-                SS(strongSelf);
-                WS(weakSelf);
-                self.selectWorkerView.selectWorkerRecommendBlock = ^{
-                    
-                    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
-                    if (weakSelf.selectWorkerView.nameL.text) {
-                        
-                        [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
-                    }
-                    
-                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-                    NSDictionary *tempDic = @{@"project":strongSelf->_model.project_name,
-                                              @"sex":model.sex,
-                                              @"tel":model.tel,
-                                              @"name":model.name
-                                              };
-                    reportCustomConfirmView.state = strongSelf->_state;
-                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                        
-                        [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
-                            
-                            NSLog(@"%@",resposeObject);
-                            
-                            if ([resposeObject[@"code"] integerValue] == 200) {
-                                
-                                ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
-                                NSDictionary *tempDic = @{@"project":strongSelf->_model.project_name,
-                                                          @"sex":model.sex,
-                                                          @"tel":model.tel,
-                                                          @"name":model.name
-                                                          };
-                                reportCustomSuccessView.state = strongSelf->_state;
-                                reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                                reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
-                                    
-                                    [weakSelf MatchRequest];
-                                };
-                                [weakSelf.view addSubview:reportCustomSuccessView];
-                            }else if ([resposeObject[@"code"] integerValue] == 401){
-                                
-                                [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                            }
-                            else{
-                                
-                                [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                            }
-                        } failure:^(NSError *error) {
-                            
-                            NSLog(@"%@",error);
-                            [weakSelf showContent:@"网络错误"];
-                        }];
-                    };
-                    [weakSelf.view addSubview:reportCustomConfirmView];
-                };
-                [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":strongSelf->_model.project_id} success:^(id resposeObject) {
-                    
-                    if ([resposeObject[@"code"] integerValue] == 200) {
-                        
-                        if ([resposeObject[@"data"][@"rows"] count]) {
-                            
-                            weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
-                            _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                            _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                            weakSelf.selectWorkerView.advicerSelect = _selected;
-                            [self.view addSubview:weakSelf.selectWorkerView];
-                        }else{
-                            
-                            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
-                            
-                            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-                            NSDictionary *tempDic = @{@"project":_model.project_name,
-                                                      @"sex":model.sex,
-                                                      @"tel":model.tel,
-                                                      @"name":model.name
-                                                      };
-                            reportCustomConfirmView.state = strongSelf->_state;
-                            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                                
-                                [weakSelf RequestRecommend:dic model:model];
-                            };
-                            [weakSelf.view addSubview:reportCustomConfirmView];
-                        }
-                    }else{
-                        
-                        [self showContent:resposeObject[@"msg"]];
-                    }
-                } failure:^(NSError *error) {
-                    
-                    [self showContent:@"网络错误"];
-                }];
+                QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectId] clientId:model.client_id];
+                nextVC.projectName = _model.project_name;
+                [self.navigationController pushViewController:nextVC animated:YES];
             };
             return cell;
             break;

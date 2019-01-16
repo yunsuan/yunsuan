@@ -153,8 +153,9 @@
     }
     [dic setObject:_departTextField.text forKey:@"department"];
     [dic setObject:_positionTextField.text forKey:@"position"];
-    if (_timeL.text.length==0) {
-        [dic setObject:@"2018-06-29" forKey:@"entry_time"];
+    if (_timeL.text.length == 0) {
+        
+//        [dic setObject:@"" forKey:@"entry_time"];
     }
     else
     {

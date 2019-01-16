@@ -303,8 +303,8 @@
 - (void)ActionRightBtn:(UIButton *)btn{
     
     if (_dataArr.count) {
+        
         QuickRoomVC  *nextVC = [[QuickRoomVC alloc] initWithModel:_dataArr[0]];
-//        self.model.client_id = _customModel.client_id;
         nextVC.customerTableModel = self.model;
         [self.navigationController pushViewController:nextVC animated:YES];
     }

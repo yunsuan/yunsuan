@@ -8,10 +8,13 @@
 
 #import "BaseViewController.h"
 
+#import "CustomerModel.h"
+
 @interface QuickAddCustomVC : BaseViewController
 
 @property (nonatomic, strong) NSString *projectName;
 
-- (instancetype)initWithProjectId:(NSString *)projectId;
+- (instancetype)initWithProjectId:(NSString *)projectId clientId:(NSString *)clientId;
+
 
 @end

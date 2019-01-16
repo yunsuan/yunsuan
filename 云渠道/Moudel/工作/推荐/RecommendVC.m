@@ -18,7 +18,8 @@
 #import "ComplaintCompleteVC.h"
 #import "CompleteCustomVC1.h"
 #import "InvalidView.h"
-#import "QuickAddAndRecommendVC.h"
+
+#import "QuickAddCustomVC.h"
 
 
 @interface RecommendVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -711,7 +712,8 @@
 -(void)action_add
 {
     
-    QuickAddAndRecommendVC *nextVC = [[QuickAddAndRecommendVC alloc] init];
+    QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",@""] clientId:@""];
+//    nextVC.projectName = _model.project_name;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

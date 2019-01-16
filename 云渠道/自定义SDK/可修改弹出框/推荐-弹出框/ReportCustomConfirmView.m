@@ -63,10 +63,10 @@
         _hideReportImg.hidden = YES;
     }else{
         
-        _phone4.text = @"X";
-        _phone5.text = @"X";
-        _phone6.text = @"X";
-        _phone7.text = @"X";
+        _phone4.text = @"*";
+        _phone5.text = @"*";
+        _phone6.text = @"*";
+        _phone7.text = @"*";
         _hideL.hidden = NO;
         _hideReportL.hidden = NO;
         _hideReportImg.hidden = NO;
