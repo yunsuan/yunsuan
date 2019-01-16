@@ -132,7 +132,7 @@
         _isHide = [_model.is_hide_tel boolValue];
         if (_isHide) {
             
-            _hideReportL.text = @"显号报备";
+            _hideReportL.text = @"当前显号报备";
             _phoneTF4.userInteractionEnabled = NO;
             _phoneTF5.userInteractionEnabled = NO;
             _phoneTF6.userInteractionEnabled = NO;
@@ -290,7 +290,7 @@
         _phoneTF5.text = _tel5;
         _phoneTF6.text = _tel6;
         _phoneTF7.text = _tel7;
-        _hideReportL.text = @"隐号报备";
+        _hideReportL.text = @"当前隐号报备";
     }else{
         
         _phoneTF4.userInteractionEnabled = NO;
@@ -302,7 +302,7 @@
         _phoneTF5.text = @"*";
         _phoneTF6.text = @"*";
         _phoneTF7.text = @"*";
-        _hideReportL.text = @"显号报备";
+        _hideReportL.text = @"当前显号报备";
         
     }
 }
@@ -775,10 +775,10 @@
                 _hideReportL.textColor = COLOR(255, 165, 29, 1);
                 if (_isHide) {
                     
-                    _hideReportL.text = @"显号报备";
+                    _hideReportL.text = @"当前显号报备";
                 }else{
                     
-                    _hideReportL.text = @"隐号报备";
+                    _hideReportL.text = @"当前隐号报备";
                 }
                 [_scrollview addSubview:_hideReportL];
                 break;

@@ -593,7 +593,7 @@
                 _hideReportL = label;
                 _hideReportL.font = [UIFont systemFontOfSize:10 *SIZE];
                 _hideReportL.textColor = COLOR(255, 165, 29, 1);
-                _hideReportL.text = @"隐号报备";
+                _hideReportL.text = @"当前隐号报备";
                 [_infoView addSubview:_hideReportL];
                 break;
             }

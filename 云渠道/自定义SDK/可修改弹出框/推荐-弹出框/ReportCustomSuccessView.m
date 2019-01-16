@@ -256,7 +256,7 @@
     _hideReportL = [[UILabel alloc] init];
     _hideReportL.textColor = COLOR(255, 165, 29, 1);
     _hideReportL.font = [UIFont systemFontOfSize:10 *SIZE];
-    _hideReportL.text = @"隐号报备";
+    _hideReportL.text = @"当前隐号报备";
     [_whiteView addSubview:_hideReportL];
     
     _hideReportImg = [[UIImageView alloc] init];
