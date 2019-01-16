@@ -122,6 +122,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"house_type_name":_name}];
     [dic setObject:_city forKey:@"city"];
     [dic setObject:_projectId forKey:@"project_id"];
+    [dic setObject:[UserModelArchiver unarchive].agent_id forKey:@"agent_id"];
     [BaseRequest GET:HouseHouseList_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
@@ -153,6 +154,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page),@"house_type_name":_name}];
     [dic setObject:_city forKey:@"city"];
     [dic setObject:_projectId forKey:@"project_id"];
+    [dic setObject:[UserModelArchiver unarchive].agent_id forKey:@"agent_id"];
     [BaseRequest GET:HouseHouseList_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);

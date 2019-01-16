@@ -465,6 +465,16 @@
                 }
             }else{
                 
+                if (section == 4) {
+                    
+                    if (_houseArr.count) {
+                        
+                        return 1;
+                    }else{
+                        
+                        return 0;
+                    }
+                }
                 return 1;
             }
         }
@@ -724,13 +734,8 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            if (_houseArr.count > 3) {
-                
-                cell.num = _houseArr.count;
-            }else{
-                
-                cell.num = 3;
-            }
+
+            cell.num = _houseArr.count;
             if (_houseArr.count) {
                 
                 cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];
