@@ -70,12 +70,12 @@
     [_scrollView setContentSize:CGSizeMake(SCREEN_Width * 4, SCREEN_Height)];
     [self.view addSubview:_scrollView];
     
-    NSArray *imgArr = @[@"guidepage_1@3x",@"guidepage_2@3x",@"guidepage_3@3x",@"guidepage_4@3x"];
-    for (int i = 0; i < 4; i++) {
+    NSArray *imgArr = @[@"yindaoye1",@"yindaoye2",@"yindaoye3",@"yindaoye4",@"yindaoye5"];
+    for (int i = 0; i < 5; i++) {
         
         UIImageView *guideImg = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, SCREEN_Height)];
 
-        NSString *path = [[NSBundle mainBundle] pathForResource:imgArr[i] ofType:@"png"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:imgArr[i] ofType:@"jpg"];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         guideImg.image = image;
         guideImg.contentMode = UIViewContentModeScaleAspectFill;

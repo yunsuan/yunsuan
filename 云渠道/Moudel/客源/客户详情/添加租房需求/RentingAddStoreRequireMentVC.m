@@ -375,7 +375,7 @@
                 NSString *pro = [cityid substringToIndex:2];
                 pro = [NSString stringWithFormat:@"%@0000",pro];
                 NSString *proName;
-                if ([pro isEqualToString:@"000000"]) {
+                if ([pro isEqualToString:@"900000"]) {
                     proName = @"海外";
                 }
                 else{

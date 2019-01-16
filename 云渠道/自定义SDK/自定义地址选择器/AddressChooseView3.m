@@ -200,7 +200,7 @@
 -(void)getAreaArrayBycity:(NSString *)code name:(NSString *)name
 {
     
-    if ([code hasPrefix:@"00"]) {
+    if ([code hasPrefix:@"90"]) {
         NSString *areacode  = [code substringToIndex:4];
         areacode = [NSString stringWithFormat:@"%@01",areacode];
         

@@ -567,10 +567,11 @@
         
         if (_isSearch) {
             
-            [self RequestMethodAdd];
+            [self SearchRequest];
         }else{
             
-            [self SearchRequest];
+            
+            [self RequestMethodAdd];
         }
     }];
 }
