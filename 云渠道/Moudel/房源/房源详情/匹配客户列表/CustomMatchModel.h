@@ -10,6 +10,8 @@
 
 @interface CustomMatchModel : BaseModel
 
+@property (nonatomic, strong) NSString *is_hide_tel;
+
 @property (nonatomic, strong) NSString *area;
 
 @property (nonatomic, strong) NSString *client_id;

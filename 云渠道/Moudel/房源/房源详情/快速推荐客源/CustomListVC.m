@@ -329,6 +329,7 @@
         }];
         
         CustomMatchModel *model = [[CustomMatchModel alloc] init];
+        model.is_hide_tel = tempDic[@"is_hide_tel"];
         model.client_id = tempDic[@"client_id"];
         model.name = tempDic[@"name"];
         model.price = tempDic[@"price"];
@@ -445,7 +446,7 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [model.tel containsString:@"X"]) {
+                if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [model.is_hide_tel integerValue]) {
                     
                     [weakSelf.selectWorkerView removeFromSuperview];
                     [self.selectWorkerView removeFromSuperview];

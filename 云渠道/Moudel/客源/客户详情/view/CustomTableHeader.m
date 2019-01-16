@@ -106,7 +106,13 @@
     
     if (model.tel) {
         
-        self.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",model.tel];
+        if ([model.is_hide_tel integerValue]) {
+            
+            self.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",[model.tel stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"XXXX"]];
+        }else{
+            
+            self.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",model.tel];
+        }
     }else{
         
         self.phoneL.text = @"联系电话：";

@@ -128,6 +128,7 @@
     if (_model.client_id) {
         
         self.titleLabel.text = @"修改信息";
+        _isHide = [_model.is_hide_tel boolValue];
     }else{
         
         self.titleLabel.text = @"添加客户";
@@ -567,7 +568,15 @@
                 _phoneTF4.delegate = self;
                 if (telArr.count) {
                     
-                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+                    _tel4 = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+//                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+                    if (_isHide) {
+                        
+                        _phoneTF4.text = @"X";
+                    }else{
+                        
+                        _phoneTF4.text = _tel4;
+                    }
                 }else{
                     
                     if (_isHide) {
@@ -589,7 +598,15 @@
                 _phoneTF5.delegate = self;
                 if (telArr.count) {
                     
-                    _phoneTF5.text = [telArr[0] substringWithRange:NSMakeRange(4, 1)];
+                    _tel5 = [telArr[0] substringWithRange:NSMakeRange(4, 1)];
+                    //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+                    if (_isHide) {
+                        
+                        _phoneTF5.text = @"X";
+                    }else{
+                        
+                        _phoneTF5.text = _tel5;
+                    }
                 }else{
                     
                     if (_isHide) {
@@ -597,7 +614,7 @@
                         _phoneTF5.text = @"X";
                     }else{
                         
-                        _phoneTF5.text = _tel7;
+                        _phoneTF5.text = _tel5;
                     }
                 }
                 
@@ -611,7 +628,15 @@
                 _phoneTF6.delegate = self;
                 if (telArr.count) {
                     
-                    _phoneTF6.text = [telArr[0] substringWithRange:NSMakeRange(5, 1)];
+                    _tel6 = [telArr[0] substringWithRange:NSMakeRange(5, 1)];
+                    //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+                    if (_isHide) {
+                        
+                        _phoneTF6.text = @"X";
+                    }else{
+                        
+                        _phoneTF6.text = _tel6;
+                    }
                 }else{
                     
                     if (_isHide) {
@@ -619,7 +644,7 @@
                         _phoneTF6.text = @"X";
                     }else{
                         
-                        _phoneTF6.text = _tel7;
+                        _phoneTF6.text = _tel6;
                     }
                 }
                 
@@ -633,7 +658,15 @@
                 _phoneTF7.delegate = self;
                 if (telArr.count) {
                     
-                    _phoneTF7.text = [telArr[0] substringWithRange:NSMakeRange(6, 1)];
+                    _tel7 = [telArr[0] substringWithRange:NSMakeRange(6, 1)];
+                    //                    _phoneTF4.text = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+                    if (_isHide) {
+                        
+                        _phoneTF7.text = @"X";
+                    }else{
+                        
+                        _phoneTF7.text = _tel7;
+                    }
                 }else{
                     
                     if (_isHide) {
@@ -1386,7 +1419,7 @@
                 _phoneTF7.text = @"X";
             }
             
-            tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
+            tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_tel4,_tel5,_tel6,_tel7,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
         }
     }else{
         

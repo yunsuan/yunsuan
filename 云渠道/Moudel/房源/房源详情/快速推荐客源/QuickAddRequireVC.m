@@ -549,6 +549,17 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
+            if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [_infoModel.is_hide_tel integerValue]) {
+                
+                [self.selectWorkerView removeFromSuperview];
+                [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码" WithDefaultBlack:^{
+                   
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+
+                return ;
+            }
+            
             if ([resposeObject[@"data"][@"rows"] count]) {
                 weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
                 _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];

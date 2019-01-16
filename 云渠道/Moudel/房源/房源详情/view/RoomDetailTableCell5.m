@@ -141,22 +141,30 @@
         _urgentRateL.attributedText = attr;
     }
     
-    if (model.score) {
-        
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配度：%@%@",model.score,@"%"]];
-        [attr setAttributes:@{NSForegroundColorAttributeName:YJContentLabColor} range:NSMakeRange(0, 4)];
-        _matchRateL.attributedText = attr;
-    }else{
-        
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配度：0%@",@"%"]];
-        [attr setAttributes:@{NSForegroundColorAttributeName:YJContentLabColor} range:NSMakeRange(0, 4)];
-        _matchRateL.attributedText = attr;
-    }
+//    if (model.score) {
+//
+//        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配度：%@%@",model.score,@"%"]];
+//        [attr setAttributes:@{NSForegroundColorAttributeName:YJContentLabColor} range:NSMakeRange(0, 4)];
+//        _matchRateL.attributedText = attr;
+//    }else{
+//
+//        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配度：0%@",@"%"]];
+//        [attr setAttributes:@{NSForegroundColorAttributeName:YJContentLabColor} range:NSMakeRange(0, 4)];
+//        _matchRateL.attributedText = attr;
+//    }
     
     if (model.tel) {
         
         NSArray *arr = [model.tel componentsSeparatedByString:@","];
-        _phoneL.text = arr[0];
+        
+        if ([model.is_hide_tel integerValue]) {
+            
+            NSString *str = arr[0];
+            _phoneL.text = [str stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"XXXX"];
+        }else{
+            
+            _phoneL.text = arr[0];
+        }
     }else{
         
         _phoneL.text = @"";

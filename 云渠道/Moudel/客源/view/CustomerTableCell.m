@@ -135,8 +135,18 @@
         NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
         [attr addAttributes:attribtDic range:NSMakeRange(0, attr.length)];
         [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, attr.length)];
+        if ([model.is_hide_tel integerValue]) {
+            
+            NSMutableAttributedString *Xstr = [[NSMutableAttributedString alloc] initWithString:@"XXXX"];
+            [Xstr addAttributes:attribtDic range:NSMakeRange(0, Xstr.length)];
+            [Xstr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, Xstr.length)];
+            [attr replaceCharactersInRange:NSMakeRange(3, 4) withAttributedString:Xstr];
+            _phoneL.userInteractionEnabled = NO;
+        }else{
+            
+            _phoneL.userInteractionEnabled = YES;
+        }
         _phoneL.attributedText = attr;
-        _phoneL.userInteractionEnabled = YES;
     }else{
         
         _phoneL.text = [NSString stringWithFormat:@"%@",model.tel];

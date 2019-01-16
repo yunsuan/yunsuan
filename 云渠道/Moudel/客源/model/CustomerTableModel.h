@@ -10,6 +10,8 @@
 
 @interface CustomerTableModel : NSObject
 
+@property (nonatomic, strong) NSString *is_hide_tel;
+
 @property (nonatomic, copy) NSString *address;
 
 @property (nonatomic, copy) NSString *card_id;

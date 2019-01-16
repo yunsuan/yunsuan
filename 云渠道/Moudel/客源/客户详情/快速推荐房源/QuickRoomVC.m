@@ -913,7 +913,7 @@
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [weakSelf.customerTableModel.tel containsString:@"X"]) {
+                    if ([resposeObject[@"data"][@"tel_complete_state"] integerValue] == 0 && [weakSelf.customerTableModel.is_hide_tel boolValue]) {
                         
                         [weakSelf.selectWorkerView removeFromSuperview];
                         [self.selectWorkerView removeFromSuperview];
