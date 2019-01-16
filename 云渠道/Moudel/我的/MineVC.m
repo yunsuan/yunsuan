@@ -365,7 +365,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 2)
-        return 3;
+        return 2;
     else
         return 4;
 }

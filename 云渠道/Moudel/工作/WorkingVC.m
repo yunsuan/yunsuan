@@ -382,7 +382,7 @@
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
         _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
-            
+            _MainTableView.mj_header.state = MJRefreshStateIdle;
             [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
         }];
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

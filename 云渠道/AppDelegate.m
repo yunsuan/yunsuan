@@ -58,12 +58,12 @@ static NSString *const kQQAPPID = @"1106811849";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
-        NSMutableArray *arr = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-        if (arr.count != 1) {
-            NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
-            [dataarr writeToFile:filePath atomically:YES];
-        }
+//        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
+//        NSMutableArray *arr = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
+//        if (arr.count != 1) {
+//            NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
+//            [dataarr writeToFile:filePath atomically:YES];
+//        }
     [self initUI];
     [self NetworkingStart];
     [self configThirdWithOptions:launchOptions];
