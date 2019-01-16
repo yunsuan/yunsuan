@@ -9,6 +9,7 @@
 #import "MyAttentionVC.h"
 
 #import "SecAllRoomDetailVC.h"
+#import "RentingAllRoomDetailVC.h"
 
 //#import "SecdaryAllTableModel.h"
 #import "SecdaryAllTableCell.h"
@@ -17,6 +18,7 @@
 {
     
     NSMutableArray *_dataArr;
+    NSInteger _page;
 }
 @property (nonatomic, strong) UITableView *attentionTable;
 
@@ -40,8 +42,11 @@
 
 - (void)RequestMethod{
     
+    _attentionTable.mj_footer.state = MJRefreshStateIdle;
+    _page = 1;
     [BaseRequest GET:PersonalGetSubList_URL parameters:nil success:^(id resposeObject) {
 
+        [_attentionTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [self SetData:resposeObject[@"data"][@"data"]];
@@ -51,6 +56,37 @@
         }
     } failure:^(NSError *error) {
         
+        [_attentionTable.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    [BaseRequest GET:PersonalGetSubList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+        
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"][@"data"]];
+            if ([resposeObject[@"data"][@"data"] count] < 15) {
+                
+                _attentionTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }else{
+                
+                [_attentionTable.mj_footer endRefreshing];
+            }
+        }else{
+            
+            [_attentionTable.mj_footer endRefreshing];
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_attentionTable.mj_footer endRefreshing];
+        _page -= 1;
         [self showContent:@"网络错误"];
     }];
 }
@@ -83,19 +119,6 @@
                 }
             }
         }];
-//        SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] init];//WithDictionary:tempDic];
-//        model.price_change = tempDic[@"price_change"];
-//        model.img_url = tempDic[@"img_url"];
-//        model.house_id = tempDic[@"house_id"];
-//        model.title = tempDic[@"title"];
-//        model.describe = tempDic[@"describe"];
-//        model.price = tempDic[@"price"];
-//        model.unit_price = tempDic[@"unit_price"];
-//        model.property_type = tempDic[@"property_type"];
-//        model.store_name = tempDic[@"store_name"];
-//        model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
-//        model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
-//        model.type = tempDic[@"type"];
         
         [_dataArr addObject:tempDic];
     }
@@ -191,7 +214,6 @@
     NSDictionary *dic = @{@"focus_id":_dataArr[indexPath.row][@"focus_id"]};
     [BaseRequest GET:PersonalCancelFocusHouse_URL parameters:dic success:^(id resposeObject) {
 
-
         if ([resposeObject[@"code"] integerValue] == 200) {
 
             [_dataArr removeObjectAtIndex:indexPath.row];
@@ -213,10 +235,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSDictionary *tempDic = _dataArr[indexPath.row];
-    SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:tempDic[@"house_id"] city:@""];
-    nextVC.type = [tempDic[@"type"] integerValue];
-    nextVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:nextVC animated:YES];
+    if ([tempDic[@"focus_type"] integerValue] == 2) {
+        
+        RentingAllRoomDetailVC *nextVC = [[RentingAllRoomDetailVC alloc] initWithHouseId:tempDic[@"house_id"] city:@""];
+        nextVC.type = [tempDic[@"type"] integerValue];
+        nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+
+        SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:tempDic[@"house_id"] city:@""];
+        nextVC.type = [tempDic[@"type"] integerValue];
+        nextVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 - (void)initUI{
