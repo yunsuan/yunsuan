@@ -90,6 +90,10 @@
 
 @property (nonatomic, strong) DropDownBtn *selectWorkerBtn;
 
+@property (nonatomic, strong) UILabel *markL;
+
+@property (nonatomic, strong) UITextView *markTV;
+
 @property (nonatomic , strong) UIButton *surebtn;
 
 @property (nonatomic, strong) WorkerPickView *workerPickView;
@@ -223,7 +227,7 @@
     _model = [[CustomerModel alloc] initWithDictionary:tempDic];
     
     _isHide = [_model.is_hide_tel boolValue];
-    if (_isHide) {
+    if (!_isHide) {
         
         _phoneTF4.userInteractionEnabled = NO;
         _phoneTF5.userInteractionEnabled = NO;
@@ -231,6 +235,8 @@
         _phoneTF7.userInteractionEnabled = NO;
         
         _hideReportL.text = @"当前显号报备";
+        _hideL.text = @"需要补全电话号码";
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
     }else{
         
         _hideReportL.text = @"当前隐号报备";
@@ -469,7 +475,9 @@
         _phoneTF5.text = _tel5;
         _phoneTF6.text = _tel6;
         _phoneTF7.text = _tel7;
-        _hideReportL.text = @"当前隐号报备";
+        _hideReportL.text = @"当前显号报备";
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
+        _hideL.text = @"需要补全电话号码";
     }else{
         
         _phoneTF4.userInteractionEnabled = NO;
@@ -481,7 +489,9 @@
         _phoneTF5.text = @"*";
         _phoneTF6.text = @"*";
         _phoneTF7.text = @"*";
-        _hideReportL.text = @"当前显号报备";
+        _hideReportL.text = @"当前隐号报备";
+        _hideL.text = @"只需输入手机号前三位后四位";
+        _hideImg.image = [UIImage imageNamed:@"eye"];
     }
 }
 
@@ -878,6 +888,15 @@
     
     [_scrollview addSubview:self.surebtn];
     
+    _markL = [[UILabel alloc] init];
+    _markL.textColor = YJTitleLabColor;
+    _markL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _markL.text = @"备注";
+    [_scrollview addSubview:_markL];
+    
+    _markTV = [[UITextView alloc] init];
+    [_scrollview addSubview:_markTV];
+    
     [self masonryUI];
 }
 
@@ -989,7 +1008,7 @@
     
     [_hideImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_scrollview).offset(271 *SIZE);
+        make.left.equalTo(_scrollview).offset(251 *SIZE);
         make.top.equalTo(_phoneTF1.mas_bottom).offset(16 *SIZE);
         make.width.mas_equalTo(14 *SIZE);
         make.height.mas_equalTo(6 *SIZE);
@@ -997,9 +1016,9 @@
     
     [_hideReportL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_scrollview).offset(299 *SIZE);
+        make.left.equalTo(_scrollview).offset(279 *SIZE);
         make.top.equalTo(_phoneTF1.mas_bottom).offset(14 *SIZE);
-        make.width.mas_equalTo(50 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
         make.height.mas_equalTo(10 *SIZE);
     }];
     
@@ -1099,10 +1118,26 @@
         make.height.equalTo(@(33 *SIZE));
     }];
     
+    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(9 *SIZE);
+        make.top.equalTo(_selectWorkerBtn.mas_bottom).offset(30 *SIZE);
+        make.width.equalTo(@(65 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_markTV mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollview).offset(80 *SIZE);
+        make.top.equalTo(_selectWorkerBtn.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(77 *SIZE));
+    }];
+    
     [self.surebtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrollview).offset(22 *SIZE);
-        make.top.equalTo(_selectWorkerBtn.mas_bottom).offset(43 *SIZE);
+        make.top.equalTo(_markTV.mas_bottom).offset(43 *SIZE);
         make.width.equalTo(@(317 *SIZE));
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrollview.mas_bottom).offset(-53 *SIZE);
@@ -1241,7 +1276,6 @@
     _model.card_id = _num.textfield.text;
     _model.address = _detailadress.text;
     _model.is_hide_tel = [NSString stringWithFormat:@"%ld",[[NSNumber numberWithBool:_isHide] integerValue]];
-    
     if (_state == 0 && _isHide) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"此项目需要显号报备，请补全电话号码"];
@@ -1262,6 +1296,11 @@
             
             [dic setObject:_projectId forKey:@"project_id"];
         }
+        if ([self isEmpty:_markTV.text]) {
+            
+            [dic setObject:_markTV.text forKey:@"comment"];
+        }
+        
         [dic removeObjectForKey:@"client_property_type"];
         [dic removeObjectForKey:@"client_type"];
         

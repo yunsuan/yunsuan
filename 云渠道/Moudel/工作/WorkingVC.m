@@ -55,11 +55,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+
     [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
     [self refresh];
-    
-    
+
+
 }
 
 - (void)viewDidLoad {
@@ -70,14 +70,14 @@
     self.titleLabel.text = @"工作";
     [self initDateSouce];
     [self initUI];
-    
+
 }
 
 -(void)refresh{
     [BaseRequest GET:FlushDate_URL parameters:nil success:^(id resposeObject) {
-        
+
     } failure:^(NSError *error) {
-        
+
     }];
 }
 
@@ -92,17 +92,17 @@
             [BaseRequest GET:AgentInfoCount_URL parameters:nil success:^(id resposeObject) {
                 [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"]integerValue] ==200) {
-                    
+
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
-                    
+
                     _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
-                    
+
                     _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
                 }
-                
+
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
-                
+
                 [_MainTableView.mj_header endRefreshing];
             }];
         }
@@ -112,38 +112,38 @@
             _imglist = @[@"recommended"];
             _countdata  = @[@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
-                
+
                 [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"] integerValue] ==200) {
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
-                
+
                 _secCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
-                
+
                 _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
-                
+
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {
-                
+
                 [_MainTableView.mj_header endRefreshing];
             }];
         }
             break;
-            
+
         default:{
             break;
         }
-            
+
     }
-    
-    
+
+
 }
 
 -(void)initDateSouce
 {
-    
+
     if (![UserModel defaultModel].workArr.count) {
-        
+
         [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
         [UserModelArchiver archive];
     }
@@ -161,19 +161,19 @@
 }
 
 - (void)ActionMoreBtn:(UIButton *)btn{
-    
-    
+
+
     WorkSelectView *view = [[WorkSelectView alloc] initWithFrame:CGRectMake(0, SCREEN_Height, SCREEN_Width, SCREEN_Height -STATUS_BAR_HEIGHT)];
-    
+
     view.clickblook = ^(int selctnum) {
 //        _titlearr = [UserModel defaultModel].tagSelectArr;
 //
 //        self.selectIndex = selctnum;
 //        [self reloadData];
     };
-    
+
     view.hideblook = ^{
-        
+
         [_MainTableView reloadData];
 //        _titlearr = [UserModel defaultModel].tagSelectArr;
 //        //        self.selectIndex = 0;
@@ -190,21 +190,21 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if ([[UserModel defaultModel].workArr[section] isEqualToString:@"新房"]) {
-        
+
         if ([[UserModelArchiver unarchive].agent_identity integerValue]==1) {
-            
+
             return 3;
         }
         else{
-            
+
             return 1;
         }
-    
+
 //    }else if ([[UserModel defaultModel].workArr[section] isEqualToString:@"二手房"]){
 //
 //
     }else{
-        
+
         return 4;
     }
 //    if (section == 0) {
@@ -225,12 +225,12 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
+
     return [UserModel defaultModel].workArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
+
     return 40 *SIZE;
 }
 
@@ -239,34 +239,34 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
+
     return CGFLOAT_MIN;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    
+
     return [[UIView alloc] init];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
+
     BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
     if (!header) {
-        
+
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
-    
+
     header.titleL.text = [UserModel defaultModel].workArr[section];
     return header;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
     if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"新房"]) {
-        
+
         static NSString *CellIdentifier = @"WorkingCell";
-        
+
         WorkingCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[WorkingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -275,28 +275,28 @@
         [cell setTitle:_namelist[indexPath.row] content:_countdata[indexPath.row] img:_imglist[indexPath.row]];
         return cell;
     }else if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"二手房"]){
-        
+
         static NSString *CellIdentifier = @"WorkingCell";
-        
+
         WorkingCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[WorkingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        
+
         [cell setTitle:_secondArr[indexPath.row] content:_secCountData[indexPath.row] img:_secondImgArr[indexPath.row]];
-        
+
         return cell;
     }else{
-        
+
         static NSString *CellIdentifier = @"WorkingCell";
-        
+
         WorkingCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[WorkingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        
+
         [cell setTitle:_rentArr[indexPath.row] content:_rentCountData[indexPath.row] img:_secondImgArr[indexPath.row]];
 //        cell.titlelab.text = _rentArr[indexPath.row];
 //        cell.headimg.image = [UIImage imageNamed:_secondImgArr[indexPath.row]];
@@ -307,68 +307,68 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
     if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"新房"]) {
-    
+
         if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
             if (indexPath.row == 0) {
-    
+
                 RecommendVC *nextVC = [[RecommendVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }
         else{
-            
+
             if (indexPath.row == 0) {
-    
+
                 RecommendVC *nextVC = [[RecommendVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else if(indexPath.row == 1){
-    
+
                 NomineeVC *nextVC = [[NomineeVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
-    
+
                 BarginVC *nextVC = [[BarginVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }
     }else if([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"租房"]){
-    
+
         if (indexPath.row == 0) {
-    
+
             RentingReportVC *nextVC = [[RentingReportVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
-            
+
         }else if (indexPath.row == 1){
-    
+
             RentingSurveyVC *nextVC = [[RentingSurveyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 2){
-    
+
             RentingRoomMaintainVC *nextVC = [[RentingRoomMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
-    
+
             RentingRoomAgencyVC *nextVC = [[RentingRoomAgencyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }
     }else{
-    
+
         if (indexPath.row == 0) {
-        
+
             RoomReportVC *nextVC = [[RoomReportVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 1){
-        
+
             RoomSurveyVC *nextVC = [[RoomSurveyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 3){
-        
+
             RoomAgencyVC *nextVC = [[RoomAgencyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 2){
-        
+
             RoomMaintainVC *nextVC = [[RoomMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }
@@ -501,17 +501,38 @@
 //    [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
 //}
 //
-//- (void)ActionRightBtn:(UIButton *)btn{
+//- (void)ActionMoreBtn:(UIButton *)btn{
 //
 //
+//    WorkSelectView *view = [[WorkSelectView alloc] initWithFrame:CGRectMake(0, SCREEN_Height, SCREEN_Width, SCREEN_Height -STATUS_BAR_HEIGHT)];
+//
+//    view.clickblook = ^(int selctnum) {
+//        //        _titlearr = [UserModel defaultModel].tagSelectArr;
+//        //
+//        //        self.selectIndex = selctnum;
+//        //        [self reloadData];
+//    };
+//
+//    view.hideblook = ^{
+//
+//        [_MainTableView reloadData];
+//        //        _titlearr = [UserModel defaultModel].tagSelectArr;
+//        //        //        self.selectIndex = 0;
+//        //        [self reloadData];
+//        //        [self forceLayoutSubviews];
+//    };
+//    [[UIApplication sharedApplication].keyWindow addSubview:view];
+//    [view show];
 //}
+//
 //
 //-(void)initUI
 //{
 //
-//    self.rightBtn.hidden = YES;
-//    [self.rightBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-//    [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    self.rightBtn.hidden = NO;
+//    [self.rightBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.rightBtn setImage:[UIImage imageNamed:@"add_50"] forState:UIControlStateNormal];
+//
 //
 //    [self.view addSubview:self.MainTableView];
 //

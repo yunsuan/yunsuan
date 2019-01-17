@@ -132,7 +132,7 @@
         _isHide = [_model.is_hide_tel boolValue];
         if (_isHide) {
             
-            _hideReportL.text = @"当前显号报备";
+            _hideReportL.text = @"当前隐号报备";
             _phoneTF4.userInteractionEnabled = NO;
             _phoneTF5.userInteractionEnabled = NO;
             _phoneTF6.userInteractionEnabled = NO;
@@ -140,6 +140,9 @@
         }
     }else{
         
+        _hideReportL.text = @"当前显号报备";
+        _hideL.text = @"需要补全电话号码";
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
         self.titleLabel.text = @"添加客户";
         _isHide = NO;
     }
@@ -290,7 +293,9 @@
         _phoneTF5.text = _tel5;
         _phoneTF6.text = _tel6;
         _phoneTF7.text = _tel7;
-        _hideReportL.text = @"当前隐号报备";
+        _hideReportL.text = @"当前显号报备";
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
+        _hideL.text = @"需要补全电话号码";
     }else{
         
         _phoneTF4.userInteractionEnabled = NO;
@@ -302,8 +307,9 @@
         _phoneTF5.text = @"*";
         _phoneTF6.text = @"*";
         _phoneTF7.text = @"*";
-        _hideReportL.text = @"当前显号报备";
-        
+        _hideReportL.text = @"当前隐号报备";
+        _hideL.text = @"只需输入手机号前三位后四位";
+        _hideImg.image = [UIImage imageNamed:@"eye"];
     }
 }
 
@@ -764,7 +770,13 @@
                 _hideL = label;
                 _hideL.font = [UIFont systemFontOfSize:11 *SIZE];
                 _hideL.textColor = YJ170Color;
-                _hideL.text = @"只需输入手机号前三位后四位";
+                if (_isHide) {
+                    
+                    _hideL.text = @"只需输入手机号前三位后四位";
+                }else{
+                    
+                    _hideL.text = @"需要补全电话号码";
+                }
                 [_scrollview addSubview:_hideL];
                 break;
             }
@@ -775,10 +787,10 @@
                 _hideReportL.textColor = COLOR(255, 165, 29, 1);
                 if (_isHide) {
                     
-                    _hideReportL.text = @"当前显号报备";
+                    _hideReportL.text = @"当前隐号报备";
                 }else{
                     
-                    _hideReportL.text = @"当前隐号报备";
+                    _hideReportL.text = @"当前显号报备";
                 }
                 [_scrollview addSubview:_hideReportL];
                 break;
@@ -787,7 +799,13 @@
     }
     
     _hideImg = [[UIImageView alloc] init];
-    _hideImg.image = [UIImage imageNamed:@"eye"];
+    if (_isHide) {
+        
+        _hideImg.image = [UIImage imageNamed:@"eye"];
+    }else{
+        
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
+    }
     [_scrollview addSubview:_hideImg];
     
     
@@ -1193,7 +1211,7 @@
     
     [_hideImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_scrollview).offset(271 *SIZE);
+        make.left.equalTo(_scrollview).offset(251 *SIZE);
         make.top.equalTo(_telL.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(14 *SIZE);
         make.height.mas_equalTo(6 *SIZE);
@@ -1201,9 +1219,9 @@
     
     [_hideReportL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_scrollview).offset(299 *SIZE);
+        make.left.equalTo(_scrollview).offset(279 *SIZE);
         make.top.equalTo(_telL.mas_bottom).offset(18 *SIZE);
-        make.width.mas_equalTo(50 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
         make.height.mas_equalTo(10 *SIZE);
     }];
     
