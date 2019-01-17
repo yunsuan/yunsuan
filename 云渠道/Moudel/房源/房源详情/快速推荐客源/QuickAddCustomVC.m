@@ -895,6 +895,10 @@
     [_scrollview addSubview:_markL];
     
     _markTV = [[UITextView alloc] init];
+    _markTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+    _markTV.layer.borderWidth = 1 *SIZE;
+    _markTV.layer.cornerRadius = 5 *SIZE;
+    _markTV.clipsToBounds = YES;
     [_scrollview addSubview:_markTV];
     
     [self masonryUI];
@@ -1296,7 +1300,7 @@
             
             [dic setObject:_projectId forKey:@"project_id"];
         }
-        if ([self isEmpty:_markTV.text]) {
+        if (![self isEmpty:_markTV.text]) {
             
             [dic setObject:_markTV.text forKey:@"comment"];
         }

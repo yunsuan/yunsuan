@@ -492,7 +492,7 @@
     _name = [[BorderTF alloc]initWithFrame:CGRectMake((CGFloat) 80.3*SIZE, 46*SIZE, (CGFloat) 116.7*SIZE, (CGFloat) 33.3*SIZE)];
     _name.textfield.placeholder = @"必填(少于5字)";
     _name.textfield.text = _model.name;
-    _name.textfield.delegate = self;
+//    _name.textfield.delegate = self;
     [_scrollview addSubview:_name];
     
     //性别

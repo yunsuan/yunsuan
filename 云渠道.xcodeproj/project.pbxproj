@@ -186,6 +186,7 @@
 		0C6B635C21218B0600ABB506 /* RoomMaintainModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C6B635B21218B0600ABB506 /* RoomMaintainModel.m */; };
 		0C73B04C21EF847F005F71F1 /* RentWorkFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */; };
 		0C73B04F21EF84BA005F71F1 /* RentWorkSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */; };
+		0C73B05221F09CA1005F71F1 /* RecommendVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B05121F09CA1005F71F1 /* RecommendVC1.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
@@ -1037,6 +1038,8 @@
 		0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentWorkFailVC.m; sourceTree = "<group>"; };
 		0C73B04D21EF84BA005F71F1 /* RentWorkSuccessVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentWorkSuccessVC.h; sourceTree = "<group>"; };
 		0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentWorkSuccessVC.m; sourceTree = "<group>"; };
+		0C73B05021F09CA1005F71F1 /* RecommendVC1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendVC1.h; sourceTree = "<group>"; };
+		0C73B05121F09CA1005F71F1 /* RecommendVC1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendVC1.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
@@ -6247,6 +6250,8 @@
 				105E18EB206B6B410031558D /* cell */,
 				105E18E5206B662C0031558D /* RecommendVC.h */,
 				105E18E6206B662C0031558D /* RecommendVC.m */,
+				0C73B05021F09CA1005F71F1 /* RecommendVC1.h */,
+				0C73B05121F09CA1005F71F1 /* RecommendVC1.m */,
 			);
 			path = "推荐";
 			sourceTree = "<group>";
@@ -6967,6 +6972,7 @@
 				0CDD704E20D3694A00D6609C /* RoomSurveyComplaitVC.m in Sources */,
 				0C9CD43421017D73004894A3 /* MaintainModifyCustomVC.m in Sources */,
 				0CDD702720D2655100D6609C /* RoomReportComplaintCell.m in Sources */,
+				0C73B05221F09CA1005F71F1 /* RecommendVC1.m in Sources */,
 				0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */,
 				0C9B01CF216F47EE0055A9A8 /* RoomTypeCollHeader.m in Sources */,
 				0C997BE321D0789400F805AA /* WWSliderKnobLayer.m in Sources */,

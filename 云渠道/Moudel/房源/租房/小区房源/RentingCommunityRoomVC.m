@@ -147,9 +147,7 @@
         self.MainTableView.mj_footer.state = MJRefreshStateIdle;
     }
     
-    //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
-    
-    
+
 }
 
 - (void)RequestAddMethod{
