@@ -187,6 +187,20 @@
 		0C73B04C21EF847F005F71F1 /* RentWorkFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04B21EF847F005F71F1 /* RentWorkFailVC.m */; };
 		0C73B04F21EF84BA005F71F1 /* RentWorkSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */; };
 		0C73B05221F09CA1005F71F1 /* RecommendVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B05121F09CA1005F71F1 /* RecommendVC1.m */; };
+		0C73B06421F1742E005F71F1 /* RecommendUnconfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B06321F1742E005F71F1 /* RecommendUnconfirmVC.m */; };
+		0C73B06721F17483005F71F1 /* RecommendValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B06621F17483005F71F1 /* RecommendValidVC.m */; };
+		0C73B06A21F17497005F71F1 /* RecommendInvalidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B06921F17497005F71F1 /* RecommendInvalidVC.m */; };
+		0C73B06D21F174BF005F71F1 /* NewComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B06C21F174BF005F71F1 /* NewComplaintVC.m */; };
+		0C73B07021F19B38005F71F1 /* NomineeVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B06F21F19B38005F71F1 /* NomineeVC1.m */; };
+		0C73B07321F19B9F005F71F1 /* NomineeConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B07221F19B9F005F71F1 /* NomineeConfirmVC.m */; };
+		0C73B07621F19E3E005F71F1 /* NomineeInvalidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B07521F19E3E005F71F1 /* NomineeInvalidVC.m */; };
+		0C73B07921F19E53005F71F1 /* NomineeValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B07821F19E53005F71F1 /* NomineeValidVC.m */; };
+		0C73B07C21F19E8F005F71F1 /* NomineeComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B07B21F19E8F005F71F1 /* NomineeComplaintVC.m */; };
+		0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B07E21F1A54D005F71F1 /* BarginVC1.m */; };
+		0C73B08221F1A5B2005F71F1 /* BarginFailDealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08121F1A5B2005F71F1 /* BarginFailDealVC.m */; };
+		0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08421F1A5C4005F71F1 /* BarginUndealVC.m */; };
+		0C73B08821F1A5D5005F71F1 /* BarginDealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08721F1A5D5005F71F1 /* BarginDealVC.m */; };
+		0C73B08B21F1A602005F71F1 /* BarginDealComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08A21F1A602005F71F1 /* BarginDealComplaintVC.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
@@ -1040,6 +1054,34 @@
 		0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentWorkSuccessVC.m; sourceTree = "<group>"; };
 		0C73B05021F09CA1005F71F1 /* RecommendVC1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendVC1.h; sourceTree = "<group>"; };
 		0C73B05121F09CA1005F71F1 /* RecommendVC1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendVC1.m; sourceTree = "<group>"; };
+		0C73B06221F1742E005F71F1 /* RecommendUnconfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendUnconfirmVC.h; sourceTree = "<group>"; };
+		0C73B06321F1742E005F71F1 /* RecommendUnconfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendUnconfirmVC.m; sourceTree = "<group>"; };
+		0C73B06521F17483005F71F1 /* RecommendValidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendValidVC.h; sourceTree = "<group>"; };
+		0C73B06621F17483005F71F1 /* RecommendValidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendValidVC.m; sourceTree = "<group>"; };
+		0C73B06821F17497005F71F1 /* RecommendInvalidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendInvalidVC.h; sourceTree = "<group>"; };
+		0C73B06921F17497005F71F1 /* RecommendInvalidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendInvalidVC.m; sourceTree = "<group>"; };
+		0C73B06B21F174BF005F71F1 /* NewComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewComplaintVC.h; sourceTree = "<group>"; };
+		0C73B06C21F174BF005F71F1 /* NewComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewComplaintVC.m; sourceTree = "<group>"; };
+		0C73B06E21F19B38005F71F1 /* NomineeVC1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomineeVC1.h; sourceTree = "<group>"; };
+		0C73B06F21F19B38005F71F1 /* NomineeVC1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomineeVC1.m; sourceTree = "<group>"; };
+		0C73B07121F19B9F005F71F1 /* NomineeConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomineeConfirmVC.h; sourceTree = "<group>"; };
+		0C73B07221F19B9F005F71F1 /* NomineeConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomineeConfirmVC.m; sourceTree = "<group>"; };
+		0C73B07421F19E3E005F71F1 /* NomineeInvalidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomineeInvalidVC.h; sourceTree = "<group>"; };
+		0C73B07521F19E3E005F71F1 /* NomineeInvalidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomineeInvalidVC.m; sourceTree = "<group>"; };
+		0C73B07721F19E53005F71F1 /* NomineeValidVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomineeValidVC.h; sourceTree = "<group>"; };
+		0C73B07821F19E53005F71F1 /* NomineeValidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomineeValidVC.m; sourceTree = "<group>"; };
+		0C73B07A21F19E8F005F71F1 /* NomineeComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomineeComplaintVC.h; sourceTree = "<group>"; };
+		0C73B07B21F19E8F005F71F1 /* NomineeComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomineeComplaintVC.m; sourceTree = "<group>"; };
+		0C73B07D21F1A54D005F71F1 /* BarginVC1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginVC1.h; sourceTree = "<group>"; };
+		0C73B07E21F1A54D005F71F1 /* BarginVC1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginVC1.m; sourceTree = "<group>"; };
+		0C73B08021F1A5B2005F71F1 /* BarginFailDealVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginFailDealVC.h; sourceTree = "<group>"; };
+		0C73B08121F1A5B2005F71F1 /* BarginFailDealVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginFailDealVC.m; sourceTree = "<group>"; };
+		0C73B08321F1A5C4005F71F1 /* BarginUndealVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginUndealVC.h; sourceTree = "<group>"; };
+		0C73B08421F1A5C4005F71F1 /* BarginUndealVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginUndealVC.m; sourceTree = "<group>"; };
+		0C73B08621F1A5D5005F71F1 /* BarginDealVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginDealVC.h; sourceTree = "<group>"; };
+		0C73B08721F1A5D5005F71F1 /* BarginDealVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginDealVC.m; sourceTree = "<group>"; };
+		0C73B08921F1A602005F71F1 /* BarginDealComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginDealComplaintVC.h; sourceTree = "<group>"; };
+		0C73B08A21F1A602005F71F1 /* BarginDealComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginDealComplaintVC.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
@@ -2362,6 +2404,8 @@
 				0C0BED1720A184C8005A16A1 /* view */,
 				0C0BED1420A17E3C005A16A1 /* BarginVC.h */,
 				0C0BED1520A17E3C005A16A1 /* BarginVC.m */,
+				0C73B07D21F1A54D005F71F1 /* BarginVC1.h */,
+				0C73B07E21F1A54D005F71F1 /* BarginVC1.m */,
 			);
 			path = "客源成交";
 			sourceTree = "<group>";
@@ -2386,6 +2430,8 @@
 			children = (
 				0C0BED2520A191FF005A16A1 /* DealedVC.h */,
 				0C0BED2620A191FF005A16A1 /* DealedVC.m */,
+				0C73B08621F1A5D5005F71F1 /* BarginDealVC.h */,
+				0C73B08721F1A5D5005F71F1 /* BarginDealVC.m */,
 			);
 			path = "成交详情";
 			sourceTree = "<group>";
@@ -2395,6 +2441,8 @@
 			children = (
 				0C0BED2920A193E9005A16A1 /* UnDealVC.h */,
 				0C0BED2A20A193E9005A16A1 /* UnDealVC.m */,
+				0C73B08321F1A5C4005F71F1 /* BarginUndealVC.h */,
+				0C73B08421F1A5C4005F71F1 /* BarginUndealVC.m */,
 			);
 			path = "待成交详情";
 			sourceTree = "<group>";
@@ -2404,6 +2452,8 @@
 			children = (
 				0C0BED2D20A197C4005A16A1 /* FailedDealVC.h */,
 				0C0BED2E20A197C4005A16A1 /* FailedDealVC.m */,
+				0C73B08021F1A5B2005F71F1 /* BarginFailDealVC.h */,
+				0C73B08121F1A5B2005F71F1 /* BarginFailDealVC.m */,
 			);
 			path = "未成交详情";
 			sourceTree = "<group>";
@@ -2415,6 +2465,8 @@
 				0C0BED3220A1A222005A16A1 /* DealComplaintingVC.m */,
 				0C0BED3420A1A23F005A16A1 /* DealComplaintResultVC.h */,
 				0C0BED3520A1A23F005A16A1 /* DealComplaintResultVC.m */,
+				0C73B08921F1A602005F71F1 /* BarginDealComplaintVC.h */,
+				0C73B08A21F1A602005F71F1 /* BarginDealComplaintVC.m */,
 			);
 			path = "申述详情";
 			sourceTree = "<group>";
@@ -3074,6 +3126,8 @@
 				0C2D02AD20AD51A7002F1B4E /* AppealComplaintingVC.m */,
 				0C2D02AF20AD51BA002F1B4E /* AppealComplaintedVC.h */,
 				0C2D02B020AD51BA002F1B4E /* AppealComplaintedVC.m */,
+				0C73B07A21F19E8F005F71F1 /* NomineeComplaintVC.h */,
+				0C73B07B21F19E8F005F71F1 /* NomineeComplaintVC.m */,
 			);
 			path = "申诉";
 			sourceTree = "<group>";
@@ -3452,6 +3506,8 @@
 			children = (
 				0C96D9F5209C52E100B6A8B8 /* NoValidVC.h */,
 				0C96D9F6209C52E100B6A8B8 /* NoValidVC.m */,
+				0C73B07721F19E53005F71F1 /* NomineeValidVC.h */,
+				0C73B07821F19E53005F71F1 /* NomineeValidVC.m */,
 			);
 			path = "报备有效详情";
 			sourceTree = "<group>";
@@ -5590,6 +5646,8 @@
 			children = (
 				0CF04F3C207B0F2900A45F4A /* UnconfirmDetailVC.h */,
 				0CF04F3D207B0F2900A45F4A /* UnconfirmDetailVC.m */,
+				0C73B06221F1742E005F71F1 /* RecommendUnconfirmVC.h */,
+				0C73B06321F1742E005F71F1 /* RecommendUnconfirmVC.m */,
 			);
 			path = "待确认详情";
 			sourceTree = "<group>";
@@ -5599,6 +5657,8 @@
 			children = (
 				0CF04F41207B308000A45F4A /* InvalidVC.h */,
 				0CF04F42207B308000A45F4A /* InvalidVC.m */,
+				0C73B06821F17497005F71F1 /* RecommendInvalidVC.h */,
+				0C73B06921F17497005F71F1 /* RecommendInvalidVC.m */,
 			);
 			path = "无效详情";
 			sourceTree = "<group>";
@@ -5612,6 +5672,8 @@
 				0CF04F4D207B399200A45F4A /* ComplaintCompleteVC.m */,
 				0CF04F4F207B39AA00A45F4A /* ComplaintUnCompleteVC.h */,
 				0CF04F50207B39AA00A45F4A /* ComplaintUnCompleteVC.m */,
+				0C73B06B21F174BF005F71F1 /* NewComplaintVC.h */,
+				0C73B06C21F174BF005F71F1 /* NewComplaintVC.m */,
 			);
 			path = "申诉";
 			sourceTree = "<group>";
@@ -5621,6 +5683,8 @@
 			children = (
 				0CF04F49207B36C100A45F4A /* ValidVC.h */,
 				0CF04F4A207B36C100A45F4A /* ValidVC.m */,
+				0C73B06521F17483005F71F1 /* RecommendValidVC.h */,
+				0C73B06621F17483005F71F1 /* RecommendValidVC.m */,
 			);
 			path = "有效详情";
 			sourceTree = "<group>";
@@ -5630,6 +5694,8 @@
 			children = (
 				0CF04F53207B3CFE00A45F4A /* confirmDetailVC.h */,
 				0CF04F54207B3CFE00A45F4A /* confirmDetailVC.m */,
+				0C73B07121F19B9F005F71F1 /* NomineeConfirmVC.h */,
+				0C73B07221F19B9F005F71F1 /* NomineeConfirmVC.m */,
 			);
 			path = "已确认详情";
 			sourceTree = "<group>";
@@ -5671,6 +5737,8 @@
 			children = (
 				0CF04F6E207C830C00A45F4A /* NoInvalidVC.h */,
 				0CF04F6F207C830C00A45F4A /* NoInvalidVC.m */,
+				0C73B07421F19E3E005F71F1 /* NomineeInvalidVC.h */,
+				0C73B07521F19E3E005F71F1 /* NomineeInvalidVC.m */,
 			);
 			path = "被推荐失效详情";
 			sourceTree = "<group>";
@@ -6235,6 +6303,8 @@
 				105E18EC206B6B490031558D /* cell */,
 				105E18E8206B66700031558D /* NomineeVC.h */,
 				105E18E9206B66700031558D /* NomineeVC.m */,
+				0C73B06E21F19B38005F71F1 /* NomineeVC1.h */,
+				0C73B06F21F19B38005F71F1 /* NomineeVC1.m */,
 			);
 			path = "被推荐的客户";
 			sourceTree = "<group>";
@@ -6941,6 +7011,7 @@
 				0CDD705A20D36A6500D6609C /* RoomSurveyingVC.m in Sources */,
 				0CC19CFC206E21110007CC5F /* SelectCompanyCollCell.m in Sources */,
 				0CA37B7020889028005609C7 /* AddTagView.m in Sources */,
+				0C73B08821F1A5D5005F71F1 /* BarginDealVC.m in Sources */,
 				0C997BE221D0789400F805AA /* WWSliderView.m in Sources */,
 				0CD90ABD20E609B700061B4A /* ModifyTimeVC.m in Sources */,
 				0C997C4C21E4420100F805AA /* LookWorkConfirmVC.m in Sources */,
@@ -6965,6 +7036,7 @@
 				0CDD705420D3696C00D6609C /* RoomSurveySuccessVC.m in Sources */,
 				0CAF4DD6219E5FF80009873E /* AttentionComCell.m in Sources */,
 				0C997B6D21CB7FD800F805AA /* RentingModifyProjectImageVC.m in Sources */,
+				0C73B07C21F19E8F005F71F1 /* NomineeComplaintVC.m in Sources */,
 				0C581DFF213E341A0048546C /* SecComAllRoomListVC.m in Sources */,
 				10255A7521A53D000042738C /* YBImageBrowserProgressBar.m in Sources */,
 				0CD90A3A20DA664300061B4A /* RoomAgencyProtocolVC.m in Sources */,
@@ -6979,6 +7051,7 @@
 				0C96CE6C21940A080049C1AC /* SecWorkSuccessVC.m in Sources */,
 				0C997C6B21E4782A00F805AA /* CustomLookVC.m in Sources */,
 				0CD90A4620DB3CFA00061B4A /* MaintainLookCell.m in Sources */,
+				0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */,
 				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
 				0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */,
 				0CD7B5C3214799C5009517F2 /* RoomChildVC.m in Sources */,
@@ -7033,6 +7106,7 @@
 				10255A6F21A53D000042738C /* YBImageBrowserViewLayout.m in Sources */,
 				0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */,
 				0C9CD43C2101B95C004894A3 /* ModifyProjectAnalysisVC.m in Sources */,
+				0C73B06721F17483005F71F1 /* RecommendValidVC.m in Sources */,
 				0C3AD55F2069DABC0059CE02 /* RoomDetailTableCell1.m in Sources */,
 				0C07BFC22060D835007F31EC /* UserModel.m in Sources */,
 				0C9CD42421006AE4004894A3 /* MaintainCustomVC.m in Sources */,
@@ -7076,6 +7150,7 @@
 				0C9CD427210097C2004894A3 /* MaintainRoomInfoCell.m in Sources */,
 				10DBB1F6207CCACE00CFE59D /* KyoRowIndexView.m in Sources */,
 				10255A7921A53D000042738C /* BuildingAlbumCollCell.m in Sources */,
+				0C73B08B21F1A602005F71F1 /* BarginDealComplaintVC.m in Sources */,
 				0CED0BD921E6E4000016A029 /* RecommendSuccessCell.m in Sources */,
 				0CD90A8320E1DB9B00061B4A /* ReportRoomDetailView.m in Sources */,
 				0C2883B7210EB13B00F69C5F /* RentingRoomMaintainVC.m in Sources */,
@@ -7084,6 +7159,8 @@
 				0CD909F720D9024500061B4A /* BaseCollHeader.m in Sources */,
 				0C9CD40F20FF4515004894A3 /* NameSexImgCell.m in Sources */,
 				0C997BE821D233AA00F805AA /* RentingAllRoomStoreCell.m in Sources */,
+				0C73B06A21F17497005F71F1 /* RecommendInvalidVC.m in Sources */,
+				0C73B07921F19E53005F71F1 /* NomineeValidVC.m in Sources */,
 				0CC19D05206E22EF0007CC5F /* ExperienceTableCell.m in Sources */,
 				105E18EF206B6BE90031558D /* RecommendCell.m in Sources */,
 				0CB6BAF52074982000921C75 /* HouseTypeDetailVC.m in Sources */,
@@ -7096,6 +7173,7 @@
 				0C0B820B20638A2A00238D4F /* CustomDetailTableCell.m in Sources */,
 				0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */,
 				0C96DA01209C6A6700B6A8B8 /* QuickAddCustomVC.m in Sources */,
+				0C73B07621F19E3E005F71F1 /* NomineeInvalidVC.m in Sources */,
 				0CDD700C20CFFC6E00D6609C /* RoomReportFailVC.m in Sources */,
 				0C2883D5210FFB8800F69C5F /* RentingSurveyingDetailVC.m in Sources */,
 				10255A7121A53D000042738C /* NSBundle+YBImageBrowser.m in Sources */,
@@ -7226,6 +7304,7 @@
 				10866681218952A8002473E0 /* UIView+CYLTabBarControllerExtention.m in Sources */,
 				0C252230215397370031CC44 /* AddStoreRequireMentVC.m in Sources */,
 				0CD90A5520DB4C4800061B4A /* AgencyDoneHeader.m in Sources */,
+				0C73B07321F19B9F005F71F1 /* NomineeConfirmVC.m in Sources */,
 				0C0B82522064FF6400238D4F /* WorkMessageVC.m in Sources */,
 				104B924E20B663EC001583E2 /* C_brokerageCell.m in Sources */,
 				0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */,
@@ -7254,6 +7333,7 @@
 				0C30630920CE796C004D1996 /* SecAllRoomDetailVC.m in Sources */,
 				10B2CAAC205A1DFA00E814AC /* WorkingCell.m in Sources */,
 				0C2883B42109AAD300F69C5F /* RentingSurveyInvalidVC.m in Sources */,
+				0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */,
 				0C15A1DA2112986700544F2E /* RentingModifyProjectAnalysisVC.m in Sources */,
 				0C9CD40220FF1AED004894A3 /* TextFieldImgCell.m in Sources */,
 				0C342FB7207DEB540058406D /* BaseModel.m in Sources */,
@@ -7270,6 +7350,7 @@
 				0C9CD3F220FD8B8D004894A3 /* BlueTitleBaseCell.m in Sources */,
 				0CF04F43207B308000A45F4A /* InvalidVC.m in Sources */,
 				0C2883CE210EF61400F69C5F /* RentingRoomAgencyCancelVC.m in Sources */,
+				0C73B06D21F174BF005F71F1 /* NewComplaintVC.m in Sources */,
 				0C252241215CE8EC0031CC44 /* StoreAuthVC.m in Sources */,
 				0C997C6E21E4790100F805AA /* LookDealVC.m in Sources */,
 				0CBD85902085FE4500E7B183 /* RoomBrokerageVC.m in Sources */,
@@ -7319,6 +7400,7 @@
 				0CDD703B20D3581300D6609C /* ContentTimeBtnBaseView.m in Sources */,
 				105E18FE206CB5320031558D /* DropDownBtn.m in Sources */,
 				0C9B01C8216D95580055A9A8 /* SecComTypeRoomListVC.m in Sources */,
+				0C73B06421F1742E005F71F1 /* RecommendUnconfirmVC.m in Sources */,
 				10255A7221A53D000042738C /* YBImageBrowserUtilities.m in Sources */,
 				0C92194C2092ECFC00EFE75C /* CustomMatchModel.m in Sources */,
 				0CEC62EE208DED26006EC0BD /* AnalyzeTableCell.m in Sources */,
@@ -7373,6 +7455,7 @@
 				0C08BF63206CB8A7005BB3B4 /* BrokerageDetailTableCell.m in Sources */,
 				0CD90A2220DA51F600061B4A /* MaintainAddFollowHeader.m in Sources */,
 				10B5097B209317C7004355C4 /* SelectView.m in Sources */,
+				0C73B07021F19B38005F71F1 /* NomineeVC1.m in Sources */,
 				0C1A014020AC566100665BB9 /* DealValidVC.m in Sources */,
 				0CF04F70207C830C00A45F4A /* NoInvalidVC.m in Sources */,
 				10AEEE7221A2A0B20049625B /* TeamInfoView.m in Sources */,
@@ -7470,6 +7553,7 @@
 				0CD90A2B20DA595000061B4A /* TitleContentTimeDoubleBtnView.m in Sources */,
 				10AEEE8721A2BFD40049625B /* BrokerageAwardVC.m in Sources */,
 				0C997B5921C8CCA200F805AA /* RentingAllRoomOfficeVC.m in Sources */,
+				0C73B08221F1A5B2005F71F1 /* BarginFailDealVC.m in Sources */,
 				102DF9762057A1AE00E1859C /* RoomVC.m in Sources */,
 				0C96D9F7209C52E100B6A8B8 /* NoValidVC.m in Sources */,
 				0C08BF5B206CB344005BB3B4 /* BrokerageCell.m in Sources */,

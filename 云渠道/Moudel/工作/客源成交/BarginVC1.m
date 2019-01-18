@@ -1,22 +1,21 @@
 //
-//  RecommendVC1.m
+//  BarginVC1.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/17.
+//  Created by 谷治墙 on 2019/1/18.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "RecommendVC1.h"
+#import "BarginVC1.h"
 
-#import "QuickAddCustomVC.h"
-#import "RecommendUnConfirmVC.h"
-#import "RecommendValidVC.h"
-#import "RecommendInvalidVC.h"
-#import "NewComplaintVC.h"
+#import "BarginDealVC.h"
+#import "BarginUndealVC.h"
+#import "BarginFailDealVC.h"
+#import "BarginDealComplaintVC.h"
 
 #import "RoomReportCollCell.h"
 
-@interface RecommendVC1 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UITextFieldDelegate>
+@interface BarginVC1 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UITextFieldDelegate>
 {
     
     NSArray *_titleArr;
@@ -29,17 +28,17 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-@property (nonatomic, strong) RecommendUnconfirmVC *recommendUnconfirmVC;
+@property (nonatomic, strong) BarginUndealVC *barginUndealVC;
 
-@property (nonatomic, strong) RecommendValidVC *recommendValidVC;
+@property (nonatomic, strong) BarginDealVC *barginDealVC;
 
-@property (nonatomic, strong) RecommendInvalidVC *recommendInvalidVC;
+@property (nonatomic, strong) BarginFailDealVC *barginFailDealVC;
 
-@property (nonatomic, strong) NewComplaintVC *recommendComplaintVC;
+@property (nonatomic, strong) BarginDealComplaintVC *barginDealComplaintVC;
 
 @end
 
-@implementation RecommendVC1
+@implementation BarginVC1
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,14 +50,9 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"确认中",@"有效",@"无效",@"申诉"];
+    _titleArr = @[@"待成交",@"成交",@"未成交",@"申诉"];
 }
 
-- (void)action_add{
-    
-    QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",@""] clientId:@""];
-    [self.navigationController pushViewController:nextVC animated:YES];
-}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
@@ -66,26 +60,26 @@
     switch (index) {
         case 0:
         {
-            _recommendUnconfirmVC.search = textField.text;
-            [_recommendUnconfirmVC RequestMethod];
+            _barginUndealVC.search = textField.text;
+            [_barginUndealVC RequestMethod];
             break;
         }
         case 1:
         {
-            _recommendValidVC.search = textField.text;
-            [_recommendValidVC RequestMethod];
+            _barginDealVC.search = textField.text;
+            [_barginDealVC RequestMethod];
             break;
         }
         case 2:
         {
-            _recommendInvalidVC.search = textField.text;
-            [_recommendInvalidVC RequestMethod];
+            _barginUndealVC.search = textField.text;
+            [_barginUndealVC RequestMethod];
             break;
         }
         case 3:
         {
-            _recommendComplaintVC.search = textField.text;
-            [_recommendComplaintVC RequestMethod];
+            _barginDealComplaintVC.search = textField.text;
+            [_barginDealComplaintVC RequestMethod];
             break;
         }
         default:
@@ -126,12 +120,8 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"报备";
+    self.titleLabel.text = @"客源成交";
     self.line.hidden = YES;
-    
-    self.rightBtn.hidden = NO;
-    [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
-    [self.rightBtn addTarget:self action:@selector(action_add) forControlEvents:UIControlEventTouchUpInside];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -187,26 +177,26 @@
     self.scrollView.bounces = NO;
     
     // 创建控制器
-    _recommendUnconfirmVC = [[RecommendUnconfirmVC alloc] init];
-    _recommendValidVC = [[RecommendValidVC alloc] init];
-    _recommendInvalidVC = [[RecommendInvalidVC alloc] init];
-    _recommendComplaintVC = [[NewComplaintVC alloc] init];
+    _barginUndealVC = [[BarginUndealVC alloc] init];
+    _barginDealVC = [[BarginDealVC alloc] init];
+    _barginFailDealVC = [[BarginFailDealVC alloc] init];
+    _barginDealComplaintVC = [[BarginDealComplaintVC alloc] init];
     
     // 添加为self的子控制器
-    [self addChildViewController:_recommendUnconfirmVC];
-    [self addChildViewController:_recommendValidVC];
-    [self addChildViewController:_recommendInvalidVC];
-    [self addChildViewController:_recommendComplaintVC];
+    [self addChildViewController:_barginUndealVC];
+    [self addChildViewController:_barginDealVC];
+    [self addChildViewController:_barginFailDealVC];
+    [self addChildViewController:_barginDealComplaintVC];
     
-    _recommendUnconfirmVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _recommendValidVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _recommendInvalidVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _recommendComplaintVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _barginUndealVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _barginDealVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _barginFailDealVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _barginDealComplaintVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
-    [self.scrollView addSubview:_recommendUnconfirmVC.view];
-    [self.scrollView addSubview:_recommendValidVC.view];
-    [self.scrollView addSubview:_recommendInvalidVC.view];
-    [self.scrollView addSubview:_recommendComplaintVC.view];
+    [self.scrollView addSubview:_barginUndealVC.view];
+    [self.scrollView addSubview:_barginDealVC.view];
+    [self.scrollView addSubview:_barginFailDealVC.view];
+    [self.scrollView addSubview:_barginDealComplaintVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;
 }

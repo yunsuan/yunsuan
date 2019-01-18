@@ -803,7 +803,13 @@
                     cell.surelab.hidden = YES;
                 }else{
                     
-                    cell.statusImg.hidden = NO;
+                    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                        
+                        cell.statusImg.hidden = NO;
+                    }else{
+                        
+                        cell.statusImg.hidden = YES;
+                    }
                     if ([model.guarantee_brokerage integerValue] == 1) {
                         
                         cell.surelab.hidden = NO;

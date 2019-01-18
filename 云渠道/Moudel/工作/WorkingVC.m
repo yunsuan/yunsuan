@@ -9,8 +9,11 @@
 #import "WorkingVC.h"
 //新房
 #import "RecommendVC.h"
+#import "RecommendVC1.h"
 #import "NomineeVC.h"
+#import "NomineeVC1.h"
 #import "BarginVC.h"
+#import "BarginVC1.h"
 //二手房
 #import "RoomReportVC.h"
 #import "RoomSurveyVC.h"
@@ -321,15 +324,15 @@
 
             if (indexPath.row == 0) {
 
-                RecommendVC *nextVC = [[RecommendVC alloc] init];
+                RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else if(indexPath.row == 1){
 
-                NomineeVC *nextVC = [[NomineeVC alloc] init];
+                NomineeVC1 *nextVC = [[NomineeVC1 alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
 
-                BarginVC *nextVC = [[BarginVC alloc] init];
+                BarginVC1 *nextVC = [[BarginVC1 alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }

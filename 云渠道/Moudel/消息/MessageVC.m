@@ -133,7 +133,7 @@
                 
                 work = 0;
             }
-            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"系统派单",[NSString stringWithFormat:@"待确认消息%ld条",work]],@[@"Grabtheorder",@"带看派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
+            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"平台派单",[NSString stringWithFormat:@"待确认消息%ld条",work]],@[@"Grabtheorder",@"带看派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
     
             [_messageTable reloadData];
             [_messageTable.mj_header endRefreshing];
