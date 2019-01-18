@@ -501,18 +501,19 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
+        SecdaryComModel *model = _dataArr[indexPath.row];
         if ([self.status isEqualToString:@"挂牌信息编辑"]) {
             
             SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-            nextVC.projiect_id = @"1";
-            nextVC.img_name = @"upload/project/img/1529910374_21.jpg";
+            nextVC.projiect_id = model.project_id;
+            nextVC.img_name = model.img_url;
             nextVC.status = @"挂牌信息编辑";
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
             SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-            nextVC.projiect_id = @"1";
-            nextVC.img_name = @"upload/project/img/1529910374_21.jpg";
+            nextVC.projiect_id = model.project_id;
+            nextVC.img_name = model.img_url;
             nextVC.status = @"release";
             [self.navigationController pushViewController:nextVC animated:YES];
         }

@@ -16,9 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) SecDistributAddHouseBlock secDistributAddHouseBlock;
 
+@property (nonatomic , strong) NSString *urlfor3d;
+
 @property (nonatomic, strong) NSString *comName;
 
 @property (nonatomic , strong) NSString *img_name;
+
 @property (nonatomic , strong) NSString *projiect_id;
 
 @property (nonatomic, strong) NSString *status;

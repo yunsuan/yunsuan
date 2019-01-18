@@ -547,6 +547,7 @@
                                     self.rentingRoomReportAddHouseBlock(dic);
                                 }
                             };
+//                            nextVC.urlfor3d = model.total_float_url_panorama;
                             nextVC.projiect_id = model.project_id;
                             nextVC.img_name = model.img_url;
                             nextVC.status = self.status;

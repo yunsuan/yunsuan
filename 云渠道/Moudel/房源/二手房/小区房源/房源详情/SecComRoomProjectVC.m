@@ -857,6 +857,7 @@
     if (indexPath.section == 3) {
         
         SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+        nextVC.urlfor3d = _model.total_float_url_panorama;
         nextVC.projiect_id = _projectId;
         nextVC.img_name = _model.total_float_url_phone;
         nextVC.status = @"release";
