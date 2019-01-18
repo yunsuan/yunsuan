@@ -59,13 +59,14 @@
     _titleL = [[UILabel alloc] init];
     _titleL.textColor = YJTitleLabColor;
     _titleL.font = [UIFont systemFontOfSize:15 *SIZE];
-    _titleL.numberOfLines = 0;
+    _titleL.numberOfLines = 2;
     [self.contentView addSubview:_titleL];
     
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
     _contentL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _contentL.numberOfLines = 0;
+    _contentL.numberOfLines = 2;
+//    _contentL.numberOf
     [self.contentView addSubview:_contentL];
     
     _sourceL = [[UILabel alloc] init];

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendInfoVC : BaseViewController
 
-- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr;
+- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr;
 
 @end
 

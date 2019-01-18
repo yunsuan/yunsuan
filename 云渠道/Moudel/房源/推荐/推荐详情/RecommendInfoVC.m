@@ -18,6 +18,8 @@
     
     NSString *_urlStr;
     NSString *_titleStr;
+    NSString *_imageUrl;
+    NSString *_briefStr;
 }
 @property (nonatomic, assign) CGFloat height;
 
@@ -32,13 +34,15 @@
 
 @implementation RecommendInfoVC
 
-- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(nonnull NSString *)titleStr
+- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(nonnull NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr
 {
     self = [super init];
     if (self) {
         
         _urlStr = urlStr;
         _titleStr = titleStr;
+        _imageUrl = imageUrl;
+        _briefStr = briefStr;
     }
     return self;
 }
@@ -114,7 +118,7 @@
             
             if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
                 
-                [weakSelf shareWebPageToPlatformType];
+                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
             }else{
                 
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
@@ -123,7 +127,7 @@
             
             if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
                 
-                [weakSelf shareWebPageToPlatformType];
+                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_Qzone];
             }else{
                 
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
@@ -132,7 +136,7 @@
             
             if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
                 
-                [weakSelf shareWebPageToPlatformType];
+                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatSession];
             }else{
                 
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
@@ -141,7 +145,7 @@
             
             if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
                 
-                [weakSelf shareWebPageToPlatformType];
+                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
             }else{
                 
                 [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
@@ -227,50 +231,35 @@
 }
 
 
-- (void)shareWebPageToPlatformType {
-//    //创建分享消息对象
-//        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
-//
-//        //创建网页内容对象
-//        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_model.project_name descr:_model.district_name thumImage:[NSString stringWithFormat:@"%@%@",Base_Net,_model.img_url]];
-//        //设置网页地址
-//
-//
-//    //创建网页内容对象
+- (void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    //创建分享消息对象
+        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+
+        //创建网页内容对象
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imageUrl]];
+        //设置网页地址
+
+
+    //创建网页内容对象
 //        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房产渠道专业平台" thumImage:[UIImage imageNamed:@"shareimg"]];
 //    设置网页地址
-//
-//
-//        [BaseRequest GET:@"user/project/getShare" parameters:@{@"project_id":_model.project_id} success:^(id resposeObject) {
-//
-//            NSLog(@"%@",resposeObject);
-//            if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//                shareObject.webpageUrl =@"http://itunes.apple.com/app/id1371978352?mt=8";
-//                //            shareObject.webpageUrl = resposeObject[@"data"];
-//                //分享消息对象设置分享内容对象
-//                messageObject.shareObject = shareObject;
-//
-//                //调用分享接口
-//                [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
-//                    if (error) {
-//
-//                        [self alertControllerWithNsstring:@"分享失败" And:nil];
-//                    }else{
-//
-//                        [self showContent:@"分享成功"];
-//                        [self.transmitView removeFromSuperview];
-//                    }
-//                }];
-//            }else{
-//
-//                [self alertControllerWithNsstring:@"温馨提示" And:@"获取分享链接失败"];
-//            }
-//        } failure:^(NSError *error) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"获取分享链接失败"];
-//            NSLog(@"%@",error);
-//        }];
+    shareObject.webpageUrl = [NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr];
+    //            shareObject.webpageUrl = resposeObject[@"data"];
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+    
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            
+            [self alertControllerWithNsstring:@"分享失败" And:nil];
+        }else{
+            
+            [self showContent:@"分享成功"];
+//            [self.transmitView removeFromSuperview];
+        }
+    }];
 }
 
 

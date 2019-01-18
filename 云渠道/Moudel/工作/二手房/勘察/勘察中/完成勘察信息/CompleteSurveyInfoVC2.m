@@ -45,7 +45,7 @@
 
 - (void)initDataSource{
     
-    _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
+//    _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
     
     _dataArr = [[NSMutableArray alloc] init];
     if ([self.dic[@"type"] integerValue] == 1) {

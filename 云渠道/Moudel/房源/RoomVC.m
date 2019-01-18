@@ -361,7 +361,7 @@
     
     vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {
         
-        RecommendInfoVC *vc = [[RecommendInfoVC alloc] initWithUrlStr:model.content_url titleStr:model.title];
+        RecommendInfoVC *vc = [[RecommendInfoVC alloc] initWithUrlStr:model.content_url titleStr:model.title imageUrl:model.img_url briefStr:model.desc];
         [self.navigationController pushViewController:vc animated:YES];
     };
     
