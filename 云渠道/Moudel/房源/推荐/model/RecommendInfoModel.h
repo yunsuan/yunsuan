@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *update_time;
 
+@property (nonatomic, strong) NSString *source;
+
+@property (nonatomic, strong) NSString *source_comment;
+
 @end
 
 NS_ASSUME_NONNULL_END

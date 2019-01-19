@@ -39,7 +39,13 @@
     _contentL.text = model.desc;
     
     _timeL.text = [NSString stringWithFormat:@"%@",model.update_time];
-    _sourceL.text = @"云算";
+    _sourceL.text = model.source;
+    if ([model.source isEqualToString:@"原创"]) {
+        _autherL.text = [NSString stringWithFormat:@"作者:%@",model.source_comment];
+    }
+    else{
+         _autherL.text = [NSString stringWithFormat:@"来源:%@",model.source_comment];
+    }
     
     [_sourceL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -65,7 +71,7 @@
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
     _contentL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _contentL.numberOfLines = 2;
+    _contentL.numberOfLines = 3;
     [self.contentView addSubview:_contentL];
     
     _sourceL = [[UILabel alloc] init];
@@ -74,9 +80,16 @@
     _sourceL.layer.cornerRadius = 2 *SIZE;
     _sourceL.clipsToBounds = YES;
     _sourceL.textAlignment = NSTextAlignmentCenter;
-    _sourceL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _sourceL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_sourceL];
     
+    
+    _autherL = [[UILabel alloc] init];
+    _autherL.textColor = YJContentLabColor;
+    _autherL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _autherL.numberOfLines = 0;
+    _autherL.textAlignment = NSTextAlignmentLeft;
+    [self.contentView addSubview:_autherL];
     
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJContentLabColor;
@@ -126,6 +139,13 @@
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
+        make.top.equalTo(_headImg.mas_bottom).offset(8 *SIZE);
+        make.width.equalTo(@(200 *SIZE));
+    }];
+    
+    [_autherL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(_headImg.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(200 *SIZE));
     }];
