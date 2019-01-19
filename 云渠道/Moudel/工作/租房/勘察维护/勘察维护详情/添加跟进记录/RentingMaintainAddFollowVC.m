@@ -152,7 +152,7 @@
 
 - (void)initDataSource{
     
-    _followArr = [self getDetailConfigArrByConfigState:23];
+    _followArr = [self getDetailConfigArrByConfigState:FOLLOW_TYPE];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < _followArr.count; i++) {
         
@@ -162,7 +162,7 @@
    if (self.type == 1) {
       
       _payArr = [self
-                 getDetailConfigArrByConfigState:48];
+                 getDetailConfigArrByConfigState:RENT_HOUSE_RECEIVE_TYPE];
    }else{
       
       _payArr = [self
@@ -283,7 +283,9 @@
                                                                                @"price":_PriceTF.textfield.text,
                                                                                @"receive_way":_payWay,
                                                                                @"comment":_markTV.text,
-                                                                               @"next_visit_time":_timeBtn.content.text
+                                                                               @"next_visit_time":_timeBtn.content.text,
+                                                                               @"rent_type":[NSString stringWithFormat:@"%ld",_rentType],
+                                                                               @"level":_roomLevelBtn->str
                                                                                }];
    if (_minPeriodBtn.content.text.length) {
       
@@ -760,10 +762,11 @@
                      
                       if ([_dataDic[@"check_way"] isEqualToString:arr[i][@"param"]]) {
                         
-                         _seeWay = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
+                         _seeWayBtn->str = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
                       }
                    }
                    _seeWayBtn.content.text = _dataDic[@"check_way"];
+                 
                 }
                 [_contentView addSubview:_seeWayBtn];
                 break;

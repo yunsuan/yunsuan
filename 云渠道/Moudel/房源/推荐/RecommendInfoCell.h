@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *timeL;
 
+@property (nonatomic , strong) UILabel *autherL;
+
 @property (nonatomic, strong) UIView *line;
 
 @end
