@@ -331,7 +331,7 @@
         [self.navigationController pushViewController:nextVC animated:YES];
         
     };
-    
+
     vc.roomChildVCAttentionSecModelBlock = ^(AttentionHouseModel *model) {
         
         SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:model.house_id city:_city];
