@@ -518,10 +518,10 @@
                     }
                 }else{
                     
-                    if ([tempDic[@"type"] integerValue] == 0) {
+                    if ([tempDic[@"focus_type"] integerValue] == 0) {
                         
                         
-                    }else if ([tempDic[@"type"] integerValue] == 1){
+                    }else if ([tempDic[@"focus_type"] integerValue] == 1){
                         
                         AttentionHouseModel *model = [[AttentionHouseModel alloc] initWithDictionary:tempDic];
                         [_dataArr addObject:model];
@@ -671,7 +671,14 @@
             
             if ([self.status isEqualToString:@"关注"]) {
                 
-                return 120 *SIZE;
+                if ([_dataArr[indexPath.row] isKindOfClass:[RoomListModel class]]) {
+                    
+                    return 120 *SIZE;
+                }else{
+                    
+                    return UITableViewAutomaticDimension;
+                }
+                
             }else{
                 
                 return UITableViewAutomaticDimension;
