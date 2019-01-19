@@ -66,7 +66,6 @@
     _contentL.textColor = YJContentLabColor;
     _contentL.font = [UIFont systemFontOfSize:11 *SIZE];
     _contentL.numberOfLines = 2;
-//    _contentL.numberOf
     [self.contentView addSubview:_contentL];
     
     _sourceL = [[UILabel alloc] init];

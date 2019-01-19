@@ -266,11 +266,15 @@
     _storeTL.text = @"所属门店";
     [_storeView addSubview:_storeTL];
     
-    _storeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 200 *SIZE, 12 *SIZE)];
+    _storeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 190 *SIZE, 12 *SIZE)];
     _storeL.textColor = YJTitleLabColor;
     _storeL.font = [UIFont systemFontOfSize:13 *SIZE];
     _storeL.textAlignment = NSTextAlignmentRight;
     [_storeView addSubview:_storeL];
+    
+    UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(330 *SIZE, 18 *SIZE, 12 *SIZE, 12 *SIZE)];
+    img.image = [UIImage imageNamed:@"downarrow2"];
+    [_storeView addSubview:img];
     
     _storeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _storeBtn.frame = _storeView.bounds;
@@ -310,11 +314,15 @@
     _employeeTL.text = @"是否为本店员工";
     [_employeeView addSubview:_employeeTL];
     
-    _employeeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 200 *SIZE, 12 *SIZE)];
+    _employeeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 190 *SIZE, 12 *SIZE)];
     _employeeL.textColor = YJTitleLabColor;
     _employeeL.font = [UIFont systemFontOfSize:13 *SIZE];
     _employeeL.textAlignment = NSTextAlignmentRight;
     [_employeeView addSubview:_employeeL];
+    
+    UIImageView *img1 = [[UIImageView alloc] initWithFrame:CGRectMake(330 *SIZE, 18 *SIZE, 12 *SIZE, 12 *SIZE)];
+    img1.image = [UIImage imageNamed:@"downarrow2"];
+    [_employeeView addSubview:img1];
     
     _empBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _empBtn.frame = CGRectMake(0, 0, SCREEN_Width, 50 *SIZE);

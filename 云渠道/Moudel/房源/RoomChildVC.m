@@ -140,12 +140,23 @@
     [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     
     [dic setObject:@"asc" forKey:@"sort_type"];
+    
+    if (_city.length) {
+        
+        [dic setObject:_city forKey:@"city"];
+    }else{
+        
+        [_MainTableView.mj_header endRefreshing];
+        return;
+    }
+    
     if (_AllType == 1) {
         
         if ([self.status isEqualToString:@"关注"]) {
             
             [dic removeObjectForKey:@"page"];
             [dic removeObjectForKey:@"sort_type"];
+            [dic removeObjectForKey:@"city"];
         }
     }else{
         
@@ -165,14 +176,6 @@
         
     }
     
-    if (_city.length) {
-        
-        [dic setObject:_city forKey:@"city"];
-    }else{
-        
-        [_MainTableView.mj_header endRefreshing];
-        return;
-    }
     if (![_district isEqualToString:@"0"] && _district.length) {
         
         [dic setObject:_district forKey:@"district"];
@@ -291,9 +294,24 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
     [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     
+    if (_city.length) {
+        
+        [dic setObject:_city forKey:@"city"];
+    }else{
+        
+        [_MainTableView.mj_footer endRefreshing];
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择城市"];
+        return;
+    }
+    
     if (_AllType == 1) {
         
-        
+        if ([self.status isEqualToString:@"关注"]) {
+            
+            [dic removeObjectForKey:@"page"];
+            [dic removeObjectForKey:@"sort_type"];
+            [dic removeObjectForKey:@"city"];
+        }
     }else{
         
         if ([self.param isEqualToString:@"houseProject"]) {
@@ -311,15 +329,6 @@
         }
     }
     
-    if (_city.length) {
-        
-        [dic setObject:_city forKey:@"city"];
-    }else{
-        
-        [_MainTableView.mj_footer endRefreshing];
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择城市"];
-        return;
-    }
     if (_district.length && [_district isEqualToString:@"0"]) {
         
         [dic setObject:_district forKey:@"district"];
@@ -441,20 +450,6 @@
                     }
                 }];
                 SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] initWithDictionary:tempDic];
-//                model.level
-//                model.price_change = tempDic[@"price_change"];
-//                model.img_url = tempDic[@"img_url"];
-//                model.house_id = tempDic[@"house_id"];
-//                model.title = tempDic[@"title"];
-//                model.describe = tempDic[@"describe"];
-//                model.price = tempDic[@"price"];
-//                model.unit_price = tempDic[@"unit_price"];
-//                model.property_type = tempDic[@"property_type"];
-//                model.store_name = tempDic[@"store_name"];
-//                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
-//                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
-//                model.type = tempDic[@"type"];
-//                model.info_id = tempDic[@"info_id"];
                 [_dataArr addObject:model];
             }
         }else{
@@ -498,6 +493,18 @@
 //                        AttetionComModel *model = [[AttetionComModel alloc] initWithDictionary:tempDic];
 //                        [_dataArr addObject:model];
 
+                        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+                        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                            
+                            if ([obj isKindOfClass:[NSNull class]]) {
+                                
+                                [tempDic setObject:@"" forKey:key];
+                            }
+                        }];
+                        
+                        RoomListModel *model = [[RoomListModel alloc] initWithDictionary:tempDic];
+                        
+                        [_dataArr addObject:model];
                     }else if ([tempDic[@"type"] integerValue] == 1){
                         
                         AttetionComModel *model = [[AttetionComModel alloc] initWithDictionary:tempDic];
@@ -660,7 +667,19 @@
     
     if (_AllType != 2) {
         
-        return UITableViewAutomaticDimension;
+        if (_AllType == 1) {
+            
+            if ([self.status isEqualToString:@"关注"]) {
+                
+                return 120 *SIZE;
+            }else{
+                
+                return UITableViewAutomaticDimension;
+            }
+        }else{
+            
+            return UITableViewAutomaticDimension;
+        }
     }else{
         
         return 120*SIZE;
@@ -757,7 +776,82 @@
                     break;
                 }else{
                     
-                    
+                    RoomListModel *model = _dataArr[indexPath.row];
+                    if ([model.guarantee_brokerage integerValue] == 2) {
+                        
+                        static NSString *CellIdentifier = @"CompanyCell";
+                        
+                        CompanyCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                        if (!cell) {
+                            cell = [[CompanyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                        }
+                        [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
+                        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        return cell;
+                        
+                    }else{
+                        
+                        static NSString *CellIdentifier = @"PeopleCell";
+                        
+                        PeopleCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                        if (!cell) {
+                            cell = [[PeopleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                        }
+                        [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
+                        if ([model.sort integerValue] == 0 && [model.cycle integerValue] == 0) {
+                            
+                            cell.statusImg.hidden = YES;
+                            cell.surelab.hidden = YES;
+                        }else{
+                            
+                            if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                                
+                                cell.statusImg.hidden = NO;
+                            }else{
+                                
+                                cell.statusImg.hidden = YES;
+                            }
+                            if ([model.guarantee_brokerage integerValue] == 1) {
+                                
+                                cell.surelab.hidden = NO;
+                            }else{
+                                
+                                cell.surelab.hidden = YES;
+                            }
+                        }
+                        NSArray *project_tags =model.project_tags?model.project_tags:@[];
+                        NSArray *property_tags = model.property_tags?model.property_tags:@[];
+                        [cell settagviewWithdata:@[property_tags,project_tags]];
+                        if (model.sort) {
+                            
+                            cell.rankView.rankL.text = [NSString stringWithFormat:@"佣金:第%@名",model.sort];
+                        }else{
+                            
+                            cell.rankView.rankL.text = [NSString stringWithFormat:@"佣金:无排名"];
+                        }
+                        [cell.rankView.rankL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(cell.rankView).offset(0);
+                            make.top.equalTo(cell.rankView).offset(0);
+                            make.height.equalTo(@(10 *SIZE));
+                            make.width.equalTo(@(cell.rankView.rankL.mj_textWith + 5 *SIZE));
+                        }];
+                        if ([model.brokerSortCompare integerValue] == 0) {
+                            
+                            cell.rankView.statusImg.image = nil;
+                        }else if ([model.brokerSortCompare integerValue] == 1){
+                            
+                            cell.rankView.statusImg.image = [UIImage imageNamed:@"rising"];
+                        }else if ([model.brokerSortCompare integerValue] == 2){
+                            
+                            cell.rankView.statusImg.image = [UIImage imageNamed:@"falling"];
+                        }
+                        [cell.getLevel SetImage:[UIImage imageNamed:@"lightning_1"] selectImg:[UIImage imageNamed:@"lightning"] num:[model.cycle integerValue]];
+                        
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        return cell;
+                    }
                 }
             }else{
                 
@@ -952,6 +1046,11 @@
             }else{
                 
                 
+                RoomListModel *model = _dataArr[indexPath.row];
+                if (self.roomChildVCRoomModelBlock) {
+                    
+                    self.roomChildVCRoomModelBlock(model);
+                }
             }
 //            if ([_dataArr[indexPath.row] isKindOfClass:[AttentionHouseModel class]]) {
 //

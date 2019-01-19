@@ -237,7 +237,7 @@
         UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
 
         //创建网页内容对象
-        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imageUrl]];
+        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imageUrl]]]]];
         //设置网页地址
 
 
