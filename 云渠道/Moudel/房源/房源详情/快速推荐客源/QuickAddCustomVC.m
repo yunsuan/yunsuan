@@ -290,7 +290,7 @@
     
     if (telArr.count) {
         
-        _tel5 = [telArr[0] substringWithRange:NSMakeRange(3, 1)];
+        _tel5 = [telArr[0] substringWithRange:NSMakeRange(4, 1)];
 
         if (_isHide) {
             
