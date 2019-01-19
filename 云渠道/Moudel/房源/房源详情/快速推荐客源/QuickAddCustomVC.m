@@ -538,70 +538,348 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    if (textField == _phoneTF4) {
+    if (textField.text.length) {
         
-        _tel4 = string;
+        if ([string isEqualToString:@""]) {
+            
+            if (textField == _phoneTF1) {
+                
+                [_phoneTF1 becomeFirstResponder];
+            }else if (textField == _phoneTF2) {
+                
+                if (_phoneTF2.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF1 becomeFirstResponder];
+                }
+            }else if (textField == _phoneTF3) {
+                
+                if (_phoneTF3.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF2 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF4) {
+                
+                if (_phoneTF4.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF3 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF5) {
+                
+                if (_phoneTF5.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF4 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF6) {
+                
+                if (_phoneTF6.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF5 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF7) {
+                
+                if (_phoneTF7.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF6 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF8) {
+                
+                if (_phoneTF8.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF7 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF9) {
+                
+                if (_phoneTF9.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF8 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF10) {
+                
+                if (_phoneTF10.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF9 becomeFirstResponder];
+                }
+            }else if (textField == _phoneTF11) {
+                
+                if (_phoneTF11.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF10 becomeFirstResponder];
+                }
+            }
+        }else{
+            
+            if (textField == _phoneTF1) {
+                
+                _phoneTF1.text = string;
+                [_phoneTF2 becomeFirstResponder];
+            }else if (textField == _phoneTF2) {
+                
+                _phoneTF2.text = string;
+                [_phoneTF3 becomeFirstResponder];
+            }else if (textField == _phoneTF3) {
+                
+                _phoneTF3.text = string;
+                if (_isHide) {
+                    
+                    [_phoneTF8 becomeFirstResponder];
+                }else{
+                    
+                    [_phoneTF4 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF4) {
+                
+                _phoneTF4.text = string;
+                _tel4 = string;
+                [_phoneTF5 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF5) {
+                
+                _phoneTF5.text = string;
+                _tel5 = string;
+                [_phoneTF6 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF6) {
+                
+                _phoneTF6.text = string;
+                _tel6 = string;
+                [_phoneTF7 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF7) {
+                
+                _phoneTF7.text = string;
+                _tel7 = string;
+                [_phoneTF8 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF8) {
+                
+                _phoneTF8.text = string;
+                [_phoneTF9 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF9) {
+                
+                _phoneTF9.text = string;
+                [_phoneTF10 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF10) {
+                
+                _phoneTF10.text = string;
+                [_phoneTF11 becomeFirstResponder];
+            }else if (textField == _phoneTF11) {
+                
+                _phoneTF11.text = string;
+                [_phoneTF11 endEditing:YES];
+            }
+        }
+    }else{
+        
+        if ([string isEqualToString:@""]) {
+            
+            if (textField == _phoneTF1) {
+                
+                [_phoneTF1 becomeFirstResponder];
+            }else if (textField == _phoneTF2) {
+                
+                if (_phoneTF2.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF1 becomeFirstResponder];
+                }
+            }else if (textField == _phoneTF3) {
+                
+                if (_phoneTF3.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF2 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF4) {
+                
+                if (_phoneTF4.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF3 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF5) {
+                
+                if (_phoneTF5.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF4 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF6) {
+                
+                if (_phoneTF6.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF5 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF7) {
+                
+                if (_phoneTF7.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF6 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF8) {
+                
+                if (_phoneTF8.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF7 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF9) {
+                
+                if (_phoneTF9.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF8 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF10) {
+                
+                if (_phoneTF10.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF9 becomeFirstResponder];
+                }
+            }else if (textField == _phoneTF11) {
+                
+                if (_phoneTF11.text.length) {
+                    
+                    
+                }else{
+                    
+                    [_phoneTF10 becomeFirstResponder];
+                }
+            }
+        }else{
+            
+            if (textField == _phoneTF1) {
+                
+                _phoneTF1.text = string;
+                [_phoneTF2 becomeFirstResponder];
+            }else if (textField == _phoneTF2) {
+                
+                _phoneTF2.text = string;
+                [_phoneTF3 becomeFirstResponder];
+            }else if (textField == _phoneTF3) {
+                
+                _phoneTF3.text = string;
+                if (_isHide) {
+                    
+                    [_phoneTF8 becomeFirstResponder];
+                }else{
+                    
+                    [_phoneTF4 becomeFirstResponder];
+                }
+            }
+            else if (textField == _phoneTF4) {
+                
+                _phoneTF4.text = string;
+                _tel4 = string;
+                [_phoneTF5 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF5) {
+                
+                _phoneTF5.text = string;
+                _tel5 = string;
+                [_phoneTF6 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF6) {
+                
+                _phoneTF6.text = string;
+                _tel6 = string;
+                [_phoneTF7 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF7) {
+                
+                _phoneTF7.text = string;
+                _tel7 = string;
+                [_phoneTF8 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF8) {
+                
+                _phoneTF8.text = string;
+                [_phoneTF9 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF9) {
+                
+                _phoneTF9.text = string;
+                [_phoneTF10 becomeFirstResponder];
+            }
+            else if (textField == _phoneTF10) {
+                
+                _phoneTF10.text = string;
+                [_phoneTF11 becomeFirstResponder];
+            }else if (textField == _phoneTF11) {
+                
+                _phoneTF11.text = string;
+                [_phoneTF11 endEditing:YES];
+            }
+        }
     }
-    else if (textField == _phoneTF5) {
-        
-        _tel5 = string;
-    }
-    else if (textField == _phoneTF6) {
-        
-        _tel6 = string;
-    }
-    else if (textField == _phoneTF7) {
-        
-        _tel7 = string;
-    }
-    
-    if (range.location > 0) {
-        
-        textField.text = [textField.text substringToIndex:1];
-        
-        if (textField == _phoneTF1) {
-            
-            [_phoneTF2 becomeFirstResponder];
-        }else if (textField == _phoneTF2) {
-            
-            [_phoneTF3 becomeFirstResponder];
-        }else if (textField == _phoneTF3) {
-            
-            [_phoneTF4 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF4) {
-            
-            [_phoneTF5 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF5) {
-            
-            [_phoneTF6 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF6) {
-            
-            [_phoneTF7 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF7) {
-            
-            [_phoneTF8 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF8) {
-            
-            [_phoneTF9 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF9) {
-            
-            [_phoneTF10 becomeFirstResponder];
-        }
-        else if (textField == _phoneTF10) {
-            
-            [_phoneTF11 becomeFirstResponder];
-        }else if (textField == _phoneTF11) {
-            
-            [_phoneTF11 endEditing:YES];
-        }
-        return NO;
-    }
+
     return YES;
 }
 

@@ -201,6 +201,7 @@
 		0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08421F1A5C4005F71F1 /* BarginUndealVC.m */; };
 		0C73B08821F1A5D5005F71F1 /* BarginDealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08721F1A5D5005F71F1 /* BarginDealVC.m */; };
 		0C73B08B21F1A602005F71F1 /* BarginDealComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08A21F1A602005F71F1 /* BarginDealComplaintVC.m */; };
+		0C73B08F21F363AB005F71F1 /* PhoneTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C73B08E21F363AB005F71F1 /* PhoneTextField.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
@@ -1082,6 +1083,8 @@
 		0C73B08721F1A5D5005F71F1 /* BarginDealVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginDealVC.m; sourceTree = "<group>"; };
 		0C73B08921F1A602005F71F1 /* BarginDealComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarginDealComplaintVC.h; sourceTree = "<group>"; };
 		0C73B08A21F1A602005F71F1 /* BarginDealComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarginDealComplaintVC.m; sourceTree = "<group>"; };
+		0C73B08D21F363AB005F71F1 /* PhoneTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhoneTextField.h; sourceTree = "<group>"; };
+		0C73B08E21F363AB005F71F1 /* PhoneTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhoneTextField.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
@@ -3470,6 +3473,15 @@
 				0C73B04E21EF84BA005F71F1 /* RentWorkSuccessVC.m */,
 			);
 			path = "租房工作消息";
+			sourceTree = "<group>";
+		};
+		0C73B08C21F36387005F71F1 /* 输入框继承 */ = {
+			isa = PBXGroup;
+			children = (
+				0C73B08D21F363AB005F71F1 /* PhoneTextField.h */,
+				0C73B08E21F363AB005F71F1 /* PhoneTextField.m */,
+			);
+			path = "输入框继承";
 			sourceTree = "<group>";
 		};
 		0C74EB0B21BE57EB0036915D /* model */ = {
@@ -6543,6 +6555,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0C73B08C21F36387005F71F1 /* 输入框继承 */,
 				0CED0C0B21E9DB5D0016A029 /* 选择工作 */,
 				10B3930621AF88FF00DE73AB /* 定位管理 */,
 				10AEEE8921A3E6A20049625B /* 选择置业顾问 */,
@@ -7374,6 +7387,7 @@
 				0C30631320CE88A8004D1996 /* SecAllRoomTableCell2.m in Sources */,
 				0CED0C0A21E85F440016A029 /* AddContractCell3.m in Sources */,
 				0C25223D215CDB9F0031CC44 /* SecAllRoomStoreCell.m in Sources */,
+				0C73B08F21F363AB005F71F1 /* PhoneTextField.m in Sources */,
 				0CBD858C2085F90500E7B183 /* RoomProjectVC.m in Sources */,
 				0CAF4DD3219E5ED40009873E /* AttentionHouseCell.m in Sources */,
 				0CD909EA20D8B17D00061B4A /* BaseCollCell.m in Sources */,
