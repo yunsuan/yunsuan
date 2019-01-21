@@ -12,21 +12,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendWaitCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *codeL;
-
 @property (nonatomic, strong) UILabel *nameL;
+
+@property (nonatomic, strong) UIImageView *sexImg;
 
 @property (nonatomic, strong) UILabel *phoneL;
 
-@property (nonatomic, strong) UILabel *levelL;
+@property (nonatomic, strong) UILabel *storeL;
 
-@property (nonatomic, strong) UILabel *demandL;
+@property (nonatomic, strong) UILabel *codeL;
 
-@property (nonatomic, strong) UILabel *progressL;
-
-@property (nonatomic, strong) UILabel *numL;
-
-@property (nonatomic, strong) UILabel *matchL;
+@property (nonatomic, strong) UILabel *timeL;
 
 @property (nonatomic, strong) UIView *line;
 

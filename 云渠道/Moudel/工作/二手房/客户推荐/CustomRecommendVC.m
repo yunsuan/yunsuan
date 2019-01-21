@@ -50,42 +50,42 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"待接单",@"推荐成功",@"推荐失败",@"申诉"];
+    _titleArr = @[@"待接单",@"有效",@"失效",@"申诉"];
 }
 
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-//
-//    NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
-//    switch (index) {
-//        case 0:
-//        {
-//            _customLookWaitVC.search = textField.text;
-//            [_customLookWaitVC RequestMethod];
-//            break;
-//        }
-//        case 1:
-//        {
-//            _.search = textField.text;
-//            [_roomSurveyingVC RequestMethod];
-//            break;
-//        }
-//        case 2:
-//        {
-//            _roomSurveyFailVC.search = textField.text;
-//            [_roomSurveyFailVC RequestMethod];
-//            break;
-//        }
-//        case 3:
-//        {
-//            _roomSurveySuccessVC.search = textField.text;
-//            [_roomSurveySuccessVC RequestMethod];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+    NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
+    switch (index) {
+        case 0:
+        {
+            _recommendWaitVC.search = textField.text;
+            [_recommendWaitVC RequestMethod];
+            break;
+        }
+        case 1:
+        {
+            _recommendSuccessVC.search = textField.text;
+            [_recommendSuccessVC RequestMethod];
+            break;
+        }
+        case 2:
+        {
+            _recommendFailVC.search = textField.text;
+            [_recommendFailVC RequestMethod];
+            break;
+        }
+        case 3:
+        {
+            _recommendComplaintVC.search = textField.text;
+            [_recommendComplaintVC RequestMethod];
+            break;
+        }
+        default:
+            break;
+    }
+    return YES;
+}
 
 #pragma mark -- collectionview
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{

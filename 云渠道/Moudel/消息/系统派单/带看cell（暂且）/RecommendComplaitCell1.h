@@ -1,8 +1,8 @@
 //
-//  RecommendFailCell.h
+//  RecommendComplaitCell1.h
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/10.
+//  Created by 谷治墙 on 2019/1/21.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
@@ -10,21 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RecommendFailCell : UITableViewCell
+@interface RecommendComplaitCell1 : UITableViewCell
 
 @property (nonatomic, strong) UILabel *nameL;
 
-@property (nonatomic, strong) UIImageView *sexImg;
+@property (nonatomic, strong) UILabel *storeL;
 
 @property (nonatomic, strong) UILabel *phoneL;
 
-@property (nonatomic, strong) UILabel *storeL;
+@property (nonatomic, strong) UILabel *statusL;
 
-@property (nonatomic, strong) UILabel *typeL;
+@property (nonatomic, strong) UILabel *recommendTimeL;
 
-@property (nonatomic, strong) UILabel *codeL;
-
-@property (nonatomic, strong) UILabel *failTimeL;
+@property (nonatomic, strong) UILabel *complaintTimeL;
 
 @property (nonatomic, strong) UIView *line;
 
