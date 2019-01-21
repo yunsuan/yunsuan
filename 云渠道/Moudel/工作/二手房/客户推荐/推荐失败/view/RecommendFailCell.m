@@ -31,20 +31,13 @@
 
 - (void)initUI{
     
-    _codeL = [[UILabel alloc] init];
-    _codeL.textColor = YJ86Color;
-    _codeL.font = [UIFont systemFontOfSize:15 *SIZE];
-    [self.contentView addSubview:_codeL];
-    
     _nameL = [[UILabel alloc] init];
     _nameL.textColor = YJTitleLabColor;
-    _nameL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _nameL.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.contentView addSubview:_nameL];
     
-    _houseCodeL = [[UILabel alloc] init];
-    _houseCodeL.textColor = YJ86Color;
-    _houseCodeL.font = [UIFont systemFontOfSize:15 *SIZE];
-    [self.contentView addSubview:_houseCodeL];
+    _sexImg = [[UIImageView alloc] init];
+    [self.contentView addSubview:_sexImg];
     
     _phoneL = [[UILabel alloc] init];
     _phoneL.textColor = YJ86Color;
@@ -52,15 +45,28 @@
     _phoneL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneL];
     
-    _recommendTimeL = [[UILabel alloc] init];
-    _recommendTimeL.textColor = YJ86Color;
-    _recommendTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_recommendTimeL];
+    _codeL = [[UILabel alloc] init];
+    _codeL.textColor = YJ86Color;
+    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_codeL];
+    
+    _typeL = [[UILabel alloc] init];
+    _typeL.textColor = YJ86Color;
+    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _typeL.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:_typeL];
     
     _failTimeL = [[UILabel alloc] init];
     _failTimeL.textColor = YJ86Color;
     _failTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_failTimeL];
+    
+    
+    _codeL = [[UILabel alloc] init];
+    _codeL.textColor = YJ86Color;
+    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_codeL];
+    
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -73,43 +79,50 @@
     
     [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(self.contentView).offset(14 *SIZE);
-        make.right.equalTo(self.contentView).offset(-9 *SIZE);
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
     }];
     
-    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sexImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(5 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.height.mas_equalTo(12 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(201 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_storeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(140 *SIZE);
     }];
     
-    [_houseCodeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
-    }];
-    
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
-    [_recommendTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_phoneL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_storeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(140 *SIZE);
     }];
     
     [_failTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_recommendTimeL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(140 *SIZE);
     }];
     

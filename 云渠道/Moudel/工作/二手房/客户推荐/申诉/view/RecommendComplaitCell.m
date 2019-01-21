@@ -25,30 +25,34 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    //    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-    //    _houseCodeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@""]];
-    //    _nameL.text = [NSString stringWithFormat:@"名称：%@",dataDic[@""]];
-    //    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    //    _numL.text = [NSString stringWithFormat:@"已看房数量：%@",dataDic[@""]];
 }
 
 - (void)initUI{
     
     _nameL = [[UILabel alloc] init];
     _nameL.textColor = YJTitleLabColor;
-    _nameL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _nameL.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.contentView addSubview:_nameL];
     
-    _storeL = [[UILabel alloc] init];
-    _storeL.textColor = YJ86Color;
-    _storeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_storeL];
+    _sexImg = [[UIImageView alloc] init];
+    [self.contentView addSubview:_sexImg];
     
     _phoneL = [[UILabel alloc] init];
     _phoneL.textColor = YJ86Color;
     _phoneL.font = [UIFont systemFontOfSize:12 *SIZE];
-//    _phoneL.textAlignment = NSTextAlignmentRight;
+    _phoneL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneL];
+    
+    _typeL = [[UILabel alloc] init];
+    _typeL.textColor = YJ86Color;
+    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _typeL.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:_typeL];
+    
+    _codeL = [[UILabel alloc] init];
+    _codeL.textColor = YJ86Color;
+    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_codeL];
     
     _statusL = [[UILabel alloc] init];
     _statusL.textColor = YJ86Color;
@@ -56,15 +60,10 @@
     _statusL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_statusL];
     
-    _recommendTimeL = [[UILabel alloc] init];
-    _recommendTimeL.textColor = YJ86Color;
-    _recommendTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_recommendTimeL];
-    
-    _complaintTimeL = [[UILabel alloc] init];
-    _complaintTimeL.textColor = YJ86Color;
-    _complaintTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_complaintTimeL];
+    _timeL = [[UILabel alloc] init];
+    _timeL.textColor = YJ86Color;
+    _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_timeL];
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -77,9 +76,23 @@
     
     [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(self.contentView).offset(14 *SIZE);
-        make.right.equalTo(self.contentView).offset(-9 *SIZE);
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+    }];
+    
+    [_sexImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(5 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.height.mas_equalTo(12 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(201 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
     }];
     
     [_storeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -89,7 +102,14 @@
         make.width.mas_equalTo(140 *SIZE);
     }];
     
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(201 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_storeL.mas_bottom).offset(13 *SIZE);
@@ -99,31 +119,23 @@
     [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_storeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
-    [_recommendTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_phoneL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
-    }];
-    
-    [_complaintTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_recommendTimeL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(140 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_complaintTimeL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }
-
 @end

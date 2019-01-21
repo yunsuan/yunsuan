@@ -14,15 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *nameL;
 
-@property (nonatomic, strong) UILabel *storeL;
+@property (nonatomic, strong) UIImageView *sexImg;
 
 @property (nonatomic, strong) UILabel *phoneL;
 
+@property (nonatomic, strong) UILabel *storeL;
+
+@property (nonatomic, strong) UILabel *typeL;
+
+@property (nonatomic, strong) UILabel *codeL;
+
 @property (nonatomic, strong) UILabel *statusL;
 
-@property (nonatomic, strong) UILabel *recommendTimeL;
-
-@property (nonatomic, strong) UILabel *complaintTimeL;
+@property (nonatomic, strong) UILabel *timeL;
 
 @property (nonatomic, strong) UIView *line;
 
