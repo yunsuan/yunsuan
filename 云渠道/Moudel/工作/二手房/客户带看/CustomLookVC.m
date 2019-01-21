@@ -20,6 +20,7 @@
     
     NSArray *_titleArr;
 }
+@property (nonatomic, strong) UITextField *searchBar;
 
 @property (nonatomic, strong) UICollectionView *segmentColl;
 
@@ -125,6 +126,30 @@
     self.line.hidden = YES;
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
+    whiteView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:whiteView];
+    
+    _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 3 *SIZE, 340 *SIZE, 33 *SIZE)];
+    _searchBar.backgroundColor = YJBackColor;
+    _searchBar.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 11 *SIZE, 0)];
+    //设置显示模式为永远显示(默认不显示)
+    _searchBar.delegate = self;
+    _searchBar.leftViewMode = UITextFieldViewModeAlways;
+    _searchBar.placeholder = @"输入电话/姓名";
+    _searchBar.font = [UIFont systemFontOfSize:12 *SIZE];
+    _searchBar.layer.cornerRadius = 2 *SIZE;
+    _searchBar.returnKeyType = UIReturnKeySearch;
+    
+    UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
+    //    rightImg.backgroundColor = [UIColor whiteColor];
+    rightImg.image = [UIImage imageNamed:@"search"];
+    _searchBar.rightView = rightImg;
+    _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;
+    _searchBar.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _searchBar.delegate = self;
+    [whiteView addSubview:_searchBar];
 
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 4, 40 *SIZE);
@@ -133,7 +158,7 @@
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     
-    _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
+    _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
     _segmentColl.backgroundColor = [UIColor whiteColor];
     _segmentColl.delegate = self;
     _segmentColl.dataSource = self;
@@ -143,7 +168,7 @@
     [self.view addSubview:_segmentColl];
     
     // 创建scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 41 *SIZE, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 41 *SIZE)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 81 *SIZE, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 81 *SIZE)];
     self.scrollView.scrollEnabled = NO;
     [self.view addSubview:self.scrollView];
     // 设置scrollView的内容

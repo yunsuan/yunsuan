@@ -10,12 +10,14 @@
 
 #import "CustomLookConfirmCell.h"
 
-@interface LookMaintainVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface LookMaintainVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     
     NSInteger _page;
     NSMutableArray *_dataArr;
 }
+@property (nonatomic, strong) UITextField *searchBar;
+
 @property (nonatomic, strong) UITableView *waitTable;
 
 @end
@@ -157,7 +159,38 @@
 
 - (void)initUI{
     
-    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 40 *SIZE) style:UITableViewStylePlain];
+    self.navBackgroundView.hidden = NO;
+    self.titleLabel.text = @"带看维护";
+    
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
+    whiteView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:whiteView];
+    
+    _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 3 *SIZE, 340 *SIZE, 33 *SIZE)];
+    _searchBar.backgroundColor = YJBackColor;
+    _searchBar.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 11 *SIZE, 0)];
+    //设置显示模式为永远显示(默认不显示)
+    _searchBar.leftViewMode = UITextFieldViewModeAlways;
+    _searchBar.placeholder = @"输入电话/姓名";
+    _searchBar.font = [UIFont systemFontOfSize:12 *SIZE];
+    _searchBar.layer.cornerRadius = 2 *SIZE;
+    _searchBar.delegate = self;
+    _searchBar.returnKeyType = UIReturnKeySearch;
+    
+    UIImageView *rightImg = [[UIImageView alloc] initWithFrame:CGRectMake(0 *SIZE, 8 *SIZE, 17 *SIZE, 17 *SIZE)];
+    //    rightImg.backgroundColor = [UIColor whiteColor];
+    rightImg.image = [UIImage imageNamed:@"search"];
+    _searchBar.rightView = rightImg;
+    _searchBar.rightViewMode = UITextFieldViewModeUnlessEditing;
+    _searchBar.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _searchBar.delegate = self;
+    [whiteView addSubview:_searchBar];
+    
+//    self.rightBtn.hidden = NO;
+//    [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
+//    [self.rightBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 40 *SIZE) style:UITableViewStylePlain];
     
     _waitTable.rowHeight = UITableViewAutomaticDimension;
     _waitTable.estimatedRowHeight = 87 *SIZE;
