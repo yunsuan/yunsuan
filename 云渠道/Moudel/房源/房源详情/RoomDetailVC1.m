@@ -188,6 +188,7 @@
     
     // 创建控制器
     _roomProjectVC = [[RoomProjectVC alloc] initWithProjectId:_model.project_id infoid:_model.info_id];
+    _roomProjectVC.isRecommend = self.isRecommend;
     
     _roomBrokerageVC = [[RoomBrokerageVC alloc] initWithModel:_model];
     _roomBrokerageVC.brokerage = _brokerage;

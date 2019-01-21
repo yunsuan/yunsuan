@@ -871,6 +871,12 @@
     [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
         _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+    }else{
+        
+        if ([self.isRecommend isEqualToString:@"NO"]) {
+            
+            _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+        }
     }
     [self.view addSubview:_counselBtn];
     
@@ -882,9 +888,16 @@
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
-        [self.view addSubview:_recommendBtn];
+        if ([self.isRecommend isEqualToString:@"NO"]) {
+            
+        }else{
+            
+            [self.view addSubview:_recommendBtn];
+        }
+    }else{
+        
+        
     }
-    
 }
 
 
