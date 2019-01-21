@@ -22,8 +22,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSLog(@"**********w=%f,h=%f",[[UIScreen mainScreen] currentMode].size.width,[[UIScreen mainScreen] currentMode].size.height);
-//    NSLog(@"**********%@", [[UIScreen mainScreen] currentMode].size);
     self.view.backgroundColor = [UIColor whiteColor];
     [self initialBaseViewInterface];
 }

@@ -18,7 +18,7 @@
         _dataarr = [NSMutableArray array];
         _breakerinfo = [NSMutableArray array];
         _companyarr = [NSMutableArray array];
-        
+        _brokerinfo = data;
         
         
         for (int i = 0; i<data.count; i++) {

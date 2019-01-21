@@ -319,13 +319,14 @@
             if ([model.sort integerValue] == 0 && [model.cycle integerValue] == 0){
                 
                 nextVC.isRecommend = @"NO";
-            }else{
+            }
+            else{
                 
                 if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
                     
                 }else{
                     
-                    nextVC.isRecommend = @"NO";
+                nextVC.isRecommend = @"NO";
                 }
             }
             nextVC.brokerage = @"yes";

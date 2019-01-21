@@ -13,6 +13,7 @@
 @property (nonatomic , strong) NSMutableArray *bsicarr;//全名看到的基本规则
 @property (nonatomic , strong) NSMutableArray *breakerinfo;//全名看到的佣金规则
 @property (nonatomic , strong) NSMutableArray *companyarr;//公司看到的基本规则
+@property (nonatomic , strong) NSMutableArray *brokerinfo;
 
 
 -(instancetype)initWithdata:(NSArray *)data;
