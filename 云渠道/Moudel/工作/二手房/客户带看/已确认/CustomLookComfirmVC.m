@@ -127,8 +127,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    return 1;
-    return _dataArr.count;
+    return 1;
+//    return _dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -142,7 +142,7 @@
     
     cell.tag = indexPath.row;
     
-    cell.dataDic = _dataArr[indexPath.row];
+//    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }
