@@ -44,9 +44,14 @@
     
     _page = 1;
     _MainTableView.mj_footer.state = MJRefreshStateIdle;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
-        [BaseRequest GET:BrokerAppeal_URL parameters:nil success:^(id resposeObject) {
+        [BaseRequest GET:BrokerAppeal_URL parameters:dic success:^(id resposeObject) {
             
             [_MainTableView.mj_header endRefreshing];
             if ([resposeObject[@"code"] integerValue] == 200) {
@@ -78,9 +83,15 @@
 - (void)RequestAddMethod{
     
     _page += 1;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
-        [BaseRequest GET:BrokerAppeal_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+        [BaseRequest GET:BrokerAppeal_URL parameters:dic success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 

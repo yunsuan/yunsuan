@@ -12,6 +12,8 @@
 
 @interface RoomDetailVC1 : BaseViewController
 
+@property (nonatomic, strong) NSString *isRecommend;
+
 @property (nonatomic, strong) NSString *brokerage;
 
 - (instancetype)initWithModel:(RoomListModel *)model;
