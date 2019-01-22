@@ -330,7 +330,7 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
+    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
     _imgScroll.pagingEnabled = YES;
     //    _imgScroll.backgroundColor = [UIColor blackColor];
     _imgScroll.delegate = self;
@@ -339,7 +339,7 @@
     _imgScroll.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:_imgScroll];
     
-    _alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 143 *SIZE, SCREEN_Width, 40 *SIZE)];
+    _alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 162.5 *SIZE, SCREEN_Width, 40 *SIZE)];
     _alphaView.backgroundColor = [UIColor blackColor];
     _alphaView.alpha = 0.2;
     [self.contentView addSubview:_alphaView];
@@ -350,7 +350,7 @@
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     
-    _imgColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 143 *SIZE , SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
+    _imgColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 162.5 *SIZE , SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
     _imgColl.backgroundColor = [UIColor clearColor];
     _imgColl.delegate = self;
     _imgColl.dataSource = self;
@@ -359,7 +359,7 @@
     [self.contentView addSubview:_imgColl];
     
     
-    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 144 *SIZE, 30 *SIZE, 30 *SIZE)];
+    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 163.5 *SIZE, 30 *SIZE, 30 *SIZE)];
     _numL.backgroundColor = COLOR(255, 255, 255, 0.6);
     _numL.textColor = YJTitleLabColor;
     _numL.font = [UIFont systemFontOfSize:10 *SIZE];
@@ -388,7 +388,7 @@
     [self.contentView addSubview:_attentL];
     
     
-    _moreView = [[UIView alloc] initWithFrame:CGRectMake(0, 249 *SIZE, SCREEN_Width, 67 *SIZE)];
+    _moreView = [[UIView alloc] initWithFrame:CGRectMake(0, 268.5 *SIZE, SCREEN_Width, 67 *SIZE)];
     _moreView.backgroundColor = [UIColor whiteColor];
     //    NSArray *titleArr = @[@"售价",@"房型",@"产权面积"];
     NSArray *titleArr = @[@"租金",@"户型",@"面积"];
@@ -472,14 +472,14 @@
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(self.contentView).offset(197 *SIZE);
+        make.top.equalTo(self.contentView).offset(216.5 *SIZE);
         make.right.equalTo(self.contentView).offset(-60 *SIZE);
     }];
     
     [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(self.contentView).offset(-11 *SIZE);
-        make.top.equalTo(self.contentView).offset(194 *SIZE);
+        make.top.equalTo(self.contentView).offset(213.5 *SIZE);
         make.height.mas_equalTo(17 *SIZE);
     }];
     

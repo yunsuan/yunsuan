@@ -66,13 +66,13 @@
             }
         }else{
             
-            [_mainTable.mj_footer endRefreshing];
+            [_mainTable.mj_header endRefreshing];
             [self showContent:resposeObject[@"msg"]];
         }
         [_mainTable reloadData];
     } failure:^(NSError *error) {
         
-        [_mainTable.mj_footer endRefreshing];
+        [_mainTable.mj_header endRefreshing];
         NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
@@ -175,13 +175,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
 //    RoomMaintainModel *model = _dataArr[indexPath.row];
-    RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] houseId:_dataArr[indexPath.row][@"house_id"] type:[_dataArr[indexPath.row][@"type"] integerValue]];
-    nextVC.edit = [_dataArr[indexPath.row][@"edit"] integerValue] ? YES:NO;
-    nextVC.rentingMaintainDetailVCBlock = ^{
+    [BaseRequest GET:RentCapacityCheck_URL parameters:@{@"project_id":_dataArr[indexPath.row][@"project_id"]} success:^(id resposeObject) {
         
-        [self RequestMethod];
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] integerValue] == 1) {
+                
+                RentingMaintainDetailVC *nextVC = [[RentingMaintainDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] houseId:_dataArr[indexPath.row][@"house_id"] type:[_dataArr[indexPath.row][@"type"] integerValue]];
+                nextVC.edit = [_dataArr[indexPath.row][@"edit"] integerValue] ? YES:NO;
+                nextVC.rentingMaintainDetailVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+            }
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)initUI{

@@ -184,6 +184,8 @@
     NSArray *tempArr1 = @[model.property_tags,model.project_tags_name];
     [cell settagviewWithdata:tempArr1];
     cell.getLevel.hidden = YES;
+    cell.statusImg.hidden = YES;
+    cell.surelab.hidden = YES;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;

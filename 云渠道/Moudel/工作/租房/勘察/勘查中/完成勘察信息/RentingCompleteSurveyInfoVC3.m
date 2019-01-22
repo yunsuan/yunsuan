@@ -301,7 +301,7 @@
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         if ([info[UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
             
-            _image = info[UIImagePickerControllerOriginalImage];;
+            _image = [self cropSquareImage:[self fixOrientation:info[UIImagePickerControllerOriginalImage]]];
             
             if (_index < [_ImgArr count]) {
                 
@@ -361,7 +361,7 @@
         }
     }else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
         
-        _image = info[UIImagePickerControllerOriginalImage];;
+        _image = [self cropSquareImage:info[UIImagePickerControllerOriginalImage]];
         
         if (_index < [_ImgArr count]) {
             

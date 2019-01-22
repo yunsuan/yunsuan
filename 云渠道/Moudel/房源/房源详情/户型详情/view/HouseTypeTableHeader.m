@@ -209,14 +209,14 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 366 *SIZE)];
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
     _scrollView.delegate = self;
     [self.contentView addSubview:_scrollView];
     
     
-    UIView *alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 326 *SIZE, SCREEN_Width, 40 *SIZE)];
+    UIView *alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 162.5 *SIZE, SCREEN_Width, 40 *SIZE)];
     alphaView.backgroundColor = [UIColor blackColor];
     alphaView.alpha = 0.2;
     [self.contentView addSubview:alphaView];
@@ -227,7 +227,7 @@
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     
-    _imgColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 326 *SIZE , SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
+    _imgColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 162.5 *SIZE , SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
     _imgColl.backgroundColor = [UIColor clearColor];
     _imgColl.delegate = self;
     _imgColl.dataSource = self;

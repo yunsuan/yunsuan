@@ -268,6 +268,14 @@
         
         return _matchList.count;
     }
+    if (section == 1) {
+        
+        if (_houseArr.count) {
+            
+            return 1;
+        }
+        return 0;
+    }
     return 1;
 }
 
@@ -280,7 +288,17 @@
     
     if (section == 0) {
         
-        return 366 *SIZE;
+        return 203.5 *SIZE;
+    }
+    if (section == 1) {
+        
+        if (_houseArr.count) {
+            
+            return 33 *SIZE;
+        }else{
+            
+            return 0;
+        }
     }
     return 33 *SIZE;
 }
@@ -292,7 +310,7 @@
         HouseTypeTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"HouseTypeTableHeader"];
         if (!header) {
             
-            header = [[HouseTypeTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 366 *SIZE)];
+            header = [[HouseTypeTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 203.5 *SIZE)];
         }
         header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
         header.houseTypeImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {

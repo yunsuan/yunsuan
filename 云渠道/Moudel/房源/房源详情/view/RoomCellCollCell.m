@@ -25,7 +25,8 @@
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     _typeImg = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 18 *SIZE, 103 *SIZE, 103 *SIZE)];
-    _typeImg.contentMode = UIViewContentModeScaleAspectFit;
+    _typeImg.contentMode = UIViewContentModeScaleAspectFill;
+    _typeImg.clipsToBounds = YES;
     [self.contentView addSubview:_typeImg];
     
     _letterL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 134 *SIZE, 100 *SIZE, 11 *SIZE)];

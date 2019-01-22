@@ -117,5 +117,7 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 
 -(NSArray *)getDetailConfigArrByConfigState:(ConfigState)configState;
 
+- (UIImage *)cropSquareImage:(UIImage *)image;
+
 @end
 
