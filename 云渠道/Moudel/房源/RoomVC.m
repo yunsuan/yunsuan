@@ -310,31 +310,52 @@
     vc.city = _city;
     vc.roomChildVCRoomModelBlock = ^(RoomListModel *model) {
         
-        RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
-        if ([model.guarantee_brokerage integerValue] == 2) {
+        if ([dic[@"tag"] isEqualToString:@"关注"]) {
             
-            nextVC.brokerage = @"no";
-        }else{
-            
-            if ([model.sort integerValue] == 0 && [model.cycle integerValue] == 0){
+            RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+            if ([model.guarantee_brokerage integerValue] == 2) {
                 
-                nextVC.isRecommend = @"NO";
-            }
-            else{
+                nextVC.brokerage = @"no";
+            }else{
                 
                 if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
                     
                 }else{
                     
-                nextVC.isRecommend = @"NO";
+                    nextVC.isRecommend = @"NO";
                 }
+                nextVC.brokerage = @"yes";
             }
-            nextVC.brokerage = @"yes";
+            
+            nextVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+            if ([model.guarantee_brokerage integerValue] == 2) {
+                
+                nextVC.brokerage = @"no";
+            }else{
+                
+                if ([model.sort integerValue] == 0 && [model.cycle integerValue] == 0){
+                    
+                    nextVC.isRecommend = @"NO";
+                }
+                else{
+                    
+                    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                        
+                    }else{
+                        
+                        nextVC.isRecommend = @"NO";
+                    }
+                }
+                nextVC.brokerage = @"yes";
+            }
+            
+            nextVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:nextVC animated:YES];
         }
-        
-        nextVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:nextVC animated:YES];
-        
     };
     
     vc.roomChildVCSecModelBlock = ^(SecdaryAllTableModel *model) {
