@@ -1,8 +1,8 @@
 //
-//  LookDealCell.h
+//  CustomLookWaitCell.h
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/8.
+//  Created by 谷治墙 on 2019/1/23.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LookDealCell : UITableViewCell
+typedef void(^CustomLookWaitCellBlock)(NSInteger index);
+
+@interface CustomLookWaitCell : UITableViewCell
+
+@property (nonatomic, copy) CustomLookWaitCellBlock customLookWaitCellBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -24,9 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *sourceL;
 
-@property (nonatomic, strong) UILabel *dealInfoL;
-
 @property (nonatomic, strong) UILabel *timeL;
+
+@property (nonatomic, strong) UILabel *endTimeL;
+
+@property (nonatomic, strong) UIButton *comfirmBtn;
 
 @property (nonatomic, strong) UIView *line;
 

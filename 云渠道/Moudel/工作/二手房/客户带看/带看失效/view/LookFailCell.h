@@ -16,15 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImageView *genderImg;
 
-@property (nonatomic, strong) UILabel *customCodeL;
+@property (nonatomic, strong) UILabel *codeL;
 
 @property (nonatomic, strong) UILabel *phoneL;
 
-@property (nonatomic, strong) UILabel *demandL;
+@property (nonatomic, strong) UILabel *typeL;
 
-@property (nonatomic, strong) UILabel *matchL;
+@property (nonatomic, strong) UILabel *sourceL;
 
-@property (nonatomic, strong) UILabel *numL;
+@property (nonatomic, strong) UILabel *failTypeL;
 
 @property (nonatomic, strong) UILabel *timeL;
 

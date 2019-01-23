@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^CustomLookConfirmCellBlock)(NSInteger index);
+
 @interface CustomLookConfirmCell : UITableViewCell
+
+@property (nonatomic, copy) CustomLookConfirmCellBlock customLookConfirmCellBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -19,6 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *codeL;
 
 @property (nonatomic, strong) UILabel *phoneL;
+
+@property (nonatomic, strong) UILabel *typeL;
+
+@property (nonatomic, strong) UILabel *sourceL;
+
+@property (nonatomic, strong) UILabel *timeL;
+
+@property (nonatomic, strong) UIButton *comfirmBtn;
 
 @property (nonatomic, strong) UIView *line;
 

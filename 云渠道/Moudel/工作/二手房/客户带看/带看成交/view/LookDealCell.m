@@ -24,10 +24,13 @@
     
     _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
     
-    _houseCodeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@""]];
-    _customCodeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@""]];
-    _numL.text = [NSString stringWithFormat:@"带看的房源数量：%@",dataDic[@""]];
+    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@""]];
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@""]];
+    _dealInfoL.text = [NSString stringWithFormat:@"成交信息：%@",dataDic[@""]];
+    _timeL.text = [NSString stringWithFormat:@"成交时间：%@",dataDic[@""]];
+    
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -47,30 +50,37 @@
     _genderImg = [[UIImageView alloc] init];
     [self.contentView addSubview:_genderImg];
     
-    _houseCodeL = [[UILabel alloc] init];
-    _houseCodeL.textColor = YJ86Color;
-    _houseCodeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_houseCodeL];
-    
-    _customCodeL = [[UILabel alloc] init];
-    _customCodeL.textColor = YJ86Color;
-    _customCodeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_customCodeL];
-    
     _phoneL = [[UILabel alloc] init];
     _phoneL.textColor = YJ86Color;
     _phoneL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _phoneL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneL];
     
-    _numL = [[UILabel alloc] init];
-    _numL.textColor = YJ86Color;
-    _numL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_numL];
+    _codeL = [[UILabel alloc] init];
+    _codeL.textColor = YJ86Color;
+    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_codeL];
     
-    _line = [[UIView alloc] init];
-    _line.backgroundColor = YJBackColor;
-    [self.contentView addSubview:_line];
+    _typeL = [[UILabel alloc] init];
+    _typeL.textColor = YJ86Color;
+    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_typeL];
     
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.textColor = YJ86Color;
+    _sourceL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_sourceL];
+    
+    _dealInfoL = [[UILabel alloc] init];
+    _dealInfoL.textColor = YJ86Color;
+    _dealInfoL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_dealInfoL];
+    
+    _timeL = [[UILabel alloc] init];
+    _timeL.textColor = YJ86Color;
+    _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_codeL];
+
     [self MasonryUI];
 }
 
@@ -90,38 +100,53 @@
         make.width.height.mas_equalTo(12 *SIZE);
     }];
     
-    [_houseCodeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(200 *SIZE);
+        make.top.equalTo(self.contentView).offset(17 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(340 *SIZE);
     }];
     
-    [_customCodeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_houseCodeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
     }];
     
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_customCodeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
+        make.left.equalTo(self.contentView).offset(126 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
     }];
     
-    [_numL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_dealInfoL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_phoneL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
+        make.top.equalTo(_typeL.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(250 *SIZE);
     }];
+    
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_dealInfoL.mas_bottom).offset(11 *SIZE);
+        make.width.mas_equalTo(250 *SIZE);
+    }];
+    
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_numL.mas_bottom).offset(15 *SIZE);
+        make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];

@@ -10,7 +10,7 @@
 
 #import "CustomLookWaitDetailVC.h"
 
-#import "CustomLookConfirmCell.h"
+#import "CustomLookWaitCell.h"
 
 @interface CustomLookWaitVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -134,10 +134,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CustomLookConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomLookConfirmCell"];
+    CustomLookWaitCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomLookWaitCell"];
     if (!cell) {
         
-        cell = [[CustomLookConfirmCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomLookConfirmCell"];
+        cell = [[CustomLookWaitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomLookWaitCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
