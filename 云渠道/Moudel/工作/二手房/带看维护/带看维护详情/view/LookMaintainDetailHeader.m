@@ -27,6 +27,8 @@
 
 - (void)initUI{
     
+    self.backgroundColor = YJBackColor;
+    
     _systemView = [[UIView alloc] init];
     _systemView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_systemView];
@@ -179,13 +181,194 @@
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         if (i == 0) {
             
+            _roomBtn = btn;
+            [_needView addSubview:_roomBtn];
         }else if (i == 1){
             
+            _contactBtn = btn;
+            [_needView addSubview:_contactBtn];
         }else{
             
-            
+            _followBtn = btn;
+            [_needView addSubview:_followBtn];
         }
     }
+    
+    [self MasonryUI];
+}
+
+- (void)MasonryUI{
+    
+    [_systemView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self).offset(0);
+        make.top.equalTo(self).offset(0);
+        make.width.mas_equalTo(SCREEN_Width);
+    }];
+    
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_systemView).offset(28 *SIZE);
+        make.top.equalTo(_systemView).offset(51 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_wayL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_systemView).offset(180 *SIZE);
+        make.top.equalTo(_systemView).offset(51 *SIZE);
+        make.width.mas_equalTo(166 *SIZE);
+    }];
+    
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_systemView).offset(28 *SIZE);
+        make.top.equalTo(_sourceL.mas_bottom).offset(14 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+        make.bottom.equalTo(_systemView).offset(-17 *SIZE);
+    }];
+    
+    [_customView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self).offset(0);
+        make.top.equalTo(_systemView.mas_bottom).offset(5 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+    }];
+    
+    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(28 *SIZE);
+        make.top.equalTo(_customView).offset(16 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(180 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(11 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_followTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(28 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(180 *SIZE);
+    }];
+    
+    [_customLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(210 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(156 *SIZE);
+    }];
+    
+    [_matchL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(28 *SIZE);
+        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(180 *SIZE);
+        make.bottom.equalTo(_customView).offset(-17 *SIZE);
+    }];
+    
+    [_progressL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_customView).offset(210 *SIZE);
+        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(156 *SIZE);
+        make.bottom.equalTo(_customView).offset(-17 *SIZE);
+    }];
+    
+    [_needView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self).offset(0);
+        make.top.equalTo(_customView.mas_bottom).offset(5 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.bottom.equalTo(self).offset(0);
+    }];
+    
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_needView).offset(52 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_purposeL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_typeL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_decorateL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_priceL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_areaL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_houseTypeL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_payWayL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_roomBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(0);
+        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(119 *SIZE);
+        make.height.mas_equalTo(47 *SIZE);
+    }];
+    
+    [_contactBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(120 *SIZE);
+        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(119 *SIZE);
+        make.height.mas_equalTo(47 *SIZE);
+    }];
+    
+    [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(240 *SIZE);
+        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(119 *SIZE);
+        make.height.mas_equalTo(47 *SIZE);
+    }];
 }
 
 
