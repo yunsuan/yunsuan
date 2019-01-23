@@ -119,5 +119,7 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 
 - (UIImage *)cropSquareImage:(UIImage *)image;
 
+- (UIImage *)thumbnailWithImage:(UIImage *)originalImage size:(CGSize)size;
+
 @end
 

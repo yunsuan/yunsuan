@@ -683,6 +683,9 @@
 		10F7D0C521F70F0B007818E3 /* ChooseCustomerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0C421F70F0B007818E3 /* ChooseCustomerVC.m */; };
 		10F7D0C821F71158007818E3 /* ChooseHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0C721F71158007818E3 /* ChooseHouseCell.m */; };
 		10F7D0CB21F71179007818E3 /* ChooseCustomerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0CA21F71179007818E3 /* ChooseCustomerCell.m */; };
+		10F7D0CE21F83AEA007818E3 /* AddContractCell4.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0CD21F83AEA007818E3 /* AddContractCell4.m */; };
+		10F7D0D121F83B17007818E3 /* AddContractCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D021F83B17007818E3 /* AddContractCell5.m */; };
+		10F7D0D421F83B23007818E3 /* AddContractCell6.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D321F83B23007818E3 /* AddContractCell6.m */; };
 		10FA288921EF215D00617555 /* yindaoye2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288421EF215D00617555 /* yindaoye2.jpg */; };
 		10FA288A21EF215D00617555 /* yindaoye5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288521EF215D00617555 /* yindaoye5.jpg */; };
 		10FA288B21EF215D00617555 /* yindaoye1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288621EF215D00617555 /* yindaoye1.jpg */; };
@@ -2054,6 +2057,12 @@
 		10F7D0C721F71158007818E3 /* ChooseHouseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseHouseCell.m; sourceTree = "<group>"; };
 		10F7D0C921F71179007818E3 /* ChooseCustomerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseCustomerCell.h; sourceTree = "<group>"; };
 		10F7D0CA21F71179007818E3 /* ChooseCustomerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseCustomerCell.m; sourceTree = "<group>"; };
+		10F7D0CC21F83AEA007818E3 /* AddContractCell4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell4.h; sourceTree = "<group>"; };
+		10F7D0CD21F83AEA007818E3 /* AddContractCell4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell4.m; sourceTree = "<group>"; };
+		10F7D0CF21F83B17007818E3 /* AddContractCell5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell5.h; sourceTree = "<group>"; };
+		10F7D0D021F83B17007818E3 /* AddContractCell5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell5.m; sourceTree = "<group>"; };
+		10F7D0D221F83B23007818E3 /* AddContractCell6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell6.h; sourceTree = "<group>"; };
+		10F7D0D321F83B23007818E3 /* AddContractCell6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell6.m; sourceTree = "<group>"; };
 		10FA288421EF215D00617555 /* yindaoye2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye2.jpg; sourceTree = "<group>"; };
 		10FA288521EF215D00617555 /* yindaoye5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye5.jpg; sourceTree = "<group>"; };
 		10FA288621EF215D00617555 /* yindaoye1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye1.jpg; sourceTree = "<group>"; };
@@ -5616,6 +5625,12 @@
 				0CED0C0621E85F340016A029 /* AddContractCell2.m */,
 				0CED0C0821E85F440016A029 /* AddContractCell3.h */,
 				0CED0C0921E85F440016A029 /* AddContractCell3.m */,
+				10F7D0CC21F83AEA007818E3 /* AddContractCell4.h */,
+				10F7D0CD21F83AEA007818E3 /* AddContractCell4.m */,
+				10F7D0CF21F83B17007818E3 /* AddContractCell5.h */,
+				10F7D0D021F83B17007818E3 /* AddContractCell5.m */,
+				10F7D0D221F83B23007818E3 /* AddContractCell6.h */,
+				10F7D0D321F83B23007818E3 /* AddContractCell6.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7127,6 +7142,7 @@
 			files = (
 				0CAF4DE0219EC08E0009873E /* AttetionComModel.m in Sources */,
 				0C6B6348211B04F500ABB506 /* CompleteSurveyInfoVC.m in Sources */,
+				10F7D0CE21F83AEA007818E3 /* AddContractCell4.m in Sources */,
 				0C997C8321E490D900F805AA /* LookFailCell.m in Sources */,
 				0C0BED2320A18F7A005A16A1 /* ComplaintCell.m in Sources */,
 				0CED0BF221E72C750016A029 /* ContractSignListVC.m in Sources */,
@@ -7301,6 +7317,7 @@
 				0C73B09E21F5C69A005F71F1 /* RecommendSuccessCell1.m in Sources */,
 				0CED0BD921E6E4000016A029 /* RecommendSuccessCell.m in Sources */,
 				0CD90A8320E1DB9B00061B4A /* ReportRoomDetailView.m in Sources */,
+				10F7D0D121F83B17007818E3 /* AddContractCell5.m in Sources */,
 				0C2883B7210EB13B00F69C5F /* RentingRoomMaintainVC.m in Sources */,
 				0C9CD45621058184004894A3 /* RentingComRoomDetailVC.m in Sources */,
 				10174C0B2072179300D00B9A /* LicenceCell.m in Sources */,
@@ -7618,6 +7635,7 @@
 				0CD90A5D20DB7C4F00061B4A /* AgencyProtocolDetailVC.m in Sources */,
 				1086667E218952A8002473E0 /* UITabBarItem+CYLTabBarControllerExtention.m in Sources */,
 				0CDD6FE320CF6F6A00D6609C /* DealRecordVC.m in Sources */,
+				10F7D0D421F83B23007818E3 /* AddContractCell6.m in Sources */,
 				105E18E2206B41980031558D /* WorkMessageCell.m in Sources */,
 				0CF04F9A207CBBCB00A45F4A /* AuthenedTableHeader.m in Sources */,
 				105E1902206CF0B10031558D /* BorderTF.m in Sources */,

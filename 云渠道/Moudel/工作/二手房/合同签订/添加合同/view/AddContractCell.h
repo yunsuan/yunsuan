@@ -12,8 +12,29 @@
 #import "BorderTF.h"
 
 NS_ASSUME_NONNULL_BEGIN
+typedef void(^CardTimeBlock)(void);
+typedef void(^CancelTimeBlock)(void);
+typedef void(^PaywWayBlock)(void);
+typedef void(^BuyReasonBlock)(void);
+typedef void(^SellReasonBlock)(void);
+
+typedef void(^TextFiledBlock)(void);
+
+
 
 @interface AddContractCell : UITableViewCell
+//交易信息
+
+@property (nonatomic, copy) CardTimeBlock cardTimeBlock;
+
+@property (nonatomic, copy) CancelTimeBlock cancelTimeBlock;
+
+@property (nonatomic, copy) PaywWayBlock paywWayBlock;
+
+@property (nonatomic, copy) BuyReasonBlock buyReasonBlock;
+
+@property (nonatomic, copy) SellReasonBlock sellReasonBlock;
+
 
 @property (nonatomic, strong) UILabel *codeL;
 

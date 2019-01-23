@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface AddContractCell2 : UITableViewCell
+//无客源模式
+
 @property (nonatomic , strong) UIButton *addbtn;
 
 @property (nonatomic , strong) UIButton *choosebtn;
