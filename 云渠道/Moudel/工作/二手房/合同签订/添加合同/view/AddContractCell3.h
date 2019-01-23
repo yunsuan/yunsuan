@@ -15,23 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AddContractCell3 : UITableViewCell
 
-@property (nonatomic, strong) UILabel *payWayL;
-
-@property (nonatomic, strong) UILabel *allPriceL;
-
-@property (nonatomic, strong) UILabel *priceL;
-
-@property (nonatomic, strong) UILabel *payTimeL;
-
-@property (nonatomic, strong) DropDownBtn *payTimeBtn;
-
-@property (nonatomic, strong) UILabel *payPriceL;
-
-@property (nonatomic, strong) BorderTF *payPriceTF;
-
-@property (nonatomic, strong) UILabel *loanBankL;
-
-@property (nonatomic, strong) BorderTF *loanBankTF;
+@property (nonatomic , strong) UIButton *choosebtn;
 
 @end
 

@@ -31,9 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) BorderTF *sellBreachTF;
 
-@property (nonatomic, strong) UILabel *costL;
+@property (nonatomic, strong) UILabel *buyCommissionL;
 
-@property (nonatomic, strong) BorderTF *costTF;
+@property (nonatomic, strong) BorderTF *buyCommissionTF;
+
+@property (nonatomic, strong) UILabel *sellCommissionL;
+
+@property (nonatomic, strong) BorderTF *sellCommissionTF;
 
 @property (nonatomic, strong) UILabel *loanTimeL;
 
@@ -43,13 +47,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) DropDownBtn *cardTimeBtn;
 
-@property (nonatomic, strong) UILabel *mortgageTimeL;
-
-@property (nonatomic, strong) DropDownBtn *mortgageTimeBtn;
-
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) DropDownBtn *payWayBtn;
+
+@property (nonatomic, strong) UILabel *buyReasonL;
+
+@property (nonatomic, strong) DropDownBtn *buyReasonBtn;
+
+@property (nonatomic, strong) UILabel *sellReasonL;
+
+@property (nonatomic, strong) DropDownBtn *sellReasonBtn;
+
+@property (nonatomic, strong)UILabel *notesL;
+
+@property (nonatomic, strong)UITextView *notesTV;
 
 @end
 

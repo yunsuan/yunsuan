@@ -81,40 +81,40 @@
     
     AddContractVC *nextVC = [[AddContractVC alloc] init];
     [self.navigationController pushViewController:nextVC animated:YES];
-    [BaseRequest GET:HouseSubNeedAgent_URL parameters:nil success:^(id resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-//            RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
-//            NSMutableDictionary *dic = [resposeObject[@"data"] mutableCopy];
-//            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//            [formatter setDateFormat:@"YYYY/MM/dd"];
-//            [dic setObject:[formatter stringFromDate:[NSDate date]] forKey:@"regist_time"];
-//            [dic setObject:dic[@"name"] forKey:@"agent_name"];
-//            [dic setObject:dic[@"tel"] forKey:@"agent_tel"];
+//    [BaseRequest GET:HouseSubNeedAgent_URL parameters:nil success:^(id resposeObject) {
 //
+//        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
 //
-//            nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
-//            //            nextVC.handleDic
-//            nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:[@{} mutableCopy]];
-//            //            nextVC.roomAgencyAddProtocolVCBlock = ^{
-//            //
-//            //                if (self.maintainDetailVCBlock) {
-//            //
-//            //                    self.maintainDetailVCBlock();
-//            //                }
-//            //            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
-            
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-        NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
-    }];
+////            RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
+////            NSMutableDictionary *dic = [resposeObject[@"data"] mutableCopy];
+////            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+////            [formatter setDateFormat:@"YYYY/MM/dd"];
+////            [dic setObject:[formatter stringFromDate:[NSDate date]] forKey:@"regist_time"];
+////            [dic setObject:dic[@"name"] forKey:@"agent_name"];
+////            [dic setObject:dic[@"tel"] forKey:@"agent_tel"];
+////
+////
+////            nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+////            //            nextVC.handleDic
+////            nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:[@{} mutableCopy]];
+////            //            nextVC.roomAgencyAddProtocolVCBlock = ^{
+////            //
+////            //                if (self.maintainDetailVCBlock) {
+////            //
+////            //                    self.maintainDetailVCBlock();
+////            //                }
+////            //            };
+////            [self.navigationController pushViewController:nextVC animated:YES];
+//        }else{
+//
+//            [self showContent:resposeObject[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        NSLog(@"%@",error);
+//        [self showContent:@"网络错误"];
+//    }];
 }
 
 #pragma mark -- collectionview

@@ -7,26 +7,28 @@
 //
 
 #import "AddContractVC.h"
+#import "AddPeopleVC.h"
+#import "ChooseHouseVC.h"
+#import "ChooseCustomerVC.h"
+
 
 #import "SelectCustomVC.h"
 
 #import "BlueTitleMoreHeader.h"
-#import "RoomAgencyAddProtocolCell.h"
-#import "RoomAgencyAddProtocolCell2.h"
-#import "RoomAgencyAddProtocolCell3.h"
 #import "AddContractCell.h"
 #import "AddContractCell2.h"
-
+#import "AddContractCell3.h"
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 
 
 @interface AddContractVC ()<UITableViewDelegate,UITableViewDataSource>
 {
-    
-    NSDateFormatter *_formatter;
     NSArray *_titleArr;
     NSMutableArray *_foldArr;
+    NSMutableDictionary *_tradedic;
+    NSMutableArray *_buyarr;
+    NSMutableArray *_sellarr;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -47,11 +49,25 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"买方信息",@"经办人信息",@"房源信息",@"卖方信息",@"合同信息",@"付款信息",@"买卖方支付"];
-    _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0",@"0",@"0",@"0",@"0"]];
-//    _roomDic = [@{} mutableCopy];
-    _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY/MM/dd"];
+    _titleArr = @[@"交易信息",@"买方信息",@"卖方信息"];
+    _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0"]];
+    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"0":@"",
+                                                               @"1":@"",
+                                                               @"2":@"",
+                                                               @"3":@"",
+                                                               @"4":@"",
+                                                               @"5":@"",
+                                                               @"6":@"",
+                                                               @"7":@"",
+                                                               @"8":@"",
+                                                               @"9":@"",
+                                                               @"10":@"",
+                                                               @"11":@""
+                                                               }];  //替换0～11为接口需要的键值
+    _buyarr =[NSMutableArray arrayWithArray:@[@""]];
+    _sellarr =[NSMutableArray arrayWithArray:@[@""]];
+    
+    
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
@@ -70,12 +86,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if ([_foldArr[section] integerValue]) {
-        
         if (section == 0) {
-            
             return 1;
         }
-        return 1;
+        else if(section ==1)
+        {
+            return _buyarr.count;
+        }else{
+            return _sellarr.count;
+        }
     }
     return 0;
 }
@@ -169,336 +188,39 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
+    AddContractCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell"];
+    if (!cell) {
         
-        RoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell"];
-        if (!cell) {
-            cell = [[RoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell"];
-        }
-        cell.tag = indexPath.row;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.nameL.text = @"权益人：";
-//        cell.dic = _dataArr[indexPath.row];
-        //加号添加客户
-        __weak __typeof(&*cell)weakCell = cell;
-        cell.roomAgencyAddProtocolCellBlock = ^(NSInteger index) {
-            
-            SelectCustomVC *nextVC = [[SelectCustomVC alloc] init];
-            nextVC.selectCustomVCBlock = ^(CustomerTableModel * _Nonnull model) {
-                NSDictionary *dic = @{
-                                      @"address":model.address,
-                                      @"card_id":[NSString stringWithFormat:@"%@",model.card_id],
-                                      @"card_type":[NSString stringWithFormat:@"%@",model.card_type],
-                                      @"card_type_name":@"",
-                                      @"contact_id":@"",
-                                      @"report_type":@"",
-                                      @"name":model.name,
-                                      @"sex":[NSString stringWithFormat:@"%@",model.sex],
-                                      @"tel":[model.tel componentsSeparatedByString:@","],
-                                      };
-//                [_dataArr replaceObjectAtIndex:index withObject:dic];
-//                cell.dic = _dataArr[indexPath.row];
-                //                        [tableView reloadData];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
-        };
-        //选择男女
-        cell.roomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
-            [weakCell.nameTF.textfield resignFirstResponder];
-            [weakCell.phoneTF.textfield resignFirstResponder];
-            [weakCell.phoneTF2.textfield resignFirstResponder];
-
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-                //                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-//                [dic setObject:@"1" forKey:@"sex"];
-//                [_dataArr replaceObjectAtIndex:index withObject:dic];
-//                cell.dic = _dataArr[indexPath.row];
-
-            }];
-            UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-//                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-//                [dic setObject:@"2" forKey:@"sex"];
-//                [_dataArr replaceObjectAtIndex:index withObject:dic];
-//                cell.dic = _dataArr[indexPath.row];
-            }];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            }];
-            [alert addAction:male];
-            [alert addAction:female];
-            [alert addAction:cancel];
-            [self.navigationController presentViewController:alert animated:YES completion:^{
-            }];
-            
-        };
-        cell.RoomAgencyBlock = ^(NSInteger index, NSDictionary *datadic) {
-//            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-//            if (datadic[@"name"]) {
-//                [dic setObject:datadic[@"name"] forKey:@"name"];
-//            }
-//            if (datadic[@"card_id"]) {
-//                [dic setObject:datadic[@"card_id"] forKey:@"card_id"];
-//            }
-//            if (datadic[@"address"]) {
-//                [dic setObject:datadic[@"address"] forKey:@"address"];
-//            }
-//
-//            NSMutableArray *telarr = [dic[@"tel"] mutableCopy];
-//
-//            if (datadic[@"tel1"]) {
-//                telarr[0] = datadic[@"tel1"];
-//            }
-//
-//            if (datadic[@"tel2"]) {
-//                telarr[1] = datadic[@"tel2"];
-//            }
-//            [dic setObject:telarr forKey:@"tel"];
-//            [_dataArr replaceObjectAtIndex:index withObject:dic];
-        };
+        cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
         
-        //选择证件类型
-        cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
-            
-            [weakCell.nameTF.textfield resignFirstResponder];
-            [weakCell.phoneTF.textfield resignFirstResponder];
-            [weakCell.phoneTF2.textfield resignFirstResponder];
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self     getDetailConfigArrByConfigState:2]];
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-
-                //                NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-//                [tempDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"card_type"];
-//                [tempDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"card_type_name"];
-//                [_dataArr replaceObjectAtIndex:index withObject:tempDic];
-//                cell.dic = _dataArr[indexPath.row];
-            };
-            [self.view addSubview:view];
-        };
-        return cell;
-    }else if(indexPath.section == 1){
-        
-        RoomAgencyAddProtocolCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell2"];
-        if (!cell) {
-            cell = [[RoomAgencyAddProtocolCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell2"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-//        if (self.handleDic.count) {
-//            [cell setDataByDic:self.handleDic];
-//        }
-        __weak RoomAgencyAddProtocolCell2 *weakcell = cell;
-        cell.roomAgencyAddProtocolCell2TimeBlock = ^{
-            DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
-            view.dateblock = ^(NSDate *date) {
-                weakcell.timeBtn.content.text = [self->_formatter stringFromDate:date];
-                weakcell.timeBtn->str = [self->_formatter stringFromDate:date];
-//                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
-            };
-            [self.view addSubview:view];
-        };
-        cell.roomAgencyAddProtocolCell2SexBlock = ^{
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                weakcell.genderTF->str = @"1";
-                weakcell.genderTF.content.text = @"男";
-//                [self.handleDic setObject:@"1" forKey:@"sex"];
-            }];
-            UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                weakcell.genderTF->str = @"2";
-                weakcell.genderTF.content.text = @"女";
-//                [self.handleDic setObject:@"2" forKey:@"sex"];
-            }];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            }];
-            [alert addAction:male];
-            [alert addAction:female];
-            [alert addAction:cancel];
-            [self.navigationController presentViewController:alert animated:YES completion:^{
-            }];
-        };
-        cell.roomAgencyCell2Block = ^{
-            
-//            if (cell.datadic[@"agent_name"]) {
-//                [self.handleDic setObject:weakcell.datadic[@"agent_name"] forKey:@"agent_name"];
-//            }
-//            if (cell.datadic[@"agent_tel"]) {
-//                [self.handleDic setObject:weakcell.datadic[@"agent_tel"] forKey:@"agent_tel"];
-//            }
-        };
-        
-        return cell;
     }
-    else if (indexPath.section == 2){
-        
-        RoomAgencyAddProtocolCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell3"];
-        if (!cell) {
-            cell = [[RoomAgencyAddProtocolCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell3"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        if ([_roomDic count]) {
-//            [cell setDataByDic:_roomDic];
-//        }
-        
-        WS(weakSelf);
-        cell.changeblock = ^{
-//            if (_housedic.count) {
-//                SecComAllRoomListVC *nextVC = [[SecComAllRoomListVC alloc] initWithProjectId:_housedic[@"project_id"] city:@""];
-//                nextVC.status = @"protocol";
-//                nextVC.secComAllRoomListVCBlock = ^(SecdaryAllTableModel *model) {
-//                    _houseId = model.house_id;
-//                    [weakSelf RequestMethod];
-//                };
-//                [self.navigationController pushViewController:nextVC animated:YES];
-//            }else{
-//                RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
-//                nextVC.status = @"selectSec";
-//                nextVC.roomReportAddModelBlock = ^(SecdaryAllTableModel *model) {
-//                    _houseId = model.house_id;
-//                    [weakSelf RequestMethod];
-//                };
-//                [self.navigationController pushViewController:nextVC animated:YES];
-//            }
-        };
-        cell.roomAgencyCell3Block = ^(NSString *homeland) {
-            
-//            [_roomDic setObject:homeland forKey:@"land_use_permit_code"];
-        };
-        
-        return cell;
-        
-    }else if(indexPath.section == 3){
-        
-        RoomAgencyAddProtocolCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomAgencyAddProtocolCell"];
-        if (!cell) {
-            cell = [[RoomAgencyAddProtocolCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomAgencyAddProtocolCell"];
-        }
-        cell.tag = indexPath.row;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.nameL.text = @"权益人：";
-        //        cell.dic = _dataArr[indexPath.row];
-        //加号添加客户
-        __weak __typeof(&*cell)weakCell = cell;
-        cell.roomAgencyAddProtocolCellBlock = ^(NSInteger index) {
-            
-            SelectCustomVC *nextVC = [[SelectCustomVC alloc] init];
-            nextVC.selectCustomVCBlock = ^(CustomerTableModel * _Nonnull model) {
-                NSDictionary *dic = @{
-                                      @"address":model.address,
-                                      @"card_id":[NSString stringWithFormat:@"%@",model.card_id],
-                                      @"card_type":[NSString stringWithFormat:@"%@",model.card_type],
-                                      @"card_type_name":@"",
-                                      @"contact_id":@"",
-                                      @"report_type":@"",
-                                      @"name":model.name,
-                                      @"sex":[NSString stringWithFormat:@"%@",model.sex],
-                                      @"tel":[model.tel componentsSeparatedByString:@","],
-                                      };
-                //                [_dataArr replaceObjectAtIndex:index withObject:dic];
-                //                cell.dic = _dataArr[indexPath.row];
-                //                        [tableView reloadData];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
-        };
-        //选择男女
-        cell.roomAgencyAddProtocolCellSexBlock = ^(NSInteger index) {
-            [weakCell.nameTF.textfield resignFirstResponder];
-            [weakCell.phoneTF.textfield resignFirstResponder];
-            [weakCell.phoneTF2.textfield resignFirstResponder];
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                //                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-                //                [dic setObject:@"1" forKey:@"sex"];
-                //                [_dataArr replaceObjectAtIndex:index withObject:dic];
-                //                cell.dic = _dataArr[indexPath.row];
-                
-            }];
-            UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                //                NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-                //                [dic setObject:@"2" forKey:@"sex"];
-                //                [_dataArr replaceObjectAtIndex:index withObject:dic];
-                //                cell.dic = _dataArr[indexPath.row];
-            }];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            }];
-            [alert addAction:male];
-            [alert addAction:female];
-            [alert addAction:cancel];
-            [self.navigationController presentViewController:alert animated:YES completion:^{
-            }];
-            
-        };
-        cell.RoomAgencyBlock = ^(NSInteger index, NSDictionary *datadic) {
-            //            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-            //            if (datadic[@"name"]) {
-            //                [dic setObject:datadic[@"name"] forKey:@"name"];
-            //            }
-            //            if (datadic[@"card_id"]) {
-            //                [dic setObject:datadic[@"card_id"] forKey:@"card_id"];
-            //            }
-            //            if (datadic[@"address"]) {
-            //                [dic setObject:datadic[@"address"] forKey:@"address"];
-            //            }
-            //
-            //            NSMutableArray *telarr = [dic[@"tel"] mutableCopy];
-            //
-            //            if (datadic[@"tel1"]) {
-            //                telarr[0] = datadic[@"tel1"];
-            //            }
-            //
-            //            if (datadic[@"tel2"]) {
-            //                telarr[1] = datadic[@"tel2"];
-            //            }
-            //            [dic setObject:telarr forKey:@"tel"];
-            //            [_dataArr replaceObjectAtIndex:index withObject:dic];
-        };
-        
-        //选择证件类型
-        cell.roomAgencyAddProtocolCellCardBlock = ^(NSInteger index) {
-            
-            [weakCell.nameTF.textfield resignFirstResponder];
-            [weakCell.phoneTF.textfield resignFirstResponder];
-            [weakCell.phoneTF2.textfield resignFirstResponder];
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self     getDetailConfigArrByConfigState:2]];
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                //                NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[index]];
-                //                [tempDic setObject:[NSString stringWithFormat:@"%@",ID] forKey:@"card_type"];
-                //                [tempDic setObject:[NSString stringWithFormat:@"%@",MC] forKey:@"card_type_name"];
-                //                [_dataArr replaceObjectAtIndex:index withObject:tempDic];
-                //                cell.dic = _dataArr[indexPath.row];
-            };
-            [self.view addSubview:view];
-        };
-        return cell;
-    }else if (indexPath.section == 4){
-        
-        AddContractCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell"];
-        if (!cell) {
-            
-            cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-        
-    }else if (indexPath.section == 5){
-        
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    return cell;
+    }else if (indexPath.section == 1) {
+    
         AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
         if (!cell) {
             
             cell = [[AddContractCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell2"];
+            [cell.addbtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+            [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         return cell;
+    }else {
         
-    }else{
-        
-        return [[UITableViewCell alloc] init];
+        AddContractCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell3"];
+        if (!cell) {
+            
+            cell = [[AddContractCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell3"];
+            [cell.choosebtn addTarget:self action:@selector(action_chooseseller) forControlEvents:UIControlEventTouchUpInside];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
+        return cell;
     }
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -506,12 +228,47 @@
     
 }
 
+
+#pragma mark  -----action-----
+-(void)action_addbuyer
+{
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+-(void)action_addseller
+{
+//    MaintainModifyCustomVC *nextVC = [[MaintainModifyCustomVC alloc] init];
+////    nextVC.houseId = _houseId;
+//    nextVC.status = @"添加";
+//    nextVC.maintainModifyCustomVCBlock = ^(NSDictionary *dic) {
+//
+//    };
+//    [self.navigationController pushViewController:nextVC animated:YES];
+}
+
+-(void)action_choosebuyer
+{
+    ChooseCustomerVC *vc =[[ChooseCustomerVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)action_chooseseller
+{
+    ChooseHouseVC *vc =[[ChooseHouseVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"添加合同";
-    
-    
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
     _table.rowHeight = UITableViewAutomaticDimension;
     _table.estimatedRowHeight = 423 *SIZE;
@@ -527,7 +284,7 @@
     _nextBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_nextBtn addTarget:self action:@selector(ActionNextBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
-    [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
+    [_nextBtn setTitle:@"确定" forState:UIControlStateNormal];
     [self.view addSubview:_nextBtn];
 }
 @end

@@ -88,13 +88,7 @@
         make.width.mas_equalTo(340 *SIZE);
     }];
     
-    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_phoneL.mas_bottom).offset(15 *SIZE);
-        make.width.mas_equalTo(SCREEN_Width);
-        make.bottom.equalTo(self.contentView).offset(0 *SIZE);
-    }];
+    
 }
 
 @end
