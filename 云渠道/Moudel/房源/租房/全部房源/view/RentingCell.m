@@ -112,7 +112,7 @@
     _titleL = [[UILabel alloc] init];
     _titleL.textColor = YJTitleLabColor;
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _titleL.numberOfLines = 0;
+//    _titleL.numberOfLines = 0;
     [self.contentView addSubview:_titleL];
     
     _roomLevelL = [[UILabel alloc] init];
@@ -123,7 +123,7 @@
     _contentL = [[UILabel alloc] init];
     _contentL.textColor = YJContentLabColor;
     _contentL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _contentL.numberOfLines = 0;
+//    _contentL.numberOfLines = 0;
     [self.contentView addSubview:_contentL];
     
     _priceL = [[UILabel alloc] init];

@@ -87,7 +87,7 @@
     _complainL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_complainL];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 113 *SIZE, SCREEN_Width, SIZE)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 112 *SIZE, SCREEN_Width, SIZE)];
     line.backgroundColor = YJBackColor;
     [self.contentView addSubview:line];
 }

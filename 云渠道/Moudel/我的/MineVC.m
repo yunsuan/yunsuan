@@ -301,6 +301,9 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    NSLog(@"%@",info);
+    
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         if ([info[UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
             UIImage *originalImage = [self fixOrientation:info[UIImagePickerControllerOriginalImage]];

@@ -42,7 +42,7 @@
         
         _numL.text = @"0/0";
     }
-    [_imgScroll setContentSize:CGSizeMake(imgArr.count *SCREEN_Width, 183 *SIZE)];
+    [_imgScroll setContentSize:CGSizeMake(imgArr.count *SCREEN_Width, 202.5 *SIZE)];
     for (UIView *view in _imgScroll.subviews) {
         
         [view removeFromSuperview];
@@ -52,7 +52,7 @@
         
         for (int i = 0; i < imgArr.count; i++) {
             
-            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, 183 *SIZE)];
+            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, 202.5 *SIZE)];
             img.contentMode = UIViewContentModeScaleAspectFill;
             img.clipsToBounds = YES;
             NSString *imgname = imgArr[i][@"img_url"];
@@ -77,7 +77,7 @@
         }
     }else{
         
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.clipsToBounds = YES;
         img.image = [UIImage imageNamed:@"banner_default_2"];
@@ -175,7 +175,7 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
+    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
     _imgScroll.pagingEnabled = YES;
     _imgScroll.delegate = self;
     _imgScroll.showsVerticalScrollIndicator = NO;
@@ -188,7 +188,7 @@
     //    [_ImgBtn addTarget:self action:@selector(ActionImgBtn:) forControlEvents:UIControlEventTouchUpInside];
     //    [self.contentView addSubview:_ImgBtn];
     
-    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 144 *SIZE, 30 *SIZE, 30 *SIZE)];
+    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 164.5 *SIZE, 30 *SIZE, 30 *SIZE)];
     _numL.backgroundColor = COLOR(255, 255, 255, 0.6);
     _numL.textColor = YJTitleLabColor;
     _numL.font = [UIFont systemFontOfSize:10 *SIZE];
@@ -233,7 +233,7 @@
     _priceL.font = [UIFont systemFontOfSize:16 *SIZE];
     [self.contentView addSubview:_priceL];
     
-    UIImageView *addressImg = [[UIImageView alloc] initWithFrame:CGRectMake(11 *SIZE, 335 *SIZE, 16 *SIZE, 16 *SIZE)];
+    UIImageView *addressImg = [[UIImageView alloc] initWithFrame:CGRectMake(11 *SIZE, 354.5 *SIZE, 16 *SIZE, 16 *SIZE)];
     addressImg.image = [UIImage imageNamed:@"map"];
     [self.contentView addSubview:addressImg];
     
@@ -244,10 +244,10 @@
     _addressL.userInteractionEnabled = YES;
     [_addressL addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action_map)]];
     
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
+    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 235.5 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
     [self.contentView addSubview:_wuyeview];
     
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
+    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 264.5 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
     [self.contentView addSubview:_tagview];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];

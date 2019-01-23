@@ -464,7 +464,7 @@
     
     if (!section) {
         
-        return 368 *SIZE;
+        return 387.5 *SIZE;
     }else{
         
         if (section == 6) {
@@ -489,7 +489,7 @@
         RoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RoomDetailTableHeader"];
         if (!header) {
             
-            header = [[RoomDetailTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 383 *SIZE)];
+            header = [[RoomDetailTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 402.5 *SIZE)];
         }
         
         header.model = _model;

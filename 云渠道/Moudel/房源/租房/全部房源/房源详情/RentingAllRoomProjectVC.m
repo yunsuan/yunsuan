@@ -258,13 +258,14 @@
     }
     if (section == 3) {
         
-        if (_model.match_tags.count) {
-            
-            return 1;
-        }else{
-            
-            return 0;
-        }
+        return 1;
+//        if (_model.match_tags.count) {
+//
+//
+//        }else{
+//
+//            return 0;
+//        }
     }
     return 1;
 }
@@ -565,13 +566,6 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            //        if (_houseArr.count) {
-            //
-            //            cell.num = _houseArr.count;
-            //        }else{
-            //
-            //            cell.num = 1;
-            //        }
             cell.num = _houseArr.count;
             
             if (_houseArr.count) {

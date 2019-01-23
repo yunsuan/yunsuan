@@ -154,6 +154,9 @@ static NSString *const PersonalMyTeamList_URL = @"agent/personal/myTeamList";
 
 #pragma mark ---  客源  ---
 
+//客源统计
+static NSString *const ClientList_URL = @"agent/client/list";
+
 //1客户列表
 //static NSString *const ListClient_URL = @"agent/client/list";
 static NSString *const ListClient_URL = @"agent/client/list/v2.7";

@@ -16,6 +16,7 @@
     
     NSArray *_titleArr;
     NSArray *_imgArr;
+    NSArray *_dataArr;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -30,12 +31,35 @@
     
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
 }
 
 - (void)initDataSource{
     
     _titleArr = @[@"新房客户",@"二手房客户",@"租房客户"];
     _imgArr = @[@"新房",@"二手房",@"租房"];
+    _dataArr = @[@"",@"",@""];
+}
+
+- (void)RequestMethod{
+    
+    [BaseRequest GET:ClientList_URL parameters:nil success:^(id resposeObject) {
+        
+        [_table.mj_header endRefreshing];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            _dataArr = @[[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"project"][@"today"],resposeObject[@"data"][@"project"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"house"][@"today"],resposeObject[@"data"][@"house"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]]];
+            [_table reloadData];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+       
+        [_table.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -57,7 +81,7 @@
         cell = [[WorkingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell setTitle:_titleArr[indexPath.row] content:@"" img:_imgArr[indexPath.row]];
+    [cell setTitle:_titleArr[indexPath.row] content:_dataArr[indexPath.row] img:_imgArr[indexPath.row]];
     
     return cell;
 }
@@ -82,6 +106,11 @@
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_table];
+    _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        [self RequestMethod];
+    }];
+    
 }
 
 

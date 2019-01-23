@@ -250,7 +250,7 @@
         // 2、设置支持的媒体格式
         _imagePickerController.mediaTypes = @[mediaTypes[0]];
         // 3、其他设置
-        _imagePickerController.allowsEditing = YES; // 如果设置为NO，当用户选择了图片之后不会进入图像编辑界面。
+        _imagePickerController.allowsEditing = NO; // 如果设置为NO，当用户选择了图片之后不会进入图像编辑界面。
         // 4、推送图片拾取器控制器
         [self presentViewController:_imagePickerController animated:YES completion:nil];
     }
@@ -301,7 +301,7 @@
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         if ([info[UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
             
-            _image = info[UIImagePickerControllerOriginalImage];;
+            _image = [self cropSquareImage:[self fixOrientation:info[UIImagePickerControllerOriginalImage]]];
             
             if (_index < [_ImgArr count]) {
                 
@@ -361,7 +361,7 @@
         }
     }else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
         
-        _image = info[UIImagePickerControllerOriginalImage];;
+        _image = [self cropSquareImage:info[UIImagePickerControllerOriginalImage]];
         
         if (_index < [_ImgArr count]) {
             

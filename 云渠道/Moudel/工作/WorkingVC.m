@@ -316,7 +316,7 @@
 //        if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
 //            if (indexPath.row == 0) {
 //
-//                RecommendVC *nextVC = [[RecommendVC alloc] init];
+//                RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
 //                [self.navigationController pushViewController:nextVC animated:YES];
 //            }
 //        }

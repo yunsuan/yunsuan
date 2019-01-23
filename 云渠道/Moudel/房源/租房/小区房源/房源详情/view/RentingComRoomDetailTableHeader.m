@@ -42,7 +42,7 @@
         
         _numL.text = @"0/0";
     }
-    [_imgScroll setContentSize:CGSizeMake(imgArr.count *SCREEN_Width, 183 *SIZE)];
+    [_imgScroll setContentSize:CGSizeMake(imgArr.count *SCREEN_Width, 202.5 *SIZE)];
     for (UIView *view in _imgScroll.subviews) {
         
         [view removeFromSuperview];
@@ -52,7 +52,7 @@
         
         for (int i = 0; i < imgArr.count; i++) {
             
-            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, 183 *SIZE)];
+            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, 202.5 *SIZE)];
             img.contentMode = UIViewContentModeScaleAspectFill;
             img.clipsToBounds = YES;
             NSString *imageurl = imgArr[i][@"img_url"];
@@ -75,7 +75,7 @@
         }
     }else{
         
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.clipsToBounds = YES;
         img.image = [UIImage imageNamed:@"banner_default_2"];
@@ -201,7 +201,7 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 183 *SIZE)];
+    _imgScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 202.5 *SIZE)];
     _imgScroll.pagingEnabled = YES;
     _imgScroll.delegate = self;
     _imgScroll.showsVerticalScrollIndicator = NO;
@@ -210,7 +210,7 @@
     [self.contentView addSubview:_imgScroll];
     
     
-    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 144 *SIZE, 30 *SIZE, 30 *SIZE)];
+    _numL = [[UILabel alloc] initWithFrame:CGRectMake(319 *SIZE, 163.5 *SIZE, 30 *SIZE, 30 *SIZE)];
     _numL.backgroundColor = COLOR(255, 255, 255, 0.6);
     _numL.textColor = YJTitleLabColor;
     _numL.font = [UIFont systemFontOfSize:10 *SIZE];
@@ -243,12 +243,12 @@
     _attentL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_attentL];
     
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"0"];
+    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 235.5 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"0"];
     _wuyeview.collectionview.userInteractionEnabled = NO;
     _wuyeview.userInteractionEnabled = NO;
     [self.contentView addSubview:_wuyeview];
     
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10*SIZE, 245*SIZE, 200*SIZE, 20 *SIZE)  type:@"1"];
+    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10*SIZE, 265.5*SIZE, 200*SIZE, 20 *SIZE)  type:@"1"];
     _tagview.collectionview.userInteractionEnabled = NO;
     _tagview.userInteractionEnabled = NO;
     [self.contentView addSubview:_tagview];
@@ -277,7 +277,7 @@
     [_moreBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
     //    [self.contentView addSubview:_moreBtn];
     
-    _btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 344 *SIZE, SCREEN_Width, 107 *SIZE)];
+    _btnView = [[UIView alloc] initWithFrame:CGRectMake(0, 363.5 *SIZE, SCREEN_Width, 107 *SIZE)];
     _btnView.backgroundColor = [UIColor whiteColor];
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width , SIZE)];
     line.backgroundColor = YJBackColor;
@@ -317,14 +317,14 @@
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(11 *SIZE);
-        make.top.equalTo(self.contentView).offset(193 *SIZE);
+        make.top.equalTo(self.contentView).offset(212.5 *SIZE);
         make.right.equalTo(self.contentView).offset(-60 *SIZE);
     }];
     
     [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(320 *SIZE);
-        make.top.equalTo(self.contentView).offset(193 *SIZE);
+        make.top.equalTo(self.contentView).offset(212.5 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
     
