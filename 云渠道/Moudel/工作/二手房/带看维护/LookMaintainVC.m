@@ -8,7 +8,7 @@
 
 #import "LookMaintainVC.h"
 
-#import "CustomLookConfirmCell.h"
+#import "LookMaintainCell.h"
 
 @interface LookMaintainVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
@@ -134,16 +134,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CustomLookConfirmCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomLookConfirmCell"];
+    LookMaintainCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LookMaintainCell"];
     if (!cell) {
         
-        cell = [[CustomLookConfirmCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomLookConfirmCell"];
+        cell = [[LookMaintainCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LookMaintainCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.tag = indexPath.row;
     
-    cell.dataDic = _dataArr[indexPath.row];
+//    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }
