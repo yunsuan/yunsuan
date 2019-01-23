@@ -8,9 +8,9 @@
 
 #import "ComplaintVC.h"
 #import "SinglePickView.h"
-#import "RecommendVC.h"
-#import "BarginVC.h"
-#import "NomineeVC.h"
+#import "RecommendVC1.h"
+#import "BarginVC1.h"
+#import "NomineeVC1.h"
 
 #import "TypeZeroVC.h"
 
@@ -74,21 +74,21 @@
                 
                 for (UIViewController *vc in self.navigationController.viewControllers) {
                     
-                    if ([vc isKindOfClass:[RecommendVC class]]) {
+                    if ([vc isKindOfClass:[RecommendVC1 class]]) {
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                     
-                    if ([vc isKindOfClass:[NomineeVC class]]) {
+                    if ([vc isKindOfClass:[NomineeVC1 class]]) {
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                     
-                    if ([vc isKindOfClass:[BarginVC class]]) {
+                    if ([vc isKindOfClass:[BarginVC1 class]]) {
                         
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];

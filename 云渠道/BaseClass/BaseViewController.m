@@ -392,11 +392,19 @@
     
     CGFloat _imageWidth = image.size.width * image.scale;
     CGFloat _imageHeight = image.size.height * image.scale;
-    CGFloat _width = _imageWidth;//_imageWidth > _imageHeight ? _imageHeight : _imageWidth;
+    CGFloat _width = _imageWidth > _imageHeight ? _imageHeight : _imageWidth;
     CGFloat _offsetX = (_imageWidth - _width) / 2;
     CGFloat _offsetY = (_imageHeight - _width) / 2;
     
-    CGRect rect = CGRectMake(_offsetX, _offsetY, _imageWidth, _imageWidth * 9 / 16);
+    CGRect rect;
+    if (_imageHeight > _imageWidth * 9 / 16) {
+        
+        rect = CGRectMake(_offsetX, _offsetY, _imageWidth, _imageWidth * 9 / 16);
+    }else{
+        
+        rect = CGRectMake(_offsetX, _offsetY, _imageHeight * 16 / 9, _imageHeight);
+    }
+    
     CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);//按照给定的矩形区域进行剪裁
     UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
     

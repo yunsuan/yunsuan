@@ -10,7 +10,7 @@
 
 #import "DealedVC.h"
 
-#import "UnDealCell.h"
+#import "DealedCell.h"
 
 @interface BarginDealVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -147,17 +147,17 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    static NSString *CellIdentifier = @"UnDealCell";
+    static NSString *CellIdentifier = @"DealedCell";
     
-    UnDealCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    DealedCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[UnDealCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[DealedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.dataDic = _dataArr[indexPath.row];
     cell.tag = indexPath.row;
-    cell.unDealCellPhoneBtnBlock = ^(NSInteger index) {
+    cell.dealedCellPhoneBtnBlock = ^(NSInteger index) {
         
         NSString *phone = [_dataArr[index][@"tel"] componentsSeparatedByString:@","][0];
         if (phone.length) {
