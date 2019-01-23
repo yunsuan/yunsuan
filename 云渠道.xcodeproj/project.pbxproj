@@ -678,6 +678,11 @@
 		10DBB1F5207CCACE00CFE59D /* KyoCenterLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1ED207CCACE00CFE59D /* KyoCenterLineView.m */; };
 		10DBB1F6207CCACE00CFE59D /* KyoRowIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1EE207CCACE00CFE59D /* KyoRowIndexView.m */; };
 		10DBB1F7207CCACE00CFE59D /* SMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1F2207CCACE00CFE59D /* SMScrollView.m */; };
+		10F7D0BD21F70727007818E3 /* AddPeopleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0BC21F70727007818E3 /* AddPeopleVC.m */; };
+		10F7D0C221F70EFA007818E3 /* ChooseHouseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0C121F70EFA007818E3 /* ChooseHouseVC.m */; };
+		10F7D0C521F70F0B007818E3 /* ChooseCustomerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0C421F70F0B007818E3 /* ChooseCustomerVC.m */; };
+		10F7D0C821F71158007818E3 /* ChooseHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0C721F71158007818E3 /* ChooseHouseCell.m */; };
+		10F7D0CB21F71179007818E3 /* ChooseCustomerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0CA21F71179007818E3 /* ChooseCustomerCell.m */; };
 		10FA288921EF215D00617555 /* yindaoye2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288421EF215D00617555 /* yindaoye2.jpg */; };
 		10FA288A21EF215D00617555 /* yindaoye5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288521EF215D00617555 /* yindaoye5.jpg */; };
 		10FA288B21EF215D00617555 /* yindaoye1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288621EF215D00617555 /* yindaoye1.jpg */; };
@@ -2039,6 +2044,16 @@
 		10DBB1F0207CCACE00CFE59D /* KyoCinameSeatScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KyoCinameSeatScrollView.h; sourceTree = "<group>"; };
 		10DBB1F2207CCACE00CFE59D /* SMScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMScrollView.m; sourceTree = "<group>"; };
 		10DBB1F3207CCACE00CFE59D /* SMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMScrollView.h; sourceTree = "<group>"; };
+		10F7D0BB21F70727007818E3 /* AddPeopleVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddPeopleVC.h; sourceTree = "<group>"; };
+		10F7D0BC21F70727007818E3 /* AddPeopleVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddPeopleVC.m; sourceTree = "<group>"; };
+		10F7D0C021F70EFA007818E3 /* ChooseHouseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseHouseVC.h; sourceTree = "<group>"; };
+		10F7D0C121F70EFA007818E3 /* ChooseHouseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseHouseVC.m; sourceTree = "<group>"; };
+		10F7D0C321F70F0B007818E3 /* ChooseCustomerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseCustomerVC.h; sourceTree = "<group>"; };
+		10F7D0C421F70F0B007818E3 /* ChooseCustomerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseCustomerVC.m; sourceTree = "<group>"; };
+		10F7D0C621F71158007818E3 /* ChooseHouseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseHouseCell.h; sourceTree = "<group>"; };
+		10F7D0C721F71158007818E3 /* ChooseHouseCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseHouseCell.m; sourceTree = "<group>"; };
+		10F7D0C921F71179007818E3 /* ChooseCustomerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseCustomerCell.h; sourceTree = "<group>"; };
+		10F7D0CA21F71179007818E3 /* ChooseCustomerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseCustomerCell.m; sourceTree = "<group>"; };
 		10FA288421EF215D00617555 /* yindaoye2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye2.jpg; sourceTree = "<group>"; };
 		10FA288521EF215D00617555 /* yindaoye5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye5.jpg; sourceTree = "<group>"; };
 		10FA288621EF215D00617555 /* yindaoye1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye1.jpg; sourceTree = "<group>"; };
@@ -5582,6 +5597,9 @@
 		0CED0BFA21E740140016A029 /* 添加合同 */ = {
 			isa = PBXGroup;
 			children = (
+				10F7D0BE21F70EB7007818E3 /* 选择房源 */,
+				10F7D0BF21F70EB7007818E3 /* 选择客源 */,
+				10F7D0BA21F706EA007818E3 /* 添加权益人信息 */,
 				0CED0BFE21E82BAD0016A029 /* view */,
 				0CED0BFB21E740380016A029 /* AddContractVC.h */,
 				0CED0BFC21E740380016A029 /* AddContractVC.m */,
@@ -6856,6 +6874,37 @@
 			path = SESScrollView;
 			sourceTree = "<group>";
 		};
+		10F7D0BA21F706EA007818E3 /* 添加权益人信息 */ = {
+			isa = PBXGroup;
+			children = (
+				10F7D0BB21F70727007818E3 /* AddPeopleVC.h */,
+				10F7D0BC21F70727007818E3 /* AddPeopleVC.m */,
+			);
+			path = "添加权益人信息";
+			sourceTree = "<group>";
+		};
+		10F7D0BE21F70EB7007818E3 /* 选择房源 */ = {
+			isa = PBXGroup;
+			children = (
+				10F7D0C021F70EFA007818E3 /* ChooseHouseVC.h */,
+				10F7D0C121F70EFA007818E3 /* ChooseHouseVC.m */,
+				10F7D0C621F71158007818E3 /* ChooseHouseCell.h */,
+				10F7D0C721F71158007818E3 /* ChooseHouseCell.m */,
+			);
+			path = "选择房源";
+			sourceTree = "<group>";
+		};
+		10F7D0BF21F70EB7007818E3 /* 选择客源 */ = {
+			isa = PBXGroup;
+			children = (
+				10F7D0C321F70F0B007818E3 /* ChooseCustomerVC.h */,
+				10F7D0C421F70F0B007818E3 /* ChooseCustomerVC.m */,
+				10F7D0C921F71179007818E3 /* ChooseCustomerCell.h */,
+				10F7D0CA21F71179007818E3 /* ChooseCustomerCell.m */,
+			);
+			path = "选择客源";
+			sourceTree = "<group>";
+		};
 		588A381E570994FF347F095F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -7185,6 +7234,7 @@
 				105E189B20622C870031558D /* singleviewCell.m in Sources */,
 				0CC19D152071F2A60007CC5F /* BirthVC.m in Sources */,
 				0CD90A5A20DB7B4E00061B4A /* RoomAgencyProtocolCell.m in Sources */,
+				10F7D0BD21F70727007818E3 /* AddPeopleVC.m in Sources */,
 				0CF04F31207A145B00A45F4A /* CustomMatchListVC.m in Sources */,
 				0C0B82542064FF6400238D4F /* SystemMessageVC.m in Sources */,
 				0CDD704420D368B800D6609C /* RoomSurveyWaitVC.m in Sources */,
@@ -7216,6 +7266,7 @@
 				0C9CD4302100A66F004894A3 /* MaintainRoomInfoCell3.m in Sources */,
 				0C3062F220CE5FAD004D1996 /* SecComRoomDetailVC.m in Sources */,
 				0C997C4321E440BD00F805AA /* LookWorkVC.m in Sources */,
+				10F7D0C221F70EFA007818E3 /* ChooseHouseVC.m in Sources */,
 				0CDD6FF320CFAE4400D6609C /* ReportedVC.m in Sources */,
 				0C382E7020A03A01005472CD /* IdentifyTableCell.m in Sources */,
 				10255A7821A53D000042738C /* AlbumCollCell.m in Sources */,
@@ -7464,6 +7515,7 @@
 				0CDD6FD620CF623D00D6609C /* OverviewVC.m in Sources */,
 				0CD909E320D8A66600061B4A /* SurveySuccessRoomDetailVC.m in Sources */,
 				0CDD707620D3A79E00D6609C /* RoomSurveyingCell.m in Sources */,
+				10F7D0CB21F71179007818E3 /* ChooseCustomerCell.m in Sources */,
 				0CD90A3E20DA677600061B4A /* RoomAgencyDoneCell.m in Sources */,
 				0CB6BB082074C6DE00921C75 /* HouseHeaderCollCell.m in Sources */,
 				0CDD701B20D00E0800D6609C /* ReportWaitDetailVC.m in Sources */,
@@ -7643,6 +7695,7 @@
 				0CD90AA420E21D9600061B4A /* AddAlbumView.m in Sources */,
 				100D8F6D218004ED006839EB /* WMProgressView.m in Sources */,
 				0C0850EA214BA7810034ED44 /* SecAllRoomStoreVC.m in Sources */,
+				10F7D0C521F70F0B007818E3 /* ChooseCustomerVC.m in Sources */,
 				0C2883A32109A17200F69C5F /* RentingSurveyWaitDetailVC.m in Sources */,
 				10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */,
 				0C0BED1D20A18D94005A16A1 /* FailedDealCell.m in Sources */,
@@ -7689,6 +7742,7 @@
 				0C2883CB210EF60000F69C5F /* RentingRoomAgencyDoneVC.m in Sources */,
 				0C08BF66206CBC0B005BB3B4 /* BrokerageDetailTableCell2.m in Sources */,
 				0C0BED2020A18E76005A16A1 /* DealedCell.m in Sources */,
+				10F7D0C821F71158007818E3 /* ChooseHouseCell.m in Sources */,
 				0CD909C520D73FC300061B4A /* RoomSurveyComplaintCell.m in Sources */,
 				0C382E7320A03C7B005472CD /* IdentifyHeader.m in Sources */,
 				0CB6BAFF2074A82D00921C75 /* HouseTypeTableCell2.m in Sources */,

@@ -88,7 +88,7 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = _titleStr;
+    self.titleLabel.text = @"推荐详情";
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT)];
     _scrollView.backgroundColor = [UIColor whiteColor];

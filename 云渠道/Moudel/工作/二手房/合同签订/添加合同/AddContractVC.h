@@ -10,11 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^AddContractVCBlock)(void);
+
 
 @interface AddContractVC : BaseViewController
 
-@property (nonatomic, copy) AddContractVCBlock addContractVCBlock;
+
 
 @end
 
