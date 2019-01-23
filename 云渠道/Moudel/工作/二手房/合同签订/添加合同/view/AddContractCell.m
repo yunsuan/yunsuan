@@ -20,6 +20,54 @@
     return self;
 }
 
+
+-(void)action_cardTime
+{
+    if (self.cardTimeBlock !=nil) {
+        
+        self.cardTimeBlock();
+    }
+}
+
+-(void)action_cancelTime
+{
+    if (self.cancelTimeBlock !=nil) {
+        
+        self.cancelTimeBlock();
+    }
+}
+
+-(void)action_paywWay
+{
+    if (self.paywWayBlock !=nil) {
+        
+        self.paywWayBlock();
+    }
+}
+
+-(void)action_buyReason
+{
+    if (self.buyReasonBlock !=nil) {
+        
+        self.buyReasonBlock();
+    }
+}
+
+
+-(void)action_sellReason
+{
+    if (self.sellReasonBlock !=nil) {
+        
+        self.sellReasonBlock();
+    }
+}
+
+
+
+
+
+
+
 - (void)initUI{
     
     NSArray *titleArr = @[@"合同编号：",@"成交总价：",@"买方违约金额：",@"卖方违约金额：",@"买方支付佣金：",@"卖方支付佣金：",@"办证时间：",@"注销抵押时间：",@"付款方式：",@"买房原因：",@"卖房原因：",@"约定事项："];
@@ -165,30 +213,37 @@
                 case 6:
                 {
                     _loanTimeBtn = btn;
+                  
+                    [_loanTimeBtn addTarget:self action:@selector(action_cardTime) forControlEvents:UIControlEventTouchUpInside];
                     [self.contentView addSubview:_loanTimeBtn];
                     break;
                 }
                 case 7:
                 {
                     _cardTimeBtn = btn;
+                    [_cardTimeBtn addTarget:self action:@selector(action_cancelTime) forControlEvents:UIControlEventTouchUpInside];
+
                     [self.contentView addSubview:_cardTimeBtn];
                     break;
                 }
                 case 8:
                 {
                     _payWayBtn = btn;
+                    [_payWayBtn addTarget:self action:@selector(action_paywWay) forControlEvents:UIControlEventTouchUpInside];
                     [self.contentView addSubview:_payWayBtn];
                     break;
                 }
                 case 9:
                 {
                     _buyReasonBtn = btn;
+                    [_buyReasonBtn addTarget:self action:@selector(action_buyReason) forControlEvents:UIControlEventTouchUpInside];
                     [self.contentView addSubview:_buyReasonBtn];
                     break;
                 }
                 case 10:
                 {
                     _sellReasonBtn = btn;
+                    [_sellReasonBtn addTarget:self action:@selector(action_sellReason) forControlEvents:UIControlEventTouchUpInside];
                     [self.contentView addSubview:_sellReasonBtn];
                     break;
                 }

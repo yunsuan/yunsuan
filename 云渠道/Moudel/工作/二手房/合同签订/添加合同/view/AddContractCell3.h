@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AddContractCell3 : UITableViewCell
-
+//无房源模式
 @property (nonatomic , strong) UIButton *choosebtn;
 
 @end

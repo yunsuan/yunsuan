@@ -18,6 +18,9 @@
 #import "AddContractCell.h"
 #import "AddContractCell2.h"
 #import "AddContractCell3.h"
+#import "AddContractCell4.h"
+#import "AddContractCell5.h"
+#import "AddContractCell6.h"
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 
@@ -29,6 +32,7 @@
     NSMutableDictionary *_tradedic;
     NSMutableArray *_buyarr;
     NSMutableArray *_sellarr;
+    NSDateFormatter *_formatter;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -66,6 +70,8 @@
                                                                }];  //替换0～11为接口需要的键值
     _buyarr =[NSMutableArray arrayWithArray:@[@""]];
     _sellarr =[NSMutableArray arrayWithArray:@[@""]];
+    _formatter = [[NSDateFormatter alloc] init];
+    [_formatter setDateFormat:@"YYYY/MM/dd"];
     
     
 }
@@ -192,6 +198,63 @@
     if (!cell) {
         
         cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
+        
+        __weak AddContractCell *weakcell = cell;
+        cell.cardTimeBlock = ^{
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+            view.dateblock = ^(NSDate *date) {
+                
+                weakcell.loanTimeBtn.content.text = [self->_formatter stringFromDate:date];
+                weakcell.loanTimeBtn->str = [self->_formatter stringFromDate:date];
+//                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+            };
+            [self.view addSubview:view];
+        };
+        
+        cell.cancelTimeBlock = ^{
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+            view.dateblock = ^(NSDate *date) {
+                
+                weakcell.cardTimeBtn.content.text = [self->_formatter stringFromDate:date];
+                weakcell.cardTimeBtn->str = [self->_formatter stringFromDate:date];
+                //                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+            };
+            [self.view addSubview:view];
+        };
+        
+        cell.paywWayBlock = ^{
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
+
+                //                [tableView reloadData];
+            };
+            [self.view addSubview:view];
+            
+        };
+        
+        cell.buyReasonBlock = ^{
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                cell.buyReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                cell.buyReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
+                
+                //                [tableView reloadData];
+            };
+            [self.view addSubview:view];
+        };
+        
+        cell.sellReasonBlock = ^{
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                cell.sellReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                cell.sellReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
+                
+                //                [tableView reloadData];
+            };
+            [self.view addSubview:view];
+        };
         
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

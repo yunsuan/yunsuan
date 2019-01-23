@@ -81,7 +81,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _dataArr.count;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -93,7 +93,8 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.dataDic = _dataArr[indexPath.row];
+//    cell.dataDic = _dataArr[indexPath.row];
+//    cell.dataDic = @{}
     
     return cell;
 }
