@@ -1,14 +1,14 @@
 //
-//  CustomLookConfirmCell.m
+//  CustomLookWaitCell.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/8.
+//  Created by 谷治墙 on 2019/1/23.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "CustomLookConfirmCell.h"
+#import "CustomLookWaitCell.h"
 
-@implementation CustomLookConfirmCell
+@implementation CustomLookWaitCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -29,6 +29,7 @@
     _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@""]];
     _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@""]];
     _timeL.text = [NSString stringWithFormat:@"接单时间：%@",dataDic[@""]];
+    _endTimeL.text = [NSString stringWithFormat:@"截止时间：%@",dataDic[@""]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -40,9 +41,9 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-    if (self.customLookConfirmCellBlock) {
+    if (self.customLookWaitCellBlock) {
         
-        self.customLookConfirmCellBlock(btn.tag);
+        self.customLookWaitCellBlock(btn.tag);
     }
 }
 
@@ -82,12 +83,17 @@
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_codeL];
     
+    _endTimeL = [[UILabel alloc] init];
+    _endTimeL.textColor = YJ86Color;
+    _endTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_endTimeL];
+    
     _comfirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _comfirmBtn.layer.cornerRadius = 2 *SIZE;
     _comfirmBtn.clipsToBounds = YES;
     _comfirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_comfirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_comfirmBtn setTitle:@"带看维护" forState:UIControlStateNormal];
+    [_comfirmBtn setTitle:@"去确认" forState:UIControlStateNormal];
     [self.contentView addSubview:_comfirmBtn];
     
     [self MasonryUI];
@@ -144,10 +150,17 @@
         make.width.mas_equalTo(250 *SIZE);
     }];
     
+    [_endTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_timeL.mas_bottom).offset(9 *SIZE);
+        make.width.mas_equalTo(250 *SIZE);
+    }];
+    
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_endTimeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
