@@ -688,6 +688,7 @@
 		10F7D0CE21F83AEA007818E3 /* AddContractCell4.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0CD21F83AEA007818E3 /* AddContractCell4.m */; };
 		10F7D0D121F83B17007818E3 /* AddContractCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D021F83B17007818E3 /* AddContractCell5.m */; };
 		10F7D0D421F83B23007818E3 /* AddContractCell6.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D321F83B23007818E3 /* AddContractCell6.m */; };
+		10F7D0D821F86C59007818E3 /* ContractDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D721F86C59007818E3 /* ContractDetailVC.m */; };
 		10FA288921EF215D00617555 /* yindaoye2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288421EF215D00617555 /* yindaoye2.jpg */; };
 		10FA288A21EF215D00617555 /* yindaoye5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288521EF215D00617555 /* yindaoye5.jpg */; };
 		10FA288B21EF215D00617555 /* yindaoye1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288621EF215D00617555 /* yindaoye1.jpg */; };
@@ -2069,6 +2070,8 @@
 		10F7D0D021F83B17007818E3 /* AddContractCell5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell5.m; sourceTree = "<group>"; };
 		10F7D0D221F83B23007818E3 /* AddContractCell6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell6.h; sourceTree = "<group>"; };
 		10F7D0D321F83B23007818E3 /* AddContractCell6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell6.m; sourceTree = "<group>"; };
+		10F7D0D621F86C59007818E3 /* ContractDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailVC.h; sourceTree = "<group>"; };
+		10F7D0D721F86C59007818E3 /* ContractDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailVC.m; sourceTree = "<group>"; };
 		10FA288421EF215D00617555 /* yindaoye2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye2.jpg; sourceTree = "<group>"; };
 		10FA288521EF215D00617555 /* yindaoye5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye5.jpg; sourceTree = "<group>"; };
 		10FA288621EF215D00617555 /* yindaoye1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye1.jpg; sourceTree = "<group>"; };
@@ -5582,6 +5585,7 @@
 		0CED0BE621E72B870016A029 /* 合同签订 */ = {
 			isa = PBXGroup;
 			children = (
+				10F7D0D521F86C29007818E3 /* 合同详情 */,
 				0CED0BFA21E740140016A029 /* 添加合同 */,
 				0CED0BEB21E72C480016A029 /* 待审核 */,
 				0CED0BEA21E72C480016A029 /* 合同列表 */,
@@ -6946,6 +6950,15 @@
 			path = "选择客源";
 			sourceTree = "<group>";
 		};
+		10F7D0D521F86C29007818E3 /* 合同详情 */ = {
+			isa = PBXGroup;
+			children = (
+				10F7D0D621F86C59007818E3 /* ContractDetailVC.h */,
+				10F7D0D721F86C59007818E3 /* ContractDetailVC.m */,
+			);
+			path = "合同详情";
+			sourceTree = "<group>";
+		};
 		588A381E570994FF347F095F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -7781,6 +7794,7 @@
 				0CDD706A20D39B9C00D6609C /* ReportFailComplaintVC.m in Sources */,
 				0CC19D0B206E3E9C0007CC5F /* CustomDetailTableCell3.m in Sources */,
 				0C997C4F21E4421B00F805AA /* LookWorkDisabledVC.m in Sources */,
+				10F7D0D821F86C59007818E3 /* ContractDetailVC.m in Sources */,
 				102DF97C2057A20100E1859C /* LoginVC.m in Sources */,
 				0C3AD5652069DADC0059CE02 /* RoomDetailTableCell3.m in Sources */,
 				0C15A1F52118348A00544F2E /* RentingMaintainAddFollowVC.m in Sources */,
