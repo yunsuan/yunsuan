@@ -1,8 +1,8 @@
 //
-//  RecommendWaitDetailVC.h
+//  RecommendFailComplaintVC.h
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/21.
+//  Created by 谷治墙 on 2019/1/24.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RecommendWaitDetailVC : BaseViewController
+@interface RecommendFailComplaintVC : BaseViewController
 
 - (instancetype)initWithRecommendId:(NSString *)recommendId;
 

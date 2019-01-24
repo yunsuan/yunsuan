@@ -22,6 +22,41 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_name"]];
+    if ([dataDic[@"client_sex"] integerValue] == 1) {
+        
+        _sexImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"client_sex"] integerValue] == 1){
+        
+        _sexImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _sexImg.image = [UIImage imageNamed:@""];
+    }
+    
+//    if ([dataDic[@"take_num"] integerValue] == 0) {
+//
+//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：未带看"];
+//    }else if ([dataDic[@"take_num"] integerValue] == 1){
+//
+//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：首看"];
+//    }else{
+//
+//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：%@看",dataDic[@"take_num"]];
+//    }
+    _phaseL.text = [NSString stringWithFormat:@"带看阶段：%@",dataDic[@"take_num"]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
+    _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
+    _timeL.text = [NSString stringWithFormat:@"接单日期：%@",dataDic[@"recommend_time"]];
+    
+    
+    [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+    }];
 }
 
 - (void)initUI{
@@ -40,11 +75,11 @@
     _phoneL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneL];
     
-    _typeL = [[UILabel alloc] init];
-    _typeL.textColor = YJ86Color;
-    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    _typeL.textAlignment = NSTextAlignmentRight;
-    [self.contentView addSubview:_typeL];
+//    _typeL = [[UILabel alloc] init];
+//    _typeL.textColor = YJ86Color;
+//    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
+//    _typeL.textAlignment = NSTextAlignmentRight;
+//    [self.contentView addSubview:_typeL];
     
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJ86Color;
@@ -113,12 +148,12 @@
         make.width.mas_equalTo(140 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(150 *SIZE);
-    }];
+//    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(201 *SIZE);
+//        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+//        make.width.mas_equalTo(150 *SIZE);
+//    }];
     
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         

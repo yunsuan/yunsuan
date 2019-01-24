@@ -8,7 +8,17 @@
 
 #import "RecommendSuccessVC.h"
 
-@interface RecommendSuccessVC ()
+#import "RecommendSuccessDetailVC.h"
+
+#import "RecommendSuccessCell.h"
+
+@interface RecommendSuccessVC ()<UITableViewDelegate,UITableViewDataSource>
+{
+    
+    NSInteger _page;
+    NSMutableArray *_dataArr;
+}
+@property (nonatomic, strong) UITableView *waitTable;
 
 @end
 
@@ -16,17 +26,168 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self initDataSource];
+    [self initUI];
+    [self RequestMethod];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initDataSource{
+    
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"SystemWork" object:nil];
+    _page = 1;
+    _dataArr = [@[] mutableCopy];
 }
-*/
+
+- (void)RequestMethod{
+    
+    _page = 1;
+    _waitTable.mj_footer.state = MJRefreshStateIdle;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendBrokerValueList_URL parameters:dic success:^(id resposeObject) {
+        
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+            
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+        
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendBrokerValueList_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] count]) {
+                
+                [_waitTable.mj_footer endRefreshing];
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+            
+            [_waitTable.mj_footer endRefreshing];
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+        
+        [_waitTable.mj_footer endRefreshing];
+        _page -= 1;
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSArray *)data{
+    
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }];
+        
+        [_dataArr addObject:tempDic];
+    }
+    [_waitTable reloadData];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    //    return 1;
+    return _dataArr.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    RecommendSuccessCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendSuccessCell"];
+    if (!cell) {
+        
+        cell = [[RecommendSuccessCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendSuccessCell"];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    cell.tag = indexPath.row;
+    
+    cell.dataDic = _dataArr[indexPath.row];
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    RecommendSuccessDetailVC *nextVC = [[RecommendSuccessDetailVC alloc] initWithRecommendId:_dataArr[indexPath.row][@"recommend_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
+}
+
+- (void)initUI{
+    
+    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 40 *SIZE) style:UITableViewStylePlain];
+    
+    _waitTable.rowHeight = UITableViewAutomaticDimension;
+    _waitTable.estimatedRowHeight = 87 *SIZE;
+    _waitTable.backgroundColor = self.view.backgroundColor;
+    _waitTable.delegate = self;
+    _waitTable.dataSource = self;
+    _waitTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_waitTable];
+    
+    WS(weakSelf);
+    _waitTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        [weakSelf RequestMethod];
+    }];
+    
+    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        
+        [weakSelf RequestAddMethod];
+    }];
+}
 
 @end

@@ -671,6 +671,28 @@ static NSString *const BreachList_URL = @"agent/house/sub/breach/list";
 //挞定详情
 static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
 
+#pragma mark -- 二手房-工作-客户推荐 --
+
+//待接单列表
+static NSString *const RecommendBrokerWaitList_URL = @"agent/take/recommend/broker/wait/list";
+
+//待接单详情
+static NSString *const RecommendBrokerWaitDetail_URL = @"agent/take/recommend/broker/wait/detail";
+
+//有效列表
+static NSString *const RecommendBrokerValueList_URL = @"agent/take/recommend/broker/value/list";
+
+//有效详情
+static NSString *const RecommendBrokerValueDetail_URL = @"agent/take/recommend/broker/value/detail";
+
+//无效列表
+static NSString *const RecommendBrokerDisabledList_URL = @"agent/take/recommend/broker/disabled/list";
+
+//无效详情
+static NSString *const RecommendBrokerDisabledDetail_URL = @"agent/take/recommend/broker/disabled/detail";
+//申述列表
+//static NSString *const RecommendBrokerValueList_URL = @"agent/take/recommend/broker/value/list";
+
 
 #pragma mark -- 租房 --
 
