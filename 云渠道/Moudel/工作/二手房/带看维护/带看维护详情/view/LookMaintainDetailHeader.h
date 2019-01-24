@@ -64,6 +64,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIButton *followBtn;
 
+@property (nonatomic, strong) NSMutableArray *dataDic;
+
 @end
 
 NS_ASSUME_NONNULL_END

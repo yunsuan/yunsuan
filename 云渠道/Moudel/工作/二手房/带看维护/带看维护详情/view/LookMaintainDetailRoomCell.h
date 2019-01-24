@@ -12,6 +12,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookMaintainDetailRoomCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *roomImg;
+
+@property (nonatomic, strong) UILabel *statusL;
+
+@property (nonatomic, strong) UILabel *codeL;
+
+@property (nonatomic, strong) UILabel *satisfyL;
+
+@property (nonatomic, strong) UILabel *contentL;
+
+@property (nonatomic, strong) UILabel *compL;
+
+@property (nonatomic, strong) UILabel *firstTimeL;
+
+@property (nonatomic, strong) UILabel *lastTimeL;
+
+@property (nonatomic, strong) UILabel *numL;
+
+@property (nonatomic, strong) UILabel *priceL;
+
+@property (nonatomic, strong) UILabel *line;
+
 @end
 
 NS_ASSUME_NONNULL_END

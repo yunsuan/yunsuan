@@ -12,6 +12,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookMaintainDetailContactCell : UITableViewCell
 
+@property (nonatomic, strong) UIView *whiteView;
+
+@property (nonatomic, strong) UILabel *typeL;
+
+@property (nonatomic, strong) UILabel *nameL;
+
+@property (nonatomic, strong) UIImageView *sexImg;
+
+@property (nonatomic, strong) UIButton *moreBtn;
+
+@property (nonatomic, strong) UILabel *phoneL;
+
 @end
 
 NS_ASSUME_NONNULL_END
