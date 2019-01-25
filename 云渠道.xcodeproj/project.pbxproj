@@ -14,6 +14,9 @@
 		0C06B1FB209D92EB00F11993 /* QuickRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C06B1FA209D92EB00F11993 /* QuickRoomVC.m */; };
 		0C06B1FE209D9B3100F11993 /* QuickSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C06B1FD209D9B3000F11993 /* QuickSearchVC.m */; };
 		0C075DF921FB048700BDD123 /* LookMaintainCustomDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C075DF821FB048700BDD123 /* LookMaintainCustomDetailVC.m */; };
+		0C075DFD21FB071800BDD123 /* LookMaintainAddRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C075DFC21FB071800BDD123 /* LookMaintainAddRoomVC.m */; };
+		0C075E0121FB0CF200BDD123 /* LookMaintainAddRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C075E0021FB0CF200BDD123 /* LookMaintainAddRoomCell.m */; };
+		0C075E0521FB12DA00BDD123 /* LookMaintainAddLookVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C075E0421FB12DA00BDD123 /* LookMaintainAddLookVC.m */; };
 		0C07BFC22060D835007F31EC /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C07BFC12060D835007F31EC /* UserModel.m */; };
 		0C07BFC52060D88C007F31EC /* UserModelArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C07BFC42060D88C007F31EC /* UserModelArchiver.m */; };
 		0C07BFCB2060D94C007F31EC /* BaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C07BFCA2060D94C007F31EC /* BaseRequest.m */; };
@@ -741,6 +744,12 @@
 		0C06B1FD209D9B3000F11993 /* QuickSearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickSearchVC.m; sourceTree = "<group>"; };
 		0C075DF721FB048700BDD123 /* LookMaintainCustomDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainCustomDetailVC.h; sourceTree = "<group>"; };
 		0C075DF821FB048700BDD123 /* LookMaintainCustomDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainCustomDetailVC.m; sourceTree = "<group>"; };
+		0C075DFB21FB071800BDD123 /* LookMaintainAddRoomVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainAddRoomVC.h; sourceTree = "<group>"; };
+		0C075DFC21FB071800BDD123 /* LookMaintainAddRoomVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainAddRoomVC.m; sourceTree = "<group>"; };
+		0C075DFF21FB0CF200BDD123 /* LookMaintainAddRoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainAddRoomCell.h; sourceTree = "<group>"; };
+		0C075E0021FB0CF200BDD123 /* LookMaintainAddRoomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainAddRoomCell.m; sourceTree = "<group>"; };
+		0C075E0321FB12DA00BDD123 /* LookMaintainAddLookVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainAddLookVC.h; sourceTree = "<group>"; };
+		0C075E0421FB12DA00BDD123 /* LookMaintainAddLookVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainAddLookVC.m; sourceTree = "<group>"; };
 		0C07BFBF2060AC26007F31EC /* 云渠道.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "云渠道.entitlements"; sourceTree = "<group>"; };
 		0C07BFC02060D835007F31EC /* UserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		0C07BFC12060D835007F31EC /* UserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
@@ -2187,6 +2196,34 @@
 			path = "客户详情";
 			sourceTree = "<group>";
 		};
+		0C075DFA21FB070500BDD123 /* 添加带看房源 */ = {
+			isa = PBXGroup;
+			children = (
+				0C075DFE21FB0A2300BDD123 /* view */,
+				0C075DFB21FB071800BDD123 /* LookMaintainAddRoomVC.h */,
+				0C075DFC21FB071800BDD123 /* LookMaintainAddRoomVC.m */,
+			);
+			path = "添加带看房源";
+			sourceTree = "<group>";
+		};
+		0C075DFE21FB0A2300BDD123 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0C075DFF21FB0CF200BDD123 /* LookMaintainAddRoomCell.h */,
+				0C075E0021FB0CF200BDD123 /* LookMaintainAddRoomCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		0C075E0221FB12B700BDD123 /* 添加带看记录 */ = {
+			isa = PBXGroup;
+			children = (
+				0C075E0321FB12DA00BDD123 /* LookMaintainAddLookVC.h */,
+				0C075E0421FB12DA00BDD123 /* LookMaintainAddLookVC.m */,
+			);
+			path = "添加带看记录";
+			sourceTree = "<group>";
+		};
 		0C07BFCD2060E7DC007F31EC /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -3421,6 +3458,8 @@
 		0C38825421F84C6F00359423 /* 带看维护详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C075E0221FB12B700BDD123 /* 添加带看记录 */,
+				0C075DFA21FB070500BDD123 /* 添加带看房源 */,
 				0C075DF621FB046D00BDD123 /* 客户详情 */,
 				0C38826921FAEE1900359423 /* 添加跟进记录 */,
 				0C38825821F8541B00359423 /* view */,
@@ -7369,6 +7408,7 @@
 				0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */,
 				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
 				0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */,
+				0C075E0521FB12DA00BDD123 /* LookMaintainAddLookVC.m in Sources */,
 				0C73B09721F5BDF7005F71F1 /* RecommendWaitDetailVC.m in Sources */,
 				0CD7B5C3214799C5009517F2 /* RoomChildVC.m in Sources */,
 				10255A7021A53D000042738C /* YBImageBrowserCopywriter.m in Sources */,
@@ -7524,6 +7564,7 @@
 				100D8F69218004ED006839EB /* WMPageController.m in Sources */,
 				0C0606A9207DB3050045E3C1 /* RoomListModel.m in Sources */,
 				1044B3F12099C3E5002D9BAE /* WebViewVC.m in Sources */,
+				0C075DFD21FB071800BDD123 /* LookMaintainAddRoomVC.m in Sources */,
 				0CF7425E206262EC001F926F /* BoxView.m in Sources */,
 				0C549CFD21E5A0AA004CFA66 /* RecommendComplaintVC.m in Sources */,
 				0C342FBA207E01510058406D /* CustomRequireModel.m in Sources */,
@@ -7874,6 +7915,7 @@
 				0C73B09321F5B904005F71F1 /* RecommendWaitCell1.m in Sources */,
 				0C9B01B4215E0B6D0055A9A8 /* SecAllRoomCollCell.m in Sources */,
 				0C222D5A21B6686A00EF45B6 /* RentReportComplaintDetailVC.m in Sources */,
+				0C075E0121FB0CF200BDD123 /* LookMaintainAddRoomCell.m in Sources */,
 				0C0B82532064FF6400238D4F /* SystemMessageCell.m in Sources */,
 				0CDD701F20D20A6200D6609C /* RoomReportSucCell.m in Sources */,
 				0CD90AA420E21D9600061B4A /* AddAlbumView.m in Sources */,
