@@ -485,6 +485,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    StoreDetailVC *vc = [[StoreDetailVC alloc]init];
+    vc.store_id = _dataArr[indexPath.row][@"store_id"];
+    vc.client_id = _client_id;
+    vc.type = _type;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

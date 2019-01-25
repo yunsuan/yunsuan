@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface StoreDetailVC : BaseViewController
 @property (nonatomic , strong) NSString *type;//1为二手房，2为租房
 @property (nonatomic , strong) NSString *client_id;
+@property (nonatomic , strong) NSString *store_id;
+
 @end
 
 NS_ASSUME_NONNULL_END
