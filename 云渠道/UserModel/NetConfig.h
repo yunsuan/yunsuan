@@ -196,6 +196,9 @@ static NSString *const RecommendClient_URL = @"agent/client/recommend";
 //客户匹配项目
 static NSString *const ClientMatching_URL = @"agent/matching/client";
 
+//所有门店
+static NSString *const AllStore_URL = @"agent/store/list";
+
 #pragma mark ---  房源  ---
 
 //推荐
@@ -670,6 +673,8 @@ static NSString *const BreachList_URL = @"agent/house/sub/breach/list";
 
 //挞定详情
 static NSString *const BreachDetail_URL = @"agent/house/sub/breach/detail";
+
+
 
 
 #pragma mark -- 租房 --

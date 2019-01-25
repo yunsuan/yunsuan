@@ -695,6 +695,9 @@
 		10F7D0D121F83B17007818E3 /* AddContractCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D021F83B17007818E3 /* AddContractCell5.m */; };
 		10F7D0D421F83B23007818E3 /* AddContractCell6.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D321F83B23007818E3 /* AddContractCell6.m */; };
 		10F7D0D821F86C59007818E3 /* ContractDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0D721F86C59007818E3 /* ContractDetailVC.m */; };
+		10F7D0DC21F9A196007818E3 /* StoreListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0DB21F9A196007818E3 /* StoreListVC.m */; };
+		10F7D0DF21F9A1C7007818E3 /* StoreDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */; };
+		10F7D0E221F9A41C007818E3 /* StoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0E121F9A41C007818E3 /* StoreListCell.m */; };
 		10FA288921EF215D00617555 /* yindaoye2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288421EF215D00617555 /* yindaoye2.jpg */; };
 		10FA288A21EF215D00617555 /* yindaoye5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288521EF215D00617555 /* yindaoye5.jpg */; };
 		10FA288B21EF215D00617555 /* yindaoye1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288621EF215D00617555 /* yindaoye1.jpg */; };
@@ -2090,6 +2093,12 @@
 		10F7D0D321F83B23007818E3 /* AddContractCell6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell6.m; sourceTree = "<group>"; };
 		10F7D0D621F86C59007818E3 /* ContractDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailVC.h; sourceTree = "<group>"; };
 		10F7D0D721F86C59007818E3 /* ContractDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailVC.m; sourceTree = "<group>"; };
+		10F7D0DA21F9A196007818E3 /* StoreListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreListVC.h; sourceTree = "<group>"; };
+		10F7D0DB21F9A196007818E3 /* StoreListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreListVC.m; sourceTree = "<group>"; };
+		10F7D0DD21F9A1C7007818E3 /* StoreDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreDetailVC.h; sourceTree = "<group>"; };
+		10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreDetailVC.m; sourceTree = "<group>"; };
+		10F7D0E021F9A41C007818E3 /* StoreListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreListCell.h; sourceTree = "<group>"; };
+		10F7D0E121F9A41C007818E3 /* StoreListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreListCell.m; sourceTree = "<group>"; };
 		10FA288421EF215D00617555 /* yindaoye2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye2.jpg; sourceTree = "<group>"; };
 		10FA288521EF215D00617555 /* yindaoye5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye5.jpg; sourceTree = "<group>"; };
 		10FA288621EF215D00617555 /* yindaoye1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye1.jpg; sourceTree = "<group>"; };
@@ -2324,6 +2333,7 @@
 		0C0B82042063513400238D4F /* 客户详情 */ = {
 			isa = PBXGroup;
 			children = (
+				10F7D0D921F9A146007818E3 /* 全部门店 */,
 				0C997C3321DC88A600F805AA /* 添加租房需求 */,
 				0C3D303D218B06FA00B8B8C2 /* 已推荐项目状态 */,
 				0C25222D215397140031CC44 /* 添加商铺写字楼 */,
@@ -7013,6 +7023,19 @@
 			path = "合同详情";
 			sourceTree = "<group>";
 		};
+		10F7D0D921F9A146007818E3 /* 全部门店 */ = {
+			isa = PBXGroup;
+			children = (
+				10F7D0DA21F9A196007818E3 /* StoreListVC.h */,
+				10F7D0DB21F9A196007818E3 /* StoreListVC.m */,
+				10F7D0DD21F9A1C7007818E3 /* StoreDetailVC.h */,
+				10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */,
+				10F7D0E021F9A41C007818E3 /* StoreListCell.h */,
+				10F7D0E121F9A41C007818E3 /* StoreListCell.m */,
+			);
+			path = "全部门店";
+			sourceTree = "<group>";
+		};
 		588A381E570994FF347F095F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -7709,6 +7732,7 @@
 				105E18E7206B662C0031558D /* RecommendVC.m in Sources */,
 				100D8F8221801B28006839EB /* UIView+Frame.m in Sources */,
 				0C2883D8210FFC2F00F69C5F /* RentingCompleteSurveyInfoVC.m in Sources */,
+				10F7D0E221F9A41C007818E3 /* StoreListCell.m in Sources */,
 				0CD90AB420E5D31600061B4A /* DealRecordDetailVC.m in Sources */,
 				1069000D2057974200E11F52 /* BaseViewController.m in Sources */,
 				0C252233215397430031CC44 /* AddOfficeRequireMentVC.m in Sources */,
@@ -7784,6 +7808,7 @@
 				0CDD701720D0040C00D6609C /* RoomReportWaitCell.m in Sources */,
 				0C997B4721C73F4900F805AA /* RentingAllRoomDetailTableHeader.m in Sources */,
 				0CF04FA4207CCDF000A45F4A /* MoreViewCollCell.m in Sources */,
+				10F7D0DC21F9A196007818E3 /* StoreListVC.m in Sources */,
 				0C28839D2109A10900F69C5F /* RentingValidApplyVC.m in Sources */,
 				100D8F7D2180189B006839EB /* HNChannelView.m in Sources */,
 				0CF04F34207B00F900A45F4A /* RecommendCollCell.m in Sources */,
@@ -7875,6 +7900,7 @@
 				0CF04F6C207C62D800A45F4A /* NomineeCell3.m in Sources */,
 				0CEC62EB208DEB86006EC0BD /* RoomBrokerageTableCell2.m in Sources */,
 				0CD90A5120DB4BC400061B4A /* AgencyDoneDetailVC.m in Sources */,
+				10F7D0DF21F9A1C7007818E3 /* StoreDetailVC.m in Sources */,
 				0CE47B65206B9D0E001ADD73 /* PersonalVC.m in Sources */,
 				0CFAA33C219143EA00BF6D35 /* SecAllRoomBrokerageVC.m in Sources */,
 				10B2CAB0205A76FC00E814AC /* MineCell.m in Sources */,
