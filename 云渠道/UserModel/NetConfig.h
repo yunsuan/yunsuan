@@ -705,13 +705,17 @@ static NSString *const RecommendBrokerAppealDetail_URL = @"agent/take/recommend/
 //待确认列表
 static NSString *const RecommendButterWaitList_URL = @"agent/take/recommend/butter/wait/list";
 
+//待确认详情
+static NSString *const RecommendButterWaitDetail_URL = @"agent/take/recommend/butter/wait/detail";
+
 //已确认列表
 static NSString *const RecommendButterValueList_URL = @"agent/take/recommend/butter/value/list";
 
 //失效列表
 static NSString *const RecommendButterDisabledList_URL = @"agent/take/recommend/butter/disabled/list";
 
-
+//失效详情
+static NSString *const RecommendButterDisabledDetail_URL = @"agent/take/recommend/butter/disabled/detail";
 
 #pragma mark -- 租房 --
 

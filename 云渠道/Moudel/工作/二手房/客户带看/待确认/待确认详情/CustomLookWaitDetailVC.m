@@ -24,7 +24,7 @@
     
     NSArray *_titleArr;
     NSMutableArray *_contentArr;
-    NSString *_surveyId;
+    NSString *_takeId;
     NSMutableDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITableView *detailTable;
@@ -37,12 +37,12 @@
 
 @implementation CustomLookWaitDetailVC
 
-- (instancetype)initWithSurveyId:(NSString *)surveyId
+- (instancetype)initWithTakeId:(NSString *)takeId
 {
     self = [super init];
     if (self) {
         
-        _surveyId = surveyId;
+        _takeId = takeId;
     }
     return self;
 }
@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _titleArr = @[@"",@"抢单信息",@"报备信息"];
+    _titleArr = @[@"失效倒计时：",@"推荐信息",@"接单信息",@"需求信息"];
     _contentArr = [@[] mutableCopy];
     _dataDic = [@{} mutableCopy];
     [self initUI];
@@ -70,7 +70,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HouseSurveyUnderWayDetail_URL parameters:@{@"survey_id":_surveyId} success:^(id resposeObject) {
+    [BaseRequest GET:RecommendButterWaitDetail_URL parameters:@{@"take_id":_takeId} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -89,9 +89,17 @@
 
 - (void)SetData:(NSDictionary *)data{
     
-    _titleArr = @[[NSString stringWithFormat:@"抢单时间：%@",data[@""]],@"抢单信息",@"报备信息"];
     _dataDic = [NSMutableDictionary dictionaryWithDictionary:data];
-    _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"来源：%@",[data[@""] substringWithRange:NSMakeRange(0, 10)]],data[@"timeLimit"]],@[[NSString stringWithFormat:@"推荐编号：%@",data[@""]],[NSString stringWithFormat:@"归属门店：%@",data[@""]],[NSString stringWithFormat:@"客户姓名：%@",data[@""]],[NSString stringWithFormat:@"客户性别：%@",data[@""]],[NSString stringWithFormat:@"联系方式：%@",data[@""]],[NSString stringWithFormat:@"推荐时间：%@",data[@""]],[NSString stringWithFormat:@"报备时间：%@",data[@""]]],@[[NSString stringWithFormat:@"意向城市：%@",data[@""]],[NSString stringWithFormat:@"区域街道：%@",data[@""]],[NSString stringWithFormat:@"意向单价：%@",data[@""]],[NSString stringWithFormat:@"意向总价：%@",data[@""]],[NSString stringWithFormat:@"意向面积：%@",data[@""]],[NSString stringWithFormat:@"意向户型：%@",data[@""]],[NSString stringWithFormat:@"意向楼层：%@",data[@""]],[NSString stringWithFormat:@"装修标准：%@",data[@""]],[NSString stringWithFormat:@"超想要求：%@",data[@""]],[NSString stringWithFormat:@"付款方式：%@",data[@""]],[NSString stringWithFormat:@"关注配套：%@",data[@""]],[NSString stringWithFormat:@"已选标签：%@",data[@""]],[NSString stringWithFormat:@"备注：%@",data[@""]]]]];
+    if ([_dataDic[@"property_type"] integerValue] == 1) {
+        
+        _contentArr = [NSMutableArray arrayWithArray:@[@[data[@"timeLimit"]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",data[@""]],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][@"province_name"],data[@"need_info"][@"region"][@"city_name"],data[@"need_info"][@"region"][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"aera"]],[NSString stringWithFormat:@"装修标准：%@",data[@"need_info"][@"decorate"]],[NSString stringWithFormat:@"置业目的：%@",data[@"need_info"][@"buy_purpose"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsSeparatedByString:@","]],[NSString stringWithFormat:@"需求标签：%@",data[@"need_info"][@"need_tags"]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+    }else if ([_dataDic[@"property_type"] integerValue] == 2){
+        
+        _contentArr = [NSMutableArray arrayWithArray:@[@[data[@"timeLimit"]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",data[@""]],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][@"province_name"],data[@"need_info"][@"region"][@"city_name"],data[@"need_info"][@"region"][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"aera"]],[NSString stringWithFormat:@"商铺类型：%@",data[@"need_info"][@"shop_type"]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsSeparatedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",data[@"need_info"][@"match_tags"]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+    }else{
+        
+        _contentArr = [NSMutableArray arrayWithArray:@[@[data[@"timeLimit"]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",data[@""]],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][@"province_name"],data[@"need_info"][@"region"][@"city_name"],data[@"need_info"][@"region"][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"aera"]],[NSString stringWithFormat:@"写字楼等级：%@",data[@"need_info"][@"office_level"]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsSeparatedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",data[@"need_info"][@"match_tags"]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+    }
     
     [_detailTable reloadData];
 }
@@ -100,35 +108,7 @@
     
     if (_dataDic.count) {
         
-        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
-            
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"] integerValue] == 1) {
-                    
-                    SurveyInvalidVC *nextVC = [[SurveyInvalidVC alloc] initWithData:_dataDic];
-                    nextVC.surveyId = _surveyId;
-                    nextVC.surveyInvalidVCBlock = ^{
-                        
-                        if (self.customLookWaitDetailVCBlock) {
-                            
-                            self.customLookWaitDetailVCBlock();
-                        }
-                    };
-                    [self.navigationController pushViewController:nextVC animated:YES];
-                }else{
-                    
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有带看权限，请联系门店负责人"];
-                }
-            }else{
-                
-                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有带看权限，请联系门店负责人"];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        
     }
 }
 
@@ -136,36 +116,7 @@
     
     if (_dataDic) {
         
-        [BaseRequest GET:HouseCapacityCheck_URL parameters:@{@"project_id":_dataDic[@"project_id"]} success:^(id resposeObject) {
-            
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"] integerValue] == 1) {
-                    
-                    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-                    nextVC.completeSurveyInfoVCBlock = ^{
-                        
-                        if (self.customLookWaitDetailVCBlock) {
-                            
-                            self.customLookWaitDetailVCBlock();
-                        }
-                    };
-                    nextVC.surveyId = _surveyId;
-                    nextVC.dataDic = _dataDic;
-                    [self.navigationController pushViewController:nextVC animated:YES];
-                }else{
-                    
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
-                }
-            }else{
-                
-                [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        
     }
 }
 
@@ -219,52 +170,22 @@
     if (indexPath.section == 0 ) {
         
         
-        if (indexPath.row == 1) {
-            
-            static NSString *CellIdentifier = @"CountDownCell2";
-            CountDownCell2 *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (!cell) {
-                cell = [[CountDownCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            }
-            cell.titleL.text = @"勘察失效倒计时：";
-            cell.frame = CGRectMake(0, 0, 360*SIZE, 75*SIZE);
-            cell.countdown2block = ^{
-                
-                //            [self refresh];
-            };
-            cell.countDownMoreBlock = ^{
-                
-                ModifyRecordVC *nextVC = [[ModifyRecordVC alloc] initWithSurveyId:_surveyId];
-                //                nextVC
-                [self.navigationController pushViewController:nextVC animated:YES];
-            };
-            cell.titleL.textColor = YJTitleLabColor;
-            [cell setcountdownbyendtime:_contentArr[indexPath.section][indexPath.row]];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
-        }else{
-            
-            static NSString *CellIdentifier = @"SurveyingDetailCell";
-            SurveyingDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (!cell) {
-                cell = [[SurveyingDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            }
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.lineView.hidden = YES;
-            cell.surveyingDetailChangeBlock = ^{
-                
-                ModifyTimeVC *nextVC = [[ModifyTimeVC alloc] initWithSurveyId:_surveyId];
-                nextVC.modifyTimeVCBlock = ^{
-                    
-                    [self RequestMethod];
-                };
-                nextVC.dataDic = _dataDic;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            };
-            cell.contentL.text = _contentArr[indexPath.section][indexPath.row];
-            return cell;
+        static NSString *CellIdentifier = @"CountDownCell2";
+        CountDownCell2 *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[CountDownCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
+        cell.titleL.text = @"失效倒计时：";
+        cell.frame = CGRectMake(0, 0, 360*SIZE, 75*SIZE);
+        cell.countdown2block = ^{
+            
+            //            [self refresh];
+        };
+        
+        cell.titleL.textColor = YJTitleLabColor;
+        [cell setcountdownbyendtime:_contentArr[indexPath.section][indexPath.row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }else{
         
         SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];

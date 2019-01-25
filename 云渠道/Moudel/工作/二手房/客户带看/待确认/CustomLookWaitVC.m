@@ -163,7 +163,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithSurveyId:@""];
+    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

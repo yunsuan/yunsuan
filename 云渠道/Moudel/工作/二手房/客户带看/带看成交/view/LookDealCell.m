@@ -25,13 +25,13 @@
     _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
     if ([dataDic[@"client_sex"] integerValue] == 1) {
         
-        _sexImg.image = [UIImage imageNamed:@"man"];
+        _genderImg.image = [UIImage imageNamed:@"man"];
     }else if ([dataDic[@"client_sex"] integerValue] == 1){
         
-        _sexImg.image = [UIImage imageNamed:@"girl"];
+        _genderImg.image = [UIImage imageNamed:@"girl"];
     }else{
         
-        _sexImg.image = [UIImage imageNamed:@""];
+        _genderImg.image = [UIImage imageNamed:@""];
     }
     _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
