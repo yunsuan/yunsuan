@@ -43,67 +43,77 @@
     
     _page = 1;
     _waitTable.mj_footer.state = MJRefreshStateIdle;
-    //    [BaseRequest GET:HousePushWaitList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
-    //
-    //        [_waitTable.mj_header endRefreshing];
-    //        NSLog(@"%@",resposeObject);
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            [_dataArr removeAllObjects];
-    //            if ([resposeObject[@"data"] count]) {
-    //
-    //                [self SetData:resposeObject[@"data"]];
-    //            }else{
-    //
-    //                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
-    //            }
-    //            [_waitTable reloadData];
-    //        }else{
-    //
-    //            _page -= 1;
-    //            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //        [_waitTable reloadData];
-    //    } failure:^(NSError *error) {
-    //
-    //        [_waitTable.mj_header endRefreshing];
-    //        NSLog(@"%@",error);
-    //        [self showContent:@"网络错误"];
-    //    }];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendButterDisabledList_URL parameters:dic success:^(id resposeObject) {
+    
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"] count]) {
+    
+                [self SetData:resposeObject[@"data"]];
+            }else{
+    
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+    
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+    
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)RequestAddMethod{
     
     _page += 1;
-    //    [BaseRequest GET:HousePushConfirmList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
-    //
-    //        NSLog(@"%@",resposeObject);
-    //
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            if ([resposeObject[@"data"] count]) {
-    //
-    //                [_waitTable.mj_footer endRefreshing];
-    //                [self SetData:resposeObject[@"data"]];
-    //            }else{
-    //
-    //                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
-    //            }
-    //            [_waitTable reloadData];
-    //        }else{
-    //
-    //            [_waitTable.mj_footer endRefreshing];
-    //            _page -= 1;
-    //            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //        [_waitTable reloadData];
-    //    } failure:^(NSError *error) {
-    //
-    //        [_waitTable.mj_footer endRefreshing];
-    //        _page -= 1;
-    //        NSLog(@"%@",error);
-    //        [self showContent:@"网络错误"];
-    //    }];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendButterDisabledList_URL parameters:dic success:^(id resposeObject) {
+    
+        NSLog(@"%@",resposeObject);
+    
+        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+            if ([resposeObject[@"data"] count]) {
+    
+                [_waitTable.mj_footer endRefreshing];
+                [self SetData:resposeObject[@"data"]];
+            }else{
+    
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+    
+            [_waitTable.mj_footer endRefreshing];
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+
+        [_waitTable.mj_footer endRefreshing];
+        _page -= 1;
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)SetData:(NSArray *)data{
@@ -128,8 +138,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
-//    return _dataArr.count;
+
+    return _dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -143,7 +153,7 @@
     
     cell.tag = indexPath.row;
     
-//    cell.dataDic = _dataArr[indexPath.row];
+    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }

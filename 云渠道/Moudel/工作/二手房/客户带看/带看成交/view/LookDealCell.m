@@ -23,7 +23,16 @@
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    
+    if ([dataDic[@"client_sex"] integerValue] == 1) {
+        
+        _sexImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"client_sex"] integerValue] == 1){
+        
+        _sexImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _sexImg.image = [UIImage imageNamed:@""];
+    }
     _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
     _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@""]];
@@ -79,7 +88,7 @@
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJ86Color;
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_codeL];
+    [self.contentView addSubview:_timeL];
 
     [self MasonryUI];
 }

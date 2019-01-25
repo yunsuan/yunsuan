@@ -690,9 +690,23 @@ static NSString *const RecommendBrokerDisabledList_URL = @"agent/take/recommend/
 
 //无效详情
 static NSString *const RecommendBrokerDisabledDetail_URL = @"agent/take/recommend/broker/disabled/detail";
-//申述列表
-//static NSString *const RecommendBrokerValueList_URL = @"agent/take/recommend/broker/value/list";
 
+//申述列表
+static NSString *const RecommendBrokerAppealList_URL = @"agent/take/recommend/broker/appeal/list";
+
+//申诉详情
+static NSString *const RecommendBrokerAppealDetail_URL = @"agent/take/recommend/broker/appeal/detail";
+
+#pragma mark -- 二手房-工作-客户带看 --
+
+//待确认列表
+static NSString *const RecommendButterWaitList_URL = @"agent/take/recommend/butter/wait/list";
+
+//已确认列表
+static NSString *const RecommendButterValueList_URL = @"agent/take/recommend/butter/value/list";
+
+//失效列表
+static NSString *const RecommendButterDisabledList_URL = @"agent/take/recommend/butter/disabled/list";
 
 #pragma mark -- 租房 --
 

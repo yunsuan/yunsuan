@@ -25,6 +25,31 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_name"]];
+    if ([dataDic[@"client_sex"] integerValue] == 1) {
+        
+        _sexImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"client_sex"] integerValue] == 1){
+        
+        _sexImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _sexImg.image = [UIImage imageNamed:@""];
+    }
+
+    _typeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
+    _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
+    _timeL.text = [NSString stringWithFormat:@"申诉日期：%@",dataDic[@"appeal_time"]];
+    _statusL.text = [NSString stringWithFormat:@"%@",dataDic[@"state"]];
+    
+    [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+    }];
 }
 
 - (void)initUI{
