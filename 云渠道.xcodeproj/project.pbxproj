@@ -162,6 +162,7 @@
 		0C38826121F8799700359423 /* LookMaintainDetailFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826021F8799700359423 /* LookMaintainDetailFollowCell.m */; };
 		0C38826421F879AB00359423 /* LookMaintainDetailContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826321F879AB00359423 /* LookMaintainDetailContactCell.m */; };
 		0C38826821F99A5600359423 /* RecommendFailComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */; };
+		0C38826C21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826B21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m */; };
 		0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD5552068E5C30059CE02 /* RoomDetailCollCell.m */; };
 		0C3AD55C2069DA980059CE02 /* RoomDetailTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD55B2069DA980059CE02 /* RoomDetailTableHeader.m */; };
 		0C3AD55F2069DABC0059CE02 /* RoomDetailTableCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD55E2069DABC0059CE02 /* RoomDetailTableCell1.m */; };
@@ -1036,6 +1037,8 @@
 		0C38826321F879AB00359423 /* LookMaintainDetailContactCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailContactCell.m; sourceTree = "<group>"; };
 		0C38826621F99A5600359423 /* RecommendFailComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendFailComplaintVC.h; sourceTree = "<group>"; };
 		0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendFailComplaintVC.m; sourceTree = "<group>"; };
+		0C38826A21FAEE3500359423 /* LookMaintainDetailAddFollowVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainDetailAddFollowVC.h; sourceTree = "<group>"; };
+		0C38826B21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailAddFollowVC.m; sourceTree = "<group>"; };
 		0C3AD5542068E5C30059CE02 /* RoomDetailCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomDetailCollCell.h; sourceTree = "<group>"; };
 		0C3AD5552068E5C30059CE02 /* RoomDetailCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomDetailCollCell.m; sourceTree = "<group>"; };
 		0C3AD55A2069DA980059CE02 /* RoomDetailTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomDetailTableHeader.h; sourceTree = "<group>"; };
@@ -3406,6 +3409,7 @@
 		0C38825421F84C6F00359423 /* 带看维护详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C38826921FAEE1900359423 /* 添加跟进记录 */,
 				0C38825821F8541B00359423 /* view */,
 				0C38825521F84C8300359423 /* LookMaintainDetailVC.h */,
 				0C38825621F84C8300359423 /* LookMaintainDetailVC.m */,
@@ -3435,6 +3439,15 @@
 				0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */,
 			);
 			path = "申诉";
+			sourceTree = "<group>";
+		};
+		0C38826921FAEE1900359423 /* 添加跟进记录 */ = {
+			isa = PBXGroup;
+			children = (
+				0C38826A21FAEE3500359423 /* LookMaintainDetailAddFollowVC.h */,
+				0C38826B21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m */,
+			);
+			path = "添加跟进记录";
 			sourceTree = "<group>";
 		};
 		0C3AD5502068E17B0059CE02 /* view */ = {
@@ -7615,6 +7628,7 @@
 				0C9B01CC216EF2660055A9A8 /* SelectCustomVC.m in Sources */,
 				0C2883BB210EB1E100F69C5F /* RentingMaintainDetailVC.m in Sources */,
 				0C2883912109682900F69C5F /* RentingSurveySuccessVC.m in Sources */,
+				0C38826C21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m in Sources */,
 				0CED0BFD21E740380016A029 /* AddContractVC.m in Sources */,
 				0CF04F73207C899D00A45F4A /* AuditStatusVC.m in Sources */,
 				0CF04F2D207A0DA300A45F4A /* DynamicListTableCell.m in Sources */,
