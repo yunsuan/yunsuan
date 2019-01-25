@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendFailDetailVC : BaseViewController
 
+- (instancetype)initWithRecommendId:(NSString *)recommendId;
+
 @end
 
 NS_ASSUME_NONNULL_END

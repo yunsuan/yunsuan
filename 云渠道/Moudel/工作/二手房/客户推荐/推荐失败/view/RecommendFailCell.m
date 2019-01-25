@@ -22,11 +22,33 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-//    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-//    _houseCodeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@""]];
-//    _nameL.text = [NSString stringWithFormat:@"名称：%@",dataDic[@""]];
-//    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-//    _numL.text = [NSString stringWithFormat:@"已看房数量：%@",dataDic[@""]];
+
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_name"]];
+    if ([dataDic[@"client_sex"] integerValue] == 1) {
+        
+        _sexImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"client_sex"] integerValue] == 1){
+        
+        _sexImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _sexImg.image = [UIImage imageNamed:@""];
+    }
+
+    _typeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
+    _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
+    _failTimeL.text = [NSString stringWithFormat:@"失效日期：%@",dataDic[@"disabled_time"]];
+    
+    
+    [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+    }];
+
 }
 
 - (void)initUI{

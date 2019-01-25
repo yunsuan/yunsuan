@@ -8,6 +8,8 @@
 
 #import "RecommendWaitVC.h"
 
+#import "RecommendWaitDetailVC.h"
+
 #import "RecommendWaitCell.h"
 
 @interface RecommendWaitVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -41,86 +43,97 @@
     
     _page = 1;
     _waitTable.mj_footer.state = MJRefreshStateIdle;
-    //    [BaseRequest GET:HousePushWaitList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
-    //
-    //        [_waitTable.mj_header endRefreshing];
-    //        NSLog(@"%@",resposeObject);
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            [_dataArr removeAllObjects];
-    //            if ([resposeObject[@"data"] count]) {
-    //
-    //                [self SetData:resposeObject[@"data"]];
-    //            }else{
-    //
-    //                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
-    //            }
-    //            [_waitTable reloadData];
-    //        }else{
-    //
-    //            _page -= 1;
-    //            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //        [_waitTable reloadData];
-    //    } failure:^(NSError *error) {
-    //
-    //        [_waitTable.mj_header endRefreshing];
-    //        NSLog(@"%@",error);
-    //        [self showContent:@"网络错误"];
-    //    }];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendBrokerWaitList_URL parameters:dic success:^(id resposeObject) {
+    
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"] count]) {
+    
+                [self SetData:resposeObject[@"data"]];
+            }else{
+    
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+    
+        [_waitTable.mj_header endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)RequestAddMethod{
     
     _page += 1;
-    //    [BaseRequest GET:HousePushConfirmList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
-    //
-    //        NSLog(@"%@",resposeObject);
-    //
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            if ([resposeObject[@"data"] count]) {
-    //
-    //                [_waitTable.mj_footer endRefreshing];
-    //                [self SetData:resposeObject[@"data"]];
-    //            }else{
-    //
-    //                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
-    //            }
-    //            [_waitTable reloadData];
-    //        }else{
-    //
-    //            [_waitTable.mj_footer endRefreshing];
-    //            _page -= 1;
-    //            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //        [_waitTable reloadData];
-    //    } failure:^(NSError *error) {
-    //
-    //        [_waitTable.mj_footer endRefreshing];
-    //        _page -= 1;
-    //        NSLog(@"%@",error);
-    //        [self showContent:@"网络错误"];
-    //    }];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:RecommendBrokerWaitList_URL parameters:dic success:^(id resposeObject) {
+    
+        NSLog(@"%@",resposeObject);
+    
+        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+            if ([resposeObject[@"data"] count]) {
+    
+                [_waitTable.mj_footer endRefreshing];
+                [self SetData:resposeObject[@"data"]];
+            }else{
+    
+                _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_waitTable reloadData];
+        }else{
+    
+            [_waitTable.mj_footer endRefreshing];
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_waitTable reloadData];
+    } failure:^(NSError *error) {
+
+        [_waitTable.mj_footer endRefreshing];
+        _page -= 1;
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)SetData:(NSArray *)data{
     
-    _dataArr = [NSMutableArray arrayWithArray:data];
-    for (int i = 0; i < _dataArr.count; i++) {
+    for (int i = 0; i < data.count; i++) {
         
-        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[i]];
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
         [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
                 
                 [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
             }
         }];
         
-        [_dataArr replaceObjectAtIndex:i withObject:tempDic];
+        [_dataArr addObject:tempDic];
     }
-    
     [_waitTable reloadData];
 }
 
@@ -149,10 +162,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
-    //    SystemWorkWaitDetailVC *nextVC = [[SystemWorkWaitDetailVC alloc] initWithPushId:_dataArr[indexPath.row][@"push_id"] type:_dataArr[indexPath.row][@"type"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+    RecommendWaitDetailVC *nextVC = [[RecommendWaitDetailVC alloc] initWithRecommendId:_dataArr[indexPath.row][@"recommend_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{

@@ -14,7 +14,8 @@
 @interface RecommendWaitDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-    NSMutableArray *_dataArr;
+    NSString *_recommendId;
+    NSArray *_dataArr;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -23,16 +24,59 @@
 
 @implementation RecommendWaitDetailVC
 
+- (instancetype)initWithRecommendId:(NSString *)recommendId;
+{
+    self = [super init];
+    if (self) {
+        
+        _recommendId = recommendId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
+    [self requestMethod];
 }
 
 - (void)initDataSource{
     
-    _dataArr = [@[] mutableCopy];
+//    _dataArr = [@[] mutableCopy];
+}
+
+- (void)requestMethod{
+    
+    [BaseRequest GET:RecommendBrokerWaitDetail_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:data];
+    
+//    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//
+//        if (obj isKindOfClass:[NSNull class]) {
+//            <#statements#>
+//        }
+//    }];
+    
+    _dataArr = @[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -68,7 +112,6 @@
 }
 
 - (void)initUI{
-    
 
     self.titleLabel.text = @"待确认详情";
     

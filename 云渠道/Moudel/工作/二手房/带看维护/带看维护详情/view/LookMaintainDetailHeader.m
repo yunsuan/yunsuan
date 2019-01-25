@@ -20,7 +20,13 @@
     return self;
 }
 
+
 - (void)ActionTagBtn:(UIButton *)btn{
+    
+    
+}
+
+- (void)setDataDic:(NSMutableArray *)dataDic{
     
     
 }

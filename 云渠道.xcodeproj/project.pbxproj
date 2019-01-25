@@ -161,6 +161,7 @@
 		0C38825E21F878CD00359423 /* LookMaintainDetailRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38825D21F878CD00359423 /* LookMaintainDetailRoomCell.m */; };
 		0C38826121F8799700359423 /* LookMaintainDetailFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826021F8799700359423 /* LookMaintainDetailFollowCell.m */; };
 		0C38826421F879AB00359423 /* LookMaintainDetailContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826321F879AB00359423 /* LookMaintainDetailContactCell.m */; };
+		0C38826821F99A5600359423 /* RecommendFailComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */; };
 		0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD5552068E5C30059CE02 /* RoomDetailCollCell.m */; };
 		0C3AD55C2069DA980059CE02 /* RoomDetailTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD55B2069DA980059CE02 /* RoomDetailTableHeader.m */; };
 		0C3AD55F2069DABC0059CE02 /* RoomDetailTableCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3AD55E2069DABC0059CE02 /* RoomDetailTableCell1.m */; };
@@ -1033,6 +1034,8 @@
 		0C38826021F8799700359423 /* LookMaintainDetailFollowCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailFollowCell.m; sourceTree = "<group>"; };
 		0C38826221F879AB00359423 /* LookMaintainDetailContactCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainDetailContactCell.h; sourceTree = "<group>"; };
 		0C38826321F879AB00359423 /* LookMaintainDetailContactCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailContactCell.m; sourceTree = "<group>"; };
+		0C38826621F99A5600359423 /* RecommendFailComplaintVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendFailComplaintVC.h; sourceTree = "<group>"; };
+		0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendFailComplaintVC.m; sourceTree = "<group>"; };
 		0C3AD5542068E5C30059CE02 /* RoomDetailCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomDetailCollCell.h; sourceTree = "<group>"; };
 		0C3AD5552068E5C30059CE02 /* RoomDetailCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoomDetailCollCell.m; sourceTree = "<group>"; };
 		0C3AD55A2069DA980059CE02 /* RoomDetailTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomDetailTableHeader.h; sourceTree = "<group>"; };
@@ -3425,6 +3428,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		0C38826521F99A4100359423 /* 申诉 */ = {
+			isa = PBXGroup;
+			children = (
+				0C38826621F99A5600359423 /* RecommendFailComplaintVC.h */,
+				0C38826721F99A5600359423 /* RecommendFailComplaintVC.m */,
+			);
+			path = "申诉";
+			sourceTree = "<group>";
+		};
 		0C3AD5502068E17B0059CE02 /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -3661,6 +3673,7 @@
 		0C73B09F21F5C9A2005F71F1 /* 推荐失败详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C38826521F99A4100359423 /* 申诉 */,
 				0C73B0A321F5CE20005F71F1 /* RecommendFailDetailVC.h */,
 				0C73B0A421F5CE20005F71F1 /* RecommendFailDetailVC.m */,
 			);
@@ -7344,6 +7357,7 @@
 				10B2CAA5205A0D0900E814AC /* RegisterVC.m in Sources */,
 				0C997B7821CB849100F805AA /* RentingMaintainCustomVC.m in Sources */,
 				0C2883DB21103D6800F69C5F /* RentingCompleteSurveyInfoVC2.m in Sources */,
+				0C38826821F99A5600359423 /* RecommendFailComplaintVC.m in Sources */,
 				10255A6821A53D000042738C /* YBImageBrowserFunctionBar.m in Sources */,
 				0C28838E2109680600F69C5F /* RentingSurveyFailVC.m in Sources */,
 				0C549D0321E5A0CD004CFA66 /* RecommendFailVC.m in Sources */,

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *storeL;
 
-@property (nonatomic, strong) UILabel *typeL;
+//@property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UILabel *codeL;
 
