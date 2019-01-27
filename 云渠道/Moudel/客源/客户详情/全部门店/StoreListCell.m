@@ -111,22 +111,6 @@
     }];
     _recomentBtn.tag = [data[@"store_id"] integerValue] ;
     
-//    [_adresslab mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(self.contentView).offset(93 *SIZE);
-//        make.top.equalTo(_numlab.mas_bottom).offset(10 *SIZE);
-//        make.width.mas_equalTo(180*SIZE);
-//
-//    }];
-//
-//    [_housenumlab mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(self.contentView).offset(93 *SIZE);
-//        make.top.equalTo(_adresslab.mas_bottom).offset(10 *SIZE);
-//        make.width.mas_equalTo(180*SIZE);
-//        make.height.mas_equalTo(13*SIZE);
-//    }];
-    
 }
 
 @end
