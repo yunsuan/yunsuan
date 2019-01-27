@@ -11,11 +11,15 @@
 #import "StoreDetailCell.h"
 #import "SecdaryAllTableCell.h"
 #import "SecdaryAllTableModel.h"
+#import <MapKit/MapKit.h>
 
 @interface StoreDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSString *_recommendId;
-    NSArray *_dataArr;
+    NSMutableArray *_dataArr;
+    NSDictionary *_store_info;
+    NSInteger _page;
+    NSString *_numofhouse;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -30,12 +34,14 @@
     
     [self initDataSource];
     [self initUI];
-    [self requestMethod];
+    [self requestMethodWithpage:_page];
 }
 
 - (void)initDataSource{
     
-    //    _dataArr = [@[] mutableCopy];
+    _dataArr = [@[] mutableCopy];
+    _store_info = [@{} mutableCopy];
+    _numofhouse = 0;
 }
 
 -(void)action_sure
@@ -43,29 +49,106 @@
     
 }
 
-- (void)requestMethod{
-    
-//    [BaseRequest GET:RecommendBrokerWaitDetail_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
-//
-//
-//    } failure:^(NSError *error) {
-//
-//        [self showContent:@"网络错误"];
-//    }];
+-(void)action_phone
+{
+    NSString *phone = _store_info[@"contact_tel"];
+    if (phone.length) {
+        
+        //获取目标号码字符串,转换成URL
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
+        //调用系统方法拨号
+        [[UIApplication sharedApplication] openURL:url];
+    }else{
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+    }
 }
 
-- (void)SetData:(NSDictionary *)data{
+-(void)action_map
+{
+    double lat = [_store_info[@"latitude"] doubleValue];
+    double lon = [_store_info[@"longitude"] doubleValue];
+    CLLocationCoordinate2D endCoor = CLLocationCoordinate2DMake(lat, lon);
+    MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
+    MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:endCoor addressDictionary:nil]];
+    toLocation.name = _store_info[@"address"];
+    [MKMapItem openMapsWithItems:@[currentLocation, toLocation] launchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving,MKLaunchOptionsShowsTrafficKey: [NSNumber numberWithBool:YES]}];
+}
+
+- (void)requestMethodWithpage:(NSInteger )page{
+    NSString *pagestr = [NSString stringWithFormat:@"%ld",page];
     
-    //    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:data];
+    [BaseRequest GET:DetailStore_URl parameters:@{@"store_id":_store_id,
+                                                  @"type":_type,
+                                                  @"page":pagestr
+                                                  }
+             success:^(id resposeObject) {
+                 NSLog(@"%@",resposeObject);
+                 if ([resposeObject[@"code"] integerValue]==200) {
+
+                         _store_info = resposeObject[@"data"][@"store_info"];
+                    
+                     
+                     if (page ==1) {
+                         [_dataArr removeAllObjects];
+                     }
+                     _numofhouse = resposeObject[@"data"][@"houseList"][@"total"] ;
+                       [self SetData:resposeObject[@"data"][@"houseList"][@"data"]];
+                 }
+                 
+        
+
+    } failure:^(NSError *error) {
+
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSMutableArray *)data{
     
-    //    [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-    //
-    //        if (obj isKindOfClass:[NSNull class]) {
-    //            <#statements#>
-    //        }
-    //    }];
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                    
+                    [tempDic setObject:@[] forKey:key];
+                }else{
+                    
+                    [tempDic setObject:@"" forKey:key];
+                }
+            }else{
+                
+                if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                    
+                    
+                }else{
+                    
+                    [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                }
+            }
+        }];
+        
+        SecdaryAllTableModel *model = [[SecdaryAllTableModel alloc] init];//WithDictionary:tempDic];
+        model.price_change = tempDic[@"price_change"];
+        model.img_url = tempDic[@"img_url"];
+        model.house_id = tempDic[@"house_id"];
+        model.title = tempDic[@"title"];
+        model.describe = tempDic[@"describe"];
+        model.price = tempDic[@"price"];
+        model.unit_price = tempDic[@"unit_price"];
+        model.property_type = tempDic[@"property_type"];
+        model.store_name = tempDic[@"store_name"];
+        model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
+        model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
+        model.type = tempDic[@"type"];
+        [_dataArr addObject:model];
+    }
     
-    _dataArr = @[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]];
+    [self.table reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -74,7 +157,7 @@
         return 1;
     }else
     {
-        return 1;
+        return _dataArr.count;
     }
 
 }
@@ -110,10 +193,16 @@
         lab.textColor = YJTitleLabColor;
         lab.font = [UIFont systemFontOfSize:15 *SIZE];
         if ([_type isEqualToString:@"1"]) {
-            lab.text = [NSString stringWithFormat:@"可售房源（%@）",_type];
+            if (_numofhouse) {
+                 lab.text = [NSString stringWithFormat:@"可售房源（%@）",_numofhouse];
+            }
+           
         }else
         {
-            lab.text = [NSString stringWithFormat:@"可租房源（%@）",_type];
+            
+            if (_numofhouse) {
+                  lab.text = [NSString stringWithFormat:@"可租房源（%@）",_numofhouse];
+            }
         }
         [view addSubview:lab];
             return view;
@@ -130,7 +219,9 @@
             cell = [[StoreDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"StoreDetailCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        [cell setDataBydata:_store_info];
+        [cell.mapbtn addTarget:self action:@selector(action_map) forControlEvents:UIControlEventTouchUpInside];
+        [cell.phonebtn addTarget:self action:@selector(action_phone) forControlEvents:UIControlEventTouchUpInside];
 //        cell.contentL.text = _dataArr[indexPath.row];
         
         return cell;
@@ -142,10 +233,8 @@
             cell = [[SecdaryAllTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecdaryAllTableCell"];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-//        SecdaryAllTableModel *model = _dataArr[indexPath.row];
-//        cell.model = model;
-        
+        SecdaryAllTableModel *model = _dataArr[indexPath.row];
+        cell.model = model;
         return cell;
     }
 }
@@ -153,12 +242,10 @@
 - (void)initUI{
      self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"门店详情";
-    
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
     _table.delegate = self;
     _table.dataSource = self;
-    
     [self.view addSubview:_table];
     [self.view addSubview:self.surebtn];
 }

@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) UIButton *phonebtn;
 @property (nonatomic , strong) UIButton *mapbtn;
 
+-(void)setDataBydata:(NSDictionary *)data;
 @end
 
 NS_ASSUME_NONNULL_END
