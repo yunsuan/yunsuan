@@ -717,6 +717,10 @@ static NSString *const RecommendButterDisabledList_URL = @"agent/take/recommend/
 //失效详情
 static NSString *const RecommendButterDisabledDetail_URL = @"agent/take/recommend/butter/disabled/detail";
 
+#pragma mark -- 二手房-工作 -- 带看维护
+
+static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
+
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息
