@@ -22,14 +22,23 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    
-    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@""]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@""]];
-    _failTypeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@""]];
-    _timeL.text = [NSString stringWithFormat:@"成交时间：%@",dataDic[@""]];
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_name"]];
+    if ([dataDic[@"client_sex"] integerValue] == 1) {
+        
+        _genderImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"client_sex"] integerValue] == 1){
+        
+        _genderImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _genderImg.image = [UIImage imageNamed:@""];
+    }
+    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"recommend_code"]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    _failTypeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
+    _timeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"disabled_time"]];
     
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -79,7 +88,7 @@
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJ170Color;
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_codeL];
+    [self.contentView addSubview:_timeL];
     
     [self MasonryUI];
 }
@@ -141,7 +150,6 @@
         make.top.equalTo(_failTypeL.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(250 *SIZE);
     }];
-    
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         

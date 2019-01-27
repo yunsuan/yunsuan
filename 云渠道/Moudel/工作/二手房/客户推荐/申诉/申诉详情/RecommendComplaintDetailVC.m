@@ -17,6 +17,7 @@
     NSArray *_contentArr;
     //    NSString *_sta/te;
     NSMutableArray *_processArr;
+    NSString *_recommendId;
 }
 
 @property (nonatomic, strong) UITableView *detailTable;
@@ -24,6 +25,16 @@
 @end
 
 @implementation RecommendComplaintDetailVC
+
+- (instancetype)initWithRecommendId:(NSString *)recommendId
+{
+    self = [super init];
+    if (self) {
+        
+        _recommendId = recommendId;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,81 +52,52 @@
 
 - (void)RequestMethod{
     
-    //    [BaseRequest GET:HouseRecordValueDetail_URL parameters:@{@"survey_id":_recordId} success:^(id resposeObject) {
-    //
-    //        NSLog(@"%@",resposeObject);
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            [self SetData:resposeObject[@"data"]];
-    //        }else{
-    //
-    //            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //    } failure:^(NSError *error) {
-    //
-    //        NSLog(@"%@",error);
-    //        [self showContent:@"网络错误"];
-    //    }];
+    [BaseRequest GET:RecommendBrokerAppealDetail_URL parameters:@{@"appeal_id":_recommendId} success:^(id resposeObject) {
+    
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+            [self SetData:resposeObject[@"data"]];
+        }else{
+    
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 
 - (void)SetData:(NSDictionary *)data{
     
-    if (data[@"sub_info"]) {
-        
-        NSDictionary *dic = data[@"sub_info"];
-        _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"抢单时间:%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"经办人姓名：%@",dic[@"agent_name"]],[NSString stringWithFormat:@"经办人电话：%@",dic[@"agent_tel"]],[NSString stringWithFormat:@"经办人性别：%@",[dic[@"agent_sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"预付金：%@",dic[@"earnest_money"]],[NSString stringWithFormat:@"违约金：%@",dic[@"break_money"]],[NSString stringWithFormat:@"预定签约时间：%@",dic[@"appoint_construct_time"]]]];
-    }else{
-        
-        _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"抢单时间:%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]]];
-    }
-    
-    //    _endtime = [NSString stringWithFormat:@"%@",data[@"timeLimit"]];
-    //    _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    //    _state = [NSString stringWithFormat:@"%@",data[@"current_state"]];//data[@"current_state"];
+//    if (data[@"sub_info"]) {
+//
+//        NSDictionary *dic = data[@"sub_info"];
+        _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]],[NSString stringWithFormat:@"失效类型：%@",data[@"disabled_state"]],[NSString stringWithFormat:@"失效原由：%@",data[@"disabled_reason"]]],@[[NSString stringWithFormat:@"申诉时间：%@",data[@"appeal_time"]],[NSString stringWithFormat:@"申诉类型：%@",data[@"appeal_type"]],[NSString stringWithFormat:@"申诉原由：%@",data[@"appeal_comment"]]]];
+//    }else{
+//
+//        _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]]],@[[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]]],@[[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]]],@[[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]],[NSString stringWithFormat:@"%@",data[@""]]]];
+//    }
+
     [_detailTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    //    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
-    //
-    if (_contentArr.count) {
-        
-        return 1 + _contentArr.count;
-    }else{
-        
-        return 0;
-    }
-    
-    
+
+    return _contentArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
-    //
-    if (section < _contentArr.count) {
-        
-        return [_contentArr[section] count];
-    }else{
-        
-        return _processArr.count;
-    }
-    
+    return [_contentArr[section] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
     
-    if (section == _contentArr.count) {
-        
-        return 0;
-    }else{
-        
-        return 40 *SIZE;
-    }
-    //    }
+    return 40 *SIZE;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -130,13 +112,19 @@
     
     if (section == 0) {
         
-        header.titleL.text = @"报备信息";
+        header.titleL.text = @"处理信息";
     }else if(section == 1){
         
-        header.titleL.text = @"抢单信息";
+        header.titleL.text = @"推荐信息";
+    }else if(section == 2){
+        
+        header.titleL.text = @"接单信息";
+    }else if(section == 3){
+        
+        header.titleL.text = @"失效信息";
     }else{
         
-        header.titleL.text = @"成交信息";
+        header.titleL.text = @"申诉信息";
     }
     
     header.lineView.hidden = YES;
@@ -171,8 +159,8 @@
 }
 
 - (void)initUI{
-    
-    self.titleLabel.text = @"有效详情";
+
+    self.titleLabel.text = @"处理详情";
     self.navBackgroundView.hidden = NO;
     
     _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookFailDetailVC : BaseViewController
 
-- (instancetype)initWithRecordId:(NSString *)recordId;
+- (instancetype)initWithTakeID:(NSString *)takeId;
 
 @end
 

@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomLookComfirmVC : BaseViewController
 
+@property (nonatomic, strong) NSString *search;
+
+- (void)RequestMethod;
+
 @end
 
 NS_ASSUME_NONNULL_END

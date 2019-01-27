@@ -16,7 +16,7 @@ typedef void(^CustomLookWaitDetailVCBlock)(void);
 
 @property (nonatomic, copy) CustomLookWaitDetailVCBlock customLookWaitDetailVCBlock;
 
-- (instancetype)initWithSurveyId:(NSString *)surveyId;
+- (instancetype)initWithTakeId:(NSString *)takeId;
 
 @end
 
