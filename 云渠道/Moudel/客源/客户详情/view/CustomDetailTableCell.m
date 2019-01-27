@@ -134,9 +134,9 @@
         }
         
         
-        if (model.pay_type.length) {
+        if (model.pay_type.count) {
             
-            _payWayL.text = model.pay_type;
+            _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[model.pay_type componentsJoinedByString:@","]];
             
         }else{
             
@@ -239,9 +239,9 @@
         }
     }
     
-    if (model.pay_type.length) {
+    if (model.pay_type.count) {
         
-        _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",model.pay_type];
+        _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[model.pay_type componentsJoinedByString:@","]];
     }else{
         
         _payWayL.text = @"付款方式：";

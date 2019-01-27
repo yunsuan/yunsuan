@@ -10,11 +10,19 @@
 
 #import "LookMaintainDetailHeader.h"
 #import "LookMaintainDetailRoomCell.h"
+#import "LookMaintainDetailContactCell.h"
+#import "LookMaintainDetailFollowCell.h"
 
 @interface LookMaintainDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSInteger _index;
+    NSString *_takeId;
+    NSMutableArray *_contactArr;
+    NSMutableDictionary *_baseInfoDic;
+    NSMutableArray *_followArr;
+    NSMutableDictionary *_needInfoDic;
+    NSMutableArray *_takeHouseArr;
 }
 @property (nonatomic, strong) UITableView *mainTable;
 
@@ -22,34 +30,117 @@
 
 @implementation LookMaintainDetailVC
 
+- (instancetype)initWithTakeId:(NSString *)takeId
+{
+    self = [super init];
+    if (self) {
+        
+        _takeId = takeId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
-//    [self initUI];
+    [self initUI];
+    [self RequestMethod];
 }
 
 - (void)initDataSource{
 
+    _contactArr = [@[] mutableCopy];
+    _baseInfoDic = [@{} mutableCopy];
+    _followArr = [@[] mutableCopy];
+    _needInfoDic = [@{} mutableCopy];
+    _takeHouseArr = [@[] mutableCopy];
+}
 
+- (void)RequestMethod{
+    
+    [BaseRequest GET:TakeMaintainDetail_URL parameters:@{@"take_id":_takeId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _baseInfoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"base_info"]];
+    [_baseInfoDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+       
+        if ([obj isKindOfClass:[NSNull class]]) {
+            
+            [_baseInfoDic setObject:@"" forKey:key];
+        }else{
+            
+            [_baseInfoDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+        }
+    }];
+    
+    _contactArr = [NSMutableArray arrayWithArray:data[@"contact"]];
+    _followArr = [NSMutableArray arrayWithArray:data[@"follow"]];
+    _needInfoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"need_info"]];
+    [_needInfoDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        if ([key isEqualToString:@"pay_type"]) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [_needInfoDic setObject:@[] forKey:key];
+            }
+        }else{
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [_needInfoDic setObject:@"" forKey:key];
+            }else{
+                
+                [_needInfoDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }
+    }];
+    _takeHouseArr = [NSMutableArray arrayWithArray:data[@"take_house"]];
+    
+    [_mainTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
-    if (_index == 1) {
+    if (_baseInfoDic.count) {
         
-        return 1;
+        if (_index == 0) {
+            
+            return 1;
+        }
+        return 2;
+    }else{
+        
+        return 0;
     }
-    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    if (_index == 1) {
+    if (_index == 0) {
         
-        return 2;
+        return _takeHouseArr.count;
+    }else if (_index == 1){
+        
+        return _contactArr.count;
     }
-    return 2;
+    return _followArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -76,7 +167,8 @@
             
             header = [[LookMaintainDetailHeader alloc] initWithReuseIdentifier:@"LookMaintainDetailHeader"];
         }
-        //        header.model = _customModel;
+        header.dataDic = _baseInfoDic;
+        header.needDic = _needInfoDic;
         
         [header.roomBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
         [header.roomBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
@@ -85,6 +177,15 @@
         [header.followBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
         [header.followBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
         
+        if (_takeHouseArr.count) {
+            
+            [header.roomBtn setTitle:[NSString stringWithFormat:@"带看房源(%ld)",_takeHouseArr.count] forState:UIControlStateNormal];
+        }else{
+            
+            [header.roomBtn setTitle:@"带看房源(0)" forState:UIControlStateNormal];
+        }
+        [header.followBtn setTitle:@"联系人信息" forState:UIControlStateNormal];
+        [header.contactBtn setTitle:@"跟进记录" forState:UIControlStateNormal];
         if (_index == 0) {
             
             [header.roomBtn setBackgroundColor:YJBlueBtnColor];
@@ -99,7 +200,19 @@
             [header.contactBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
-        //        heade
+        header.lookMaintainDetailHeaderBlock = ^(NSInteger index) {
+            
+            _index = index;
+            if (index == 1) {
+                
+                
+            }else if (index == 2){
+                
+                
+            }
+            [tableView reloadData];
+        };
+        
         return header;
     }else{
         
@@ -121,6 +234,8 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            cell.dataDic = _takeHouseArr[indexPath.row];
+            
             return cell;
         }else{
 
@@ -132,30 +247,42 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            cell.dataDic = _takeHouseArr[indexPath.row];
             return cell;
         }
     }else{
 
         if (_index == 1) {
 
-            NSString * Identifier = @"LookMaintainDetailRoomCell";
-            LookMaintainDetailRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+            NSString * Identifier = @"LookMaintainDetailContactCell";
+            LookMaintainDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
             if (!cell) {
                 
-                cell = [[LookMaintainDetailRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                cell = [[LookMaintainDetailContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.dataDic = _contactArr[indexPath.row];
+            if (indexPath.row == 0) {
+                
+                cell.typeL.text = @"主权益人";
+            }else{
+                
+                cell.typeL.text = @"副权益人";
+            }
             
             return cell;
         }else{
 
-            NSString * Identifier = @"LookMaintainDetailRoomCell";
-            LookMaintainDetailRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+            NSString * Identifier = @"LookMaintainDetailFollowCell";
+            LookMaintainDetailFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
             if (!cell) {
                 
-                cell = [[LookMaintainDetailRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                cell = [[LookMaintainDetailFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.dataDic = _followArr[indexPath.row];
             
             return cell;
         }

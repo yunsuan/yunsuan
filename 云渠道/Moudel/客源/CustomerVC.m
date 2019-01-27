@@ -90,17 +90,21 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    if (indexPath.row == 1) {
-        StoreListVC *nextVC = [[StoreListVC alloc] init];
-        nextVC.type = @"1";
-        [self.navigationController pushViewController:nextVC animated:YES];
-    }
-    else{
     CustomerListVC *nextVC = [[CustomerListVC alloc] init];
     nextVC.hidesBottomBarWhenPushed = YES;
     nextVC.status = indexPath.row;
     [self.navigationController pushViewController:nextVC animated:YES];
-    }
+//    if (indexPath.row == 1) {
+//        StoreListVC *nextVC = [[StoreListVC alloc] init];
+//        nextVC.type = @"1";
+//        [self.navigationController pushViewController:nextVC animated:YES];
+//    }
+//    else{
+//    CustomerListVC *nextVC = [[CustomerListVC alloc] init];
+//    nextVC.hidesBottomBarWhenPushed = YES;
+//    nextVC.status = indexPath.row;
+//    [self.navigationController pushViewController:nextVC animated:YES];
+//    }
 }
 
 - (void)initUI{

@@ -719,7 +719,11 @@ static NSString *const RecommendButterDisabledDetail_URL = @"agent/take/recommen
 
 #pragma mark -- 二手房-工作 -- 带看维护
 
+//带看维护列表
 static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
+
+//带看维护详情
+static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
 
 #pragma mark -- 租房 --
 

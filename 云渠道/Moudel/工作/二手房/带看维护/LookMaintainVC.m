@@ -8,6 +8,7 @@
 
 #import "LookMaintainVC.h"
 
+#import "LookMaintainDetailVC.h"
 #import "LookMaintainCell.h"
 
 @interface LookMaintainVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
@@ -55,9 +56,9 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
     
             [_dataArr removeAllObjects];
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
     
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
     
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -91,10 +92,10 @@
     
         if ([resposeObject[@"code"] integerValue] == 200) {
     
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
     
                 [_waitTable.mj_footer endRefreshing];
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
     
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -136,9 +137,16 @@
     [_waitTable reloadData];
 }
 
+
+
+- (void)ActionAddBtn:(UIButton *)btn{
+    
+    
+}
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    //    return 1;
     return _dataArr.count;
 }
 
@@ -161,10 +169,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
-    //    SystemWorkWaitDetailVC *nextVC = [[SystemWorkWaitDetailVC alloc] initWithPushId:_dataArr[indexPath.row][@"push_id"] type:_dataArr[indexPath.row][@"type"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+    LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
@@ -196,11 +202,11 @@
     _searchBar.delegate = self;
     [whiteView addSubview:_searchBar];
     
-//    self.rightBtn.hidden = NO;
-//    [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
-//    [self.rightBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.rightBtn.hidden = NO;
+    [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 40 *SIZE) style:UITableViewStylePlain];
+    _waitTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 41 *SIZE, SCREEN_Width, self.view.bounds.size.height - NAVIGATION_BAR_HEIGHT - 41 *SIZE) style:UITableViewStylePlain];
     
     _waitTable.rowHeight = UITableViewAutomaticDimension;
     _waitTable.estimatedRowHeight = 87 *SIZE;

@@ -758,14 +758,14 @@
         }
     }
     
-    if (_model.pay_type.length) {
+    if (_model.pay_type.count) {
         
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",13]];
         NSArray *typeArr = dic[@"param"];
         for (NSUInteger i = 0; i < typeArr.count; i++) {
             
-            if ([typeArr[i][@"param"] isEqualToString:_model.pay_type]) {
+            if ([typeArr[i][@"param"] isEqualToString:_model.pay_type[0]]) {
                 
                 _payWayBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
                 _payWayBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];

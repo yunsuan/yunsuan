@@ -25,6 +25,30 @@
     
 }
 
+- (void)setDataDic:(NSMutableDictionary *)dataDic{
+    
+    _nameL.text = dataDic[@"name"];
+    
+    if ([dataDic[@"sex"] integerValue] == 1) {
+        
+        _sexImg.image = [UIImage imageNamed:@"man"];
+    }else if ([dataDic[@"sex"] integerValue] == 1){
+        
+        _sexImg.image = [UIImage imageNamed:@"girl"];
+    }else{
+        
+        _sexImg.image = [UIImage imageNamed:@""];
+    }
+    _phoneL.text = [NSString stringWithFormat:@"联系电话：%@",[dataDic[@"tel"] componentsJoinedByString:@","]];
+    [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(12 *SIZE);
+        make.top.equalTo(_typeL.mas_bottom).offset(17 *SIZE);
+        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+        make.bottom.equalTo(_whiteView).offset(-19 *SIZE);
+    }];
+}
+
 - (void)initUI{
     
     self.contentView.backgroundColor = YJBackColor;
@@ -95,11 +119,20 @@
         make.width.height.mas_equalTo(12 *SIZE);
     }];
     
-    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
+        make.top.equalTo(_whiteView).offset(20 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+        make.height.mas_equalTo(20 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
         make.top.equalTo(_typeL.mas_bottom).offset(16 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-19 *SIZE);
     }];
 }
 

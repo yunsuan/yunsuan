@@ -40,7 +40,9 @@
 
 @property (nonatomic, strong) NSString *orientation;
 
-@property (nonatomic, strong) NSString *pay_type;
+@property (nonatomic, strong) NSMutableArray *pay_type;
+
+@property (nonatomic, strong) NSMutableDictionary *fit_info;
 
 @property (nonatomic, strong) NSString *property_type;
 

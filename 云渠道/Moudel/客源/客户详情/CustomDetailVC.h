@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) CustomerTableModel *model;
 
+@property (nonatomic, strong) NSString *customType;
+
 - (instancetype)initWithClientId:(NSString *)clientId;
 
 @end

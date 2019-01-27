@@ -14,15 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *whiteView;
 
+@property (nonatomic, strong) UILabel *timeL;
+
 @property (nonatomic, strong) UILabel *wayL;
 
-@property (nonatomic, strong) UILabel *intentionL;
-
-@property (nonatomic, strong) UILabel *urgentL;
+@property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic, strong) UILabel *contentL;
 
-@property (nonatomic, strong) UILabel *timeL;
+@property (nonatomic, strong) UILabel *numL;
+
+@property (nonatomic, strong) UILabel *nextTimeL;
+
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end
 

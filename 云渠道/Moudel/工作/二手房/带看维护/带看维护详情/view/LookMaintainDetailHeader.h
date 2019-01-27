@@ -12,7 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^LookMaintainDetailHeaderBlock)(NSInteger index);
+
 @interface LookMaintainDetailHeader : UITableViewHeaderFooterView
+
+@property (nonatomic, copy) LookMaintainDetailHeaderBlock lookMaintainDetailHeaderBlock;
 
 @property (nonatomic, strong) BaseHeader *customHeader;
 
@@ -64,7 +68,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIButton *followBtn;
 
-@property (nonatomic, strong) NSMutableArray *dataDic;
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
+
+@property (nonatomic, strong) NSMutableDictionary *needDic;
 
 @end
 

@@ -34,6 +34,11 @@
 #import "CustomTableAddHeader.h"
 #import "CustomTableListHeader.h"
 
+#pragma mark -- 二手房
+
+#import "SecondaryMatchCell.h"
+#import "SecondaryMatchCell2.h"
+#import "SecondaryMatchHeader.h"
 
 
 @interface CustomDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -134,10 +139,7 @@
 - (void)MatchRequest{
     
     [BaseRequest GET:ClientMatching_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
-        
-       
-//        NSLog(@"%@",resposeObject);
-    
+
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
@@ -147,11 +149,12 @@
             }
         }
         else{
+            
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
-//        NSLog(@"%@",error);
+
     }];
 }
 
@@ -183,35 +186,21 @@
     [_customDetailTable reloadData];
 }
 
-//-(void)GetCustomRequestMethod
-//{
-//
-//    [BaseRequest GET:GetStateList_URL parameters:@{@"client_id":[UserModelArchiver unarchive].agent_id} success:^(id resposeObject) {
-//
-//        NSLog(@"%@",resposeObject);
-//    } failure:^(NSError *error) {
-//
-//        NSLog(@"%@",error);
-//    }];
-//
-//}
 
 - (void)GetFollowRequestMethod{
     
     [BaseRequest GET:GetRecord_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
-        
-//        NSLog(@"%@",resposeObject);
-      
+
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             _FollowArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"data"]];
             [_customDetailTable reloadData];
         }else{
+            
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
-       
-//        NSLog(@"%@",error);
+
         [self showContent:@"网络错误"];
     }];
 }
@@ -219,9 +208,7 @@
 - (void)RequestMethod{
     
     [BaseRequest GET:GetCliendInfo_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
-        
-//        NSLog(@"%@",resposeObject);
-      
+
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
@@ -273,7 +260,7 @@
             NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
             [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                 
-                if ([key isEqualToString:@"region"] || [key isEqualToString:@"shop_type"]) {
+                if ([key isEqualToString:@"region"] || [key isEqualToString:@"shop_type"] || [key isEqualToString:@"pay_type"]) {
                     
                     if ([obj isKindOfClass:[NSArray class]]) {
                         
@@ -284,12 +271,29 @@
                     }
                 }else{
                     
-                    if ([obj isKindOfClass:[NSNull class]]) {
+                    if ([key isEqualToString:@"fit_info"]) {
                         
-                        tempDic[key] = @"";
+                        if ([obj isKindOfClass:[NSNull class]]) {
+                            
+                            tempDic[key] = @{@"fit_house_num":@"0",
+                                             @"fit_store_num":@"0",
+                                             @"is_recommend_num":@"0",
+                                             @"is_take_num":@"0",
+                                             @"fit_store_list":@[],
+                                             };
+                        }else{
+                            
+                            
+                        }
                     }else{
                         
-                        [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                        if ([obj isKindOfClass:[NSNull class]]) {
+                            
+                            tempDic[key] = @"";
+                        }else{
+                            
+                            [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+                        }
                     }
                 }
             }];
@@ -339,11 +343,24 @@
         return _FollowArr.count;
     }else{
         
-        if (section == 0) {
+        if ([self.customType isEqualToString:@"二手房"]) {
             
-            return 0;
+            if (section == 0) {
+                
+                return 1;
+            }else{
+                
+                return _projectArr.count < 3? _projectArr.count : 3;
+            }
+        }else{
+            
+            if (section == 0) {
+                
+                return 0;
+            }
+            CustomRequireModel *model = _dataArr[0];
+            return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
         }
-        return _projectArr.count < 3? _projectArr.count : 3;
     }
 }
 
@@ -523,13 +540,13 @@
                 return header;
             }else{
                 
-                CustomTableListHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"CustomTableListHeader"];
-                if (!header) {
-                    
-                    header = [[CustomTableListHeader alloc] initWithReuseIdentifier:@"CustomTableListHeader"];
-                }
-                
                 if ([_model.client_type isEqualToString:@"新房"]) {
+                    
+                    CustomTableListHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"CustomTableListHeader"];
+                    if (!header) {
+                        
+                        header = [[CustomTableListHeader alloc] initWithReuseIdentifier:@"CustomTableListHeader"];
+                    }
                     
                     header.numListL.text = [NSString stringWithFormat:@"匹配项目列表(%ld)",_projectArr.count];
                     header.recommendListL.text = [NSString stringWithFormat:@"已推荐项目数(%ld)",_statusArr.count];
@@ -538,26 +555,35 @@
                         RecommendedStatusVC *nextVC = [[RecommendedStatusVC alloc] initWithData:_statusArr];
                         [self.navigationController pushViewController:nextVC animated:YES];
                     };
+                    
+                    if (_projectArr.count == 0) {
+                        
+                        header.moreBtn.hidden = YES;
+                    }else{
+                        
+                        header.moreBtn.hidden = NO;
+                    }
+                    
+                    header.customTableListHeaderMoreBlock = ^{
+                        
+                        
+                    };
+                    return header;
                 }else{
                     
-                    header.numListL.text = [NSString stringWithFormat:@"匹配小区列表(%ld)",_projectArr.count];
-                    header.recommendListL.text = [NSString stringWithFormat:@"已推荐小区数(%ld)",_statusArr.count];
+                    SecondaryMatchHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"SecondaryMatchHeader"];
+                    if (!header) {
+                        
+                        header = [[SecondaryMatchHeader alloc] initWithReuseIdentifier:@"CustomTableListHeader"];
+                    }
+                    CustomRequireModel *model = _dataArr[0];
+                    header.numListL.text = [NSString stringWithFormat:@"匹配项目列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
+                    header.secondaryMatchHeaderMoreBlock = ^{
+                        
+                        
+                    };
+                    return header;
                 }
-                
-                if (_projectArr.count == 0) {
-                    
-                    header.moreBtn.hidden = YES;
-                }else{
-                    
-                    header.moreBtn.hidden = NO;
-                }
-                
-                
-                header.customTableListHeaderMoreBlock = ^{
-                    
-                    
-                };
-                return header;
             }
         }
     }
@@ -748,63 +774,92 @@
             return cell;
         }else{
             
-            NSString * Identifier = @"CustomDetailTableCell3";
-            CustomDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
-            if (!cell) {
+            if ([self.customType isEqualToString:@"二手房"]) {
                 
-                cell = [[CustomDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.tag = indexPath.row;
-            [cell setDataDic:_projectArr[indexPath.row]];
-            
-            NSMutableArray *tempArr = [@[] mutableCopy];
-            for (int i = 0; i < [_projectArr[indexPath.row][@"property_tags"] count]; i++) {
-                
-                [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (indexPath.section == 0) {
                     
-                    if ([obj[@"id"] integerValue] == [_projectArr[indexPath.row][@"property_tags"][i] integerValue]) {
+                    SecondaryMatchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecondaryMatchCell"];
+                    if (!cell) {
                         
-                        [tempArr addObject:obj[@"param"]];
-                        *stop = YES;
+                        cell = [[SecondaryMatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecondaryMatchCell"];
                     }
-                }];
-            }
-            
-            NSArray *tempArr1 = _projectArr[indexPath.row][@"project_tags"];
-            
-            NSArray *tempArr3 = @[tempArr,tempArr1.count == 0 ? @[]:tempArr1];
-            [cell settagviewWithdata:tempArr3];
-            
-            cell.recommendBtnBlock3 = ^(NSInteger index) {
-                
-                if (_dataArr.count) {
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     CustomRequireModel *model = _dataArr[0];
-//                    self.customDetailTable.userInteractionEnabled = NO;
-                    [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectArr[index][@"project_id"],@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
+                    cell.dataDic = model.fit_info;
+                    return cell;
+                }else{
+                    
+                    SecondaryMatchCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"SecondaryMatchCell2"];
+                    if (!cell) {
                         
-//                        self.customDetailTable.userInteractionEnabled = YES;
-//                        NSLog(@"%@",resposeObject);
-                        if ([resposeObject[@"code"] integerValue] == 200) {
+                        cell = [[SecondaryMatchCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecondaryMatchCell2"];
+                    }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    CustomRequireModel *model = _dataArr[0];
+                    cell.dicData = model.fit_info[@"fit_store_list"][indexPath.row];
+                    return cell;
+                }
+            }else{
+                
+                NSString * Identifier = @"CustomDetailTableCell3";
+                CustomDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+                if (!cell) {
+                    
+                    cell = [[CustomDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.tag = indexPath.row;
+                [cell setDataDic:_projectArr[indexPath.row]];
+                
+                NSMutableArray *tempArr = [@[] mutableCopy];
+                for (int i = 0; i < [_projectArr[indexPath.row][@"property_tags"] count]; i++) {
+                    
+                    [_propertyArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        
+                        if ([obj[@"id"] integerValue] == [_projectArr[indexPath.row][@"property_tags"][i] integerValue]) {
                             
-                            [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
-                                
-                                [self MatchRequest];
-                            }];
-                        }else{
-                            
-                            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                            [tempArr addObject:obj[@"param"]];
+                            *stop = YES;
                         }
-                    } failure:^(NSError *error) {
-                        
-//                        NSLog(@"%@",error);
-                        [self showContent:@"网络错误"];
                     }];
                 }
-            };
-            
-            return cell;
+                
+                NSArray *tempArr1 = _projectArr[indexPath.row][@"project_tags"];
+                
+                NSArray *tempArr3 = @[tempArr,tempArr1.count == 0 ? @[]:tempArr1];
+                [cell settagviewWithdata:tempArr3];
+                
+                cell.recommendBtnBlock3 = ^(NSInteger index) {
+                    
+                    if (_dataArr.count) {
+                        
+                        CustomRequireModel *model = _dataArr[0];
+                        //                    self.customDetailTable.userInteractionEnabled = NO;
+                        [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectArr[index][@"project_id"],@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
+                            
+                            //                        self.customDetailTable.userInteractionEnabled = YES;
+                            //                        NSLog(@"%@",resposeObject);
+                            if ([resposeObject[@"code"] integerValue] == 200) {
+                                
+                                [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
+                                    
+                                    [self MatchRequest];
+                                }];
+                            }else{
+                                
+                                [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                            }
+                        } failure:^(NSError *error) {
+                            
+                            //                        NSLog(@"%@",error);
+                            [self showContent:@"网络错误"];
+                        }];
+                    }
+                };
+                return cell;
+            }
         }
     }
 }

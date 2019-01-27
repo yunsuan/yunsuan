@@ -32,7 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) UILabel *line;
+@property (nonatomic, strong) UIView *line;
+
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end
 

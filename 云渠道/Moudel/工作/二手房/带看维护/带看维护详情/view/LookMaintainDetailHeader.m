@@ -23,12 +23,42 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    
+    if (self.lookMaintainDetailHeaderBlock) {
+        
+        self.lookMaintainDetailHeaderBlock(btn.tag);
+    }
 }
 
-- (void)setDataDic:(NSMutableArray *)dataDic{
+- (void)setNeedDic:(NSMutableDictionary *)needDic{
     
+    _needHeader.titleL.text = @"需求信息";
     
+    _purposeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",needDic[@"property_type"]];
+    _decorateL.text = [NSString stringWithFormat:@"装修状况：%@",needDic[@"decorate"]];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"总价：%@万",needDic[@"total_price"]]];
+    [attr addAttribute:NSForegroundColorAttributeName value:COLOR(225, 165, 29, 1) range:NSMakeRange(3, attr.length - 4)];
+    _priceL.attributedText = attr;
+//    _priceL.text = [NSString stringWithFormat:@"总价：%@万",needDic[@"total_price"]];
+    _areaL.text = [NSString stringWithFormat:@"面积：%@㎡",needDic[@"area"]];
+    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",needDic[@"house_type"]];
+    _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
+    _markL.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
+}
+
+- (void)setDataDic:(NSMutableDictionary *)dataDic{
+    
+    _customHeader.titleL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"recommend_code"]];
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    _wayL.text = [NSString stringWithFormat:@"方式：%@",dataDic[@"get_way"]];
+    _timeL.text = [NSString stringWithFormat:@"接单时间：%@",dataDic[@"accept_time"]];
+    
+    _nameL.text = dataDic[@"client_name"];
+    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"client_tel"]];
+    _followTimeL.text = [NSString stringWithFormat:@"上次跟进时间：%@",dataDic[@"last_follow_time"]];
+    _customLevelL.text = [NSString stringWithFormat:@"客户等级：%@",dataDic[@"client_level"]];
+//    _matchL.text = [NSString stringWithFormat:@"匹配套数：%@套",dataDic[@""]];
+    _progressL.text = [NSString stringWithFormat:@"进度：%@",dataDic[@"take_num"]];
 }
 
 - (void)initUI{
@@ -55,6 +85,7 @@
         }else if (i == 1){
             
             _wayL = label;
+            _wayL.textAlignment = NSTextAlignmentRight;
             [_systemView addSubview:_wayL];
         }else{
             
@@ -94,18 +125,20 @@
             case 3:
             {
                 _customLevelL = label;
+                _customLevelL.textAlignment = NSTextAlignmentRight;
                 [_customView addSubview:_customLevelL];
                 break;
             }
             case 4:
             {
                 _matchL = label;
-                [_customView addSubview:_matchL];
+//                [_customView addSubview:_matchL];
                 break;
             }
             case 5:
             {
                 _progressL = label;
+//                _progressL.textAignment = NSTextAlignmentRight;
                 [_customView addSubview:_progressL];
                 break;
             }
@@ -136,7 +169,7 @@
             case 1:
             {
                 _typeL = label;
-                [_needView addSubview:_houseTypeL];
+                [_needView addSubview:_typeL];
                 break;
             }
             case 2:
@@ -184,6 +217,7 @@
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+        btn.tag = i;
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         if (i == 0) {
             
@@ -230,7 +264,7 @@
         
         make.left.equalTo(_systemView).offset(28 *SIZE);
         make.top.equalTo(_sourceL.mas_bottom).offset(14 *SIZE);
-        make.width.mas_equalTo(150 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
         make.bottom.equalTo(_systemView).offset(-17 *SIZE);
     }];
     
@@ -250,7 +284,7 @@
     
     [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_customView).offset(180 *SIZE);
+        make.left.equalTo(_customView).offset(28 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(300 *SIZE);
     }];
@@ -259,29 +293,29 @@
         
         make.left.equalTo(_customView).offset(28 *SIZE);
         make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(180 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_customLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_customView).offset(210 *SIZE);
         make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(156 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
     }];
     
-    [_matchL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_customView).offset(28 *SIZE);
-        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(180 *SIZE);
-        make.bottom.equalTo(_customView).offset(-17 *SIZE);
-    }];
+//    [_matchL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_customView).offset(28 *SIZE);
+//        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
+//        make.width.mas_equalTo(180 *SIZE);
+//        make.bottom.equalTo(_customView).offset(-17 *SIZE);
+//    }];
     
     [_progressL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_customView).offset(210 *SIZE);
+        make.left.equalTo(_customView).offset(28 *SIZE);
         make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(156 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
         make.bottom.equalTo(_customView).offset(-17 *SIZE);
     }];
     
