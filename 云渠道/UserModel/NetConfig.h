@@ -202,6 +202,9 @@ static NSString *const AllStore_URL = @"agent/store/list";
 //门店详情
 static NSString *const DetailStore_URl = @"agent/store/detail";
 
+//二手房推荐
+static NSString *const SCReconment_URL = @"agent/take/recommend";
+
 #pragma mark ---  房源  ---
 
 //推荐

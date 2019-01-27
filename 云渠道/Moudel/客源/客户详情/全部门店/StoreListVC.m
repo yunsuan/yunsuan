@@ -12,6 +12,8 @@
 #import "StoreDetailVC.h"
 #import "StoreListCell.h"
 #import "SelectStoreCollCell.h"
+#import "SHRecommenView.h"
+#import "FailView.h"
 
 
 @interface StoreListVC ()<UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UITextFieldDelegate>
@@ -40,6 +42,10 @@
 @property (nonatomic, strong) UICollectionView *selectColl;
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+
+@property (nonatomic, strong) SHRecommenView *recommendView;
+
+@property (nonatomic, strong) FailView *failView;
 
 
 @end
@@ -357,9 +363,59 @@
 #pragma mark --action --
 -(void)action_recoment:(UIButton *)sender
 {
-    NSLog(@"%ld",sender.tag);
+
+    [self.view addSubview:self.recommendView];
+    _recommendView.sexBtn.content.text =@"男";
+    _recommendView.sexBtn->str = @"1";
+    _recommendView.nameTF.textfield.text = @"张三";
+    _recommendView.phoneTF.textfield.text = @"13492839393";
+    [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
+    _recommendView.recommendViewConfirmBlock = ^{
+        NSDictionary *dic = @{@"client_id":_client_id,
+                              @"store_id":[NSString stringWithFormat:@"%ld",sender.tag],
+                              @"type":_type,
+                              @"name":_recommendView.nameTF.textfield.text,
+                              @"tel":_recommendView.phoneTF.textfield.text,
+                              @"sex":_recommendView.sexBtn->str,
+                              @"comment":_recommendView.markTV.text
+                              };
+        
+        [BaseRequest POST:SCReconment_URL parameters:dic success:^(id resposeObject) {
+            
+        } failure:^(NSError *error) {
+            
+        }];
+    };
+    
 }
 
+-(void)action_sex
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"男";
+        _recommendView.sexBtn->str = @"1";
+    }];
+    
+    UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"女";
+        _recommendView.sexBtn->str =@"2";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:male];
+    [alert addAction:female];
+    [alert addAction:cancel];
+    [self.navigationController presentViewController:alert animated:YES completion:^{
+        
+    }];
+}
 
 
 #pragma mark --coll代理
@@ -578,6 +634,26 @@
     }];
     
 
+}
+
+
+- (FailView *)failView{
+    
+    if (!_failView) {
+        
+        _failView = [[FailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+    }
+    return _failView;
+}
+
+- (SHRecommenView *)recommendView{
+    
+    if (!_recommendView) {
+        
+        _recommendView = [[SHRecommenView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+
+    }
+    return _recommendView;
 }
 
 
