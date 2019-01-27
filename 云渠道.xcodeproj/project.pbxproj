@@ -599,6 +599,7 @@
 		10174C0B2072179300D00B9A /* LicenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174C0A2072179300D00B9A /* LicenceCell.m */; };
 		10174C14207B010500D00B9A /* region.json in Resources */ = {isa = PBXBuildFile; fileRef = 10174C13207B010500D00B9A /* region.json */; };
 		10174C18207C4EF600D00B9A /* CustomerInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174C17207C4EF600D00B9A /* CustomerInfoModel.m */; };
+		101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101F10A821FD9FA3001CA1FC /* SHRecommenView.m */; };
 		10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3921A53D000042738C /* YBImageBrowserAnimatedTransitioning.m */; };
 		10255A6721A53D000042738C /* YBImageBrowserFunctionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3C21A53D000042738C /* YBImageBrowserFunctionModel.m */; };
 		10255A6821A53D000042738C /* YBImageBrowserFunctionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3D21A53D000042738C /* YBImageBrowserFunctionBar.m */; };
@@ -707,6 +708,7 @@
 		10F7D0DC21F9A196007818E3 /* StoreListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0DB21F9A196007818E3 /* StoreListVC.m */; };
 		10F7D0DF21F9A1C7007818E3 /* StoreDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */; };
 		10F7D0E221F9A41C007818E3 /* StoreListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0E121F9A41C007818E3 /* StoreListCell.m */; };
+		10F7D0E521FAFE3B007818E3 /* StoreDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10F7D0E421FAFE3B007818E3 /* StoreDetailCell.m */; };
 		10FA288921EF215D00617555 /* yindaoye2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288421EF215D00617555 /* yindaoye2.jpg */; };
 		10FA288A21EF215D00617555 /* yindaoye5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288521EF215D00617555 /* yindaoye5.jpg */; };
 		10FA288B21EF215D00617555 /* yindaoye1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 10FA288621EF215D00617555 /* yindaoye1.jpg */; };
@@ -1910,6 +1912,8 @@
 		10174C13207B010500D00B9A /* region.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = region.json; sourceTree = "<group>"; };
 		10174C16207C4EF600D00B9A /* CustomerInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerInfoModel.h; sourceTree = "<group>"; };
 		10174C17207C4EF600D00B9A /* CustomerInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerInfoModel.m; sourceTree = "<group>"; };
+		101F10A721FD9FA3001CA1FC /* SHRecommenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHRecommenView.h; sourceTree = "<group>"; };
+		101F10A821FD9FA3001CA1FC /* SHRecommenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHRecommenView.m; sourceTree = "<group>"; };
 		10255A3821A53D000042738C /* YBImageBrowserAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowserAnimatedTransitioning.h; sourceTree = "<group>"; };
 		10255A3921A53D000042738C /* YBImageBrowserAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBImageBrowserAnimatedTransitioning.m; sourceTree = "<group>"; };
 		10255A3B21A53D000042738C /* YBImageBrowserFunctionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowserFunctionBar.h; sourceTree = "<group>"; };
@@ -2126,6 +2130,8 @@
 		10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreDetailVC.m; sourceTree = "<group>"; };
 		10F7D0E021F9A41C007818E3 /* StoreListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreListCell.h; sourceTree = "<group>"; };
 		10F7D0E121F9A41C007818E3 /* StoreListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreListCell.m; sourceTree = "<group>"; };
+		10F7D0E321FAFE3B007818E3 /* StoreDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreDetailCell.h; sourceTree = "<group>"; };
+		10F7D0E421FAFE3B007818E3 /* StoreDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreDetailCell.m; sourceTree = "<group>"; };
 		10FA288421EF215D00617555 /* yindaoye2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye2.jpg; sourceTree = "<group>"; };
 		10FA288521EF215D00617555 /* yindaoye5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye5.jpg; sourceTree = "<group>"; };
 		10FA288621EF215D00617555 /* yindaoye1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yindaoye1.jpg; sourceTree = "<group>"; };
@@ -6034,6 +6040,7 @@
 		0CF04F60207C4C8900A45F4A /* 弹出框 */ = {
 			isa = PBXGroup;
 			children = (
+				101F10A621FD9F2B001CA1FC /* 二手房推荐 */,
 				0CF04F61207C4CBF00A45F4A /* RecommendView.h */,
 				0CF04F62207C4CBF00A45F4A /* RecommendView.m */,
 				0CF04F64207C555F00A45F4A /* FailView.h */,
@@ -6271,6 +6278,15 @@
 				10174C17207C4EF600D00B9A /* CustomerInfoModel.m */,
 			);
 			path = "客户基本信息model";
+			sourceTree = "<group>";
+		};
+		101F10A621FD9F2B001CA1FC /* 二手房推荐 */ = {
+			isa = PBXGroup;
+			children = (
+				101F10A721FD9FA3001CA1FC /* SHRecommenView.h */,
+				101F10A821FD9FA3001CA1FC /* SHRecommenView.m */,
+			);
+			path = "二手房推荐";
 			sourceTree = "<group>";
 		};
 		10255A3421A53D000042738C /* 相册 */ = {
@@ -7133,6 +7149,8 @@
 				10F7D0DE21F9A1C7007818E3 /* StoreDetailVC.m */,
 				10F7D0E021F9A41C007818E3 /* StoreListCell.h */,
 				10F7D0E121F9A41C007818E3 /* StoreListCell.m */,
+				10F7D0E321FAFE3B007818E3 /* StoreDetailCell.h */,
+				10F7D0E421FAFE3B007818E3 /* StoreDetailCell.m */,
 			);
 			path = "全部门店";
 			sourceTree = "<group>";
@@ -7729,6 +7747,7 @@
 				0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */,
 				0C15A1DA2112986700544F2E /* RentingModifyProjectAnalysisVC.m in Sources */,
 				0C9CD40220FF1AED004894A3 /* TextFieldImgCell.m in Sources */,
+				101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */,
 				0C342FB7207DEB540058406D /* BaseModel.m in Sources */,
 				0C288360210711DB00F69C5F /* RentingReportVC.m in Sources */,
 				0C9CD41620FF4D6F004894A3 /* AgencyDoneCustomerDetailVC.m in Sources */,
@@ -7817,6 +7836,7 @@
 				0CA37B762088A0C4005609C7 /* AddTagCollHeader.m in Sources */,
 				0C0BED3620A1A23F005A16A1 /* DealComplaintResultVC.m in Sources */,
 				0C288FC221EDBF6100A142F6 /* CompleteTelView.m in Sources */,
+				10F7D0E521FAFE3B007818E3 /* StoreDetailCell.m in Sources */,
 				0C997C1521D5D08300F805AA /* RentingCancelAgencyProtocolVC.m in Sources */,
 				0CDD707320D3A77A00D6609C /* SurveyingDetailVC.m in Sources */,
 				10AEEE7721A2A0B20049625B /* MyTeamVC.m in Sources */,
