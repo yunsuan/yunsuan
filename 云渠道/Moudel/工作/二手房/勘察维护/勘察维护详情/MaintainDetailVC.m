@@ -466,7 +466,8 @@
                     return nil;
                 }
                 
-                MaintainAddFollowHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MaintainAddFollowHeader"];
+                MaintainAddFollowHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MaintainAddFollowHeader"]
+                ;
                 if (!header) {
                     
                     header = [[MaintainAddFollowHeader alloc] initWithReuseIdentifier:@"MaintainAddFollowHeader"];

@@ -74,6 +74,11 @@
     _typeL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_typeL];
     
+    _storeL = [[UILabel alloc] init];
+    _storeL.textColor = YJ86Color;
+    _storeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_storeL];
+    
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJ86Color;
     _codeL.font = [UIFont systemFontOfSize:12 *SIZE];

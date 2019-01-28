@@ -366,6 +366,7 @@
 		0CB3E2EC21FD7839007D71CF /* SecondaryMatchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2EB21FD7839007D71CF /* SecondaryMatchCell.m */; };
 		0CB3E2EF21FD7848007D71CF /* SecondaryMatchCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2EE21FD7848007D71CF /* SecondaryMatchCell2.m */; };
 		0CB3E2F221FD80D2007D71CF /* SecondaryMatchHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2F121FD80D2007D71CF /* SecondaryMatchHeader.m */; };
+		0CB3E2F521FEA7B4007D71CF /* LookMaintainAddFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2F421FEA7B4007D71CF /* LookMaintainAddFollowCell.m */; };
 		0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC19D212072172C0007CC5F /* AddRequireMentVC.m */; };
 		0CB6BAF120736D7B00921C75 /* FollowRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BAF020736D7B00921C75 /* FollowRecordVC.m */; };
 		0CB6BAF52074982000921C75 /* HouseTypeDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BAF42074982000921C75 /* HouseTypeDetailVC.m */; };
@@ -1446,6 +1447,8 @@
 		0CB3E2EE21FD7848007D71CF /* SecondaryMatchCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondaryMatchCell2.m; sourceTree = "<group>"; };
 		0CB3E2F021FD80D2007D71CF /* SecondaryMatchHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondaryMatchHeader.h; sourceTree = "<group>"; };
 		0CB3E2F121FD80D2007D71CF /* SecondaryMatchHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondaryMatchHeader.m; sourceTree = "<group>"; };
+		0CB3E2F321FEA7B4007D71CF /* LookMaintainAddFollowCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainAddFollowCell.h; sourceTree = "<group>"; };
+		0CB3E2F421FEA7B4007D71CF /* LookMaintainAddFollowCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainAddFollowCell.m; sourceTree = "<group>"; };
 		0CB6BAEF20736D7B00921C75 /* FollowRecordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FollowRecordVC.h; sourceTree = "<group>"; };
 		0CB6BAF020736D7B00921C75 /* FollowRecordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FollowRecordVC.m; sourceTree = "<group>"; };
 		0CB6BAF32074982000921C75 /* HouseTypeDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseTypeDetailVC.h; sourceTree = "<group>"; };
@@ -3496,6 +3499,8 @@
 				0C38826021F8799700359423 /* LookMaintainDetailFollowCell.m */,
 				0C38826221F879AB00359423 /* LookMaintainDetailContactCell.h */,
 				0C38826321F879AB00359423 /* LookMaintainDetailContactCell.m */,
+				0CB3E2F321FEA7B4007D71CF /* LookMaintainAddFollowCell.h */,
+				0CB3E2F421FEA7B4007D71CF /* LookMaintainAddFollowCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7800,6 +7805,7 @@
 				0CD90A4920DB3D1600061B4A /* MaintainLookHeader.m in Sources */,
 				102DF9732057A14300E1859C /* WorkingVC.m in Sources */,
 				0C997C5B21E44FC500F805AA /* LookWorkConfirmCell.m in Sources */,
+				0CB3E2F521FEA7B4007D71CF /* LookMaintainAddFollowCell.m in Sources */,
 				0CDD706620D39A0300D6609C /* RoomInvalidApplyVC.m in Sources */,
 				1016245B208863BB00AD53DE /* YJChooseView.m in Sources */,
 				10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */,
