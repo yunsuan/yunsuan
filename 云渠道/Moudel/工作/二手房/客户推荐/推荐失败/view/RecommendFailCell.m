@@ -69,7 +69,7 @@
     
     _storeL = [[UILabel alloc] init];
     _storeL.textColor = YJ86Color;
-    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _storeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_storeL];
     
     _codeL = [[UILabel alloc] init];
@@ -87,13 +87,6 @@
     _failTimeL.textColor = YJ86Color;
     _failTimeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_failTimeL];
-    
-    
-    _codeL = [[UILabel alloc] init];
-    _codeL.textColor = YJ86Color;
-    _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_codeL];
-    
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -113,15 +106,15 @@
     
     [_sexImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(5 *SIZE);
-        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.left.equalTo(_nameL.mas_right).offset(6 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
         make.width.height.mas_equalTo(12 *SIZE);
     }];
     
     [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(self.contentView).offset(17 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
@@ -129,7 +122,7 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -143,14 +136,14 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_storeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_failTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -158,6 +151,7 @@
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(_failTimeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }

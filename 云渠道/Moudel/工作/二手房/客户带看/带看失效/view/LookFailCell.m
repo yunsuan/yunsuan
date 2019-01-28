@@ -90,6 +90,10 @@
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_timeL];
     
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
+    
     [self MasonryUI];
 }
 
@@ -156,6 +160,7 @@
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }

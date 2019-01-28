@@ -77,6 +77,7 @@
 //    }];
     
     _dataArr = @[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]];
+    [_table reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -107,16 +108,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.contentL.text = _dataArr[indexPath.row];
+    cell.lineView.hidden = YES;
     
     return cell;
 }
 
 - (void)initUI{
 
+    self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"待确认详情";
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.delegate = self;
     _table.dataSource = self;
     

@@ -42,7 +42,7 @@
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
     _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
     _timeL.text = [NSString stringWithFormat:@"申诉日期：%@",dataDic[@"appeal_time"]];
-    _statusL.text = [NSString stringWithFormat:@"%@",dataDic[@"state"]];
+    _statusL.text = [NSString stringWithFormat:@"%@",dataDic[@"appeal_state"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -113,15 +113,15 @@
     
     [_sexImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(5 *SIZE);
-        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.left.equalTo(_nameL.mas_right).offset(6 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
         make.width.height.mas_equalTo(12 *SIZE);
     }];
     
     [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(self.contentView).offset(17 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
@@ -129,7 +129,7 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -143,7 +143,7 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_storeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -157,7 +157,7 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -165,6 +165,7 @@
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }
