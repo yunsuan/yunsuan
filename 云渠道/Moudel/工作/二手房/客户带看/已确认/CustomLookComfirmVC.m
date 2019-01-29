@@ -49,7 +49,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:HousePushWaitList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RecommendButterValueList_URL parameters:dic success:^(id resposeObject) {
     
         [_waitTable.mj_header endRefreshing];
         NSLog(@"%@",resposeObject);
@@ -86,7 +86,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:HousePushConfirmList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:RecommendButterValueList_URL parameters:dic success:^(id resposeObject) {
     
         NSLog(@"%@",resposeObject);
     

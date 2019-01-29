@@ -99,6 +99,10 @@
     [_comfirmBtn setTitle:@"带看维护" forState:UIControlStateNormal];
     [self.contentView addSubview:_comfirmBtn];
     
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
+    
     [self MasonryUI];
 }
 

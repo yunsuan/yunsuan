@@ -305,6 +305,7 @@
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
+                cell.tag = indexPath.row;
                 cell.dataDic = _contactArr[indexPath.row];
                 if (indexPath.row == 0) {
                     
@@ -325,6 +326,55 @@
                 
                 cell.lookMaintainDetailContactCellBlock = ^(NSInteger index, NSInteger btn) {
                     
+                    if (btn == 0){
+                        
+                        if (index == 0) {
+                            
+                            
+                        }else{
+                            
+                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[index - 1][@"contact_id"]} success:^(id resposeObject) {
+                                
+                                NSLog(@"%@",resposeObject);
+                                if ([resposeObject[@"code"] integerValue] == 200) {
+                                    
+                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index - 1)];
+                                    [_mainTable reloadData];
+                                }else{
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                }
+                            } failure:^(NSError *error) {
+                                
+                                NSLog(@"%@",error);
+                                [self showContent:@"网络错误"];
+                            }];
+                        }
+                    }else{
+                        
+                        if (index == _contactArr.count - 1) {
+                            
+                            
+                        }else{
+                            
+                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[index + 1][@"contact_id"]} success:^(id resposeObject) {
+                                
+                                NSLog(@"%@",resposeObject);
+                                if ([resposeObject[@"code"] integerValue] == 200) {
+                                    
+                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index + 1)];
+                                    [_mainTable reloadData];
+                                }else{
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                }
+                            } failure:^(NSError *error) {
+                                
+                                NSLog(@"%@",error);
+                                [self showContent:@"网络错误"];
+                            }];
+                        }
+                    }
                 };
                 return cell;
             }else{

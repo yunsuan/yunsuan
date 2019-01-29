@@ -138,12 +138,20 @@
             _phoneTF6.userInteractionEnabled = NO;
             _phoneTF7.userInteractionEnabled = NO;
         }
+        
     }else{
         
         _hideReportL.text = @"当前显号报备";
         _hideL.text = @"需要补全电话号码";
         _hideImg.image = [UIImage imageNamed:@"eye_2"];
         self.titleLabel.text = @"添加客户";
+        _isHide = NO;
+    }
+    if (self.status > 1) {
+        
+        _hideReportL.hidden = YES;
+        _hideL.hidden = YES;
+        _hideImg.hidden = YES;
         _isHide = NO;
     }
     [self initDataSouce];
@@ -177,7 +185,7 @@
             _typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
             _typeBtn->str = [NSString stringWithFormat:@"%@", ID];
             _Customerinfomodel.client_property_type = [NSString stringWithFormat:@"%@",ID];
-
+            
         };
         [self.view addSubview:view];
     }else{
@@ -187,6 +195,31 @@
             
             _needBtn.content.text = [NSString stringWithFormat:@"%@",MC];
             _needBtn->str = [NSString stringWithFormat:@"%@", ID];
+            self.status = [[NSString stringWithFormat:@"%@", ID] integerValue];
+            if ([_needBtn.content.text isEqualToString:@"新房"]) {
+                
+                _hideReportL.hidden = NO;
+                _hideL.hidden = NO;
+                _hideImg.hidden = NO;
+    
+                _phoneTF4.text = _tel4;
+                _phoneTF5.text = _tel5;
+                _phoneTF6.text = _tel6;
+                _phoneTF7.text = _tel7;
+                _hideReportL.text = @"当前显号报备";
+                _hideImg.image = [UIImage imageNamed:@"eye_2"];
+                _hideL.text = @"需要补全电话号码";
+            }else{
+                
+                _phoneTF4.text = _tel4;
+                _phoneTF5.text = _tel5;
+                _phoneTF6.text = _tel6;
+                _phoneTF7.text = _tel7;
+                _hideReportL.hidden = YES;
+                _hideL.hidden = YES;
+                _hideImg.hidden = YES;
+                _isHide = NO;
+            }
             if ([_needBtn.content.text isEqualToString:@"二手房"]) {
                 
                 _typeL.hidden = NO;
@@ -1253,6 +1286,14 @@
     [_scrollview addSubview:_detailadress];
     
     [_scrollview addSubview:self.surebtn];
+    
+    if (self.status > 1) {
+        
+        _hideReportL.hidden = YES;
+        _hideL.hidden = YES;
+        _hideImg.hidden = YES;
+        _isHide = NO;
+    }
     
     [self masonryUI];
     
