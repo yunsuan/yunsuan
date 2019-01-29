@@ -11,6 +11,9 @@
 #import "StoreDetailCell.h"
 #import "SecdaryAllTableCell.h"
 #import "SecdaryAllTableModel.h"
+#import "SHRecommenView.h"
+#import "SHRecomenSucessView.h"
+#import "FailView.h"
 #import <MapKit/MapKit.h>
 
 @interface StoreDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -24,6 +27,8 @@
 
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic , strong) UIButton *surebtn;
+@property (nonatomic, strong) SHRecommenView *recommendView;
+@property (nonatomic, strong) FailView *failView;
 @end
 
 @implementation StoreDetailVC
@@ -47,6 +52,71 @@
 -(void)action_sure
 {
     
+    [self.view addSubview:self.recommendView];
+    if ([_sex integerValue]==2) {
+        _recommendView.sexBtn.content.text =@"女";
+        _recommendView.sexBtn->str = @"2";
+    }
+    else{
+        _recommendView.sexBtn.content.text =@"男";
+        _recommendView.sexBtn->str = @"1";
+    }
+    _recommendView.nameTF.textfield.text = _name;
+    _recommendView.phoneTF.textfield.text = _tel;
+    _recommendView.markTV.text =@"";
+    [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
+    _recommendView.recommendViewConfirmBlock = ^{
+        NSDictionary *dic = @{@"client_id":_client_id,
+                              @"store_id":_store_id,
+                              @"type":_type,
+                              @"name":_recommendView.nameTF.textfield.text,
+                              @"tel":_recommendView.phoneTF.textfield.text,
+                              @"sex":_recommendView.sexBtn->str,
+                              @"comment":_recommendView.markTV.text
+                              };
+        
+        [BaseRequest POST:SCReconment_URL parameters:dic success:^(id resposeObject) {
+            if ([resposeObject[@"code"] integerValue]==200) {
+                SHRecomenSucessView *view =[[SHRecomenSucessView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                view.codeL.text = [NSString stringWithFormat:@"推荐编号：%@",resposeObject[@"data"][@"recommend_code"]];
+                view.nameL.text = [NSString stringWithFormat:@"客户名称：%@",resposeObject[@"data"][@"client_name"]];
+                view.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client_tel"]];
+                view.timeL.text = resposeObject[@"data"][@"recommend_time"];
+                [self.view addSubview:view];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    };
+    
+}
+
+-(void)action_sex
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"男";
+        _recommendView.sexBtn->str = @"1";
+    }];
+    
+    UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"女";
+        _recommendView.sexBtn->str =@"2";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:male];
+    [alert addAction:female];
+    [alert addAction:cancel];
+    [self.navigationController presentViewController:alert animated:YES completion:^{
+        
+    }];
 }
 
 -(void)action_phone
@@ -84,6 +154,8 @@
                                                   }
              success:^(id resposeObject) {
                  NSLog(@"%@",resposeObject);
+                 [_table.mj_header endRefreshing];
+                 [_table.mj_footer endRefreshing];
                  if ([resposeObject[@"code"] integerValue]==200) {
 
                          _store_info = resposeObject[@"data"][@"store_info"];
@@ -94,12 +166,17 @@
                      }
                      _numofhouse = resposeObject[@"data"][@"houseList"][@"total"] ;
                        [self SetData:resposeObject[@"data"][@"houseList"][@"data"]];
+                     if ([resposeObject[@"data"][@"houseList"][@"last_page"] integerValue] ==_page) {
+                        _table.mj_footer.state = MJRefreshStateNoMoreData;
+                     }
                  }
                  
         
 
     } failure:^(NSError *error) {
 
+        [_table.mj_header endRefreshing];
+        [_table.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
     }];
 }
@@ -246,6 +323,24 @@
     _table.backgroundColor = self.view.backgroundColor;
     _table.delegate = self;
     _table.dataSource = self;
+    _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        _page = 1;
+        //        if (_isSearch) {
+        
+        [self requestMethodWithpage:_page];
+        //        }else{
+        //
+        //            [self RequestMethod];
+        //        }
+    }];
+    
+    _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        
+        _page = _page+1;
+        [self requestMethodWithpage:_page];
+        
+    }];
     [self.view addSubview:_table];
     [self.view addSubview:self.surebtn];
 }
@@ -265,6 +360,28 @@
     }
     return _surebtn;
 }
+
+- (FailView *)failView{
+    
+    if (!_failView) {
+        
+        _failView = [[FailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+    }
+    return _failView;
+}
+
+- (SHRecommenView *)recommendView{
+    
+    if (!_recommendView) {
+        
+        _recommendView = [[SHRecommenView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+        
+    }
+    return _recommendView;
+}
+
+
+
 
 @end
 

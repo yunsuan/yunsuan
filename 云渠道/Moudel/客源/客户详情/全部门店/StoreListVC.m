@@ -13,6 +13,7 @@
 #import "StoreListCell.h"
 #import "SelectStoreCollCell.h"
 #import "SHRecommenView.h"
+#import "SHRecomenSucessView.h"
 #import "FailView.h"
 
 
@@ -365,10 +366,17 @@
 {
 
     [self.view addSubview:self.recommendView];
+    if ([_sex integerValue]==2) {
+        _recommendView.sexBtn.content.text =@"女";
+        _recommendView.sexBtn->str = @"2";
+    }
+    else{
     _recommendView.sexBtn.content.text =@"男";
     _recommendView.sexBtn->str = @"1";
-    _recommendView.nameTF.textfield.text = @"张三";
-    _recommendView.phoneTF.textfield.text = @"13492839393";
+    }
+    _recommendView.nameTF.textfield.text = _name;
+    _recommendView.phoneTF.textfield.text = _tel;
+    _recommendView.markTV.text =@"";
     [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
     _recommendView.recommendViewConfirmBlock = ^{
         NSDictionary *dic = @{@"client_id":_client_id,
@@ -381,7 +389,14 @@
                               };
         
         [BaseRequest POST:SCReconment_URL parameters:dic success:^(id resposeObject) {
-            
+            if ([resposeObject[@"code"] integerValue]==200) {
+                SHRecomenSucessView *view =[[SHRecomenSucessView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                view.codeL.text = [NSString stringWithFormat:@"推荐编号：%@",resposeObject[@"data"][@"recommend_code"]];
+                view.nameL.text = [NSString stringWithFormat:@"客户名称：%@",resposeObject[@"data"][@"client_name"]];
+                view.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client_tel"]];
+                view.timeL.text = resposeObject[@"data"][@"recommend_time"];
+                [self.view addSubview:view];
+            }
         } failure:^(NSError *error) {
             
         }];
@@ -545,6 +560,9 @@
     vc.store_id = _dataArr[indexPath.row][@"store_id"];
     vc.client_id = _client_id;
     vc.type = _type;
+    vc.name = _name;
+    vc.tel =_tel;
+    vc.sex =_sex;
     [self.navigationController pushViewController:vc animated:YES];
     
 }
