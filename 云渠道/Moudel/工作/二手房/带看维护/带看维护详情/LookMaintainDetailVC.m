@@ -8,9 +8,13 @@
 
 #import "LookMaintainDetailVC.h"
 
+#import "LookMaintainDetailAddFollowVC.h"
+
 #import "LookMaintainDetailHeader.h"
 #import "LookMaintainDetailRoomCell.h"
 #import "LookMaintainDetailContactCell.h"
+#import "AddPeopleCell.h"
+#import "LookMaintainAddFollowCell.h"
 #import "LookMaintainDetailFollowCell.h"
 
 @interface LookMaintainDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -138,9 +142,23 @@
         return _takeHouseArr.count;
     }else if (_index == 1){
         
-        return _contactArr.count;
+        if (section == 0) {
+            
+            return _contactArr.count;
+        }else{
+            
+            return 1;
+        }
+    }else{
+        
+        if (section == 0) {
+            
+            return 1;
+        }else{
+            
+            return _followArr.count;
+        }
     }
-    return _followArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -184,8 +202,8 @@
             
             [header.roomBtn setTitle:@"带看房源(0)" forState:UIControlStateNormal];
         }
-        [header.followBtn setTitle:@"联系人信息" forState:UIControlStateNormal];
-        [header.contactBtn setTitle:@"跟进记录" forState:UIControlStateNormal];
+        [header.followBtn setTitle:@"跟进记录" forState:UIControlStateNormal];
+        [header.contactBtn setTitle:@"联系人信息" forState:UIControlStateNormal];
         if (_index == 0) {
             
             [header.roomBtn setBackgroundColor:YJBlueBtnColor];
@@ -254,37 +272,93 @@
 
         if (_index == 1) {
 
-            NSString * Identifier = @"LookMaintainDetailContactCell";
-            LookMaintainDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
-            if (!cell) {
+            if (indexPath.section == 0) {
                 
-                cell = [[LookMaintainDetailContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
-            }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            cell.dataDic = _contactArr[indexPath.row];
-            if (indexPath.row == 0) {
+                NSString * Identifier = @"LookMaintainDetailContactCell";
+                LookMaintainDetailContactCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+                if (!cell) {
+                    
+                    cell = [[LookMaintainDetailContactCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
-                cell.typeL.text = @"主权益人";
+                cell.dataDic = _contactArr[indexPath.row];
+                if (indexPath.row == 0) {
+                    
+                    cell.typeL.text = @"主权益人";
+                }else{
+                    
+                    cell.typeL.text = @"副权益人";
+                }
+                
+                return cell;
             }else{
                 
-                cell.typeL.text = @"副权益人";
+                AddPeopleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddPeopleCell"];
+                if (!cell) {
+                    
+                    cell = [[AddPeopleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddPeopleCell"];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                cell.addImg.image = [UIImage imageNamed:@"add10"];
+                
+                return cell;
             }
-            
-            return cell;
         }else{
 
-            NSString * Identifier = @"LookMaintainDetailFollowCell";
-            LookMaintainDetailFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
-            if (!cell) {
+            if (indexPath.section == 0) {
                 
-                cell = [[LookMaintainDetailFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                NSString * Identifier = @"LookMaintainAddFollowCell";
+                LookMaintainAddFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+                if (!cell) {
+                    
+                    cell = [[LookMaintainAddFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }else{
+                
+                NSString * Identifier = @"LookMaintainDetailFollowCell";
+                LookMaintainDetailFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+                if (!cell) {
+                    
+                    cell = [[LookMaintainDetailFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                cell.dataDic = _followArr[indexPath.row];
+                
+                return cell;
             }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_index == 0) {
+        
+        
+    }else if (_index == 1){
+        
+        if (indexPath.section == 0) {
             
-            cell.dataDic = _followArr[indexPath.row];
             
-            return cell;
+        }else{
+            
+            
+        }
+    }else{
+        
+        if (indexPath.section == 0) {
+            
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            
         }
     }
 }

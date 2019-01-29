@@ -8,6 +8,8 @@
 
 #import "LookDealVC.h"
 
+#import "LookDealDetailVC.h"
+
 #import "LookDealCell.h"
 
 @interface LookDealVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -126,8 +128,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
-//    return _dataArr.count;
+    return _dataArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -141,7 +142,7 @@
     
     cell.tag = indexPath.row;
     
-//    cell.dataDic = _dataArr[indexPath.row];
+    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }
@@ -149,10 +150,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
-    //    SystemWorkWaitDetailVC *nextVC = [[SystemWorkWaitDetailVC alloc] initWithPushId:_dataArr[indexPath.row][@"push_id"] type:_dataArr[indexPath.row][@"type"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+    LookDealDetailVC *nextVC = [[LookDealDetailVC alloc] initWithLookId:_dataArr[indexPath.row][@"look_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
