@@ -20,9 +20,13 @@
     return self;
 }
 
-- (void)ActionMoreBtn:(UIButton *)btn{
+
+- (void)ActionTagBtn:(UIButton *)btn{
     
-    
+    if (self.lookMaintainDetailContactCellBlock) {
+        
+        self.lookMaintainDetailContactCellBlock(self.tag,btn.tag);
+    }
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
@@ -82,12 +86,23 @@
     _phoneL.textAlignment = NSTextAlignmentRight;
     [_whiteView addSubview:_phoneL];
     
-    _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
-    [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_moreBtn setTitle:@"查看全部 》" forState:UIControlStateNormal];
-    [_moreBtn setTitleColor:YJBlueBtnColor forState:UIControlStateNormal];
-    [_whiteView addSubview:_moreBtn];
+    for (int i = 0; i < 2; i++) {
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
+        if (i == 0) {
+            
+            _upBtn = btn;
+            [_upBtn setImage:[UIImage imageNamed:@"shang1"] forState:UIControlStateNormal];
+            [self.contentView addSubview:_upBtn];
+        }else{
+            
+            _downBtn = btn;
+            [_downBtn setImage:[UIImage imageNamed:@"xia1"] forState:UIControlStateNormal];
+            [self.contentView addSubview:_downBtn];
+        }
+    }
     
     [self MasonryUI];
 }
@@ -125,19 +140,27 @@
         make.width.height.mas_equalTo(12 *SIZE);
     }];
     
-    [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_upBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
-        make.top.equalTo(_whiteView).offset(20 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-        make.height.mas_equalTo(20 *SIZE);
+        make.left.equalTo(_whiteView).offset(270 *SIZE);
+        make.top.equalTo(_whiteView).offset(10 *SIZE);
+        make.width.mas_equalTo(29 *SIZE);
+        make.height.mas_equalTo(29 *SIZE);
+    }];
+    
+    [_downBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(300 *SIZE);
+        make.top.equalTo(_whiteView).offset(10 *SIZE);
+        make.width.mas_equalTo(29 *SIZE);
+        make.height.mas_equalTo(29 *SIZE);
     }];
     
     [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
         make.top.equalTo(_typeL.mas_bottom).offset(16 *SIZE);
-        make.width.mas_equalTo(150 *SIZE);
+        make.width.mas_equalTo(160 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-19 *SIZE);
     }];
 }

@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^LookMaintainCustomDetailVCBlock)(void);
+
 @interface LookMaintainCustomDetailVC : BaseViewController
+
+@property (nonatomic, copy) LookMaintainCustomDetailVCBlock lookMaintainCustomDetailVCBlock;
+
+- (instancetype)initWithDataDic:(NSDictionary *)dataDic;
 
 @end
 

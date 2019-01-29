@@ -10,6 +10,8 @@
 
 #import "LookMaintainDetailAddFollowVC.h"
 #import "LookMaintainDetailLookRecordVC.h"
+#import "LookMaintainCustomDetailVC.h"
+#import "LookMaintainModifyCustomDetailVC.h"
 
 #import "LookMaintainDetailHeader.h"
 #import "LookMaintainDetailRoomCell.h"
@@ -170,7 +172,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
-    return UITableViewAutomaticDimension;
+    if (section == 0) {
+        
+        return UITableViewAutomaticDimension;
+    }else{
+        
+        if (_index == 0) {
+            
+            return SIZE;
+        }else{
+            
+            return CGFLOAT_MIN;
+        }
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -294,11 +309,23 @@
                 if (indexPath.row == 0) {
                     
                     cell.typeL.text = @"主权益人";
+                    cell.upBtn.hidden = YES;
                 }else{
                     
                     cell.typeL.text = @"副权益人";
+                    cell.upBtn.hidden = NO;
+                    if (indexPath.row == _contactArr.count - 1) {
+                        
+                        cell.downBtn.hidden = YES;
+                    }else{
+                        
+                        cell.downBtn.hidden = NO;
+                    }
                 }
                 
+                cell.lookMaintainDetailContactCellBlock = ^(NSInteger index, NSInteger btn) {
+                    
+                };
                 return cell;
             }else{
                 
@@ -362,10 +389,26 @@
         
         if (indexPath.section == 0) {
             
-            
+            LookMaintainCustomDetailVC *nextVC = [[LookMaintainCustomDetailVC alloc] initWithDataDic:_contactArr[indexPath.row]];
+            nextVC.lookMaintainCustomDetailVCBlock = ^{
+                
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
-            
+            LookMaintainModifyCustomDetailVC *nextVC = [[LookMaintainModifyCustomDetailVC alloc] init];
+//            nextVC.houseId = _houseId;
+            nextVC.status = @"添加";
+            nextVC.lookMaintainModifyCustomDetailVCBlock = ^(NSDictionary *dic) {
+                
+//                if (self.maintainDetailVCBlock) {
+//
+//                    self.maintainDetailVCBlock();
+//                }
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }
     }else{
         
@@ -378,6 +421,53 @@
             
         }
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_index == 1) {
+        
+        if (indexPath.section == 0) {
+            
+            if (indexPath.row == 0) {
+                
+                return NO;
+            }
+            return YES;
+        }else{
+            
+            return NO;
+        }
+    }
+    return NO;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [self alertControllerWithNsstring:@"温馨提示" And:@"你确定要删除联系人?" WithCancelBlack:^{
+        
+        
+    } WithDefaultBlack:^{
+        
+        [BaseRequest POST:TakeMaintainContactDelete_URL parameters:@{@"contact_id":_contactArr[indexPath.row][@"contact_id"]} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self RequestMethod];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
+    }];
 }
 
 
