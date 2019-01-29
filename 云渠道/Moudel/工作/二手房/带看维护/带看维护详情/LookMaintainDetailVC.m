@@ -351,7 +351,7 @@
         if (indexPath.section == 0) {
             
             LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-            nextVC.status = @"3";
+            nextVC.status = @"2";
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
