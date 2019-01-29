@@ -9,6 +9,7 @@
 #import "LookMaintainDetailVC.h"
 
 #import "LookMaintainDetailAddFollowVC.h"
+#import "LookMaintainDetailLookRecordVC.h"
 
 #import "LookMaintainDetailHeader.h"
 #import "LookMaintainDetailRoomCell.h"
@@ -126,7 +127,7 @@
         
         if (_index == 0) {
             
-            return 1;
+            return 2;
         }
         return 2;
     }else{
@@ -139,7 +140,13 @@
 
     if (_index == 0) {
         
-        return _takeHouseArr.count;
+        if (section == 0) {
+            
+            return 1;
+        }else{
+            
+            return _takeHouseArr.count;
+        }
     }else if (_index == 1){
         
         if (section == 0) {
@@ -244,15 +251,16 @@
 
         if (indexPath.section == 0) {
 
-            NSString * Identifier = @"LookMaintainDetailRoomCell";
-            LookMaintainDetailRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+            NSString * Identifier = @"LookMaintainAddFollowCell";
+            LookMaintainAddFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
             if (!cell) {
 
-                cell = [[LookMaintainDetailRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                cell = [[LookMaintainAddFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.dataDic = _takeHouseArr[indexPath.row];
+            cell.addLabel.text = @"添加房源";
+//            cell.dataDic = _takeHouseArr[indexPath.row];
             
             return cell;
         }else{
@@ -340,7 +348,16 @@
     
     if (_index == 0) {
         
-        
+        if (indexPath.section == 0) {
+            
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+            nextVC.status = @"3";
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            LookMaintainDetailLookRecordVC *nextVC = [[LookMaintainDetailLookRecordVC alloc] initWithData:_takeHouseArr[indexPath.row]];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
     }else if (_index == 1){
         
         if (indexPath.section == 0) {

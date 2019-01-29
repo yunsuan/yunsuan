@@ -370,11 +370,12 @@
             
             _wayFlowLayout = flowLayout;
             _wayFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _wayFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _wayFlowLayout.minimumLineSpacing = 5 *SIZE;
             _wayFlowLayout.minimumInteritemSpacing = 0;
             
             _wayColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_wayFlowLayout];
             _wayColl.backgroundColor = [UIColor whiteColor];
+            _wayColl.bounces = NO;
             _wayColl.delegate = self;
             _wayColl.dataSource = self;
             [_wayColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
@@ -383,26 +384,28 @@
             
             _levelFlowLayout = flowLayout;
             _levelFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _levelFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _levelFlowLayout.minimumLineSpacing = 5 *SIZE;
             _levelFlowLayout.minimumInteritemSpacing = 0;
             
             _levelColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_levelFlowLayout];
             _levelColl.backgroundColor = [UIColor whiteColor];
             _levelColl.delegate = self;
             _levelColl.dataSource = self;
+            _levelColl.bounces = NO;
             [_levelColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
             [_contentView addSubview:_levelColl];
         }else{
             
             _payFlowLayout = flowLayout;
             _payFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _payFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _payFlowLayout.minimumLineSpacing = 5 *SIZE;
             _payFlowLayout.minimumInteritemSpacing = 0;
             
             _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_payFlowLayout];
             _payColl.backgroundColor = [UIColor whiteColor];
             _payColl.delegate = self;
             _payColl.dataSource = self;
+            _payColl.bounces = NO;
             [_payColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
             [_contentView addSubview:_payColl];
         }

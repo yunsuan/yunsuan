@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookMaintainDetailLookRecordVC : BaseViewController
 
+- (instancetype)initWithData:(NSDictionary *)data;
+
 @end
 
 NS_ASSUME_NONNULL_END
