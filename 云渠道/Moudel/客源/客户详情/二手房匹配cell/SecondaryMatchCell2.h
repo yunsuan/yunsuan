@@ -30,7 +30,7 @@ typedef void(^SecondaryMatchCell2Block)(NSInteger index);
 
 @property (nonatomic, strong) UIButton *recommendBtn;
 
-@property (nonatomic, strong) UILabel *line;
+@property (nonatomic, strong) UIView *line;
 
 @property (nonatomic, strong) NSMutableDictionary *dicData;
 

@@ -42,6 +42,10 @@
 
 #import "StoreListVC.h"
 
+#import "SHRecommenView.h"
+#import "SHRecomenSucessView.h"
+#import "FailView.h"
+
 
 @interface CustomDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -57,6 +61,10 @@
     NSArray *_propertyArr;
 }
 @property (nonatomic, strong) UITableView *customDetailTable;
+
+@property (nonatomic, strong) SHRecommenView *recommendView;
+
+@property (nonatomic, strong) FailView *failView;
 
 @end
 
@@ -316,6 +324,34 @@
     }
 }
 
+-(void)action_sex
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"男";
+        _recommendView.sexBtn->str = @"1";
+    }];
+    
+    UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _recommendView.sexBtn.content.text = @"女";
+        _recommendView.sexBtn->str =@"2";
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:male];
+    [alert addAction:female];
+    [alert addAction:cancel];
+    [self.navigationController presentViewController:alert animated:YES completion:^{
+        
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     if (_item == 0) {
@@ -345,7 +381,7 @@
         return _FollowArr.count;
     }else{
         
-        if ([self.customType isEqualToString:@"二手房"]) {
+        if ([self.customType isEqualToString:@"新房"]) {
             
             if (section == 0) {
                 
@@ -811,8 +847,51 @@
                     }
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
+                    cell.tag = indexPath.row;
+                    
                     CustomRequireModel *model = _dataArr[0];
                     cell.dicData = model.fit_info[@"fit_store_list"][indexPath.row];
+                    cell.secondaryMatchCell2Block = ^(NSInteger index) {
+                        
+                        [self.view addSubview:self.recommendView];
+                        if ([_customModel.sex integerValue]==2) {
+                            _recommendView.sexBtn.content.text =@"女";
+                            _recommendView.sexBtn->str = @"2";
+                        }
+                        else{
+                            _recommendView.sexBtn.content.text =@"男";
+                            _recommendView.sexBtn->str = @"1";
+                        }
+                        _recommendView.nameTF.textfield.text = _customModel.name;
+                        _recommendView.phoneTF.textfield.text = _customModel.tel;
+                        _recommendView.markTV.text =@"";
+                        [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
+                        SS(strongSelf);
+                        __strong __typeof(&*model)strongModel = model;
+                        _recommendView.recommendViewConfirmBlock = ^{
+                            NSDictionary *dic = @{@"client_id":strongSelf->_customModel.client_id,
+                                                  @"store_id":[NSString stringWithFormat:@"%@",strongModel.fit_info[@"fit_store_list"][index][@"store_id"]],
+                                                  @"type":[strongSelf->_customType isEqualToString:@"二手房"]?@"1":@"2",
+                                                  @"name":strongSelf->_recommendView.nameTF.textfield.text,
+                                                  @"tel":strongSelf->_recommendView.phoneTF.textfield.text,
+                                                  @"sex":strongSelf->_recommendView.sexBtn->str,
+                                                  @"comment":strongSelf->_recommendView.markTV.text
+                                                  };
+                            
+                            [BaseRequest POST:SCReconment_URL parameters:dic success:^(id resposeObject) {
+                                if ([resposeObject[@"code"] integerValue]==200) {
+                                    SHRecomenSucessView *view =[[SHRecomenSucessView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                                    view.codeL.text = [NSString stringWithFormat:@"推荐编号：%@",resposeObject[@"data"][@"recommend_code"]];
+                                    view.nameL.text = [NSString stringWithFormat:@"客户名称：%@",resposeObject[@"data"][@"client_name"]];
+                                    view.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client_tel"]];
+                                    view.timeL.text = resposeObject[@"data"][@"recommend_time"];
+                                    [strongSelf.view addSubview:view];
+                                }
+                            } failure:^(NSError *error) {
+                                
+                            }];
+                        };
+                    };
                     return cell;
                 }
             }else{
@@ -901,5 +980,23 @@
     [self.view addSubview:_customDetailTable];
 }
 
+- (FailView *)failView{
+    
+    if (!_failView) {
+        
+        _failView = [[FailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+    }
+    return _failView;
+}
+
+- (SHRecommenView *)recommendView{
+    
+    if (!_recommendView) {
+        
+        _recommendView = [[SHRecommenView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+        
+    }
+    return _recommendView;
+}
 
 @end
