@@ -603,6 +603,7 @@
 		10174C14207B010500D00B9A /* region.json in Resources */ = {isa = PBXBuildFile; fileRef = 10174C13207B010500D00B9A /* region.json */; };
 		10174C18207C4EF600D00B9A /* CustomerInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174C17207C4EF600D00B9A /* CustomerInfoModel.m */; };
 		101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101F10A821FD9FA3001CA1FC /* SHRecommenView.m */; };
+		101F10AC21FEA5B2001CA1FC /* SHRecomenSucessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101F10AB21FEA5B2001CA1FC /* SHRecomenSucessView.m */; };
 		10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3921A53D000042738C /* YBImageBrowserAnimatedTransitioning.m */; };
 		10255A6721A53D000042738C /* YBImageBrowserFunctionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3C21A53D000042738C /* YBImageBrowserFunctionModel.m */; };
 		10255A6821A53D000042738C /* YBImageBrowserFunctionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3D21A53D000042738C /* YBImageBrowserFunctionBar.m */; };
@@ -1923,6 +1924,8 @@
 		10174C17207C4EF600D00B9A /* CustomerInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerInfoModel.m; sourceTree = "<group>"; };
 		101F10A721FD9FA3001CA1FC /* SHRecommenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHRecommenView.h; sourceTree = "<group>"; };
 		101F10A821FD9FA3001CA1FC /* SHRecommenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHRecommenView.m; sourceTree = "<group>"; };
+		101F10AA21FEA5B2001CA1FC /* SHRecomenSucessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHRecomenSucessView.h; sourceTree = "<group>"; };
+		101F10AB21FEA5B2001CA1FC /* SHRecomenSucessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHRecomenSucessView.m; sourceTree = "<group>"; };
 		10255A3821A53D000042738C /* YBImageBrowserAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowserAnimatedTransitioning.h; sourceTree = "<group>"; };
 		10255A3921A53D000042738C /* YBImageBrowserAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBImageBrowserAnimatedTransitioning.m; sourceTree = "<group>"; };
 		10255A3B21A53D000042738C /* YBImageBrowserFunctionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowserFunctionBar.h; sourceTree = "<group>"; };
@@ -6316,6 +6319,8 @@
 			children = (
 				101F10A721FD9FA3001CA1FC /* SHRecommenView.h */,
 				101F10A821FD9FA3001CA1FC /* SHRecommenView.m */,
+				101F10AA21FEA5B2001CA1FC /* SHRecomenSucessView.h */,
+				101F10AB21FEA5B2001CA1FC /* SHRecomenSucessView.m */,
 			);
 			path = "二手房推荐";
 			sourceTree = "<group>";
@@ -7989,6 +7994,7 @@
 				0C0B820E2063908E00238D4F /* CustomTableHeader.m in Sources */,
 				0C997C2F21D760AE00F805AA /* RecommendTransmitView.m in Sources */,
 				0CED0BDD21E6E7790016A029 /* RecommendFailCell.m in Sources */,
+				101F10AC21FEA5B2001CA1FC /* SHRecomenSucessView.m in Sources */,
 				0C997C3F21E2E7EF00F805AA /* RentingComTypeRoomListVC.m in Sources */,
 				0CED0BF521E72C880016A029 /* ContractSignDoneVC.m in Sources */,
 				0C997C5321E445A500F805AA /* LookWorkWaitCell.m in Sources */,

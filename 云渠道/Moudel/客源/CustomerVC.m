@@ -8,8 +8,6 @@
 
 #import "CustomerVC.h"
 #import "CustomerListVC.h"
-#import "StoreListVC.h"
-
 #import "WorkingCell.h"
 
 @interface CustomerVC ()<UITableViewDelegate,UITableViewDataSource>

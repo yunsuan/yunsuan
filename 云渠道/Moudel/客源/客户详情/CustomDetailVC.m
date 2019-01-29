@@ -40,6 +40,8 @@
 #import "SecondaryMatchCell2.h"
 #import "SecondaryMatchHeader.h"
 
+#import "StoreListVC.h"
+
 
 @interface CustomDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -579,8 +581,20 @@
                     CustomRequireModel *model = _dataArr[0];
                     header.numListL.text = [NSString stringWithFormat:@"匹配项目列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
                     header.secondaryMatchHeaderMoreBlock = ^{
+                        StoreListVC *nextVC = [[StoreListVC alloc] init];
+                        if ([_customType isEqualToString:@"二手房"]) {
+                            nextVC.type = @"1";
+                        }
+                        else if([_customType isEqualToString:@"租房"])
+                        {
+                            nextVC.type = @"2";
+                        }
                         
-                        
+                        nextVC.name = _customModel.name;
+                        nextVC.tel = _customModel.tel;
+                        nextVC.sex = _customModel.sex;
+                        nextVC.client_id = _customModel.client_id;
+                        [self.navigationController pushViewController:nextVC animated:YES];
                     };
                     return header;
                 }
