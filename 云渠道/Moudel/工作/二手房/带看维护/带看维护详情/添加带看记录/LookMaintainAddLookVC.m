@@ -11,12 +11,16 @@
 #import "DropDownBtn.h"
 
 @interface LookMaintainAddLookVC ()
-
+{
+    
+    NSString *_houseTakeFollowId;
+    NSDictionary *_dataDic;
+}
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIView *houseView;
 
-@property (nonatomic, strong) UIView *placeL;
+@property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic, strong) UIView *intentView;
 
@@ -65,19 +69,29 @@
 
 @implementation LookMaintainAddLookVC
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initUI];
+
 }
+
+
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
     
 }
 
+- (void)ActionCommitBtn:(UIButton *)btn{
+    
+    
+}
+
 - (void)initUI{
     
+    self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"跟进记录";
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT)];
@@ -90,10 +104,21 @@
     _houseView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_houseView];
     
+    _intentView = [[UIView alloc] init];
+    _intentView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_intentView];
+    
+    _contentView = [[UIView alloc] init];
+    _contentView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_contentView];
+    
+    NSArray *titleArr = @[@"房源编号：",@"房号：",@"客户反馈信息",@"意向度：",@"带看时间：",@"带看人数：",@"客户中意点：",@"客户抗性：",@"是否出价：",@"出价金额：",@"付款方式：",@"附带看：",@"备注："];
     for (int i = 0; i < 13; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
+        label.text = titleArr[i];
+        label.adjustsFontSizeToFitWidth = YES;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         switch (i) {
             case 0:
@@ -111,6 +136,7 @@
             case 2:
             {
                 _placeL = label;
+                _placeL.text = @"客户反馈信息";
                 [_scrollView addSubview:_placeL];
                 break;
             }
@@ -129,7 +155,7 @@
             case 5:
             {
                 _numL = label;
-                [_houseView addSubview:_numL];
+                [_intentView addSubview:_numL];
                 break;
             }
             case 6:
@@ -165,13 +191,13 @@
             case 11:
             {
                 _secLookL = label;
-                [_houseView addSubview:_secLookL];
+                [_contentView addSubview:_secLookL];
                 break;
             }
             case 12:
             {
                 _markL = label;
-                [_houseView addSubview:_markL];
+                [_contentView addSubview:_markL];
                 break;
             }
             default:
@@ -235,6 +261,15 @@
             [_contentView addSubview:_markTV];
         }
     }
+    
+    _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_confirmBtn addTarget:self action:@selector(ActionCommitBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_confirmBtn setTitle:@"提 交" forState:UIControlStateNormal];
+    [_confirmBtn setBackgroundColor:YJBlueBtnColor];
+    _confirmBtn.layer.cornerRadius = 2 *SIZE;
+    _confirmBtn.clipsToBounds = YES;
+    [_scrollView addSubview:_confirmBtn];
     
     [self MasonryUI];
 }
@@ -313,34 +348,34 @@
         make.left.equalTo(_scrollView).offset(0);
         make.top.equalTo(_intentView.mas_bottom).offset(6 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
-        make.bottom.equalTo(_scrollView).offset(0 *SIZE);
+//        make.bottom.equalTo(_scrollView).offset(0 *SIZE);
     }];
     
     [_favL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_intentView).offset(24 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_contentView).offset(24 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_favTV mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_intentView).offset(24 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_contentView).offset(24 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(77 *SIZE);
     }];
     
     [_resisL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
         make.top.equalTo(_favTV.mas_bottom).offset(18 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_resisTV mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
         make.top.equalTo(_favTV.mas_bottom).offset(18 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(77 *SIZE);
@@ -348,78 +383,87 @@
     
     [_offerL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_resisTV.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_resisTV.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_offerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_resisTV.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_resisTV.mas_bottom).offset(21 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_offerBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_offerBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_offerBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_offerBtn.mas_bottom).offset(21 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_priceBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_priceBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_payWayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_priceBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_priceBtn.mas_bottom).offset(21 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_secLookL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_payWayBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_payWayBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_secLookBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_payWayBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_payWayBtn.mas_bottom).offset(21 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_secLookBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_secLookBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_markTV mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_intentView).offset(80 *SIZE);
-        make.top.equalTo(_secLookBtn.mas_bottom).offset(18 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_secLookBtn.mas_bottom).offset(21 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(77 *SIZE);
-        make.bottom.equalTo(_scrollView).offset(-38 *SIZE);
+        make.bottom.equalTo(_contentView).offset(-38 *SIZE);
+    }];
+    
+    [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(22 *SIZE);
+        make.top.equalTo(_contentView.mas_bottom).offset(37 *SIZE);
+        make.width.mas_equalTo(317 *SIZE);
+        make.height.mas_equalTo(40 *SIZE);
+        make.bottom.equalTo(_scrollView.mas_bottom).offset(-36 *SIZE);
     }];
 }
 

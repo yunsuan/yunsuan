@@ -1,8 +1,8 @@
 //
-//  LookMaintainAddLookVC.h
+//  LookMaintainDetailLookRecordSingleVC.h
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/25.
+//  Created by 谷治墙 on 2019/1/29.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LookMaintainAddLookVC : BaseViewController
+@interface LookMaintainDetailLookRecordSingleVC : BaseViewController
 
 - (instancetype)initWithHouseTakeFollowId:(NSString *)houseTakeFollowId;
 

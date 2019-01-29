@@ -12,6 +12,7 @@
 #import "DateChooseView.h"
 
 #import "DropDownBtn.h"
+#import "BorderTF.h"
 #import "CompleteSurveyCollCell.h"
 
 @interface LookMaintainDetailAddFollowVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
@@ -60,14 +61,6 @@
 
 @property (nonatomic, strong) UICollectionView *levelColl;
 
-//@property (nonatomic, strong) UIButton *levelBtn1;
-//
-//@property (nonatomic, strong) UIButton *levelBtn2;
-//
-//@property (nonatomic, strong) UIButton *levelBtn3;
-//
-//@property (nonatomic, strong) UIButton *levelBtn4;
-
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) DropDownBtn *typeBtn;
@@ -78,11 +71,11 @@
 
 @property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) DropDownBtn *areaBtn;
+@property (nonatomic, strong) BorderTF *areaBtn;
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) DropDownBtn *priceBtn;
+@property (nonatomic, strong) BorderTF *priceBtn;
 
 @property (nonatomic, strong) UILabel *houseTypeL;
 
@@ -182,26 +175,26 @@
         }
         case 3:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.areaBtn.content.text = MC;
-                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.areaBtn.content.text = MC;
+//                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 4:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.priceBtn.content.text = MC;
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.priceBtn.content.text = MC;
+//                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 5:
@@ -235,7 +228,10 @@
 
 - (void)ActionCommitBtn:(UIButton *)btn{
     
-    
+    if (!_purposeBtn->str.length) {
+        
+//        self alertControllerWithNsstring:@"温馨提示" And:@"请选择"
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -308,6 +304,13 @@
     if (collectionView == _wayColl) {
         
         _way = indexPath.item;
+        if (_way == 0) {
+            
+            [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+        }else{
+            
+            [_commitBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        }
     }else if (collectionView == _levelColl){
         
         _level = indexPath.item;
@@ -476,13 +479,15 @@
             }
             case 3:
             {
-                _areaBtn = btn;
+                _areaBtn = [[BorderTF alloc] initWithFrame:btn.frame];
+                _areaBtn.unitL.text = @"㎡";
                 [_contentView addSubview:_areaBtn];
                 break;
             }
             case 4:
             {
-                _priceBtn = btn;
+                _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
+                _priceBtn.unitL.text = @"万";
                 [_contentView addSubview:_priceBtn];
                 break;
             }
@@ -561,7 +566,13 @@
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_commitBtn addTarget:self action:@selector(ActionCommitBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+    if (_way == 0) {
+        
+        [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+    }else{
+        
+        [_commitBtn setTitle:@"下一步" forState:UIControlStateNormal];
+    }
     [_commitBtn setBackgroundColor:YJBlueBtnColor];
     [_scrollView addSubview:_commitBtn];
     

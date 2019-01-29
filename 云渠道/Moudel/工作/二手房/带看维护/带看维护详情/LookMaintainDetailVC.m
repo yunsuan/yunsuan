@@ -259,7 +259,7 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.addLabel.text = @"添加房源";
+            cell.addLabel.text = @"添加带看";
 //            cell.dataDic = _takeHouseArr[indexPath.row];
             
             return cell;

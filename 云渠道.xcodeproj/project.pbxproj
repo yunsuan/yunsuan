@@ -369,6 +369,7 @@
 		0CB3E2F521FEA7B4007D71CF /* LookMaintainAddFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2F421FEA7B4007D71CF /* LookMaintainAddFollowCell.m */; };
 		0CB3E2F921FEEE8E007D71CF /* LookMaintainDetailLookRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2F821FEEE8E007D71CF /* LookMaintainDetailLookRecordVC.m */; };
 		0CB3E2FD21FFEBA6007D71CF /* LookMaintainDetailLookRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E2FC21FFEBA6007D71CF /* LookMaintainDetailLookRecordCell.m */; };
+		0CB3E30122002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3E30022002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m */; };
 		0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC19D212072172C0007CC5F /* AddRequireMentVC.m */; };
 		0CB6BAF120736D7B00921C75 /* FollowRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BAF020736D7B00921C75 /* FollowRecordVC.m */; };
 		0CB6BAF52074982000921C75 /* HouseTypeDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BAF42074982000921C75 /* HouseTypeDetailVC.m */; };
@@ -1456,6 +1457,8 @@
 		0CB3E2F821FEEE8E007D71CF /* LookMaintainDetailLookRecordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailLookRecordVC.m; sourceTree = "<group>"; };
 		0CB3E2FB21FFEBA6007D71CF /* LookMaintainDetailLookRecordCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainDetailLookRecordCell.h; sourceTree = "<group>"; };
 		0CB3E2FC21FFEBA6007D71CF /* LookMaintainDetailLookRecordCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailLookRecordCell.m; sourceTree = "<group>"; };
+		0CB3E2FF22002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainDetailLookRecordSingleVC.h; sourceTree = "<group>"; };
+		0CB3E30022002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailLookRecordSingleVC.m; sourceTree = "<group>"; };
 		0CB6BAEF20736D7B00921C75 /* FollowRecordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FollowRecordVC.h; sourceTree = "<group>"; };
 		0CB6BAF020736D7B00921C75 /* FollowRecordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FollowRecordVC.m; sourceTree = "<group>"; };
 		0CB6BAF32074982000921C75 /* HouseTypeDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseTypeDetailVC.h; sourceTree = "<group>"; };
@@ -4579,6 +4582,7 @@
 		0CB3E2F621FEEE45007D71CF /* 已看房源详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0CB3E2FE22002C98007D71CF /* 已看房源详情单次详情 */,
 				0CB3E2FA21FFEB83007D71CF /* view */,
 				0CB3E2F721FEEE8E007D71CF /* LookMaintainDetailLookRecordVC.h */,
 				0CB3E2F821FEEE8E007D71CF /* LookMaintainDetailLookRecordVC.m */,
@@ -4593,6 +4597,15 @@
 				0CB3E2FC21FFEBA6007D71CF /* LookMaintainDetailLookRecordCell.m */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		0CB3E2FE22002C98007D71CF /* 已看房源详情单次详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0CB3E2FF22002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.h */,
+				0CB3E30022002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m */,
+			);
+			path = "已看房源详情单次详情";
 			sourceTree = "<group>";
 		};
 		0CB6BAEE20736D4600921C75 /* 跟进记录 */ = {
@@ -7426,6 +7439,7 @@
 				0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */,
 				0C08BF6C206CCF55005BB3B4 /* BrokerDetailHeader.m in Sources */,
 				0C2883752107131F00F69C5F /* RentingReportComplaitVC.m in Sources */,
+				0CB3E30122002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m in Sources */,
 				0CC19D19207202E80007CC5F /* ChangeNameVC.m in Sources */,
 				0C08BF5F206CB7CD005BB3B4 /* BrokerageDetailVC.m in Sources */,
 				0C549CFA21E5A06E004CFA66 /* RecommendWaitVC.m in Sources */,

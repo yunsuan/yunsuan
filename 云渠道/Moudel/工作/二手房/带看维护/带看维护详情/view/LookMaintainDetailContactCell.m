@@ -39,7 +39,13 @@
         
         _sexImg.image = [UIImage imageNamed:@""];
     }
-    _phoneL.text = [NSString stringWithFormat:@"联系电话：%@",[dataDic[@"tel"] componentsJoinedByString:@","]];
+    if ([dataDic[@"tel"] count]) {
+        
+        _phoneL.text = [NSString stringWithFormat:@"联系电话：%@",dataDic[@"tel"][0]];
+    }else{
+        
+        _phoneL.text = [NSString stringWithFormat:@"联系电话："];
+    }
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(12 *SIZE);

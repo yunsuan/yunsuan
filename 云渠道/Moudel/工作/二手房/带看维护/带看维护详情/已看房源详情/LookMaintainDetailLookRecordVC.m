@@ -8,15 +8,19 @@
 
 #import "LookMaintainDetailLookRecordVC.h"
 
+#import "LookMaintainDetailLookRecordSingleVC.h"
+
 #import "BaseHeader.h"
 #import "SingleContentCell.h"
 #import "LookMaintainDetailLookRecordCell.h"
+#import "LookMaintainDetailRoomCell.h"
 
 @interface LookMaintainDetailLookRecordVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
     NSArray *_customArr;
     NSMutableArray *_lookArr;
+    NSMutableDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITableView *table;
 
@@ -30,9 +34,10 @@
     if (self) {
         
 //        _customArr = [@[] mutableCopy];
+        _dataDic = [data mutableCopy];
         _lookArr = [@[] mutableCopy];
         _lookArr = [data[@"list"] mutableCopy];
-        _customArr = @[[NSString stringWithFormat:@"意向度：%@",data[@"intent"]],[NSString stringWithFormat:@"带看时间：%@",data[@"take_time"]],[NSString stringWithFormat:@"带看人数：%@",data[@"take_visit_num"]],[NSString stringWithFormat:@"客户中意点：%@",data[@"client_like"]],[NSString stringWithFormat:@"客户抗性：%@",data[@"client_dislike"]],[NSString stringWithFormat:@"是否出价：%@",[data[@"price"] integerValue] == 0 ? @"否":@"是"],[NSString stringWithFormat:@"出价金额：%@",data[@"price"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"pay_way"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"附带看：%@",data[@"attach_agent"]],[NSString stringWithFormat:@"备注：%@",data[@"describe"]]];
+        _customArr = @[[NSString stringWithFormat:@"意向度：%@",data[@"intent"]],[NSString stringWithFormat:@"带看时间：%@",data[@"take_time"]],[NSString stringWithFormat:@"带看人数：%@",data[@"take_visit_num"]],[NSString stringWithFormat:@"客户中意点：%@",data[@"client_like"]],[NSString stringWithFormat:@"客户抗性：%@",data[@"client_dislike"]],[NSString stringWithFormat:@"是否出价：%@",[data[@"price"] integerValue] == 0 ? @"否":@"是"],[NSString stringWithFormat:@"出价金额：%@",data[@"price"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"pay_way"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"附带看：%@",data[@"attach_agent"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]];
     }
     return self;
 }
@@ -81,7 +86,7 @@
     
     if (section == 0) {
         
-        header.titleL.text = @"客户信息";
+        header.titleL.text = @"最近一次信息";
     }else{
         
         header.titleL.text = [NSString stringWithFormat:@"带看次数(%ld次)",_lookArr.count];
@@ -104,6 +109,18 @@
     
     if (indexPath.section == 0) {
         
+        if (indexPath.row == 0) {
+            
+            LookMaintainDetailRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LookMaintainDetailRoomCell"];
+            if (!cell) {
+                
+                cell = [[LookMaintainDetailRoomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LookMaintainDetailRoomCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.data = _dataDic;
+            return cell;
+        }
         SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
         if (!cell) {
             
@@ -143,7 +160,9 @@
         }
         
         cell.lookMaintainDetailLookRecordCellBlock = ^(NSInteger index) {
-            
+          
+            LookMaintainDetailLookRecordSingleVC *nextVC = [[LookMaintainDetailLookRecordSingleVC alloc] initWithHouseTakeFollowId:[NSString stringWithFormat:@"%@",_lookArr[index - 1][@"house_take_follow_id"]]];
+            [self.navigationController pushViewController:nextVC animated:YES];
         };
         return cell;
     }

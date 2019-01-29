@@ -731,6 +731,9 @@ static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
 //带看维护详情
 static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
 
+//带看房源带看记录
+static NSString *const TakeMaintainHouseDetail_URL = @"agent/take/maintain/house/detail";
+
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息

@@ -14,6 +14,7 @@
 {
     
     NSMutableArray *_dataArr;
+    
 }
 @property (nonatomic, strong) UITableView *roomTable;
 
@@ -21,17 +22,22 @@
 
 @implementation LookMaintainAddRoomVC
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
  
     [self initDataSource];
     [self initUI];
+    
 }
 
 - (void)initDataSource{
     
     _dataArr = [@[] mutableCopy];
 }
+
+
 
 - (void)ActionRightBtn:(UIButton *)btn{
     
