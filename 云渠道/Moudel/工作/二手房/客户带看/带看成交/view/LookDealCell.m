@@ -90,6 +90,10 @@
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_timeL];
 
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
+    
     [self MasonryUI];
 }
 

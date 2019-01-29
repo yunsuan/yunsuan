@@ -753,6 +753,20 @@ static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
 //带看维护详情
 static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
 
+//带看房源带看记录
+static NSString *const TakeMaintainHouseDetail_URL = @"agent/take/maintain/house/detail";
+
+//添加联系人
+static NSString *const TakeMaintainContactAdd_URL = @"take/maintain/contact/add";
+
+//删除联系人
+static NSString *const TakeMaintainContactDelete_URL = @"take/maintain/contact/delete";
+
+//联系人修改排序
+static NSString *const TakeMaintainContactChangeSort_URL = @"agent/take/maintain/contact/changeSort";
+
+//修改联系人
+static NSString *const TakeMaintainContactUpdate_URL = @"agent/take/maintain/contact/update";
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息

@@ -7,97 +7,113 @@
 //
 
 #import "LookMaintainCustomDetailVC.h"
+#import "LookMaintainModifyCustomDetailVC.h"
 
 #import "SingleContentCell.h"
+#import "NameSexImgCell.h"
 #import "BaseHeader.h"
-#import "BrokerageDetailTableCell3.h"
 
 @interface LookMaintainCustomDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-//    NSString *_recommendId;
-    NSArray *_contentArr;
-    NSMutableArray *_processArr;
+    NSMutableArray *_contentArr;
+    NSMutableDictionary *_dataDic;
 }
-
-@property (nonatomic, strong) UITableView *detailTable;
+@property (nonatomic, strong) UITableView *table;
 
 @end
 
 @implementation LookMaintainCustomDetailVC
+
+- (instancetype)initWithDataDic:(NSDictionary *)dataDic
+{
+    self = [super init];
+    if (self) {
+        
+        
+        _dataDic = [NSMutableDictionary dictionaryWithDictionary:dataDic];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
-    [self RequestMethod];
 }
 
 - (void)initDataSource{
     
+    _contentArr = [@[] mutableCopy];
     
-    _processArr = [@[] mutableCopy];
-}
-
-- (void)RequestMethod{
-    
-//    [BaseRequest GET:RecommendBrokerValueDetail_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
-//
-//        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//            [self SetData:resposeObject[@"data"]];
-//        }else{
-//
-//            [self showContent:resposeObject[@"msg"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        NSLog(@"%@",error);
-//        [self showContent:@"网络错误"];
-//    }];
-}
-
-
-- (void)SetData:(NSDictionary *)data{
-    
-    _contentArr = @[@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"成交编号：%@",data[@""]],[NSString stringWithFormat:@"当前状态：%@",data[@""]],[NSString stringWithFormat:@"签约时间：%@",data[@""]],[NSString stringWithFormat:@"签约人员：%@",data[@""]],[NSString stringWithFormat:@"联系电话：%@",data[@""]],[NSString stringWithFormat:@"成交金额：%@",data[@""]]]];
-    _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    [_detailTable reloadData];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    if (_contentArr.count) {
+    NSArray *tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"类型：%@",_dataDic[@"report_type"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
+    _contentArr = [NSMutableArray arrayWithArray:tempArr];
+    for (int i = 0; i < [_dataDic[@"tel"] count]; i++) {
         
-        return 1 + _contentArr.count;
-    }else{
-        
-        return 0;
+        [_contentArr insertObject:[NSString stringWithFormat:@"联系号码：%@",_dataDic[@"tel"][i]] atIndex:(2 + i)];
     }
+}
+
+- (void)ActionRightBtn:(UIButton *)btn{
+    
+    LookMaintainModifyCustomDetailVC *nextVC = [[LookMaintainModifyCustomDetailVC alloc] init];
+    nextVC.contactId = _dataDic[@"contact_id"];
+    nextVC.dataDic = _dataDic;
+    nextVC.lookMaintainModifyCustomDetailVCBlock = ^(NSDictionary *dic) {
+
+        if (dic[@"address"]) {
+
+            [_dataDic setObject:dic[@"address"] forKey:@"address"];
+        }
+
+        if (dic[@"card_id"]) {
+
+            [_dataDic setObject:dic[@"card_id"] forKey:@"card_id"];
+        }
+
+        if (dic[@"card_type"]) {
+
+            [_dataDic setObject:dic[@"card_type"] forKey:@"card_type"];
+        }
+
+        NSArray *tempArr = [self getDetailConfigArrByConfigState:2];
+        for (NSDictionary *tempDic in tempArr) {
+
+            if ([tempDic[@"id"] integerValue] == [dic[@"card_type"] integerValue]) {
+
+                [_dataDic setObject:tempDic[@"param"] forKey:@"card_type_name"];
+            }
+        }
+        [_dataDic setObject:dic[@"contact_id"] forKey:@"contact_id"];
+        [_dataDic setObject:dic[@"name"] forKey:@"name"];
+        NSArray *tempArr1 = [self getDetailConfigArrByConfigState:30];
+        for (NSDictionary *tempDic in tempArr1) {
+
+            if ([tempDic[@"id"] integerValue] == [dic[@"report_type"] integerValue]) {
+
+                [_dataDic setObject:tempDic[@"param"] forKey:@"report_type"];
+            }
+        }
+        [_dataDic setObject:dic[@"sex"] forKey:@"sex"];
+
+        [_dataDic setObject:[dic[@"tel"] componentsSeparatedByString:@","] forKey:@"tel"];
+
+        [_contentArr removeAllObjects];
+        NSArray *tempArr2 = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"类型：%@",_dataDic[@"report_type"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
+        _contentArr = [NSMutableArray arrayWithArray:tempArr2];
+        [_table reloadData];
+        if (self.lookMaintainCustomDetailVCBlock) {
+
+            self.lookMaintainCustomDetailVCBlock();
+        }
+    };
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (section < _contentArr.count) {
-        
-        return [_contentArr[section] count];
-    }else{
-        
-        return _processArr.count;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    if (section == _contentArr.count) {
-        
-        return 0;
-    }else{
-        
-        return 40 *SIZE;
-    }
+    return _contentArr.count;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -108,31 +124,40 @@
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
     
-    if (section == 0) {
-        
-        header.titleL.text = @"推荐信息";
-    }else if(section == 1){
-        
-        header.titleL.text = @"接单信息";
-    }
+    header.titleL.text = @"联系人信息";
     header.lineView.hidden = YES;
     
     return header;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
-    return 7 *SIZE;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    
-    return [[UIView alloc] init];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section < _contentArr.count) {
+    if (indexPath.row == 0) {
+        
+        NameSexImgCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NameSexImgCell"];
+        if (!cell) {
+            
+            cell = [[NameSexImgCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NameSexImgCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.contentL.text = _contentArr[indexPath.row];
+        [cell.contentL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(cell.contentView).offset(27*SIZE);
+            make.top.equalTo(cell.contentView).offset(9*SIZE);
+            make.width.mas_equalTo(cell.contentL.mj_textWith + 10 *SIZE);
+        }];
+        [cell.sexImg mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(cell.contentL.mas_right).offset(0*SIZE);
+            make.top.equalTo(cell.contentView).offset(12 *SIZE);
+            make.width.height.mas_equalTo(16 *SIZE);
+        }];
+        cell.sexImg.hidden = NO;
+        cell.lineView.hidden = YES;
+        return cell;
+    }else{
         
         SingleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SingleContentCell"];
         if (!cell) {
@@ -141,63 +166,27 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        cell.contentL.text = _contentArr[indexPath.row];
         cell.lineView.hidden = YES;
-        
-        cell.contentL.text = _contentArr[indexPath.section][indexPath.row];
-        
-        return cell;
-    }else{
-        
-        BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
-        if (!cell) {
-            cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_processArr[indexPath.row][@"process_name"],_processArr[indexPath.row][@"time"]];
-        if (indexPath.row == 0) {
-            
-            cell.upLine.hidden = YES;
-        }else{
-            
-            cell.upLine.hidden = NO;
-        }
-        if (indexPath.row == _processArr.count - 1) {
-            
-            cell.downLine.hidden = YES;
-        }else{
-            
-            cell.downLine.hidden = NO;
-        }
         return cell;
     }
 }
 
 - (void)initUI{
     
-    self.titleLabel.text = @"客户信息";
+    self.titleLabel.text = @"联系人信息";
     self.navBackgroundView.hidden = NO;
     
-    _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
+    self.rightBtn.hidden = NO;
+    [self.rightBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    _detailTable.rowHeight = UITableViewAutomaticDimension;
-    _detailTable.estimatedRowHeight = 31 *SIZE;
-    _detailTable.backgroundColor = self.view.backgroundColor;
-    _detailTable.delegate = self;
-    _detailTable.dataSource = self;
-    _detailTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_detailTable];
-}
-
--(void)refresh{
-    
-    [BaseRequest GET:FlushDate_URL parameters:nil success:^(id resposeObject) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-        [self.navigationController popViewControllerAnimated:YES];
-    } failure:^(NSError *error) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.backgroundColor = self.view.backgroundColor;
+    _table.delegate = self;
+    _table.dataSource = self;
+    [self.view addSubview:_table];
 }
 
 @end

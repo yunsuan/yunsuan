@@ -12,7 +12,6 @@
 
 typedef void(^MaintainCellBlock)(NSInteger index,NSInteger btn);
 
-
 @interface MaintainCell : UITableViewCell
 
 @property (nonatomic, copy) MaintainCellBlock maintainCellBlock;

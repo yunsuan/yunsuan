@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) NSMutableDictionary *data;
+
 @end
 
 NS_ASSUME_NONNULL_END

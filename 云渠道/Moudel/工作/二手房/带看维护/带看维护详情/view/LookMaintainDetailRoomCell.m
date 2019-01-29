@@ -20,6 +20,22 @@
     return self;
 }
 
+- (void)setData:(NSMutableDictionary *)data{
+    
+    [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,data[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+        if (error) {
+            
+            _roomImg.image = [UIImage imageNamed:@"default_3"];
+        }
+    }];
+    
+    _statusL.text = [NSString stringWithFormat:@"%@",data[@"house_state"]];
+    _codeL.text = [NSString stringWithFormat:@"%@",data[@"title"]];
+    _firstTimeL.text = [NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]];
+    
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     [_roomImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
@@ -30,12 +46,14 @@
         }
     }];
     
-    _contentL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
+    _statusL.text = [NSString stringWithFormat:@"%@",dataDic[@"house_state"]];
+    
+    _contentL.text = [NSString stringWithFormat:@"%@",dataDic[@"describe"]];
     
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"满意度：%@%@",dataDic[@"intent"],@"%"]];
     [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(3, attr.length - 3)];
     _satisfyL.attributedText = attr;
-    _codeL.text = [NSString stringWithFormat:@"%@",dataDic[@"describe"]];
+    _codeL.text = [NSString stringWithFormat:@"%@",dataDic[@"title"]];
     _firstTimeL.text = [NSString stringWithFormat:@"首次看房时间：%@",dataDic[@"first_take_time"]];
     _lastTimeL.text = [NSString stringWithFormat:@"最后看房时间：%@",dataDic[@"last_take_time"]];
     _compL.text = [NSString stringWithFormat:@"%@",dataDic[@"finish_state"]];
@@ -59,6 +77,14 @@
     _roomImg.contentMode = UIViewContentModeScaleAspectFill;
     _roomImg.clipsToBounds = YES;
     [self.contentView addSubview:_roomImg];
+    
+    _statusL = [[UILabel alloc] init];
+    _statusL.textColor = [UIColor whiteColor];
+    _statusL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _statusL.textAlignment = NSTextAlignmentCenter;
+    _statusL.backgroundColor = [UIColor blackColor];
+    _statusL.alpha = 0.5;
+    [_roomImg addSubview:_statusL];
     
     for (int i = 0; i < 8; i++) {
         
@@ -116,6 +142,7 @@
             case 7:
             {
                 _priceL = label;
+                _priceL.textAlignment = NSTextAlignmentRight;
                 [self.contentView addSubview:_priceL];
                 break;
             }
@@ -139,6 +166,14 @@
         make.top.equalTo(self.contentView).offset(16 *SIZE);
         make.width.mas_equalTo(100 *SIZE);
         make.height.mas_equalTo(88 *SIZE);
+    }];
+    
+    [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_roomImg).offset(0 *SIZE);
+        make.top.equalTo(_roomImg).offset(72 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+        make.height.mas_equalTo(17 *SIZE);
     }];
     
     [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^LookMaintainDetailContactCellBlock)(NSInteger index,NSInteger btn);
+
 @interface LookMaintainDetailContactCell : UITableViewCell
+
+@property (nonatomic, copy) LookMaintainDetailContactCellBlock lookMaintainDetailContactCellBlock;
 
 @property (nonatomic, strong) UIView *whiteView;
 
@@ -20,7 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImageView *sexImg;
 
-@property (nonatomic, strong) UIButton *moreBtn;
+@property (nonatomic, strong) UIButton *upBtn;
+
+@property (nonatomic, strong) UIButton *downBtn;
 
 @property (nonatomic, strong) UILabel *phoneL;
 

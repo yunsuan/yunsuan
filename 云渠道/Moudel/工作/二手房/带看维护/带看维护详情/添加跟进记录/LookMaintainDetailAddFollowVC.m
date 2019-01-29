@@ -8,7 +8,11 @@
 
 #import "LookMaintainDetailAddFollowVC.h"
 
+#import "SinglePickView.h"
+#import "DateChooseView.h"
+
 #import "DropDownBtn.h"
+#import "BorderTF.h"
 #import "CompleteSurveyCollCell.h"
 
 @interface LookMaintainDetailAddFollowVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
@@ -57,14 +61,6 @@
 
 @property (nonatomic, strong) UICollectionView *levelColl;
 
-//@property (nonatomic, strong) UIButton *levelBtn1;
-//
-//@property (nonatomic, strong) UIButton *levelBtn2;
-//
-//@property (nonatomic, strong) UIButton *levelBtn3;
-//
-//@property (nonatomic, strong) UIButton *levelBtn4;
-
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) DropDownBtn *typeBtn;
@@ -75,11 +71,11 @@
 
 @property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) DropDownBtn *areaBtn;
+@property (nonatomic, strong) BorderTF *areaBtn;
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) DropDownBtn *priceBtn;
+@property (nonatomic, strong) BorderTF *priceBtn;
 
 @property (nonatomic, strong) UILabel *houseTypeL;
 
@@ -101,6 +97,8 @@
 
 @property (nonatomic, strong) UIButton *commitBtn;
 
+@property (nonatomic, strong) NSDateFormatter *formatter;
+
 @end
 
 @implementation LookMaintainDetailAddFollowVC
@@ -115,20 +113,125 @@
 
 - (void)initDataSource{
     
-    _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"}];
+    _way = [self.status integerValue];
     
-    _levelArr = [UserModelArchiver unarchive].Configdic[@"36"][@"param"];
-    _payArr = [UserModelArchiver unarchive].Configdic[@"36"][@"param"];
+    self.formatter = [[NSDateFormatter alloc] init];
+    [self.formatter setDateFormat:@"YYYY/MM/dd"];
+    
+    _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"}];
+    _levelArr = [UserModelArchiver unarchive].Configdic[@"54"][@"param"];
+    _payArr = [UserModelArchiver unarchive].Configdic[@"13"][@"param"];
+    _paySelectArr = [@[] mutableCopy];
+    for (int i = 0; i < _payArr.count; i++) {
+        
+        [_paySelectArr addObject:@0];
+    }
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    
+    switch (btn.tag) {
+        case 0:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.purposeBtn.content.text = MC;
+                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 1:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:@[@{@"param":@"住宅",
+                                                                                                       @"id":@"1"
+                                                                                                       },@{@"param":@"商铺",
+                                                                                                           @"id":@"2"
+                                                                                                           },@{@"param":@"写字楼",
+                                                                                                               @"id":@"3"
+                                                                                                               }]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.typeBtn.content.text = MC;
+                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 2:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:DECORATE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.decorateBtn.content.text = MC;
+                weakself.decorateBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 3:
+        {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.areaBtn.content.text = MC;
+//                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+            break;
+        }
+        case 4:
+        {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.priceBtn.content.text = MC;
+//                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+            break;
+        }
+        case 5:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.houseBtn.content.text = MC;
+                weakself.houseBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 6:
+        {
+            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            __weak __typeof(&*self)weakSelf = self;
+            view.dateblock = ^(NSDate *date) {
+                
+                weakSelf.nextTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+            };
+            [self.view addSubview:view];
+            break;
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)ActionCommitBtn:(UIButton *)btn{
     
-    
+    if (!_purposeBtn->str.length) {
+        
+//        self alertControllerWithNsstring:@"温馨提示" And:@"请选择"
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -156,6 +259,13 @@
         }
         
         cell.titleL.text = _wayArr[indexPath.row][@"param"];
+        if (indexPath.row == _way) {
+            
+            [cell setIsSelect:1];
+        }else{
+            
+            [cell setIsSelect:0];
+        }
         return cell;
     }else if (collectionView == _levelColl){
         
@@ -166,17 +276,24 @@
         }
         
         cell.titleL.text = _levelArr[indexPath.row][@"param"];
-        
+        if (indexPath.row == _level) {
+            
+            [cell setIsSelect:1];
+        }else{
+            
+            [cell setIsSelect:0];
+        }
         return cell;
     }else{
         
         CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
         if (!cell) {
             
-            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 80 *SIZE, 20 *SIZE)];
+            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 100 *SIZE, 20 *SIZE)];
         }
         
-         cell.titleL.text = _payArr[indexPath.row][@"param"];
+        [cell setIsSelect:[_paySelectArr[indexPath.item] integerValue]];
+        cell.titleL.text = _payArr[indexPath.row][@"param"];
         
         return cell;
     }
@@ -184,7 +301,30 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    if (collectionView == _wayColl) {
+        
+        _way = indexPath.item;
+        if (_way == 0) {
+            
+            [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+        }else{
+            
+            [_commitBtn setTitle:@"下一步" forState:UIControlStateNormal];
+        }
+    }else if (collectionView == _levelColl){
+        
+        _level = indexPath.item;
+    }else{
+        
+        if ([_paySelectArr[indexPath.item] integerValue]) {
+            
+            [_paySelectArr replaceObjectAtIndex:indexPath.item withObject:@0];
+        }else{
+            
+            [_paySelectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+        }
+    }
+    [collectionView reloadData];
 }
 
 - (void)initUI{
@@ -211,6 +351,9 @@
     _timeContentL.font = [UIFont systemFontOfSize:12 *SIZE];
     [_contentView addSubview:_timeContentL];
     
+    [self.formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+    _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
+    [self.formatter setDateFormat:@"YYYY/MM/dd"];
     
     _progressContentL = [[UILabel alloc] init];
     _progressContentL.textColor = YJTitleLabColor;
@@ -336,13 +479,15 @@
             }
             case 3:
             {
-                _areaBtn = btn;
+                _areaBtn = [[BorderTF alloc] initWithFrame:btn.frame];
+                _areaBtn.unitL.text = @"㎡";
                 [_contentView addSubview:_areaBtn];
                 break;
             }
             case 4:
             {
-                _priceBtn = btn;
+                _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
+                _priceBtn.unitL.text = @"万";
                 [_contentView addSubview:_priceBtn];
                 break;
             }
@@ -370,11 +515,12 @@
             
             _wayFlowLayout = flowLayout;
             _wayFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _wayFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _wayFlowLayout.minimumLineSpacing = 5 *SIZE;
             _wayFlowLayout.minimumInteritemSpacing = 0;
             
             _wayColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_wayFlowLayout];
             _wayColl.backgroundColor = [UIColor whiteColor];
+            _wayColl.bounces = NO;
             _wayColl.delegate = self;
             _wayColl.dataSource = self;
             [_wayColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
@@ -383,26 +529,28 @@
             
             _levelFlowLayout = flowLayout;
             _levelFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _levelFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _levelFlowLayout.minimumLineSpacing = 5 *SIZE;
             _levelFlowLayout.minimumInteritemSpacing = 0;
             
             _levelColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_levelFlowLayout];
             _levelColl.backgroundColor = [UIColor whiteColor];
             _levelColl.delegate = self;
             _levelColl.dataSource = self;
+            _levelColl.bounces = NO;
             [_levelColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
             [_contentView addSubview:_levelColl];
         }else{
             
             _payFlowLayout = flowLayout;
-            _payFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _payFlowLayout.minimumLineSpacing = 20 *SIZE;
+            _payFlowLayout.estimatedItemSize = CGSizeMake(100 *SIZE, 20 *SIZE);
+            _payFlowLayout.minimumLineSpacing = 5 *SIZE;
             _payFlowLayout.minimumInteritemSpacing = 0;
             
             _payColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_payFlowLayout];
             _payColl.backgroundColor = [UIColor whiteColor];
             _payColl.delegate = self;
             _payColl.dataSource = self;
+            _payColl.bounces = NO;
             [_payColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
             [_contentView addSubview:_payColl];
         }
@@ -418,7 +566,13 @@
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_commitBtn addTarget:self action:@selector(ActionCommitBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+    if (_way == 0) {
+        
+        [_commitBtn setTitle:@"提 交" forState:UIControlStateNormal];
+    }else{
+        
+        [_commitBtn setTitle:@"下一步" forState:UIControlStateNormal];
+    }
     [_commitBtn setBackgroundColor:YJBlueBtnColor];
     [_scrollView addSubview:_commitBtn];
     
@@ -522,7 +676,7 @@
         make.left.equalTo(_contentView).offset(76 *SIZE);
         make.top.equalTo(_purposeBtn.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(255 *SIZE);
-        make.height.mas_equalTo(_wayColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+        make.height.mas_equalTo(_levelColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE * (_levelArr.count / 3 + 1) + 5 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -612,7 +766,7 @@
         make.left.equalTo(_contentView).offset(76 *SIZE);
         make.top.equalTo(_houseBtn.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(255 *SIZE);
-        make.height.mas_equalTo(_wayColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE * (_payArr.count / 2 + 1));
     }];
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {

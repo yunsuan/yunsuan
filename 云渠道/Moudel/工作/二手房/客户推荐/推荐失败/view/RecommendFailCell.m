@@ -36,9 +36,9 @@
         _sexImg.image = [UIImage imageNamed:@""];
     }
 
-    _typeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
+    _storeL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
-    _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
+//    _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
     _failTimeL.text = [NSString stringWithFormat:@"失效日期：%@",dataDic[@"disabled_time"]];
     
     

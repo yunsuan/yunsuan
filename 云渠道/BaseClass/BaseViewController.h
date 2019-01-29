@@ -62,7 +62,11 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     RENT_SHOP_OFFICE_RECEIVE_TYPE=49,//租房商铺写字收款类型
     HOUSE_LEVEL=50,//住宅等级
     RENT_BREACH_TYPE=51, //租房挞定类型
-    RENT_DISABLED_RESON=52 //租房下架原因
+    RENT_DISABLED_RESON=52, //租房下架原因
+    TAKE_DISABLED_TYPE=53,//带看无效类型
+    CLIENT_LEVEL=54,//客户等级
+    TAKE_APPEAL=55,//带看申述类型
+    TAKE_REPORT_TYPE=56//带看联系人类型
 };
 
 

@@ -1014,6 +1014,8 @@
     }
 }
 
+
+
 - (void)initUI{
     
     self.titleLabel.text = @"房源详情";
