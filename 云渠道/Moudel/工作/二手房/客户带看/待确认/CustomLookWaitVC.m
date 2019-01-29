@@ -160,7 +160,7 @@
     cell.dataDic = _dataArr[indexPath.row];
     cell.customLookWaitCellBlock = ^(NSInteger index) {
       
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认客源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
@@ -179,7 +179,7 @@
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            CustomLookConfirmFailVC *nextVC = [[CustomLookConfirmFailVC alloc] init];//WithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
+            CustomLookConfirmFailVC *nextVC = [[CustomLookConfirmFailVC alloc] initWithData:_dataArr[index]];
             nextVC.customLookConfirmFailVCBlock = ^{
             
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];

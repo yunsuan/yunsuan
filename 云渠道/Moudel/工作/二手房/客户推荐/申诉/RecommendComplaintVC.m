@@ -34,7 +34,7 @@
 
 - (void)initDataSource{
     
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"SystemWork" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"appeal" object:nil];
     _page = 1;
     _dataArr = [@[] mutableCopy];
 }

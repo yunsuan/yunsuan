@@ -73,20 +73,21 @@
     //        return;
     //    }
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"recommend_id":_recommendId,
-                                                                               @"type":@"2",
+                                                                               @"type":@"1",
                                                                                @"appeal_type":_type
                                                                                }];
     if (![self isEmpty:_reasonTV.text]) {
         
         [dic setObject:_reasonTV.text forKey:@"comment"];
     }
-    [BaseRequest POST:TakeAppeal_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:TakeAppeal_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [self alertControllerWithNsstring:@"温馨提示" And:@"申诉成功" WithDefaultBlack:^{
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"appeal" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             }];
         }else{
