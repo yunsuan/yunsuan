@@ -78,10 +78,10 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"]  count]) {
                 
                 [_waitTable.mj_footer endRefreshing];
-                [self SetData:resposeObject[@"data"][@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"] ];
             }else{
                 
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
