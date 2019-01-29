@@ -309,7 +309,7 @@ static NSString *const MessageProjectDisabledDetail_URL = @"agent/message/work/p
 //获取工作消息项目成交
 static NSString *const MessageProjectDealDetail_URL = @"agent/message/work/projectDealDetail";
 
-#pragma mark -- 派单 --
+#pragma mark -- 勘察派单 --
 
 //派单待确认
 static NSString *const HousePushWaitList_URL = @"agent/house/push/wait/list";
@@ -328,6 +328,28 @@ static NSString *const HousePushConfirmList_URL = @"agent/house/push/confirm/lis
 
 //失效列表
 static NSString *const HousePushDisabledList_URL = @"agent/house/push/disabled/list";
+
+
+#pragma mark -- 带看派单 --
+
+//带看待接单列表
+static NSString *const TakeLookWaitList_URL = @"agent/take/push/wait/list";
+
+//带看待接单详情
+static NSString *const TakeLookWaitDetail_URL = @"agent/take/push/wait/detail";
+
+//接单
+static NSString *const AcceptTake_URL = @"agent/take/accept";
+
+//拒绝接单
+static NSString *const RefuseTake_URL = @"agent/take/refuse";
+
+//带看已接单列表接口
+static NSString *const TakeLookSureList_URL = @"agent/take/push/value/list";
+
+//带看已失效列表
+static NSString *const TakeLookDisabledList_URL = @"agent/take/push/disabled/list";
+
 
 #pragma mark ---  工作  ---
 //static NSString *const RecommendList_URL = @"agent/work/getRecommendList";
