@@ -22,14 +22,16 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"house_code"]];
-    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"name"]];
-    _numL.text = [NSString stringWithFormat:@"匹配房源：%@",dataDic[@"house"]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"house"]];
-    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
+    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"client_name"]];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配房源：%@套",dataDic[@"fit_house"]]];
+    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(5, attr.length - 5)];
+    _numL.attributedText = attr;
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type"]];
     _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
-    _reasonL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"house"]];
-    _timeL.text = [NSString stringWithFormat:@"接单截止时间：%@",dataDic[@"disabled_time"]];
+    _reasonL.text = [NSString stringWithFormat:@"失效类型：%@",dataDic[@"disabled_state"]];
+    _timeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"disabled_time"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         

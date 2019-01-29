@@ -8,6 +8,10 @@
 
 #import "LookWorkConfirmVC.h"
 
+#import "LookWorkConfirmDetailVC.h"
+#import "CustomLookWaitDetailVC.h"
+#import "CustomLookConfirmFailVC.h"
+
 //#import "RoomValidApplyVC.h"
 //#import "RoomInvalidApplyVC.h"
 //
@@ -158,7 +162,7 @@
             
         }];
         
-        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"房源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"客源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
 //            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
 //            nextVC.roomValidApplyVCBlock = ^{
@@ -169,15 +173,15 @@
 //            [self.navigationController pushViewController:nextVC animated:YES];
         }];
         
-        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"房源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-//            RoomInvalidApplyVC *nextVC = [[RoomInvalidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-//            nextVC.roomInvalidApplyVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
-//                [self RequestMethod];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            CustomLookConfirmFailVC *nextVC = [[CustomLookConfirmFailVC alloc] initWithData:_dataArr[index]];
+            nextVC.customLookConfirmFailVCBlock = ^{
+
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }];
         
         [alert addAction:valid];
@@ -193,12 +197,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:_dataArr[indexPath.row][@"survey_id"] type:_dataArr[indexPath.row][@"type"]];
-//    nextVC.systemWorkConfirmDetailVCBlock = ^{
-//        
-//        [self RequestMethod];
-//    };
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
+    nextVC.customLookWaitDetailVCBlock = ^{
+        
+    };
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
@@ -219,10 +222,10 @@
         [weakSelf RequestMethod];
     }];
     
-    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
-        
-        [weakSelf RequestAddMethod];
-    }];
+//    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+//
+//        [weakSelf RequestAddMethod];
+//    }];
 }
 
 @end

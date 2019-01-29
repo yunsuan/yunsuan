@@ -722,6 +722,9 @@ static NSString *const RecommendBrokerDisabledList_URL = @"agent/take/recommend/
 //无效详情
 static NSString *const RecommendBrokerDisabledDetail_URL = @"agent/take/recommend/broker/disabled/detail";
 
+//申诉
+static NSString *const TakeAppeal_URL = @"agent/take/appeal";
+
 //申述列表
 static NSString *const RecommendBrokerAppealList_URL = @"agent/take/recommend/broker/appeal/list";
 
@@ -735,6 +738,12 @@ static NSString *const RecommendButterWaitList_URL = @"agent/take/recommend/butt
 
 //待确认详情
 static NSString *const RecommendButterWaitDetail_URL = @"agent/take/recommend/butter/wait/detail";
+
+//带看单有效
+static NSString *const TakeConfirmValue_URL = @"agent/take/confirm/value";
+
+//带看单无效
+static NSString *const TakeConfirmDisabled_URL = @"agent/take/confirm/disabled";
 
 //已确认列表
 static NSString *const RecommendButterValueList_URL = @"agent/take/recommend/butter/value/list";

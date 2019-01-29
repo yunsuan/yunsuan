@@ -47,9 +47,9 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -78,10 +78,10 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [_waitTable.mj_footer endRefreshing];
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -104,6 +104,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
