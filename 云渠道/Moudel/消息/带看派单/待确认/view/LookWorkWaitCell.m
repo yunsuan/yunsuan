@@ -22,14 +22,20 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"house_code"]];
-    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"name"]];
-    _numL.text = [NSString stringWithFormat:@"匹配房源：%@",dataDic[@"house"]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"house"]];
-    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
-    _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
-    _comL.text = [NSString stringWithFormat:@"小区名称：%@",dataDic[@"house"]];
-    _timeL.text = [NSString stringWithFormat:@"接单截止时间：%@",dataDic[@"disabled_time"]];
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"client_name"]];
+    if ([dataDic[@"client_sex"] integerValue]==1) {
+        _genderImg.image =[UIImage imageNamed:@"man"];
+    }
+    if ([dataDic[@"client_sex"] integerValue]==2) {
+        _genderImg.image =[UIImage imageNamed:@"girl"];
+    }
+    _numL.text = [NSString stringWithFormat:@"匹配房源：%@套",dataDic[@"fit_house"]];
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
+//    _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
+    _comL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type"]];
+    _timeL.text = [NSString stringWithFormat:@"接单截止时间：%@",dataDic[@"end_time"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -127,7 +133,7 @@
     
     [_genderImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_nameL).offset(9 *SIZE);
+        make.left.equalTo(_nameL.mas_right).offset(9 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(15 *SIZE);
         make.width.height.mas_equalTo(12 *SIZE);
     }];

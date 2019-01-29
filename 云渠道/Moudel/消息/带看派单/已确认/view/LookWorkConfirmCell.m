@@ -22,15 +22,21 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"house_code"]];
-    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"name"]];
-    _numL.text = [NSString stringWithFormat:@"匹配房源：%@",dataDic[@"house"]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"house"]];
-    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type_name"]];
+    if ([dataDic[@"client_sex"] integerValue]==1) {
+        _genderImg.image =[UIImage imageNamed:@"man"];
+    }
+    if ([dataDic[@"client_sex"] integerValue]==2) {
+        _genderImg.image =[UIImage imageNamed:@"girl"];
+    }
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"client_name"]];
+    _numL.text = dataDic[@"client_tel"];
+    _sourceL.text = [NSString stringWithFormat:@"匹配房源：%@套",dataDic[@"fit_house"]];
+    _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"type"]];
     _proTypeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
-    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"house"]];
-    _timeL.text = [NSString stringWithFormat:@"接单时间：%@",dataDic[@"disabled_time"]];
-    _confirmTimeL.text = [NSString stringWithFormat:@"确认房源信息截止时间：%@",dataDic[@"disabled_time"]];
+    _phoneL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    _timeL.text = [NSString stringWithFormat:@"接单时间：%@",dataDic[@"end_time"]];
+    _confirmTimeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"end_time"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -105,7 +111,7 @@
     _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
-    [_confirmBtn setTitle:@"接单" forState:UIControlStateNormal];
+    [_confirmBtn setTitle:@"去确认" forState:UIControlStateNormal];
     [self.contentView addSubview:_confirmBtn];
     
     _lineView = [[UIView alloc] init];
@@ -133,7 +139,7 @@
     
     [_genderImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_nameL).offset(9 *SIZE);
+        make.left.equalTo(_nameL.mas_right).offset(9 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(15 *SIZE);
         make.width.height.mas_equalTo(12 *SIZE);
     }];
@@ -169,7 +175,7 @@
     [_proTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(220 *SIZE);
-        make.top.equalTo(_sourceL.mas_bottom).offset(10 *SIZE);
+        make.top.equalTo(_sourceL.mas_bottom).offset(15 *SIZE);
         make.width.mas_equalTo(130 *SIZE);
     }];
     
@@ -183,7 +189,7 @@
     [_confirmTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
-        make.top.equalTo(_timeL.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_timeL.mas_bottom).offset(15 *SIZE);
         make.width.mas_equalTo(250 *SIZE);
     }];
     
@@ -198,7 +204,7 @@
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_confirmTimeL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_confirmTimeL.mas_bottom).offset(15 *SIZE);
         make.width.mas_equalTo(360 *SIZE);
         make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);

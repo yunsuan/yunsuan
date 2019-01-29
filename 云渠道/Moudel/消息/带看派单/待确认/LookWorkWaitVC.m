@@ -7,7 +7,7 @@
 //
 
 #import "LookWorkWaitVC.h"
-
+#import "LookworkwaitDetailVC.h"
 //#import "SystemWorkConfirmDetailVC.h"
 //#import "SystemWorkWaitDetailVC.h"
 
@@ -44,7 +44,7 @@
     
     _page = 1;
     _waitTable.mj_footer.state = MJRefreshStateIdle;
-    [BaseRequest GET:HousePushWaitList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+    [BaseRequest GET:TakeLookWaitList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
         
         [_waitTable.mj_header endRefreshing];
         NSLog(@"%@",resposeObject);
@@ -53,7 +53,7 @@
             [_dataArr removeAllObjects];
             if ([resposeObject[@"data"] count]) {
                 
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -76,7 +76,7 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    [BaseRequest GET:HousePushConfirmList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+    [BaseRequest GET:TakeLookWaitList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         
@@ -85,7 +85,7 @@
             if ([resposeObject[@"data"] count]) {
                 
                 [_waitTable.mj_footer endRefreshing];
-                [self SetData:resposeObject[@"data"]];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
                 _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
@@ -154,7 +154,7 @@
             
         } WithDefaultBlack:^{
             
-            [BaseRequest POST:HouseRecordPushAccept_URL parameters:@{@"push_id":_dataArr[index][@"push_id"],@"type":_dataArr[index][@"type"]} success:^(id resposeObject) {
+            [BaseRequest GET:AcceptTake_URL parameters:@{@"push_id":_dataArr[index][@"push_id"]} success:^(id resposeObject) {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
@@ -196,7 +196,7 @@
         
     } WithDefaultBlack:^{
         
-        [BaseRequest POST:HouseRecordPushRefuse_URL parameters:@{@"push_id":_dataArr[indexPath.row][@"push_id"],@"type":_dataArr[indexPath.row][@"type"]} success:^(id resposeObject) {
+        [BaseRequest GET:RefuseTake_URL parameters:@{@"push_id":_dataArr[indexPath.row][@"push_id"]} success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
@@ -215,11 +215,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    //    ReportWaitDetailVC *nextVC = [[ReportWaitDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
-    //    [self.navigationController pushViewController:nextVC animated:YES];
-//    SystemWorkWaitDetailVC *nextVC = [[SystemWorkWaitDetailVC alloc] initWithPushId:_dataArr[indexPath.row][@"push_id"] type:_dataArr[indexPath.row][@"type"]];
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    LookWorkWaitDetailVC *vc = [[LookWorkWaitDetailVC alloc]initWithPushId:_dataArr[indexPath.row][@"push_id"]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)initUI{

@@ -40,7 +40,7 @@
     
     _page = 1;
     _waitTable.mj_footer.state = MJRefreshStateIdle;
-    [BaseRequest GET:HousePushDisabledList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+    [BaseRequest GET:TakeLookDisabledList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
         
         [_waitTable.mj_header endRefreshing];
         NSLog(@"%@",resposeObject);
@@ -72,7 +72,7 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    [BaseRequest GET:HousePushDisabledList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
+    [BaseRequest GET:TakeLookDisabledList_URL parameters:@{@"page":@(_page)} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookWorkWaitDetailVC : BaseViewController
 
-- (instancetype)initWithPushId:(NSString *)pushId type:(NSString *)type;
+- (instancetype)initWithPushId:(NSString *)pushId;
 
 @end
 

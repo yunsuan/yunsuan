@@ -17,7 +17,6 @@
     
     NSArray *_titleArr;
     NSString *_pushId;
-    NSString *_type;
 }
 
 @property (nonatomic, strong) UITableView *detailTable;
@@ -30,13 +29,12 @@
 
 @implementation LookWorkWaitDetailVC
 
-- (instancetype)initWithPushId:(NSString *)pushId type:(NSString *)type
+- (instancetype)initWithPushId:(NSString *)pushId
 {
     self = [super init];
     if (self) {
         
         _pushId = pushId;
-        _type = type;
     }
     return self;
 }
@@ -50,7 +48,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HousePushWaitDetail_URL parameters:@{@"push_id":_pushId,@"type":_type} success:^(id resposeObject) {
+    [BaseRequest GET:TakeLookWaitDetail_URL parameters:@{@"push_id":_pushId} success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -68,8 +66,17 @@
 }
 
 - (void)SetData:(NSDictionary *)data{
+
+//    _titleArr = @[@[[NSString stringWithFormat:@"来源：%@",data[@"project_name"]],[NSString stringWithFormat:@"客源编号：%@",data[@"project_name"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"house_code"]],[NSString stringWithFormat:@"客户性别：%@",data[@"store_name"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"name"]],[NSString stringWithFormat:@"备注%@",data[@"project_name"]]],@[[NSString stringWithFormat:@"意向城市：%@",data[@"project_name"]],[NSString stringWithFormat:@"意向区域：%@",data[@"project_name"]],[NSString stringWithFormat:@"意向单价：%@",data[@"house_code"]],[NSString stringWithFormat:@"意向总价：%@",data[@"store_name"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"name"]],[NSString stringWithFormat:@"备注%@",data[@"project_name"]]]];
     
-    _titleArr = @[@[[NSString stringWithFormat:@"来源：%@",data[@"project_name"]],[NSString stringWithFormat:@"订单类型：%@",data[@"project_name"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"house_code"]],[NSString stringWithFormat:@"客源编号：%@",data[@"store_name"]],[NSString stringWithFormat:@"归属门店：%@",data[@"name"]],[NSString stringWithFormat:@"联系人%@",data[@"project_name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2?@"女":@"男"],[NSString stringWithFormat:@"推荐时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]];
+    NSString *sex =@"";
+    if ([data[@"recommend_info"][@"client_sex"] integerValue]==1) {
+        sex =@"男";
+    }
+    if ([data[@"recommend_info"][@"client_sex"] integerValue]==2) {
+        sex =@"女";
+    }
+    _titleArr = @[@[[NSString stringWithFormat:@"来源：%@",data[@"recommend_info"][@"source"]],[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_info"][@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"recommend_info"][@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",sex],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_info"][@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"recommend_info"][@"comment"]]]];
     
     [_detailTable reloadData];
 }
@@ -86,7 +93,7 @@
         
     } WithDefaultBlack:^{
         
-        [BaseRequest POST:HouseRecordPushAccept_URL parameters:@{@"push_id":_pushId,@"type":_type} success:^(id resposeObject) {
+        [BaseRequest POST:HouseRecordPushAccept_URL parameters:@{@"push_id":_pushId} success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
@@ -130,9 +137,11 @@
         
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
-    
-    header.titleL.text = @"订单信息";
-    
+    if (section==0) {
+         header.titleL.text = @"推荐信息";
+    }else{
+        header.titleL.text = @"需求信息";
+    }
     header.lineView.hidden = YES;
     
     return header;
@@ -166,7 +175,7 @@
 
 - (void)initUI{
     
-    self.titleLabel.text = @"派单详情";
+    self.titleLabel.text = @"待接单详情";
     self.navBackgroundView.hidden = NO;
     
     _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
