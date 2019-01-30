@@ -11,6 +11,7 @@
 #import "LookWorkConfirmDetailVC.h"
 #import "CustomLookWaitDetailVC.h"
 #import "CustomLookConfirmFailVC.h"
+#import "CustomLookConfirmSuccessVC.h"
 
 //#import "RoomValidApplyVC.h"
 //#import "RoomInvalidApplyVC.h"
@@ -164,13 +165,13 @@
         
         UIAlertAction *valid = [UIAlertAction actionWithTitle:@"客源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-//            RoomValidApplyVC *nextVC = [[RoomValidApplyVC alloc] initWithData:_dataArr[index] SurveyId:_dataArr[index][@"survey_id"]];
-//            nextVC.roomValidApplyVCBlock = ^{
-//
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"RoomSurveying" object:nil];
-//                [self RequestMethod];
-//            };
-//            [self.navigationController pushViewController:nextVC animated:YES];
+            CustomLookConfirmSuccessVC *nextVC = [[CustomLookConfirmSuccessVC alloc] initWithDataDic:_dataArr[index]];
+            nextVC.customLookConfirmSuccessVCBlock = ^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
         }];
         
         UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

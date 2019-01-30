@@ -9,6 +9,7 @@
 #import "CustomLookComfirmVC.h"
 
 #import "CustomLookConfirmDetailVC.h"
+#import "LookMaintainDetailVC.h"
 
 #import "CustomLookConfirmCell.h"
 
@@ -158,6 +159,12 @@
     cell.tag = indexPath.row;
     
     cell.dataDic = _dataArr[indexPath.row];
+    
+    cell.customLookConfirmCellBlock = ^(NSInteger index) {
+        
+        LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[index][@"take_id"]];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
     
     return cell;
 }

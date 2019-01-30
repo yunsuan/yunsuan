@@ -11,6 +11,7 @@
 #import "ModifyTimeVC.h"
 #import "ModifyRecordVC.h"
 #import "CustomLookConfirmFailVC.h"
+#import "CustomLookConfirmSuccessVC.h"
 
 //#import "CountDownCell.h"
 #import "CountDownCell.h"
@@ -89,15 +90,39 @@
 - (void)SetData:(NSDictionary *)data{
     
     _dataDic = [NSMutableDictionary dictionaryWithDictionary:data];
+//    NSDictionary *recommendDic = data[@"recommend_info"];
+    NSDictionary *needDic = data[@"need_info"];
     if ([_dataDic[@"property_type"] integerValue] == 1) {
         
-        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"住宅"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"装修标准：%@",data[@"need_info"][@"decorate"]],[NSString stringWithFormat:@"置业目的：%@",data[@"need_info"][@"buy_purpose"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"需求标签：%@",[data[@"need_info"][@"need_tags"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"住宅"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"装修标准：%@",data[@"need_info"][@"decorate"]],[NSString stringWithFormat:@"置业目的：%@",data[@"need_info"][@"buy_purpose"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"需求标签：%@",data[@"need_info"][@"need_tags"]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
     }else if ([_dataDic[@"property_type"] integerValue] == 2){
         
-        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"商铺"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"商铺类型：%@",[data[@"need_info"][@"shop_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",[data[@"need_info"][@"match_tags"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+        NSString *str = @"";
+        for (NSDictionary *dic in needDic[@"match_tags"]) {
+            
+            if (str.length) {
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,dic[@"name"]];
+            }else{
+                
+                str = dic[@"name"];
+            }
+        }
+        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"商铺"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"商铺类型：%@",[data[@"need_info"][@"shop_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",str],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
     }else{
         
-        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"写字楼"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"写字楼等级：%@",data[@"need_info"][@"office_level"]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",[data[@"need_info"][@"match_tags"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
+        NSString *str = @"";
+        for (NSDictionary *dic in needDic[@"match_tags"]) {
+            
+            if (str.length) {
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,dic[@"name"]];
+            }else{
+                
+                str = dic[@"name"];
+            }
+        }
+        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"%@",_dataDic[@"timeLimit"]]],@[[NSString stringWithFormat:@"客源编号：%@",data[@"recommend_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]],@[[NSString stringWithFormat:@"意向物业：%@",@"写字楼"],[NSString stringWithFormat:@"意向区域：%@",[NSString stringWithFormat:@"%@%@%@",data[@"need_info"][@"region"][0][@"province_name"],data[@"need_info"][@"region"][0][@"city_name"],data[@"need_info"][@"region"][0][@"district_name"]]],[NSString stringWithFormat:@"意向价格：%@",data[@"need_info"][@"total_price"]],[NSString stringWithFormat:@"意向面积：%@",data[@"need_info"][@"area"]],[NSString stringWithFormat:@"写字楼等级：%@",data[@"need_info"][@"office_level"]],[NSString stringWithFormat:@"购买用途：%@",data[@"need_info"][@"buy_use"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"need_info"][@"pay_type"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"配套设施：%@",str],[NSString stringWithFormat:@"备注：%@",data[@"need_info"][@"comment"]]]]];
     }
     
     [_detailTable reloadData];
@@ -123,7 +148,15 @@
     
     if (_dataDic) {
         
-        
+        CustomLookConfirmSuccessVC *nextVC = [[CustomLookConfirmSuccessVC alloc] initWithDataDic:_dataDic];
+        nextVC.customLookConfirmSuccessVCBlock = ^{
+            
+            if (self.customLookWaitDetailVCBlock) {
+                
+                self.customLookWaitDetailVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
 

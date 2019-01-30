@@ -33,7 +33,7 @@
         
         _genderImg.image = [UIImage imageNamed:@""];
     }
-    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"recommend_code"]];
+    _codeL.text = [NSString stringWithFormat:@"带看编号：%@",dataDic[@"take_code"]];
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
     _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
     _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
@@ -95,6 +95,7 @@
     _comfirmBtn.layer.cornerRadius = 2 *SIZE;
     _comfirmBtn.clipsToBounds = YES;
     _comfirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_comfirmBtn setBackgroundColor:YJBlueBtnColor];
     [_comfirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_comfirmBtn setTitle:@"带看维护" forState:UIControlStateNormal];
     [self.contentView addSubview:_comfirmBtn];
@@ -155,6 +156,14 @@
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_typeL.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(250 *SIZE);
+    }];
+    
+    [_comfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(283 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(21 *SIZE);
+        make.width.mas_equalTo(67 *SIZE);
+        make.height.mas_equalTo(30 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {

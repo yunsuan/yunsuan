@@ -22,7 +22,7 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"recommend_code"]];
+    _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"take_code"]];
     _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"name"]];
     
     if ([dataDic[@"sex"] integerValue] == 1) {
@@ -198,6 +198,7 @@
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(_progressL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];
 }
