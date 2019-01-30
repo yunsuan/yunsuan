@@ -7,7 +7,7 @@
 //
 
 #import "LookWorkWaitDetailVC.h"
-#import "LookWorkConfirmDetailVC.h"
+#import "CustomLookWaitDetailVC.h"
 
 #import "SingleContentCell.h"
 #import "BaseHeader.h"
@@ -138,7 +138,7 @@
                 [self alertControllerWithNsstring:@"接单成功" And:@"" WithDefaultBlack:^{
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
-                    LookWorkConfirmDetailVC *nextVC = [[LookWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]] type:resposeObject[@"data"][@"type"]];
+                    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"take_id"]]];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];
             }else{

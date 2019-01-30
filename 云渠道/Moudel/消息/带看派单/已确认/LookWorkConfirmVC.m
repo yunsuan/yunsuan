@@ -8,16 +8,10 @@
 
 #import "LookWorkConfirmVC.h"
 
-#import "LookWorkConfirmDetailVC.h"
 #import "CustomLookWaitDetailVC.h"
 #import "CustomLookConfirmFailVC.h"
 #import "CustomLookConfirmSuccessVC.h"
 
-//#import "RoomValidApplyVC.h"
-//#import "RoomInvalidApplyVC.h"
-//
-//#import "SystemWorkConfirmDetailVC.h"
-//
 #import "LookWorkConfirmCell.h"
 
 @interface LookWorkConfirmVC ()<UITableViewDelegate,UITableViewDataSource>
