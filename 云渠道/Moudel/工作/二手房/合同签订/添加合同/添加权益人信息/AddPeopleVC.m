@@ -62,6 +62,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (!_dataDic) {
+        _dataDic =[NSMutableDictionary dictionaryWithDictionary:
+                   @{@"name":@"",
+                     @"tel":@"",
+                     @"card_type":@"",
+                     @"card_id":@"",
+                     @"address":@"",
+                     @"sex":@""
+                     }];
+    }
     
     [self initUI];
 }
@@ -74,17 +84,12 @@
         return;
     }
     
-    if (!_gender.length) {
+    if (!_genderBtn->str.length) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择性别"];
         return;
     }
     
-    if (!_typeId.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择联系人类型"];
-        return;
-    }
     
     if (![self checkTel:_phoneTF.textfield.text]) {
         
@@ -92,14 +97,16 @@
         return;
     }
     
-    if (![self isEmpty:_phoneTF2.textfield.text]) {
-        
-        if (![self checkTel:_phoneTF2.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入正确的电话号码"];
-            return;
-        }
-    }
+
+    _dataDic =[NSMutableDictionary dictionaryWithDictionary:
+               @{@"name":_nameTF.textfield.text,
+                 @"tel":_phoneTF.textfield.text,
+                 @"card_type":_certTypeBtn->str,
+                 @"card_type_name":_certTypeBtn.content.text,
+                 @"card_id":_certNumTF.textfield.text,
+                 @"address":_addressTF.textfield.text,
+                 @"sex":_genderBtn->str
+                 }];
     
     [self.navigationController popViewControllerAnimated:YES];
     if (self.AddPeopleblock !=nil) {
@@ -114,13 +121,13 @@
     UIAlertAction *male = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _genderBtn.content.text = @"男";
-        _gender = @"1";
+        _genderBtn->str = @"1";
     }];
     
     UIAlertAction *female = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         _genderBtn.content.text = @"女";
-        _gender = @"2";
+        _genderBtn->str = @"2";
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -135,17 +142,23 @@
     }];
 }
 
-- (void)ActionTypeBtn:(UIButton *)btn{
-    
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:30]];
-    SS(strongSelf);
-    view.selectedBlock = ^(NSString *MC, NSString *ID) {
-        
-        strongSelf->_typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-        strongSelf->_typeId = [NSString stringWithFormat:@"%@",ID];
-    };
-    [self.view addSubview:view];
-}
+//- (void)ActionTypeBtn:(UIButton *)btn{
+//
+//    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:@[@{@"param":@"主权益人",
+//                        @"id":@"1"
+//                    },
+//                    @{@"param":@"副权益人",
+//                         @"id":@"2"
+//                      }
+//                    ]];
+//    SS(strongSelf);
+//    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//        strongSelf->_typeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//        strongSelf->_typeBtn->str = [NSString stringWithFormat:@"%@",ID];
+//    };
+//    [self.view addSubview:view];
+//}
 
 - (void)ActionCardTypeBtn:(UIButton *)btn{
     
@@ -154,7 +167,7 @@
     view.selectedBlock = ^(NSString *MC, NSString *ID) {
         
         strongSelf->_certTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-        strongSelf->_cardType = [NSString stringWithFormat:@"%@",ID];
+        strongSelf->_certTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
     };
     [self.view addSubview:view];
 }
@@ -209,41 +222,19 @@
     UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(31 *SIZE, 14 *SIZE, 100 *SIZE, 15 *SIZE)];
     titleL.textColor = YJTitleLabColor;
     titleL.font = [UIFont systemFontOfSize:15 *SIZE];
-    titleL.text = @"联系人信息";
+    titleL.text = @"权益人信息";
     [_whiteView addSubview:titleL];
     
-    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
-    [_whiteView addSubview:_addBtn];
+//    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
+//    [_whiteView addSubview:_addBtn];
     
-    NSArray *titleArr = @[@"姓名：",@"性别：",@"类型：",@"联系电话1：",@"联系电话2：",@"证件类型：",@"证件编号：",@"通讯地址："];
-    NSArray *contentArr;
-    if (self.dataDic.count) {
-        
-        if ([self.dataDic[@"tel"] count] == 1) {
-            
-            if ([self.dataDic[@"sex"] integerValue] == 2) {
-                
-                contentArr = @[self.dataDic[@"name"],@"女",self.dataDic[@"report_type"],self.dataDic[@"tel"][0],@"",self.dataDic[@"card_type_name"],self.dataDic[@"card_id"],self.dataDic[@"address"]];
-            }else{
-                
-                contentArr = @[self.dataDic[@"name"],@"男",self.dataDic[@"report_type"],self.dataDic[@"tel"][0],@"",self.dataDic[@"card_type_name"],self.dataDic[@"card_id"],self.dataDic[@"address"]];
-            }
-        }else{
-            
-            
-            if ([self.dataDic[@"sex"] integerValue] == 2) {
-                
-                contentArr = @[self.dataDic[@"name"],@"女",self.dataDic[@"report_type"],self.dataDic[@"tel"][0],self.dataDic[@"tel"][1],self.dataDic[@"card_type_name"],self.dataDic[@"card_id"],self.dataDic[@"address"]];
-            }else{
-                
-                contentArr = @[self.dataDic[@"name"],@"男",self.dataDic[@"report_type"],self.dataDic[@"tel"][0],self.dataDic[@"tel"][1],self.dataDic[@"card_type_name"],self.dataDic[@"card_id"],self.dataDic[@"address"]];
-            }
-        }
-    }
+    NSArray *titleArr = @[@"姓名：",@"性别：",@"联系电话：",@"证件类型：",@"证件编号：",@"通讯地址："];
     
-    for (int i = 0; i < 8; i++) {
+
+    
+    for (int i = 0; i < 6; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -254,7 +245,7 @@
         BorderTF *textField = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 0, 257 *SIZE, 33 *SIZE)];
         if (self.dataDic.count) {
             
-            textField.textfield.text = contentArr[i];
+//            textField.textfield.text = contentArr[i];
         }
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:textField.frame];
         
@@ -264,6 +255,9 @@
                 _nameL = label;
                 [_whiteView addSubview:_nameL];
                 _nameTF = textField;
+                if (_dataDic[@"name"]) {
+                    _nameTF.textfield.text = _dataDic[@"name"];
+                }
                 [_whiteView addSubview:_nameTF];
                 break;
             }
@@ -274,84 +268,62 @@
                 _genderBtn = btn;
                 if ([self.dataDic[@"sex"] integerValue] == 2) {
                     
-                    _gender = @"2";
+                    _genderBtn->str = @"2";
                     _genderBtn.content.text = @"女";
                 }else if ([self.dataDic[@"sex"] integerValue] == 1){
                     
-                    _gender = @"1";
+                    _genderBtn->str = @"1";
                     _genderBtn.content.text = @"男";
                 }
                 [_genderBtn addTarget:self action:@selector(ActionGenderBtn:) forControlEvents:UIControlEventTouchUpInside];
                 [_whiteView addSubview:_genderBtn];
                 break;
             }
+           
             case 2:
-            {
-                _typeL = label;
-                [_whiteView addSubview:_typeL];
-                _typeBtn = btn;
-                if (self.dataDic.count) {
-                    
-                    NSArray *arr = [self getDetailConfigArrByConfigState:30];
-                    for (NSDictionary *dic in arr) {
-                        
-                        if ([dic[@"param"] isEqualToString:self.dataDic[@"report_type"]]) {
-                            
-                            _typeId = [NSString stringWithFormat:@"%@",dic[@"id"]];
-                            break;
-                        }
-                    }
-                    _typeBtn.content.text = self.dataDic[@"report_type"];
-                }
-                [_typeBtn addTarget:self action:@selector(ActionTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
-                [_whiteView addSubview:_typeBtn];
-                break;
-            }
-            case 3:
             {
                 _phoneL = label;
                 [_whiteView addSubview:_phoneL];
                 _phoneTF = textField;
+                if (_dataDic[@"tel"]) {
+                    _phoneTF.textfield.text = _dataDic[@"tel"];
+                }
                 [_whiteView addSubview:_phoneTF];
                 break;
             }
-            case 4:
-            {
-                _phoneL2 = label;
-                _phoneL2.hidden = YES;
-                [_whiteView addSubview:_phoneL2];
-                _phoneTF2 = textField;
-                _phoneTF2.hidden = YES;
-                [_whiteView addSubview:_phoneTF2];
-                break;
-            }
-            case 5:
+            case 3:
             {
                 _certTypeL = label;
                 [_whiteView addSubview:_certTypeL];
                 _certTypeBtn = btn;
-                if ([self.dataDic count]) {
+                if (_dataDic[@"card_type"]) {
                     
-                    _certTypeBtn.content.text = self.dataDic[@"card_type_name"];
-                    _cardType = [NSString stringWithFormat:@"%@",self.dataDic[@"card_type"]];
+                    _certTypeBtn.content.text = _dataDic[@"card_type_name"];
+                    _certTypeBtn->str = _dataDic[@"card_type"];
                 }
                 [_certTypeBtn addTarget:self action:@selector(ActionCardTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
                 [_whiteView addSubview:_certTypeBtn];
                 break;
             }
-            case 6:
+            case 4:
             {
                 _certNumL = label;
                 [_whiteView addSubview:_certNumL];
                 _certNumTF = textField;
+                if (_dataDic[@"card_id"]) {
+                    _certNumTF.textfield.text =_dataDic[@"card_id"];
+                }
                 [_whiteView addSubview:_certNumTF];
                 break;
             }
-            case 7:
+            case 5:
             {
                 _addressL = label;
                 [_whiteView addSubview:_addressL];
                 _addressTF = textField;
+                if (_dataDic[@"address"]) {
+                    _addressTF.textfield.text =_dataDic[@"address"];
+                }
                 [_whiteView addSubview:_addressTF];
                 break;
             }
@@ -370,11 +342,11 @@
     
     [self MasonryUI];
     if (self.dataDic.count) {
-        
-        if ([self.dataDic[@"tel"] count] == 2) {
-            
-            [self ActionAddBtn:_addBtn];
-        }
+//
+//        if ([self.dataDic[@"tel"] count] == 2) {
+//
+//            [self ActionAddBtn:_addBtn];
+//        }
     }
 }
 
@@ -417,14 +389,29 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(9 *SIZE);
+//        make.top.equalTo(_nameTF.mas_bottom).offset(31 *SIZE);
+//        make.width.mas_equalTo(70 *SIZE);
+//    }];
+//
+//    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(81 *SIZE);
+//        make.top.equalTo(_nameTF.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(257 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(9 *SIZE);
         make.top.equalTo(_nameTF.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_nameTF.mas_bottom).offset(20 *SIZE);
@@ -432,29 +419,14 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_whiteView).offset(9 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(31 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
-    [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_whiteView).offset(81 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(217 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_whiteView).offset(308 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(21 *SIZE);
-        make.width.mas_equalTo(35 *SIZE);
-        make.height.mas_equalTo(35 *SIZE);
-    }];
-    
+//    [_addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(308 *SIZE);
+//        make.top.equalTo(_typeBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.mas_equalTo(35 *SIZE);
+//        make.height.mas_equalTo(35 *SIZE);
+//    }];
+//
     [_certTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(9 *SIZE);

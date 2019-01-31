@@ -38,6 +38,14 @@
     
 }
 
+-(void)action_stickie
+{
+    if (_stickieBlock!=nil) {
+        self.stickieBlock(_indexpath);
+    }
+}
+
+
 - (void)initUI{
 
     
@@ -69,8 +77,7 @@
     [_stickieBtn setTitle:@"置顶" forState:UIControlStateNormal];
     [_stickieBtn setTitleColor:YJBlueBtnColor forState:UIControlStateNormal];
     _stickieBtn.titleLabel.font = [UIFont systemFontOfSize:12*SIZE];
-    _stickieBtn.layer.masksToBounds = YES;
-    _stickieBtn.layer.cornerRadius = 1*SIZE;
+    [_stickieBtn addTarget:self action:@selector(action_stickie) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_stickieBtn];
  
     _line = [[UIView alloc] init];

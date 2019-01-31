@@ -45,12 +45,12 @@
 
 -(void)postWithpage:(NSString *)page{
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":page}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":page ,@"type":@"1"}];
     if (![self isEmpty:self.search]) {
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:PurchaseContractList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:WaitContractList_URL parameters:dic success:^(id resposeObject) {
         [_table.mj_footer endRefreshing];
         [_table.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] ==200) {
@@ -93,8 +93,9 @@
         cell = [[ContractSignListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractSignListCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    cell.dataDic = _dataArr[indexPath.row];
+    cell.statusL.text =@"待审核";
+    [cell setDataDic:_dataArr[indexPath.row]];
+    //    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }

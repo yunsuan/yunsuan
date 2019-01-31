@@ -58,7 +58,7 @@
     
     _titleArr = @[@"交易信息",@"买方信息",@"卖方信息"];
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0"]];
-    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"construct_code":@"",
+    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"deal_code":@"",
                                                                @"deal_money":@"",
                                                                @"buy_breach":@"",
                                                                @"sale_breach":@"",
@@ -83,6 +83,167 @@
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
+    if ([_buyarr[0] isEqual:@""]) {
+        [self showContent:@"请选择或添加买方信息"];
+        return;
+    }
+    if ([_sellarr[0] isEqual:@""]) {
+        [self showContent:@"请选择卖方信息"];
+        return;
+    }
+    if ([_tradedic[@"deal_code"] isEqual:@""]) {
+        [self showContent:@"请填写合同编号"];
+        return;
+    }
+    if ([_tradedic[@"deal_money"] isEqual:@""]) {
+        [self showContent:@"请填成交总价"];
+        return;
+    }
+    if ([_tradedic[@"buy_breach"] isEqual:@""]) {
+        [self showContent:@"请填写买方违约金"];
+        return;
+    }
+    if ([_tradedic[@"sale_breach"] isEqual:@""]) {
+        [self showContent:@"请填写卖房违约金"];
+        return;
+    }
+    if ([_tradedic[@"buy_brokerage"] isEqual:@""]) {
+        [self showContent:@"请填写买方支付佣金"];
+        return;
+    }
+    if ([_tradedic[@"sale_brokerage"] isEqual:@""]) {
+        [self showContent:@"请填写卖房支付佣金"];
+        return;
+    }
+    if ([_tradedic[@"certificate_time"] isEqual:@""]) {
+        [self showContent:@"请选择办证时间"];
+        return;
+    }
+    if ([_tradedic[@"mortgage_cancel_time"] isEqual:@""]) {
+        [self showContent:@"请选择注销抵押时间"];
+        return;
+    }
+    if ([_tradedic[@"pay_way"] isEqual:@""]) {
+        [self showContent:@"请选择付款方式"];
+        return;
+    }
+    if ([_tradedic[@"buy_reason"] isEqual:@""]) {
+        [self showContent:@"请选择买房原因"];
+        return;
+    }
+    if ([_tradedic[@"sale_reason"] isEqual:@""]) {
+        [self showContent:@"请选择卖房原因"];
+        return;
+    }
+    if ([_tradedic[@"comment"] isEqual:@""]) {
+        [self showContent:@"请填写约定事项"];
+        return;
+    }
+    
+    NSMutableArray *sellpeopel =[NSMutableArray array];
+    for (int i=1; i<_sellarr.count; i++) {
+        NSDictionary *dic = @{
+                              @"name":_sellarr[i][@"name"],
+                              @"tel":_sellarr[i][@"tel"],
+                              @"report_type":i==1?@"1":@"2",
+                              @"card_type":_sellarr[i][@"card_type"],
+                              @"card_id":_sellarr[i][@"card_id"],
+                              @"address":_sellarr[i][@"address"],
+                              @"sex":_sellarr[i][@"sex"],
+                              @"sort":[NSString stringWithFormat:@"%d",i-1]
+                              };
+        [sellpeopel addObject:dic];
+    }
+    NSData *sellData = [NSJSONSerialization dataWithJSONObject:sellpeopel options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *selljson = [[NSString alloc] initWithData:sellData encoding:NSUTF8StringEncoding];
+    NSMutableArray *buypeopel =[NSMutableArray array];
+    NSDictionary *adddic = [NSDictionary dictionary];
+    if (_isadd) {
+        
+        for (int i=0; i<_buyarr.count; i++) {
+            NSDictionary *dic = @{
+                                  @"name":_buyarr[i][@"name"],
+                                  @"tel":_buyarr[i][@"tel"],
+                                  @"report_type":i==0?@"1":@"2",
+                                  @"card_type":_buyarr[i][@"card_type"],
+                                  @"card_id":_buyarr[i][@"card_id"],
+                                  @"address":_buyarr[i][@"address"],
+                                  @"sex":_buyarr[i][@"sex"],
+                                  @"sort":[NSString stringWithFormat:@"%d",i]
+                                  };
+            [buypeopel addObject:dic];
+        }
+        
+        NSData *buyData = [NSJSONSerialization dataWithJSONObject:buypeopel options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *buyjson = [[NSString alloc] initWithData:buyData encoding:NSUTF8StringEncoding];
+        adddic = @{
+                                 @"deal_code":_tradedic[@"deal_code"],
+                                 @"deal_money":_tradedic[@"deal_money"],
+                                 @"buy_breach":_tradedic[@"buy_breach"],
+                                 @"sale_breach":_tradedic[@"sale_breach"],
+                                 @"buy_brokerage":_tradedic[@"buy_brokerage"],
+                                 @"sale_brokerage":_tradedic[@"sale_brokerage"],
+                                 @"certificate_time":_tradedic[@"certificate_time"],
+                             @"mortgage_cancel_time":_tradedic[@"mortgage_cancel_time"],
+                                 @"pay_way":_tradedic[@"pay_way"],
+                                 @"sale_reason":_tradedic[@"sale_reason"],
+                                 @"buy_reason":_tradedic[@"buy_reason"],
+                                 @"comment":_tradedic[@"comment"],
+                                 @"house_id":_sellarr[0][@"house_id"],
+                                 @"sale_contact_group":selljson,
+                                 @"buy_contact_group":buyjson,
+                                 @"type":@"1"
+                                 };
+    }
+    else{
+        
+        for (int i=1; i<_buyarr.count; i++) {
+            NSDictionary *dic = @{
+                                  @"name":_buyarr[i][@"name"],
+                                  @"tel":_buyarr[i][@"tel"],
+                                  @"report_type":i==1?@"1":@"2",
+                                  @"card_type":_buyarr[i][@"card_type"],
+                                  @"card_id":_buyarr[i][@"card_id"],
+                                  @"address":_buyarr[i][@"address"],
+                                  @"sex":_buyarr[i][@"sex"],
+                                  @"sort":[NSString stringWithFormat:@"%d",i-1]
+                                  };
+            [buypeopel addObject:dic];
+        }
+        
+        NSData *buyData = [NSJSONSerialization dataWithJSONObject:buypeopel options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *buyjson = [[NSString alloc] initWithData:buyData encoding:NSUTF8StringEncoding];
+        adddic = @{
+                   @"deal_code":_tradedic[@"deal_code"],
+                   @"deal_money":_tradedic[@"deal_money"],
+                   @"buy_breach":_tradedic[@"buy_breach"],
+                   @"sale_breach":_tradedic[@"sale_breach"],
+                   @"buy_brokerage":_tradedic[@"buy_brokerage"],
+                   @"sale_brokerage":_tradedic[@"sale_brokerage"],
+                   @"certificate_time":_tradedic[@"certificate_time"],
+                   @"mortgage_cancel_time":_tradedic[@"mortgage_cancel_time"],
+                   @"pay_way":_tradedic[@"pay_way"],
+                   @"sale_reason":_tradedic[@"sale_reason"],
+                   @"buy_reason":_tradedic[@"buy_reason"],
+                   @"comment":_tradedic[@"comment"],
+                   @"house_id":_sellarr[0][@"house_id"],
+                   @"take_id":_buyarr[0][@"take_id"],
+                   @"sale_contact_group":selljson,
+                   @"buy_contact_group":buyjson,
+                   @"type":@"1"
+                   };
+    }
+
+    
+    [BaseRequest POST:AddContract_URL parameters:adddic success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue]==200) {
+            [self showContent:@"添加成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
 
@@ -198,6 +359,63 @@
     return header;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section ==0) {
+        return NO;
+    }else if (indexPath.section ==1)
+    {
+        if (_isadd) {
+            if (indexPath.row ==0) {
+                return NO;
+            }
+            else{
+                return YES;
+            }
+        }else{
+            if (indexPath.row<2) {
+                return NO;
+            }
+            else{
+                return YES;
+            }
+        }
+    }
+    else{
+        if (indexPath.row<2) {
+            return NO;
+        }
+        else{
+            return YES;
+        }
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (indexPath.section ==1) {
+        [_buyarr removeObjectAtIndex:indexPath.row];
+        [_table reloadData];
+//        [_table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }else{
+        [_sellarr removeObjectAtIndex:indexPath.row];
+        [_table reloadData];
+//        [_table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    }
+}
+
+
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
     return [[UIView alloc] init];
@@ -211,6 +429,8 @@
         
         cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
         
+    }
+        cell.data = _tradedic;
         __weak AddContractCell *weakcell = cell;
         cell.cardTimeBlock = ^{
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
@@ -218,7 +438,7 @@
                 
                 weakcell.loanTimeBtn.content.text = [self->_formatter stringFromDate:date];
                 weakcell.loanTimeBtn->str = [self->_formatter stringFromDate:date];
-//                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+                [_tradedic setObject:[self->_formatter stringFromDate:date] forKey:@"certificate_time"];
             };
             [self.view addSubview:view];
         };
@@ -230,6 +450,7 @@
                 weakcell.cardTimeBtn.content.text = [self->_formatter stringFromDate:date];
                 weakcell.cardTimeBtn->str = [self->_formatter stringFromDate:date];
                 //                [self.handleDic setObject:[self->_formatter stringFromDate:date] forKey:@"regist_time"];
+                [_tradedic setObject:[self->_formatter stringFromDate:date] forKey:@"mortgage_cancel_time"];
             };
             [self.view addSubview:view];
         };
@@ -239,7 +460,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
-
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"pay_way"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
@@ -247,28 +468,31 @@
         };
         
         cell.buyReasonBlock = ^{
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:BUY_HOUSE_RESON]];
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.buyReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.buyReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"sale_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
         };
         
         cell.sellReasonBlock = ^{
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:SELL_HOUSE_RESON]];
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.sellReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.sellReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"buy_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
         };
         
-    }
+        cell.textFiledBlock = ^(NSMutableDictionary * _Nonnull datadic) {
+            _tradedic = datadic;
+        };
+        
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -339,6 +563,16 @@
                 cell.stickieBtn.hidden = NO;
                 cell.titelL.text = @"副权益人";
                 }
+            cell.indexpath = indexPath;
+            cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                if (_isadd) {
+                    [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:0];
+                    [_table reloadData];
+                }else{
+                    [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
+                    [_table reloadData];
+                }
+            };
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
         return cell;
@@ -347,8 +581,7 @@
 
     }else {
 #pragma mark  --卖方信息
-        
-        
+
         if (![_sellarr[0] isEqual:@""]) {
             if (indexPath.row ==0) {
                 AddContractCell6 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell6"];
@@ -394,6 +627,13 @@
                     cell.stickieBtn.hidden = NO;
                     cell.titelL.text = @"副权益人";
                 }
+                cell.indexpath = indexPath;
+                cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+              
+                        [_sellarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
+                        [_table reloadData];
+                
+                };
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
                 return cell;
@@ -420,8 +660,10 @@
         if (_isadd ==NO) {
             if (indexPath.row>0&&indexPath.row<_buyarr.count+1) {
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-                    
+                    [_buyarr replaceObjectAtIndex:indexPath.row withObject:dic];
+                    [_table reloadData];
                 };
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -429,8 +671,10 @@
         else{
             if (indexPath.row>=0&&indexPath.row<_buyarr.count+1) {
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-                    
+                     [_buyarr replaceObjectAtIndex:indexPath.row withObject:dic];
+                    [_table reloadData];
                 };
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -439,8 +683,10 @@
     }else if (indexPath.section ==2){
         if (indexPath.row >0&&indexPath.row<_sellarr.count+1) {
             AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+            vc.dataDic = _sellarr[indexPath.row];
             vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-                
+                [_sellarr replaceObjectAtIndex:indexPath.row withObject:dic];
+                [_table reloadData];
             };
             [self.navigationController pushViewController:vc animated:YES];
         }
@@ -457,6 +703,7 @@
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
         [_buyarr removeAllObjects];
         [_buyarr addObject:dic];
+        [_table reloadData];
     };
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -466,35 +713,20 @@
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
         [_buyarr addObject:dic];
+        [_table reloadData];
     };
     [self.navigationController pushViewController:vc animated:YES];
     
 }
 
--(void)action_fixbuyer
-{
-    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
-    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-        
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-    
-}
--(void)action_fixseller
-{
-    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
-    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-        
-    };
-    [self.navigationController pushViewController:vc animated:YES];
-    
-}
+
 
 -(void)action_addseller
 {
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
         [_sellarr addObject:dic];
+        [_table reloadData];
     };
     [self.navigationController pushViewController:vc animated:YES];
 }

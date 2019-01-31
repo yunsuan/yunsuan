@@ -22,11 +22,21 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    //    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-    //    _houseCodeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@""]];
-    //    _nameL.text = [NSString stringWithFormat:@"名称：%@",dataDic[@""]];
-    //    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    //    _numL.text = [NSString stringWithFormat:@"已看房数量：%@",dataDic[@""]];
+    
+    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_1"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (error) {
+            image =[UIImage imageNamed:@"default_1"];
+        }
+    }];
+   
+    _codeL.text = [NSString stringWithFormat:@"合同编号%@",dataDic[@"deal_code"]];
+    _priceL.text =[NSString stringWithFormat:@"%@万",dataDic[@"price"]];
+    _areaL.text = dataDic[@"address"];
+    _customL.text = [NSString stringWithFormat:@"客户：%@",dataDic[@"client_name"]];
+    _ownerL.text = [NSString stringWithFormat:@"业主：%@",dataDic[@"owner_name"]];
+    _signerL.text = [NSString stringWithFormat:@"签约人：%@",dataDic[@"agent_name"]];
+    _timeL.text = dataDic[@"create_time"];
+ 
 }
 
 - (void)initUI{
@@ -36,7 +46,7 @@
     _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
     
-    _headImg.image = [UIImage imageNamed:@"recommended"];
+
     
     _statusL = [[UILabel alloc] init];
 //    _statusL.textColor = YJ86Color;
@@ -44,54 +54,54 @@
     _statusL.textAlignment = NSTextAlignmentCenter;
     _statusL.backgroundColor = COLOR(0, 0, 0, 0.3);
     [self.contentView addSubview:_statusL];
-    _statusL.text = @"已签约";
+//    _statusL.text = @"已签约";
     
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJTitleLabColor;
     _codeL.font = [UIFont systemFontOfSize:14 *SIZE];
     [self.contentView addSubview:_codeL];
-    _codeL.text = @"交易编号：1354632321360";
+//    _codeL.text = @"交易编号：1354632321360";
     
     _priceL = [[UILabel alloc] init];
     _priceL.textColor = [UIColor redColor];
     _priceL.textAlignment = NSTextAlignmentRight;
     _priceL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_priceL];
-    _priceL.text =@"120万";
+//    _priceL.text =@"120万";
     
     
     _areaL = [[UILabel alloc] init];
     _areaL.textColor = YJContentLabColor;
     _areaL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_areaL];
-    _areaL.text = @"成都市-高新区-链家门店";
+//    _areaL.text = @"成都市-高新区-链家门店";
     
     _customL = [[UILabel alloc] init];
     _customL.textColor = YJContentLabColor;
     _customL.font = [UIFont systemFontOfSize:12 *SIZE];
-    _customL.textAlignment = NSTextAlignmentRight;
+//    _customL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_customL];
-    _customL.text = @"客户：张三";
+//    _customL.text = @"客户：张三";
     
     _ownerL = [[UILabel alloc] init];
     _ownerL.textColor = YJContentLabColor;
     _ownerL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_ownerL];
-    _ownerL.text = @"业主：张三";
+//    _ownerL.text = @"业主：张三";
     
     
     _signerL = [[UILabel alloc] init];
     _signerL.textColor = YJContentLabColor;
     _signerL.font = [UIFont systemFontOfSize:12 *SIZE];
-    _signerL.textAlignment = NSTextAlignmentRight;
+//    _signerL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_signerL];
-        _signerL.text = @"签约人：李四";
+//        _signerL.text = @"签约人：李四";
     
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJContentLabColor;
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_timeL];
-    _timeL.text = @"2018/12/20";
+//    _timeL.text = @"2018/12/20";
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
