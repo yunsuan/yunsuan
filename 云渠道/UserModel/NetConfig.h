@@ -748,6 +748,9 @@ static NSString *const TakeConfirmDisabled_URL = @"agent/take/confirm/disabled";
 //已确认列表
 static NSString *const RecommendButterValueList_URL = @"agent/take/recommend/butter/value/list";
 
+//带看有效详情
+static NSString *const RecommendButterValueDetail_URL = @"agent/take/recommend/butter/value/detail";
+
 //失效列表
 static NSString *const RecommendButterDisabledList_URL = @"agent/take/recommend/butter/disabled/list";
 

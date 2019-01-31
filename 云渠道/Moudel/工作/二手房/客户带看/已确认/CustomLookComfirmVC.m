@@ -173,7 +173,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-        CustomLookConfirmDetailVC *nextVC = [[CustomLookConfirmDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"record_id"]];
+        CustomLookConfirmDetailVC *nextVC = [[CustomLookConfirmDetailVC alloc] initWithRecordId:_dataArr[indexPath.row][@"take_id"]];
         [self.navigationController pushViewController:nextVC animated:YES];
 }
 

@@ -42,6 +42,7 @@
 #import "SecAllRoomStoreEquipCell.h"
 #import "BaseHeader.h"
 
+#import "StoreDetailVC.h"
 #import "StoreListVC.h"
 
 #import "SHRecommenView.h"
@@ -947,6 +948,34 @@
                     }
                 };
                 return cell;
+            }
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_item == 2) {
+        
+        if ([self.customType isEqualToString:@"二手房"]) {
+            
+            if (indexPath.section == 1) {
+                
+                StoreDetailVC *vc = [[StoreDetailVC alloc]init];
+                CustomRequireModel *model = _dataArr[0];
+                vc.store_id = model.fit_info[@"fit_store_list"][indexPath.row][@"store_id"];
+                vc.client_id = _customModel.client_id;
+                if ([_customType isEqualToString:@"二手房"]) {
+                    vc.type = @"1";
+                }
+                else if([_customType isEqualToString:@"租房"])
+                {
+                    vc.type = @"2";
+                }
+                vc.name = _customModel.name;;
+                vc.tel =_customModel.tel;;
+                vc.sex =_customModel.sex;;
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }

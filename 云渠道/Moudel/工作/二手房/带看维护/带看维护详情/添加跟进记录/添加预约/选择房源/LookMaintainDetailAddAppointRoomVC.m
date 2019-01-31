@@ -12,16 +12,24 @@
 #import "LookMaintainAddLookVC.h"
 
 #import "BoxView.h"
+#import "PriceSetView.h"
 
 #import "LookMaintainDetailAddAppointRoomCell.h"
 
 @interface LookMaintainDetailAddAppointRoomVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     
+    BOOL _is1;
+    BOOL _is2;
+    BOOL _is3;
+    
     NSInteger _page;
     
     NSString *_takeId;
     NSString *_type;
+    NSString *_pro;
+    NSString *_min;
+    NSString *_max;
     
     NSMutableArray *_arr;
     NSMutableArray *_dataArr;
@@ -37,6 +45,8 @@
 @property (nonatomic, strong) UIButton *typeBtn;
 
 @property (nonatomic, strong) BoxView *proView;
+
+@property (nonatomic, strong) PriceSetView *priceView;
 
 @property (nonatomic, strong) BoxView *typeView;
 
@@ -69,8 +79,15 @@
     
     _dataArr = [@[] mutableCopy];
     _proArr = [@[] mutableCopy];
-    _typeArr = @[@{@"id":@"0",@"param":@"不限"},@{@"id":@"1",@"param":@"住在"},@{@"id":@"2",@"param":@"商铺"},@{@"id":@"3",@"param":@"写字楼"}];
+    _typeArr = @[@{@"id":@"0",@"param":@"不限"},@{@"id":@"1",@"param":@"住宅"},@{@"id":@"2",@"param":@"商铺"},@{@"id":@"3",@"param":@"写字楼"}];
     _page = 1;
+}
+
+- (void)ActionMaskBtn:(UIButton *)btn{
+    
+    [self.proView removeFromSuperview];
+    [self.priceView removeFromSuperview];
+    [self.typeView removeFromSuperview];
 }
 
 - (void)RequestMethod{
@@ -84,6 +101,12 @@
         
         [dic setObject:_type forKey:@"property_type"];
     }
+    if ([_pro integerValue]) {
+        
+        [dic setObject:_pro forKey:@"project_id"];
+    }
+    
+    [dic setObject:[NSString stringWithFormat:@"%@-%@",_min,_max] forKey:@"price"];
     _table.mj_footer.state = MJRefreshStateIdle;
     [BaseRequest GET:TakeMaintainFollowHouseList_URL parameters:dic success:^(id resposeObject) {
         
@@ -110,6 +133,16 @@
     [dic setObject:@"1" forKey:@"type"];
     [dic setObject:@(_page) forKey:@"page"];
     
+    if ([_type integerValue]) {
+        
+        [dic setObject:_type forKey:@"property_type"];
+    }
+    if ([_pro integerValue]) {
+        
+        [dic setObject:_pro forKey:@"project_id"];
+    }
+    
+    [dic setObject:[NSString stringWithFormat:@"%@-%@",_min,_max] forKey:@"price"];
     [BaseRequest GET:TakeMaintainFollowHouseList_URL parameters:dic success:^(id resposeObject) {
         
         [_table.mj_footer endRefreshing];
@@ -187,12 +220,87 @@
     
     if (btn.tag == 1) {
         
+        _is2 = NO;
+        _is3 = NO;
+        _priceBtn.selected = NO;
+        _typeBtn.selected = NO;
+        [self.priceView removeFromSuperview];
+        [self.typeView removeFromSuperview];
+        
+        if (_is1) {
+            
+            _is1 = !_is1;
+            [self.proView removeFromSuperview];
+        }else{
+            
+            _is1 = YES;
+            if (_proArr.count) {
+                
+                [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+            }else{
+                
+                [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+                        for (int i = 0; i < _proArr.count; i++) {
+                            
+                            NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
+                            [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
+                            [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
+                            [tempDic removeObjectForKey:@"project_name"];
+                            [tempDic removeObjectForKey:@"project_id"];
+                            [_proArr replaceObjectAtIndex:i withObject:tempDic];
+                            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+                        }
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }
+        }
     }else if (btn.tag == 2){
         
-        
+        _is1 = NO;
+        _is3 = NO;
+        _proBtn.selected = NO;
+        _typeBtn.selected = NO;
+        [self.proView removeFromSuperview];
+        [self.typeView removeFromSuperview];
+        if (_is2) {
+            
+            _is2 = !_is2;
+            [self.priceView removeFromSuperview];
+        }else{
+            
+            _is2 = YES;
+            
+            self.priceView.minTF.textfield.text = _min.length ? _min:@"0";
+            self.priceView.maxTF.textfield.text = _max.length ? _max:@"0";
+            [[UIApplication sharedApplication].keyWindow addSubview:self.priceView];
+        }
     }else{
         
-        [[UIApplication sharedApplication].keyWindow addSubview:self.typeView];
+        _is1 = NO;
+        _is2 = NO;
+        _proBtn.selected = NO;
+        _priceBtn.selected = NO;
+        [self.proView removeFromSuperview];
+        [self.priceView removeFromSuperview];
+        if (_is3) {
+            
+            _is3 = !_is3;
+            [self.typeView removeFromSuperview];
+        }else{
+            
+            _is3 = YES;
+            [[UIApplication sharedApplication].keyWindow addSubview:self.typeView];
+        }
     }
 }
 
@@ -348,8 +456,7 @@
         
         _proView = [[BoxView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 80 *SIZE, SCREEN_Width, SCREEN_Height - 80 *SIZE - NAVIGATION_BAR_HEIGHT)];
         
-        NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
-        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
+        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:_proArr];
         [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
         _proView.dataArr = [NSMutableArray arrayWithArray:tempArr];
         [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -371,14 +478,14 @@
             
             if ([str isEqualToString:@"不限"]) {
                 
-                [weakSelf.priceBtn setTitle:@"均价" forState:UIControlStateNormal];
+                [weakSelf.proBtn setTitle:@"项目" forState:UIControlStateNormal];
             }else{
                 
-                [weakSelf.priceBtn setTitle:str forState:UIControlStateNormal];
+                [weakSelf.proBtn setTitle:str forState:UIControlStateNormal];
             }
 //            _is2 = NO;
-//            _price = [NSString stringWithFormat:@"%@",ID];
-            weakSelf.priceBtn.selected = NO;
+            _pro = [NSString stringWithFormat:@"%@",ID];
+            weakSelf.proBtn.selected = NO;
             [weakSelf.proView removeFromSuperview];
             [weakSelf RequestMethod];
         };
@@ -386,62 +493,39 @@
         _proView.cancelBtnBlock = ^{
             
 //            _is2 = NO;
-            weakSelf.priceBtn.selected = NO;
+            weakSelf.proBtn.selected = NO;
         };
     }
     return _proView;
 }
 
 
-//- (BoxView *)priceView{
-//
-//    if (!_priceView) {
-//
-//        _priceView = [[BoxView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 102 *SIZE, SCREEN_Width, SCREEN_Height - 102 *SIZE)];
-//
-//        NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
-//        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
-//        [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
-//        _priceView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-//        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//            if (idx == 0) {
-//
-//                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
-//            }else{
-//
-//                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
-//            }
-//        }];
-//        _priceView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-//        [_priceView.mainTable reloadData];
-//
-//
-//        WS(weakSelf);
-//        _priceView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
-//
-//            if ([str isEqualToString:@"不限"]) {
-//
-//                [weakSelf.priceBtn setTitle:@"均价" forState:UIControlStateNormal];
-//            }else{
-//
-//                [weakSelf.priceBtn setTitle:str forState:UIControlStateNormal];
-//            }
-//            _is2 = NO;
-//            _price = [NSString stringWithFormat:@"%@",ID];
-//            weakSelf.priceBtn.selected = NO;
-//            [weakSelf.priceView removeFromSuperview];
-//            [weakSelf RequestMethod];
-//        };
-//
-//        _priceView.cancelBtnBlock = ^{
-//
-//            _is2 = NO;
-//            weakSelf.priceBtn.selected = NO;
-//        };
-//    }
-//    return _priceView;
-//}
+- (PriceSetView *)priceView{
+
+    if (!_priceView) {
+
+        _priceView = [[PriceSetView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 80 *SIZE, SCREEN_Width, SCREEN_Height - 80 *SIZE - NAVIGATION_BAR_HEIGHT)];
+
+        
+        WS(weakSelf);
+        _priceView.priceSetViewConfirmBtnBlock = ^(NSString * _Nonnull min, NSString * _Nonnull max) {
+
+            _min = min;
+            _max = max;
+
+            weakSelf.priceBtn.selected = NO;
+            [weakSelf.priceView removeFromSuperview];
+            [weakSelf RequestMethod];
+        };
+
+        _priceView.priceSetViewCancelBtnBlock = ^{
+
+      
+            weakSelf.priceBtn.selected = NO;
+        };
+    }
+    return _priceView;
+}
 
 - (BoxView *)typeView{
     

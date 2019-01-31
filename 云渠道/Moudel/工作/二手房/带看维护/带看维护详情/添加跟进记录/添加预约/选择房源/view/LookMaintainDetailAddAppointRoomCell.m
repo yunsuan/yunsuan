@@ -262,7 +262,6 @@
         make.height.equalTo(@(SIZE));
         make.bottom.equalTo(self.contentView).offset(0);
     }];
-    
 }
 
 @end

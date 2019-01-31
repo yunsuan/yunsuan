@@ -8,6 +8,8 @@
 
 #import "CustomLookConfirmDetailVC.h"
 
+#import "LookMaintainDetailVC.h"
+
 #import "SingleContentCell.h"
 #import "BaseHeader.h"
 #import "CountDownCell.h"
@@ -20,6 +22,7 @@
     NSArray *_contentArr;
     NSString *_state;
     NSMutableArray *_processArr;
+    NSDictionary *_dic;
 //    NSString *_endtime;
 }
 @property (nonatomic, strong) UITableView *detailTable;
@@ -56,32 +59,43 @@
 
 - (void)RequestMethod{
     
-//    [BaseRequest GET:HouseRecordValueDetail_URL parameters:@{@"survey_id":_recordId} success:^(id resposeObject) {
-//        
-//        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//            
-//            [self SetData:resposeObject[@"data"]];
-//        }else{
-//            
-//            [self showContent:resposeObject[@"msg"]];
-//        }
-//    } failure:^(NSError *error) {
-//        
-//        NSLog(@"%@",error);
-//        [self showContent:@"网络错误"];
-//    }];
+    [BaseRequest GET:RecommendButterValueDetail_URL parameters:@{@"take_id":_recordId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self SetData:resposeObject[@"data"]];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
 }
 
 
 - (void)SetData:(NSDictionary *)data{
     
-    _contentArr = @[@[[NSString stringWithFormat:@"来源：%@",data[@""]]],@[[NSString stringWithFormat:@"推荐编号：%@",data[@""]],[NSString stringWithFormat:@"归属门店：%@",data[@""]],[NSString stringWithFormat:@"客户姓名：%@",data[@""]],[NSString stringWithFormat:@"客户性别：%@",data[@""]],[NSString stringWithFormat:@"联系方式：%@",data[@""]],[NSString stringWithFormat:@"推荐时间：%@",data[@""]],[NSString stringWithFormat:@"报备时间：%@",data[@""]]],@[[NSString stringWithFormat:@"意向城市：%@",data[@""]],[NSString stringWithFormat:@"区域街道：%@",data[@""]],[NSString stringWithFormat:@"意向单价：%@",data[@""]],[NSString stringWithFormat:@"意向总价：%@",data[@""]],[NSString stringWithFormat:@"意向面积：%@",data[@""]],[NSString stringWithFormat:@"意向户型：%@",data[@""]],[NSString stringWithFormat:@"意向楼层：%@",data[@""]],[NSString stringWithFormat:@"装修标准：%@",data[@""]],[NSString stringWithFormat:@"超想要求：%@",data[@""]],[NSString stringWithFormat:@"付款方式：%@",data[@""]],[NSString stringWithFormat:@"关注配套：%@",data[@""]],[NSString stringWithFormat:@"已选标签：%@",data[@""]],[NSString stringWithFormat:@"备注：%@",data[@""]]]];
+    _dic = data;
+    _contentArr = @[@[[NSString stringWithFormat:@"客源编号：%@",data[@"take_code"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"client_name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"client_sex"] integerValue] == 1 ?@"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"client_tel"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"recommend_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"经纪人：%@",data[@"butter_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"butter_tel"]],[NSString stringWithFormat:@"门店编号：%@",data[@"store_code"]],[NSString stringWithFormat:@"门店名称：%@",data[@"store_name"]],[NSString stringWithFormat:@"接单时间：%@",data[@"accept_time"]]]];
     
 //    _endtime = [NSString stringWithFormat:@"%@",data[@"timeLimit"]];
     _processArr = [NSMutableArray arrayWithArray:data[@"process"]];
-    _state = [NSString stringWithFormat:@"%@",data[@"current_state"]];//data[@"current_state"];
+//    _state = [NSString stringWithFormat:@"%@",data[@"current_state"]];//data[@"current_state"];
     [_detailTable reloadData];
+}
+
+- (void)ActionGotoBtn:(UIButton *)btn{
+    
+    if (_dic.count) {
+        
+        LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dic[@"take_id"]];
+        nextVC.edit = [NSString stringWithFormat:@"%@",_dic[@"is_edit"]];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -210,8 +224,9 @@
     [self.view addSubview:_detailTable];
     
     _gotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_gotoBtn setBackgroundColor:YJBlueBtnColor];
     _gotoBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
-//    [_gotoBtn addTarget:self action:@selector(<#selector#>) forControlEvents:UIControlEventTouchUpInside];
+    [_gotoBtn addTarget:self action:@selector(ActionGotoBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_gotoBtn setTitle:@"前往带看维护" forState:UIControlStateNormal];
     [self.view addSubview:_gotoBtn];
 }

@@ -233,6 +233,7 @@
 		0C7492F92201DB93008F551B /* LookMaintainDetailAddAppointRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7492F82201DB93008F551B /* LookMaintainDetailAddAppointRoomCell.m */; };
 		0C7492FC2201DBA3008F551B /* LookMaintainDetailAddAppointRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7492FB2201DBA3008F551B /* LookMaintainDetailAddAppointRoomModel.m */; };
 		0C7492FF22029078008F551B /* LookMaintainDetailAddAppointCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7492FE22029078008F551B /* LookMaintainDetailAddAppointCell2.m */; };
+		0C7493022202F091008F551B /* PriceSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493012202F091008F551B /* PriceSetView.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
@@ -1202,6 +1203,8 @@
 		0C7492FB2201DBA3008F551B /* LookMaintainDetailAddAppointRoomModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailAddAppointRoomModel.m; sourceTree = "<group>"; };
 		0C7492FD22029078008F551B /* LookMaintainDetailAddAppointCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LookMaintainDetailAddAppointCell2.h; sourceTree = "<group>"; };
 		0C7492FE22029078008F551B /* LookMaintainDetailAddAppointCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookMaintainDetailAddAppointCell2.m; sourceTree = "<group>"; };
+		0C7493002202F090008F551B /* PriceSetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PriceSetView.h; sourceTree = "<group>"; };
+		0C7493012202F091008F551B /* PriceSetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceSetView.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
@@ -3881,6 +3884,8 @@
 			children = (
 				0C7492F72201DB93008F551B /* LookMaintainDetailAddAppointRoomCell.h */,
 				0C7492F82201DB93008F551B /* LookMaintainDetailAddAppointRoomCell.m */,
+				0C7493002202F090008F551B /* PriceSetView.h */,
+				0C7493012202F091008F551B /* PriceSetView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -8221,6 +8226,7 @@
 				0CD90A9C20E2151A00061B4A /* UICollectionViewLeftAlignedLayout.m in Sources */,
 				0CD90A4220DB3C6F00061B4A /* MaintainLookRecordVC.m in Sources */,
 				0C9CD4672105B64A004894A3 /* RentingAllRoomTableCell.m in Sources */,
+				0C7493022202F091008F551B /* PriceSetView.m in Sources */,
 				0CF04F91207CAFB000A45F4A /* PYSearchSuggestionViewController.m in Sources */,
 				0C0BED2F20A197C4005A16A1 /* FailedDealVC.m in Sources */,
 				0C2883BF210EB33900F69C5F /* RentingMaintainDetailHeader.m in Sources */,
