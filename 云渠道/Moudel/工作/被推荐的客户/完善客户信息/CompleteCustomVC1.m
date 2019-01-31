@@ -258,13 +258,17 @@
                 
                 _phoneTF4.text = string;
 //                _tel4 = string;
-                [_phoneTF5 becomeFirstResponder];
+                if (!_phoneTF5.text.length) {
+                    
+                    [_phoneTF5 becomeFirstResponder];
+                }
+//                [_phoneTF5 becomeFirstResponder];
             }
             else if (textField == _phoneTF5) {
                 
                 _phoneTF5.text = string;
 //                _tel5 = string;
-                [_phoneTF6 becomeFirstResponder];
+//                [_phoneTF6 becomeFirstResponder];
             }
             else if (textField == _phoneTF6) {
                 

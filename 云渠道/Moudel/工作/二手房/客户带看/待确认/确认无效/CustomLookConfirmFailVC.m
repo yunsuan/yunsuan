@@ -72,7 +72,7 @@
     
     if (!_type.length) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"选择申诉类型"];
+        [self alertControllerWithNsstring:@"温馨提示" And:@"选择失效类型"];
         return;
     }
     
@@ -87,7 +87,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"申诉成功" WithDefaultBlack:^{
+            [self alertControllerWithNsstring:@"温馨提示" And:@"失效成功" WithDefaultBlack:^{
                 
                 if (self.customLookConfirmFailVCBlock) {
                     

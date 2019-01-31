@@ -114,7 +114,9 @@
 
 -(void)post{
     [BaseRequest GET:MessageGetUnreadCount_URL parameters:nil success:^(id resposeObject) {
+     
         if ([resposeObject[@"code"] integerValue]==200) {
+            
             NSInteger system = [resposeObject[@"data"][@"system"][@"unread"] integerValue];
             if (system < 0) {
                 system = 0;
@@ -133,19 +135,24 @@
                 
                 work = 0;
             }
-            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"平台派单",[NSString stringWithFormat:@"待确认消息%ld条",work]],@[@"Grabtheorder",@"带看派单",[NSString stringWithFormat:@"待确认消息%ld条",work]]];
+            NSInteger take = [resposeObject[@"data"][@"take"][@"unread"] integerValue];
+            if (take < 0) {
+                
+                take = 0;
+            }
+            _data = @[@[@"systemmessage",@"系统消息",[NSString stringWithFormat:@"未读消息%ld条",system]],@[@"worknews",@"工作消息",[NSString stringWithFormat:@"未读消息%ld条",working]],@[@"Grabtheorder",@"勘察抢单",[NSString stringWithFormat:@"可抢消息%ld条",grab]],@[@"Grabtheorder",@"平台派单",[NSString stringWithFormat:@"待确认消息%ld条",work]],@[@"Grabtheorder",@"带看派单",[NSString stringWithFormat:@"待确认消息%ld条",take]]];
     
             [_messageTable reloadData];
             [_messageTable.mj_header endRefreshing];
 
-            if (working + system + grab + work< 1) {
+            if (working + system + grab + work + take< 1) {
                 [self.navigationController.tabBarItem setBadgeValue:nil];
             }else{
                 
-                [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",working + system + grab + work]];
+                [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",working + system + grab + work + take]];
             }
             
-            [UIApplication sharedApplication].applicationIconBadgeNumber = working + system + grab + work;
+            [UIApplication sharedApplication].applicationIconBadgeNumber = working + system + grab + work + take;
         }
         
     } failure:^(NSError *error) {
