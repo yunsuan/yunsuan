@@ -23,17 +23,17 @@
 - (void)initUI{
     
     _roomImg = [[UIImageView alloc] init];
-    _roomImg.contentMode = UIViewContentModeScaleAspectFill;
+    _roomImg.contentMode = UIViewContentModeScaleAspectFit;
     _roomImg.clipsToBounds = YES;
     [self.contentView addSubview:_roomImg];
     
     [_roomImg mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.left.equalTo(self.contentView).offset(0);
-        make.top.equalTo(self.contentView).offset(0);
-        make.bottom.equalTo(self.contentView).offset(0);
-        make.width.mas_equalTo(SCREEN_Width);
-        make.height.mas_equalTo(202.5 *SIZE);
+        make.left.equalTo(self.contentView).offset(130 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-10 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+        make.height.mas_equalTo(100 *SIZE);
     }];
 }
 

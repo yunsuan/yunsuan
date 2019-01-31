@@ -65,8 +65,8 @@
         _averageL.text = @"暂无均价信息";
     }
     
-    _typeL.text = [NSString stringWithFormat:@"看房方式：%@",model.property_type];
-    _storeL.text = [NSString stringWithFormat:@"预约时间：%@",model.take_num];
+    _typeL.text = [NSString stringWithFormat:@"看房方式：%@",model.check_way];
+//    _storeL.text = [NSString stringWithFormat:@"预约时间：%@",model.take_num];
     if ([model.price_change integerValue] == 0) {
         
         _statusImg.image = [UIImage imageNamed:@""];

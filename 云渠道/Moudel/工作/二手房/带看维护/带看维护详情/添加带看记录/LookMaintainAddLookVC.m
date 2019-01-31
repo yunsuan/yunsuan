@@ -9,12 +9,14 @@
 #import "LookMaintainAddLookVC.h"
 
 #import "DropDownBtn.h"
+#import "BorderTF.h"
 
 @interface LookMaintainAddLookVC ()
 {
     
     NSString *_houseTakeFollowId;
     NSDictionary *_dataDic;
+    LookMaintainDetailAddAppointRoomModel *_model;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -32,9 +34,15 @@
 
 @property (nonatomic, strong) UILabel *intentL;
 
+@property (nonatomic, strong) BorderTF *intentTF;
+
 @property (nonatomic, strong) UILabel *timeL;
 
+@property (nonatomic, strong) DropDownBtn *timeBtn;
+
 @property (nonatomic, strong) UILabel *numL;
+
+@property (nonatomic, strong) BorderTF *numTF;
 
 @property (nonatomic, strong) UILabel *favL;
 
@@ -69,6 +77,17 @@
 
 @implementation LookMaintainAddLookVC
 
+- (instancetype)initWithModel:(LookMaintainDetailAddAppointRoomModel *)model
+{
+    self = [super init];
+    if (self) {
+        
+        _model = model;
+    }
+    return self;
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,14 +96,36 @@
 
 }
 
-
-
 - (void)ActionTagBtn:(UIButton *)btn{
+    
+    switch (btn.tag) {
+        case 0:
+        {
+            break;
+        }
+        case 1:
+        {
+            break;
+        }
+        case 2:
+        {
+            break;
+        }
+        case 3:
+        {
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)ActionCommitBtn:(UIButton *)btn{
     
     
 }
 
-- (void)ActionCommitBtn:(UIButton *)btn{
+- (void)ActionTimeBtn:(UIButton *)btn{
     
     
 }
@@ -124,6 +165,7 @@
             case 0:
             {
                 _codeL = label;
+//                _codeL.text = [NSString stringWithFormat:@"%@",_model.ho]
                 [_houseView addSubview:_codeL];
                 break;
             }
@@ -242,6 +284,29 @@
     
     for (int i = 0; i < 3; i++) {
         
+        BorderTF *tf = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
+        if (i == 0) {
+            
+            _intentTF = tf;
+            _intentTF.unitL.text = @"%";
+            _intentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_intentView addSubview:_intentTF];
+        }else if (i == 1){
+            
+            _timeBtn = [[DropDownBtn alloc] initWithFrame:tf.frame];
+            [_timeBtn addTarget:self action:@selector(ActionTimeBtn:) forControlEvents:UIControlEventTouchUpInside];
+            [_intentView addSubview:_timeBtn];
+        }else{
+            
+            _numTF = tf;
+            _numTF.unitL.text = @"人";
+            _numTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_intentView addSubview:_numTF];
+        }
+    }
+    
+    for (int i = 0; i < 3; i++) {
+        
         UITextView *tv = [[UITextView alloc] init];
         tv.layer.cornerRadius = 5 *SIZE;
         tv.layer.borderWidth = SIZE;
@@ -327,19 +392,44 @@
         make.top.equalTo(_intentView).offset(18 *SIZE);
         make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
     }];
+
+    [_intentTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_intentView.mas_bottom).offset(8 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
     
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_intentL.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_intentTF.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
+    }];
+    
+    [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_intentTF.mas_bottom).offset(8 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_numL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_intentView).offset(10 *SIZE);
-        make.top.equalTo(_timeL.mas_bottom).offset(15 *SIZE);
+        make.top.equalTo(_timeBtn.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
+        
+    }];
+    
+    [_numTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_timeBtn.mas_bottom).offset(8 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
         make.bottom.equalTo(_intentView).offset(-14 *SIZE);
     }];
     

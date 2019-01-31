@@ -8,11 +8,19 @@
 
 #import "BaseViewController.h"
 
+#import "LookMaintainDetailAddAppointRoomModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+typedef void(^LookMaintainAddLookVCBlock)(void);
 
 @interface LookMaintainAddLookVC : BaseViewController
 
-- (instancetype)initWithHouseTakeFollowId:(NSString *)houseTakeFollowId;
+@property (nonatomic, copy) LookMaintainAddLookVCBlock lookMaintainAddLookVCBlock;
+
+@property (nonatomic, strong) NSDictionary *dataDic;
+
+- (instancetype)initWithModel:(LookMaintainDetailAddAppointRoomModel *)model;
 
 @end
 

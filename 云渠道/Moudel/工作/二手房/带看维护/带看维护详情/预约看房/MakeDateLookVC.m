@@ -67,7 +67,7 @@
 
 - (void)ActionTimeBtn:(UIButton *)btn{
     
-    DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
+    DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
     
     [view.pickerView setMinimumDate:[NSDate date]];
     [view.pickerView setCalendar:[NSCalendar currentCalendar]];
@@ -76,7 +76,7 @@
     [comps setDay:15];//设置最大时间为：当前时间推后10天
     [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
     
-    WS(weakSelf);
+    __weak __typeof(&*self)weakSelf = self;
     view.dateblock = ^(NSDate *date) {
         
         weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
@@ -136,7 +136,7 @@
         }else{
             
             _phoneL = label;
-            _contactL.text = [NSString stringWithFormat:@"联系电话：%@",_model.contact_tel];
+            _phoneL.text = [NSString stringWithFormat:@"联系电话：%@",_model.contact_tel];
             [_contentView addSubview:_phoneL];
         }
     }
@@ -148,7 +148,7 @@
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [_contentView addSubview:_timeL];
     
-    _timeBtn = [[DropDownBtn alloc] init];
+    _timeBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 291 *SIZE, 33 *SIZE)];
     [_timeBtn addTarget:self action:@selector(ActionTimeBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_timeBtn];
     

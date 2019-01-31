@@ -18,7 +18,9 @@ typedef void(^LookMaintainDetailAddAppointRoomVCBlock)(NSDictionary *dic);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
-- (instancetype)initWithTakeId:(NSString *)takeId;
+@property (nonatomic, strong) NSString *status;
+
+- (instancetype)initWithTakeId:(NSString *)takeId dataArr:(NSArray *)dataArr;
 
 @end
 

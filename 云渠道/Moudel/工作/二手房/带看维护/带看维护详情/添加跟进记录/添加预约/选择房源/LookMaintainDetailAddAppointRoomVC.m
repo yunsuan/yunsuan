@@ -9,6 +9,7 @@
 #import "LookMaintainDetailAddAppointRoomVC.h"
 
 #import "MakeDateLookVC.h"
+#import "LookMaintainAddLookVC.h"
 
 #import "RoomReportCollCell.h"
 
@@ -17,6 +18,7 @@
 @interface LookMaintainDetailAddAppointRoomVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     
+    NSMutableArray *_arr;
     NSMutableArray *_dataArr;
     NSString *_takeId;
     NSInteger _page;
@@ -33,11 +35,12 @@
 
 @implementation LookMaintainDetailAddAppointRoomVC
 
-- (instancetype)initWithTakeId:(NSString *)takeId
+- (instancetype)initWithTakeId:(NSString *)takeId dataArr:(NSArray *)dataArr
 {
     self = [super init];
     if (self) {
         
+        _arr = [[NSMutableArray alloc] initWithArray:dataArr];
         _takeId = takeId;
     }
     return self;
@@ -141,8 +144,23 @@
                 }
             }
         }];
+        
         LookMaintainDetailAddAppointRoomModel *model = [[LookMaintainDetailAddAppointRoomModel alloc] initWithDictionary:tempDic];
         [_dataArr addObject:model];
+    }
+    
+    for ( int i = 0; i < _dataArr.count; i++) {
+        
+        for (int j = 0; j < _arr.count; j++) {
+            
+            LookMaintainDetailAddAppointRoomModel *model = _dataArr[i];
+            LookMaintainDetailAddAppointRoomModel *tempModel = _arr[j][@"model"];
+            if ([tempModel.house_id isEqualToString:model.house_id]) {
+                
+                [_arr removeObjectAtIndex:j];
+                [_dataArr removeObjectAtIndex:i];
+            }
+        }
     }
     [_table reloadData];
 }
@@ -192,16 +210,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    MakeDateLookVC *nextVC = [[MakeDateLookVC alloc] initWithModel:_dataArr[indexPath.row]];
-    nextVC.dataDic = self.dataDic;
-    nextVC.makeDateLookVCBlock = ^(NSDictionary * _Nonnull dic) {
+    if ([self.status integerValue] == 1) {
         
-        if (self.lookMaintainDetailAddAppointRoomVCBlock) {
+        MakeDateLookVC *nextVC = [[MakeDateLookVC alloc] initWithModel:_dataArr[indexPath.row]];
+        nextVC.dataDic = self.dataDic;
+        nextVC.makeDateLookVCBlock = ^(NSDictionary * _Nonnull dic) {
             
-            self.lookMaintainDetailAddAppointRoomVCBlock(dic);
-        }
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
+            if (self.lookMaintainDetailAddAppointRoomVCBlock) {
+                
+                self.lookMaintainDetailAddAppointRoomVCBlock(dic);
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        LookMaintainAddLookVC *nextVC = [[LookMaintainAddLookVC alloc] init];
+        nextVC.dataDic = self.dataDic;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 

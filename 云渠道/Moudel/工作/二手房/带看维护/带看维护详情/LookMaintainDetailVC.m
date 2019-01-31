@@ -439,7 +439,9 @@
         
         if (indexPath.section == 0) {
             
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId];
+            NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+            [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
             nextVC.property = _needInfoDic[@"property_type"];
             nextVC.status = @"2";
             nextVC.lookMaintainDetailAddFollowVCBlock = ^{
@@ -481,7 +483,9 @@
         
         if (indexPath.section == 0) {
             
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId];
+            NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+            [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
             nextVC.property = _needInfoDic[@"property_type"];
             nextVC.lookMaintainDetailAddFollowVCBlock = ^{
                 

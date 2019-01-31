@@ -22,7 +22,7 @@ typedef void(^LookMaintainDetailAddFollowVCBlock)(void);
 
 @property (nonatomic, strong) NSDictionary *dic;
 
-- (instancetype)initWithTakeId:(NSString *)takeId;
+- (instancetype)initWithTakeId:(NSString *)takeId dataDic:(NSDictionary *)dataDic;
 
 @end
 

@@ -54,8 +54,9 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId];
+    LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
     nextVC.dataDic = self.dataDic;
+    nextVC.status = self.status;
     nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
         
         [_dataArr addObject:dic];
@@ -78,7 +79,17 @@
         LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
         [tempArr addObject:@{@"house_id":model.house_id,@"take_time":dic[@"take_time"]}];
     }
-    [self.dataDic setObject:tempArr forKey:@"take_group"];
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tempArr
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [self.dataDic setObject:jsonResult forKey:@"take_group"];
+//    [self.dataDic setObject:tempArr forKey:@"take_group"];
     [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
@@ -122,8 +133,8 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.model = _dataArr[indexPath.row];
-        
+        cell.model = _dataArr[indexPath.row][@"model"];
+        cell.storeL.text = [NSString stringWithFormat:@"预约时间：%@",_dataArr[indexPath.row][@"take_time"]];
         return cell;
     }else{
         
@@ -134,20 +145,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        if (_dataArr.count) {
-            
-            LookMaintainDetailAddAppointRoomModel *model = _dataArr[indexPath.row][@"model"];
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.img_url]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                
-                if (error) {
-                    
-                    cell.imageView.image = [UIImage imageNamed:@"default_3"];
-                }
-            }];
-        }else{
-            
-            cell.imageView.image = [UIImage imageNamed:@"add"];
-        }
+        cell.roomImg.image = [UIImage imageNamed:@"add"];
         
         return cell;
     }
@@ -161,8 +159,9 @@
         
     }else{
         
-        LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId];
+        LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
         nextVC.dataDic = self.dataDic;
+        nextVC.status = self.status;
         nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
             
             [_dataArr addObject:dic];
