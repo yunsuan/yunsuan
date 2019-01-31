@@ -33,10 +33,21 @@
     
     _needHeader.titleL.text = @"需求信息";
     
+    _propertyL.text = @"";
+    _purposeL.text = @"";
+    _typeL.text = @"";
+    _decorateL.text = @"";
+    _priceL.text = @"";
+    _areaL.text = @"";
+    _houseTypeL.text = @"";
+    _payWayL.text = @"";
+    _markL.text = @"";
+    _markL2.text = @"";
+    
     if ([needDic[@"property_type"] isEqualToString:@"商铺"]) {
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"商铺"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"商铺类型：%@",[needDic[@"shop_type"] componentsJoinedByString:@","]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -58,7 +69,7 @@
     }else if ([needDic[@"property_type"] isEqualToString:@"写字楼"]){
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"写字楼"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"写字楼等级：%@",needDic[@"office_level"]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -80,11 +91,11 @@
     }else{
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"住宅"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"意向户型：%@",needDic[@"house_type"]];
         _priceL.text = [NSString stringWithFormat:@"意向楼层：%@层-%@层",needDic[@"floor_min"],needDic[@"floor_max"]];
-        _areaL.text = [NSString stringWithFormat:@"装修标准：%@㎡",needDic[@"decorate"]];
+        _areaL.text = [NSString stringWithFormat:@"装修标准：%@",needDic[@"decorate"]];
         _houseTypeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
         _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
         _markL.text = [NSString stringWithFormat:@"需求标签：%@",needDic[@"need_tags"]];

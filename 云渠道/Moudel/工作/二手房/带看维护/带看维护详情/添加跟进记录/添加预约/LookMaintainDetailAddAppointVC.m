@@ -166,7 +166,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.roomImg.image = [UIImage imageNamed:@"add"];
+        cell.roomImg.image = [UIImage imageNamed:@"add40"];
         
         return cell;
     }

@@ -420,9 +420,16 @@
                 str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
             }
         }
-        if(str)
+        if(str){
             
-            [dic setObject:str forKey:@"match_tags"];
+            if ([self.property isEqualToString:@"住宅"]) {
+                
+                [dic setObject:str forKey:@"need_tags"];
+            }else{
+                
+                [dic setObject:str forKey:@"match_tags"];
+            }
+        }
     }
     
     if ([self isEmpty:_contentTV.text]) {
@@ -523,6 +530,7 @@
             [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
         }
     }
+    [dic setObject:_payWay forKey:@"pay_type"];
     [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
     [dic setObject:_areaBtn.textfield.text forKey:@"area"];
     [dic setObject:_timeContentL.text forKey:@"follow_time"];
@@ -574,10 +582,15 @@
         LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
         nextVC.dataDic = dic;
         nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+        nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+            
+            if (self.lookMaintainDetailAddFollowVCBlock) {
+                
+                self.lookMaintainDetailAddFollowVCBlock();
+            }
+        };
         [self.navigationController pushViewController:nextVC animated:YES];
     }
-    
-    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -914,7 +927,7 @@
         if (i == 0) {
             
             _priceBtn = tf;
-            _priceBtn.unitL.text = @"万";
+            _priceBtn.unitL.text = @"元";
             _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_contentView addSubview:_priceBtn];
         }else if (i == 1){
@@ -1222,6 +1235,21 @@
                 
                 _floorTF2.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
                 _floorTF2->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
+    
+    if ([_dataDic[@"house_type"] length]) {
+        
+        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
+        NSArray *typeArr = dic[@"param"];
+        for (NSDictionary *dic in typeArr) {
+            
+            if ([[NSString stringWithFormat:@"%@",dic[@"param"]] isEqualToString:_dataDic[@"house_type"]]) {
+                
+                _houseBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _houseBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
             }
         }
     }

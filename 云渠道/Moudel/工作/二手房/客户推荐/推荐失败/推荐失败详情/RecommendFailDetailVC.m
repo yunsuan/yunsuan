@@ -147,7 +147,7 @@
         header.titleL.text = @"抢单信息";
     }else{
         
-        header.titleL.text = @"成交信息";
+        header.titleL.text = @"失效信息";
     }
     
     header.lineView.hidden = YES;

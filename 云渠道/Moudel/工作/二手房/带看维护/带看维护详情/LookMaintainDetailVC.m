@@ -466,7 +466,7 @@
         }else{
             
             LookMaintainModifyCustomDetailVC *nextVC = [[LookMaintainModifyCustomDetailVC alloc] init];
-//            nextVC.houseId = _houseId;
+            nextVC.houseId = _baseInfoDic[@"take_id"];
             nextVC.status = @"添加";
             nextVC.lookMaintainModifyCustomDetailVCBlock = ^(NSDictionary *dic) {
                 

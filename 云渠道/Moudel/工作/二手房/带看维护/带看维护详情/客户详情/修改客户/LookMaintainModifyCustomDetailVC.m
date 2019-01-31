@@ -83,11 +83,11 @@
         return;
     }
     
-    if (!_typeId.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择联系人类型"];
-        return;
-    }
+//    if (!_typeId.length) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择联系人类型"];
+//        return;
+//    }
     
     if (![self checkTel:_phoneTF.textfield.text]) {
         
@@ -108,7 +108,7 @@
     
     NSDictionary *tempDic = @{@"name":_nameTF.textfield.text,
                               @"sex":_gender,
-                              @"report_type":_typeId
+                              @"report_type":@""
                               //                              @"card_type":_cardType,
                               //                              @"card_id":_certNumTF.textfield.text,
                               //                              @"address":_addressTF.textfield.text
@@ -141,7 +141,7 @@
     
     if ([self.status isEqualToString:@"添加"]) {
         
-        [dic setObject:self.houseId forKey:@"house_id"];
+        [dic setObject:self.houseId forKey:@"take_id"];
         [BaseRequest POST:TakeMaintainContactAdd_URL parameters:dic success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
@@ -227,7 +227,7 @@
 
 - (void)ActionTypeBtn:(UIButton *)btn{
     
-    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:30]];
+    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:56]];
     SS(strongSelf);
     view.selectedBlock = ^(NSString *MC, NSString *ID) {
         
@@ -390,7 +390,7 @@
                 _typeBtn = btn;
                 if (self.dataDic.count) {
                     
-                    NSArray *arr = [self getDetailConfigArrByConfigState:30];
+                    NSArray *arr = [self getDetailConfigArrByConfigState:56];
                     for (NSDictionary *dic in arr) {
                         
                         if ([dic[@"param"] isEqualToString:self.dataDic[@"report_type"]]) {
@@ -515,32 +515,32 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(9 *SIZE);
+//        make.top.equalTo(_nameTF.mas_bottom).offset(31 *SIZE);
+//        make.width.mas_equalTo(70 *SIZE);
+//    }];
+//
+//    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(81 *SIZE);
+//        make.top.equalTo(_nameTF.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(257 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(9 *SIZE);
         make.top.equalTo(_nameTF.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_whiteView).offset(81 *SIZE);
-        make.top.equalTo(_nameTF.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_whiteView).offset(9 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(31 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
-    }];
-    
     [_phoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_whiteView).offset(81 *SIZE);
-        make.top.equalTo(_typeBtn.mas_bottom).offset(20 *SIZE);
+        make.top.equalTo(_nameTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];

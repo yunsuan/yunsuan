@@ -109,7 +109,7 @@
 - (void)initDataSource{
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [self.formatter setDateFormat:@"YYYY-MM-dd"];
     _agentArr = [@[] mutableCopy];
 }
 
@@ -503,7 +503,7 @@
             case 1:
             {
                 _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
-                _priceBtn.unitL.text = @"万";
+                _priceBtn.unitL.text = @"元";
                 _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_contentView addSubview:_priceBtn];
                 break;

@@ -29,10 +29,10 @@
     
     [_roomImg mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.left.equalTo(self.contentView).offset(130 *SIZE);
+        make.left.equalTo(self.contentView).offset(80 *SIZE);
         make.top.equalTo(self.contentView).offset(10 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-10 *SIZE);
-        make.width.mas_equalTo(100 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
         make.height.mas_equalTo(100 *SIZE);
     }];
 }

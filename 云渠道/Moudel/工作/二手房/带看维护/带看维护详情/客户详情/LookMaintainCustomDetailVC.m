@@ -47,7 +47,7 @@
     
     _contentArr = [@[] mutableCopy];
     
-    NSArray *tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"类型：%@",_dataDic[@"report_type"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
+    NSArray *tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
     _contentArr = [NSMutableArray arrayWithArray:tempArr];
     for (int i = 0; i < [_dataDic[@"tel"] count]; i++) {
         

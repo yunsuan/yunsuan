@@ -109,22 +109,44 @@
     
     //    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
     
-    if (section == 0) {
+    if (_contentArr.count == 4){
         
-        header.titleL.text = @"处理信息";
-    }else if(section == 1){
-        
-        header.titleL.text = @"推荐信息";
-    }else if(section == 2){
-        
-        header.titleL.text = @"接单信息";
-    }else if(section == 3){
-        
-        header.titleL.text = @"失效信息";
+        if (section == 0) {
+            
+            header.titleL.text = @"推荐信息";
+        }else if(section == 1){
+            
+            header.titleL.text = @"接单信息";
+        }else if(section == 2){
+            
+            header.titleL.text = @"失效信息";
+        }else if(section == 3){
+            
+            header.titleL.text = @"申诉信息";
+        }else{
+            
+            header.titleL.text = @"申诉信息";
+        }
     }else{
         
-        header.titleL.text = @"申诉信息";
+        if (section == 0) {
+            
+            header.titleL.text = @"处理信息";
+        }else if(section == 1){
+            
+            header.titleL.text = @"推荐信息";
+        }else if(section == 2){
+            
+            header.titleL.text = @"接单信息";
+        }else if(section == 3){
+            
+            header.titleL.text = @"失效信息";
+        }else{
+            
+            header.titleL.text = @"申诉信息";
+        }
     }
+    
     
     header.lineView.hidden = YES;
     

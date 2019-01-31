@@ -64,7 +64,7 @@
         attrPrice = [[NSMutableAttributedString alloc] initWithString:@"最新出价：未出价"];
     }else{
         
-        attrPrice = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"最新出价：%@万",dataDic[@"price"]]];
+        attrPrice = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"最新出价：%.2f万",[dataDic[@"price"] floatValue] / 10000.00]];
     }
     [attrPrice addAttribute:NSForegroundColorAttributeName value:COLOR(255, 70, 70, 1) range:NSMakeRange(5, attrPrice.length - 5)];
 
