@@ -79,7 +79,7 @@
     _customL = [[UILabel alloc] init];
     _customL.textColor = YJContentLabColor;
     _customL.font = [UIFont systemFontOfSize:12 *SIZE];
-//    _customL.textAlignment = NSTextAlignmentRight;
+    _customL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_customL];
 //    _customL.text = @"客户：张三";
     
@@ -93,7 +93,7 @@
     _signerL = [[UILabel alloc] init];
     _signerL.textColor = YJContentLabColor;
     _signerL.font = [UIFont systemFontOfSize:12 *SIZE];
-//    _signerL.textAlignment = NSTextAlignmentRight;
+    _signerL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_signerL];
 //        _signerL.text = @"签约人：李四";
     
