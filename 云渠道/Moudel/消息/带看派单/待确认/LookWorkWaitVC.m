@@ -198,7 +198,7 @@
         
     } WithDefaultBlack:^{
         
-        [BaseRequest GET:RefuseTake_URL parameters:@{@"push_id":_dataArr[indexPath.row][@"push_id"]} success:^(id resposeObject) {
+        [BaseRequest POST:RefuseTake_URL parameters:@{@"push_id":_dataArr[indexPath.row][@"push_id"]} success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 

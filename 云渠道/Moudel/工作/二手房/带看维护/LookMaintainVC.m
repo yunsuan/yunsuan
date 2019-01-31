@@ -16,6 +16,7 @@
     
     NSInteger _page;
     NSMutableArray *_dataArr;
+    NSString *_search;
 }
 @property (nonatomic, strong) UITextField *searchBar;
 
@@ -45,10 +46,11 @@
     _page = 1;
     _waitTable.mj_footer.state = MJRefreshStateIdle;
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
-//    if (![self isEmpty:self.search]) {
-//
-//        [dic setObject:self.search forKey:@"search"];
-//    }
+    
+    if (![self isEmpty:_search]) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
     [BaseRequest GET:TakeMaintainList_URL parameters:dic success:^(id resposeObject) {
     
         [_waitTable.mj_header endRefreshing];
@@ -82,10 +84,10 @@
     
     _page += 1;
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
-    //    if (![self isEmpty:self.search]) {
-    //
-    //        [dic setObject:self.search forKey:@"search"];
-    //    }
+    if (![self isEmpty:_search]) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
     [BaseRequest GET:TakeMaintainList_URL parameters:dic success:^(id resposeObject) {
     
         NSLog(@"%@",resposeObject);
@@ -146,6 +148,19 @@
 - (void)ActionAddBtn:(UIButton *)btn{
     
     
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    if (![self isEmpty:textField.text]) {
+        
+        _search = textField.text;
+        [self RequestMethod];
+    }else{
+        
+        _search = @"";
+    }
+    return YES;
 }
 
 

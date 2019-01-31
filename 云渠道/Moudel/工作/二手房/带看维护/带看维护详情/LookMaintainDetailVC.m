@@ -322,6 +322,7 @@
                     
                     cell.typeL.text = @"主权益人";
                     cell.upBtn.hidden = YES;
+                    cell.downBtn.hidden = YES;
                 }else{
                     
                     cell.typeL.text = @"副权益人";

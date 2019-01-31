@@ -30,6 +30,7 @@
     NSString *_pro;
     NSString *_min;
     NSString *_max;
+    NSString *_search;
     
     NSMutableArray *_arr;
     NSMutableArray *_dataArr;
@@ -108,6 +109,10 @@
         
         [dic setObject:_pro forKey:@"project_id"];
     }
+    if (_search.length) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
     
     [dic setObject:[NSString stringWithFormat:@"%@-%@",_min,_max] forKey:@"price"];
     _table.mj_footer.state = MJRefreshStateIdle;
@@ -117,6 +122,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue]) {
             
+            [_dataArr removeAllObjects];
             [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
@@ -136,6 +142,10 @@
     [dic setObject:@"1" forKey:@"type"];
     [dic setObject:@(_page) forKey:@"page"];
     
+    if (_search.length) {
+        
+        [dic setObject:_search forKey:@"search"];
+    }
     if ([_type integerValue]) {
         
         [dic setObject:_type forKey:@"property_type"];
@@ -219,6 +229,19 @@
     [_table reloadData];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    if (![self isEmpty:textField.text]) {
+        
+        _search = textField.text;
+        [self RequestMethod];
+    }else{
+        
+        _search = @"";
+    }
+    return YES;
+}
+
 - (void)ActionTagBtn:(UIButton *)btn{
     
     if (btn.tag == 1) {
@@ -278,8 +301,36 @@
         _is3 = NO;
         _proBtn.selected = NO;
         _typeBtn.selected = NO;
-        [self.proView removeFromSuperview];
-        [self.typeView removeFromSuperview];
+        if (_proArr.count) {
+            
+            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+        }else{
+            
+            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+                    for (int i = 0; i < _proArr.count; i++) {
+                        
+                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
+                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
+                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
+                        [tempDic removeObjectForKey:@"project_name"];
+                        [tempDic removeObjectForKey:@"project_id"];
+                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
+                    }
+                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [self showContent:@"网络错误"];
+            }];
+        }
+        
         if (_is2) {
             
             _is2 = !_is2;
@@ -288,6 +339,8 @@
             
             _is2 = YES;
             
+            [self.proView removeFromSuperview];
+            [self.typeView removeFromSuperview];
             self.priceView.minTF.textfield.text = _min.length ? _min:@"0";
             self.priceView.maxTF.textfield.text = _max.length ? _max:@"0";
             [[UIApplication sharedApplication].keyWindow addSubview:self.priceView];
@@ -298,14 +351,44 @@
         _is2 = NO;
         _proBtn.selected = NO;
         _priceBtn.selected = NO;
-        [self.proView removeFromSuperview];
-        [self.priceView removeFromSuperview];
+        
+        if (_proArr.count) {
+            
+            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+        }else{
+            
+            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+                    for (int i = 0; i < _proArr.count; i++) {
+                        
+                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
+                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
+                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
+                        [tempDic removeObjectForKey:@"project_name"];
+                        [tempDic removeObjectForKey:@"project_id"];
+                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
+                    }
+                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [self showContent:@"网络错误"];
+            }];
+        }
         if (_is3) {
             
             _is3 = !_is3;
             [self.typeView removeFromSuperview];
         }else{
             
+            [self.proView removeFromSuperview];
+            [self.priceView removeFromSuperview];
             _is3 = YES;
             [[UIApplication sharedApplication].keyWindow addSubview:self.typeView];
         }

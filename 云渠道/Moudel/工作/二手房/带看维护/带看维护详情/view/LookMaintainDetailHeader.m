@@ -98,7 +98,21 @@
         _areaL.text = [NSString stringWithFormat:@"装修标准：%@",needDic[@"decorate"]];
         _houseTypeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
         _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
-        _markL.text = [NSString stringWithFormat:@"需求标签：%@",needDic[@"need_tags"]];
+        NSArray *arr = [needDic[@"need_tags"] componentsSeparatedByString:@","];
+        NSMutableArray *tempArr = [@[] mutableCopy];
+        NSArray *tagArr = [UserModelArchiver unarchive].Configdic[@"15"][@"param"];
+
+        for (int i = 0; i < arr.count; i++) {
+            
+            [tagArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
+                    [tempArr addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        _markL.text = [NSString stringWithFormat:@"需求标签：%@",[tempArr componentsJoinedByString:@","]];
         _markL2.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
     }
 }
@@ -133,6 +147,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
+//        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
 //        label.textAlignment = <#NSTextAlignment#>;
         if (i == 0) {
