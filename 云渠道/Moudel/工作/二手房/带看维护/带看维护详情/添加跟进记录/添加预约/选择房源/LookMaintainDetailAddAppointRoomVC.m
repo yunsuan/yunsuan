@@ -81,6 +81,8 @@
     _proArr = [@[] mutableCopy];
     _typeArr = @[@{@"id":@"0",@"param":@"不限"},@{@"id":@"1",@"param":@"住宅"},@{@"id":@"2",@"param":@"商铺"},@{@"id":@"3",@"param":@"写字楼"}];
     _page = 1;
+    _min = @"0";
+    _max = @"0";
 }
 
 - (void)ActionMaskBtn:(UIButton *)btn{
@@ -88,6 +90,7 @@
     [self.proView removeFromSuperview];
     [self.priceView removeFromSuperview];
     [self.typeView removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)RequestMethod{
@@ -222,17 +225,22 @@
         
         _is2 = NO;
         _is3 = NO;
-        _priceBtn.selected = NO;
-        _typeBtn.selected = NO;
-        [self.priceView removeFromSuperview];
-        [self.typeView removeFromSuperview];
+        
         
         if (_is1) {
             
+            _priceBtn.selected = NO;
+            _typeBtn.selected = NO;
+            [self.priceView removeFromSuperview];
+            [self.typeView removeFromSuperview];
             _is1 = !_is1;
             [self.proView removeFromSuperview];
         }else{
             
+            _priceBtn.selected = NO;
+            _typeBtn.selected = NO;
+            [self.priceView removeFromSuperview];
+            [self.typeView removeFromSuperview];
             _is1 = YES;
             if (_proArr.count) {
                 
@@ -252,8 +260,8 @@
                             [tempDic removeObjectForKey:@"project_name"];
                             [tempDic removeObjectForKey:@"project_id"];
                             [_proArr replaceObjectAtIndex:i withObject:tempDic];
-                            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
                         }
+                        [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
                     }else{
                         
                         [self showContent:resposeObject[@"msg"]];
@@ -474,18 +482,19 @@
         
         
         WS(weakSelf);
+        SS(strongSelf);
         _proView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
             
             if ([str isEqualToString:@"不限"]) {
                 
-                [weakSelf.proBtn setTitle:@"项目" forState:UIControlStateNormal];
+                [strongSelf->_proBtn setTitle:@"项目" forState:UIControlStateNormal];
             }else{
                 
-                [weakSelf.proBtn setTitle:str forState:UIControlStateNormal];
+                [strongSelf->_proBtn setTitle:str forState:UIControlStateNormal];
             }
 //            _is2 = NO;
             _pro = [NSString stringWithFormat:@"%@",ID];
-            weakSelf.proBtn.selected = NO;
+            strongSelf->_proBtn.selected = NO;
             [weakSelf.proView removeFromSuperview];
             [weakSelf RequestMethod];
         };
@@ -508,12 +517,26 @@
 
         
         WS(weakSelf);
+        SS(strongSelf);
         _priceView.priceSetViewConfirmBtnBlock = ^(NSString * _Nonnull min, NSString * _Nonnull max) {
 
             _min = min;
             _max = max;
-
-            weakSelf.priceBtn.selected = NO;
+            
+            if ([_min integerValue] == 0 && [_max integerValue] == 0) {
+                
+                [strongSelf->_priceBtn setTitle:@"价格" forState:UIControlStateNormal];
+            }else{
+                
+                if ([_max integerValue] == 0) {
+                    
+                    [strongSelf->_priceBtn setTitle:[NSString stringWithFormat:@"%@万以上",strongSelf->_min] forState:UIControlStateNormal];
+                }else{
+                    
+                    [strongSelf->_priceBtn setTitle:[NSString stringWithFormat:@"%@-%@万",strongSelf->_min,strongSelf->_max] forState:UIControlStateNormal];
+                }
+            }
+            strongSelf->_priceBtn.selected = NO;
             [weakSelf.priceView removeFromSuperview];
             [weakSelf RequestMethod];
         };
@@ -548,18 +571,19 @@
         [_typeView.mainTable reloadData];
         
         WS(weakSelf);
+        SS(strongSelf);
         _typeView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
             
             if ([str isEqualToString:@"不限"]) {
                 
-                [weakSelf.typeBtn setTitle:@"类型" forState:UIControlStateNormal];
+                [strongSelf->_typeBtn setTitle:@"类型" forState:UIControlStateNormal];
             }else{
                 
-                [weakSelf.typeBtn setTitle:str forState:UIControlStateNormal];
+                [strongSelf->_typeBtn setTitle:str forState:UIControlStateNormal];
             }
 //            _is3 = NO;
             _type = [NSString stringWithFormat:@"%@",ID];
-            weakSelf.typeBtn.selected = NO;
+            strongSelf->_typeBtn.selected = NO;
             [weakSelf.typeView removeFromSuperview];
             [weakSelf RequestMethod];
         };
