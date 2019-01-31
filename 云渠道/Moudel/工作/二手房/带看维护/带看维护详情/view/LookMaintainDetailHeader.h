@@ -46,6 +46,8 @@ typedef void(^LookMaintainDetailHeaderBlock)(NSInteger index);
 
 @property (nonatomic, strong) BaseHeader *needHeader;
 
+@property (nonatomic, strong) UILabel *propertyL;
+
 @property (nonatomic, strong) UILabel *purposeL;
 
 @property (nonatomic, strong) UILabel *typeL;
@@ -61,6 +63,8 @@ typedef void(^LookMaintainDetailHeaderBlock)(NSInteger index);
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) UILabel *markL;
+
+@property (nonatomic, strong) UILabel *markL2;
 
 @property (nonatomic, strong) UIButton *roomBtn;
 

@@ -33,17 +33,63 @@
     
     _needHeader.titleL.text = @"需求信息";
     
-    _purposeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
-    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",needDic[@"property_type"]];
-    _decorateL.text = [NSString stringWithFormat:@"装修状况：%@",needDic[@"decorate"]];
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"总价：%@万",needDic[@"total_price"]]];
-    [attr addAttribute:NSForegroundColorAttributeName value:COLOR(225, 165, 29, 1) range:NSMakeRange(3, attr.length - 4)];
-    _priceL.attributedText = attr;
-//    _priceL.text = [NSString stringWithFormat:@"总价：%@万",needDic[@"total_price"]];
-    _areaL.text = [NSString stringWithFormat:@"面积：%@㎡",needDic[@"area"]];
-    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",needDic[@"house_type"]];
-    _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
-    _markL.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
+    if ([needDic[@"property_type"] isEqualToString:@"商铺"]) {
+        
+        _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"商铺"];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
+        _decorateL.text = [NSString stringWithFormat:@"商铺类型：%@",[needDic[@"shop_type"] componentsJoinedByString:@","]];
+        _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
+        _areaL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
+        NSString *str = @"";
+        for (NSDictionary *dic in needDic[@"match_tags"]) {
+            
+            if (str.length) {
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,dic[@"name"]];
+            }else{
+                
+                str = dic[@"name"];
+            }
+        }
+        _houseTypeL.text = [NSString stringWithFormat:@"配套设施：%@",str];
+        _payWayL.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
+        _markL.text = @"";
+    }else if ([needDic[@"property_type"] isEqualToString:@"写字楼"]){
+        
+        _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"写字楼"];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
+        _decorateL.text = [NSString stringWithFormat:@"写字楼等级：%@",needDic[@"office_level"]];
+        _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
+        _areaL.text = [NSString stringWithFormat:@"已使用年限：%@㎡",needDic[@"used_years"]];
+        _houseTypeL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
+        NSString *str = @"";
+        for (NSDictionary *dic in needDic[@"match_tags"]) {
+            
+            if (str.length) {
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,dic[@"name"]];
+            }else{
+                
+                str = dic[@"name"];
+            }
+        }
+        _payWayL.text = [NSString stringWithFormat:@"配套设施：%@",str];
+        _markL.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
+    }else{
+        
+        _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"住宅"];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@万",needDic[@"total_price"]];
+        _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
+        _decorateL.text = [NSString stringWithFormat:@"意向户型：%@",needDic[@"house_type"]];
+        _priceL.text = [NSString stringWithFormat:@"意向楼层：%@层-%@层",needDic[@"floor_min"],needDic[@"floor_max"]];
+        _areaL.text = [NSString stringWithFormat:@"装修标准：%@㎡",needDic[@"decorate"]];
+        _houseTypeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
+        _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
+        _markL.text = [NSString stringWithFormat:@"需求标签：%@",needDic[@"need_tags"]];
+        _markL2.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
+    }
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
@@ -154,7 +200,7 @@
     _needHeader = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     [_needView addSubview:_needHeader];
     
-    for (int i = 0; i < 8 ; i++) {
+    for (int i = 0; i < 10 ; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
@@ -206,6 +252,18 @@
             {
                 _markL = label;
                 [_needView addSubview:_markL];
+                break;
+            }
+            case 8:
+            {
+                _propertyL = label;
+                [_needView addSubview:_propertyL];
+                break;
+            }
+            case 9:
+            {
+                _markL2 = label;
+                [_needView addSubview:_markL2];
                 break;
             }
             default:
@@ -327,10 +385,17 @@
         make.bottom.equalTo(self).offset(0);
     }];
     
-    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_needView).offset(28 *SIZE);
         make.top.equalTo(_needView).offset(52 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_propertyL.mas_bottom).offset(19 *SIZE);
         make.width.mas_equalTo(300 *SIZE);
     }];
     
@@ -383,10 +448,17 @@
         make.width.mas_equalTo(300 *SIZE);
     }];
     
+    [_markL2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needView).offset(28 *SIZE);
+        make.top.equalTo(_markL.mas_bottom).offset(19 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
+    }];
+    
     [_roomBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_needView).offset(0);
-        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_markL2.mas_bottom).offset(18 *SIZE);
         make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
         make.width.mas_equalTo(119 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
@@ -395,7 +467,7 @@
     [_contactBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_needView).offset(120 *SIZE);
-        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_markL2.mas_bottom).offset(18 *SIZE);
         make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
         make.width.mas_equalTo(119 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
@@ -404,7 +476,7 @@
     [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_needView).offset(240 *SIZE);
-        make.top.equalTo(_markL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_markL2.mas_bottom).offset(18 *SIZE);
         make.bottom.equalTo(_needView.mas_bottom).offset(0 *SIZE);
         make.width.mas_equalTo(119 *SIZE);
         make.height.mas_equalTo(47 *SIZE);

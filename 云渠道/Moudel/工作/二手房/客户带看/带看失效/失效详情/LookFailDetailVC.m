@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _titleArr = @[@"推荐信息",@"失效信息",@"失效信息"];
+    _titleArr = @[@"推荐信息",@"接单信息",@"失效信息"];
     [self initDataSource];
     [self initUI];
     [self RequestMethod];

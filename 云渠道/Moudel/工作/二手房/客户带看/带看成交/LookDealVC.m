@@ -170,16 +170,16 @@
     _waitTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_waitTable];
     
-    WS(weakSelf);
-    _waitTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
-        
-        [weakSelf RequestMethod];
-    }];
+//    WS(weakSelf);
+//    _waitTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+//
+//        [weakSelf RequestMethod];
+//    }];
     
-    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
-        
-        [weakSelf RequestAddMethod];
-    }];
+//    _waitTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+//
+//        [weakSelf RequestAddMethod];
+//    }];
 }
 
 
