@@ -47,7 +47,7 @@
     if ([needDic[@"property_type"] isEqualToString:@"商铺"]) {
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"商铺"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"商铺类型：%@",[needDic[@"shop_type"] componentsJoinedByString:@","]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -69,7 +69,7 @@
     }else if ([needDic[@"property_type"] isEqualToString:@"写字楼"]){
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"写字楼"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"写字楼等级：%@",needDic[@"office_level"]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -91,7 +91,7 @@
     }else{
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"住宅"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"意向户型：%@",needDic[@"house_type"]];
         _priceL.text = [NSString stringWithFormat:@"意向楼层：%@层-%@层",needDic[@"floor_min"],needDic[@"floor_max"]];

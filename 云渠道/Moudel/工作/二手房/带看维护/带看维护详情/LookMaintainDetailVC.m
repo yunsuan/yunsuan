@@ -325,15 +325,16 @@
                     cell.downBtn.hidden = YES;
                 }else{
                     
-                    cell.typeL.text = @"副权益人";
+                    cell.typeL.text = @"附权益人";
                     cell.upBtn.hidden = NO;
-                    if (indexPath.row == _contactArr.count - 1) {
-                        
-                        cell.downBtn.hidden = YES;
-                    }else{
-                        
-                        cell.downBtn.hidden = NO;
-                    }
+                    cell.downBtn.hidden = YES;
+//                    if (indexPath.row == _contactArr.count - 1) {
+//
+//                        cell.downBtn.hidden = YES;
+//                    }else{
+//
+//                        cell.downBtn.hidden = NO;
+//                    }
                 }
                 
                 cell.lookMaintainDetailContactCellBlock = ^(NSInteger index, NSInteger btn) {
@@ -345,12 +346,13 @@
                             
                         }else{
                             
-                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[index - 1][@"contact_id"]} success:^(id resposeObject) {
+                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[0][@"contact_id"]} success:^(id resposeObject) {
                                 
                                 NSLog(@"%@",resposeObject);
                                 if ([resposeObject[@"code"] integerValue] == 200) {
                                     
-                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index - 1)];
+//                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index - 1)];
+                                    [self RequestMethod];
                                     [_mainTable reloadData];
                                 }else{
                                     
@@ -369,12 +371,13 @@
                             
                         }else{
                             
-                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[index + 1][@"contact_id"]} success:^(id resposeObject) {
+                            [BaseRequest GET:TakeMaintainContactChangeSort_URL parameters:@{@"contact_id":_contactArr[index][@"contact_id"],@"top_contact_id":_contactArr[0][@"contact_id"]} success:^(id resposeObject) {
                                 
                                 NSLog(@"%@",resposeObject);
                                 if ([resposeObject[@"code"] integerValue] == 200) {
                                     
-                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index + 1)];
+                                    [self RequestMethod];
+//                                    [_contactArr exchangeObjectAtIndex:index withObjectAtIndex:(index + 1)];
                                     [_mainTable reloadData];
                                 }else{
                                     

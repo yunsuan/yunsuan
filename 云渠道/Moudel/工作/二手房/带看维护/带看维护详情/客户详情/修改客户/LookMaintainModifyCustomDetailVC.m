@@ -108,7 +108,7 @@
     
     NSDictionary *tempDic = @{@"name":_nameTF.textfield.text,
                               @"sex":_gender,
-                              @"report_type":@"1"
+                              @"report_type":_typeId.length?_typeId:@"1"
                               //                              @"card_type":_cardType,
                               //                              @"card_id":_certNumTF.textfield.text,
                               //                              @"address":_addressTF.textfield.text
@@ -142,7 +142,7 @@
     if ([self.status isEqualToString:@"添加"]) {
         
         [dic setObject:self.houseId forKey:@"take_id"];
-        [BaseRequest POST:TakeMaintainContactAdd_URL parameters:dic success:^(id resposeObject) {
+        [BaseRequest GET:TakeMaintainContactAdd_URL parameters:dic success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
