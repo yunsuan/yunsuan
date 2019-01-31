@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^ChooseHouseBlock)(NSMutableArray *arr);
+typedef void(^ChooseHouseBlock)(NSDictionary *dic);
 
 @interface ChooseHouseVC : BaseViewController
 

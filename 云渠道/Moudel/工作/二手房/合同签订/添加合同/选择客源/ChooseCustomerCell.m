@@ -23,16 +23,16 @@
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
 //    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-//
-//    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-//    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@""]];
-//
-//    [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(self.contentView).offset(10 *SIZE);
-//        make.top.equalTo(self.contentView).offset(14 *SIZE);
-//        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
-//    }];
+    _titlelab.text = dataDic[@"name"];
+    if ([dataDic[@"sex"] integerValue]==1) {
+        _genderImg.image =[UIImage imageNamed:@"man"];
+    }
+    if ([dataDic[@"sex"] integerValue]==2) {
+        _genderImg.image =[UIImage imageNamed:@"girl"];
+    }
+    _numlab.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"take_code"]];
+    _namelab.text = [NSString stringWithFormat:@"带看经纪人：%@  %@",dataDic[@"butter_name"],dataDic[@"butter_tel"]];
+    _phonelab.text = dataDic[@"tel"];
 }
 
 - (void)initUI{
@@ -42,7 +42,7 @@
     _titlelab.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.contentView addSubview:_titlelab];
     
-    _titlelab.text = @"张三";
+//    _titlelab.text = @"张三";
     
     _genderImg = [[UIImageView alloc] init];
     [self.contentView addSubview:_genderImg];
@@ -53,21 +53,21 @@
     _numlab.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_numlab];
     
-    _numlab.text = @"客源编号：25621153223";
+//    _numlab.text = @"客源编号：25621153223";
     
     _namelab = [[UILabel alloc] init];
     _namelab.textColor = YJ86Color;
     _namelab.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_namelab];
     
-    _namelab.text = @"带看经纪人：张三   18756231245";
+//    _namelab.text = @"带看经纪人：张三   18756231245";
     
     _phonelab = [[UILabel alloc] init];
     _phonelab.textColor = YJ86Color;
     _phonelab.textAlignment = NSTextAlignmentRight;
     _phonelab.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_phonelab];
-    _phonelab.text = @"18756231245";    
+//    _phonelab.text = @"18756231245";
     [self MasonryUI];
 }
 
@@ -77,7 +77,8 @@
         
         make.left.equalTo(self.contentView).offset(14 *SIZE);
         make.top.equalTo(self.contentView).offset(12 *SIZE);
-        make.width.mas_equalTo(_titlelab.mj_textWith + 5 *SIZE);
+        make.width.mas_equalTo( 80 *SIZE);
+        
         make.height.mas_equalTo(16*SIZE);
     }];
     

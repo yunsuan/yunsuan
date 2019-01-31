@@ -777,12 +777,24 @@ static NSString *const TakeMaintainContactChangeSort_URL = @"agent/take/maintain
 //修改联系人
 static NSString *const TakeMaintainContactUpdate_URL = @"agent/take/maintain/contact/update";
 
+
 //新增跟进
 static NSString *const TakeMaintainFollowAdd_URL = @"agent/take/maintain/follow/add";
 
 //获取房源列表
 static NSString *const TakeMaintainFollowHouseList_URL = @"agent/take/maintain/follow/houseList";
 
+
+
+#pragma mark -- 二手房合同  --
+//选择房源
+static NSString *const TakeHouseList_URL = @"agent/take/deal/house/list";
+//房源联系人
+static NSString *const HousePeopleList_URL = @"agent/take/deal/house/contact/list";
+//选择客源
+static NSString *const TakeCustomerList_URL = @"agent/take/deal/take/list";
+//客源联系人
+static NSString *const TakePeopleList_URL = @"agent/take/deal/take/contact/list";
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息

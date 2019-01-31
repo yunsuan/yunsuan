@@ -635,6 +635,7 @@
 		10255A7721A53D000042738C /* BuildingAlbumVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A5F21A53D000042738C /* BuildingAlbumVC.m */; };
 		10255A7821A53D000042738C /* AlbumCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A6321A53D000042738C /* AlbumCollCell.m */; };
 		10255A7921A53D000042738C /* BuildingAlbumCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A6421A53D000042738C /* BuildingAlbumCollCell.m */; };
+		1026B0102201BDF500E4C6FA /* AddContractCell7.m in Sources */ = {isa = PBXBuildFile; fileRef = 1026B00F2201BDF500E4C6FA /* AddContractCell7.m */; };
 		102DF9702057A12B00E1859C /* MessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF96F2057A12B00E1859C /* MessageVC.m */; };
 		102DF9732057A14300E1859C /* WorkingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF9722057A14300E1859C /* WorkingVC.m */; };
 		102DF9762057A1AE00E1859C /* RoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF9752057A1AE00E1859C /* RoomVC.m */; };
@@ -1999,6 +2000,8 @@
 		10255A6321A53D000042738C /* AlbumCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCollCell.m; sourceTree = "<group>"; };
 		10255A6421A53D000042738C /* BuildingAlbumCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuildingAlbumCollCell.m; sourceTree = "<group>"; };
 		10255A6521A53D000042738C /* BuildingAlbumVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuildingAlbumVC.h; sourceTree = "<group>"; };
+		1026B00E2201BDF500E4C6FA /* AddContractCell7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddContractCell7.h; sourceTree = "<group>"; };
+		1026B00F2201BDF500E4C6FA /* AddContractCell7.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddContractCell7.m; sourceTree = "<group>"; };
 		102DF96E2057A12B00E1859C /* MessageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageVC.h; sourceTree = "<group>"; };
 		102DF96F2057A12B00E1859C /* MessageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageVC.m; sourceTree = "<group>"; };
 		102DF9712057A14300E1859C /* WorkingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkingVC.h; sourceTree = "<group>"; };
@@ -5993,6 +5996,8 @@
 				10F7D0D021F83B17007818E3 /* AddContractCell5.m */,
 				10F7D0D221F83B23007818E3 /* AddContractCell6.h */,
 				10F7D0D321F83B23007818E3 /* AddContractCell6.m */,
+				1026B00E2201BDF500E4C6FA /* AddContractCell7.h */,
+				1026B00F2201BDF500E4C6FA /* AddContractCell7.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7899,6 +7904,7 @@
 				0C38826C21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m in Sources */,
 				0CED0BFD21E740380016A029 /* AddContractVC.m in Sources */,
 				0C075DF921FB048700BDD123 /* LookMaintainCustomDetailVC.m in Sources */,
+				1026B0102201BDF500E4C6FA /* AddContractCell7.m in Sources */,
 				0CF04F73207C899D00A45F4A /* AuditStatusVC.m in Sources */,
 				0CF04F2D207A0DA300A45F4A /* DynamicListTableCell.m in Sources */,
 				10AEEE7521A2A0B20049625B /* MyTeamTableHeader.m in Sources */,

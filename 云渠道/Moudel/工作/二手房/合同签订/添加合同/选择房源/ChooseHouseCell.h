@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) UILabel *namelab;
 @property (nonatomic , strong) UILabel *phonelab;
 
+-(void)setdatabydata:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END
