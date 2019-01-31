@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *type;
 
+@property (nonatomic, copy) NSString *house_code;
+
 @property (nonatomic, copy) NSString *describe;
 
 @property (nonatomic, copy) NSString *house_id;

@@ -54,8 +54,9 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId];
+    LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
     nextVC.dataDic = self.dataDic;
+    nextVC.status = self.status;
     nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
         
         [_dataArr addObject:dic];
@@ -73,12 +74,43 @@
     }
     
     NSMutableArray *tempArr = [@[] mutableCopy];
-    for (NSDictionary *dic in _dataArr) {
+    
+    if ([self.status integerValue] == 1) {
         
-        LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
-        [tempArr addObject:@{@"house_id":model.house_id,@"take_time":dic[@"take_time"]}];
+        for (NSDictionary *dic in _dataArr) {
+            
+            LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
+            [tempArr addObject:@{@"house_id":model.house_id,@"take_time":dic[@"take_time"]}];
+        }
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tempArr
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding];
+        NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.dataDic setObject:jsonResult forKey:@"take_group"];
+    }else{
+        
+        for (NSDictionary *dic in _dataArr) {
+            
+            NSMutableDictionary *tempDic = [dic mutableCopy];
+            [tempDic removeObjectForKey:@"model"];
+            [tempArr addObject:tempDic];
+        }
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tempArr
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding];
+        NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.dataDic setObject:jsonResult forKey:@"take_group"];
     }
-    [self.dataDic setObject:tempArr forKey:@"take_group"];
     [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
@@ -122,8 +154,8 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.model = _dataArr[indexPath.row];
-        
+        cell.model = _dataArr[indexPath.row][@"model"];
+        cell.storeL.text = [NSString stringWithFormat:@"预约时间：%@",_dataArr[indexPath.row][@"take_time"]];
         return cell;
     }else{
         
@@ -134,20 +166,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        if (_dataArr.count) {
-            
-            LookMaintainDetailAddAppointRoomModel *model = _dataArr[indexPath.row][@"model"];
-            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,model.img_url]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                
-                if (error) {
-                    
-                    cell.imageView.image = [UIImage imageNamed:@"default_3"];
-                }
-            }];
-        }else{
-            
-            cell.imageView.image = [UIImage imageNamed:@"add"];
-        }
+        cell.roomImg.image = [UIImage imageNamed:@"add"];
         
         return cell;
     }
@@ -161,8 +180,9 @@
         
     }else{
         
-        LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId];
+        LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
         nextVC.dataDic = self.dataDic;
+        nextVC.status = self.status;
         nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
             
             [_dataArr addObject:dic];
@@ -201,8 +221,8 @@
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    if ([self.status integerValue] == 1) {
-        
+//    if ([self.status integerValue] == 1) {
+    
         _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
         _table.separatorStyle = UITableViewCellSeparatorStyleNone;
         _table.rowHeight = UITableViewAutomaticDimension;
@@ -219,17 +239,17 @@
         [_commintBtn setTitle:@"提 交" forState:UIControlStateNormal];
         [_commintBtn setBackgroundColor:YJBlueBtnColor];
         [self.view addSubview:_commintBtn];
-    }else{
-        
-        _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
-        _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _table.rowHeight = UITableViewAutomaticDimension;
-        _table.estimatedRowHeight = 202.5 *SIZE;
-        _table.backgroundColor = self.view.backgroundColor;
-        _table.delegate = self;
-        _table.dataSource = self;
-        [self.view addSubview:_table];
-    }
+//    }else{
+//
+//        _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+//        _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        _table.rowHeight = UITableViewAutomaticDimension;
+//        _table.estimatedRowHeight = 202.5 *SIZE;
+//        _table.backgroundColor = self.view.backgroundColor;
+//        _table.delegate = self;
+//        _table.dataSource = self;
+//        [self.view addSubview:_table];
+//    }
 }
 
 @end

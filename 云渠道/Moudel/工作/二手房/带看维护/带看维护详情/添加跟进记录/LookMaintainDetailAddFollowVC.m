@@ -35,6 +35,8 @@
     NSString *_payWay;
     NSString *_store;
     
+    NSDictionary *_dataDic;
+    
     NSArray *_wayArr;
     NSArray *_levelArr;
     NSArray *_payArr;
@@ -146,11 +148,12 @@
 
 @implementation LookMaintainDetailAddFollowVC
 
-- (instancetype)initWithTakeId:(NSString *)takeId
+- (instancetype)initWithTakeId:(NSString *)takeId dataDic:(NSDictionary *)dataDic
 {
     self = [super init];
     if (self) {
         
+        _dataDic = dataDic;
         _takeId = takeId;
     }
     return self;
@@ -330,7 +333,6 @@
                 weakSelf.nextTimeBtn.content.text = [weakSelf.formatter stringFromDate:date];
             };
             [self.view addSubview:view];
-            break;
             break;
         }
         case 7:
@@ -526,7 +528,10 @@
     [dic setObject:_timeContentL.text forKey:@"follow_time"];
     [dic setObject:_contentTV.text forKey:@"follow_comment"];
     [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
-
+    if (_levelBtn.content.text) {
+        
+        [dic setObject:_levelBtn->str forKey:@"client_level"];
+    }
     if (_way == 0) {
         
         [dic setObject:@"1" forKey:@"follow_type"];
@@ -976,7 +981,10 @@
     }
     
     _tagView = [[AddTagView alloc] initWithFrame:CGRectMake(0, 757 *SIZE, SCREEN_Width, 127 *SIZE)];
-    
+//    if ([_dataDic[@"need_tags"] length]) {
+//
+//        _dataArr = [NSMutableArray arrayWithArray:[[_dataDic[@"need_tags"] componentsSeparatedByString:@","] mutableCopy]];
+//    }
     _tagView.dataArr = [NSMutableArray arrayWithArray:_dataArr];
     [_tagView reloadInputViews];
     WS(weak);
@@ -994,6 +1002,11 @@
         
     };
     [_scrollView addSubview:_tagView];
+    
+    if ([_dataDic[@"match_tags"] count]) {
+        
+        _dataArr = [NSMutableArray arrayWithArray:[_dataDic[@"match_tags"] mutableCopy]];
+    }
     
     _collHeader = [[BlueTitleMoreHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     _collHeader.titleL.text = @"配套设施";
@@ -1084,6 +1097,134 @@
     
     [self masonryUI];
     [self RemasonryUI];
+    
+    if ([_dataDic[@"client_level"] length]) {
+        
+        for (NSDictionary *dic in _levelArr) {
+            
+            if ([dic[@"param"] isEqualToString:_dataDic[@"client_level"]]) {
+                
+                _levelBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _levelBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
+    if ([_dataDic[@"total_price"] length]) {
+        
+        _priceBtn.textfield.text = _dataDic[@"total_price"];
+    }
+    if ([_dataDic[@"area"] length]) {
+        
+        _areaBtn.textfield.text = _dataDic[@"area"];
+    }
+    if ([_dataDic[@"used_years"] length]) {
+        
+        _yearTF.textfield.text = _dataDic[@"used_years"];
+    }
+    if ([_dataDic[@"office_level"] length]) {
+        
+        for (NSDictionary *dic in [self getDetailConfigArrByConfigState:OFFICE_GRADE]) {
+            
+            if ([dic[@"param"] isEqualToString:_dataDic[@"office_level"]]) {
+                
+                _officeLevelBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _officeLevelBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
+    
+    if ([_dataDic[@"pay_type"] count]) {
+        
+        for (int i = 0; i < _payArr.count; i++) {
+            
+            for (int j = 0; j < [_dataDic[@"pay_type"] count]; j++) {
+                
+                if ([_dataDic[@"pay_type"][j] isEqualToString:_payArr[i][@"param"]]) {
+                    
+                    [_paySelectArr replaceObjectAtIndex:i withObject:@1];
+                }
+            }
+        }
+    }
+    
+    if ([_dataDic[@"shop_type"] count]) {
+        
+        for (int i = 0; i < _storeArr.count; i++) {
+            
+            for (int j = 0; j < [_dataDic[@"shop_type"] count]; j++) {
+                
+                if ([_dataDic[@"shop_type"][j] isEqualToString:_storeArr[i][@"param"]]) {
+                    
+                    [_selectStoreArr replaceObjectAtIndex:i withObject:@1];
+                }
+            }
+            
+        }
+    }
+    
+    if ([self.property isEqualToString:@"住宅"]) {
+        
+        if ([_dataDic[@"buy_purpose"] length]) {
+            
+            for (NSDictionary *dic in [self getDetailConfigArrByConfigState:BUY_TYPE]) {
+                
+                if ([dic[@"param"] isEqualToString:_dataDic[@"buy_purpose"]]) {
+                    
+                    _purposeBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                    _purposeBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+                }
+            }
+        }
+    }else{
+        
+        if ([_dataDic[@"buy_use"] length]) {
+            
+            for (NSDictionary *dic in [self getDetailConfigArrByConfigState:BUY_USE]) {
+                
+                if ([dic[@"param"] isEqualToString:_dataDic[@"buy_use"]]) {
+                    
+                    _purposeBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                    _purposeBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+                }
+            }
+        }
+    }
+    
+    if ([_dataDic[@"decorate"] length]) {
+        
+        for (NSDictionary *dic in [self getDetailConfigArrByConfigState:DECORATE]) {
+            
+            if ([dic[@"param"] isEqualToString:_dataDic[@"decorate"]]) {
+                
+                _decorateBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _decorateBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
+    
+    if ([_dataDic[@"floor_min"] length]) {
+        
+        for (NSDictionary *dic in _stairArr) {
+            
+            if ([[NSString stringWithFormat:@"%@",dic[@"id"]] isEqualToString:_dataDic[@"floor_min"]]) {
+                
+                _floorTF1.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _floorTF1->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
+    
+    if ([_dataDic[@"floor_max"] length]) {
+        
+        for (NSDictionary *dic in _stairArr) {
+            
+            if ([[NSString stringWithFormat:@"%@",dic[@"id"]] isEqualToString:_dataDic[@"floor_max"]]) {
+                
+                _floorTF2.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+                _floorTF2->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            }
+        }
+    }
 }
 
 - (void)masonryUI{
@@ -1491,6 +1632,14 @@
     _purposeBtn.content.text = @"";
     [_dataArr removeAllObjects];
     
+//    if ([_dataDic[@"need_tags"] length]) {
+//        
+//        _dataArr = [NSMutableArray arrayWithArray:[[_dataDic[@"need_tags"] componentsSeparatedByString:@","] mutableCopy]];
+//    }
+    if ([_dataDic[@"match_tags"] count]) {
+        
+        _dataArr = [NSMutableArray arrayWithArray:[_dataDic[@"match_tags"] mutableCopy]];
+    }
     [_facilityColl reloadData];
     [_tagView.tagColl reloadData];
     

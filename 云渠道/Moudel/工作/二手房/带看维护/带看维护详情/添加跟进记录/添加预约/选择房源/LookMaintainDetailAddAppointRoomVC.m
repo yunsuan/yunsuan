@@ -9,23 +9,36 @@
 #import "LookMaintainDetailAddAppointRoomVC.h"
 
 #import "MakeDateLookVC.h"
+#import "LookMaintainAddLookVC.h"
 
-#import "RoomReportCollCell.h"
+#import "BoxView.h"
 
 #import "LookMaintainDetailAddAppointRoomCell.h"
 
-@interface LookMaintainDetailAddAppointRoomVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface LookMaintainDetailAddAppointRoomVC ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     
-    NSMutableArray *_dataArr;
-    NSString *_takeId;
     NSInteger _page;
+    
+    NSString *_takeId;
+    NSString *_type;
+    
+    NSMutableArray *_arr;
+    NSMutableArray *_dataArr;
+    NSMutableArray *_proArr;
+    NSArray *_typeArr;
 }
 @property (nonatomic, strong) UITextField *searchBar;
 
-@property (nonatomic, strong) UICollectionView *segmentColl;
+@property (nonatomic, strong) UIButton *proBtn;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) UIButton *priceBtn;
+
+@property (nonatomic, strong) UIButton *typeBtn;
+
+@property (nonatomic, strong) BoxView *proView;
+
+@property (nonatomic, strong) BoxView *typeView;
 
 @property (nonatomic, strong) UITableView *table;
 
@@ -33,11 +46,12 @@
 
 @implementation LookMaintainDetailAddAppointRoomVC
 
-- (instancetype)initWithTakeId:(NSString *)takeId
+- (instancetype)initWithTakeId:(NSString *)takeId dataArr:(NSArray *)dataArr
 {
     self = [super init];
     if (self) {
         
+        _arr = [[NSMutableArray alloc] initWithArray:dataArr];
         _takeId = takeId;
     }
     return self;
@@ -54,6 +68,9 @@
 - (void)initDataSource{
     
     _dataArr = [@[] mutableCopy];
+    _proArr = [@[] mutableCopy];
+    _typeArr = @[@{@"id":@"0",@"param":@"不限"},@{@"id":@"1",@"param":@"住在"},@{@"id":@"2",@"param":@"商铺"},@{@"id":@"3",@"param":@"写字楼"}];
+    _page = 1;
 }
 
 - (void)RequestMethod{
@@ -63,6 +80,10 @@
     [dic setObject:@"1" forKey:@"type"];
     [dic setObject:@(_page) forKey:@"page"];
     
+    if ([_type integerValue]) {
+        
+        [dic setObject:_type forKey:@"property_type"];
+    }
     _table.mj_footer.state = MJRefreshStateIdle;
     [BaseRequest GET:TakeMaintainFollowHouseList_URL parameters:dic success:^(id resposeObject) {
         
@@ -141,33 +162,38 @@
                 }
             }
         }];
+        
         LookMaintainDetailAddAppointRoomModel *model = [[LookMaintainDetailAddAppointRoomModel alloc] initWithDictionary:tempDic];
         [_dataArr addObject:model];
+    }
+    
+    for ( int i = 0; i < _dataArr.count; i++) {
+        
+        for (int j = 0; j < _arr.count; j++) {
+            
+            LookMaintainDetailAddAppointRoomModel *model = _dataArr[i];
+            LookMaintainDetailAddAppointRoomModel *tempModel = _arr[j][@"model"];
+            if ([tempModel.house_id isEqualToString:model.house_id]) {
+                
+                [_arr removeObjectAtIndex:j];
+                [_dataArr removeObjectAtIndex:i];
+            }
+        }
     }
     [_table reloadData];
 }
 
-#pragma mark -- collectionview
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+- (void)ActionTagBtn:(UIButton *)btn{
     
-    return 3;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    RoomReportCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomReportCollCell" forIndexPath:indexPath];
-    if (!cell) {
+    if (btn.tag == 1) {
         
-        cell = [[RoomReportCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 3, 40 *SIZE)];
+    }else if (btn.tag == 2){
+        
+        
+    }else{
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:self.typeView];
     }
-    cell.titleL.frame = CGRectMake(0, 14 *SIZE, SCREEN_Width / 3, 11 *SIZE);
-    cell.line.hidden = YES;
-    
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -192,16 +218,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    MakeDateLookVC *nextVC = [[MakeDateLookVC alloc] initWithModel:_dataArr[indexPath.row]];
-    nextVC.dataDic = self.dataDic;
-    nextVC.makeDateLookVCBlock = ^(NSDictionary * _Nonnull dic) {
+    if ([self.status integerValue] == 1) {
         
-        if (self.lookMaintainDetailAddAppointRoomVCBlock) {
+        MakeDateLookVC *nextVC = [[MakeDateLookVC alloc] initWithModel:_dataArr[indexPath.row]];
+        nextVC.dataDic = self.dataDic;
+        nextVC.makeDateLookVCBlock = ^(NSDictionary * _Nonnull dic) {
             
-            self.lookMaintainDetailAddAppointRoomVCBlock(dic);
-        }
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
+            if (self.lookMaintainDetailAddAppointRoomVCBlock) {
+                
+                self.lookMaintainDetailAddAppointRoomVCBlock(dic);
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        LookMaintainAddLookVC *nextVC = [[LookMaintainAddLookVC alloc] initWithModel:_dataArr[indexPath.row]];
+        nextVC.dataDic = self.dataDic;
+        nextVC.lookMaintainAddLookVCBlock = ^(NSDictionary * _Nonnull dic) {
+          
+            if (self.lookMaintainDetailAddAppointRoomVCBlock) {
+                
+                self.lookMaintainDetailAddAppointRoomVCBlock(dic);
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 
@@ -211,7 +252,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"选择房源";
     
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 40 *SIZE)];
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 80 *SIZE)];
     whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:whiteView];
     
@@ -235,21 +276,51 @@
     _searchBar.delegate = self;
     [whiteView addSubview:_searchBar];
     
-    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 3, 40 *SIZE);
-    _flowLayout.minimumLineSpacing = 0;
-    _flowLayout.minimumInteritemSpacing = 0;
-    _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    
-    
-    _segmentColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 40 *SIZE) collectionViewLayout:_flowLayout];
-    _segmentColl.backgroundColor = [UIColor whiteColor];
-    _segmentColl.delegate = self;
-    _segmentColl.dataSource = self;
-    _segmentColl.showsHorizontalScrollIndicator = NO;
-    _segmentColl.bounces = NO;
-    [_segmentColl registerClass:[RoomReportCollCell class] forCellWithReuseIdentifier:@"RoomReportCollCell"];
-    [self.view addSubview:_segmentColl];
+    for (int i = 0; i < 3; i++) {
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(120 *SIZE * i, 40 *SIZE, 120 *SIZE, 40 *SIZE);
+        btn.tag = i + 1;
+        [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
+        
+        switch (i) {
+            case 0:
+            {
+                [btn setTitle:@"项目" forState:UIControlStateNormal];
+                [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                btn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+                [btn setImage:[UIImage imageNamed:@"downarrow1"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"uparrow2"] forState:UIControlStateSelected];
+                _proBtn = btn;
+                [whiteView addSubview:_proBtn];
+                break;
+            }
+            case 1:
+            {
+                [btn setTitle:@"价格" forState:UIControlStateNormal];
+                [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                btn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+                [btn setImage:[UIImage imageNamed:@"downarrow1"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"uparrow2"] forState:UIControlStateSelected];
+                _priceBtn = btn;
+                [whiteView addSubview:_priceBtn];
+                break;
+            }
+            case 2:
+            {
+                [btn setTitle:@"类型" forState:UIControlStateNormal];
+                [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                btn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+                [btn setImage:[UIImage imageNamed:@"downarrow1"] forState:UIControlStateNormal];
+                [btn setImage:[UIImage imageNamed:@"uparrow2"] forState:UIControlStateSelected];
+                _typeBtn = btn;
+                [whiteView addSubview:_typeBtn];
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 81 *SIZE, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 81 *SIZE) style:UITableViewStylePlain];
     _table.rowHeight = UITableViewAutomaticDimension;
@@ -271,4 +342,150 @@
     }];
 }
 
+- (BoxView *)proView{
+    
+    if (!_proView) {
+        
+        _proView = [[BoxView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 80 *SIZE, SCREEN_Width, SCREEN_Height - 80 *SIZE - NAVIGATION_BAR_HEIGHT)];
+        
+        NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
+        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
+        [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+        _proView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+        }];
+        _proView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [_proView.mainTable reloadData];
+        
+        
+        WS(weakSelf);
+        _proView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
+            
+            if ([str isEqualToString:@"不限"]) {
+                
+                [weakSelf.priceBtn setTitle:@"均价" forState:UIControlStateNormal];
+            }else{
+                
+                [weakSelf.priceBtn setTitle:str forState:UIControlStateNormal];
+            }
+//            _is2 = NO;
+//            _price = [NSString stringWithFormat:@"%@",ID];
+            weakSelf.priceBtn.selected = NO;
+            [weakSelf.proView removeFromSuperview];
+            [weakSelf RequestMethod];
+        };
+        
+        _proView.cancelBtnBlock = ^{
+            
+//            _is2 = NO;
+            weakSelf.priceBtn.selected = NO;
+        };
+    }
+    return _proView;
+}
+
+
+//- (BoxView *)priceView{
+//
+//    if (!_priceView) {
+//
+//        _priceView = [[BoxView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 102 *SIZE, SCREEN_Width, SCREEN_Height - 102 *SIZE)];
+//
+//        NSArray *array = [self getDetailConfigArrByConfigState:AVERAGE];
+//        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:array];
+//        [tempArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+//        _priceView.dataArr = [NSMutableArray arrayWithArray:tempArr];
+//        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//            if (idx == 0) {
+//
+//                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+//            }else{
+//
+//                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+//            }
+//        }];
+//        _priceView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+//        [_priceView.mainTable reloadData];
+//
+//
+//        WS(weakSelf);
+//        _priceView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
+//
+//            if ([str isEqualToString:@"不限"]) {
+//
+//                [weakSelf.priceBtn setTitle:@"均价" forState:UIControlStateNormal];
+//            }else{
+//
+//                [weakSelf.priceBtn setTitle:str forState:UIControlStateNormal];
+//            }
+//            _is2 = NO;
+//            _price = [NSString stringWithFormat:@"%@",ID];
+//            weakSelf.priceBtn.selected = NO;
+//            [weakSelf.priceView removeFromSuperview];
+//            [weakSelf RequestMethod];
+//        };
+//
+//        _priceView.cancelBtnBlock = ^{
+//
+//            _is2 = NO;
+//            weakSelf.priceBtn.selected = NO;
+//        };
+//    }
+//    return _priceView;
+//}
+
+- (BoxView *)typeView{
+    
+    if (!_typeView) {
+        
+        _typeView = [[BoxView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 80 *SIZE, SCREEN_Width, SCREEN_Height - 80 *SIZE - NAVIGATION_BAR_HEIGHT)];
+        
+        NSMutableArray * tempArr = [NSMutableArray arrayWithArray:_typeArr];
+        _typeView.dataArr = [NSMutableArray arrayWithArray:_typeArr];
+        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
+            }else{
+                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
+            }
+        }];
+        _typeView.selectArr = [NSMutableArray arrayWithArray:tempArr];
+        [_typeView.mainTable reloadData];
+        
+        WS(weakSelf);
+        _typeView.confirmBtnBlock = ^(NSString *ID, NSString *str) {
+            
+            if ([str isEqualToString:@"不限"]) {
+                
+                [weakSelf.typeBtn setTitle:@"类型" forState:UIControlStateNormal];
+            }else{
+                
+                [weakSelf.typeBtn setTitle:str forState:UIControlStateNormal];
+            }
+//            _is3 = NO;
+            _type = [NSString stringWithFormat:@"%@",ID];
+            weakSelf.typeBtn.selected = NO;
+            [weakSelf.typeView removeFromSuperview];
+            [weakSelf RequestMethod];
+        };
+        
+        _typeView.cancelBtnBlock = ^{
+            
+//            _is3 = NO;
+            weakSelf.typeBtn.selected = NO;
+        };
+    }
+    return _typeView;
+}
 @end

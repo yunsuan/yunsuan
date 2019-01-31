@@ -62,7 +62,7 @@
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"写字楼等级：%@",needDic[@"office_level"]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
-        _areaL.text = [NSString stringWithFormat:@"已使用年限：%@㎡",needDic[@"used_years"]];
+        _areaL.text = [NSString stringWithFormat:@"已使用年限：%@年",needDic[@"used_years"]];
         _houseTypeL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
         NSString *str = @"";
         for (NSDictionary *dic in needDic[@"match_tags"]) {
