@@ -35,7 +35,7 @@
         
         if (_minTF.textfield.text.length) {
             
-            _min = _minTF.textfield.text;
+            _min = [NSString stringWithFormat:@"%ld",[_minTF.textfield.text integerValue]];
         }else{
             
             _min = @"0";
@@ -43,7 +43,7 @@
         
         if (_maxTF.textfield.text.length) {
             
-            _max = _maxTF.textfield.text;
+            _max = [NSString stringWithFormat:@"%ld",[_maxTF.textfield.text integerValue]];
         }else{
             
             _max = @"0";
