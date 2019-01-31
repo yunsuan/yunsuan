@@ -152,9 +152,9 @@
         [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
         [UserModelArchiver archive];
     }
-    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"代购合同",@"客户推荐",@"客户带看",@"带看维护",@"合同签订"];
+    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同",@"合同签订"];
     _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
-    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"contract",@"takelook",@"contract",@"signing"];
+    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"takelook",@"contract",@"contract",@"signing"];
 }
 
 -(void)initUI
@@ -355,24 +355,29 @@
             RoomSurveyVC *nextVC = [[RoomSurveyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 3){
-            
-            RoomAgencyVC *nextVC = [[RoomAgencyVC alloc] init];
+            CustomRecommendVC *nextVC = [[CustomRecommendVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
+            
         }else if (indexPath.row == 2){
             
             RoomMaintainVC *nextVC = [[RoomMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 4){
             
-            CustomRecommendVC *nextVC = [[CustomRecommendVC alloc] init];
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }else if (indexPath.row == 5){
+
             
             CustomLookVC *nextVC = [[CustomLookVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else if (indexPath.row == 6){
+        }else if (indexPath.row == 5){
+            
+
             
             LookMaintainVC *nextVC = [[LookMaintainVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else if (indexPath.row == 6){
+            
+
+            RoomAgencyVC *nextVC = [[RoomAgencyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
