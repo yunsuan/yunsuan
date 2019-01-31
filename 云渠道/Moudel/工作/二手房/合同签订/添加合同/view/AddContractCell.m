@@ -8,6 +8,10 @@
 
 #import "AddContractCell.h"
 
+@interface AddContractCell ()<UITextViewDelegate>
+
+@end
+
 @implementation AddContractCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -62,10 +66,55 @@
     }
 }
 
+//@"construct_code":@"",
+//@"deal_money":@"",
+//@"buy_breach":@"",
+//@"sale_breach":@"",
+//@"buy_brokerage":@"",
+//@"sale_brokerage":@"",
+//@"certificate_time":@"",
+//@"mortgage_cancel_time":@"",
+//@"pay_way":@"",
+//@"sale_reason":@"",
+//@"buy_reason":@"",
+//@"comment":@""
+
+-(void)textChange:(UITextField *)textField{
+    if (!self.data) {
+        self.data = [NSMutableDictionary dictionary];
+    }
+    if (textField.tag ==1001) {
+        [self.data setValue:textField.text forKey:@"deal_code"];
+    }else if (textField.tag == 1002)
+    {
+        [self.data setValue:textField.text forKey:@"deal_money"];
+    }else if (textField.tag == 1003)
+    {
+        [self.data setValue:textField.text forKey:@"buy_breach"];
+    }
+    else if(textField.tag == 1004){
+        [self.data setValue:textField.text forKey:@"sale_breach"];
+    }
+    else if(textField.tag == 1005){
+        [self.data setValue:textField.text forKey:@"buy_brokerage"];
+    }
+    else{
+        [self.data setValue:textField.text forKey:@"sale_brokerage"];
+    }
+    if (self.textFiledBlock != nil) {
+        self.textFiledBlock(self.data);
+    }
+}
 
 
-
-
+-(void)textViewDidChange:(UITextView *)textView
+{
+     [self.data setValue:textView.text forKey:@"comment"];
+    
+    if (self.textFiledBlock != nil) {
+        self.textFiledBlock(self.data);
+    }
+}
 
 
 - (void)initUI{
@@ -164,6 +213,9 @@
                 case 0:
                 {
                     _codeTF = tf;
+                    _codeTF.textfield.tag = 1001;
+                    [_codeTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _codeTF.textfield.keyboardType = UIKeyboardTypeASCIICapable;
                     [self.contentView addSubview:_codeTF];
                     break;
                 }
@@ -171,6 +223,9 @@
                 {
                     tf.unitL.text = @"元";
                     _priceTF = tf;
+                    _priceTF.textfield.tag = 1002;
+                    _priceTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
+                    [_priceTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     [self.contentView addSubview:_priceTF];
                     break;
                 }
@@ -178,6 +233,9 @@
                 {
                     tf.unitL.text = @"元";
                     _buyBreachTF = tf;
+                    _buyBreachTF.textfield.tag = 1003;
+                    _buyBreachTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
+                    [_buyBreachTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     [self.contentView addSubview:_buyBreachTF];
                     break;
                 }
@@ -185,6 +243,9 @@
                 {
                     tf.unitL.text = @"元";
                     _sellBreachTF = tf;
+                    _sellBreachTF.textfield.tag = 1004;
+                    _sellBreachTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
+                    [_sellBreachTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     [self.contentView addSubview:_sellBreachTF];
                     break;
                 }
@@ -192,6 +253,9 @@
                 {
                     tf.unitL.text = @"元";
                     _buyCommissionTF = tf;
+                    _buyCommissionTF.textfield.tag = 1005;
+                    _buyCommissionTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
+                    [_buyCommissionTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     [self.contentView addSubview:_buyCommissionTF];
                     break;
                 }
@@ -200,6 +264,9 @@
                 {
                     tf.unitL.text = @"元";
                     _sellCommissionTF = tf;
+                    _sellCommissionTF.textfield.tag = 1006;
+                    _sellCommissionTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
+                     [_sellCommissionTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     [self.contentView addSubview:_sellCommissionTF];
                     break;
                 }
@@ -259,6 +326,7 @@
             _notesTV.layer.borderWidth = SIZE;
             _notesTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
             _notesTV.clipsToBounds = YES;
+            _notesTV.delegate = self;
             [self.contentView addSubview:_notesTV];
         }
     }

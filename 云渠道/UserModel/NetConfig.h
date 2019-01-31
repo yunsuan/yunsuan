@@ -802,6 +802,13 @@ static NSString *const HousePeopleList_URL = @"agent/take/deal/house/contact/lis
 static NSString *const TakeCustomerList_URL = @"agent/take/deal/take/list";
 //客源联系人
 static NSString *const TakePeopleList_URL = @"agent/take/deal/take/contact/list";
+
+//添加合同
+static NSString *const AddContract_URL = @"agent/take/deal/add";
+
+//待审核合同列表
+static NSString *const WaitContractList_URL = @"agent/take/deal/list";
+
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息

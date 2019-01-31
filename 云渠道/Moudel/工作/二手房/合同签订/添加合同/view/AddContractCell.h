@@ -17,9 +17,7 @@ typedef void(^CancelTimeBlock)(void);
 typedef void(^PaywWayBlock)(void);
 typedef void(^BuyReasonBlock)(void);
 typedef void(^SellReasonBlock)(void);
-
-typedef void(^TextFiledBlock)(void);
-
+typedef void(^TextFiledBlock)(NSMutableDictionary *datadic);
 
 
 @interface AddContractCell : UITableViewCell
@@ -35,6 +33,7 @@ typedef void(^TextFiledBlock)(void);
 
 @property (nonatomic, copy) SellReasonBlock sellReasonBlock;
 
+@property (nonatomic, copy) TextFiledBlock textFiledBlock;
 
 @property (nonatomic, strong) UILabel *codeL;
 
@@ -83,6 +82,9 @@ typedef void(^TextFiledBlock)(void);
 @property (nonatomic, strong)UILabel *notesL;
 
 @property (nonatomic, strong)UITextView *notesTV;
+
+@property (nonatomic , strong) NSMutableDictionary *data;
+
 
 @end
 

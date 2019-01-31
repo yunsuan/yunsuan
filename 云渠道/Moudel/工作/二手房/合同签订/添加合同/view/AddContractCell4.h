@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^StickieBlock)(NSIndexPath* indexpath);
 @interface AddContractCell4 : UITableViewCell
+
+@property (nonatomic , strong) NSIndexPath *indexpath;
+
 //权益人
 @property (nonatomic , strong) UILabel *titelL;
 @property (nonatomic , strong) UILabel *nameL;
@@ -18,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , strong) UILabel *telL;
 @property (nonatomic , strong) UIButton *stickieBtn;
 @property (nonatomic , strong) UIView *line;
+@property (nonatomic , strong) StickieBlock stickieBlock;
+
 - (void)setData:(NSMutableDictionary *)dataDic;
 
 @end
