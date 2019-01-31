@@ -258,6 +258,10 @@
                 
                 _phoneTF4.text = string;
 //                _tel4 = string;
+                if (!_phoneTF5.text.length) {
+                    
+                    [_phoneTF5 becomeFirstResponder];
+                }
 //                [_phoneTF5 becomeFirstResponder];
             }
             else if (textField == _phoneTF5) {
