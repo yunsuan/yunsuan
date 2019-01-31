@@ -151,7 +151,7 @@
     
     cell.lookWorkConfirmBlock = ^(NSInteger index) {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认房源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认客源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             

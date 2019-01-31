@@ -362,6 +362,10 @@
         return 3;
     }else{
         
+        if ([self.customType isEqualToString:@"租房"]) {
+        
+            return 1;
+        }
         return 2;
     }
 }
@@ -384,7 +388,7 @@
             
             if (section == 0) {
                 
-                return 1;
+                return 0;
             }else{
                 
                 return _projectArr.count < 3? _projectArr.count : 3;
@@ -395,8 +399,11 @@
                 
                 return 0;
             }
-            CustomRequireModel *model = _dataArr[0];
-            return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
+            if ([self.customType isEqualToString:@"二手房"]) {
+                CustomRequireModel *model = _dataArr[0];
+                return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
+            }
+            return 0;
         }
     }
 }
@@ -491,6 +498,16 @@
         header.customTableHeaderEditBlock = ^{
             
             AddCustomerVC *nextVC = [[AddCustomerVC alloc] initWithModel:_customModel];
+            if ([_customType isEqualToString:@"新房"]) {
+                
+                nextVC.status = 1;
+            }else if ([_customType isEqualToString:@"二手房"]){
+                
+                nextVC.status = 2;
+            }else{
+                
+                nextVC.status = 3;
+            }
             [self.navigationController pushViewController:nextVC animated:YES];
         };
         
@@ -820,7 +837,7 @@
             return cell;
         }else{
             
-            if ([self.customType isEqualToString:@"二手房"]) {
+            if ([self.customType isEqualToString:@"二手房"] || [self.customType isEqualToString:@"租房"] ) {
                 
                 if (indexPath.section == 0) {
                     
