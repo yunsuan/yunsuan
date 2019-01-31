@@ -119,6 +119,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
@@ -170,6 +174,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
+    nextVC.edit = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"is_edit"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

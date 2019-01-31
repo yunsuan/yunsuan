@@ -7,20 +7,28 @@
 //
 
 #import "AddOfficeRequireMentVC.h"
+
 #import "CustomerListVC.h"
 #import "CustomDetailVC.h"
+#import "AddEquipmentVC.h"
+
 #import "BaseFrameHeader.h"
 #import "SinglePickView.h"
 #import "AddressChooseView3.h"
+#import "BlueTitleMoreHeader.h"
+#import "StoreViewCollCell.h"
+//#import "AddTagView2.h"
+
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 
-@interface AddOfficeRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
+@interface AddOfficeRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     NSInteger _btnNum;
     
     CustomRequireModel *_model;
     NSArray *_titleArr;
+    NSMutableArray *_dataArr;
 }
 
 @property (nonatomic, strong) UIScrollView *scrolleView;
@@ -73,9 +81,17 @@
 
 @property (nonatomic, strong) UISlider *urgentSlider;
 
-@property (nonatomic, strong) UILabel *markL;
+@property (nonatomic, strong) UIView *CollView;
+
+@property (nonatomic, strong) BlueTitleMoreHeader *collHeader;
+
+@property (nonatomic, strong) UICollectionViewFlowLayout *facilityLayout;
+
+@property (nonatomic, strong) UICollectionView *facilityColl;
 
 @property (nonatomic, strong) UITextView *markTV;
+
+@property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -105,7 +121,7 @@
 - (void)initDataSource{
     
     _titleArr = @[@"区域：",@"意向总价：",@"意向面积：",@"购买用途：",@"付款方式：",@"已使用年限：",@"等级：",@"购房意向度：",@"购房紧迫度：",@"其他要求："];
-
+    _dataArr = [@[] mutableCopy];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -131,15 +147,7 @@
 
 - (void)ActionLevelBtn:(UIButton *)btn{
     
-//    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.frame WithData:[self getDetailConfigArrByConfigState:50]];
-//
-//    SS(strongSelf);
-//    view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//        strongSelf->_roomLevelBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-//        strongSelf->_roomLevelBtn->str = [NSString stringWithFormat:@"%@",ID];
-//    };
-//    [self.view addSubview:view];
+
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -233,14 +241,7 @@
         }
         case 5:
         {
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.yearBtn.content.text = MC;
-//                weakself.yearBtn->str = [NSString stringWithFormat:@"%@", ID];
-//            };
-//            [self.view addSubview:view];
+
             break;
         }
         case 6:
@@ -275,13 +276,7 @@
                 return;
             }
         }
-        
-//        if ([self isEmpty:_roomLevelBtn->str]) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
-//            return;
-//        }
-//        dic[@"level"] = _roomLevelBtn->str;
+
         
         if (_priceBtn->str.length) {
             
@@ -291,10 +286,7 @@
             
             dic[@"area"] = _areaTF->str;
         }
-        //        if (_typeBtn.str.length) {
-        //
-        //            [dic setObject:_typeBtn.str forKey:@"house_type"];
-        //        }
+
         if (_useBtn->str.length) {
             
             dic[@"buy_use"] = _useBtn->str;
@@ -320,14 +312,28 @@
             
             dic[@"urgency"] = _urgentTF.textfield.text;
         }
-        if (_urgentTF.textfield.text.length) {
-            
-            dic[@"need_tags"] = _urgentTF.textfield.text;
-        }
         if (_markTV.text.length) {
             
             dic[@"comment"] = _markTV.text;
         }
+        
+        if (_dataArr.count) {
+            
+            NSString *str;
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                if (i == 0) {
+                    
+                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                }else{
+                    
+                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                }
+            }
+            if(str)
+                [dic setObject:str forKey:@"match_tags"];
+        }
+
         
         _nextBtn.userInteractionEnabled = NO;
         [BaseRequest POST:AddCustomer_URL parameters:dic success:^(id resposeObject) {
@@ -373,10 +379,7 @@
             
             dic[@"area"] = _areaTF->str;
         }
-        //        if (_typeBtn.str.length) {
-        //
-        //            [dic setObject:_typeBtn.str forKey:@"house_type"];
-        //        }
+
         if (_useBtn->str.length) {
             
             dic[@"buy_use"] = _useBtn->str;
@@ -402,13 +405,26 @@
             
             dic[@"urgency"] = _urgentTF.textfield.text;
         }
-        if (_urgentTF.textfield.text.length) {
-            
-            dic[@"need_tags"] = _urgentTF.textfield.text;
-        }
         if (_markTV.text.length) {
             
             dic[@"comment"] = _markTV.text;
+        }
+        
+        if (_dataArr.count) {
+            
+            NSString *str;
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                if (i == 0) {
+                    
+                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                }else{
+                    
+                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                }
+            }
+            if(str)
+                [dic setObject:str forKey:@"match_tags"];
         }
         
         _nextBtn.userInteractionEnabled = NO;
@@ -448,6 +464,40 @@
     }
 }
 
+#pragma mark -- Collection
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    return _dataArr.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    StoreViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StoreViewCollCell" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[StoreViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 72 *SIZE, 72 *SIZE)];
+    }
+    NSString *imageurl = _dataArr[indexPath.item][@"url"];
+    if (imageurl.length>0) {
+        
+        [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            
+        }];
+        cell.titleL.text = _dataArr[indexPath.item][@"name"];
+        
+    }
+    else
+    {
+#warning 默认图片？？
+    }
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+
+}
+
 - (void)initUI{
     
     if (_model) {
@@ -474,13 +524,6 @@
     header.lineView.hidden = YES;
     [_infoView addSubview:header];
     
-    
-//    _roomLevelL = [[UILabel alloc] init];
-//    _roomLevelL.textColor = YJTitleLabColor;
-//    _roomLevelL.font = [UIFont systemFontOfSize:12 *SIZE];
-//    _roomLevelL.text = @"房源等级";
-//    _roomLevelL.adjustsFontSizeToFitWidth = YES;
-//    [_infoView addSubview:_roomLevelL];
     
     for (NSUInteger i = 0; i < 10; i++) {
         
@@ -546,18 +589,14 @@
             }
             case 9:
             {
-                _markL = label;
-                [_infoView addSubview:_markL];
+//                _markL = label;
+//                [_infoView addSubview:_markL];
                 break;
             }
             default:
                 break;
         }
     }
-    
-//    _roomLevelBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 436 *SIZE, 257 *SIZE, 33 *SIZE)];
-//    [_roomLevelBtn addTarget:self action:@selector(ActionLevelBtn:) forControlEvents:UIControlEventTouchUpInside];
-//    [_infoView addSubview:_roomLevelBtn];
 
     
     for (int i = 0; i < 7; i++) {
@@ -678,16 +717,72 @@
         }
     }
     
+    NSArray *arr =  _model.match_tags;
+    
+    _dataArr = [NSMutableArray arrayWithArray:[arr mutableCopy]];
+    
+    _CollView = [[UIView alloc] init];
+    _CollView.backgroundColor = [UIColor whiteColor];
+    [_scrolleView addSubview:_CollView];
+    
+    _collHeader = [[BlueTitleMoreHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+    _collHeader.titleL.text = @"配套设施";
+    [_collHeader.moreBtn setTitle:@"" forState:UIControlStateNormal];
+    [_collHeader.moreBtn setImage:[UIImage imageNamed:@"add_40"] forState:UIControlStateNormal];
+    WS(weakSelf);
+    SS(strongSelf);
+    _collHeader.blueTitleMoreHeaderBlock = ^{
+        
+        AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:3];
+        nextVC.data = strongSelf->_dataArr;
+        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+            
+            strongSelf->_dataArr = [NSMutableArray arrayWithArray:data];
+            [strongSelf->_facilityColl reloadData];
+            [strongSelf->_facilityColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(strongSelf->_CollView).offset(0 *SIZE);
+                make.top.equalTo(strongSelf->_CollView).offset(40 *SIZE);
+                make.width.mas_equalTo(SCREEN_Width);
+                make.height.mas_equalTo(strongSelf->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+                make.bottom.equalTo(strongSelf->_CollView.mas_bottom).offset(0 *SIZE);
+            }];
+            
+        };
+        [weakSelf.navigationController pushViewController:nextVC animated:YES];
+    };
+    [_CollView addSubview:_collHeader];
+    
+    _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
+    _facilityLayout.minimumLineSpacing = 20 *SIZE;
+    _facilityLayout.minimumInteritemSpacing = 0;
+    
+    _facilityColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40 *SIZE, SCREEN_Width, 87 *SIZE) collectionViewLayout:_facilityLayout];
+    _facilityColl.backgroundColor = [UIColor whiteColor];
+    _facilityColl.delegate = self;
+    _facilityColl.dataSource = self;
+    [_facilityColl registerClass:[StoreViewCollCell class] forCellWithReuseIdentifier:@"StoreViewCollCell"];
+    [_CollView addSubview:_facilityColl];
+
+    
     _markTV = [[UITextView alloc] init];
-    _markTV.layer.borderWidth = SIZE;
-    _markTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
-    _markTV.layer.cornerRadius = 5 *SIZE;
-    _markTV.clipsToBounds = YES;
+    _markTV.delegate = self;
+    _markTV.contentInset = UIEdgeInsetsMake(10 *SIZE, 12 *SIZE, 12 *SIZE, 12 *SIZE);
+    
+    [_scrolleView addSubview:_markTV];
+    
+    _placeL = [[UILabel alloc] initWithFrame:CGRectMake(6 *SIZE, 7 *SIZE, 40 *SIZE, 11 *SIZE)];
+    _placeL.textColor = YJContentLabColor;
+    _placeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _placeL.text = @"备注...";
+    [_markTV addSubview:_placeL];
+    
     if (_model.comment) {
         
         _markTV.text = _model.comment;
+        _placeL.hidden = YES;
     }
-    [_infoView addSubview:_markTV];
     
     _nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_nextBtn setBackgroundColor:YJBlueBtnColor];
@@ -845,22 +940,6 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-//    [_roomLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_infoView).offset(9 *SIZE);
-//        make.top.equalTo(_priceBtn.mas_bottom).offset(36 *SIZE);
-//        make.height.mas_equalTo(12 *SIZE);
-//        make.width.mas_equalTo(65 *SIZE);
-//    }];
-//
-//    [_roomLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_infoView).offset(81 *SIZE);
-//        make.top.equalTo(_priceBtn.mas_bottom).offset(25 *SIZE);
-//        make.width.mas_equalTo(257 *SIZE);
-//        make.height.mas_equalTo(33 *SIZE);
-//    }];
-    
     [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
@@ -975,6 +1054,7 @@
         make.top.equalTo(_intentionTF.mas_bottom).offset(62 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
+        make.bottom.equalTo(_infoView).offset(-69 *SIZE);
     }];
     
     [_urgentSlider mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -985,28 +1065,38 @@
         make.height.equalTo(@(5 *SIZE));
     }];
     
-    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_CollView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_urgentSlider.mas_bottom).offset(51 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
+        make.left.equalTo(_scrolleView).offset(0);
+        make.top.equalTo(_infoView.mas_bottom).offset(9 *SIZE);
+        make.right.equalTo(_scrolleView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
+        make.height.equalTo(@(127 *SIZE));
+    }];
+    
+    [_facilityColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_CollView).offset(0 *SIZE);
+        make.top.equalTo(self->_CollView).offset(40 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+        make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
     }];
     
     [_markTV mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_infoView).offset(80 *SIZE);
-        make.top.equalTo(_urgentSlider.mas_bottom).offset(52 *SIZE);
-        make.height.equalTo(@(77  *SIZE));
-        make.width.equalTo(@(258 *SIZE));
-        make.bottom.equalTo(_infoView.mas_bottom).offset(-22 *SIZE);
+        make.left.equalTo(_scrolleView).offset(0);
+        make.top.equalTo(_CollView.mas_bottom).offset(7 *SIZE);
+        make.right.equalTo(_scrolleView).offset(0);
+        make.height.equalTo(@(117 *SIZE));
+        make.width.equalTo(@(SCREEN_Width));
     }];
     
     [_nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_scrolleView).offset(22 *SIZE);
-        make.top.equalTo(_infoView.mas_bottom).offset(20 *SIZE);
-        make.width.mas_offset(316 *SIZE);
+        make.top.equalTo(_markTV.mas_bottom).offset(40 *SIZE);
+        make.right.equalTo(_scrolleView).offset(-22 *SIZE);
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrolleView.mas_bottom).offset(-48 *SIZE);
     }];

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LookMaintainDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *edit;
+
 - (instancetype)initWithTakeId:(NSString *)takeId;
 
 @end

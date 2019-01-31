@@ -101,7 +101,7 @@
     _needInfoDic = [NSMutableDictionary dictionaryWithDictionary:data[@"need_info"]];
     [_needInfoDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         
-        if ([key isEqualToString:@"pay_type"]) {
+        if ([key isEqualToString:@"pay_type"] || [key isEqualToString:@"match_tags"] || [key isEqualToString:@"shop_type"]) {
             
             if ([obj isKindOfClass:[NSNull class]]) {
                 
@@ -144,7 +144,11 @@
         
         if (section == 0) {
             
-            return 1;
+            if ([self.edit integerValue]) {
+                
+                return 1;
+            }
+            return 0;
         }else{
             
             return _takeHouseArr.count;
@@ -156,13 +160,21 @@
             return _contactArr.count;
         }else{
             
-            return 1;
+            if ([self.edit integerValue]) {
+                
+                return 1;
+            }
+            return 0;
         }
     }else{
         
         if (section == 0) {
             
-            return 1;
+            if ([self.edit integerValue]) {
+                
+                return 1;
+            }
+            return 0;
         }else{
             
             return _followArr.count;
@@ -401,7 +413,7 @@
                     cell = [[LookMaintainAddFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
                 }
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
+                cell.addLabel.text = @"添加跟进记录";
                 return cell;
             }else{
                 
@@ -427,8 +439,13 @@
         
         if (indexPath.section == 0) {
             
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId];
+            nextVC.property = _needInfoDic[@"property_type"];
             nextVC.status = @"2";
+            nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                
+                [self RequestMethod];
+            };
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
@@ -464,7 +481,12 @@
         
         if (indexPath.section == 0) {
             
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId];
+            nextVC.property = _needInfoDic[@"property_type"];
+            nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                
+                [self RequestMethod];
+            };
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             

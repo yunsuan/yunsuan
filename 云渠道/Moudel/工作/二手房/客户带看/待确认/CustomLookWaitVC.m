@@ -9,6 +9,8 @@
 #import "CustomLookWaitVC.h"
 
 #import "CustomLookWaitDetailVC.h"
+#import "CustomLookConfirmFailVC.h"
+#import "CustomLookConfirmSuccessVC.h"
 
 #import "CustomLookWaitCell.h"
 
@@ -118,6 +120,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
@@ -155,7 +161,40 @@
     cell.dataDic = _dataArr[indexPath.row];
     cell.customLookWaitCellBlock = ^(NSInteger index) {
       
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认客源" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"客源有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            CustomLookConfirmSuccessVC *nextVC = [[CustomLookConfirmSuccessVC alloc] initWithDataDic:_dataArr[index]];
+            nextVC.customLookConfirmSuccessVCBlock = ^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
+        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客源无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            CustomLookConfirmFailVC *nextVC = [[CustomLookConfirmFailVC alloc] initWithData:_dataArr[index]];
+            nextVC.customLookConfirmFailVCBlock = ^{
+            
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"SurveyInvlid" object:nil];
+                [self RequestMethod];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
+        [alert addAction:valid];
+        [alert addAction:invalid];
+        [alert addAction:cancel];
+        [self.navigationController presentViewController:alert animated:YES completion:^{
+            
+        }];
     };
     return cell;
 }

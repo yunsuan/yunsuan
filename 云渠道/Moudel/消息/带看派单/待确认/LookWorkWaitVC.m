@@ -51,7 +51,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [self SetData:resposeObject[@"data"][@"data"]];
             }else{
@@ -82,7 +82,7 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"] count]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [_waitTable.mj_footer endRefreshing];
                 [self SetData:resposeObject[@"data"][@"data"]];
@@ -109,6 +109,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
@@ -162,8 +166,6 @@
                         
                         [self RequestMethod];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
-//                        SystemWorkConfirmDetailVC *nextVC = [[SystemWorkConfirmDetailVC alloc] initWithSurveyId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"survey_id"]] type:resposeObject[@"data"][@"type"]];
-//                        [self.navigationController pushViewController:nextVC animated:YES];
                     }];
                 }else{
                     
@@ -215,6 +217,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     LookWorkWaitDetailVC *vc = [[LookWorkWaitDetailVC alloc]initWithPushId:_dataArr[indexPath.row][@"push_id"]];
     [self.navigationController pushViewController:vc animated:YES];
 }

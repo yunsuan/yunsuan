@@ -8,22 +8,41 @@
 
 #import "LookMaintainDetailAddFollowVC.h"
 
+#import "AddEquipmentVC.h"
+#import "AddTagVC.h"
+#import "LookMaintainDetailAddAppointVC.h"
+
 #import "SinglePickView.h"
 #import "DateChooseView.h"
+#import "AddTagView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
+
+#import "LookMaintainDetailAddFollowCell.h"
 #import "CompleteSurveyCollCell.h"
+#import "BlueTitleMoreHeader.h"
+#import "StoreViewCollCell.h"
 
 @interface LookMaintainDetailAddFollowVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
 {
     
-    NSArray *_wayArr;
     NSInteger _way;
-    NSArray *_levelArr;
     NSInteger _level;
+    
+    
+    NSString *_takeId;
+    NSString *_payWay;
+    NSString *_store;
+    
+    NSArray *_wayArr;
+    NSArray *_levelArr;
     NSArray *_payArr;
     NSMutableArray *_paySelectArr;
+    NSMutableArray *_dataArr;
+    NSMutableArray *_stairArr;
+    NSArray *_storeArr;
+    NSMutableArray *_selectStoreArr;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -41,51 +60,33 @@
 
 @property (nonatomic, strong) UICollectionView *wayColl;
 
-//@property (nonatomic, strong) UIButton *wayBtn1;
-//
-//@property (nonatomic, strong) UIButton *wayBtn2;
-//
-//@property (nonatomic, strong) UIButton *wayBtn3;
-
-@property (nonatomic, strong) UILabel *progressL;
-
-@property (nonatomic, strong) UILabel *progressContentL;
-
-@property (nonatomic, strong) UILabel *purposeL;
-
-@property (nonatomic, strong) DropDownBtn *purposeBtn;
-
 @property (nonatomic, strong) UILabel *levelL;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *levelFlowLayout;
-
-@property (nonatomic, strong) UICollectionView *levelColl;
+@property (nonatomic, strong) DropDownBtn *levelBtn;
 
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) DropDownBtn *typeBtn;
 
-@property (nonatomic, strong) UILabel *decorateL;
+@property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) DropDownBtn *decorateBtn;
+@property (nonatomic, strong) BorderTF *priceBtn;
 
 @property (nonatomic, strong) UILabel *areaL;
 
 @property (nonatomic, strong) BorderTF *areaBtn;
 
-@property (nonatomic, strong) UILabel *priceL;
+@property (nonatomic, strong) UILabel *purposeL;
 
-@property (nonatomic, strong) BorderTF *priceBtn;
-
-@property (nonatomic, strong) UILabel *houseTypeL;
-
-@property (nonatomic, strong) DropDownBtn *houseBtn;
+@property (nonatomic, strong) DropDownBtn *purposeBtn;//置业目的、购买用途
 
 @property (nonatomic, strong) UILabel *payWayL;
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *payFlowLayout;
 
-@property (nonatomic, strong) UICollectionView *payColl;
+@property (nonatomic, strong) UICollectionView *payColl;//付款方式
+
+@property (nonatomic, strong) UIView *followView;
 
 @property (nonatomic, strong) UILabel *contentL;
 
@@ -99,9 +100,73 @@
 
 @property (nonatomic, strong) NSDateFormatter *formatter;
 
+//写字楼
+
+@property (nonatomic, strong) UILabel *yearL;
+
+@property (nonatomic, strong) BorderTF *yearTF;//使用年限
+
+@property (nonatomic, strong) UILabel *officeLevelL;
+
+@property (nonatomic, strong) DropDownBtn *officeLevelBtn;//写字楼等级
+
+//商铺
+@property (nonatomic, strong) UILabel *commercialL;
+
+@property (nonatomic, strong) UICollectionView *comercialColl;
+
+@property (nonatomic, strong) UICollectionViewFlowLayout *comercialFlowLayout;//商铺类型
+
+@property (nonatomic, strong) UIView *CollView;
+
+@property (nonatomic, strong) BlueTitleMoreHeader *collHeader;
+
+@property (nonatomic, strong) UICollectionViewFlowLayout *facilityLayout;
+
+@property (nonatomic, strong) UICollectionView *facilityColl;//商铺、写字楼配套
+
+//住宅
+@property (nonatomic, strong) UILabel *houseTypeL;
+
+@property (nonatomic, strong) DropDownBtn *houseBtn;//户型
+
+@property (nonatomic, strong) UILabel *floorL;
+
+@property (nonatomic, strong) DropDownBtn *floorTF1;
+
+@property (nonatomic, strong) DropDownBtn *floorTF2;//楼层
+
+@property (nonatomic, strong) UILabel *decorateL;
+
+@property (nonatomic, strong) DropDownBtn *decorateBtn;//装修标准
+
+@property (nonatomic, strong) AddTagView *tagView;//住宅需求标签
+
 @end
 
 @implementation LookMaintainDetailAddFollowVC
+
+- (instancetype)initWithTakeId:(NSString *)takeId
+{
+    self = [super init];
+    if (self) {
+        
+        _takeId = takeId;
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    if (_timeContentL) {
+        
+        [self.formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+        _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
+        [self.formatter setDateFormat:@"YYYY/MM/dd"];
+    }
+}
 
 - (void)viewDidLoad{
     
@@ -126,6 +191,18 @@
         
         [_paySelectArr addObject:@0];
     }
+    _storeArr = [self getDetailConfigArrByConfigState:SHOP_TYPE];
+    _selectStoreArr = [@[] mutableCopy];
+    for (int i = 0; i < _storeArr.count; i++) {
+        
+        [_selectStoreArr addObject:@(0)];
+    }
+    _stairArr = [[NSMutableArray alloc] init];
+    for (int i = 1; i < 50; i++) {
+        
+        NSString *str = [NSString stringWithFormat:@"%d层",i];
+        [_stairArr addObject:@{@"id":@(i),@"param":str}];
+    }
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -133,15 +210,40 @@
     switch (btn.tag) {
         case 0:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+            if ([self.property isEqualToString:@"商铺"]) {
                 
-                weakself.purposeBtn.content.text = MC;
-                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
-            break;
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_USE]];
+                WS(weakself);
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    weakself.purposeBtn.content.text = MC;
+                    weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                };
+                [self.view addSubview:view];
+                break;
+            }else if ([self.property isEqualToString:@"写字楼"]){
+                
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_USE]];
+                WS(weakself);
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    weakself.purposeBtn.content.text = MC;
+                    weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                };
+                [self.view addSubview:view];
+                break;
+            }else{
+                
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+                WS(weakself);
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    weakself.purposeBtn.content.text = MC;
+                    weakself.purposeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                };
+                [self.view addSubview:view];
+                break;
+            }
         }
         case 1:
         {
@@ -155,8 +257,10 @@
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
+                self.property = MC;
                 weakself.typeBtn.content.text = MC;
                 weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                [self RemasonryUI];
             };
             [self.view addSubview:view];
             break;
@@ -175,26 +279,26 @@
         }
         case 3:
         {
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.areaBtn.content.text = MC;
-//                weakself.areaBtn->str = [NSString stringWithFormat:@"%@", ID];
-//            };
-//            [self.view addSubview:view];
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_stairArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+
+                weakself.floorTF1.content.text = MC;
+                weakself.floorTF1->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
             break;
         }
         case 4:
         {
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.priceBtn.content.text = MC;
-//                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
-//            };
-//            [self.view addSubview:view];
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_stairArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.floorTF2.content.text = MC;
+                weakself.floorTF2->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
             break;
         }
         case 5:
@@ -212,6 +316,14 @@
         case 6:
         {
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            
+            [view.pickerView setMinimumDate:[NSDate date]];
+            [view.pickerView setCalendar:[NSCalendar currentCalendar]];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            NSDateComponents *comps = [[NSDateComponents alloc] init];
+            [comps setDay:15];//设置最大时间为：当前时间推后10天
+            [view.pickerView setMaximumDate:[calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
+            
             __weak __typeof(&*self)weakSelf = self;
             view.dateblock = ^(NSDate *date) {
                 
@@ -221,6 +333,30 @@
             break;
             break;
         }
+        case 7:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:OFFICE_GRADE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.officeLevelBtn.content.text = MC;
+                weakself.officeLevelBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
+        case 8:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_levelArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.levelBtn.content.text = MC;
+                weakself.levelBtn->str = [NSString stringWithFormat:@"%@", ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
         default:
             break;
     }
@@ -228,10 +364,215 @@
 
 - (void)ActionCommitBtn:(UIButton *)btn{
     
-    if (!_purposeBtn->str.length) {
+    NSMutableDictionary *dic = [@{} mutableCopy];
+    [dic setObject:_takeId forKey:@"take_id"];
+    [dic setObject:@"1" forKey:@"type"];
+//    if (!_levelBtn.content.text) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择客户等级"];
+//        return;
+//    }
+    
+    if ([self isEmpty:_priceBtn.textfield.text]) {
         
-//        self alertControllerWithNsstring:@"温馨提示" And:@"请选择"
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
+        return;
     }
+    
+    if ([self isEmpty:_areaBtn.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
+        return;
+    }
+    _payWay = @"";
+    for (int i = 0; i < _paySelectArr.count; i++) {
+        
+        
+        if ([_paySelectArr[i] integerValue]) {
+            
+            if (i == 0) {
+                
+                _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+            }else{
+                
+                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+            }
+        }
+    }
+    if (!_payWay.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+        return;
+    }
+
+    if (_dataArr.count) {
+        
+        NSString *str;
+        for (int i = 0; i < _dataArr.count; i++) {
+            
+            if (i == 0) {
+                
+                str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+            }else{
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+            }
+        }
+        if(str)
+            
+            [dic setObject:str forKey:@"match_tags"];
+    }
+    
+    if ([self isEmpty:_contentTV.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入跟进内容"];
+        return;
+    }
+
+    if (!_nextTimeBtn.content.text.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择下次回访时间"];
+        return;
+    }
+    
+    if ([self.property isEqualToString:@"商铺"]) {
+        
+        [dic setObject:@"2" forKey:@"property_type"];
+        
+        _store = @"";
+        for (int i = 0; i < _selectStoreArr.count; i++) {
+            
+            
+            if ([_selectStoreArr[i] integerValue]) {
+                
+                if (i == 0) {
+                    
+                    _store = [NSString stringWithFormat:@"%@",_storeArr[i][@"id"]];
+                }else{
+                    
+                    _store = [NSString stringWithFormat:@"%@,%@",_store,_storeArr[i][@"id"]];
+                }
+            }
+        }
+        if (!_store.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择商铺类型"];
+            return;
+        }
+        
+        [dic setObject:_store forKey:@"shop_type"];
+    }else if ([self.property isEqualToString:@"写字楼"]){
+        
+        [dic setObject:@"3" forKey:@"property_type"];
+        //            if (!_officeLevelBtn.content.text) {
+        //
+        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择写字楼等级"];
+        //                return;
+        //            }
+        if (_officeLevelBtn.content.text.length) {
+            
+            [dic setObject:_officeLevelBtn->str forKey:@"office_level"];
+        }
+        //            if (!_purposeBtn.content.text) {
+        //
+        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择购买用途"];
+        //                return;
+        //            }
+        if (_purposeBtn.content.text.length) {
+            
+            [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+        }
+        //            if ([self isEmpty:_yearTF.textfield.text]) {
+        //
+        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请输入使用年限"];
+        //                return;
+        //            }
+        if (![self isEmpty:_yearTF.textfield.text]) {
+            
+            [dic setObject:_yearTF.textfield.text forKey:@"used_years"];
+        }
+        
+    }else{
+        
+        [dic setObject:@"1" forKey:@"property_type"];
+        
+        if (_houseBtn.content.text) {
+            
+            [dic setObject:_houseBtn->str forKey:@"house_type"];
+        }
+        
+        if (_floorTF1.content.text) {
+            
+            [dic setObject:_floorTF1->str forKey:@"floor_min"];
+        }
+        
+        if (_floorTF2.content.text) {
+            
+            [dic setObject:_floorTF2->str forKey:@"floor_max"];
+        }
+        
+        if (_decorateBtn.content.text) {
+            
+            [dic setObject:_decorateBtn->str forKey:@"decorate"];
+        }
+        
+        if (_purposeBtn.content.text) {
+            
+            [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+        }
+    }
+    [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
+    [dic setObject:_areaBtn.textfield.text forKey:@"area"];
+    [dic setObject:_timeContentL.text forKey:@"follow_time"];
+    [dic setObject:_contentTV.text forKey:@"follow_comment"];
+    [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
+
+    if (_way == 0) {
+        
+        [dic setObject:@"1" forKey:@"follow_type"];
+        [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:dic success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }else if (_way == 1){
+        
+        [dic setObject:@"2" forKey:@"follow_type"];
+        LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
+        nextVC.dataDic = dic;
+        nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+        nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+          
+            if (self.lookMaintainDetailAddFollowVCBlock) {
+                
+                self.lookMaintainDetailAddFollowVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        [dic setObject:@"3" forKey:@"follow_type"];
+        LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
+        nextVC.dataDic = dic;
+        nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+    
+    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -239,9 +580,12 @@
     if (collectionView == _wayColl) {
         
         return _wayArr.count;
-    }else if (collectionView == _levelColl){
+    }else if (collectionView == _comercialColl){
         
-        return _levelArr.count;
+        return _storeArr.count;
+    }else if (collectionView == _facilityColl){
+        
+        return _dataArr.count;
     }else{
         
         return _payArr.count;
@@ -252,10 +596,10 @@
     
     if (collectionView == _wayColl) {
         
-        CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
+        LookMaintainDetailAddFollowCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LookMaintainDetailAddFollowCell" forIndexPath:indexPath];
         if (!cell) {
             
-            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 80 *SIZE, 20 *SIZE)];
+            cell = [[LookMaintainDetailAddFollowCell alloc] initWithFrame:CGRectMake(0, 0, 80 *SIZE, 20 *SIZE)];
         }
         
         cell.titleL.text = _wayArr[indexPath.row][@"param"];
@@ -267,21 +611,36 @@
             [cell setIsSelect:0];
         }
         return cell;
-    }else if (collectionView == _levelColl){
+    }else if (collectionView == _comercialColl){
         
         CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
         if (!cell) {
             
-            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 80 *SIZE, 20 *SIZE)];
+            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
         }
         
-        cell.titleL.text = _levelArr[indexPath.row][@"param"];
-        if (indexPath.row == _level) {
+        [cell setIsSelect:[_selectStoreArr[(NSUInteger) indexPath.item] integerValue]];
+        cell.titleL.text = _storeArr[(NSUInteger) indexPath.item][@"param"];
+        return cell;
+    }else if (collectionView == _facilityColl){
+        
+        StoreViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StoreViewCollCell" forIndexPath:indexPath];
+        if (!cell) {
             
-            [cell setIsSelect:1];
-        }else{
+            cell = [[StoreViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 72 *SIZE, 72 *SIZE)];
+        }
+        NSString *imageurl = _dataArr[indexPath.item][@"url"];
+        if (imageurl.length>0) {
             
-            [cell setIsSelect:0];
+            [cell.typeImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"url"]]] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+            }];
+            cell.titleL.text = _dataArr[indexPath.item][@"name"];
+            
+        }
+        else
+        {
+#warning 默认图片？？
         }
         return cell;
     }else{
@@ -311,9 +670,16 @@
             
             [_commitBtn setTitle:@"下一步" forState:UIControlStateNormal];
         }
-    }else if (collectionView == _levelColl){
+    }else if (collectionView == _comercialColl){
         
-        _level = indexPath.item;
+        if ([_selectStoreArr[indexPath.item] integerValue] == 1) {
+            
+            [_selectStoreArr replaceObjectAtIndex:indexPath.item withObject:@0];
+        }else{
+            
+            [_selectStoreArr replaceObjectAtIndex:indexPath.item withObject:@1];
+        }
+        [collectionView reloadData];
     }else{
         
         if ([_paySelectArr[indexPath.item] integerValue]) {
@@ -341,10 +707,17 @@
     _contentView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_contentView];
     
+    _CollView = [[UIView alloc] init];
+    _CollView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_CollView];
+    
+    _followView = [[UIView alloc] init];
+    _followView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_followView];
+    
     _lineView = [[UIView alloc] init];
     _lineView.backgroundColor = YJBackColor;
     [_contentView addSubview:_lineView];
-    
     
     _timeContentL = [[UILabel alloc] init];
     _timeContentL.textColor = YJTitleLabColor;
@@ -355,14 +728,8 @@
     _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
     [self.formatter setDateFormat:@"YYYY/MM/dd"];
     
-    _progressContentL = [[UILabel alloc] init];
-    _progressContentL.textColor = YJTitleLabColor;
-    _progressContentL.font = [UIFont systemFontOfSize:12 *SIZE];
-    _progressContentL.text = @"首看";
-    [_contentView addSubview:_progressContentL];
-    
-    NSArray *titleArr = @[@"跟进时间",@"跟进方式：",@"进度：",@"置业目的：",@"客户等级：",@"物业类型：",@"装修状况：",@"面积：",@"总价：",@"户型：",@"付款方式：",@"跟进内容：",@"下次回访时间："];
-    for (int i = 0; i < 13; i++) {
+    NSArray *titleArr = @[@"跟进时间",@"跟进方式：",@"客户等级：",@"物业类型：",@"总价：",@"面积：",@"置业目的：",@"付款方式：",@"跟进内容：",@"下次回访时间：",@"已使用年限：",@"写字楼等级：",@"商铺类型：",@"户型：",@"楼层：",@"装修标准："];
+    for (int i = 0; i < 16; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -384,68 +751,86 @@
             }
             case 2:
             {
-                _progressL = label;
-                [_contentView addSubview:_progressL];
-                break;
-            }
-            case 3:
-            {
-                _purposeL = label;
-                [_contentView addSubview:_purposeL];
-                break;
-            }
-            case 4:
-            {
                 _levelL = label;
                 [_contentView addSubview:_levelL];
                 break;
             }
-            case 5:
+            case 3:
             {
                 _typeL = label;
                 [_contentView addSubview:_typeL];
                 break;
             }
-            case 6:
-            {
-                _decorateL = label;
-                [_contentView addSubview:_decorateL];
-                break;
-            }
-            case 7:
-            {
-                _areaL = label;
-                [_contentView addSubview:_areaL];
-                break;
-            }
-            case 8:
+            case 4:
             {
                 _priceL = label;
                 [_contentView addSubview:_priceL];
                 break;
             }
-            case 9:
+            case 5:
             {
-                _houseTypeL = label;
-                [_contentView addSubview:_houseTypeL];
+                _areaL = label;
+                [_contentView addSubview:_areaL];
                 break;
             }
-            case 10:
+            case 6:
+            {
+                _purposeL = label;
+                [_contentView addSubview:_purposeL];
+                break;
+            }
+            case 7:
             {
                 _payWayL = label;
                 [_contentView addSubview:_payWayL];
                 break;
             }
-            case 11:
+            case 8:
             {
                 _contentL = label;
-                [_contentView addSubview:_contentL];
+                [_followView addSubview:_contentL];
+                break;
+            }
+            case 9:
+            {
+                _nextTimeL = label;
+                [_followView addSubview:_nextTimeL];
+                break;
+            }
+            case 10:
+            {
+                _yearL = label;
+                [_contentView addSubview:_yearL];
+                break;
+            }
+            case 11:
+            {
+                _officeLevelL = label;
+                [_contentView addSubview:_officeLevelL];
                 break;
             }
             case 12:
             {
-                _nextTimeL = label;
-                [_contentView addSubview:_nextTimeL];
+                _commercialL = label;
+                [_contentView addSubview:_commercialL];
+                break;
+            }
+            case 13:
+            {
+                _houseTypeL = label;
+                [_contentView addSubview:_houseTypeL];
+                break;
+            }
+            case 14:
+            {
+                _floorL = label;
+                [_contentView addSubview:_floorL];
+                break;
+            }
+            case 15:
+            {
+                _decorateL = label;
+                [_contentView addSubview:_decorateL];
                 break;
             }
             default:
@@ -453,7 +838,7 @@
         }
     }
     
-    for (int i = 0 ; i < 7; i++) {
+    for (int i = 0 ; i < 9; i++) {
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
         btn.tag = i;
@@ -479,16 +864,14 @@
             }
             case 3:
             {
-                _areaBtn = [[BorderTF alloc] initWithFrame:btn.frame];
-                _areaBtn.unitL.text = @"㎡";
-                [_contentView addSubview:_areaBtn];
+                _floorTF1 = btn;
+                [_contentView addSubview:_floorTF1];
                 break;
             }
             case 4:
             {
-                _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
-                _priceBtn.unitL.text = @"万";
-                [_contentView addSubview:_priceBtn];
+                _floorTF2 = btn;
+                [_contentView addSubview:_floorTF2];
                 break;
             }
             case 5:
@@ -500,11 +883,47 @@
             case 6:
             {
                 _nextTimeBtn = btn;
-                [_contentView addSubview:_nextTimeBtn];
+                [_followView addSubview:_nextTimeBtn];
+                break;
+            }
+            case 7:
+            {
+                _officeLevelBtn = btn;
+                [_contentView addSubview:_officeLevelBtn];
+                break;
+            }
+            case 8:{
+                
+                _levelBtn = btn;
+                [_contentView addSubview:_levelBtn];
                 break;
             }
             default:
                 break;
+        }
+    }
+    
+    for (int i = 0; i < 3; i++) {
+        
+        BorderTF *tf = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 257 *SIZE, 33 *SIZE)];
+        if (i == 0) {
+            
+            _priceBtn = tf;
+            _priceBtn.unitL.text = @"万";
+            _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_contentView addSubview:_priceBtn];
+        }else if (i == 1){
+            
+            _areaBtn = tf;
+            _areaBtn.unitL.text = @"㎡";
+            _areaBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_contentView addSubview:_areaBtn];
+        }else{
+            
+            _yearTF = tf;
+            _yearTF.unitL.text = @"年";
+            _yearTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            [_contentView addSubview:_yearTF];
         }
     }
     
@@ -523,22 +942,22 @@
             _wayColl.bounces = NO;
             _wayColl.delegate = self;
             _wayColl.dataSource = self;
-            [_wayColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
+            [_wayColl registerClass:[LookMaintainDetailAddFollowCell class] forCellWithReuseIdentifier:@"LookMaintainDetailAddFollowCell"];
             [_contentView addSubview:_wayColl];
         }else if (i == 1){
             
-            _levelFlowLayout = flowLayout;
-            _levelFlowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
-            _levelFlowLayout.minimumLineSpacing = 5 *SIZE;
-            _levelFlowLayout.minimumInteritemSpacing = 0;
+            _comercialFlowLayout = flowLayout;
+            _comercialFlowLayout.estimatedItemSize = CGSizeMake(100 *SIZE, 20 *SIZE);
+            _comercialFlowLayout.minimumLineSpacing = 5 *SIZE;
+            _comercialFlowLayout.minimumInteritemSpacing = 0;
             
-            _levelColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_levelFlowLayout];
-            _levelColl.backgroundColor = [UIColor whiteColor];
-            _levelColl.delegate = self;
-            _levelColl.dataSource = self;
-            _levelColl.bounces = NO;
-            [_levelColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
-            [_contentView addSubview:_levelColl];
+            _comercialColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:_comercialFlowLayout];
+            _comercialColl.backgroundColor = [UIColor whiteColor];
+            _comercialColl.delegate = self;
+            _comercialColl.dataSource = self;
+            _comercialColl.bounces = NO;
+            [_comercialColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
+            [_contentView addSubview:_comercialColl];
         }else{
             
             _payFlowLayout = flowLayout;
@@ -556,12 +975,79 @@
         }
     }
     
+    _tagView = [[AddTagView alloc] initWithFrame:CGRectMake(0, 757 *SIZE, SCREEN_Width, 127 *SIZE)];
+    
+    _tagView.dataArr = [NSMutableArray arrayWithArray:_dataArr];
+    [_tagView reloadInputViews];
+    WS(weak);
+    _tagView.addBtnBlock = ^{
+        
+        AddTagVC *nextVC = [[AddTagVC alloc] initWithArray:weak.tagView.dataArr];
+        
+        nextVC.saveBtnBlock = ^(NSArray *array) {
+            
+            weak.tagView.dataArr = [NSMutableArray arrayWithArray:array];
+            [weak.tagView.tagColl reloadData];
+            [weak.tagView reloadInputViews];
+        };
+        [weak.navigationController pushViewController:nextVC animated:YES];
+        
+    };
+    [_scrollView addSubview:_tagView];
+    
+    _collHeader = [[BlueTitleMoreHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+    _collHeader.titleL.text = @"配套设施";
+    [_collHeader.moreBtn setTitle:@"" forState:UIControlStateNormal];
+    [_collHeader.moreBtn setImage:[UIImage imageNamed:@"add_40"] forState:UIControlStateNormal];
+    WS(weakSelf);
+    SS(strongSelf);
+    _collHeader.blueTitleMoreHeaderBlock = ^{
+        
+        AddEquipmentVC *nextVC;
+        if ([strongSelf.property isEqualToString:@"商铺"]) {
+            
+            nextVC = [[AddEquipmentVC alloc] initWithType:2];
+        }else if ([strongSelf.property isEqualToString:@"写字楼"]){
+            
+            nextVC = [[AddEquipmentVC alloc] initWithType:3];
+        }
+        nextVC.data = strongSelf->_dataArr;
+        nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
+            
+            strongSelf->_dataArr = [NSMutableArray arrayWithArray:data];
+            [strongSelf->_facilityColl reloadData];
+            [strongSelf->_facilityColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(strongSelf->_CollView).offset(0 *SIZE);
+                make.top.equalTo(strongSelf->_CollView).offset(40 *SIZE);
+                make.width.mas_equalTo(SCREEN_Width);
+                make.height.mas_equalTo(strongSelf->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+                make.bottom.equalTo(strongSelf->_CollView.mas_bottom).offset(0 *SIZE);
+            }];
+            
+        };
+        [weakSelf.navigationController pushViewController:nextVC animated:YES];
+    };
+    [_CollView addSubview:_collHeader];
+    
+    _facilityLayout = [[UICollectionViewFlowLayout alloc] init];
+    _facilityLayout.estimatedItemSize = CGSizeMake(72 *SIZE, 72 *SIZE);
+    _facilityLayout.minimumLineSpacing = 20 *SIZE;
+    _facilityLayout.minimumInteritemSpacing = 0;
+    
+    _facilityColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40 *SIZE, SCREEN_Width, 87 *SIZE) collectionViewLayout:_facilityLayout];
+    _facilityColl.backgroundColor = [UIColor whiteColor];
+    _facilityColl.delegate = self;
+    _facilityColl.dataSource = self;
+    [_facilityColl registerClass:[StoreViewCollCell class] forCellWithReuseIdentifier:@"StoreViewCollCell"];
+    [_CollView addSubview:_facilityColl];
+    
     _contentTV = [[UITextView alloc] init];
     _contentTV.layer.borderColor = YJBackColor.CGColor;
     _contentTV.layer.cornerRadius = 5 *SIZE;
     _contentTV.clipsToBounds = YES;
     _contentTV.layer.borderWidth = SIZE;
-    [_contentView addSubview:_contentTV];
+    [_followView addSubview:_contentTV];
 
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commitBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
@@ -576,7 +1062,28 @@
     [_commitBtn setBackgroundColor:YJBlueBtnColor];
     [_scrollView addSubview:_commitBtn];
     
+    _typeBtn.content.text = self.property;
+    if ([self.property isEqualToString:@"商铺"]) {
+        
+        _typeBtn->str = @"2";
+        _purposeL.text = @"购买用途：";
+    }else if ([self.property isEqualToString:@"写字楼"]){
+        
+        _typeBtn->str = @"3";
+        _purposeL.text = @"购买用途：";
+    }else{
+        
+        _typeBtn->str = @"1";
+        _purposeL.text = @"置业目的：";
+    }
+    
+    if ([self.status integerValue] == 2) {
+        
+        _wayColl.userInteractionEnabled = NO;
+    }
+    
     [self masonryUI];
+    [self RemasonryUI];
 }
 
 - (void)masonryUI{
@@ -585,7 +1092,6 @@
        
         make.left.equalTo(self.view).offset(0);
         make.top.equalTo(self.view).offset(NAVIGATION_BAR_HEIGHT);
-//        make.width.mas_equalTo(SCREEN_Width);
         make.right.equalTo(self.view).offset(0);
         make.bottom.equalTo(self.view).offset(0);
     }];
@@ -635,73 +1141,44 @@
         make.height.mas_equalTo(_wayColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
     
-    [_progressL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_wayColl.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_progressContentL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(78 *SIZE);
-        make.top.equalTo(_wayColl.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(200 *SIZE);
-    }];
-    
-    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_progressContentL.mas_bottom).offset(40 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_progressContentL.mas_bottom).offset(29 *SIZE);
-        make.width.mas_equalTo(258 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
     [_levelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_purposeBtn.mas_bottom).offset(26 *SIZE);
+        make.top.equalTo(_wayColl.mas_bottom).offset(40 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_levelColl mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_levelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(76 *SIZE);
-        make.top.equalTo(_purposeBtn.mas_bottom).offset(25 *SIZE);
-        make.width.mas_equalTo(255 *SIZE);
-        make.height.mas_equalTo(_levelColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE * (_levelArr.count / 3 + 1) + 5 *SIZE);
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_wayColl.mas_bottom).offset(29 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_levelColl.mas_bottom).offset(40 *SIZE);
+        make.top.equalTo(_levelBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
     [_typeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_levelColl.mas_bottom).offset(29 *SIZE);
+        make.top.equalTo(_levelBtn.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
     
-    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
         make.top.equalTo(_typeBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(80 *SIZE);
         make.top.equalTo(_typeBtn.mas_bottom).offset(20 *SIZE);
@@ -712,41 +1189,11 @@
     [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(258 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_areaBtn.mas_bottom).offset(30 *SIZE);
-        make.width.mas_equalTo(65 *SIZE);
-    }];
-    
-    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(258 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-    }];
-    
-    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_contentView).offset(9 *SIZE);
         make.top.equalTo(_priceBtn.mas_bottom).offset(30 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
-    [_houseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(80 *SIZE);
         make.top.equalTo(_priceBtn.mas_bottom).offset(20 *SIZE);
@@ -754,62 +1201,579 @@
         make.height.mas_equalTo(33 *SIZE);
     }];
     
+#pragma mark -- 区分 --
+    
+#pragma mark -- 住宅 --
+    
+    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_houseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(10 *SIZE);
+        make.top.equalTo(_houseBtn.mas_bottom).offset(29 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_floorTF1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(81 *SIZE);
+        make.top.equalTo(_houseBtn.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(117 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_floorTF2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(222 *SIZE);
+        make.top.equalTo(_houseBtn.mas_bottom).offset(19 *SIZE);
+        make.width.equalTo(@(117 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+
+    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_floorTF1.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_floorTF1.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_decorateBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_decorateBtn.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+#pragma mark -- 商铺 --
+    
+    [_commercialL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(26 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_comercialColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(76 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(255 *SIZE);
+        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+        make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+    }];
+    
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_comercialColl.mas_bottom).offset(40 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_comercialColl.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+#pragma mark -- 写字楼 --
+    
+    [_officeLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_officeLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_officeLevelBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_officeLevelBtn.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(30 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_yearTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
     [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_houseBtn.mas_bottom).offset(26 *SIZE);
+        make.top.equalTo(_yearTF.mas_bottom).offset(26 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
     [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_contentView).offset(76 *SIZE);
-        make.top.equalTo(_houseBtn.mas_bottom).offset(25 *SIZE);
+        make.top.equalTo(_yearTF.mas_bottom).offset(25 *SIZE);
         make.width.mas_equalTo(255 *SIZE);
-        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE * (_payArr.count / 2 + 1));
+        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+        make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+    }];
+    
+#pragma mark -- 区分 --
+    [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(26 *SIZE);
+        make.width.mas_equalTo(65 *SIZE);
+    }];
+    
+    [_payColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_contentView).offset(76 *SIZE);
+        make.top.equalTo(_purposeBtn.mas_bottom).offset(25 *SIZE);
+        make.width.mas_equalTo(255 *SIZE);
+        make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+        make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+    }];
+    
+#pragma mark -- 区分 --
+    
+#pragma mark -- 住宅 --
+    [_tagView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_contentView.mas_bottom).offset(10 *SIZE);
+        make.right.equalTo(_scrollView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
+        make.height.equalTo(@(127 *SIZE));
+    }];
+    
+#pragma mark -- 商铺、写字楼 --
+    
+    [_CollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_contentView.mas_bottom).offset(10 *SIZE);
+        make.right.equalTo(_scrollView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
+        make.height.equalTo(@(127 *SIZE));
+    }];
+    
+    [_facilityColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_CollView).offset(0 *SIZE);
+        make.top.equalTo(self->_CollView).offset(40 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+        make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
+    }];
+    
+#pragma mark -- 区分 --
+    
+    [_followView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_tagView.mas_bottom).offset(10 *SIZE);
+        make.right.equalTo(_scrollView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
     }];
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(40 *SIZE);
+        make.left.equalTo(_followView).offset(9 *SIZE);
+        make.top.equalTo(_followView).offset(20 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
     [_contentTV mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_payColl.mas_bottom).offset(29 *SIZE);
+        make.left.equalTo(_followView).offset(80 *SIZE);
+        make.top.equalTo(_followView).offset(10 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(77 *SIZE);
     }];
     
     [_nextTimeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(9 *SIZE);
+        make.left.equalTo(_followView).offset(9 *SIZE);
         make.top.equalTo(_contentTV.mas_bottom).offset(40 *SIZE);
         make.width.mas_equalTo(65 *SIZE);
     }];
     
     [_nextTimeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.left.equalTo(_followView).offset(80 *SIZE);
         make.top.equalTo(_contentTV.mas_bottom).offset(29 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
-        make.bottom.equalTo(_contentView.mas_bottom).offset(-33 *SIZE);
+        make.bottom.equalTo(_followView.mas_bottom).offset(-33 *SIZE);
     }];
     
     [_commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(_scrollView).offset(22 *SIZE);
-        make.top.equalTo(_contentView.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_followView.mas_bottom).offset(28 *SIZE);
         make.bottom.equalTo(_scrollView).offset(-43 *SIZE);
         make.width.mas_equalTo(317 *SIZE);
         make.height.mas_equalTo(40 *SIZE);
     }];
 }
 
+- (void)RemasonryUI{
+    
+    _houseBtn.hidden = YES;
+    _houseTypeL.hidden = YES;
+    _floorL.hidden = YES;
+    _floorTF1.hidden = YES;
+    _floorTF2.hidden = YES;
+    _decorateL.hidden = YES;
+    _decorateBtn.hidden = YES;
+    _tagView.hidden = YES;
+    _commercialL.hidden = YES;
+    _comercialColl.hidden = YES;
+    _CollView.hidden = YES;
+    _officeLevelL.hidden = YES;
+    _officeLevelBtn.hidden = YES;
+    _yearTF.hidden = YES;
+    _yearL.hidden = YES;
+    
+    _purposeBtn.content.text = @"";
+    [_dataArr removeAllObjects];
+    
+    [_facilityColl reloadData];
+    [_tagView.tagColl reloadData];
+    
+    if ([self.property isEqualToString:@"写字楼"]) {
+        
+        _purposeL.text = @"购买用途：";
+        _officeLevelL.hidden = NO;
+        _officeLevelBtn.hidden = NO;
+        _yearTF.hidden = NO;
+        _yearL.hidden = NO;
+        _CollView.hidden = NO;
+        [_officeLevelL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_officeLevelBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_purposeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_officeLevelBtn.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_purposeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_officeLevelBtn.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_yearL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_yearTF mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_payWayL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_yearTF.mas_bottom).offset(26 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_payColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(76 *SIZE);
+            make.top.equalTo(_yearTF.mas_bottom).offset(25 *SIZE);
+            make.width.mas_equalTo(255 *SIZE);
+            make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+            make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+        }];
+        
+        [_CollView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_scrollView).offset(0);
+            make.top.equalTo(_contentView.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(_scrollView).offset(0);
+            make.width.equalTo(@(SCREEN_Width));
+            make.height.equalTo(@(127 *SIZE));
+        }];
+        
+        [_facilityColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self->_CollView).offset(0 *SIZE);
+            make.top.equalTo(self->_CollView).offset(40 *SIZE);
+            make.width.mas_equalTo(SCREEN_Width);
+            make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+            make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
+        }];
+    }else if ([self.property isEqualToString:@"商铺"]){
+        
+        _purposeL.text = @"购买用途：";
+        _CollView.hidden = NO;
+        _commercialL.hidden = NO;
+        _comercialColl.hidden = NO;
+        
+        [_commercialL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(26 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_comercialColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(76 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(25 *SIZE);
+            make.width.mas_equalTo(255 *SIZE);
+            make.height.mas_equalTo(_comercialColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE * (_storeArr.count / 2 + 1));
+//            make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+        }];
+        
+        [_purposeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_comercialColl.mas_bottom).offset(40 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_purposeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_comercialColl.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_payWayL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(26 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_payColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(76 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(25 *SIZE);
+            make.width.mas_equalTo(255 *SIZE);
+            make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+            make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+        }];
+        
+        [_CollView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_scrollView).offset(0);
+            make.top.equalTo(_contentView.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(_scrollView).offset(0);
+            make.width.equalTo(@(SCREEN_Width));
+            make.height.equalTo(@(127 *SIZE));
+        }];
+        
+        [_facilityColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self->_CollView).offset(0 *SIZE);
+            make.top.equalTo(self->_CollView).offset(40 *SIZE);
+            make.width.mas_equalTo(SCREEN_Width);
+            make.height.mas_equalTo(self->_facilityColl.collectionViewLayout.collectionViewContentSize.height);
+            make.bottom.equalTo(self->_CollView.mas_bottom).offset(0 *SIZE);
+        }];
+        
+        [_followView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_scrollView).offset(0);
+            make.top.equalTo(_CollView.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(_scrollView).offset(0);
+            make.width.equalTo(@(SCREEN_Width));
+        }];
+
+    }else{
+        
+        _purposeL.text = @"置业目的：";
+        _houseBtn.hidden = NO;
+        _houseTypeL.hidden = NO;
+        _floorL.hidden = NO;
+        _floorTF1.hidden = NO;
+        _floorTF2.hidden = NO;
+        _decorateL.hidden = NO;
+        _decorateBtn.hidden = NO;
+        _tagView.hidden = NO;
+        [_houseTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_houseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_floorL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(10 *SIZE);
+            make.top.equalTo(_houseBtn.mas_bottom).offset(29 *SIZE);
+            make.width.equalTo(@(70 *SIZE));
+            make.height.equalTo(@(13 *SIZE));
+        }];
+        
+        [_floorTF1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(81 *SIZE);
+            make.top.equalTo(_houseBtn.mas_bottom).offset(19 *SIZE);
+            make.width.equalTo(@(117 *SIZE));
+            make.height.equalTo(@(33 *SIZE));
+        }];
+        
+        [_floorTF2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(222 *SIZE);
+            make.top.equalTo(_houseBtn.mas_bottom).offset(19 *SIZE);
+            make.width.equalTo(@(117 *SIZE));
+            make.height.equalTo(@(33 *SIZE));
+        }];
+        
+        [_decorateL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_floorTF1.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_decorateBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_floorTF1.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_purposeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_decorateBtn.mas_bottom).offset(30 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_purposeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(80 *SIZE);
+            make.top.equalTo(_decorateBtn.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(258 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+        }];
+        
+        [_payWayL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(9 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(26 *SIZE);
+            make.width.mas_equalTo(65 *SIZE);
+        }];
+        
+        [_payColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_contentView).offset(76 *SIZE);
+            make.top.equalTo(_purposeBtn.mas_bottom).offset(25 *SIZE);
+            make.width.mas_equalTo(255 *SIZE);
+            make.height.mas_equalTo(_payColl.collectionViewLayout.collectionViewContentSize.height + 15 *SIZE * (_payArr.count / 2 + 1));
+            make.bottom.equalTo(_contentView.mas_bottom).offset(-10 *SIZE);
+        }];
+        
+        [_tagView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_scrollView).offset(0);
+            make.top.equalTo(_contentView.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(_scrollView).offset(0);
+            make.width.equalTo(@(SCREEN_Width));
+            make.height.equalTo(@(127 *SIZE));
+        }];
+
+        [_followView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_scrollView).offset(0);
+            make.top.equalTo(_tagView.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(_scrollView).offset(0);
+            make.width.equalTo(@(SCREEN_Width));
+        }];
+    }
+}
 
 
 @end

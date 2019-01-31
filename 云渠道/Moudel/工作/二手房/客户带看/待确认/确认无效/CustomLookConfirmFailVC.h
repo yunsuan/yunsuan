@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^CustomLookConfirmFailVCBlock)(void);
+
 @interface CustomLookConfirmFailVC : BaseViewController
+
+@property (nonatomic, copy) CustomLookConfirmFailVCBlock customLookConfirmFailVCBlock;
+
+- (instancetype)initWithData:(NSDictionary *)data;
 
 @end
 

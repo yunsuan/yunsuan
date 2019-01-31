@@ -578,6 +578,22 @@
         
         [self.dataDic setValue:_rightTF.textfield.text forKey:@"right_office"];
     }
+    if (_dataArr.count) {
+        
+        NSString *str;
+        for (int i = 0; i < _dataArr.count; i++) {
+            
+            if (i == 0) {
+                
+                str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+            }else{
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+            }
+        }
+        if(str)
+            [self.dataDic setObject:str forKey:@"match_tags"];
+    }
     CompleteSurveyInfoVC2 *nextVC = [[CompleteSurveyInfoVC2 alloc] init];
     nextVC.completeSurveyInfoVCBlock2 = ^{
         

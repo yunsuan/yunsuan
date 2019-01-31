@@ -101,6 +101,7 @@
     _comfirmBtn.layer.cornerRadius = 2 *SIZE;
     _comfirmBtn.clipsToBounds = YES;
     _comfirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_comfirmBtn setBackgroundColor:YJBlueBtnColor];
     [_comfirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_comfirmBtn setTitle:@"去确认" forState:UIControlStateNormal];
     [self.contentView addSubview:_comfirmBtn];
@@ -168,6 +169,14 @@
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_timeL.mas_bottom).offset(9 *SIZE);
         make.width.mas_equalTo(250 *SIZE);
+    }];
+    
+    [_comfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(283 *SIZE);
+        make.top.equalTo(_codeL.mas_bottom).offset(41 *SIZE);
+        make.width.mas_equalTo(67 *SIZE);
+        make.height.mas_equalTo(30 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {

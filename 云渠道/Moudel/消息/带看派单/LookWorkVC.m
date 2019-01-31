@@ -85,7 +85,7 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"系统派单";
+    self.titleLabel.text = @"带看派单";
     self.line.hidden = YES;
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];

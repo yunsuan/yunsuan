@@ -1008,8 +1008,6 @@
                 [_infoView addSubview:_urgentSlider];
             }
         }
-        
-        
     }
     
     
@@ -1112,22 +1110,6 @@
                 break;
         }
     }
-    
-//    if ([_model.property_type integerValue]) {
-//
-//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",16]];
-//        NSArray *typeArr = dic[@"param"];
-//        for (NSUInteger i = 0; i < typeArr.count; i++) {
-//
-//            if ([typeArr[i][@"id"] integerValue] == [_model.property_type integerValue]) {
-//
-//                _houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
-//                _houseTypeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-//                break;
-//            }
-//        }
-//    }
     
     if (_model.total_price.length) {
         

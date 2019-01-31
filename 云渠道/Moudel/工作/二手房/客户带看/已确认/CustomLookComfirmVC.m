@@ -9,6 +9,7 @@
 #import "CustomLookComfirmVC.h"
 
 #import "CustomLookConfirmDetailVC.h"
+#import "LookMaintainDetailVC.h"
 
 #import "CustomLookConfirmCell.h"
 
@@ -119,6 +120,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
@@ -154,6 +159,13 @@
     cell.tag = indexPath.row;
     
     cell.dataDic = _dataArr[indexPath.row];
+    
+    cell.customLookConfirmCellBlock = ^(NSInteger index) {
+        
+        LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[index][@"take_id"]];
+        nextVC.edit = [NSString stringWithFormat:@"%@",_dataArr[index][@"is_edit"]];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
     
     return cell;
 }

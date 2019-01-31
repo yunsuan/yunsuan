@@ -35,20 +35,12 @@
         _sexImg.image = [UIImage imageNamed:@""];
     }
     
-//    if ([dataDic[@"take_num"] integerValue] == 0) {
-//
-//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：未带看"];
-//    }else if ([dataDic[@"take_num"] integerValue] == 1){
-//
-//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：首看"];
-//    }else{
-//
-//        _phaseL.text = [NSString stringWithFormat:@"带看阶段：%@看",dataDic[@"take_num"]];
-//    }
-    _phaseL.text = [NSString stringWithFormat:@"带看阶段：%@",dataDic[@"take_num"]];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"带看阶段：%@",dataDic[@"take_num"]]];
+    [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(5, attr.length - 5)];
+    _phaseL.attributedText = attr;
     _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
     _storeL.text = [NSString stringWithFormat:@"门店名称：%@",dataDic[@"store_name"]];
-    _timeL.text = [NSString stringWithFormat:@"接单日期：%@",dataDic[@"recommend_time"]];
+    _timeL.text = [NSString stringWithFormat:@"接单日期：%@",dataDic[@"accept_time"]];
     
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -80,6 +72,11 @@
 //    _typeL.font = [UIFont systemFontOfSize:12 *SIZE];
 //    _typeL.textAlignment = NSTextAlignmentRight;
 //    [self.contentView addSubview:_typeL];
+    
+    _storeL = [[UILabel alloc] init];
+    _storeL.textColor = YJTitleLabColor;
+    _storeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_storeL];
     
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJ86Color;
@@ -123,7 +120,7 @@
     [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
-        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(self.contentView).offset(10 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
@@ -138,7 +135,7 @@
         
         make.left.equalTo(self.contentView).offset(201 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(200 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
     }];
     
     [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -56,21 +56,21 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:HouseRecordValueDetail_URL parameters:@{@"survey_id":_recordId} success:^(id resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            [self SetData:resposeObject[@"data"]];
-        }else{
-            
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-        NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
-    }];
+//    [BaseRequest GET:HouseRecordValueDetail_URL parameters:@{@"survey_id":_recordId} success:^(id resposeObject) {
+//        
+//        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//            
+//            [self SetData:resposeObject[@"data"]];
+//        }else{
+//            
+//            [self showContent:resposeObject[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//        
+//        NSLog(@"%@",error);
+//        [self showContent:@"网络错误"];
+//    }];
 }
 
 

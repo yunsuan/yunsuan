@@ -39,6 +39,8 @@
 #import "SecondaryMatchCell.h"
 #import "SecondaryMatchCell2.h"
 #import "SecondaryMatchHeader.h"
+#import "SecAllRoomStoreEquipCell.h"
+#import "BaseHeader.h"
 
 #import "StoreListVC.h"
 
@@ -270,7 +272,7 @@
             NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
             [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                 
-                if ([key isEqualToString:@"region"] || [key isEqualToString:@"shop_type"] || [key isEqualToString:@"pay_type"]) {
+                if ([key isEqualToString:@"region"] || [key isEqualToString:@"shop_type"] || [key isEqualToString:@"pay_type"] || [key isEqualToString:@"match_tags"]) {
                     
                     if ([obj isKindOfClass:[NSArray class]]) {
                         
@@ -356,10 +358,6 @@
     
     if (_item == 0) {
         
-        if ([_customModel.client_property_type isEqualToString:@"商铺"] || [_customModel.client_property_type isEqualToString:@"写字楼"]) {
-            
-            return 2;
-        }
         return 3;
     }else{
         
@@ -445,6 +443,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
+    if (section == 1) {
+        
+        return SIZE;
+    }
     return CGFLOAT_MIN;
 }
 
@@ -522,24 +524,15 @@
 
             if (section == 1) {
 
-                if ([_customModel.client_property_type isEqualToString:@"商铺"]) {
+                if ([_customModel.client_property_type isEqualToString:@"商铺"] || [_customModel.client_property_type isEqualToString:@"写字楼"]) {
                     
-                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 36 *SIZE)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(28 *SIZE, 12 *SIZE, 100 *SIZE, 12 *SIZE)];
-                    label.textColor = YJContentLabColor;
-                    label.font = [UIFont systemFontOfSize:13 *SIZE];
-                    label.text = @"其他要求";
-                    [view addSubview:label];
-                    return view;
-                }else if ([_customModel.client_property_type isEqualToString:@"写字楼"]){
-                    
-                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 36 *SIZE)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(28 *SIZE, 12 *SIZE, 100 *SIZE, 12 *SIZE)];
-                    label.textColor = YJContentLabColor;
-                    label.font = [UIFont systemFontOfSize:13 *SIZE];
-                    label.text = @"其他要求";
-                    [view addSubview:label];
-                    return view;
+                    BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+                    if (!header) {
+                        
+                        header = [[BaseHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+                    }
+                    header.titleL.text = @"配套设施";
+                    return header;
                 }else{
                     
                     return nil;
@@ -720,68 +713,70 @@
             }
             return cell;
         }else{
-            
-            if ([_customModel.client_property_type isEqualToString:@"商铺"]) {
-                
-                CustomDetailTableCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomDetailTableCell5"];
-                if (!cell) {
-                    cell = [[CustomDetailTableCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomDetailTableCell5"];
-                }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                CustomRequireModel *model = _dataArr[0];
-                cell.contentL.text = model.comment;
-                return cell;
-            }else if ([_customModel.client_property_type isEqualToString:@"写字楼"]){
-                
-                CustomDetailTableCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomDetailTableCell5"];
-                if (!cell) {
-                    cell = [[CustomDetailTableCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomDetailTableCell5"];
-                }
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                CustomRequireModel *model = _dataArr[0];
-                cell.contentL.text = model.comment;
-                return cell;
-            }else{
-                
+
                 if (indexPath.section == 1) {
                     
-                    CustomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomDetailTableCell4"];
-                    if (!cell) {
+                    if ([_customModel.client_property_type isEqualToString:@"商铺"] || [_customModel.client_property_type isEqualToString:@"写字楼"]){
+                    
+                        SecAllRoomStoreEquipCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SecAllRoomStoreEquipCell"];
+                        if (!cell) {
+                            
+                            cell = [[SecAllRoomStoreEquipCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SecAllRoomStoreEquipCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
-                        cell = [[CustomDetailTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomDetailTableCell4"];
-                    }
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    cell.addBtn.hidden = YES;
-                    [cell.tagView removeFromSuperview];
-                    
-                    CustomRequireModel *model = _dataArr[indexPath.row];
-                    NSArray *arr =  [model.need_tags componentsSeparatedByString:@","];
-                    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-                    layout.itemSize = CGSizeMake(77 *SIZE, 30 *SIZE);
-                    layout.minimumInteritemSpacing = 11 *SIZE;
-                    layout.sectionInset = UIEdgeInsetsMake(0, 28 *SIZE, 0, 0);
-                    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-                    
-                    
-                    NSMutableArray *tagArr1 = [[NSMutableArray alloc] init];
-                    for (int i = 0; i < arr.count; i++) {
-                        [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                            if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
-                                [tagArr1 addObject:obj[@"param"]];
-                                *stop = YES;
-                            }
+                        CustomRequireModel *model = _dataArr[indexPath.row];
+                        cell.dataArr = model.match_tags;
+                        [cell.whiteView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(cell.contentView).offset(0 *SIZE);
+                            make.top.equalTo(cell.contentView).offset(SIZE);
+                            make.width.mas_equalTo(360 *SIZE);
+                            make.height.mas_equalTo(93 *SIZE);
+                            make.bottom.equalTo(cell.contentView).offset(0 *SIZE);
                         }];
+                        [cell.coll reloadData];
+                        return cell;
+                    }else{
+                        
+                        CustomDetailTableCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomDetailTableCell4"];
+                        if (!cell) {
+                            
+                            cell = [[CustomDetailTableCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomDetailTableCell4"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        cell.addBtn.hidden = YES;
+                        [cell.tagView removeFromSuperview];
+                        
+                        CustomRequireModel *model = _dataArr[indexPath.row];
+                        NSArray *arr =  [model.need_tags componentsSeparatedByString:@","];
+                        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+                        layout.itemSize = CGSizeMake(77 *SIZE, 30 *SIZE);
+                        layout.minimumInteritemSpacing = 11 *SIZE;
+                        layout.sectionInset = UIEdgeInsetsMake(0, 28 *SIZE, 0, 0);
+                        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                        
+                        
+                        NSMutableArray *tagArr1 = [[NSMutableArray alloc] init];
+                        for (int i = 0; i < arr.count; i++) {
+                            [_tagsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
+                                    [tagArr1 addObject:obj[@"param"]];
+                                    *stop = YES;
+                                }
+                            }];
+                        }
+                        cell.tagView = [[TagView2 alloc] initWithFrame:CGRectMake(0, 49 *SIZE, SCREEN_Width, 30 *SIZE) DataSouce:tagArr1 type:@"0" flowLayout:layout];
+                        [cell.contentView addSubview:cell.tagView];
+                        [cell.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
+                            make.left.equalTo(cell.contentView).offset(0);
+                            make.top.equalTo(cell.contentView).offset(49 *SIZE);
+                            make.height.equalTo(@(30 *SIZE));
+                            make.right.equalTo(cell.contentView).offset(0);
+                            make.bottom.equalTo(cell.contentView).offset(-39 *SIZE);
+                        }];
+                        return cell;
                     }
-                    cell.tagView = [[TagView2 alloc] initWithFrame:CGRectMake(0, 49 *SIZE, SCREEN_Width, 30 *SIZE) DataSouce:tagArr1 type:@"0" flowLayout:layout];
-                    [cell.contentView addSubview:cell.tagView];
-                    [cell.tagView mas_makeConstraints:^(MASConstraintMaker *make) {
-                        make.left.equalTo(cell.contentView).offset(0);
-                        make.top.equalTo(cell.contentView).offset(49 *SIZE);
-                        make.height.equalTo(@(30 *SIZE));
-                        make.right.equalTo(cell.contentView).offset(0);
-                        make.bottom.equalTo(cell.contentView).offset(-39 *SIZE);
-                    }];
-                    return cell;
                 }else{
                     CustomDetailTableCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomDetailTableCell5"];
                     if (!cell) {
@@ -792,7 +787,7 @@
                     cell.contentL.text = model.comment;
                     return cell;
                 }
-            }
+//            }
         }
     }else{
         

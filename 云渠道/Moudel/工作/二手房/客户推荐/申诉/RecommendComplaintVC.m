@@ -34,7 +34,7 @@
 
 - (void)initDataSource{
     
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"SystemWork" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"appeal" object:nil];
     _page = 1;
     _dataArr = [@[] mutableCopy];
 }
@@ -118,6 +118,10 @@
 
 - (void)SetData:(NSArray *)data{
     
+    if (data.count < 15) {
+        
+        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+    }
     for (int i = 0; i < data.count; i++) {
         
         NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];

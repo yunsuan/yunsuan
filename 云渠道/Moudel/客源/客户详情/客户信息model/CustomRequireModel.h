@@ -48,6 +48,8 @@
 
 @property (nonatomic, strong) NSMutableArray *region;
 
+@property (nonatomic, strong) NSMutableArray *match_tags;
+
 @property (nonatomic, strong) NSString *state;
 
 @property (nonatomic, strong) NSString *total_price;
