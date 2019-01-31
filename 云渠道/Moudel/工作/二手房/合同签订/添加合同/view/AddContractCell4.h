@@ -12,6 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AddContractCell4 : UITableViewCell
 //权益人
+@property (nonatomic , strong) UILabel *titelL;
+@property (nonatomic , strong) UILabel *nameL;
+@property (nonatomic , strong) UIImageView *seximg;
+@property (nonatomic , strong) UILabel *telL;
+@property (nonatomic , strong) UIButton *stickieBtn;
+@property (nonatomic , strong) UIView *line;
+- (void)setData:(NSMutableDictionary *)dataDic;
+
 @end
 
 NS_ASSUME_NONNULL_END

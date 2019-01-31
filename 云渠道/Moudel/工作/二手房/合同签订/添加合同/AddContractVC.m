@@ -21,6 +21,7 @@
 #import "AddContractCell4.h"
 #import "AddContractCell5.h"
 #import "AddContractCell6.h"
+#import "AddContractCell7.h"
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 
@@ -33,6 +34,8 @@
     NSMutableArray *_buyarr;
     NSMutableArray *_sellarr;
     NSDateFormatter *_formatter;
+    BOOL _ischoose;
+    BOOL _isadd;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -55,23 +58,25 @@
     
     _titleArr = @[@"交易信息",@"买方信息",@"卖方信息"];
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0"]];
-    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"0":@"",
-                                                               @"1":@"",
-                                                               @"2":@"",
-                                                               @"3":@"",
-                                                               @"4":@"",
-                                                               @"5":@"",
-                                                               @"6":@"",
-                                                               @"7":@"",
-                                                               @"8":@"",
-                                                               @"9":@"",
-                                                               @"10":@"",
-                                                               @"11":@""
-                                                               }];  //替换0～11为接口需要的键值
+    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"construct_code":@"",
+                                                               @"deal_money":@"",
+                                                               @"buy_breach":@"",
+                                                               @"sale_breach":@"",
+                                                               @"buy_brokerage":@"",
+                                                               @"sale_brokerage":@"",
+                                                               @"certificate_time":@"",
+                                                               @"mortgage_cancel_time":@"",
+                                                               @"pay_way":@"",
+                                                               @"sale_reason":@"",
+                                                               @"buy_reason":@"",
+                                                               @"comment":@""
+                                                               }];
     _buyarr =[NSMutableArray arrayWithArray:@[@""]];
     _sellarr =[NSMutableArray arrayWithArray:@[@""]];
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY/MM/dd"];
+//    _ischoose = NO;
+    _isadd = NO;
     
     
 }
@@ -97,9 +102,16 @@
         }
         else if(section ==1)
         {
-            return _buyarr.count;
+            if (_isadd) {
+
+                  return _buyarr.count+1;
+
+                
+            }else{
+                return _buyarr.count==1?1:_buyarr.count+1;
+            }
         }else{
-            return _sellarr.count;
+            return _sellarr.count==1?1:_sellarr.count+1;
         }
     }
     return 0;
@@ -261,39 +273,214 @@
     
     return cell;
     }else if (indexPath.section == 1) {
-    
-        AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
-        if (!cell) {
+#pragma mark   ---- 买方信息
+        if (indexPath.row ==0) {
+            if ([_buyarr[0] isEqual:@""]) {
+                AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
+                if (!cell) {
+                
+                    cell = [[AddContractCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell2"];
+                    [cell.addbtn addTarget:self action:@selector(action_addbuy) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
+                                  }
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    return cell;
+            }else{
+             if (_isadd == NO)
+            {
+                AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
+                    if (!cell) {
+                
+                        cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
+                
+                            }
+                [cell setDataDic:_buyarr[indexPath.row]];
+                [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }else{
+                
+                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                          if (!cell) {
+                
+                              cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                
+                          }
+                          NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
+                          [cell setData:dic];
+                            cell.stickieBtn.hidden = YES;
+                       cell.titelL.text = @"主权益人";
+                        
+                          cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                          return cell;
+            }}
+        }else if (indexPath.row==_buyarr.count)
+        {
+            AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
+            if (!cell) {
+                cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
+                          }
+            [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+            return cell;
+        }else{
+            AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+            if (!cell) {
+                cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+            }
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
+            [cell setData:dic];
+            if (indexPath.row ==1 &&_isadd ==NO) {
+                    cell.stickieBtn.hidden = YES;
+                cell.titelL.text = @"主权益人";
+                }
+            else{
+                cell.stickieBtn.hidden = NO;
+                cell.titelL.text = @"副权益人";
+                }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell = [[AddContractCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell2"];
-            [cell.addbtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
-            [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
+        }
+            
+
     }else {
+#pragma mark  --卖方信息
         
-        AddContractCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell3"];
-        if (!cell) {
+        
+        if (![_sellarr[0] isEqual:@""]) {
+            if (indexPath.row ==0) {
+                AddContractCell6 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell6"];
+                if (!cell) {
+                    
+                    cell = [[AddContractCell6 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell6"];
+
+                }
+                [cell setDataDic:_sellarr[indexPath.row]];
+                [cell.choosebtn addTarget:self action:@selector(action_chooseseller) forControlEvents:UIControlEventTouchUpInside];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }else if(indexPath.row ==_sellarr.count){
+                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"]; 
+                if (!cell) {
+                    
+                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
+                }
+                
+                [cell.addBtn addTarget:self action:@selector(action_addseller) forControlEvents:UIControlEventTouchUpInside];
+//                UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(action_addseller)];
+//                [cell.addImg addGestureRecognizer:tapGesturRecognizer];
+//
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }
+            else{
+                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                if (!cell) {
+                    
+                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                    
+                }
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sellarr[indexPath.row]];
+                [cell setData:dic];
+                if (indexPath.row ==1) {
+                    cell.stickieBtn.hidden = YES;
+                    cell.titelL.text = @"主权益人";
+                }
+                else{
+                    cell.stickieBtn.hidden = NO;
+                    cell.titelL.text = @"副权益人";
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }
+
+        }else{
+            AddContractCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell3"];
+            if (!cell) {
+                
+                cell = [[AddContractCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell3"];
+                [cell.choosebtn addTarget:self action:@selector(action_chooseseller) forControlEvents:UIControlEventTouchUpInside];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell = [[AddContractCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell3"];
-            [cell.choosebtn addTarget:self action:@selector(action_chooseseller) forControlEvents:UIControlEventTouchUpInside];
+            return cell;
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-       
-        return cell;
+
     }
 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
+    if (indexPath.section ==1) {
+        if (_isadd ==NO) {
+            if (indexPath.row>0&&indexPath.row<_buyarr.count+1) {
+                AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                    
+                };
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else{
+            if (indexPath.row>=0&&indexPath.row<_buyarr.count+1) {
+                AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                    
+                };
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        
+    }else if (indexPath.section ==2){
+        if (indexPath.row >0&&indexPath.row<_sellarr.count+1) {
+            AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+            vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                
+            };
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
 }
 
 
 #pragma mark  -----action-----
+
+-(void)action_addbuy
+{
+    _isadd = YES;
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        [_buyarr removeAllObjects];
+        [_buyarr addObject:dic];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 -(void)action_addbuyer
+{
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        [_buyarr addObject:dic];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+-(void)action_fixbuyer
+{
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+-(void)action_fixseller
 {
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -305,24 +492,62 @@
 
 -(void)action_addseller
 {
-//    MaintainModifyCustomVC *nextVC = [[MaintainModifyCustomVC alloc] init];
-////    nextVC.houseId = _houseId;
-//    nextVC.status = @"添加";
-//    nextVC.maintainModifyCustomVCBlock = ^(NSDictionary *dic) {
-//
-//    };
-//    [self.navigationController pushViewController:nextVC animated:YES];
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        [_sellarr addObject:dic];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)action_choosebuyer
 {
     ChooseCustomerVC *vc =[[ChooseCustomerVC alloc]init];
+    vc.ChooseCustomerblock = ^(NSDictionary * _Nonnull dic) {
+        [BaseRequest GET:TakePeopleList_URL
+              parameters:@{@"take_id":dic[@"take_id"],
+                           @"type":@"1"
+                           }
+                 success:^(id resposeObject) {
+                     if ([resposeObject[@"code"] integerValue]==200) {
+                         [_buyarr removeAllObjects];
+                         [_buyarr addObject:dic];
+                         [_buyarr addObjectsFromArray:resposeObject[@"data"]];
+                         [_table reloadData];
+                     }
+                     
+                     
+                 }
+                 failure:^(NSError *error) {
+                     
+                 }];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)action_chooseseller
 {
     ChooseHouseVC *vc =[[ChooseHouseVC alloc]init];
+    vc.ChooseHouseblock = ^(NSDictionary * _Nonnull dic) {
+        
+        
+        [BaseRequest GET:HousePeopleList_URL
+              parameters:@{@"house_id":dic[@"house_id"],
+                               @"type":@"1"
+                            }
+                 success:^(id resposeObject) {
+                     if ([resposeObject[@"code"] integerValue]==200) {
+                         [_sellarr removeAllObjects];
+                         [_sellarr addObject:dic];
+                         [_sellarr addObjectsFromArray:resposeObject[@"data"]];
+                         [_table reloadData];
+                     }
+                     
+            
+        }
+                 failure:^(NSError *error) {
+            
+        }];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

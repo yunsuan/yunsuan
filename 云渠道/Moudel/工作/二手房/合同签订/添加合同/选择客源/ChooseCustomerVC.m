@@ -38,29 +38,29 @@
 - (void)initDataSource{
     
     _dataArr = [@[] mutableCopy];
+    _search = @"";
 }
 
 - (void)RequestMethod{
     
     _table.mj_footer.state = MJRefreshStateIdle;
     _page = 1;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
     if (![self isEmpty:_search]) {
         
         [dic setObject:_search forKey:@"search"];
     }
-    [BaseRequest GET:HouseSurveyList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:TakeCustomerList_URL parameters:dic success:^(id resposeObject) {
         
         [_table.mj_header endRefreshing];
         NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            [_dataArr removeAllObjects];
-            [self SetData:resposeObject[@"data"][@"data"]];
-        }else{
-            
-            [self showContent:resposeObject[@"msg"]];
+        [_dataArr removeAllObjects];
+        _dataArr =[NSMutableArray arrayWithArray:resposeObject[@"data"][@"data"]]
+        ;
+        if ([resposeObject[@"data"][@"last_page"] integerValue]==1) {
+            _table.mj_footer.state = MJRefreshStateNoMoreData;
         }
+        [_table reloadData];
     } failure:^(NSError *error) {
         
         [_table.mj_header endRefreshing];
@@ -72,18 +72,21 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
     if (![self isEmpty:_search]) {
         
         [dic setObject:_search forKey:@"search"];
     }
-    [BaseRequest GET:HouseSurveyList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:TakeCustomerList_URL parameters:dic success:^(id resposeObject) {
         
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             
-            [self SetData:resposeObject[@"data"][@"data"]];
+            NSArray *arr=resposeObject[@"data"][@"data"];
+            [_dataArr addObjectsFromArray:arr];
+            [_table reloadData];
+
             if ([resposeObject[@"data"][@"data"] count] < 15) {
                 
                 _table.mj_footer.state = MJRefreshStateNoMoreData;
@@ -104,28 +107,7 @@
     }];
 }
 
-- (void)SetData:(NSArray *)data{
-    
-    
-//    for (int i = 0; i < data.count; i++) {
-//
-//        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
-//
-//        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//            if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                [tempDic setObject:@"" forKey:key];
-//            }else{
-//
-//                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
-//            }
-//        }];
-//      
-//    }
-    
-    [_table reloadData];
-}
+
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -137,8 +119,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-//    return _dataArr.count;
-    return 3;
+    return _dataArr.count;
+//    return 3;
     
 }
 
@@ -154,13 +136,17 @@
         
         cell = [[ChooseCustomerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ChooseCustomerCell"];
     }
+    [cell setDataDic:[NSMutableDictionary dictionaryWithDictionary:_dataArr[indexPath.row]]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [self.navigationController popViewControllerAnimated:YES];
+    if (self.ChooseCustomerblock != nil) {
+        self.ChooseCustomerblock(_dataArr[indexPath.row]);
+    }
    
 }
 
@@ -204,6 +190,9 @@
     _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
         [self RequestMethod];
+    }];
+    _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        [self RequestAddMethod];
     }];
 }
 

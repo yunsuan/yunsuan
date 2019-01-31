@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AddContractCell5 : UITableViewCell
-//客源信息
+//添加其他联系人
+@property (nonatomic, strong) UIButton *addBtn;
 @end
 
 NS_ASSUME_NONNULL_END

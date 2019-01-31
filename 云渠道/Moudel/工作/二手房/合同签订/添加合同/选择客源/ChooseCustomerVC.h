@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-typedef void(^ChooseCustomerBlock)(NSMutableArray *arr);
+typedef void(^ChooseCustomerBlock)(NSDictionary *dic);
 
 @interface ChooseCustomerVC : BaseViewController
 
