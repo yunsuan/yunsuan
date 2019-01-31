@@ -324,6 +324,7 @@
             [UserModel defaultModel].Password = _PassWord.text;
             [UserModel defaultModel].agent_id =resposeObject[@"data"][@"agent_id"];
             [UserModel defaultModel].agent_identity =resposeObject[@"data"][@"agent_identity"];
+            [UserModel defaultModel].store_identity =resposeObject[@"data"][@"store_identity"];
             [UserModelArchiver archive];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goHome" object:nil];
 

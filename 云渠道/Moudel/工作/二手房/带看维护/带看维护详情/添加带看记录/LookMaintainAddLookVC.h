@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^LookMaintainAddLookVCBlock)(void);
+typedef void(^LookMaintainAddLookVCBlock)(NSDictionary *dic);
 
 @interface LookMaintainAddLookVC : BaseViewController
 

@@ -287,8 +287,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.addLabel.text = @"添加带看";
-//            cell.dataDic = _takeHouseArr[indexPath.row];
-            
+
             return cell;
         }else{
 

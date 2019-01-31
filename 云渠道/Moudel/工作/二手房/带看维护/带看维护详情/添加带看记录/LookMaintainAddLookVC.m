@@ -8,15 +8,21 @@
 
 #import "LookMaintainAddLookVC.h"
 
+#import "LookMaintainDetailAddAppointVC.h"
+
+#import "DateChooseView.h"
+#import "SinglePickView.h"
+
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 
-@interface LookMaintainAddLookVC ()
+@interface LookMaintainAddLookVC ()<UITextFieldDelegate>
 {
     
     NSString *_houseTakeFollowId;
     NSDictionary *_dataDic;
     LookMaintainDetailAddAppointRoomModel *_model;
+    NSMutableArray *_agentArr;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -58,7 +64,7 @@
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) DropDownBtn *priceBtn;
+@property (nonatomic, strong) BorderTF *priceBtn;
 
 @property (nonatomic, strong) UILabel *payWayL;
 
@@ -73,6 +79,9 @@
 @property (nonatomic, strong) UITextView *markTV;
 
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, strong) NSDateFormatter *formatter;
+
 @end
 
 @implementation LookMaintainAddLookVC
@@ -92,8 +101,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initUI];
 
+}
+
+- (void)initDataSource{
+    
+    self.formatter = [[NSDateFormatter alloc] init];
+    [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    _agentArr = [@[] mutableCopy];
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -101,6 +118,65 @@
     switch (btn.tag) {
         case 0:
         {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否出价" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction *Yaction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                _offerBtn.content.text = @"是";
+                _payWayL.hidden = NO;
+                _payWayBtn.hidden = NO;
+                _priceL.hidden = NO;
+                _priceBtn.hidden = NO;
+                [_secLookL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_contentView).offset(10 *SIZE);
+                    make.top.equalTo(_payWayBtn.mas_bottom).offset(31 *SIZE);
+                    make.width.mas_equalTo(70 *SIZE);
+                }];
+                
+                [_secLookBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_contentView).offset(80 *SIZE);
+                    make.top.equalTo(_payWayBtn.mas_bottom).offset(21 *SIZE);
+                    make.width.mas_equalTo(257 *SIZE);
+                    make.height.mas_equalTo(33 *SIZE);
+                }];
+            }];
+            
+            UIAlertAction *Naction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                _offerBtn.content.text = @"否";
+                _payWayL.hidden = YES;
+                _payWayBtn.hidden = YES;
+                _priceL.hidden = YES;
+                _priceBtn.hidden = YES;
+                
+                [_secLookL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_contentView).offset(10 *SIZE);
+                    make.top.equalTo(_offerBtn.mas_bottom).offset(31 *SIZE);
+                    make.width.mas_equalTo(70 *SIZE);
+                }];
+                
+                [_secLookBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_contentView).offset(80 *SIZE);
+                    make.top.equalTo(_offerBtn.mas_bottom).offset(21 *SIZE);
+                    make.width.mas_equalTo(257 *SIZE);
+                    make.height.mas_equalTo(33 *SIZE);
+                }];
+            }];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+                
+            }];
+            [alert addAction:Yaction];
+            [alert addAction:Naction];
+            [alert addAction:cancel];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+                
+            }];
             break;
         }
         case 1:
@@ -109,10 +185,60 @@
         }
         case 2:
         {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:[self getDetailConfigArrByConfigState:PAY_WAY]];
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                _payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                _payWayBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
             break;
         }
         case 3:
         {
+            if (_agentArr.count) {
+                
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:_agentArr];
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    _secLookBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                    _secLookBtn->str = [NSString stringWithFormat:@"%@",ID];
+                };
+                [self.view addSubview:view];
+            }else{
+                
+                [BaseRequest GET:TakeMaintainFollowAgentList_URL parameters:nil success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        _agentArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+                        for (int i = 0; i < _agentArr.count; i++) {
+                            
+                            NSMutableDictionary *tempDic = [_agentArr[i] mutableCopy];
+                            [tempDic setObject:tempDic[@"agent_id"] forKey:@"id"];
+                            [tempDic setObject:tempDic[@"name"] forKey:@"param"];
+                            [tempDic removeObjectForKey:@"agent_id"];
+                            [tempDic removeObjectForKey:@"name"];
+                            
+                            [_agentArr replaceObjectAtIndex:i withObject:tempDic];
+                        }
+                        
+                        SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:_agentArr];
+                        view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                            
+                            _secLookBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+                            _secLookBtn->str = [NSString stringWithFormat:@"%@",ID];
+                        };
+                        [self.view addSubview:view];
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                   
+                    [self showContent:@"获取经纪人失败，请重试"];
+                }];
+            }
             break;
         }
         default:
@@ -123,11 +249,124 @@
 - (void)ActionCommitBtn:(UIButton *)btn{
     
     
+    if ([self isEmpty:self.favTV.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户中意点"];
+        return;
+    }
+    
+    if ([self isEmpty:self.resisTV.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户抗性"];
+        return;
+    }
+    
+    if ([self isEmpty:_intentTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户意向度"];
+        return;
+    }
+    
+    if (!_timeBtn.content.text.length) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择带看时间"];
+        return;
+    }
+    
+    if ([self isEmpty:_numTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写带看人数"];
+        return;
+    }
+    
+    NSMutableDictionary *dic = [@{} mutableCopy];
+    if ([_offerBtn.content.text isEqualToString:@"是"]) {
+        
+        if ([self isEmpty:_priceBtn.textfield.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写出价金额"];
+            return;
+        }
+        
+        if (!_payWayBtn.content.text.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+            return;
+        }
+        
+        if ([self isEmpty:_markTV.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
+            return;
+        }
+        [dic setObject:_priceBtn.textfield.text forKey:@"price"];
+        [dic setObject:_payWayBtn->str forKey:@"pay_way"];
+        
+    }else{
+        
+        if ([self isEmpty:_markTV.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
+            return;
+        }
+    }
+    if (_secLookBtn.content.text.length) {
+        
+        [dic setObject:_secLookBtn->str forKey:@"attach_agent_id"];
+    }
+    [dic setObject:_favTV.text forKey:@"client_like"];
+    [dic setObject:_resisTV.text forKey:@"client_dislike"];
+    [dic setObject:_intentTF.textfield.text forKey:@"intent"];
+    [dic setObject:_timeBtn.content.text forKey:@"take_time"];
+    [dic setObject:_numTF.textfield.text forKey:@"take_visit_num"];
+    [dic setObject:_markTV.text forKey:@"comment"];
+    [dic setObject:_model.house_id forKey:@"house_id"];
+    [dic setObject:_model forKey:@"model"];
+    if (self.lookMaintainAddLookVCBlock) {
+        
+        self.lookMaintainAddLookVCBlock(dic);
+    }
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[LookMaintainDetailAddAppointVC class]]) {
+            
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
 }
 
 - (void)ActionTimeBtn:(UIButton *)btn{
     
+    DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
     
+    view.pickerView.datePickerMode = UIDatePickerModeDateAndTime;
+
+    
+    __weak __typeof(&*self)weakSelf = self;
+    view.dateblock = ^(NSDate *date) {
+        
+        weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+    };
+    [self.view addSubview:view];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    if (textField == _intentTF.textfield) {
+        
+        if ([_intentTF.textfield.text integerValue] > 100) {
+            
+            _intentTF.textfield.text = @"100";
+        }
+        _intentTF.textfield.text = [NSString stringWithFormat:@"%ld",[_intentTF.textfield.text integerValue]];
+    }else if (textField == _numTF.textfield){
+        
+        if ([_numTF.textfield.text integerValue] > 10) {
+            
+            _numTF.textfield.text = @"10";
+        }
+        _numTF.textfield.text = [NSString stringWithFormat:@"%ld",[_numTF.textfield.text integerValue]];
+    }
 }
 
 - (void)initUI{
@@ -165,13 +404,14 @@
             case 0:
             {
                 _codeL = label;
-//                _codeL.text = [NSString stringWithFormat:@"%@",_model.ho]
+                _codeL.text = [NSString stringWithFormat:@"房源编号：%@",_model.house_code];
                 [_houseView addSubview:_codeL];
                 break;
             }
             case 1:
             {
                 _houseL = label;
+                _houseL.text = [NSString stringWithFormat:@"%@",_model.describe];
                 [_houseView addSubview:_houseL];
                 break;
             }
@@ -256,12 +496,15 @@
             case 0:
             {
                 _offerBtn = btn;
+                _offerBtn.content.text = @"是";
                 [_contentView addSubview:_offerBtn];
                 break;
             }
             case 1:
             {
-                _priceBtn = btn;
+                _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
+                _priceBtn.unitL.text = @"万";
+                _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_contentView addSubview:_priceBtn];
                 break;
             }
@@ -289,6 +532,7 @@
             
             _intentTF = tf;
             _intentTF.unitL.text = @"%";
+            _intentTF.textfield.delegate = self;
             _intentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_intentView addSubview:_intentTF];
         }else if (i == 1){
@@ -300,6 +544,7 @@
             
             _numTF = tf;
             _numTF.unitL.text = @"人";
+            _numTF.textfield.delegate = self;
             _numTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_intentView addSubview:_numTF];
         }
@@ -390,13 +635,13 @@
         
         make.left.equalTo(_intentView).offset(10 *SIZE);
         make.top.equalTo(_intentView).offset(18 *SIZE);
-        make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
 
     [_intentTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(80 *SIZE);
-        make.top.equalTo(_intentView.mas_bottom).offset(8 *SIZE);
+        make.left.equalTo(_intentView).offset(80 *SIZE);
+        make.top.equalTo(_intentView).offset(8 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
@@ -405,12 +650,12 @@
         
         make.left.equalTo(_intentView).offset(10 *SIZE);
         make.top.equalTo(_intentTF.mas_bottom).offset(18 *SIZE);
-        make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.left.equalTo(_intentView).offset(80 *SIZE);
         make.top.equalTo(_intentTF.mas_bottom).offset(8 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
@@ -420,13 +665,12 @@
         
         make.left.equalTo(_intentView).offset(10 *SIZE);
         make.top.equalTo(_timeBtn.mas_bottom).offset(18 *SIZE);
-        make.right.equalTo(_intentView.mas_right).offset(-10 *SIZE);
-        
+        make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_numTF mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_contentView).offset(80 *SIZE);
+        make.left.equalTo(_intentView).offset(80 *SIZE);
         make.top.equalTo(_timeBtn.mas_bottom).offset(8 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);

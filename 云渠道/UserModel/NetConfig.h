@@ -784,7 +784,11 @@ static NSString *const TakeMaintainFollowAdd_URL = @"agent/take/maintain/follow/
 //获取房源列表
 static NSString *const TakeMaintainFollowHouseList_URL = @"agent/take/maintain/follow/houseList";
 
+//获取门店经纪人
+static NSString *const TakeMaintainFollowAgentList_URL = @"agent/take/maintain/follow/agentList";
 
+//门店下项目列表
+static NSString *const TakeMaintainFollowProjectList_URL = @"agent/take/maintain/follow/projectList";
 
 #pragma mark -- 二手房合同  --
 //选择房源
