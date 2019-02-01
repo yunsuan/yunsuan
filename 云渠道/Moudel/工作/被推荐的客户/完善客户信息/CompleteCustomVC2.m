@@ -13,7 +13,7 @@
 #import "SinglePickView.h"
 #import "WorkerPickView.h"
 #import "DateChooseView.h"
-#import "RecommendVC.h"
+#import "RecommendVC1.h"
 #import "TypeOneVC.h"
 
 @interface CompleteCustomVC2 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
@@ -427,7 +427,7 @@
             
             for (UIViewController *vc in self.navigationController.viewControllers) {
                 
-                if ([vc isKindOfClass:[RecommendVC class]] || [vc isKindOfClass:[TypeOneVC class]]) {
+                if ([vc isKindOfClass:[RecommendVC1 class]] || [vc isKindOfClass:[TypeOneVC class]]) {
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
                     [self.navigationController popToViewController:vc animated:YES];
