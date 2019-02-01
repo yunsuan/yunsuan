@@ -561,7 +561,7 @@
                 }
             else{
                 cell.stickieBtn.hidden = NO;
-                cell.titelL.text = @"副权益人";
+                cell.titelL.text = @"附权益人";
                 }
             cell.indexpath = indexPath;
             cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
@@ -625,7 +625,7 @@
                 }
                 else{
                     cell.stickieBtn.hidden = NO;
-                    cell.titelL.text = @"副权益人";
+                    cell.titelL.text = @"附权益人";
                 }
                 cell.indexpath = indexPath;
                 cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
