@@ -186,7 +186,7 @@
     }
     _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同",@"合同签订"];
     _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
-    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"contract",@"takelook",@"contract",@"contract",@"signing"];
+    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"kehutuijian",@"takelook",@"daikanweihu",@"contract",@"signing"];
 }
 
 -(void)initUI

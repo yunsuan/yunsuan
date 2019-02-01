@@ -31,7 +31,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(post) name:@"reloadMessList" object:nil];
     
-    _data = @[@[@"systemmessage",@"系统消息",@"未读消息0条"],@[@"worknews",@"工作消息",@"未读消息0条"],@[@"Grabtheorder",@"勘察抢单",@"未读消息0条"],@[@"Grabtheorder",@"系统派单",@"未读消息0条"],@[@"Grabtheorder",@"带看派单",@"未读消息0条"]];
+    _data = @[@[@"systemmessage",@"系统消息",@"未读消息0条"],@[@"worknews",@"工作消息",@"未读消息0条"],@[@"Grabtheorder",@"勘察抢单",@"未读消息0条"],@[@"pingtaipaidan",@"勘察派单",@"未读消息0条"],@[@"daikanpaidan",@"带看派单",@"未读消息0条"]];
     
     [self initUI];
 
