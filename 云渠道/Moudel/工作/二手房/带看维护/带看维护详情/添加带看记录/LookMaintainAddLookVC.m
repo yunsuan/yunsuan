@@ -339,7 +339,7 @@
     
     DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
     
-    view.pickerView.datePickerMode = UIDatePickerModeDateAndTime;
+//    view.pickerView.datePickerMode = UIDatePickerModeDateAndTime;
 
     
     __weak __typeof(&*self)weakSelf = self;

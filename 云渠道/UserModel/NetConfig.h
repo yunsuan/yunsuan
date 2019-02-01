@@ -769,10 +769,10 @@ static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
 static NSString *const TakeMaintainHouseDetail_URL = @"agent/take/maintain/house/detail";
 
 //添加联系人
-static NSString *const TakeMaintainContactAdd_URL = @"take/maintain/contact/add";
+static NSString *const TakeMaintainContactAdd_URL = @"agent/take/maintain/contact/add";
 
 //删除联系人
-static NSString *const TakeMaintainContactDelete_URL = @"take/maintain/contact/delete";
+static NSString *const TakeMaintainContactDelete_URL = @"agent/take/maintain/contact/delete";
 
 //联系人修改排序
 static NSString *const TakeMaintainContactChangeSort_URL = @"agent/take/maintain/contact/changeSort";

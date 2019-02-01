@@ -47,7 +47,7 @@
     if ([needDic[@"property_type"] isEqualToString:@"商铺"]) {
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"商铺"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"商铺类型：%@",[needDic[@"shop_type"] componentsJoinedByString:@","]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -69,7 +69,7 @@
     }else if ([needDic[@"property_type"] isEqualToString:@"写字楼"]){
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"写字楼"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"写字楼等级：%@",needDic[@"office_level"]];
         _priceL.text = [NSString stringWithFormat:@"购买用途：%@",needDic[@"buy_use"]];
@@ -91,14 +91,28 @@
     }else{
         
         _propertyL.text = [NSString stringWithFormat:@"意向物业：%@",@"住宅"];
-        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@",needDic[@"total_price"]];
+        _purposeL.text = [NSString stringWithFormat:@"意向价格：%@元",needDic[@"total_price"]];
         _typeL.text = [NSString stringWithFormat:@"意向面积：%@㎡",needDic[@"area"]];
         _decorateL.text = [NSString stringWithFormat:@"意向户型：%@",needDic[@"house_type"]];
         _priceL.text = [NSString stringWithFormat:@"意向楼层：%@层-%@层",needDic[@"floor_min"],needDic[@"floor_max"]];
         _areaL.text = [NSString stringWithFormat:@"装修标准：%@",needDic[@"decorate"]];
         _houseTypeL.text = [NSString stringWithFormat:@"置业目的：%@",needDic[@"buy_purpose"]];
         _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",[needDic[@"pay_type"] componentsJoinedByString:@","]];
-        _markL.text = [NSString stringWithFormat:@"需求标签：%@",needDic[@"need_tags"]];
+        NSArray *arr = [needDic[@"need_tags"] componentsSeparatedByString:@","];
+        NSMutableArray *tempArr = [@[] mutableCopy];
+        NSArray *tagArr = [UserModelArchiver unarchive].Configdic[@"15"][@"param"];
+
+        for (int i = 0; i < arr.count; i++) {
+            
+            [tagArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
+                    [tempArr addObject:obj[@"param"]];
+                    *stop = YES;
+                }
+            }];
+        }
+        _markL.text = [NSString stringWithFormat:@"需求标签：%@",[tempArr componentsJoinedByString:@","]];
         _markL2.text = [NSString stringWithFormat:@"备注：%@",needDic[@"comment"]];
     }
 }
@@ -133,6 +147,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
+//        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
 //        label.textAlignment = <#NSTextAlignment#>;
         if (i == 0) {

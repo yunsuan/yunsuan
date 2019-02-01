@@ -412,12 +412,24 @@
         NSString *str;
         for (int i = 0; i < _dataArr.count; i++) {
             
-            if (i == 0) {
+            if ([self.property isEqualToString:@"住宅"]) {
                 
-                str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                if (i == 0) {
+                    
+                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"id"]];
+                }else{
+                    
+                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"id"]];
+                }
             }else{
                 
-                str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                if (i == 0) {
+                    
+                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                }else{
+                    
+                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                }
             }
         }
         if(str){
@@ -448,6 +460,10 @@
         
         [dic setObject:@"2" forKey:@"property_type"];
         
+        if (_purposeBtn.content.text.length) {
+            
+            [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+        }
         _store = @"";
         for (int i = 0; i < _selectStoreArr.count; i++) {
             
@@ -505,27 +521,27 @@
         
         [dic setObject:@"1" forKey:@"property_type"];
         
-        if (_houseBtn.content.text) {
+        if (_houseBtn.content.text.length) {
             
             [dic setObject:_houseBtn->str forKey:@"house_type"];
         }
         
-        if (_floorTF1.content.text) {
+        if (_floorTF1.content.text.length) {
             
             [dic setObject:_floorTF1->str forKey:@"floor_min"];
         }
         
-        if (_floorTF2.content.text) {
+        if (_floorTF2.content.text.length) {
             
             [dic setObject:_floorTF2->str forKey:@"floor_max"];
         }
         
-        if (_decorateBtn.content.text) {
+        if (_decorateBtn.content.text.length) {
             
             [dic setObject:_decorateBtn->str forKey:@"decorate"];
         }
         
-        if (_purposeBtn.content.text) {
+        if (_purposeBtn.content.text.length) {
             
             [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
         }
@@ -536,7 +552,7 @@
     [dic setObject:_timeContentL.text forKey:@"follow_time"];
     [dic setObject:_contentTV.text forKey:@"follow_comment"];
     [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
-    if (_levelBtn.content.text) {
+    if (_levelBtn.content.text.length) {
         
         [dic setObject:_levelBtn->str forKey:@"client_level"];
     }
@@ -994,10 +1010,24 @@
     }
     
     _tagView = [[AddTagView alloc] initWithFrame:CGRectMake(0, 757 *SIZE, SCREEN_Width, 127 *SIZE)];
-//    if ([_dataDic[@"need_tags"] length]) {
-//
-//        _dataArr = [NSMutableArray arrayWithArray:[[_dataDic[@"need_tags"] componentsSeparatedByString:@","] mutableCopy]];
-//    }
+    if ([_dataDic[@"need_tags"] length]) {
+
+        NSArray *arr = [_dataDic[@"need_tags"] componentsSeparatedByString:@","];
+        NSMutableArray *tempArr = [@[] mutableCopy];
+        NSArray *tagArr = [UserModelArchiver unarchive].Configdic[@"15"][@"param"];
+        
+        for (int i = 0; i < arr.count; i++) {
+            
+            [tagArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
+                    [tempArr addObject:obj];
+                    *stop = YES;
+                }
+            }];
+        }
+        _dataArr = [NSMutableArray arrayWithArray:tempArr];
+    }
     _tagView.dataArr = [NSMutableArray arrayWithArray:_dataArr];
     [_tagView reloadInputViews];
     WS(weak);
@@ -1007,6 +1037,7 @@
         
         nextVC.saveBtnBlock = ^(NSArray *array) {
             
+            _dataArr = [NSMutableArray arrayWithArray:array];
             weak.tagView.dataArr = [NSMutableArray arrayWithArray:array];
             [weak.tagView.tagColl reloadData];
             [weak.tagView reloadInputViews];
@@ -1660,10 +1691,24 @@
     _purposeBtn.content.text = @"";
     [_dataArr removeAllObjects];
     
-//    if ([_dataDic[@"need_tags"] length]) {
-//        
-//        _dataArr = [NSMutableArray arrayWithArray:[[_dataDic[@"need_tags"] componentsSeparatedByString:@","] mutableCopy]];
-//    }
+    if ([_dataDic[@"need_tags"] length]) {
+        
+        NSArray *arr = [_dataDic[@"need_tags"] componentsSeparatedByString:@","];
+        NSMutableArray *tempArr = [@[] mutableCopy];
+        NSArray *tagArr = [UserModelArchiver unarchive].Configdic[@"15"][@"param"];
+        
+        for (int i = 0; i < arr.count; i++) {
+            
+            [tagArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                if ([obj[@"id"] integerValue] == [arr[i] integerValue]) {
+                    [tempArr addObject:obj];
+                    *stop = YES;
+                }
+            }];
+        }
+        _dataArr = [NSMutableArray arrayWithArray:tempArr];
+    }
     if ([_dataDic[@"match_tags"] count]) {
         
         _dataArr = [NSMutableArray arrayWithArray:[_dataDic[@"match_tags"] mutableCopy]];

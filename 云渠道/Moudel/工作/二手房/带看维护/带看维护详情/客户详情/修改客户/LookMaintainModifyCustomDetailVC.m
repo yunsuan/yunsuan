@@ -108,7 +108,7 @@
     
     NSDictionary *tempDic = @{@"name":_nameTF.textfield.text,
                               @"sex":_gender,
-                              @"report_type":@""
+                              @"report_type":_typeId.length?_typeId:@"1"
                               //                              @"card_type":_cardType,
                               //                              @"card_id":_certNumTF.textfield.text,
                               //                              @"address":_addressTF.textfield.text
@@ -142,7 +142,7 @@
     if ([self.status isEqualToString:@"添加"]) {
         
         [dic setObject:self.houseId forKey:@"take_id"];
-        [BaseRequest POST:TakeMaintainContactAdd_URL parameters:dic success:^(id resposeObject) {
+        [BaseRequest GET:TakeMaintainContactAdd_URL parameters:dic success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
@@ -386,7 +386,7 @@
             case 2:
             {
                 _typeL = label;
-                [_whiteView addSubview:_typeL];
+//                [_whiteView addSubview:_typeL];
                 _typeBtn = btn;
                 if (self.dataDic.count) {
                     
@@ -402,7 +402,7 @@
                     _typeBtn.content.text = self.dataDic[@"report_type"];
                 }
                 [_typeBtn addTarget:self action:@selector(ActionTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
-                [_whiteView addSubview:_typeBtn];
+//                [_whiteView addSubview:_typeBtn];
                 break;
             }
             case 3:
@@ -410,6 +410,7 @@
                 _phoneL = label;
                 [_whiteView addSubview:_phoneL];
                 _phoneTF = textField;
+                _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
                 [_whiteView addSubview:_phoneTF];
                 break;
             }
@@ -419,6 +420,7 @@
                 _phoneL2.hidden = YES;
                 [_whiteView addSubview:_phoneL2];
                 _phoneTF2 = textField;
+                _phoneTF2.textfield.keyboardType = UIKeyboardTypePhonePad;
                 _phoneTF2.hidden = YES;
                 [_whiteView addSubview:_phoneTF2];
                 break;
@@ -442,6 +444,7 @@
                 _certNumL = label;
                 [_whiteView addSubview:_certNumL];
                 _certNumTF = textField;
+                _certNumTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_whiteView addSubview:_certNumTF];
                 break;
             }
