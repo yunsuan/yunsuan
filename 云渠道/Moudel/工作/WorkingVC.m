@@ -203,19 +203,13 @@
     WorkSelectView *view = [[WorkSelectView alloc] initWithFrame:CGRectMake(0, SCREEN_Height, SCREEN_Width, SCREEN_Height -STATUS_BAR_HEIGHT)];
 
     view.clickblook = ^(int selctnum) {
-//        _titlearr = [UserModel defaultModel].tagSelectArr;
-//
-//        self.selectIndex = selctnum;
-//        [self reloadData];
+
+        
     };
 
     view.hideblook = ^{
 
         [_MainTableView reloadData];
-//        _titlearr = [UserModel defaultModel].tagSelectArr;
-//        //        self.selectIndex = 0;
-//        [self reloadData];
-//        [self forceLayoutSubviews];
     };
     [[UIApplication sharedApplication].keyWindow addSubview:view];
     [view show];
@@ -236,7 +230,6 @@
 
             return 1;
         }
-
     }else if ([[UserModel defaultModel].workArr[section] isEqualToString:@"二手房"]){
 
         return 8;
@@ -246,8 +239,7 @@
     }
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
     return [UserModel defaultModel].workArr.count;
 }
@@ -258,7 +250,8 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 84*SIZE;
+    
+    return 84 *SIZE;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -321,8 +314,7 @@
         }
 
         [cell setTitle:_rentArr[indexPath.row] content:_rentCountData[indexPath.row] img:_secondImgArr[indexPath.row]];
-//        cell.titlelab.text = _rentArr[indexPath.row];
-//        cell.headimg.image = [UIImage imageNamed:_secondImgArr[indexPath.row]];
+
         return cell;
     }
 }
@@ -333,7 +325,7 @@
 
     if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"新房"]) {
 
-        if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
+        if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
             if (indexPath.row == 0) {
 
                 RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
@@ -387,28 +379,23 @@
             RoomSurveyVC *nextVC = [[RoomSurveyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 3){
+            
             CustomRecommendVC *nextVC = [[CustomRecommendVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
-            
         }else if (indexPath.row == 2){
             
             RoomMaintainVC *nextVC = [[RoomMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 4){
             
-
-            
             CustomLookVC *nextVC = [[CustomLookVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 5){
-            
 
-            
             LookMaintainVC *nextVC = [[LookMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 6){
             
-
             RoomAgencyVC *nextVC = [[RoomAgencyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
@@ -424,13 +411,14 @@
 #pragma mark  ---  懒加载   ---
 -(UITableView *)MainTableView
 {
-    if(!_MainTableView)
-    {
-        _MainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT+1*SIZE, 360*SIZE, SCREEN_Height-NAVIGATION_BAR_HEIGHT-1*SIZE - TAB_BAR_HEIGHT) style:UITableViewStyleGrouped];
+    if(!_MainTableView){
+        
+        _MainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + SIZE, 360 *SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT - SIZE - TAB_BAR_HEIGHT) style:UITableViewStyleGrouped];
         _MainTableView.backgroundColor = YJBackColor;
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
         _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+            
             _MainTableView.mj_header.state = MJRefreshStateIdle;
             [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
         }];
