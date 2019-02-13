@@ -7,6 +7,9 @@
 //
 
 #import "StoreDetailVC.h"
+
+#import "SecAllRoomDetailVC.h"
+
 #import "BaseHeader.h"
 #import "StoreDetailCell.h"
 #import "SecdaryAllTableCell.h"
@@ -65,14 +68,16 @@
     _recommendView.phoneTF.textfield.text = _tel;
     _recommendView.markTV.text =@"";
     [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
+    SS(strongSelf);
+    WS(weakSelf);
     _recommendView.recommendViewConfirmBlock = ^{
-        NSDictionary *dic = @{@"client_id":_client_id,
-                              @"store_id":_store_id,
-                              @"type":_type,
-                              @"name":_recommendView.nameTF.textfield.text,
-                              @"tel":_recommendView.phoneTF.textfield.text,
-                              @"sex":_recommendView.sexBtn->str,
-                              @"comment":_recommendView.markTV.text
+        NSDictionary *dic = @{@"client_id":strongSelf->_client_id,
+                              @"store_id":strongSelf->_store_id,
+                              @"type":strongSelf->_type,
+                              @"name":strongSelf->_recommendView.nameTF.textfield.text,
+                              @"tel":strongSelf->_recommendView.phoneTF.textfield.text,
+                              @"sex":strongSelf->_recommendView.sexBtn->str,
+                              @"comment":strongSelf->_recommendView.markTV.text
                               };
         
         [BaseRequest POST:SCReconment_URL parameters:dic success:^(id resposeObject) {
@@ -82,7 +87,7 @@
                 view.nameL.text = [NSString stringWithFormat:@"客户名称：%@",resposeObject[@"data"][@"client_name"]];
                 view.phoneL.text = [NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client_tel"]];
                 view.timeL.text = resposeObject[@"data"][@"recommend_time"];
-                [self.view addSubview:view];
+                [weakSelf.view addSubview:view];
             }
         } failure:^(NSError *error) {
             
@@ -146,33 +151,39 @@
 }
 
 - (void)requestMethodWithpage:(NSInteger )page{
+    
     NSString *pagestr = [NSString stringWithFormat:@"%ld",page];
     
+    if (page == 1) {
+        
+        _table.mj_footer.state = MJRefreshStateIdle;
+    }
     [BaseRequest GET:DetailStore_URl parameters:@{@"store_id":_store_id,
                                                   @"type":_type,
                                                   @"page":pagestr
                                                   }
              success:^(id resposeObject) {
                  NSLog(@"%@",resposeObject);
-                 [_table.mj_header endRefreshing];
-                 [_table.mj_footer endRefreshing];
+                 
                  if ([resposeObject[@"code"] integerValue]==200) {
 
                          _store_info = resposeObject[@"data"][@"store_info"];
-                    
-                     
+  
                      if (page ==1) {
+                         
                          [_dataArr removeAllObjects];
                      }
                      _numofhouse = resposeObject[@"data"][@"houseList"][@"total"] ;
                        [self SetData:resposeObject[@"data"][@"houseList"][@"data"]];
-                     if ([resposeObject[@"data"][@"houseList"][@"last_page"] integerValue] ==_page) {
+                     if ([resposeObject[@"data"][@"houseList"][@"last_page"] integerValue] == page) {
+                         [_table.mj_header endRefreshing];
                         _table.mj_footer.state = MJRefreshStateNoMoreData;
+                     }else{
+                         
+                         [_table.mj_header endRefreshing];
+                         [_table.mj_footer endRefreshing];
                      }
                  }
-                 
-        
-
     } failure:^(NSError *error) {
 
         [_table.mj_header endRefreshing];
@@ -316,11 +327,23 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    SecdaryAllTableModel *model = _dataArr[indexPath.row];
+    SecAllRoomDetailVC *nextVC = [[SecAllRoomDetailVC alloc] initWithHouseId:model.house_id city:@""];
+    nextVC.type = [model.type integerValue];
+    nextVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:nextVC animated:YES];
+}
+
 - (void)initUI{
      self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"门店详情";
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
+    _table.rowHeight = UITableViewAutomaticDimension;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _table.estimatedRowHeight = 120 *SIZE;
     _table.delegate = self;
     _table.dataSource = self;
     _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{

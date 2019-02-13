@@ -14,18 +14,30 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _numlab = [[UILabel alloc]initWithFrame:CGRectMake(29*SIZE, 20*SIZE, 200*SIZE, 13*SIZE)];
+        _numlab = [[UILabel alloc]init];//WithFrame:CGRectMake(29*SIZE, 20*SIZE, 200*SIZE, 13*SIZE)];
         _numlab.textColor = YJContentLabColor;
         _numlab.font =[UIFont systemFontOfSize:12*SIZE];
         [self.contentView addSubview:_numlab];
+        [_numlab mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(29 *SIZE);
+            make.top.equalTo(self.contentView).offset(20 *SIZE);
+            make.width.mas_equalTo(200*SIZE);
+        }];
+
         
 //                _numlab.text = @"门店编号：110256151215";
         
-        _namelab = [[UILabel alloc]initWithFrame:CGRectMake(29*SIZE, 43*SIZE, 200*SIZE, 13*SIZE)];
+        _namelab = [[UILabel alloc]init];//WithFrame:CGRectMake(29*SIZE, 43*SIZE, 200*SIZE, 13*SIZE)];
         _namelab.textColor = YJContentLabColor;
         _namelab.font = [UIFont systemFontOfSize:12*SIZE];
         [self.contentView addSubview:_namelab];
-        
+        [_namelab mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(29 *SIZE);
+            make.top.equalTo(_numlab.mas_bottom).offset(10 *SIZE);
+            make.width.mas_equalTo(200*SIZE);
+        }];
 //                _namelab.text  =@"门店名称：清江西路门店";
         
         _adresslab = [[UILabel alloc]init];//WithFrame:CGRectMake(93*SIZE, 61*SIZE, 180*SIZE, 13*SIZE)];
@@ -115,7 +127,7 @@
             make.top.equalTo(_peoplelab.mas_bottom).offset(10 *SIZE);
             make.width.mas_equalTo(85*SIZE);
             make.height.mas_equalTo(13*SIZE);
-           
+            make.bottom.equalTo(self.contentView.mas_bottom).offset(-10 *SIZE);
         }];
         
     }

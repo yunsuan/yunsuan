@@ -44,6 +44,7 @@
 
 #import "StoreDetailVC.h"
 #import "StoreListVC.h"
+#import "SecondryRecommnedStatusVC.h"
 
 #import "SHRecommenView.h"
 #import "SHRecomenSucessView.h"
@@ -395,15 +396,18 @@
             }
         }else{
             
-            if (section == 0) {
+            if ([self.customType isEqualToString:@"二手房"]) {
+                if (section == 0) {
+                    
+                    return 1;
+                }
+                CustomRequireModel *model = _dataArr[0];
+                return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
+            }else{
                 
                 return 0;
             }
-            if ([self.customType isEqualToString:@"二手房"]) {
-                CustomRequireModel *model = _dataArr[0];
-                return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
-            }
-            return 0;
+        
         }
     }
 }
@@ -993,6 +997,10 @@
                 vc.tel =_customModel.tel;;
                 vc.sex =_customModel.sex;;
                 [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                
+                SecondryRecommnedStatusVC *nextVC = [[SecondryRecommnedStatusVC alloc] initWithClientId:_model.client_id];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
         }
     }

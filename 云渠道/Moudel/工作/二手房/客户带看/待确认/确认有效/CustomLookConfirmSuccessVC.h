@@ -14,6 +14,8 @@ typedef void(^CustomLookConfirmSuccessVCBlock)(void);
 
 @interface CustomLookConfirmSuccessVC : BaseViewController
 
+@property (nonatomic, assign) BOOL isSelect;
+
 @property (nonatomic, copy) CustomLookConfirmSuccessVCBlock customLookConfirmSuccessVCBlock;
 
 - (instancetype)initWithDataDic:(NSDictionary *)dataDic;

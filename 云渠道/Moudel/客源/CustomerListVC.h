@@ -10,9 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^CustomerListVCBlock)(void);
+
 @interface CustomerListVC : BaseViewController
 
+@property (nonatomic, copy) CustomerListVCBlock customerListVCBlock;
+
 @property (nonatomic, assign) NSInteger status;
+
+@property (nonatomic, assign) BOOL isSelect;
 
 @property (nonatomic, assign) BOOL isMultiSelection;           /*singer和combination类型是否支持多选*/
 

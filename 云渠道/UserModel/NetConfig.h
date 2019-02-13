@@ -16,7 +16,7 @@
 //static NSString *const Base_Net = @"http://120.27.21.136:2798/";
 
 //基础接口正式
-static NSString *const TestBase_Net = @"http://120.78.69.178:2902/";
+//static NSString *const TestBase_Net = @"http://120.78.69.178:2902/";
 
 //基础接口测试
 //static NSString *const TestBase_Net = @"http://120.27.21.136:2798/";
@@ -189,6 +189,9 @@ static NSString *const GetRecord_URL = @"agent/client/getFollowList";
 
 //获取客户以推荐项目
 //static NSString *const GetStateList_URL = @"agent/client/getStateList";
+
+//客户已推荐门店
+static NSString *const TakeRecommendHis_URL = @"agent/take/recommend/his";
 
 //推荐客户
 static NSString *const RecommendClient_URL = @"agent/client/recommend";
@@ -764,6 +767,9 @@ static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
 
 //带看维护详情
 static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
+
+//直接添加带看维护
+static NSString *const TakeMaintainAdd_URL = @"agent/take/maintain/add";
 
 //带看房源带看记录
 static NSString *const TakeMaintainHouseDetail_URL = @"agent/take/maintain/house/detail";

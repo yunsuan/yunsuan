@@ -7,12 +7,14 @@
 //
 
 #import "CustomerListVC.h"
-#import "CustomerTableCell.h"
 #import "CustomDetailVC.h"
-#import "BoxView.h"
 #import "AddCustomerVC.h"
 #import "PYSearchViewController.h"
 #import "CustomSearchVC.h"
+#import "CustomLookConfirmSuccessVC.h"
+
+#import "CustomerTableCell.h"
+#import "BoxView.h"
 #import "AddressChooseView2.h"
 
 @interface CustomerListVC ()<UITableViewDelegate,UITableViewDataSource,PYSearchViewControllerDelegate>
@@ -415,12 +417,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
-    CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
-    nextVC.customType = model.client_type;
-    nextVC.hidesBottomBarWhenPushed = YES;
-    nextVC.model = model;
-    [self.navigationController pushViewController:nextVC animated:YES];
+    if (self.isSelect) {
+        
+        CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
+        CustomLookConfirmSuccessVC *nextVC = [[CustomLookConfirmSuccessVC alloc] initWithDataDic:@{@"client_name":model.name,@"client_tel":model.tel,@"client_id":model.client_id}];
+        nextVC.customLookConfirmSuccessVCBlock = ^{
+          
+            if (self.customerListVCBlock) {
+                
+                self.customerListVCBlock();
+            }
+        };
+        nextVC.isSelect = self.isSelect;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
+        CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
+        nextVC.customType = model.client_type;
+        nextVC.hidesBottomBarWhenPushed = YES;
+        nextVC.model = model;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
 }
 
 

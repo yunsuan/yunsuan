@@ -10,6 +10,7 @@
 
 #import "CustomLookVC.h"
 #import "LookWorkVC.h"
+#import "LookMaintainVC.h"
 
 #import "DropDownBtn.h"
 #import "DateChooseView.h"
@@ -75,46 +76,90 @@
         return;
     }
 
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"take_id":_dataDic[@"take_id"],
-                                                                               @"take_time":_dateBtn.content.text
-                                                                               }];
-    if (![self isEmpty:_reasonTV.text]) {
-
-        [dic setObject:_reasonTV.text forKey:@"take_comment"];
-    }
-    [BaseRequest GET:TakeConfirmValue_URL parameters:dic success:^(id resposeObject) {
-
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
-
-            [self alertControllerWithNsstring:@"温馨提示" And:@"确认成功" WithDefaultBlack:^{
-
-                if (self.customLookConfirmSuccessVCBlock) {
-
-                    self.customLookConfirmSuccessVCBlock();
-                }
-                for (UIViewController *vc in self.navigationController.viewControllers) {
-
-                    if ([vc isKindOfClass:[CustomLookVC class]]) {
-
-                        [self.navigationController popToViewController:vc animated:YES];
-                    }
-                    if ([vc isKindOfClass:[LookWorkVC class]]) {
-
-                        [self.navigationController popToViewController:vc animated:YES];
-                    }
-                }
-
-            }];
-        }else{
-
-            [self showContent:resposeObject[@"msg"]];
+    
+    if (self.isSelect) {
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataDic[@"client_id"],
+                                                                                   @"take_time":_dateBtn.content.text
+                                                                                   }];
+        if (![self isEmpty:_reasonTV.text]) {
+            
+            [dic setObject:_reasonTV.text forKey:@"take_comment"];
         }
-    } failure:^(NSError *error) {
-
-        [self showContent:@"网络错误"];
-        NSLog(@"%@",error);
-    }];
+        
+        [BaseRequest GET:TakeMaintainAdd_URL parameters:dic success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"添加成功" WithDefaultBlack:^{
+                    
+                    if (self.customLookConfirmSuccessVCBlock) {
+                        
+                        self.customLookConfirmSuccessVCBlock();
+                    }
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
+                        
+                        if ([vc isKindOfClass:[LookMaintainVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                    }
+                    
+                }];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            NSLog(@"%@",error);
+        }];
+    }else{
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"take_id":_dataDic[@"take_id"],
+                                                                                   @"take_time":_dateBtn.content.text
+                                                                                   }];
+        if (![self isEmpty:_reasonTV.text]) {
+            
+            [dic setObject:_reasonTV.text forKey:@"take_comment"];
+        }
+        
+        [BaseRequest GET:TakeConfirmValue_URL parameters:dic success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"确认成功" WithDefaultBlack:^{
+                    
+                    if (self.customLookConfirmSuccessVCBlock) {
+                        
+                        self.customLookConfirmSuccessVCBlock();
+                    }
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
+                        
+                        if ([vc isKindOfClass:[CustomLookVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                        if ([vc isKindOfClass:[LookWorkVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                    }
+                    
+                }];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            NSLog(@"%@",error);
+        }];
+    }
 }
 
 - (void)ActionTimeBtn:(UIButton *)btn{
