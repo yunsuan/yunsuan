@@ -51,7 +51,7 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"待确认",@"已确认",@"带看成交",@"带看失效"];
+    _titleArr = @[@"待确认",@"带看中",@"带看失效",@"带看完成"];
 }
 
 //- (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -197,18 +197,18 @@
     // 添加为self的子控制器
     [self addChildViewController:_customLookWaitVC];
     [self addChildViewController:_customLookComfirmVC];
-    [self addChildViewController:_lookDealVC];
     [self addChildViewController:_lookFailVC];
+    [self addChildViewController:_lookDealVC];
     
     _customLookWaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     _customLookComfirmVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _lookDealVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _lookFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _lookDealVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _lookFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
     [self.scrollView addSubview:_customLookWaitVC.view];
     [self.scrollView addSubview:_customLookComfirmVC.view];
-    [self.scrollView addSubview:_lookDealVC.view];
     [self.scrollView addSubview:_lookFailVC.view];
+    [self.scrollView addSubview:_lookDealVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;
 }

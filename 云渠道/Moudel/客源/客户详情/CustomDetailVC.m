@@ -626,7 +626,7 @@
                         header = [[SecondaryMatchHeader alloc] initWithReuseIdentifier:@"CustomTableListHeader"];
                     }
                     CustomRequireModel *model = _dataArr[0];
-                    header.numListL.text = [NSString stringWithFormat:@"匹配项目列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
+                    header.numListL.text = [NSString stringWithFormat:@"匹配小区列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
                     header.secondaryMatchHeaderMoreBlock = ^{
                         StoreListVC *nextVC = [[StoreListVC alloc] init];
                         if ([_customType isEqualToString:@"二手房"]) {

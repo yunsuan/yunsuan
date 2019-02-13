@@ -69,7 +69,7 @@
         [self.contentView addSubview:_recomentBtn];
         
         
-        UIView *lane = [[UIView alloc]initWithFrame:CGRectMake(0*SIZE, 109*SIZE, 360*SIZE, 1*SIZE)];
+        UIView *lane = [[UIView alloc]init];//WithFrame:CGRectMake(0*SIZE, 109*SIZE, 360*SIZE, 1*SIZE)];
         lane.backgroundColor = YJBackColor;
         [self.contentView addSubview:lane];
         
@@ -87,6 +87,15 @@
             make.top.equalTo(_adresslab.mas_bottom).offset(5 *SIZE);
             make.width.mas_equalTo(180*SIZE);
             make.height.mas_equalTo(13*SIZE);
+        }];
+        
+        [lane mas_makeConstraints:^(MASConstraintMaker *make) {
+           
+            make.left.equalTo(self.contentView).offset(0 *SIZE);
+            make.top.equalTo(self.contentView).offset(109 *SIZE);
+            make.width.mas_equalTo(SCREEN_Width);
+            make.height.mas_equalTo(SIZE);
+            make.bottom.equalTo(self.contentView).offset(0 *SIZE);
         }];
     }
     return self;

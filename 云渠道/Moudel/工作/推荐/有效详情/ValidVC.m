@@ -35,6 +35,7 @@
 {
     self =[super init];
     if (self) {
+        
         _clientid = ClientID;
     }
     return self;
@@ -42,6 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self post];
     [self initDataSouce];
     [self initUI];
