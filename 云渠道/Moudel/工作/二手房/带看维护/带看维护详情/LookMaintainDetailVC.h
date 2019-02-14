@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^LookMaintainDetailVCBlock)(void);
+
 @interface LookMaintainDetailVC : BaseViewController
+
+@property (nonatomic, copy) LookMaintainDetailVCBlock lookMaintainDetailVCBlock;
 
 @property (nonatomic, strong) NSString *edit;
 

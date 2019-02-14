@@ -238,6 +238,7 @@
 		0C8C97F22213F41900687AC8 /* SecondryRecommnedStatusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F12213F41900687AC8 /* SecondryRecommnedStatusVC.m */; };
 		0C8C97F52213F63100687AC8 /* SecondryStatusTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F42213F63100687AC8 /* SecondryStatusTableCell.m */; };
 		0C8C97F9221544E200687AC8 /* QuickAddLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F8221544E200687AC8 /* QuickAddLookMaintainVC.m */; };
+		0C8C97FD22155E2500687AC8 /* AbandonLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
 		0C92194C2092ECFC00EFE75C /* CustomMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C92194B2092ECFC00EFE75C /* CustomMatchModel.m */; };
@@ -1218,6 +1219,8 @@
 		0C8C97F42213F63100687AC8 /* SecondryStatusTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondryStatusTableCell.m; sourceTree = "<group>"; };
 		0C8C97F7221544E200687AC8 /* QuickAddLookMaintainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickAddLookMaintainVC.h; sourceTree = "<group>"; };
 		0C8C97F8221544E200687AC8 /* QuickAddLookMaintainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddLookMaintainVC.m; sourceTree = "<group>"; };
+		0C8C97FB22155E2500687AC8 /* AbandonLookMaintainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbandonLookMaintainVC.h; sourceTree = "<group>"; };
+		0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AbandonLookMaintainVC.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
 		0C920E8A21797C3C004B7F54 /* SlideBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideBottomView.m; sourceTree = "<group>"; };
 		0C920E8D2179AD6B004B7F54 /* MaintainFollowDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaintainFollowDetailVC.h; sourceTree = "<group>"; };
@@ -3541,6 +3544,7 @@
 		0C38825421F84C6F00359423 /* 带看维护详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0C8C97FA22155DFF00687AC8 /* 放弃带看 */,
 				0CB3E30622007F72007D71CF /* 预约看房 */,
 				0CB3E2F621FEEE45007D71CF /* 已看房源详情 */,
 				0C075E0221FB12B700BDD123 /* 添加带看记录 */,
@@ -3942,6 +3946,15 @@
 				0C8C97F8221544E200687AC8 /* QuickAddLookMaintainVC.m */,
 			);
 			path = "快速添加带看维护";
+			sourceTree = "<group>";
+		};
+		0C8C97FA22155DFF00687AC8 /* 放弃带看 */ = {
+			isa = PBXGroup;
+			children = (
+				0C8C97FB22155E2500687AC8 /* AbandonLookMaintainVC.h */,
+				0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */,
+			);
+			path = "放弃带看";
 			sourceTree = "<group>";
 		};
 		0C920E8621797C3C004B7F54 /* SlideSDK */ = {
@@ -7874,6 +7887,7 @@
 				0CDD704720D368D600D6609C /* RoomSurveyVC.m in Sources */,
 				0C28836C2107129B00F69C5F /* RentingReportAddVC.m in Sources */,
 				0CF04F4E207B399200A45F4A /* ComplaintCompleteVC.m in Sources */,
+				0C8C97FD22155E2500687AC8 /* AbandonLookMaintainVC.m in Sources */,
 				0C30631020CE7CB6004D1996 /* SecAllRoomDetailTableHeader.m in Sources */,
 				0CD90AAD20E246D900061B4A /* RoomAgencyAddProtocolCell3.m in Sources */,
 				0C28837921072AD800F69C5F /* RentingReportFailDetailVC.m in Sources */,

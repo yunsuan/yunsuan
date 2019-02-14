@@ -12,6 +12,7 @@
 #import "LookMaintainDetailLookRecordVC.h"
 #import "LookMaintainCustomDetailVC.h"
 #import "LookMaintainModifyCustomDetailVC.h"
+#import "AbandonLookMaintainVC.h"
 
 #import "LookMaintainDetailHeader.h"
 #import "LookMaintainDetailRoomCell.h"
@@ -121,7 +122,49 @@
     _takeHouseArr = [NSMutableArray arrayWithArray:data[@"take_house"]];
     
     [_mainTable reloadData];
+    self.rightBtn.hidden = NO;
 }
+
+
+- (void)ActionRightBtn:(UIButton *)btn{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+
+    
+//    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//
+//    }];
+    
+    UIAlertAction *soldout = [UIAlertAction actionWithTitle:@"放弃带看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        AbandonLookMaintainVC *nextVC = [[AbandonLookMaintainVC alloc] initWithData:_baseInfoDic];
+        nextVC.abandonLookMaintainVCBlock = ^{
+          
+            if (self.lookMaintainDetailVCBlock) {
+                
+                self.lookMaintainDetailVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    //    [alert addAction:protocol];
+//    [alert addAction:buy];
+    [alert addAction:soldout];
+    [alert addAction:cancel];
+    
+    [self.navigationController presentViewController:alert animated:YES completion:^{
+        
+        
+    }];
+}
+
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
@@ -554,6 +597,12 @@
 
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"带看详情";
+    
+//    self.rightBtn.hidden = NO;
+    [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+    self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightBtn setImage:[UIImage imageNamed:@"add_1"] forState:UIControlStateNormal];
 
     _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     _mainTable.estimatedRowHeight = 367 *SIZE;

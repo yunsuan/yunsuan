@@ -194,6 +194,7 @@
 
                 _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
+            [self.MainTableView reloadData];
         }else{
             
             [_MainTableView.mj_header endRefreshing];

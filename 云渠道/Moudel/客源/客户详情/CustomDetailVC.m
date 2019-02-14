@@ -401,8 +401,15 @@
                     
                     return 1;
                 }
-                CustomRequireModel *model = _dataArr[0];
-                return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
+                if (_dataArr.count) {
+                    
+                    CustomRequireModel *model = _dataArr[0];
+                    return [model.fit_info[@"fit_store_list"] count ] < 3? [model.fit_info[@"fit_store_list"] count ] : 3;
+                }else{
+                    
+                    return 0;
+                }
+                
             }else{
                 
                 return 0;

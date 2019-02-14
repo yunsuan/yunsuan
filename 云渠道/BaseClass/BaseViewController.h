@@ -68,7 +68,9 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     TAKE_APPEAL=55,//带看申述类型
     TAKE_REPORT_TYPE=56,//带看联系人类型
     BUY_HOUSE_RESON=57,//买房原因
-    SELL_HOUSE_RESON=58//卖房原因
+    SELL_HOUSE_RESON=58,//卖房原因
+    TAKE_DEAL_AGENT_IDENTITY=59,//带看合同签约人类型
+    TAKE_OVER_TYPE=60//终止带看类型
 };
 
 

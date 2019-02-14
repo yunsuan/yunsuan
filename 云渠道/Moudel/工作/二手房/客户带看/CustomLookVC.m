@@ -54,39 +54,39 @@
     _titleArr = @[@"待确认",@"带看中",@"带看失效",@"带看完成"];
 }
 
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-//
-//    NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
-//    switch (index) {
-//        case 0:
-//        {
-//            _customLookWaitVC.search = textField.text;
-//            [_customLookWaitVC RequestMethod];
-//            break;
-//        }
-//        case 1:
-//        {
-//            _.search = textField.text;
-//            [_roomSurveyingVC RequestMethod];
-//            break;
-//        }
-//        case 2:
-//        {
-//            _roomSurveyFailVC.search = textField.text;
-//            [_roomSurveyFailVC RequestMethod];
-//            break;
-//        }
-//        case 3:
-//        {
-//            _roomSurveySuccessVC.search = textField.text;
-//            [_roomSurveySuccessVC RequestMethod];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+    NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
+    switch (index) {
+        case 0:
+        {
+            _customLookWaitVC.search = textField.text;
+            [_customLookWaitVC RequestMethod];
+            break;
+        }
+        case 1:
+        {
+            _customLookComfirmVC.search = textField.text;
+            [_customLookComfirmVC RequestMethod];
+            break;
+        }
+        case 2:
+        {
+            _lookFailVC.search = textField.text;
+            [_lookFailVC RequestMethod];
+            break;
+        }
+        case 3:
+        {
+            _lookDealVC.search = textField.text;
+            [_lookDealVC RequestMethod];
+            break;
+        }
+        default:
+            break;
+    }
+    return YES;
+}
 
 #pragma mark -- collectionview
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -172,7 +172,7 @@
     self.scrollView.scrollEnabled = NO;
     [self.view addSubview:self.scrollView];
     // 设置scrollView的内容
-    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 5, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 80 *SIZE);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 4, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 80 *SIZE);
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;

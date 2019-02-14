@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *phoneL;
 
+@property (nonatomic, strong) UILabel *statusL;
+
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UILabel *sourceL;

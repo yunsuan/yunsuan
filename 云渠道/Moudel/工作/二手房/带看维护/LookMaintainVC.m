@@ -207,6 +207,10 @@
     
     LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
     nextVC.edit = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"is_edit"]];
+    nextVC.lookMaintainDetailVCBlock = ^{
+      
+        [self RequestMethod];
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

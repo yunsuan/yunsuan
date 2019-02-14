@@ -343,7 +343,16 @@
             _gender = @"";
         }
         _typeBtn.content.text = model.client_property_type;
-        _typeId = model.client_property_type;
+        if ([_typeBtn.content.text isEqualToString:@"商铺"]) {
+            
+            _typeId = @"2";
+        }else if ([_typeBtn.content.text isEqualToString:@"写字楼"]){
+            
+            _typeId = @"3";
+        }else{
+            
+            _typeId = @"1";
+        }
         _phoneTF.textfield.text = model.tel;
         _addressTF.text = model.address;
         if (model.region.count) {

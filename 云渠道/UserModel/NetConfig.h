@@ -760,6 +760,9 @@ static NSString *const RecommendButterDisabledList_URL = @"agent/take/recommend/
 //失效详情
 static NSString *const RecommendButterDisabledDetail_URL = @"agent/take/recommend/butter/disabled/detail";
 
+//完成列表
+static NSString *const RecommendButterFinishList_URL = @"agent/take/recommend/butter/finish/list";
+
 #pragma mark -- 二手房-工作 -- 带看维护
 
 //带看维护列表
@@ -767,6 +770,9 @@ static NSString *const TakeMaintainList_URL  = @"agent/take/maintain/list";
 
 //带看维护详情
 static NSString *const TakeMaintainDetail_URL = @"agent/take/maintain/detail";
+
+//放弃带看
+static NSString *const TakeMaintainHouseOver_URL = @"agent/take/maintain/house/over";
 
 //直接添加带看维护
 static NSString *const TakeMaintainAdd_URL = @"agent/take/maintain/add";
@@ -785,7 +791,6 @@ static NSString *const TakeMaintainContactChangeSort_URL = @"agent/take/maintain
 
 //修改联系人
 static NSString *const TakeMaintainContactUpdate_URL = @"agent/take/maintain/contact/update";
-
 
 //新增跟进
 static NSString *const TakeMaintainFollowAdd_URL = @"agent/take/maintain/follow/add";

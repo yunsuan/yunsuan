@@ -22,7 +22,7 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_name"]];
     if ([dataDic[@"client_sex"] integerValue] == 1) {
         
         _genderImg.image = [UIImage imageNamed:@"man"];
@@ -33,13 +33,13 @@
         
         _genderImg.image = [UIImage imageNamed:@""];
     }
-    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@""]];
-    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@""]];
-    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@""]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@""]];
-    _dealInfoL.text = [NSString stringWithFormat:@"成交信息：%@",dataDic[@""]];
-    _timeL.text = [NSString stringWithFormat:@"成交时间：%@",dataDic[@""]];
-    
+    _codeL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"take_code"]];
+    _phoneL.text = [NSString stringWithFormat:@"%@",dataDic[@"client_tel"]];
+    _typeL.text = [NSString stringWithFormat:@"物业类型：%@",dataDic[@"property_type"]];
+    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+//    _dealInfoL.text = [NSString stringWithFormat:@"成交信息：%@",dataDic[@""]];
+    _timeL.text = [NSString stringWithFormat:@"完成时间：%@",dataDic[@"update_time"]];
+    _statusL.text = [NSString stringWithFormat:@"当前状态：%@",dataDic[@"state"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -65,6 +65,12 @@
     _phoneL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneL];
     
+    _statusL = [[UILabel alloc] init];
+    _statusL.textColor = YJ86Color;
+    _statusL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _statusL.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:_statusL];
+    
     _codeL = [[UILabel alloc] init];
     _codeL.textColor = YJ86Color;
     _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
@@ -83,7 +89,7 @@
     _dealInfoL = [[UILabel alloc] init];
     _dealInfoL.textColor = YJ86Color;
     _dealInfoL.font = [UIFont systemFontOfSize:12 *SIZE];
-    [self.contentView addSubview:_dealInfoL];
+//    [self.contentView addSubview:_dealInfoL];
     
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJ86Color;
@@ -120,11 +126,18 @@
         make.width.mas_equalTo(150 *SIZE);
     }];
     
+    [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(250 *SIZE);
+        make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
     [_codeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(13 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
+        make.width.mas_equalTo(240 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -141,17 +154,17 @@
         make.width.mas_equalTo(100 *SIZE);
     }];
     
-    [_dealInfoL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_typeL.mas_bottom).offset(9 *SIZE);
-        make.width.mas_equalTo(250 *SIZE);
-    }];
+//    [_dealInfoL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(10 *SIZE);
+//        make.top.equalTo(_typeL.mas_bottom).offset(9 *SIZE);
+//        make.width.mas_equalTo(250 *SIZE);
+//    }];
     
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_dealInfoL.mas_bottom).offset(11 *SIZE);
+        make.top.equalTo(_typeL.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(250 *SIZE);
     }];
     
