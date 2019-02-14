@@ -763,6 +763,8 @@ static NSString *const RecommendButterDisabledDetail_URL = @"agent/take/recommen
 //完成列表
 static NSString *const RecommendButterFinishList_URL = @"agent/take/recommend/butter/finish/list";
 
+//完成详情
+static NSString *const RecommendButterFinishDetail_URL = @"agent/take/recommend/butter/finish/detail";
 #pragma mark -- 二手房-工作 -- 带看维护
 
 //带看维护列表

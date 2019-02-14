@@ -163,7 +163,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    LookDealDetailVC *nextVC = [[LookDealDetailVC alloc] initWithLookId:_dataArr[indexPath.row][@"look_id"]];
+    LookDealDetailVC *nextVC = [[LookDealDetailVC alloc] initWithLookId:_dataArr[indexPath.row][@"take_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
