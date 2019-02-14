@@ -30,7 +30,7 @@
     }];
    
     _codeL.text = [NSString stringWithFormat:@"合同编号%@",dataDic[@"deal_code"]];
-    _priceL.text =[NSString stringWithFormat:@"%@万",dataDic[@"price"]];
+    _priceL.text =[NSString stringWithFormat:@"%@",dataDic[@"deal_money"]];
     _areaL.text = dataDic[@"address"];
     _customL.text = [NSString stringWithFormat:@"客户：%@",dataDic[@"client_name"]];
     _ownerL.text = [NSString stringWithFormat:@"业主：%@",dataDic[@"owner_name"]];

@@ -10,6 +10,8 @@
 
 #import "ContractSignListCell.h"
 
+#import "ContractDetailVC.h"
+
 @interface ContractSignDoneVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSArray *_dataArr;
@@ -100,16 +102,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    AgencyDoneDetailVC *nextVC = [[AgencyDoneDetailVC alloc] init];
-    //    nextVC.sub_id = _dataArr[indexPath.row][@"sub_id"];
-    //    nextVC.agencyDoneDetailVCBlock = ^{
-    //
-    //        if (self.roomAgencyDoneVCBlock) {
-    //
-    //            self.roomAgencyDoneVCBlock();
-    //        }
-    //    };
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+    ContractDetailVC *next_vc = [[ContractDetailVC alloc]init];
+    next_vc.deal_id = _dataArr[indexPath.row][@"deal_id"];
+    [self.navigationController pushViewController:next_vc animated:YES];
 }
 
 - (void)initUI{
