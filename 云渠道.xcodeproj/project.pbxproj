@@ -703,6 +703,8 @@
 		10AEEE8F21A3E6A30049625B /* SelectWorkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE8D21A3E6A20049625B /* SelectWorkerView.m */; };
 		10AEEE9721A3E7340049625B /* ReportCustomConfirmView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9121A3E7340049625B /* ReportCustomConfirmView.m */; };
 		10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */; };
+		10AFF8AD221548C300657217 /* ContractHeader2.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AFF8AC221548C300657217 /* ContractHeader2.m */; };
+		10AFF8B02215496300657217 /* ContractHeader1.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AFF8AF2215496300657217 /* ContractHeader1.m */; };
 		10B2CAA5205A0D0900E814AC /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA3205A0D0900E814AC /* RegisterVC.m */; };
 		10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */; };
 		10B2CAAC205A1DFA00E814AC /* WorkingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAAB205A1DFA00E814AC /* WorkingCell.m */; };
@@ -2140,6 +2142,10 @@
 		10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportCustomSuccessView.m; sourceTree = "<group>"; };
 		10AEEE9421A3E7340049625B /* ReportCustomSuccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomSuccessView.h; sourceTree = "<group>"; };
 		10AEEE9521A3E7340049625B /* ReportCustomConfirmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportCustomConfirmView.h; sourceTree = "<group>"; };
+		10AFF8AB221548C300657217 /* ContractHeader2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractHeader2.h; sourceTree = "<group>"; };
+		10AFF8AC221548C300657217 /* ContractHeader2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader2.m; sourceTree = "<group>"; };
+		10AFF8AE2215496300657217 /* ContractHeader1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractHeader1.h; sourceTree = "<group>"; };
+		10AFF8AF2215496300657217 /* ContractHeader1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader1.m; sourceTree = "<group>"; };
 		10B2CAA3205A0D0900E814AC /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
 		10B2CAA4205A0D0900E814AC /* RegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterVC.h; sourceTree = "<group>"; };
 		10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordVC.m; sourceTree = "<group>"; };
@@ -7193,6 +7199,17 @@
 			path = "推荐-弹出框";
 			sourceTree = "<group>";
 		};
+		10AFF8A72215485A00657217 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				10AFF8AB221548C300657217 /* ContractHeader2.h */,
+				10AFF8AC221548C300657217 /* ContractHeader2.m */,
+				10AFF8AE2215496300657217 /* ContractHeader1.h */,
+				10AFF8AF2215496300657217 /* ContractHeader1.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		10B07C62216C4B0900E2D1C6 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -7338,6 +7355,7 @@
 		10F7D0D521F86C29007818E3 /* 合同详情 */ = {
 			isa = PBXGroup;
 			children = (
+				10AFF8A72215485A00657217 /* view */,
 				10F7D0D621F86C59007818E3 /* ContractDetailVC.h */,
 				10F7D0D721F86C59007818E3 /* ContractDetailVC.m */,
 			);
@@ -7899,6 +7917,7 @@
 				0C997C5721E44C3D00F805AA /* LookWorkDisabledCell.m in Sources */,
 				0CC19CF8206E21110007CC5F /* AuthenTableCell.m in Sources */,
 				0CA37B732088938C005609C7 /* AddTagViewCollCell.m in Sources */,
+				10AFF8AD221548C300657217 /* ContractHeader2.m in Sources */,
 				0C3062E320CE4ADD004D1996 /* SecdaryAllRoomVC.m in Sources */,
 				0CDD702B20D2685F00D6609C /* SingleContentCell.m in Sources */,
 				0C9CD40520FF2702004894A3 /* CountDownCell2.m in Sources */,
@@ -7992,6 +8011,7 @@
 				0C2D02AE20AD51A7002F1B4E /* AppealComplaintingVC.m in Sources */,
 				0CDD6FD620CF623D00D6609C /* OverviewVC.m in Sources */,
 				0CD909E320D8A66600061B4A /* SurveySuccessRoomDetailVC.m in Sources */,
+				10AFF8B02215496300657217 /* ContractHeader1.m in Sources */,
 				0CDD707620D3A79E00D6609C /* RoomSurveyingCell.m in Sources */,
 				10F7D0CB21F71179007818E3 /* ChooseCustomerCell.m in Sources */,
 				0CD90A3E20DA677600061B4A /* RoomAgencyDoneCell.m in Sources */,
