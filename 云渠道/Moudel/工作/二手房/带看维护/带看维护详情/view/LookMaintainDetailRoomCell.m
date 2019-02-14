@@ -59,7 +59,8 @@
     _compL.text = [NSString stringWithFormat:@"%@",dataDic[@"finish_state"]];
     _numL.text = [NSString stringWithFormat:@"带看次数：%@",dataDic[@"take_num"]];
     NSMutableAttributedString *attrPrice;
-    if ([dataDic[@"price"] integerValue] == 0) {
+    
+    if ([dataDic[@"list"][0][@"price"] integerValue] == 0) {
         
         attrPrice = [[NSMutableAttributedString alloc] initWithString:@"最新出价：未出价"];
     }else{
