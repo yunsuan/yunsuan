@@ -378,7 +378,12 @@
     _recommendView.phoneTF.textfield.text = _tel;
     _recommendView.markTV.text =@"";
     [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
+    WS(weakself);
     _recommendView.recommendViewConfirmBlock = ^{
+        if (![weakself checkTel:_recommendView.phoneTF.textfield.text] ) {
+            [weakself showContent:@"请输入正确的电话号码"];
+        }
+        else{
         NSDictionary *dic = @{@"client_id":_client_id,
                               @"store_id":[NSString stringWithFormat:@"%ld",sender.tag],
                               @"type":_type,
@@ -400,6 +405,7 @@
         } failure:^(NSError *error) {
             
         }];
+        }
     };
     
 }

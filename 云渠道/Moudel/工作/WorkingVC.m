@@ -184,7 +184,7 @@
         [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
         [UserModelArchiver archive];
     }
-    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同",@"合同签订"];
+    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同"];//,@"合同签订"];
     _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
     _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"kehutuijian",@"takelook",@"daikanweihu",@"contract",@"signing"];
 }
@@ -232,7 +232,7 @@
         }
     }else if ([[UserModel defaultModel].workArr[section] isEqualToString:@"二手房"]){
 
-        return 8;
+        return 7;
     }else{
 
         return 4;
