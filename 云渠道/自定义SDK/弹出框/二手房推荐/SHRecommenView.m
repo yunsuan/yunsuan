@@ -68,11 +68,13 @@
     
     _phoneL = [[UILabel alloc]initWithFrame:CGRectMake(20*SIZE, 98 *SIZE, 200 *SIZE, 13 *SIZE)];
     _phoneL.textColor = YJContentLabColor;
+
     _phoneL.font = [UIFont systemFontOfSize:12 *SIZE];
     _phoneL.text = @"联系方式:";
     [_whiteView addSubview:_phoneL];
     
     _phoneTF =  [[BorderTF alloc] initWithFrame:CGRectMake(80 *SIZE, 90 *SIZE, 150 *SIZE, 33 *SIZE)];
+    _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
     [_whiteView addSubview:_phoneTF];
     
     _sexL = [[UILabel alloc]initWithFrame:CGRectMake(20*SIZE, 138 *SIZE, 200 *SIZE, 13 *SIZE)];

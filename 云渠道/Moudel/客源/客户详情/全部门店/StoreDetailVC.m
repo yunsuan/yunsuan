@@ -71,6 +71,10 @@
     SS(strongSelf);
     WS(weakSelf);
     _recommendView.recommendViewConfirmBlock = ^{
+        
+        if (![weakSelf checkTel:_recommendView.phoneTF.textfield.text] ) {
+            [weakSelf showContent:@"请输入正确的电话号码"];
+        }else{
         NSDictionary *dic = @{@"client_id":strongSelf->_client_id,
                               @"store_id":strongSelf->_store_id,
                               @"type":strongSelf->_type,
@@ -92,6 +96,7 @@
         } failure:^(NSError *error) {
             
         }];
+        }
     };
     
 }

@@ -891,8 +891,12 @@
                         _recommendView.markTV.text =@"";
                         [_recommendView.sexBtn addTarget:self action:@selector(action_sex) forControlEvents:UIControlEventTouchUpInside];
                         SS(strongSelf);
+                        WS(weakself);
                         __strong __typeof(&*model)strongModel = model;
                         _recommendView.recommendViewConfirmBlock = ^{
+                            if (![weakself checkTel:_recommendView.phoneTF.textfield.text] ) {
+                                [weakself showContent:@"请输入正确的电话号码"];
+                            }else{
                             NSDictionary *dic = @{@"client_id":strongSelf->_customModel.client_id,
                                                   @"store_id":[NSString stringWithFormat:@"%@",strongModel.fit_info[@"fit_store_list"][index][@"store_id"]],
                                                   @"type":[strongSelf->_customType isEqualToString:@"二手房"]?@"1":@"2",
@@ -914,6 +918,7 @@
                             } failure:^(NSError *error) {
                                 
                             }];
+                            }
                         };
                     };
                     return cell;
