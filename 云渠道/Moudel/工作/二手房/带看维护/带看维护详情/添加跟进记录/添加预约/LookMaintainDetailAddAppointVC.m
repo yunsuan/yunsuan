@@ -147,7 +147,7 @@
         }];
     }else{
         
-        [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
+        [BaseRequest POST:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
             
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {

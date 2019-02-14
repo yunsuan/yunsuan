@@ -36,12 +36,20 @@
         _genderImg.image = [UIImage imageNamed:@""];
     }
     _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"tel"]];
-    if ([dataDic[@"total_price"] length]) {
+    
+    if ([dataDic[@"property_type"] integerValue] == 1) {
         
-        _contentL.text = [NSString stringWithFormat:@"%@万",dataDic[@"total_price"]];
+        _contentL.text = @"住宅";
+    }else if ([dataDic[@"property_type"] integerValue] == 2){
+        
+        _contentL.text = @"商铺";
     }else{
         
-        _contentL.text = @"0万";
+        _contentL.text = @"写字楼";
+    }
+    if ([dataDic[@"total_price"] length]) {
+        
+        _contentL.text = [NSString stringWithFormat:@"%@,%@万",_contentL.text,dataDic[@"total_price"]];
     }
     
     if ([dataDic[@"area"] length]) {
@@ -49,7 +57,7 @@
         _contentL.text = [NSString stringWithFormat:@"%@ %@㎡",_contentL.text,dataDic[@"area"]];
     }else{
         
-        _contentL.text = [NSString stringWithFormat:@"%@ 0㎡",_contentL.text];
+        
     }
     
 //    if ([dataDic[@"property_type"] length]) {
