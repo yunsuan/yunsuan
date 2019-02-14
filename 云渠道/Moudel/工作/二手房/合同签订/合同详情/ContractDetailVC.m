@@ -7,15 +7,18 @@
 //
 
 #import "ContractDetailVC.h"
+#import "ContractHeader1.h"
+#import "ContractHeader2.h"
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSInteger _index;
-    NSMutableArray *_contactArr;
-    NSMutableDictionary *_baseInfoDic;
-    NSMutableArray *_followArr;
-    NSMutableDictionary *_needInfoDic;
-    NSMutableArray *_takeHouseArr;
+    NSMutableArray *_agent_info;
+    NSMutableArray *_buy_info;
+    NSMutableDictionary *_deal_info;
+    NSMutableDictionary *_house_info;
+    NSMutableArray *_img;
+    NSMutableArray *_sell_info;
 }
 @property (nonatomic , strong) UITableView *mainTable;
 
@@ -45,15 +48,31 @@
 
 -(void)InitDataSouce
 {
+    _index = 0;
+    _agent_info =[NSMutableArray array];
+    _buy_info = [NSMutableArray array];
+    _deal_info = [NSMutableDictionary dictionary];
+    _house_info = [NSMutableDictionary dictionary];
+    _img = [NSMutableArray array];
+    _sell_info = [NSMutableArray array];
     [self Post];
 }
 
 -(void)Post{
     [BaseRequest GET:ContractDetail_URL parameters:@{@"deal_id":_deal_id} success:^(id resposeObject) {
         NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue]==200) {
+            _agent_info = resposeObject[@"data"][@"agent_info"];
+            _buy_info = resposeObject[@"data"][@"buy_info"];
+            _deal_info = resposeObject[@"data"][@"deal_info"];
+            _house_info = resposeObject[@"data"][@"house_info"];
+            _img = resposeObject[@"data"][@"img"];
+            _sell_info = resposeObject[@"data"][@"sale_info"];
+            [_mainTable reloadData];
+        }
         
     } failure:^(NSError *error) {
-        
+        [self showContent:@"网络错误"];
     }];
 }
 
@@ -96,19 +115,11 @@
 
 
 #pragma mark ---  delegeta ----
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    if (_baseInfoDic.count) {
-        
-        if (_index == 0) {
-            
-            return 2;
-        }
-        return 2;
-    }else{
-        
-        return 0;
-    }
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -117,20 +128,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    if (section == 0) {
-        
-        return UITableViewAutomaticDimension;
-    }else{
-        
-        if (_index == 0) {
-            
-            return SIZE;
-        }else{
-            
-            return CGFLOAT_MIN;
-        }
+    if (section==0) {
+        return 191*SIZE;
     }
+    else{
+        return 47*SIZE;
+    }
+    
     
 }
 
@@ -145,13 +149,75 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return [[UIView alloc] init];
+    if (section == 1) {
+        ContractHeader2 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader2"];
+        if (!header) {
+            
+            header = [[ContractHeader2 alloc] initWithReuseIdentifier:@"ContractHeader2"];
+        }
+        
+        [header.buyBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
+        [header.buyBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+        [header.sellBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
+        [header.sellBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+        [header.infoBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
+        [header.infoBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+    
+        [header.buyBtn setTitle:@"买方信息" forState:UIControlStateNormal];
+        [header.sellBtn setTitle:@"卖方信息" forState:UIControlStateNormal];
+        [header.infoBtn setTitle:@"交易信息" forState:UIControlStateNormal];
+        if (_index == 0) {
+            
+            [header.buyBtn setBackgroundColor:YJBlueBtnColor];
+            [header.buyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }else if (_index == 1){
+            
+            [header.sellBtn setBackgroundColor:YJBlueBtnColor];
+            [header.sellBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }else{
+            
+            [header.infoBtn setBackgroundColor:YJBlueBtnColor];
+            [header.infoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
+        
+        header.contractHeaderBlock  = ^(NSInteger index) {
+            
+            _index = index;
+            [tableView reloadData];
+        };
+        
+        return header;
+    }else{
+        ContractHeader1 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader1"];
+        if (!header) {
+            
+            header = [[ContractHeader1 alloc] initWithReuseIdentifier:@"ContractHeader1"];
+        }
+        header.numLab.text = [NSString stringWithFormat:@"交易编号：%@",_deal_info[@"deal_code"]];
+        header.creattimeLab.text =[NSString stringWithFormat:@"创建时间：%@",_deal_info[@"create_time"]];
+        if (![_deal_info[@"check_time"] isEqual: [NSNull null]]) {
+        header.passtimeLab.text = [NSString stringWithFormat:@"签约时间：%@",_deal_info[@"check_time"]];
+        }
+        else{
+            header.passtimeLab.text = @"";
+        }
+        header.peopleLab.text =[NSString stringWithFormat:@"签约人员：%@-%@",_deal_info[@"sub_agent"],_deal_info[@"store_name"]];
+        header.moneyLab.text =[NSString stringWithFormat:@"%@万",_deal_info[@"deal_money"]];
+        header.adressLab.text = [NSString stringWithFormat:@"%@ %@",_house_info[@"project_name"],_house_info[@"address"]];
+        header.roomLab.text = [NSString stringWithFormat:@"房间信息:%@-%@-%@",_house_info[@"build_name"],_house_info[@"unit_name"],_house_info[@"house_name"]];
+        header.buyLab.text = [NSString stringWithFormat:@"买房原因：%@",_deal_info[@"buy_reason"]];
+        header.sellLab.text = [NSString stringWithFormat:@"卖房原因：%@",_deal_info[@"sale_reason"]];
+
+        return header;
+    }
+    
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//
-//
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [[UITableViewCell alloc]init];
+    return cell;
+
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -170,12 +236,12 @@
         
     } WithDefaultBlack:^{
         
-        [BaseRequest POST:TakeMaintainContactDelete_URL parameters:@{@"contact_id":_contactArr[indexPath.row][@"contact_id"]} success:^(id resposeObject) {
-            
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+//        [BaseRequest POST:TakeMaintainContactDelete_URL parameters:@{@"contact_id":_contactArr[indexPath.row][@"contact_id"]} success:^(id resposeObject) {
+//
+//        } failure:^(NSError *error) {
+//
+//            [self showContent:@"网络错误"];
+//        }];
     }];
 }
 
