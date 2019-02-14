@@ -1171,7 +1171,7 @@
         if (i == 0) {
             
             _priceBtn = tf;
-            _priceBtn.unitL.text = @"元";
+            _priceBtn.unitL.text = @"万";
             _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_contentView addSubview:_priceBtn];
         }else if (i == 1){

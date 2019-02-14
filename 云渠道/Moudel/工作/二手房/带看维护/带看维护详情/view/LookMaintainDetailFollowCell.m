@@ -29,6 +29,13 @@
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"带看套数：%@",dataDic[@"take_num"]]];
     [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(5, attr.length - 5)];
     _numL.attributedText = attr;
+    if (![dataDic[@"follow_type"] isEqualToString:@"带看"]) {
+        
+        _numL.hidden = YES;
+    }else{
+        
+        _numL.hidden = NO;
+    }
     _nextTimeL.text = [NSString stringWithFormat:@"下次回访时间：%@",dataDic[@"next_follow_time"]];
 }
 
