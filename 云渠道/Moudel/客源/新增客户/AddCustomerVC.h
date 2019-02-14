@@ -11,6 +11,8 @@
 
 @interface AddCustomerVC : BaseViewController
 
+@property (nonatomic, assign) BOOL isSelect;
+
 @property (nonatomic, assign) NSInteger status;
 
 - (instancetype)initWithModel:(CustomerModel *)model;

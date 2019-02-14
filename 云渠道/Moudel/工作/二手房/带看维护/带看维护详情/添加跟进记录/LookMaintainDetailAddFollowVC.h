@@ -16,6 +16,10 @@ typedef void(^LookMaintainDetailAddFollowVCBlock)(void);
 
 @property (nonatomic, copy) LookMaintainDetailAddFollowVCBlock lookMaintainDetailAddFollowVCBlock;
 
+@property (nonatomic, assign) BOOL isSelect;
+
+@property (nonatomic, strong) NSString *clientId;
+
 @property (nonatomic, strong) NSString *property;
 
 @property (nonatomic, strong) NSString *status;

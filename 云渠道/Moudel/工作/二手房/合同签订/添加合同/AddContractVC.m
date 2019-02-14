@@ -74,7 +74,7 @@
     _buyarr =[NSMutableArray arrayWithArray:@[@""]];
     _sellarr =[NSMutableArray arrayWithArray:@[@""]];
     _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY/MM/dd"];
+    [_formatter setDateFormat:@"YYYY-MM-dd"];
 //    _ischoose = NO;
     _isadd = NO;
     

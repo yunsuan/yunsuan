@@ -97,7 +97,11 @@
 - (void)RequestMethod{
     
     NSMutableDictionary *dic = [@{} mutableCopy];
-    [dic setObject:_takeId forKey:@"take_id"];
+    if (!self.isSelect) {
+        
+        [dic setObject:_takeId forKey:@"take_id"];
+    }
+    
     [dic setObject:@"1" forKey:@"type"];
     [dic setObject:@(_page) forKey:@"page"];
     
@@ -138,7 +142,11 @@
 - (void)RequestAddMethod{
     
     NSMutableDictionary *dic = [@{} mutableCopy];
-    [dic setObject:_takeId forKey:@"take_id"];
+//    [dic setObject:_takeId forKey:@"take_id"];
+    if (!self.isSelect) {
+        
+        [dic setObject:_takeId forKey:@"take_id"];
+    }
     [dic setObject:@"1" forKey:@"type"];
     [dic setObject:@(_page) forKey:@"page"];
     

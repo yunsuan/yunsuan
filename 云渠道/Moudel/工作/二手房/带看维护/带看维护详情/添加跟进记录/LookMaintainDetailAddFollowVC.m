@@ -165,9 +165,9 @@
     
     if (_timeContentL) {
         
-        [self.formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+        [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
         _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
-        [self.formatter setDateFormat:@"YYYY/MM/dd"];
+        [self.formatter setDateFormat:@"YYYY-MM-dd"];
     }
 }
 
@@ -184,7 +184,7 @@
     _way = [self.status integerValue];
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY/MM/dd"];
+    [self.formatter setDateFormat:@"YYYY-MM-dd"];
     
     _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"}];
     _levelArr = [UserModelArchiver unarchive].Configdic[@"54"][@"param"];
@@ -366,246 +366,474 @@
 
 - (void)ActionCommitBtn:(UIButton *)btn{
     
-    NSMutableDictionary *dic = [@{} mutableCopy];
-    [dic setObject:_takeId forKey:@"take_id"];
-    [dic setObject:@"1" forKey:@"type"];
-//    if (!_levelBtn.content.text) {
-//
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择客户等级"];
-//        return;
-//    }
-    
-    if ([self isEmpty:_priceBtn.textfield.text]) {
+    if (self.isSelect) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
-        return;
-    }
-    
-    if ([self isEmpty:_areaBtn.textfield.text]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
-        return;
-    }
-    _payWay = @"";
-    for (int i = 0; i < _paySelectArr.count; i++) {
+        NSMutableDictionary *dic = [@{} mutableCopy];
+        [dic setObject:self.clientId forKey:@"client_id"];
+        [dic setObject:@"1" forKey:@"type"];
         
         
-        if ([_paySelectArr[i] integerValue]) {
+        if ([self isEmpty:_priceBtn.textfield.text]) {
             
-            if (i == 0) {
-                
-                _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
-            }else{
-                
-                _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
-            }
-        }
-    }
-    if (!_payWay.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
-        return;
-    }
-
-    if (_dataArr.count) {
-        
-        NSString *str;
-        for (int i = 0; i < _dataArr.count; i++) {
-            
-            if ([self.property isEqualToString:@"住宅"]) {
-                
-                if (i == 0) {
-                    
-                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"id"]];
-                }else{
-                    
-                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"id"]];
-                }
-            }else{
-                
-                if (i == 0) {
-                    
-                    str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
-                }else{
-                    
-                    str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
-                }
-            }
-        }
-        if(str){
-            
-            if ([self.property isEqualToString:@"住宅"]) {
-                
-                [dic setObject:str forKey:@"need_tags"];
-            }else{
-                
-                [dic setObject:str forKey:@"match_tags"];
-            }
-        }
-    }
-    
-    if ([self isEmpty:_contentTV.text]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入跟进内容"];
-        return;
-    }
-
-    if (!_nextTimeBtn.content.text.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择下次回访时间"];
-        return;
-    }
-    
-    if ([self.property isEqualToString:@"商铺"]) {
-        
-        [dic setObject:@"2" forKey:@"property_type"];
-        
-        if (_purposeBtn.content.text.length) {
-            
-            [dic setObject:_purposeBtn->str forKey:@"buy_use"];
-        }
-        _store = @"";
-        for (int i = 0; i < _selectStoreArr.count; i++) {
-            
-            
-            if ([_selectStoreArr[i] integerValue]) {
-                
-                if (i == 0) {
-                    
-                    _store = [NSString stringWithFormat:@"%@",_storeArr[i][@"id"]];
-                }else{
-                    
-                    _store = [NSString stringWithFormat:@"%@,%@",_store,_storeArr[i][@"id"]];
-                }
-            }
-        }
-        if (!_store.length) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择商铺类型"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
             return;
         }
         
-        [dic setObject:_store forKey:@"shop_type"];
-    }else if ([self.property isEqualToString:@"写字楼"]){
-        
-        [dic setObject:@"3" forKey:@"property_type"];
-        //            if (!_officeLevelBtn.content.text) {
-        //
-        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择写字楼等级"];
-        //                return;
-        //            }
-        if (_officeLevelBtn.content.text.length) {
+        if ([self isEmpty:_areaBtn.textfield.text]) {
             
-            [dic setObject:_officeLevelBtn->str forKey:@"office_level"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
+            return;
         }
-        //            if (!_purposeBtn.content.text) {
-        //
-        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择购买用途"];
-        //                return;
-        //            }
-        if (_purposeBtn.content.text.length) {
+        _payWay = @"";
+        for (int i = 0; i < _paySelectArr.count; i++) {
             
-            [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+            
+            if ([_paySelectArr[i] integerValue]) {
+                
+                if (i == 0) {
+                    
+                    _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+                }else{
+                    
+                    _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+                }
+            }
         }
-        //            if ([self isEmpty:_yearTF.textfield.text]) {
-        //
-        //                [self alertControllerWithNsstring:@"温馨提示" And:@"请输入使用年限"];
-        //                return;
-        //            }
-        if (![self isEmpty:_yearTF.textfield.text]) {
+        if (!_payWay.length) {
             
-            [dic setObject:_yearTF.textfield.text forKey:@"used_years"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+            return;
         }
         
-    }else{
-        
-        [dic setObject:@"1" forKey:@"property_type"];
-        
-        if (_houseBtn.content.text.length) {
+        if (_dataArr.count) {
             
-            [dic setObject:_houseBtn->str forKey:@"house_type"];
+            NSString *str;
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                if ([self.property isEqualToString:@"住宅"]) {
+                    
+                    if (i == 0) {
+                        
+                        str = [NSString stringWithFormat:@"%@",_dataArr[0][@"id"]];
+                    }else{
+                        
+                        str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"id"]];
+                    }
+                }else{
+                    
+                    if (i == 0) {
+                        
+                        str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                    }else{
+                        
+                        str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                    }
+                }
+            }
+            if(str){
+                
+                if ([self.property isEqualToString:@"住宅"]) {
+                    
+                    [dic setObject:str forKey:@"need_tags"];
+                }else{
+                    
+                    [dic setObject:str forKey:@"match_tags"];
+                }
+            }
         }
         
-        if (_floorTF1.content.text.length) {
+        if ([self isEmpty:_contentTV.text]) {
             
-            [dic setObject:_floorTF1->str forKey:@"floor_min"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入跟进内容"];
+            return;
         }
         
-        if (_floorTF2.content.text.length) {
+        if (!_nextTimeBtn.content.text.length) {
             
-            [dic setObject:_floorTF2->str forKey:@"floor_max"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择下次回访时间"];
+            return;
         }
         
-        if (_decorateBtn.content.text.length) {
+        if ([self.property isEqualToString:@"商铺"]) {
             
-            [dic setObject:_decorateBtn->str forKey:@"decorate"];
+            [dic setObject:@"2" forKey:@"property_type"];
+            
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+            }
+            _store = @"";
+            for (int i = 0; i < _selectStoreArr.count; i++) {
+                
+                
+                if ([_selectStoreArr[i] integerValue]) {
+                    
+                    if (i == 0) {
+                        
+                        _store = [NSString stringWithFormat:@"%@",_storeArr[i][@"id"]];
+                    }else{
+                        
+                        _store = [NSString stringWithFormat:@"%@,%@",_store,_storeArr[i][@"id"]];
+                    }
+                }
+            }
+            if (!_store.length) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择商铺类型"];
+                return;
+            }
+            
+            [dic setObject:_store forKey:@"shop_type"];
+        }else if ([self.property isEqualToString:@"写字楼"]){
+            
+            [dic setObject:@"3" forKey:@"property_type"];
+
+            if (_officeLevelBtn.content.text.length) {
+                
+                [dic setObject:_officeLevelBtn->str forKey:@"office_level"];
+            }
+
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+            }
+
+            if (![self isEmpty:_yearTF.textfield.text]) {
+                
+                [dic setObject:_yearTF.textfield.text forKey:@"used_years"];
+            }
+            
+        }else{
+            
+            [dic setObject:@"1" forKey:@"property_type"];
+            
+            if (_houseBtn.content.text.length) {
+                
+                [dic setObject:_houseBtn->str forKey:@"house_type"];
+            }
+            
+            if (_floorTF1.content.text.length) {
+                
+                [dic setObject:_floorTF1->str forKey:@"floor_min"];
+            }
+            
+            if (_floorTF2.content.text.length) {
+                
+                [dic setObject:_floorTF2->str forKey:@"floor_max"];
+            }
+            
+            if (_decorateBtn.content.text.length) {
+                
+                [dic setObject:_decorateBtn->str forKey:@"decorate"];
+            }
+            
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+            }
         }
-        
-        if (_purposeBtn.content.text.length) {
+        [dic setObject:_payWay forKey:@"pay_type"];
+        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
+        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
+        [dic setObject:_timeContentL.text forKey:@"follow_time"];
+        [dic setObject:_contentTV.text forKey:@"follow_comment"];
+        [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
+        if (_levelBtn.content.text.length) {
             
-            [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+            [dic setObject:_levelBtn->str forKey:@"client_level"];
         }
-    }
-    [dic setObject:_payWay forKey:@"pay_type"];
-    [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
-    [dic setObject:_areaBtn.textfield.text forKey:@"area"];
-    [dic setObject:_timeContentL.text forKey:@"follow_time"];
-    [dic setObject:_contentTV.text forKey:@"follow_comment"];
-    [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
-    if (_levelBtn.content.text.length) {
-        
-        [dic setObject:_levelBtn->str forKey:@"client_level"];
-    }
-    if (_way == 0) {
-        
-        [dic setObject:@"1" forKey:@"follow_type"];
-        [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:dic success:^(id resposeObject) {
+        if (_way == 0) {
             
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
+            [dic setObject:@"1" forKey:@"follow_type"];
+            [BaseRequest POST:TakeMaintainAdd_URL parameters:dic success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if (self.lookMaintainDetailAddFollowVCBlock) {
+                        
+                        self.lookMaintainDetailAddFollowVCBlock();
+                    }
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+        }else if (_way == 1){
+            
+            [dic setObject:@"2" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] init];
+            nextVC.isSelect = self.isSelect;
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
                 
                 if (self.lookMaintainDetailAddFollowVCBlock) {
                     
                     self.lookMaintainDetailAddFollowVCBlock();
                 }
-                [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
             
-            NSLog(@"%@",error);
-            [self showContent:@"网络错误"];
-        }];
-    }else if (_way == 1){
-        
-        [dic setObject:@"2" forKey:@"follow_type"];
-        LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
-        nextVC.dataDic = dic;
-        nextVC.status = [NSString stringWithFormat:@"%ld",_way];
-        nextVC.lookMaintainDetailAddAppointVCBlock = ^{
-          
-            if (self.lookMaintainDetailAddFollowVCBlock) {
+            [dic setObject:@"3" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] init];
+            nextVC.isSelect = self.isSelect;
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
                 
-                self.lookMaintainDetailAddFollowVCBlock();
-            }
-        };
-        [self.navigationController pushViewController:nextVC animated:YES];
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
     }else{
         
-        [dic setObject:@"3" forKey:@"follow_type"];
-        LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
-        nextVC.dataDic = dic;
-        nextVC.status = [NSString stringWithFormat:@"%ld",_way];
-        nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+        NSMutableDictionary *dic = [@{} mutableCopy];
+        [dic setObject:_takeId forKey:@"take_id"];
+        [dic setObject:@"1" forKey:@"type"];
+        
+        
+        if ([self isEmpty:_priceBtn.textfield.text]) {
             
-            if (self.lookMaintainDetailAddFollowVCBlock) {
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
+            return;
+        }
+        
+        if ([self isEmpty:_areaBtn.textfield.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
+            return;
+        }
+        _payWay = @"";
+        for (int i = 0; i < _paySelectArr.count; i++) {
+            
+            
+            if ([_paySelectArr[i] integerValue]) {
                 
-                self.lookMaintainDetailAddFollowVCBlock();
+                if (i == 0) {
+                    
+                    _payWay = [NSString stringWithFormat:@"%@",_payArr[i][@"id"]];
+                }else{
+                    
+                    _payWay = [NSString stringWithFormat:@"%@,%@",_payWay,_payArr[i][@"id"]];
+                }
             }
-        };
-        [self.navigationController pushViewController:nextVC animated:YES];
+        }
+        if (!_payWay.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+            return;
+        }
+        
+        if (_dataArr.count) {
+            
+            NSString *str;
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                if ([self.property isEqualToString:@"住宅"]) {
+                    
+                    if (i == 0) {
+                        
+                        str = [NSString stringWithFormat:@"%@",_dataArr[0][@"id"]];
+                    }else{
+                        
+                        str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"id"]];
+                    }
+                }else{
+                    
+                    if (i == 0) {
+                        
+                        str = [NSString stringWithFormat:@"%@",_dataArr[0][@"ui_id"]];
+                    }else{
+                        
+                        str = [NSString stringWithFormat:@"%@,%@",str,_dataArr[i][@"ui_id"]];
+                    }
+                }
+            }
+            if(str){
+                
+                if ([self.property isEqualToString:@"住宅"]) {
+                    
+                    [dic setObject:str forKey:@"need_tags"];
+                }else{
+                    
+                    [dic setObject:str forKey:@"match_tags"];
+                }
+            }
+        }
+        
+        if ([self isEmpty:_contentTV.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入跟进内容"];
+            return;
+        }
+        
+        if (!_nextTimeBtn.content.text.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择下次回访时间"];
+            return;
+        }
+        
+        if ([self.property isEqualToString:@"商铺"]) {
+            
+            [dic setObject:@"2" forKey:@"property_type"];
+            
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+            }
+            _store = @"";
+            for (int i = 0; i < _selectStoreArr.count; i++) {
+                
+                
+                if ([_selectStoreArr[i] integerValue]) {
+                    
+                    if (i == 0) {
+                        
+                        _store = [NSString stringWithFormat:@"%@",_storeArr[i][@"id"]];
+                    }else{
+                        
+                        _store = [NSString stringWithFormat:@"%@,%@",_store,_storeArr[i][@"id"]];
+                    }
+                }
+            }
+            if (!_store.length) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择商铺类型"];
+                return;
+            }
+            
+            [dic setObject:_store forKey:@"shop_type"];
+        }else if ([self.property isEqualToString:@"写字楼"]){
+            
+            [dic setObject:@"3" forKey:@"property_type"];
+            //            if (!_officeLevelBtn.content.text) {
+            //
+            //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择写字楼等级"];
+            //                return;
+            //            }
+            if (_officeLevelBtn.content.text.length) {
+                
+                [dic setObject:_officeLevelBtn->str forKey:@"office_level"];
+            }
+            //            if (!_purposeBtn.content.text) {
+            //
+            //                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择购买用途"];
+            //                return;
+            //            }
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_use"];
+            }
+            //            if ([self isEmpty:_yearTF.textfield.text]) {
+            //
+            //                [self alertControllerWithNsstring:@"温馨提示" And:@"请输入使用年限"];
+            //                return;
+            //            }
+            if (![self isEmpty:_yearTF.textfield.text]) {
+                
+                [dic setObject:_yearTF.textfield.text forKey:@"used_years"];
+            }
+            
+        }else{
+            
+            [dic setObject:@"1" forKey:@"property_type"];
+            
+            if (_houseBtn.content.text.length) {
+                
+                [dic setObject:_houseBtn->str forKey:@"house_type"];
+            }
+            
+            if (_floorTF1.content.text.length) {
+                
+                [dic setObject:_floorTF1->str forKey:@"floor_min"];
+            }
+            
+            if (_floorTF2.content.text.length) {
+                
+                [dic setObject:_floorTF2->str forKey:@"floor_max"];
+            }
+            
+            if (_decorateBtn.content.text.length) {
+                
+                [dic setObject:_decorateBtn->str forKey:@"decorate"];
+            }
+            
+            if (_purposeBtn.content.text.length) {
+                
+                [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+            }
+        }
+        [dic setObject:_payWay forKey:@"pay_type"];
+        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
+        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
+        [dic setObject:_timeContentL.text forKey:@"follow_time"];
+        [dic setObject:_contentTV.text forKey:@"follow_comment"];
+        [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
+        if (_levelBtn.content.text.length) {
+            
+            [dic setObject:_levelBtn->str forKey:@"client_level"];
+        }
+        if (_way == 0) {
+            
+            [dic setObject:@"1" forKey:@"follow_type"];
+            [BaseRequest POST:TakeMaintainFollowAdd_URL parameters:dic success:^(id resposeObject) {
+                
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    if (self.lookMaintainDetailAddFollowVCBlock) {
+                        
+                        self.lookMaintainDetailAddFollowVCBlock();
+                    }
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                NSLog(@"%@",error);
+                [self showContent:@"网络错误"];
+            }];
+        }else if (_way == 1){
+            
+            [dic setObject:@"2" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+                
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [dic setObject:@"3" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+                
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
     }
 }
 
@@ -758,9 +986,9 @@
     _timeContentL.font = [UIFont systemFontOfSize:12 *SIZE];
     [_contentView addSubview:_timeContentL];
     
-    [self.formatter setDateFormat:@"YYYY/MM/dd HH:mm"];
+    [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
-    [self.formatter setDateFormat:@"YYYY/MM/dd"];
+    [self.formatter setDateFormat:@"YYYY-MM-dd"];
     
     NSArray *titleArr = @[@"跟进时间",@"跟进方式：",@"客户等级：",@"物业类型：",@"总价：",@"面积：",@"置业目的：",@"付款方式：",@"跟进内容：",@"下次回访时间：",@"已使用年限：",@"写字楼等级：",@"商铺类型：",@"户型：",@"楼层：",@"装修标准："];
     for (int i = 0; i < 16; i++) {

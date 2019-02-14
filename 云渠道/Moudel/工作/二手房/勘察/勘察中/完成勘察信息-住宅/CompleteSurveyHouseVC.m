@@ -147,7 +147,7 @@
 - (void)initDataSource{
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY/MM/dd"];
+    [self.formatter setDateFormat:@"YYYY-MM-dd"];
     
     _payArr = [self getDetailConfigArrByConfigState:13];
     _selectArr = [@[] mutableCopy];

@@ -50,7 +50,7 @@
     [super viewDidLoad];
     
     _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY/MM/dd"];
+    [_formatter setDateFormat:@"YYYY-MM-dd"];
     [self initUI];
 }
 

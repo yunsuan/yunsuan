@@ -8,13 +8,19 @@
 
 #import "BaseViewController.h"
 
+#import "CustomerTableModel.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^CustomerListVCBlock)(void);
 
+typedef void(^CustomerListVCCustomBlock)(CustomerTableModel *model);
+
 @interface CustomerListVC : BaseViewController
 
 @property (nonatomic, copy) CustomerListVCBlock customerListVCBlock;
+
+@property (nonatomic, copy) CustomerListVCCustomBlock customerListVCCustomBlock;
 
 @property (nonatomic, assign) NSInteger status;
 

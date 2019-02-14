@@ -16,6 +16,8 @@ typedef void(^LookMaintainDetailAddAppointVCBlock)(void);
 
 @property (nonatomic, copy) LookMaintainDetailAddAppointVCBlock lookMaintainDetailAddAppointVCBlock;
 
+@property (nonatomic, assign) BOOL isSelect;
+
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong) NSString *status;

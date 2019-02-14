@@ -9,7 +9,8 @@
 #import "LookMaintainVC.h"
 
 #import "LookMaintainDetailVC.h"
-#import "CustomerListVC.h"
+//#import "CustomerListVC.h"
+#import "QuickAddLookMaintainVC.h"
 
 #import "LookMaintainCell.h"
 
@@ -149,15 +150,21 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    CustomerListVC *nextVC = [[CustomerListVC alloc] init];
-    nextVC.customerListVCBlock = ^{
-        
+    QuickAddLookMaintainVC *nextVC = [[QuickAddLookMaintainVC alloc] init];
+    nextVC.quickAddLookMaintainVCBlock = ^{
+      
         [self RequestMethod];
     };
-    nextVC.hidesBottomBarWhenPushed = YES;
-    nextVC.status = 1;
-    nextVC.isSelect = YES;
     [self.navigationController pushViewController:nextVC animated:YES];
+//    CustomerListVC *nextVC = [[CustomerListVC alloc] init];
+//    nextVC.customerListVCBlock = ^{
+//
+//        [self RequestMethod];
+//    };
+//    nextVC.hidesBottomBarWhenPushed = YES;
+//    nextVC.status = 1;
+//    nextVC.isSelect = YES;
+//    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

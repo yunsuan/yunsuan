@@ -8,6 +8,7 @@
 
 #import "LookMaintainDetailAddAppointVC.h"
 
+#import "LookMaintainVC.h"
 #import "LookMaintainDetailVC.h"
 #import "LookMaintainDetailAddAppointRoomVC.h"
 
@@ -55,6 +56,7 @@
 - (void)ActionAddBtn:(UIButton *)btn{
     
     LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
+    nextVC.isSelect = self.isSelect;
     nextVC.dataDic = self.dataDic;
     nextVC.status = self.status;
     nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
@@ -111,31 +113,66 @@
         NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
         [self.dataDic setObject:jsonResult forKey:@"take_group"];
     }
-    [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
+    
+    if (self.isSelect) {
         
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
+        [BaseRequest POST:TakeMaintainAdd_URL parameters:self.dataDic success:^(id resposeObject) {
             
-            if (self.lookMaintainDetailAddAppointVCBlock) {
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                self.lookMaintainDetailAddAppointVCBlock();
-            }
-            for (UIViewController *vc in self.navigationController.viewControllers) {
-                
-                if ([vc isKindOfClass:[LookMaintainDetailVC class]]) {
+                if (self.lookMaintainDetailAddAppointVCBlock) {
                     
-                    [self.navigationController popToViewController:vc animated:YES];
+                    self.lookMaintainDetailAddAppointVCBlock();
                 }
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[LookMaintainDetailVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                    if ([vc isKindOfClass:[LookMaintainVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
             }
-        }else{
+        } failure:^(NSError *error) {
             
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }else{
         
-        NSLog(@"%@",error);
-        [self showContent:@"网络错误"];
-    }];
+        [BaseRequest GET:TakeMaintainFollowAdd_URL parameters:self.dataDic success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if (self.lookMaintainDetailAddAppointVCBlock) {
+                    
+                    self.lookMaintainDetailAddAppointVCBlock();
+                }
+                for (UIViewController *vc in self.navigationController.viewControllers) {
+                    
+                    if ([vc isKindOfClass:[LookMaintainDetailVC class]]) {
+                        
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                }
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -182,6 +219,7 @@
         
         LookMaintainDetailAddAppointRoomVC *nextVC = [[LookMaintainDetailAddAppointRoomVC alloc] initWithTakeId:_takeId dataArr:_dataArr];
         nextVC.dataDic = self.dataDic;
+        nextVC.isSelect = self.isSelect;
         nextVC.status = self.status;
         nextVC.lookMaintainDetailAddAppointRoomVCBlock = ^(NSDictionary * _Nonnull dic) {
             

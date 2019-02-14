@@ -12,6 +12,7 @@
 #import "PYSearchViewController.h"
 #import "CustomSearchVC.h"
 #import "CustomLookConfirmSuccessVC.h"
+#import "LookMaintainDetailAddFollowVC.h"
 
 #import "CustomerTableCell.h"
 #import "BoxView.h"
@@ -419,17 +420,18 @@
     
     if (self.isSelect) {
         
-        CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
-        CustomLookConfirmSuccessVC *nextVC = [[CustomLookConfirmSuccessVC alloc] initWithDataDic:@{@"client_name":model.name,@"client_tel":model.tel,@"client_id":model.client_id}];
-        nextVC.customLookConfirmSuccessVCBlock = ^{
-          
-            if (self.customerListVCBlock) {
-                
-                self.customerListVCBlock();
-            }
-        };
-        nextVC.isSelect = self.isSelect;
-        [self.navigationController pushViewController:nextVC animated:YES];
+        if (self.customerListVCCustomBlock) {
+            
+            CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
+            self.customerListVCCustomBlock(model);
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+//        CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
+//        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+//        nextVC.isSelect = self.isSelect;
+//        nextVC.property = model.client_property_type;
+//        nextVC.clientId = model.client_id;
+//        [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
         CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
@@ -448,7 +450,14 @@
     self.navBackgroundView.hidden = NO;
 //    self.leftButton.hidden = YES;
     self.view.backgroundColor = YJBackColor;
-    self.rightBtn.hidden = NO;
+    if (self.isSelect) {
+        
+        self.rightBtn.hidden = YES;
+    }else{
+        
+        self.rightBtn.hidden = NO;
+    }
+    
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(action_add) forControlEvents:UIControlEventTouchUpInside];
     
@@ -572,6 +581,7 @@
 -(void)action_add
 {
     AddCustomerVC *next_vc = [[AddCustomerVC alloc]init];
+    next_vc.isSelect = self.isSelect;
     next_vc.status = self.status + 1;
     [self.navigationController pushViewController:next_vc animated:YES];
 }
