@@ -12,6 +12,7 @@
 #import "ModifyRecordVC.h"
 #import "CustomLookConfirmFailVC.h"
 #import "CustomLookConfirmSuccessVC.h"
+#import "LookWorkVC.h"
 
 //#import "CountDownCell.h"
 #import "CountDownCell.h"
@@ -55,6 +56,17 @@
     _dataDic = [@{} mutableCopy];
     [self initUI];
     [self RequestMethod];
+}
+
+- (void)ActionLeftBtn:(UIButton *)btn{
+    
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[LookWorkVC class]]) {
+            
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
 }
 
 -(void)refresh{
@@ -261,6 +273,8 @@
     
     self.titleLabel.text = @"待确认详情";
     self.navBackgroundView.hidden = NO;
+    
+    [self.maskButton addTarget:self action:@selector(ActionLeftBtn:) forControlEvents:UIControlEventTouchUpInside];
     
     _detailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     

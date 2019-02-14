@@ -168,6 +168,7 @@
                         
                         self.quickAddLookMaintainVCBlock();
                     }
+//                    [self.navigationController popViewControllerAnimated:YES];
                 };
                 nextVC.isSelect = YES;
                 nextVC.property = _typeBtn.content.text;

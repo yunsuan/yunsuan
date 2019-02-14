@@ -11,6 +11,7 @@
 #import "AddEquipmentVC.h"
 #import "AddTagVC.h"
 #import "LookMaintainDetailAddAppointVC.h"
+#import "LookMaintainVC.h"
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
@@ -554,7 +555,14 @@
                         
                         self.lookMaintainDetailAddFollowVCBlock();
                     }
-                    [self.navigationController popViewControllerAnimated:YES];
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
+                        
+                        if ([vc isKindOfClass:[LookMaintainVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                    }
+//                    [self.navigationController popViewControllerAnimated:YES];
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
