@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractHeaderBlock)(NSInteger index);
+
 @interface ContractHeader2 : UITableViewHeaderFooterView
+
+@property (nonatomic, copy) ContractHeaderBlock contractHeaderBlock;
+
+@property (nonatomic, strong) UIButton *buyBtn;
+
+@property (nonatomic, strong) UIButton *sellBtn;
+
+@property (nonatomic, strong) UIButton *infoBtn;
 
 @end
 
