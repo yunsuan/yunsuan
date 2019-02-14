@@ -138,7 +138,7 @@
                 [self alertControllerWithNsstring:@"接单成功" And:@"" WithDefaultBlack:^{
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
-                    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"take_id"]]];
+                    CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:[NSString stringWithFormat:@"%@",resposeObject[@"data"]]];
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }];
             }else{

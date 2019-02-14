@@ -8,6 +8,7 @@
 
 #import "LookWorkWaitVC.h"
 #import "LookworkwaitDetailVC.h"
+#import "CustomLookWaitDetailVC.h"
 //#import "SystemWorkConfirmDetailVC.h"
 //#import "SystemWorkWaitDetailVC.h"
 
@@ -165,6 +166,8 @@
                     [self alertControllerWithNsstring:@"接单成功" And:@"" WithDefaultBlack:^{
                         
                         [self RequestMethod];
+                        CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:[NSString stringWithFormat:@"%@",resposeObject[@"data"]]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"SystemWork" object:nil];
                     }];
                 }else{
