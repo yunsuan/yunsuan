@@ -7,18 +7,19 @@
 //
 
 #import "ContractDetailVC.h"
+#import "AddPeopleVC.h"
 
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
+#import "ContractHeader3.h"
 
 #import "AddContractCell7.h"
 #import "AddContractCell4.h"
 #import "AddContractCell5.h"
-#import "AddPeopleVC.h"
 #import "roominfoCell.h"
-#import "ContractHeader3.h"
-
 #import "ContractAgentCell.h"
+#import "ContractTradeCell.h"
+#import "ContractMainConCell.h"
 
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -171,7 +172,7 @@
         }
     }else if (section == 1){
         
-        return _agent_info.count;
+        return _agent_info.count + 1;
     }
 
      return 0;
@@ -377,6 +378,31 @@
             }
         }
         else{
+            ContractTradeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractTradeCell"];
+            if (!cell) {
+                
+                cell = [[ContractTradeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractTradeCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.dataDic = _deal_info;
+            return cell;
+        }
+    }else if (indexPath.section == 1){
+        
+        
+        if (indexPath.row == _agent_info.count) {
+            
+            ContractMainConCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractMainConCell"];
+            if (!cell) {
+                
+                cell = [[ContractMainConCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractMainConCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+        }else{
+            
             ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
             if (!cell) {
                 
@@ -387,17 +413,6 @@
             cell.dataDic = _agent_info[indexPath.row];
             return cell;
         }
-    }else if (indexPath.section == 1){
-        
-        ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
-        if (!cell) {
-            
-            cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.dataDic = _agent_info[indexPath.row];
-        return cell;
     }
     
 

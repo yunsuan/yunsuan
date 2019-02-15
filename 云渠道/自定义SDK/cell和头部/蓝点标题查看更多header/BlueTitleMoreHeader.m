@@ -43,7 +43,6 @@
     [self.contentView addSubview:self.titleL];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _moreBtn.frame = CGRectMake(270 *SIZE, 14 *SIZE, 75 *SIZE, 21 *SIZE);
     _moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"查看更多 >>" forState:UIControlStateNormal];
