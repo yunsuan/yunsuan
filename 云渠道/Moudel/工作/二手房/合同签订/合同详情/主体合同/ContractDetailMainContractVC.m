@@ -56,6 +56,9 @@
 
 - (void)initUI{
     
+    self.navBackgroundView.hidden = NO;
+    self.titleLabel.text = @"主体合同";
+    
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.itemSize = CGSizeMake(110 *SIZE, 100 *SIZE);
     
