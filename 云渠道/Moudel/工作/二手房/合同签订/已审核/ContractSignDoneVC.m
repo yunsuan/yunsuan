@@ -46,12 +46,12 @@
 
 -(void)postWithpage:(NSString *)page{
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":page}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":page,@"type":@"1"}];
     if (![self isEmpty:self.search]) {
         
         [dic setObject:self.search forKey:@"search"];
     }
-    [BaseRequest GET:PurchaseContractList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:TakeDealValueList_URL parameters:dic success:^(id resposeObject) {
         [_table.mj_footer endRefreshing];
         [_table.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] ==200) {

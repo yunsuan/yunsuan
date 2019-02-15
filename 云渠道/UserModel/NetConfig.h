@@ -824,6 +824,12 @@ static NSString *const WaitContractList_URL = @"agent/take/deal/list";
 
 //合同详情
 static NSString *const ContractDetail_URL = @"agent/take/deal/detail";
+
+//合同已审核列表
+static NSString *const TakeDealValueList_URL = @"agent/take/deal/valueList";
+
+//合同所有列表
+static NSString *const TakeDealAllList_URL = @"agent/take/deal/allList";
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息
