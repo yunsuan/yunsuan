@@ -241,6 +241,7 @@
 		0C8C97FD22155E2500687AC8 /* AbandonLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */; };
 		0C8C98002216626700687AC8 /* ContractAgentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97FF2216626700687AC8 /* ContractAgentCell.m */; };
 		0C8C980322166B1E00687AC8 /* ContractHeader3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C980222166B1E00687AC8 /* ContractHeader3.m */; };
+		0C8C9806221693EB00687AC8 /* ContractTradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C9805221693EB00687AC8 /* ContractTradeCell.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
 		0C92194C2092ECFC00EFE75C /* CustomMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C92194B2092ECFC00EFE75C /* CustomMatchModel.m */; };
@@ -1228,6 +1229,8 @@
 		0C8C97FF2216626700687AC8 /* ContractAgentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractAgentCell.m; sourceTree = "<group>"; };
 		0C8C980122166B1E00687AC8 /* ContractHeader3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractHeader3.h; sourceTree = "<group>"; };
 		0C8C980222166B1E00687AC8 /* ContractHeader3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader3.m; sourceTree = "<group>"; };
+		0C8C9804221693EB00687AC8 /* ContractTradeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractTradeCell.h; sourceTree = "<group>"; };
+		0C8C9805221693EB00687AC8 /* ContractTradeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractTradeCell.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
 		0C920E8A21797C3C004B7F54 /* SlideBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideBottomView.m; sourceTree = "<group>"; };
 		0C920E8D2179AD6B004B7F54 /* MaintainFollowDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaintainFollowDetailVC.h; sourceTree = "<group>"; };
@@ -7228,15 +7231,14 @@
 				10AFF8AC221548C300657217 /* ContractHeader2.m */,
 				10AFF8AE2215496300657217 /* ContractHeader1.h */,
 				10AFF8AF2215496300657217 /* ContractHeader1.m */,
-
 				10AFF8B122168CDA00657217 /* roominfoCell.h */,
 				10AFF8B222168CDA00657217 /* roominfoCell.m */,
-
 				0C8C97FE2216626700687AC8 /* ContractAgentCell.h */,
 				0C8C97FF2216626700687AC8 /* ContractAgentCell.m */,
 				0C8C980122166B1E00687AC8 /* ContractHeader3.h */,
 				0C8C980222166B1E00687AC8 /* ContractHeader3.m */,
-
+				0C8C9804221693EB00687AC8 /* ContractTradeCell.h */,
+				0C8C9805221693EB00687AC8 /* ContractTradeCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7873,6 +7875,7 @@
 				0C075DFD21FB071800BDD123 /* LookMaintainAddRoomVC.m in Sources */,
 				0CF7425E206262EC001F926F /* BoxView.m in Sources */,
 				0C549CFD21E5A0AA004CFA66 /* RecommendComplaintVC.m in Sources */,
+				0C8C9806221693EB00687AC8 /* ContractTradeCell.m in Sources */,
 				0C342FBA207E01510058406D /* CustomRequireModel.m in Sources */,
 				10AEEE7321A2A0B20049625B /* MyTeamTableCell.m in Sources */,
 				0CC19D1D207205CA0007CC5F /* ChangeAddessVC.m in Sources */,

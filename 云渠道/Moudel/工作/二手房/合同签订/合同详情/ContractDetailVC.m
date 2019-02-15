@@ -160,7 +160,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
 
-    if (section==1) {
+    if (section == 2) {
         if (_index==0) {
             return _buy_info.count+2;
         }else if (_index ==1)
@@ -169,11 +169,12 @@
         }else{
             return 1;
         }
+    }else if (section == 1){
+        
+        return _agent_info.count;
     }
 
-    
-     return 1;
-
+     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -274,7 +275,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 
-    if (indexPath.section==1) {
+    if (indexPath.section == 2) {
         //买方信息
         if (_index == 0) {
             if (indexPath.row ==0) {
@@ -381,6 +382,17 @@
             cell.dataDic = _agent_info[indexPath.row];
             return cell;
         }
+    }else if (indexPath.section == 1){
+        
+        ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
+        if (!cell) {
+            
+            cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.dataDic = _agent_info[indexPath.row];
+        return cell;
     }
     
 
