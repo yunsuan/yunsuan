@@ -93,8 +93,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    cell.dataDic = _dataArr[indexPath.row];
-//    cell.dataDic = @{}
+    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }
