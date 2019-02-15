@@ -339,7 +339,16 @@
         {
             if (indexPath.row == 0) {
                 
+                roominfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"roominfoCell"];
+                if (!cell) {
+                    
+                    cell = [[roominfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"roominfoCell"];
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
+                cell.dataDic = _house_info;
+                
+                return cell;
             }
             else if (indexPath.row == _sell_info.count+1)
             {

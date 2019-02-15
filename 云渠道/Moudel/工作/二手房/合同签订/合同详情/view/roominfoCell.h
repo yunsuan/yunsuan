@@ -11,12 +11,28 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface roominfoCell : UITableViewCell
-@property (nonatomic , strong) UILabel *adressLab;
-@property (nonatomic , strong) UILabel *numLab;
-@property (nonatomic , strong) UILabel *roominfoLab;
-@property (nonatomic , strong) UILabel *areaLab;
-@property (nonatomic , strong) UILabel *peopleLab;
-@property (nonatomic , strong) UILabel *phoneLab;
+
+@property (nonatomic , strong) UILabel *addressL;
+
+@property (nonatomic, strong) UILabel *houseCodeL;
+
+@property (nonatomic, strong) UILabel *houseNumL;
+
+@property (nonatomic, strong) UILabel *houseTypeL;
+
+@property (nonatomic , strong) UILabel *areaL;
+
+@property (nonatomic, strong) UILabel *certNumL;
+
+@property (nonatomic, strong) UILabel *homelandL;
+
+@property (nonatomic , strong) UILabel *agentL;
+
+@property (nonatomic , strong) UILabel *phoneL;
+
+@property (nonatomic, strong) UIView *line;
+
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end
 
