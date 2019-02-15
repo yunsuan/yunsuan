@@ -20,6 +20,11 @@
     return self;
 }
 
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    
+}
+
 - (void)initUI{
     
     self.contentView.backgroundColor = COLOR(249, 249, 249, 1);
@@ -29,6 +34,21 @@
     _titleL.font = [UIFont systemFontOfSize:15 *SIZE];
     _titleL.text = @"主体合同";
     [self.contentView addSubview:_titleL];
+    
+    _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+    [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_moreBtn setTitle:@"已上传 >>" forState:UIControlStateNormal];
+    [_moreBtn setTitleColor:YJBlueBtnColor forState:UIControlStateNormal];
+    [self.contentView addSubview:_moreBtn];
+    
+    [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(self.contentView).offset(-6 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
+        make.width.mas_equalTo(66 *SIZE);
+        make.height.mas_equalTo(20 *SIZE);
+    }];
     
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
        
