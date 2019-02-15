@@ -32,9 +32,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *markL;
 
-@property (nonatomic, strong) UILabel *BuyReasonL;
+@property (nonatomic, strong) UILabel *buyReasonL;
 
 @property (nonatomic, strong) UILabel *sellReasonL;
+
+@property (nonatomic, strong) UIButton *editBtn;
+
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end
 

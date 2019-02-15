@@ -7,18 +7,18 @@
 //
 
 #import "ContractDetailVC.h"
+#import "AddPeopleVC.h"
 
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
+#import "ContractHeader3.h"
 
 #import "AddContractCell7.h"
 #import "AddContractCell4.h"
 #import "AddContractCell5.h"
-#import "AddPeopleVC.h"
 #import "roominfoCell.h"
-#import "ContractHeader3.h"
-
 #import "ContractAgentCell.h"
+#import "ContractTradeCell.h"
 
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -372,14 +372,14 @@
             }
         }
         else{
-            ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
+            ContractTradeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractTradeCell"];
             if (!cell) {
                 
-                cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
+                cell = [[ContractTradeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractTradeCell"];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.dataDic = _agent_info[indexPath.row];
+            cell.dataDic = _deal_info;
             return cell;
         }
     }else if (indexPath.section == 1){
