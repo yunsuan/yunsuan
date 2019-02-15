@@ -34,7 +34,7 @@
     _customL.text = [NSString stringWithFormat:@"客户：%@",dataDic[@"client_name"]];
     _ownerL.text = [NSString stringWithFormat:@"业主：%@",dataDic[@"owner_name"]];
     _signerL.text = [NSString stringWithFormat:@"签约人：%@",dataDic[@"agent_name"]];
-    _timeL.text = dataDic[@"regist_time"];
+    _timeL.text = dataDic[@"create_time"];
  
 }
 
@@ -52,6 +52,7 @@
     _statusL.font = [UIFont systemFontOfSize:10 *SIZE];
     _statusL.textAlignment = NSTextAlignmentCenter;
     _statusL.backgroundColor = COLOR(0, 0, 0, 0.3);
+    _statusL.textColor = [UIColor whiteColor];
     [self.contentView addSubview:_statusL];
 //    _statusL.text = @"已签约";
     

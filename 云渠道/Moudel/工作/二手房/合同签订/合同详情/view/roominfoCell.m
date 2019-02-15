@@ -25,10 +25,10 @@
     _addressL.text = [NSString stringWithFormat:@"%@ %@",dataDic[@"project_name"],dataDic[@"address"]];
     _houseCodeL.text = [NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
     _houseNumL.text = [NSString stringWithFormat:@"房号：%@",dataDic[@"house_name"]];
-    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",dataDic[@""]];
+//    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",dataDic[@""]];
     _areaL.text = [NSString stringWithFormat:@"面积：%@㎡",dataDic[@"build_area"]];
-    _certNumL.text = [NSString stringWithFormat:@"房屋所有权证号：%@",dataDic[@""]];
-    _homelandL.text = [NSString stringWithFormat:@"国土使用证号：%@",dataDic[@""]];
+//    _certNumL.text = [NSString stringWithFormat:@"房屋所有权证号：%@",dataDic[@""]];
+//    _homelandL.text = [NSString stringWithFormat:@"国土使用证号：%@",dataDic[@""]];
     _agentL.text = [NSString stringWithFormat:@"勘察经纪人：%@",dataDic[@"survey_agent_name"]];
     _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"survey_agent_tel"]];
 }
@@ -67,8 +67,8 @@
             }
             case 3:
             {
-                _houseTypeL = label;
-                [self.contentView addSubview:_houseTypeL];
+//                _houseTypeL = label;
+//                [self.contentView addSubview:_houseTypeL];
                 break;
             }
             case 4:
@@ -79,14 +79,14 @@
             }
             case 5:
             {
-                _certNumL = label;
-                [self.contentView addSubview:_certNumL];
+//                _certNumL = label;
+//                [self.contentView addSubview:_certNumL];
                 break;
             }
             case 6:
             {
-                _homelandL = label;
-                [self.contentView addSubview:_homelandL];
+//                _homelandL = label;
+//                [self.contentView addSubview:_homelandL];
                 break;
             }
             case 7:
@@ -136,38 +136,38 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(28 *SIZE);
+//        make.top.equalTo(_houseNumL.mas_bottom).offset(18 *SIZE);
+//        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//    }];
+    
+    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_houseNumL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
-    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_houseTypeL.mas_bottom).offset(18 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
-    }];
-    
-    [_certNumL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_areaL.mas_bottom).offset(18 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
-    }];
-    
-    [_homelandL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_certNumL.mas_bottom).offset(18 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
-    }];
+//    [_certNumL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(28 *SIZE);
+//        make.top.equalTo(_areaL.mas_bottom).offset(18 *SIZE);
+//        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//    }];
+//
+//    [_homelandL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(28 *SIZE);
+//        make.top.equalTo(_certNumL.mas_bottom).offset(18 *SIZE);
+//        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+//    }];
     
     [_agentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_homelandL.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_areaL.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
     }];
     
