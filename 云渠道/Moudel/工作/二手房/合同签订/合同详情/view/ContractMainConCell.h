@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractMainConCellBlock)(void);
+
 @interface ContractMainConCell : UITableViewCell
+
+@property (nonatomic, copy) ContractMainConCellBlock contractMainConCellBlock;
 
 @property (nonatomic, strong) UILabel *titleL;
 
