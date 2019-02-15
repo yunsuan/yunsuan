@@ -239,6 +239,8 @@
 		0C8C97F52213F63100687AC8 /* SecondryStatusTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F42213F63100687AC8 /* SecondryStatusTableCell.m */; };
 		0C8C97F9221544E200687AC8 /* QuickAddLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F8221544E200687AC8 /* QuickAddLookMaintainVC.m */; };
 		0C8C97FD22155E2500687AC8 /* AbandonLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */; };
+		0C8C98002216626700687AC8 /* ContractAgentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97FF2216626700687AC8 /* ContractAgentCell.m */; };
+		0C8C980322166B1E00687AC8 /* ContractHeader3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C980222166B1E00687AC8 /* ContractHeader3.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
 		0C92194C2092ECFC00EFE75C /* CustomMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C92194B2092ECFC00EFE75C /* CustomMatchModel.m */; };
@@ -1221,6 +1223,10 @@
 		0C8C97F8221544E200687AC8 /* QuickAddLookMaintainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickAddLookMaintainVC.m; sourceTree = "<group>"; };
 		0C8C97FB22155E2500687AC8 /* AbandonLookMaintainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AbandonLookMaintainVC.h; sourceTree = "<group>"; };
 		0C8C97FC22155E2500687AC8 /* AbandonLookMaintainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AbandonLookMaintainVC.m; sourceTree = "<group>"; };
+		0C8C97FE2216626700687AC8 /* ContractAgentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractAgentCell.h; sourceTree = "<group>"; };
+		0C8C97FF2216626700687AC8 /* ContractAgentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractAgentCell.m; sourceTree = "<group>"; };
+		0C8C980122166B1E00687AC8 /* ContractHeader3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractHeader3.h; sourceTree = "<group>"; };
+		0C8C980222166B1E00687AC8 /* ContractHeader3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader3.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
 		0C920E8A21797C3C004B7F54 /* SlideBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideBottomView.m; sourceTree = "<group>"; };
 		0C920E8D2179AD6B004B7F54 /* MaintainFollowDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaintainFollowDetailVC.h; sourceTree = "<group>"; };
@@ -7219,6 +7225,10 @@
 				10AFF8AC221548C300657217 /* ContractHeader2.m */,
 				10AFF8AE2215496300657217 /* ContractHeader1.h */,
 				10AFF8AF2215496300657217 /* ContractHeader1.m */,
+				0C8C97FE2216626700687AC8 /* ContractAgentCell.h */,
+				0C8C97FF2216626700687AC8 /* ContractAgentCell.m */,
+				0C8C980122166B1E00687AC8 /* ContractHeader3.h */,
+				0C8C980222166B1E00687AC8 /* ContractHeader3.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7617,6 +7627,7 @@
 				0C0BED2320A18F7A005A16A1 /* ComplaintCell.m in Sources */,
 				0CED0BF221E72C750016A029 /* ContractSignListVC.m in Sources */,
 				0C997B7121CB816300F805AA /* RentingModifyTagVC.m in Sources */,
+				0C8C98002216626700687AC8 /* ContractAgentCell.m in Sources */,
 				10AEEE8E21A3E6A30049625B /* WorkerPickView.m in Sources */,
 				0CF04F47207B367100A45F4A /* ComplaintVC.m in Sources */,
 				0C73B04C21EF847F005F71F1 /* RentWorkFailVC.m in Sources */,
@@ -7779,6 +7790,7 @@
 				0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */,
 				0C997B6921CB7B0700F805AA /* RentingModifyNerborVC.m in Sources */,
 				0C2883D2210EFB8B00F69C5F /* RentingAgencyDoneDetailVC.m in Sources */,
+				0C8C980322166B1E00687AC8 /* ContractHeader3.m in Sources */,
 				0C3D302A218B04F000B8B8C2 /* CustomTableListHeader.m in Sources */,
 				0CB3E2EC21FD7839007D71CF /* SecondaryMatchCell.m in Sources */,
 				0C0606A5207DAEC00045E3C1 /* CustomerModel.m in Sources */,

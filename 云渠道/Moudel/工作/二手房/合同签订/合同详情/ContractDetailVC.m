@@ -7,8 +7,12 @@
 //
 
 #import "ContractDetailVC.h"
+
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
+#import "ContractHeader3.h"
+
+#import "ContractAgentCell.h"
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -119,23 +123,35 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
+    if (section == 0) {
+        
+        return 0;
+    }else{
+        
+        if (section == 1) {
+            
+            return _agent_info.count;
+        }else{
+            
+            return 1;
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
     if (section==0) {
+        
         return 191*SIZE;
     }
     else{
         return 47*SIZE;
     }
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -149,7 +165,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 2) {
         ContractHeader2 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader2"];
         if (!header) {
             
@@ -187,6 +203,15 @@
         };
         
         return header;
+    }else if (section == 1){
+     
+        ContractHeader3 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader3"];
+        if (!header) {
+            
+            header = [[ContractHeader3 alloc] initWithReuseIdentifier:@"ContractHeader3"];
+        }
+        
+        return header;
     }else{
         ContractHeader1 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader1"];
         if (!header) {
@@ -214,6 +239,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 1) {
+        
+        ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
+        if (!cell) {
+            
+            cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        cell.dataDic = _agent_info[indexPath.row];
+        return cell;
+    }
     UITableViewCell *cell = [[UITableViewCell alloc]init];
     return cell;
 
