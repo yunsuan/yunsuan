@@ -70,7 +70,10 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
     SELL_HOUSE_RESON=57,//卖房原因
     BUY_HOUSE_RESON=58,//买房原因
     TAKE_DEAL_AGENT_IDENTITY=59,//带看合同签约人类型
-    TAKE_OVER_TYPE=60//终止带看类型
+    TAKE_OVER_TYPE=60,//终止带看类型
+    TAKE_DEAL_CANCEL_TYPE=61,//合同作废类型
+    TAKE_DEAL_BUY_BREACH_TYPE=62,//买方毁约类型
+    TAKE_DEAL_SALE_BREACH_TYPE=63//卖方毁约类型
 };
 
 

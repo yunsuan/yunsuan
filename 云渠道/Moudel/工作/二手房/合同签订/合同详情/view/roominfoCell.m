@@ -33,8 +33,7 @@
     _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"survey_agent_tel"]];
 }
 
--(void)initUI
-{
+- (void)initUI{
     
 //    self.contentView.backgroundColor =
     
