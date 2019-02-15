@@ -7,12 +7,19 @@
 //
 
 #import "ContractDetailVC.h"
+
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
+
 #import "AddContractCell7.h"
 #import "AddContractCell4.h"
 #import "AddContractCell5.h"
 #import "AddPeopleVC.h"
+#import "roominfoCell.h"
+#import "ContractHeader3.h"
+
+#import "ContractAgentCell.h"
+
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -147,11 +154,12 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
+
     if (section==1) {
         if (_index==0) {
             return _buy_info.count+2;
@@ -165,17 +173,18 @@
 
     
      return 1;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
     if (section==0) {
+        
         return 191*SIZE;
     }
     else{
         return 47*SIZE;
     }
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -189,7 +198,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 2) {
         ContractHeader2 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader2"];
         if (!header) {
             
@@ -227,6 +236,15 @@
         };
         
         return header;
+    }else if (section == 1){
+     
+        ContractHeader3 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader3"];
+        if (!header) {
+            
+            header = [[ContractHeader3 alloc] initWithReuseIdentifier:@"ContractHeader3"];
+        }
+        
+        return header;
     }else{
         ContractHeader1 *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContractHeader1"];
         if (!header) {
@@ -255,6 +273,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+
     if (indexPath.section==1) {
         //买方信息
         if (_index == 0) {
@@ -352,10 +371,19 @@
             }
         }
         else{
+            ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
+            if (!cell) {
+                
+                cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            cell.dataDic = _agent_info[indexPath.row];
+            return cell;
         }
     }
     
+
     UITableViewCell *cell = [[UITableViewCell alloc]init];
     return cell;
 
