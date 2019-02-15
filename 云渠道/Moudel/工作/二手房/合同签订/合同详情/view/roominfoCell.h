@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface roominfoCell : UITableViewCell
+@property (nonatomic , strong) UILabel *adressLab;
+@property (nonatomic , strong) UILabel *numLab;
+@property (nonatomic , strong) UILabel *roominfoLab;
+@property (nonatomic , strong) UILabel *areaLab;
+@property (nonatomic , strong) UILabel *peopleLab;
+@property (nonatomic , strong) UILabel *phoneLab;
 
 @end
 

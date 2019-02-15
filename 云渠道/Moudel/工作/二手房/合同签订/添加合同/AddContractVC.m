@@ -472,7 +472,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.buyReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.buyReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"sale_reason"];
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"buy_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
@@ -483,7 +483,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.sellReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.sellReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"buy_reason"];
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"sale_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
