@@ -9,6 +9,10 @@
 #import "ContractDetailVC.h"
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
+#import "AddContractCell7.h"
+#import "AddContractCell4.h"
+#import "AddContractCell5.h"
+#import "AddPeopleVC.h"
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -113,6 +117,30 @@
 }
 
 
+-(void)action_addbuyer
+{
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        [_buy_info addObject:dic];
+        [_mainTable reloadData];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
+
+-(void)action_addseller
+{
+    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+        [_sell_info addObject:dic];
+        [_mainTable reloadData];
+    };
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
 
 #pragma mark ---  delegeta ----
 
@@ -124,7 +152,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 1;
+    if (section==1) {
+        if (_index==0) {
+            return _buy_info.count+2;
+        }else if (_index ==1)
+        {
+            return _sell_info.count+2;
+        }else{
+            return 1;
+        }
+    }
+
+    
+     return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -214,6 +254,108 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section==1) {
+        //买方信息
+        if (_index == 0) {
+            if (indexPath.row ==0) {
+                AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
+                if (!cell) {
+                    
+                    cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
+                    
+                }
+                [cell setDataDic:_deal_info];
+                cell.choosebtn.hidden = YES;
+                cell.numL.font = [UIFont systemFontOfSize:15*SIZE];
+                cell.numL.textColor = YJTitleLabColor;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+            else if(indexPath.row == _buy_info.count+1)
+            {
+                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
+                if (!cell) {
+                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
+                }
+                [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+                return cell;
+            }
+            else{
+                
+                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                if (!cell) {
+                    
+                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                    
+                }
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sell_info[indexPath.row-1]];
+                [cell setData:dic];
+                if (indexPath.row ==1) {
+                    cell.stickieBtn.hidden = YES;
+                    cell.titelL.text = @"主权益人";
+                }
+                else{
+                    cell.stickieBtn.hidden = NO;
+                    cell.titelL.text = @"附权益人";
+                }
+                cell.indexpath = indexPath;
+                cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                    
+                    
+                };
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }
+                    
+        }else if (_index == 1)
+        {
+            if (indexPath.row == 0) {
+                
+                
+            }
+            else if (indexPath.row == _sell_info.count+1)
+            {
+                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
+                if (!cell) {
+                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
+                }
+                [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+                return cell;
+            }else
+            {
+                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                if (!cell) {
+                    
+                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                    
+                }
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sell_info[indexPath.row-1]];
+                [cell setData:dic];
+                if (indexPath.row ==1) {
+                    cell.stickieBtn.hidden = YES;
+                    cell.titelL.text = @"主权益人";
+                }
+                else{
+                    cell.stickieBtn.hidden = NO;
+                    cell.titelL.text = @"附权益人";
+                }
+                cell.indexpath = indexPath;
+                cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                    
+                    
+                };
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }
+        }
+        else{
+            
+        }
+    }
+    
     UITableViewCell *cell = [[UITableViewCell alloc]init];
     return cell;
 
@@ -236,15 +378,14 @@
         
     } WithDefaultBlack:^{
         
-//        [BaseRequest POST:TakeMaintainContactDelete_URL parameters:@{@"contact_id":_contactArr[indexPath.row][@"contact_id"]} success:^(id resposeObject) {
-//
-//        } failure:^(NSError *error) {
-//
-//            [self showContent:@"网络错误"];
-//        }];
+
     }];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
 
 -(UITableView *)mainTable{
     if (!_mainTable) {

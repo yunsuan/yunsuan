@@ -706,6 +706,7 @@
 		10AEEE9821A3E7340049625B /* ReportCustomSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AEEE9221A3E7340049625B /* ReportCustomSuccessView.m */; };
 		10AFF8AD221548C300657217 /* ContractHeader2.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AFF8AC221548C300657217 /* ContractHeader2.m */; };
 		10AFF8B02215496300657217 /* ContractHeader1.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AFF8AF2215496300657217 /* ContractHeader1.m */; };
+		10AFF8B322168CDA00657217 /* roominfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10AFF8B222168CDA00657217 /* roominfoCell.m */; };
 		10B2CAA5205A0D0900E814AC /* RegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA3205A0D0900E814AC /* RegisterVC.m */; };
 		10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */; };
 		10B2CAAC205A1DFA00E814AC /* WorkingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B2CAAB205A1DFA00E814AC /* WorkingCell.m */; };
@@ -2149,6 +2150,8 @@
 		10AFF8AC221548C300657217 /* ContractHeader2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader2.m; sourceTree = "<group>"; };
 		10AFF8AE2215496300657217 /* ContractHeader1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractHeader1.h; sourceTree = "<group>"; };
 		10AFF8AF2215496300657217 /* ContractHeader1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractHeader1.m; sourceTree = "<group>"; };
+		10AFF8B122168CDA00657217 /* roominfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = roominfoCell.h; sourceTree = "<group>"; };
+		10AFF8B222168CDA00657217 /* roominfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = roominfoCell.m; sourceTree = "<group>"; };
 		10B2CAA3205A0D0900E814AC /* RegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterVC.m; sourceTree = "<group>"; };
 		10B2CAA4205A0D0900E814AC /* RegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterVC.h; sourceTree = "<group>"; };
 		10B2CAA6205A0D1300E814AC /* FindPassWordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPassWordVC.m; sourceTree = "<group>"; };
@@ -7219,6 +7222,8 @@
 				10AFF8AC221548C300657217 /* ContractHeader2.m */,
 				10AFF8AE2215496300657217 /* ContractHeader1.h */,
 				10AFF8AF2215496300657217 /* ContractHeader1.m */,
+				10AFF8B122168CDA00657217 /* roominfoCell.h */,
+				10AFF8B222168CDA00657217 /* roominfoCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7788,6 +7793,7 @@
 				0CC19CFD206E21110007CC5F /* SelectCompanyTableCell.m in Sources */,
 				0CED0C0E21E9DBA80016A029 /* WorkSelectView.m in Sources */,
 				0C2883C6210EF5A600F69C5F /* RentingRoomAgencyVC.m in Sources */,
+				10AFF8B322168CDA00657217 /* roominfoCell.m in Sources */,
 				10B2CAA8205A0D1300E814AC /* FindPassWordVC.m in Sources */,
 				0CD90A7F20E0DCA600061B4A /* RoomReportAddVC.m in Sources */,
 				0C9CD427210097C2004894A3 /* MaintainRoomInfoCell.m in Sources */,
