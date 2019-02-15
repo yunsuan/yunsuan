@@ -19,6 +19,7 @@
 #import "roominfoCell.h"
 #import "ContractAgentCell.h"
 #import "ContractTradeCell.h"
+#import "ContractMainConCell.h"
 
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -171,7 +172,7 @@
         }
     }else if (section == 1){
         
-        return _agent_info.count;
+        return _agent_info.count + 1;
     }
 
      return 0;
@@ -384,15 +385,29 @@
         }
     }else if (indexPath.section == 1){
         
-        ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
-        if (!cell) {
-            
-            cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        cell.dataDic = _agent_info[indexPath.row];
-        return cell;
+        if (indexPath.row == _agent_info.count) {
+            
+            ContractMainConCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractMainConCell"];
+            if (!cell) {
+                
+                cell = [[ContractMainConCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractMainConCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+        }else{
+            
+            ContractAgentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContractAgentCell"];
+            if (!cell) {
+                
+                cell = [[ContractAgentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractAgentCell"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.dataDic = _agent_info[indexPath.row];
+            return cell;
+        }
     }
     
 

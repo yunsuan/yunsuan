@@ -20,6 +20,11 @@
     return self;
 }
 
+- (void)ActionEditBtn:(UIButton *)btn{
+    
+    
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _codeL.text = [NSString stringWithFormat:@"合同编号：%@",dataDic[@"take_code"]];
@@ -37,6 +42,18 @@
 }
 
 - (void)initUI{
+    
+    _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_editBtn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+    [self.contentView addSubview:_editBtn];
+    
+    [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.contentView).offset(-7 *SIZE);
+        make.top.equalTo(self.contentView).offset(16 *SIZE);
+        make.height.width.mas_equalTo(26 *SIZE);
+    }];
     
     for (int i = 0; i < 12; i++) {
         
