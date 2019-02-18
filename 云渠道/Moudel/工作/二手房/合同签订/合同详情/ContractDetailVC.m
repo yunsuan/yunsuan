@@ -74,12 +74,12 @@
     [BaseRequest GET:ContractDetail_URL parameters:@{@"deal_id":_deal_id} success:^(id resposeObject) {
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue]==200) {
-            _agent_info = resposeObject[@"data"][@"agent_info"];
-            _buy_info = resposeObject[@"data"][@"buy_info"];
+            _agent_info = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"agent_info"]];
+            _buy_info = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"buy_info"]];
             _deal_info = resposeObject[@"data"][@"deal_info"];
             _house_info = resposeObject[@"data"][@"house_info"];
-            _img = resposeObject[@"data"][@"img"];
-            _sell_info = resposeObject[@"data"][@"sale_info"];
+            _img = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"img"]];
+            _sell_info = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"sale_info"]];
             [_mainTable reloadData];
         }
         
@@ -129,8 +129,30 @@
 {
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-        [_buy_info addObject:dic];
-        [_mainTable reloadData];
+        [BaseRequest GET:DealAddContact_URL
+               parameters:@{
+                            @"deal_id":_deal_id,
+                            @"name":dic[@"name"],
+                            @"tel":dic[@"tel"],
+                            @"sex":dic[@"sex"],
+                            @"report_type":@"2",
+                            @"card_type":dic[@"card_type"],
+                            @"card_id":dic[@"card_id"],
+                            @"address":dic[@"address"],
+                            @"contact_type":@"1",
+                            }
+                  success:^(id resposeObject) {
+                      
+                      if ([resposeObject[@"code"] integerValue]==200) {
+                          [_buy_info addObject:dic];
+                          [_mainTable reloadData];
+//                          [self.navigationController pushViewController:vc animated:YES];
+                      }
+                                                          }
+                  failure:^(NSError *error) {
+                      [self showContent:@"网络错误"];
+                                                          }];
+
     };
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -142,8 +164,30 @@
 {
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
-        [_sell_info addObject:dic];
-        [_mainTable reloadData];
+        [BaseRequest GET:DealAddContact_URL
+              parameters:@{
+                           @"deal_id":_deal_id,
+                           @"name":dic[@"name"],
+                           @"tel":dic[@"tel"],
+                           @"sex":dic[@"sex"],
+                           @"report_type":@"2",
+                           @"card_type":dic[@"card_type"],
+                           @"card_id":dic[@"card_id"],
+                           @"address":dic[@"address"],
+                           @"contact_type":@"2",
+                           }
+                 success:^(id resposeObject) {
+                     
+                     if ([resposeObject[@"code"] integerValue]==200) {
+                         [_sell_info addObject:dic];
+                         [_mainTable reloadData];
+                         //                          [self.navigationController pushViewController:vc animated:YES];
+                     }
+                 }
+                 failure:^(NSError *error) {
+                     [self showContent:@"网络错误"];
+                 }];
+        
     };
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -315,7 +359,7 @@
                     cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
                     
                 }
-                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sell_info[indexPath.row-1]];
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row-1]];
                 [cell setData:dic];
                 if (indexPath.row ==1) {
                     cell.stickieBtn.hidden = YES;
@@ -328,7 +372,21 @@
                 cell.indexpath = indexPath;
                 cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
                     
-                    
+                    [BaseRequest GET:DealTopContact_URL parameters:@{
+                                                                     @"contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
+                                                                     @"top_contact_id":_buy_info[0][@"buy_contact_id"],
+                                                                     @"contact_type":@"1",
+                                                                         
+                                                                     }
+                             success:^(id resposeObject) {
+                        
+                                if ([resposeObject[@"code"]integerValue]==200) {
+                                    [_buy_info exchangeObjectAtIndex:0 withObjectAtIndex:indexPath.row-1];
+                                    [_mainTable reloadData];
+                                }
+                    } failure:^(NSError *error) {
+                        
+                    }];
                 };
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
@@ -378,7 +436,21 @@
                 }
                 cell.indexpath = indexPath;
                 cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
-                    
+                    [BaseRequest GET:DealTopContact_URL parameters:@{
+                                                                     @"contact_id":_sell_info[indexPath.row-1][@"sale_contact_id"],
+                                                                     @"top_contact_id":_sell_info[0][@"sale_contact_id"],
+                                                                     @"contact_type":@"1",
+                                                                     
+                                                                     }
+                             success:^(id resposeObject) {
+                                 
+                                 if ([resposeObject[@"code"]integerValue]==200) {
+                                     [_sell_info exchangeObjectAtIndex:0 withObjectAtIndex:indexPath.row-1];
+                                     [_mainTable reloadData];
+                                 }
+                             } failure:^(NSError *error) {
+                                 
+                             }];
                     
                 };
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;

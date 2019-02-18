@@ -830,6 +830,19 @@ static NSString *const TakeDealValueList_URL = @"agent/take/deal/valueList";
 
 //合同所有列表
 static NSString *const TakeDealAllList_URL = @"agent/take/deal/allList";
+
+//添加联系人
+static NSString *const DealAddContact_URL = @"agent/take/deal/contact/add";
+
+//删除联系人
+static NSString *const DealDeleteContact_URL = @"agent/take/deal/contact/del";
+
+//修改联系人
+static NSString *const DealUpdateContact_URL = @"agent/take/deal/contact/update";
+
+//联系人置顶
+static NSString *const DealTopContact_URL = @"agent/take/deal/contact/changeSort";
+
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息
