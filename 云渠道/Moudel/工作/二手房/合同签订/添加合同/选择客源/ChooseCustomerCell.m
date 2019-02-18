@@ -68,6 +68,10 @@
     _phonelab.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_phonelab];
 //    _phonelab.text = @"18756231245";
+    
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
     [self MasonryUI];
 }
 
@@ -78,7 +82,6 @@
         make.left.equalTo(self.contentView).offset(14 *SIZE);
         make.top.equalTo(self.contentView).offset(12 *SIZE);
         make.width.mas_equalTo( 80 *SIZE);
-        
         make.height.mas_equalTo(16*SIZE);
     }];
     
@@ -114,7 +117,14 @@
 //         make.bottom.equalTo(self.contentView).offset(20 *SIZE);
     }];
     
-
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(_namelab.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(1*SIZE);
+        make.bottom.equalTo(self.contentView).offset(0 *SIZE);
+    }];
 }
 
 @end

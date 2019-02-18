@@ -80,6 +80,12 @@
 - (void)action_add{
     
     AddContractVC *nextVC = [[AddContractVC alloc] init];
+    nextVC.addContractVCBlock = ^{
+      
+        [_contractSignWaitVC postWithpage:@"1"];
+        [_contractSignDoneVC postWithpage:@"1"];
+        [_contractSignListVC postWithpage:@"1"];
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 //    [BaseRequest GET:HouseSubNeedAgent_URL parameters:nil success:^(id resposeObject) {
 //

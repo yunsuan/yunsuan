@@ -239,6 +239,11 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue]==200) {
             [self showContent:@"添加成功"];
+            
+            if (self.addContractVCBlock) {
+                
+                self.addContractVCBlock();
+            }
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {

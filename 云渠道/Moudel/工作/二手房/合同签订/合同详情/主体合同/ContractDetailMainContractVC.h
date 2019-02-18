@@ -10,7 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractDetailMainContractVCBlock)(void);
+
 @interface ContractDetailMainContractVC : BaseViewController
+
+@property (nonatomic, copy) ContractDetailMainContractVCBlock contractDetailMainContractVCBlock;
+
+@property (nonatomic, strong) NSString *dealId;
+
+- (instancetype)initWithDataArr:(NSArray *)dataArr;
 
 @end
 

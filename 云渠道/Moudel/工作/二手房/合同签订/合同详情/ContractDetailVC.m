@@ -554,7 +554,12 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.contractMainConCellBlock = ^{
                 
-                ContractDetailMainContractVC *nextVC = [[ContractDetailMainContractVC alloc] init];
+                ContractDetailMainContractVC *nextVC = [[ContractDetailMainContractVC alloc] initWithDataArr:_img];
+                nextVC.contractDetailMainContractVCBlock = ^{
+                  
+                    [self Post];
+                };
+                nextVC.dealId = _deal_id;
                 [self.navigationController pushViewController:nextVC animated:YES];
                 
             };
