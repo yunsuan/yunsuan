@@ -826,6 +826,12 @@ static NSString *const WaitContractList_URL = @"agent/take/deal/list";
 //合同详情
 static NSString *const ContractDetail_URL = @"agent/take/deal/detail";
 
+//添加合同图片
+static NSString *const ContractTakeDealImgAdd_URL = @"agent/take/deal/img/add";
+
+//删除合同图片
+static NSString *const ContractTakeDealImgDel_URL = @"agent/take/deal/img/del";
+
 //合同已审核列表
 static NSString *const TakeDealValueList_URL = @"agent/take/deal/valueList";
 

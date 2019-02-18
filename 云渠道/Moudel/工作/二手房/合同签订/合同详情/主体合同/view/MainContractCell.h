@@ -10,7 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^MainContractCellBlock)(NSInteger index);
+
 @interface MainContractCell : UICollectionViewCell
+
+@property (nonatomic, copy) MainContractCellBlock mainContractCellBlock;
+
+@property (nonatomic, strong) UIImageView *bigImg;
+
+@property (nonatomic, strong) UIButton *deleteBtn;
 
 @end
 
