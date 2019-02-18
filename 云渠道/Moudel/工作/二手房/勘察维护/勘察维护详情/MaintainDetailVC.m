@@ -55,6 +55,7 @@
     NSMutableArray *_tagArr;
     NSMutableArray *_matchArr;
     NSMutableDictionary *_detailDic;
+    NSMutableDictionary *_takeDic;
     NSInteger _type;
 }
 @property (nonatomic, strong) UITableView *mainTable;
@@ -103,6 +104,7 @@
     _tagArr = [@[] mutableCopy];
     _matchArr = [@[] mutableCopy];
     _detailDic = [@{} mutableCopy];
+    _takeDic = [@{} mutableCopy];
     _moreDic = [@{} mutableCopy];
 }
 
@@ -195,6 +197,15 @@
 
         _moreDic = [NSMutableDictionary dictionaryWithDictionary:data[@"more"]];
     }
+    
+    if ([data[@"take"] isKindOfClass:[NSDictionary class]]) {
+        
+        _takeDic = [NSMutableDictionary dictionaryWithDictionary:data[@"take"]];
+    }
+//    [_takeDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+//       
+//        [_takeDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:@"key"];
+//    }];
     [_mainTable reloadData];
 }
 - (void)ActionRightBtn:(UIButton *)btn{
@@ -304,6 +315,7 @@
         [header.followBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
 
         header.dataDic = _houseDic;
+        header.takeDic = _takeDic;
         if (_type == 1) {
             
             header.typeL.text = @"住宅";
@@ -343,6 +355,12 @@
             MaintainRoomInfoVC *nextVC = [[MaintainRoomInfoVC alloc] initWithDataDic:_moreDic];
             nextVC.progressArr = [[NSMutableArray alloc] initWithArray:_detailDic[@"progress"]];
             nextVC.type = _type;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        };
+        
+        header.maintainPriceHeaderBlock = ^{
+          
+            MaintainLookRecordVC *nextVC = [[MaintainLookRecordVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
         };
         return header;
