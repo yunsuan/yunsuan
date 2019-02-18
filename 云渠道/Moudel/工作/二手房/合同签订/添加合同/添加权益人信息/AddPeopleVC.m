@@ -301,6 +301,10 @@
                     _certTypeBtn.content.text = _dataDic[@"card_type_name"];
                     _certTypeBtn->str = _dataDic[@"card_type"];
                 }
+                else{
+                    _certTypeBtn.content.text = @"";
+                    _certTypeBtn->str = @"";
+                }
                 [_certTypeBtn addTarget:self action:@selector(ActionCardTypeBtn:) forControlEvents:UIControlEventTouchUpInside];
                 [_whiteView addSubview:_certTypeBtn];
                 break;
@@ -311,7 +315,7 @@
                 [_whiteView addSubview:_certNumL];
                 _certNumTF = textField;
                 if (_dataDic[@"card_id"]) {
-                    _certNumTF.textfield.text =_dataDic[@"card_id"];
+                    _certNumTF.textfield.text = [NSString stringWithFormat:@"%@",_dataDic[@"card_id"]];
                 }
                 [_whiteView addSubview:_certNumTF];
                 break;

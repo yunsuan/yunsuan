@@ -145,8 +145,9 @@
                   success:^(id resposeObject) {
                       
                       if ([resposeObject[@"code"] integerValue]==200) {
-                          [_buy_info addObject:dic];
-                          [_mainTable reloadData];
+//                          [_buy_info addObject:dic];
+//                          [_mainTable reloadData];
+                          [self Post];
 //                          [self.navigationController pushViewController:vc animated:YES];
                       }
                                                           }
@@ -180,8 +181,9 @@
                  success:^(id resposeObject) {
                      
                      if ([resposeObject[@"code"] integerValue]==200) {
-                         [_sell_info addObject:dic];
-                         [_mainTable reloadData];
+//                         [_sell_info addObject:dic];
+//                         [_mainTable reloadData];
+                         [self Post];
                          //                          [self.navigationController pushViewController:vc animated:YES];
                      }
                  }
@@ -208,7 +210,11 @@
 
     if (section == 2) {
         if (_index==0) {
+            if ([_deal_info[@"take_code"] isEqual:[NSNull null]]) {
+               return  _buy_info.count+1;
+            }else{
             return _buy_info.count+2;
+            }
         }else if (_index ==1)
         {
             return _sell_info.count+2;
@@ -329,70 +335,127 @@
     if (indexPath.section == 2) {
         //买方信息
         if (_index == 0) {
-            if (indexPath.row ==0) {
-                AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
-                if (!cell) {
-                    
-                    cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
-                    
-                }
-                [cell setDataDic:_deal_info];
-                cell.choosebtn.hidden = YES;
-                cell.numL.font = [UIFont systemFontOfSize:15*SIZE];
-                cell.numL.textColor = YJTitleLabColor;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                return cell;
-            }
-            else if(indexPath.row == _buy_info.count+1)
-            {
-                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
-                if (!cell) {
-                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
-                }
-                [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
-                return cell;
-            }
-            else{
-                
-                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
-                if (!cell) {
-                    
-                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
-                    
-                }
-                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row-1]];
-                [cell setData:dic];
-                if (indexPath.row ==1) {
-                    cell.stickieBtn.hidden = YES;
-                    cell.titelL.text = @"主权益人";
-                }
-                else{
-                    cell.stickieBtn.hidden = NO;
-                    cell.titelL.text = @"附权益人";
-                }
-                cell.indexpath = indexPath;
-                cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
-                    
-                    [BaseRequest GET:DealTopContact_URL parameters:@{
-                                                                     @"contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
-                                                                     @"top_contact_id":_buy_info[0][@"buy_contact_id"],
-                                                                     @"contact_type":@"1",
-                                                                         
-                                                                     }
-                             success:^(id resposeObject) {
-                        
-                                if ([resposeObject[@"code"]integerValue]==200) {
-                                    [_buy_info exchangeObjectAtIndex:0 withObjectAtIndex:indexPath.row-1];
-                                    [_mainTable reloadData];
-                                }
-                    } failure:^(NSError *error) {
-                        
-                    }];
-                };
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                return cell;
-            }
+             if ([_deal_info[@"take_code"] isEqual:[NSNull null]])
+             {
+                 if (indexPath.row ==_buy_info.count) {
+                     AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell51"];
+                     if (!cell) {
+                         cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell51"];
+                     }
+                     [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+                     return cell;
+                 }
+                 else{
+                     
+                     AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell41"];
+                     if (!cell) {
+                         
+                         cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell41"];
+                         
+                     }
+                     NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row]];
+                     [cell setData:dic];
+                     if (indexPath.row ==0) {
+                         cell.stickieBtn.hidden = YES;
+                         cell.titelL.text = @"主权益人";
+                     }
+                     else{
+                         cell.stickieBtn.hidden = NO;
+                         cell.titelL.text = @"附权益人";
+                     }
+                     cell.indexpath = indexPath;
+                     cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                         
+                         [BaseRequest GET:DealTopContact_URL parameters:@{
+                                                                          @"contact_id":_buy_info[indexPath.row][@"buy_contact_id"],
+                                                                          @"top_contact_id":_buy_info[0][@"buy_contact_id"],
+                                                                          @"contact_type":@"1",
+                                                                          
+                                                                          }
+                                  success:^(id resposeObject) {
+                                      
+                                      if ([resposeObject[@"code"]integerValue]==200) {
+                                          [_buy_info exchangeObjectAtIndex:0 withObjectAtIndex:indexPath.row];
+                                          [_mainTable reloadData];
+                                      }
+                                  } failure:^(NSError *error) {
+                                      
+                                  }];
+                     };
+                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                     
+                     return cell;
+                     
+                 }
+                 
+             }else{
+                 
+                 if (indexPath.row ==0) {
+                     AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
+                     if (!cell) {
+                         
+                         cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
+                         
+                     }
+                     [cell setDataDic:_deal_info];
+                     cell.choosebtn.hidden = YES;
+                     cell.numL.font = [UIFont systemFontOfSize:15*SIZE];
+                     cell.numL.textColor = YJTitleLabColor;
+                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                     return cell;
+                 }
+                 else if(indexPath.row == _buy_info.count+1)
+                 {
+                     AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell51"];
+                     if (!cell) {
+                         cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell51"];
+                     }
+                     [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+                     return cell;
+                 }
+                 else{
+                     
+                     AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell41"];
+                     if (!cell) {
+                         
+                         cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell41"];
+                         
+                     }
+                     NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row-1]];
+                     [cell setData:dic];
+                     if (indexPath.row ==1) {
+                         cell.stickieBtn.hidden = YES;
+                         cell.titelL.text = @"主权益人";
+                     }
+                     else{
+                         cell.stickieBtn.hidden = NO;
+                         cell.titelL.text = @"附权益人";
+                     }
+                     cell.indexpath = indexPath;
+                     cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                         
+                         [BaseRequest GET:DealTopContact_URL parameters:@{
+                                                                          @"contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
+                                                                          @"top_contact_id":_buy_info[0][@"buy_contact_id"],
+                                                                          @"contact_type":@"1",
+                                                                          
+                                                                          }
+                                  success:^(id resposeObject) {
+                                      
+                                      if ([resposeObject[@"code"]integerValue]==200) {
+                                          [_buy_info exchangeObjectAtIndex:0 withObjectAtIndex:indexPath.row-1];
+                                          [_mainTable reloadData];
+                                      }
+                                  } failure:^(NSError *error) {
+                                      
+                                  }];
+                     };
+                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                     
+                     return cell;
+                 
+             }
+        }
                     
         }else if (_index == 1)
         {
@@ -411,18 +474,18 @@
             }
             else if (indexPath.row == _sell_info.count+1)
             {
-                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
+                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell52"];
                 if (!cell) {
-                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
+                    cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell512"];
                 }
-                [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
+                [cell.addBtn addTarget:self action:@selector(action_addseller) forControlEvents:UIControlEventTouchUpInside];
                 return cell;
             }else
             {
-                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell42"];
                 if (!cell) {
                     
-                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell42"];
                     
                 }
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sell_info[indexPath.row-1]];
@@ -515,7 +578,168 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-   
+    if (indexPath.section == 2) {
+        //买方信息
+        if (_index == 0) {
+            
+            if ([_deal_info[@"take_code"] isEqual:[NSNull null]])
+            {
+                if (indexPath.row<_buy_info.count) {
+                    
+                    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                    vc.dataDic = _buy_info[indexPath.row];
+                    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                        
+                        
+                        
+                        [BaseRequest GET:DealUpdateContact_URL
+                              parameters:@{
+                                           @"contact_id":_buy_info[indexPath.row][@"buy_contact_id"],
+                                           @"name":dic[@"name"],
+                                           @"tel":dic[@"tel"],
+                                           @"sex":dic[@"sex"],
+                                           @"report_type":indexPath.row==0?@"1":@"2",
+                                           @"card_type":dic[@"card_type"],
+                                           @"card_id":dic[@"card_id"],
+                                           @"address":dic[@"address"],
+                                           @"contact_type":@"1",
+                                           }
+                                 success:^(id resposeObject) {
+                                     if ([resposeObject[@"code"]integerValue]==200) {
+                                         [_buy_info replaceObjectAtIndex:indexPath.row
+                                                              withObject:
+                                          @{
+                                            @"buy_contact_id":_buy_info[indexPath.row][@"buy_contact_id"],
+                                            @"name":dic[@"name"],
+                                            @"tel":dic[@"tel"],
+                                            @"sex":dic[@"sex"],
+                                            @"report_type":indexPath.row==1?@"1":@"2",
+                                            @"card_type":dic[@"card_type"],
+                                            @"card_id":dic[@"card_id"],
+                                            @"address":dic[@"address"],
+                                            @"contact_type":@"1",
+                                            }];
+                                         [_mainTable reloadData];
+                                         
+                                     }
+                                     
+                                 }
+                                 failure:^(NSError *error) {
+                                     
+                                 }];
+                        
+                    };
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }
+            else{
+                
+                if (indexPath.row>0&&indexPath.row<_buy_info.count+1) {
+                    
+                    
+                    AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                    vc.dataDic = _buy_info[indexPath.row-1];
+                    vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                        
+                        
+                        
+                        [BaseRequest GET:DealUpdateContact_URL
+                              parameters:@{
+                                           @"contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
+                                           @"name":dic[@"name"],
+                                           @"tel":dic[@"tel"],
+                                           @"sex":dic[@"sex"],
+                                           @"report_type":indexPath.row==1?@"1":@"2",
+                                           @"card_type":dic[@"card_type"],
+                                           @"card_id":dic[@"card_id"],
+                                           @"address":dic[@"address"],
+                                           @"contact_type":@"1",
+                                           }
+                                 success:^(id resposeObject) {
+                                     if ([resposeObject[@"code"]integerValue]==200) {
+                                         [_buy_info replaceObjectAtIndex:indexPath.row-1
+                                                              withObject:
+                                          @{
+                                            @"buy_contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
+                                            @"name":dic[@"name"],
+                                            @"tel":dic[@"tel"],
+                                            @"sex":dic[@"sex"],
+                                            @"report_type":indexPath.row==1?@"1":@"2",
+                                            @"card_type":dic[@"card_type"],
+                                            @"card_id":dic[@"card_id"],
+                                            @"address":dic[@"address"],
+                                            @"contact_type":@"1",
+                                            }];
+                                         [_mainTable reloadData];
+                                         
+                                     }
+                                     
+                                 }
+                                 failure:^(NSError *error) {
+                                     
+                                 }];
+                        
+                    };
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
+            }
+            
+           
+        }
+        //卖方信息
+        if (_index == 1) {
+            
+            if (indexPath.row>0&&indexPath.row<_sell_info.count+1) {
+                
+                
+                AddPeopleVC *vc = [[AddPeopleVC alloc]init];
+                vc.dataDic = _sell_info[indexPath.row-1];
+                vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
+                    
+                    
+                    
+                    [BaseRequest GET:DealUpdateContact_URL
+                          parameters:@{
+                                       @"contact_id":_sell_info[indexPath.row-1][@"sale_contact_id"],
+                                       @"name":dic[@"name"],
+                                       @"tel":dic[@"tel"],
+                                       @"sex":dic[@"sex"],
+                                       @"report_type":indexPath.row==1?@"1":@"2",
+                                       @"card_type":dic[@"card_type"],
+                                       @"card_id":dic[@"card_id"],
+                                       @"address":dic[@"address"],
+                                       @"contact_type":@"2",
+                                       }
+                             success:^(id resposeObject) {
+                                 if ([resposeObject[@"code"]integerValue]==200) {
+                                     [_sell_info replaceObjectAtIndex:indexPath.row-1
+                                                          withObject:
+                                      @{
+                                        @"sale_contact_id":_sell_info[indexPath.row-1][@"sale_contact_id"],
+                                        @"name":dic[@"name"],
+                                        @"tel":dic[@"tel"],
+                                        @"sex":dic[@"sex"],
+                                        @"report_type":indexPath.row==1?@"1":@"2",
+                                        @"card_type":dic[@"card_type"],
+                                        @"card_id":dic[@"card_id"],
+                                        @"address":dic[@"address"],
+                                        @"contact_type":@"2",
+                                        }];
+                                     [_mainTable reloadData];
+                                     
+                                 }
+                                 
+                             }
+                             failure:^(NSError *error) {
+                                 
+                             }];
+                    
+                };
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -529,14 +753,90 @@
         
         
     } WithDefaultBlack:^{
-        
+        if (_index == 0 ) {
+            
+            if ([_deal_info[@"take_code"] isEqual:[NSNull null]])
+            {
+                [BaseRequest GET:DealDeleteContact_URL parameters:@{
+                                                                    @"contact_id":_buy_info[indexPath.row][@"buy_contact_id"],
+                                                                    @"contact_type":@"1",
+                                                                    } success:^(id resposeObject) {
+                                                                        if ([resposeObject[@"code"] integerValue] ==200) {
+                                                                            [_buy_info removeObjectAtIndex:indexPath.row];
+                                                                            [_mainTable reloadData];
+                                                                        }
+                                                                    } failure:^(NSError *error) {
+                                                                        [self showContent:@"网络错误！"];
+                                                                    }];
+            }else
+            {
+                [BaseRequest GET:DealDeleteContact_URL parameters:@{
+                                                                    @"contact_id":_buy_info[indexPath.row-1][@"buy_contact_id"],
+                                                                    @"contact_type":@"1",
+                                                                    } success:^(id resposeObject) {
+                                                                        if ([resposeObject[@"code"] integerValue] ==200) {
+                                                                            [_buy_info removeObjectAtIndex:indexPath.row-1];
+                                                                            [_mainTable reloadData];
+                                                                        }
+                                                                    } failure:^(NSError *error) {
+                                                                        [self showContent:@"网络错误！"];
+                                                                    }];
+            }
+          
+            
+        }else{
+            
+            [BaseRequest GET:DealDeleteContact_URL parameters:@{
+                                                                 @"contact_id":_sell_info[indexPath.row-1][@"sale_contact_id"],
+                                                                 @"contact_type":@"2",
+                                                                 } success:^(id resposeObject) {
+                                                                     if ([resposeObject[@"code"] integerValue] ==200) {
+                                                                         [_sell_info removeObjectAtIndex:indexPath.row-1];
+                                                                         [_mainTable reloadData];
+                                                                     }
+                                                                 } failure:^(NSError *error) {
+                                                                     [self showContent:@"网络错误！"];
+                                                                 }];
+            
+            
+        }
 
     }];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    if (indexPath.section ==2) {
+        if (_index ==0) {
+            
+            if ([_deal_info[@"take_code"] isEqual:[NSNull null]])
+            {
+                if (indexPath.row>0&&indexPath.row<_buy_info.count) {
+                    return YES;
+                }
+            }else{
+                if (indexPath.row>1&&indexPath.row<_buy_info.count+1) {
+                    return YES;
+                }
+            }
+
+        }
+        
+        if (_index ==1) {
+            
+                if (indexPath.row>1&&indexPath.row<_sell_info.count+1) {
+                    return YES;
+                }
+        }
+    }
+    
     return NO;
+    
 }
 
 -(UITableView *)mainTable{
