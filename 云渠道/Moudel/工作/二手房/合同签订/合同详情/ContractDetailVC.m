@@ -116,7 +116,10 @@
     
     [alert addAction:buy];
     [alert addAction:sell];
-    [alert addAction:soldout];
+    if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+        
+        [alert addAction:soldout];
+    }
     [alert addAction:cancel];
     
     [self.navigationController presentViewController:alert animated:YES completion:^{
