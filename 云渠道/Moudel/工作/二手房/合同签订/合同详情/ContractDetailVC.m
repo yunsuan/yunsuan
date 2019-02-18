@@ -21,6 +21,7 @@
 #import "ContractAgentCell.h"
 #import "ContractTradeCell.h"
 #import "ContractMainConCell.h"
+#import "SetContractVc.h"
 
 
 @interface ContractDetailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -128,6 +129,13 @@
     }];
 }
 
+
+-(void)action_cantract
+{
+    SetContractVc *vc = [[SetContractVc alloc]init];
+    vc.tradedic = _deal_info;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 -(void)action_addbuyer
 {
@@ -315,8 +323,8 @@
         else{
             header.passtimeLab.text = @"";
         }
-        header.peopleLab.text =[NSString stringWithFormat:@"签约人员：%@-%@",_deal_info[@"sub_agent"],_deal_info[@"store_name"]];
-        header.moneyLab.text =[NSString stringWithFormat:@"%@万",_deal_info[@"deal_money"]];
+        header.peopleLab.text = [NSString stringWithFormat:@"签约人员：%@-%@",_deal_info[@"sub_agent"],_deal_info[@"store_name"]];
+        header.moneyLab.text = [NSString stringWithFormat:@"%@万",_deal_info[@"deal_money"]];
         header.adressLab.text = [NSString stringWithFormat:@"%@ %@",_house_info[@"project_name"],_house_info[@"address"]];
         header.roomLab.text = [NSString stringWithFormat:@"房间信息:%@-%@-%@",_house_info[@"build_name"],_house_info[@"unit_name"],_house_info[@"house_name"]];
         header.buyLab.text = [NSString stringWithFormat:@"买房原因：%@",_deal_info[@"buy_reason"]];
@@ -532,7 +540,7 @@
                 cell = [[ContractTradeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractTradeCell"];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            [cell.editBtn addTarget:self action:@selector(action_cantract) forControlEvents:UIControlEventTouchUpInside];
             cell.dataDic = _deal_info;
             return cell;
         }

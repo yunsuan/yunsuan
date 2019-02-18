@@ -27,7 +27,7 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    _codeL.text = [NSString stringWithFormat:@"合同编号：%@",dataDic[@"take_code"]];
+    _codeL.text = [NSString stringWithFormat:@"合同编号：%@",dataDic[@"deal_code"]];
     _priceL.text = [NSString stringWithFormat:@"成交总价：%@万",dataDic[@"deal_money"]];
     _buyBreachL.text = [NSString stringWithFormat:@"买方违约金额：%@",dataDic[@"buy_breach"]];
     _sellBreachL.text = [NSString stringWithFormat:@"卖方违约金额：%@",dataDic[@"sale_breach"]];
@@ -35,7 +35,7 @@
     _sellCommissionL.text = [NSString stringWithFormat:@"卖方支付佣金金额：%@",dataDic[@"sale_brokerage"]];
     _payWayL.text = [NSString stringWithFormat:@"付款方式：%@",dataDic[@"pay_way"]];
     _registerTimeL.text = [NSString stringWithFormat:@"办证日期：%@",dataDic[@"certificate_time"]];
-    _logoutTimeL.text = [NSString stringWithFormat:@"注销抵押时间：%@",dataDic[@""]];
+    _logoutTimeL.text = [NSString stringWithFormat:@"注销抵押时间：%@",dataDic[@"mortgage_cancel_time"]];
     _markL.text = [NSString stringWithFormat:@"约定事项：%@",dataDic[@"comment"]];
     _buyReasonL.text = [NSString stringWithFormat:@"买房原因：%@",dataDic[@"buy_reason"]];
     _sellReasonL.text = [NSString stringWithFormat:@"卖房原因：%@",dataDic[@"sale_reason"]];
@@ -44,7 +44,7 @@
 - (void)initUI{
     
     _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_editBtn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];
+
     [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [self.contentView addSubview:_editBtn];
     

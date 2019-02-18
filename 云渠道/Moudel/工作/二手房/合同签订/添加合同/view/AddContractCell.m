@@ -66,6 +66,22 @@
     }
 }
 
+-(void)setDataWithdic:(NSMutableDictionary *)dic{
+    if (dic) {
+        _data = [NSMutableDictionary dictionaryWithDictionary:dic];
+        _codeTF.textfield.text = _data[@"deal_code"];
+        _priceTF.textfield.text = _data[@"deal_money"];
+        _buyBreachTF.textfield.text = _data[@"buy_breach"];
+        _sellBreachTF.textfield.text = _data[@"sale_breach"];
+        _buyCommissionTF.textfield.text = _data[@"buy_brokerage"];
+        _sellCommissionTF.textfield.text = _data[@"sale_brokerage"];
+        _loanTimeBtn.content.text = _data[@"certificate_time"];
+        _cardTimeBtn.content.text =_data[@"mortgage_cancel_time"];
+        _notesTV.text = _data[@"comment"];
+        
+        }
+}
+
 //@"construct_code":@"",
 //@"deal_money":@"",
 //@"buy_breach":@"",
@@ -216,6 +232,7 @@
                     _codeTF.textfield.tag = 1001;
                     [_codeTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
                     _codeTF.textfield.keyboardType = UIKeyboardTypeASCIICapable;
+                    _codeTF.textfield.text = _data[@"deal_code"];
                     [self.contentView addSubview:_codeTF];
                     break;
                 }
@@ -226,6 +243,7 @@
                     _priceTF.textfield.tag = 1002;
                     _priceTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
                     [_priceTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _priceTF.textfield.text = _data[@"deal_money"];
                     [self.contentView addSubview:_priceTF];
                     break;
                 }
@@ -236,6 +254,7 @@
                     _buyBreachTF.textfield.tag = 1003;
                     _buyBreachTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
                     [_buyBreachTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _buyBreachTF.textfield.text = _data[@"buy_breach"];
                     [self.contentView addSubview:_buyBreachTF];
                     break;
                 }
@@ -246,6 +265,7 @@
                     _sellBreachTF.textfield.tag = 1004;
                     _sellBreachTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
                     [_sellBreachTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _sellBreachTF.textfield.text = _data[@"sale_breach"];
                     [self.contentView addSubview:_sellBreachTF];
                     break;
                 }
@@ -256,6 +276,7 @@
                     _buyCommissionTF.textfield.tag = 1005;
                     _buyCommissionTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
                     [_buyCommissionTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _buyCommissionTF.textfield.text = _data[@"buy_brokerage"];
                     [self.contentView addSubview:_buyCommissionTF];
                     break;
                 }
@@ -267,7 +288,9 @@
                     _sellCommissionTF.textfield.tag = 1006;
                     _sellCommissionTF.textfield.keyboardType =  UIKeyboardTypeDecimalPad;
                      [_sellCommissionTF.textfield addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingDidEnd];
+                    _sellCommissionTF.textfield.text = _data[@"sale_brokerage"];
                     [self.contentView addSubview:_sellCommissionTF];
+                    
                     break;
                 }
                 default:
@@ -282,12 +305,14 @@
                     _loanTimeBtn = btn;
                   
                     [_loanTimeBtn addTarget:self action:@selector(action_cardTime) forControlEvents:UIControlEventTouchUpInside];
+                    _loanTimeBtn.content.text = _data[@"certificate_time"];
                     [self.contentView addSubview:_loanTimeBtn];
                     break;
                 }
                 case 7:
                 {
                     _cardTimeBtn = btn;
+                    _cardTimeBtn.content.text =_data[@"mortgage_cancel_time"];
                     [_cardTimeBtn addTarget:self action:@selector(action_cancelTime) forControlEvents:UIControlEventTouchUpInside];
 
                     [self.contentView addSubview:_cardTimeBtn];
@@ -327,6 +352,7 @@
             _notesTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
             _notesTV.clipsToBounds = YES;
             _notesTV.delegate = self;
+            _notesTV.text = _data[@"comment"];
             [self.contentView addSubview:_notesTV];
         }
     }
