@@ -669,7 +669,8 @@ static NSString *const HouseSurveyCancelSale_URL = @"agent/house/survey/cancelSa
 //下架检测
 //static NSString *const HouseSurveyCheckCancel_URL = @"agent/house/survey/checkCancel";
 
-
+//勘察带看历史列表
+static NSString *const HouseSurveyTakeHisList_URL = @"agent/house/survey/take/his/list";
 #pragma mark -- 二手房-代购合同 --
 
 //获取经办人信息

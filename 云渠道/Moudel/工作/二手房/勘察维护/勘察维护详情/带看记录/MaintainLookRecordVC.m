@@ -12,31 +12,59 @@
 #import "MaintainLookHeader.h"
 
 @interface MaintainLookRecordVC ()<UITableViewDataSource,UITableViewDelegate>
-//{
-//
-//    NSArray *_titleArr;
-//}
+{
+
+    NSMutableArray *_dataArr;
+    NSDictionary *_dataDic;
+}
 @property (nonatomic, strong) UITableView *table;
 
 @end
 
 @implementation MaintainLookRecordVC
 
+- (instancetype)initWithDataDic:(NSDictionary *)dataDic
+{
+    self = [super init];
+    if (self) {
+        
+        _dataDic = dataDic;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
 }
 
 - (void)initDataSource{
     
+    _dataArr = [@[] mutableCopy];
+}
+
+- (void)RequestMethod{
     
+    [BaseRequest GET:HouseSurveyTakeHisList_URL parameters:@{@"house_id":self.houseId,@"type":@"1"} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            _dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+        }
+        [_table reloadData];
+    } failure:^(NSError *error) {
+       
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 2;
+    return _dataArr.count;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -52,8 +80,8 @@
         header = [[MaintainLookHeader alloc] initWithReuseIdentifier:@"MaintainLookHeader"];
     }
     
-    header.numL.text = @"3";
-    header.allL.text = @"6";
+    header.numL.text = [NSString stringWithFormat:@"%@",_dataDic[@"range_take"]];
+    header.allL.text = [NSString stringWithFormat:@"%@",_dataDic[@"total_take"]];
     
     return header;
 }
@@ -67,13 +95,24 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.timeL.text = @"2018.03.12";
-    cell.priceL.text = @"89万";
-    cell.agentL.text = @"张三";
+    cell.timeL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"take_time"]];
+    cell.priceL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"price"]];
+    cell.agentL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"agent_name"]];
     cell.tag = indexPath.row;
     
     cell.maintainLookBlock = ^(NSInteger index) {
         
+        NSString *phone = [NSString stringWithFormat:@"%@",_dataArr[index][@"agent_tel"]];//[_dataArr[index][@"agent_tel"] componentsSeparatedByString:@","][0];
+        if (phone.length) {
+            
+            //获取目标号码字符串,转换成URL
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",phone]];
+            //调用系统方法拨号
+            [[UIApplication sharedApplication] openURL:url];
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"暂时未获取到联系电话"];
+        }
     };
     
     return cell;

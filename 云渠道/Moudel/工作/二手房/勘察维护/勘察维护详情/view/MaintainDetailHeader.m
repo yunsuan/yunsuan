@@ -192,7 +192,7 @@
     
     if (dataDic[@"suggest_price"]) {
         
-        _partView.daysL.text = [NSString stringWithFormat:@"%@",dataDic[@"suggest_price"]];
+        _partView.daysL.text = [NSString stringWithFormat:@"%@元/㎡",dataDic[@"suggest_price"]];
 //        _RePriceL.text = [NSString stringWithFormat:@"参考价格:%@元/㎡",dataDic[@"suggest_price"]];
     }else{
         

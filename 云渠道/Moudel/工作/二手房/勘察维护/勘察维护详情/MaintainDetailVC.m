@@ -360,7 +360,8 @@
         
         header.maintainPriceHeaderBlock = ^{
           
-            MaintainLookRecordVC *nextVC = [[MaintainLookRecordVC alloc] init];
+            MaintainLookRecordVC *nextVC = [[MaintainLookRecordVC alloc] initWithDataDic:_takeDic];
+            nextVC.houseId = _houseId;
             [self.navigationController pushViewController:nextVC animated:YES];
         };
         return header;

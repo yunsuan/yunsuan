@@ -10,4 +10,8 @@
 
 @interface MaintainLookRecordVC : BaseViewController
 
+@property (nonatomic, strong) NSString *houseId;
+
+- (instancetype)initWithDataDic:(NSDictionary *)dataDic;
+
 @end
