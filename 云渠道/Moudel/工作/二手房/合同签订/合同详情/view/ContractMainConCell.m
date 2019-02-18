@@ -22,7 +22,10 @@
 
 - (void)ActionMoreBtn:(UIButton *)btn{
     
-    
+    if (self.contractMainConCellBlock) {
+        
+        self.contractMainConCellBlock();
+    }
 }
 
 - (void)initUI{

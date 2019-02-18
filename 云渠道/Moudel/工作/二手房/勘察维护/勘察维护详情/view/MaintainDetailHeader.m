@@ -45,6 +45,25 @@
     }
 }
 
+- (void)ActionTap{
+    
+    if (self.maintainPriceHeaderBlock) {
+        
+        self.maintainPriceHeaderBlock();
+    }
+}
+
+- (void)setTakeDic:(NSMutableDictionary *)takeDic{
+    
+    _seeView.daysL.text = [NSString stringWithFormat:@"%@",takeDic[@"range_take"]];
+    _seeView.allL.text = [NSString stringWithFormat:@"%@",takeDic[@"total_take"]];
+    _seeView.intentL.text = [NSString stringWithFormat:@"%@",takeDic[@"last_price"]];
+    
+    _priceView.daysL.text = [NSString stringWithFormat:@"%@",takeDic[@"highest_price"]];
+    _priceView.allL.text = [NSString stringWithFormat:@"%@",takeDic[@"lowest_price"]];
+    _priceView.intentL.text = [NSString stringWithFormat:@"%@",takeDic[@"price_person_count"]];
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     if (dataDic[@"house_code"]) {
@@ -173,21 +192,22 @@
     
     if (dataDic[@"suggest_price"]) {
         
-        _RePriceL.text = [NSString stringWithFormat:@"参考价格:%@元/㎡",dataDic[@"suggest_price"]];
+        _partView.daysL.text = [NSString stringWithFormat:@"%@",dataDic[@"suggest_price"]];
+//        _RePriceL.text = [NSString stringWithFormat:@"参考价格:%@元/㎡",dataDic[@"suggest_price"]];
     }else{
         
-        _RePriceL.text = [NSString stringWithFormat:@"参考价格:暂无数据"];
+        _partView.daysL.text = [NSString stringWithFormat:@"0"];
     }
     
     if (dataDic[@"focus_num"]) {
         
-        _attentL.text = [NSString stringWithFormat:@"关注人数:%@",dataDic[@"focus_num"]];
+        _partView.allL.text = [NSString stringWithFormat:@"%@",dataDic[@"focus_num"]];
     }else{
         
-        _attentL.text = [NSString stringWithFormat:@"关注人数:暂无数据"];
+        _partView.allL.text = [NSString stringWithFormat:@"0"];
     }
     
-    _periodL.text = [NSString stringWithFormat:@"预估卖出周期:暂无数据"];
+    _partView.intentL.text = [NSString stringWithFormat:@"暂无数据"];
 }
 
 
@@ -316,20 +336,20 @@
             }
             case 10:
             {
-                _RePriceL = label;
-                [self.contentView addSubview:_RePriceL];
+//                _RePriceL = label;
+//                [self.contentView addSubview:_RePriceL];
                 break;
             }
             case 11:
             {
-                _attentL = label;
-                [self.contentView addSubview:_attentL];
+//                _attentL = label;
+//                [self.contentView addSubview:_attentL];
                 break;
             }
             case 12:
             {
-                _periodL = label;
-                [self.contentView addSubview:_periodL];
+//                _periodL = label;
+//                [self.contentView addSubview:_periodL];
                 break;
             }
             default:
@@ -351,18 +371,42 @@
 //        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
         [btn setTitleColor:YJ86Color forState:UIControlStateNormal];
+        
+        ThreePartView *part = [[ThreePartView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 75 *SIZE)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+        part.userInteractionEnabled = YES;
+        [part addGestureRecognizer:tap];
         if (i == 0) {
             
             _infoBtn = btn;
             [self.contentView addSubview:_infoBtn];
+            
+            _partView = part;
+            _partView.daysLabel.text = @"参考价格";
+            _partView.allLabel.text = @"关注人数";
+            _partView.intentLabel.text = @"预估卖出周期";
+            
+            [self.contentView addSubview:_partView];
         }else if (i == 1){
             
             _advantageBtn = btn;
             [self.contentView addSubview:_advantageBtn];
+            
+            _seeView = part;
+//            _seeView.daysLabel.text = @"参考价格";
+//            _seeView.allLabel.text = @"关注人数";
+            _seeView.intentLabel.text = @"最新出价";
+            [self.contentView addSubview:_seeView];
         }else{
             
             _followBtn = btn;
             [self.contentView addSubview:_followBtn];
+            
+            _priceView = part;
+            _priceView.daysLabel.text = @"最高出价";
+            _priceView.allLabel.text = @"最低出价";
+            _priceView.intentLabel.text = @"出价人数";
+            [self.contentView addSubview:_priceView];
         }
     }
     
@@ -516,31 +560,34 @@
         make.height.mas_equalTo(2 *SIZE);
     }];
     
-    [_RePriceL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_partView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_dashesLine.mas_bottom).offset(16 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(_dashesLine.mas_bottom).offset(0 *SIZE);
+        make.right.equalTo(self.contentView).offset(0 *SIZE);
+        make.height.mas_equalTo(75 *SIZE);
     }];
     
-    [_attentL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_seeView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_RePriceL.mas_bottom).offset(19 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(_partView.mas_bottom).offset(0 *SIZE);
+        make.right.equalTo(self.contentView).offset(0 *SIZE);
+        make.height.mas_equalTo(75 *SIZE);
     }];
     
-    [_periodL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_priceView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(28 *SIZE);
-        make.top.equalTo(_attentL.mas_bottom).offset(19 *SIZE);
-        make.right.equalTo(self.contentView).offset(-28 *SIZE);
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(_seeView.mas_bottom).offset(0 *SIZE);
+        make.right.equalTo(self.contentView).offset(0 *SIZE);
+        make.height.mas_equalTo(75 *SIZE);
     }];
     
     [_infoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_periodL.mas_bottom).offset(22 *SIZE);
+        make.top.equalTo(_priceView.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
@@ -549,7 +596,7 @@
     [_advantageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(120 *SIZE);
-        make.top.equalTo(_periodL.mas_bottom).offset(22 *SIZE);
+        make.top.equalTo(_priceView.mas_bottom).offset(22 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
@@ -558,7 +605,7 @@
     [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(240 *SIZE);
-        make.top.equalTo(_periodL.mas_bottom).offset(22 *SIZE);
+        make.top.equalTo(_priceView.mas_bottom).offset(22 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);

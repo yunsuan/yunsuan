@@ -427,6 +427,9 @@
 		0CC19D152071F2A60007CC5F /* BirthVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC19D142071F2A60007CC5F /* BirthVC.m */; };
 		0CC19D19207202E80007CC5F /* ChangeNameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC19D18207202E80007CC5F /* ChangeNameVC.m */; };
 		0CC19D1D207205CA0007CC5F /* ChangeAddessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC19D1C207205CA0007CC5F /* ChangeAddessVC.m */; };
+		0CC3546E2216B9A600475324 /* ContractDetailMainContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3546D2216B9A600475324 /* ContractDetailMainContractVC.m */; };
+		0CC354722216BD0100475324 /* MainContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354712216BD0100475324 /* MainContractCell.m */; };
+		0CC354752216C81200475324 /* ThreePartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354742216C81200475324 /* ThreePartView.m */; };
 		0CD0BD88219E586700A95A87 /* SystemWorkWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0BD87219E586700A95A87 /* SystemWorkWaitDetailVC.m */; };
 		0CD7B5C3214799C5009517F2 /* RoomChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD7B5C2214799C5009517F2 /* RoomChildVC.m */; };
 		0CD7B5D4214A42E6009517F2 /* CompleteSurveyStoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD7B5D3214A42E6009517F2 /* CompleteSurveyStoreVC.m */; };
@@ -1594,6 +1597,12 @@
 		0CC19D1C207205CA0007CC5F /* ChangeAddessVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeAddessVC.m; sourceTree = "<group>"; };
 		0CC19D202072172C0007CC5F /* AddRequireMentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddRequireMentVC.h; sourceTree = "<group>"; };
 		0CC19D212072172C0007CC5F /* AddRequireMentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddRequireMentVC.m; sourceTree = "<group>"; };
+		0CC3546C2216B9A600475324 /* ContractDetailMainContractVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractDetailMainContractVC.h; sourceTree = "<group>"; };
+		0CC3546D2216B9A600475324 /* ContractDetailMainContractVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractDetailMainContractVC.m; sourceTree = "<group>"; };
+		0CC354702216BD0100475324 /* MainContractCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainContractCell.h; sourceTree = "<group>"; };
+		0CC354712216BD0100475324 /* MainContractCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainContractCell.m; sourceTree = "<group>"; };
+		0CC354732216C81200475324 /* ThreePartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreePartView.h; sourceTree = "<group>"; };
+		0CC354742216C81200475324 /* ThreePartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreePartView.m; sourceTree = "<group>"; };
 		0CD0BD86219E586700A95A87 /* SystemWorkWaitDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemWorkWaitDetailVC.h; sourceTree = "<group>"; };
 		0CD0BD87219E586700A95A87 /* SystemWorkWaitDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemWorkWaitDetailVC.m; sourceTree = "<group>"; };
 		0CD7B5C1214799C5009517F2 /* RoomChildVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomChildVC.h; sourceTree = "<group>"; };
@@ -4977,6 +4986,25 @@
 			path = "添加需求";
 			sourceTree = "<group>";
 		};
+		0CC3546B2216B98500475324 /* 主体合同 */ = {
+			isa = PBXGroup;
+			children = (
+				0CC3546F2216BCED00475324 /* view */,
+				0CC3546C2216B9A600475324 /* ContractDetailMainContractVC.h */,
+				0CC3546D2216B9A600475324 /* ContractDetailMainContractVC.m */,
+			);
+			path = "主体合同";
+			sourceTree = "<group>";
+		};
+		0CC3546F2216BCED00475324 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0CC354702216BD0100475324 /* MainContractCell.h */,
+				0CC354712216BD0100475324 /* MainContractCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		0CD0BD85219E580F00A95A87 /* 待确认详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5186,6 +5214,8 @@
 				0C9CD42C2100A662004894A3 /* MaintainRoomInfoCell2.m */,
 				0C9CD42E2100A66F004894A3 /* MaintainRoomInfoCell3.h */,
 				0C9CD42F2100A66F004894A3 /* MaintainRoomInfoCell3.m */,
+				0CC354732216C81200475324 /* ThreePartView.h */,
+				0CC354742216C81200475324 /* ThreePartView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -7393,6 +7423,7 @@
 		10F7D0D521F86C29007818E3 /* 合同详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0CC3546B2216B98500475324 /* 主体合同 */,
 				10AFF8A72215485A00657217 /* view */,
 				10F7D0D621F86C59007818E3 /* ContractDetailVC.h */,
 				10F7D0D721F86C59007818E3 /* ContractDetailVC.m */,
@@ -7713,6 +7744,7 @@
 				0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */,
 				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
 				0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */,
+				0CC3546E2216B9A600475324 /* ContractDetailMainContractVC.m in Sources */,
 				0C7492E72201CD5E008F551B /* LookMaintainDetailAddAppointVC.m in Sources */,
 				0C075E0521FB12DA00BDD123 /* LookMaintainAddLookVC.m in Sources */,
 				0C73B09721F5BDF7005F71F1 /* RecommendWaitDetailVC.m in Sources */,
@@ -7994,6 +8026,7 @@
 				0C9B01AD215DCD130055A9A8 /* SelectStoreVC.m in Sources */,
 				0C9CD3F920FDD2EF004894A3 /* SecHouseTypeDetailVC.m in Sources */,
 				0CC19D01206E21500007CC5F /* ExperienceVC.m in Sources */,
+				0CC354722216BD0100475324 /* MainContractCell.m in Sources */,
 				1016245E2088640300AD53DE /* YJChooseViewCell.m in Sources */,
 				0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */,
 				0C2883942109685100F69C5F /* RentingSurveyComplaitVC.m in Sources */,
@@ -8023,6 +8056,7 @@
 				0C2883B42109AAD300F69C5F /* RentingSurveyInvalidVC.m in Sources */,
 				0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */,
 				0C15A1DA2112986700544F2E /* RentingModifyProjectAnalysisVC.m in Sources */,
+				0CC354752216C81200475324 /* ThreePartView.m in Sources */,
 				0C9CD40220FF1AED004894A3 /* TextFieldImgCell.m in Sources */,
 				101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */,
 				0C342FB7207DEB540058406D /* BaseModel.m in Sources */,

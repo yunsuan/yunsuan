@@ -97,7 +97,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.statusL.text = @"待审核";
     [cell setDataDic:_dataArr[indexPath.row]];
-    //    cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
 }

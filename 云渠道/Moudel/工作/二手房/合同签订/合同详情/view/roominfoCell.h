@@ -18,13 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *houseNumL;
 
-@property (nonatomic, strong) UILabel *houseTypeL;
+//@property (nonatomic, strong) UILabel *houseTypeL;
 
 @property (nonatomic , strong) UILabel *areaL;
 
-@property (nonatomic, strong) UILabel *certNumL;
-
-@property (nonatomic, strong) UILabel *homelandL;
+//@property (nonatomic, strong) UILabel *certNumL;
+//
+//@property (nonatomic, strong) UILabel *homelandL;
 
 @property (nonatomic , strong) UILabel *agentL;
 

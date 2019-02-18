@@ -8,6 +8,7 @@
 
 #import "ContractDetailVC.h"
 #import "AddPeopleVC.h"
+#import "ContractDetailMainContractVC.h"
 
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
@@ -480,7 +481,12 @@
                 cell = [[ContractMainConCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ContractMainConCell"];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
+            cell.contractMainConCellBlock = ^{
+                
+                ContractDetailMainContractVC *nextVC = [[ContractDetailMainContractVC alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+                
+            };
             return cell;
         }else{
             
