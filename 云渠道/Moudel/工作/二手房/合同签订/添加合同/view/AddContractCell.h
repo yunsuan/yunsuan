@@ -84,7 +84,7 @@ typedef void(^TextFiledBlock)(NSMutableDictionary *datadic);
 @property (nonatomic, strong)UITextView *notesTV;
 
 @property (nonatomic , strong) NSMutableDictionary *data;
-
+-(void)setDataWithdic:(NSMutableDictionary *)dic;
 
 @end
 
