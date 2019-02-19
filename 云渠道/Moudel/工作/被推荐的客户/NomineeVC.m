@@ -55,7 +55,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionNomineeReload) name:@"recommendReload" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionNomineeReload) name:@"recommendReload" object:nil];
     
     [self initDateSouce];
     [self initUI];

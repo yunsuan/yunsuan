@@ -43,6 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionNomineeReload) name:@"recommendReload" object:nil];
     [self initDataSource];
     [self initUI];
     [_segmentColl selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:0];
@@ -51,6 +52,14 @@
 - (void)initDataSource{
     
     _titleArr = @[@"待确认",@"有效",@"无效",@"申诉"];
+}
+
+- (void)ActionNomineeReload{
+    
+    [_nomineeConfirmVC RequestMethod];
+    [_nomineeValidVC RequestMethod];
+    [_nomineeInvalidVC RequestMethod];
+    [_nomineeComplaintVC RequestMethod];
 }
 
 
