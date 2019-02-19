@@ -132,10 +132,50 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"操作" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
 
     
-//    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//
-//
-//    }];
+    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        AddContractVC *VC = [[AddContractVC alloc]init];
+        NSMutableArray *arr1 = [NSMutableArray array];
+        
+//        _numL.text =[NSString stringWithFormat:@"客源编号：%@",dataDic[@"take_code"]];
+//        //    _addressL.text = [NSString stringWithFormat:@"房源信息：%@",dataDic[@"title"]];
+//        _nameL.text =[NSString stringWithFormat:@"带看经纪人：%@",dataDic[@"butter_name"]];
+//        _telL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"butter_tel"]];
+        [arr1 addObject:@{@"take_code": _baseInfoDic[@"take_code"],
+                          @"butter_name":_baseInfoDic[@"agent_name"],
+                          @"butter_tel":_baseInfoDic[@"agent_tel"]
+                          }];
+        NSMutableDictionary *dic;
+        for (int i=0; i<_contactArr.count; i++) {
+            dic =[NSMutableDictionary dictionaryWithDictionary:
+                  @{
+                    @"name":_contactArr[i][@"name"],
+                    @"tel":_contactArr[i][@"tel"][0],
+                    @"card_type":_contactArr[i][@"card_type"],
+                    @"card_type_name":_contactArr[i][@"card_type_name"],
+                    @"card_id":_contactArr[i][@"card_id"],
+                    @"address":_contactArr[i][@"address"],
+                    @"sex":_contactArr[i][@"sex"]
+                    }];
+            [arr1 addObject:dic];
+        }
+        
+        VC.buyarr =arr1;
+        //        _dataDic =[NSMutableDictionary dictionaryWithDictionary:
+        //                   @{@"name":_nameTF.textfield.text,
+        //                     @"tel":_phoneTF.textfield.text,
+        //                     @"card_type":_certTypeBtn->str,
+        //                     @"card_type_name":_certTypeBtn.content.text,
+        //                     @"card_id":_certNumTF.textfield.text,
+        //                     @"address":_addressTF.textfield.text,
+        //                     @"sex":_genderBtn->str
+        //                     }];
+        //        _numL.text =[NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
+        //        _addressL.text = [NSString stringWithFormat:@"房源信息：%@",dataDic[@"title"]];
+        //        _nameL.text =[NSString stringWithFormat:@"勘察经纪人：%@",dataDic[@"survey_agent_name"]];
+        //        _telL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"survey_agent_tel"]];
+        [self.navigationController pushViewController:VC animated:YES];
+
+    }];
     
     UIAlertAction *soldout = [UIAlertAction actionWithTitle:@"放弃带看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -155,7 +195,7 @@
     }];
     
     //    [alert addAction:protocol];
-//    [alert addAction:buy];
+    [alert addAction:buy];
     [alert addAction:soldout];
     [alert addAction:cancel];
     
