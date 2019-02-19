@@ -95,6 +95,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.statusL.text = _dataArr[indexPath.row][@"state_name"];
     cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
