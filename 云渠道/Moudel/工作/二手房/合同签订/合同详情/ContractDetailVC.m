@@ -52,7 +52,7 @@
 {
     self.titleLabel.text = @"合同详情";
     self.navBackgroundView.hidden = NO;
-    if (self.state > 2) {
+    if (self.state > 2 || self.state == 0) {
         
         self.rightBtn.hidden = YES;
     }else{
@@ -238,15 +238,9 @@
                 return  _buy_info.count+1;
             }else{
                 
-                if (self.state > 2) {
+                if (self.state != 2) {
                     
-                    if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
-                        
-                        return _buy_info.count + 2;
-                    }else{
-                        
-                        return _buy_info.count + 1;
-                    }
+                    return _buy_info.count + 1;
                 }else{
                     
                     return _buy_info.count+2;
@@ -254,15 +248,9 @@
             }
         }else if (_index ==1){
             
-            if (self.state > 2) {
+            if (self.state != 2) {
                 
-                if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
-                    
-                    return _sell_info.count+2;
-                }else{
-                    
-                    return _sell_info.count + 1;
-                }
+                return _sell_info.count + 1;
             }else{
                 
                 return _sell_info.count+2;
@@ -346,7 +334,7 @@
             
             header = [[ContractHeader3 alloc] initWithReuseIdentifier:@"ContractHeader3"];
         }
-        if (self.state > 2) {
+        if (self.state == 1) {
             
             if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
                 
@@ -357,7 +345,7 @@
             }
         }else{
             
-            header.AddBtn.hidden = NO;
+            header.AddBtn.hidden = YES;
         }
         
         return header;
@@ -594,15 +582,9 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.editBtn addTarget:self action:@selector(action_cantract) forControlEvents:UIControlEventTouchUpInside];
             
-            if (self.state > 2) {
+            if (self.state != 2) {
                 
-                 if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
-                     
-                     cell.editBtn.hidden = NO;
-                 }else{
-                     
-                     cell.editBtn.hidden = YES;
-                 }
+                 cell.editBtn.hidden = YES;
             }else{
                 
                 cell.editBtn.hidden = NO;
@@ -624,15 +606,9 @@
             cell.contractMainConCellBlock = ^{
                 
                 ContractDetailMainContractVC *nextVC = [[ContractDetailMainContractVC alloc] initWithDataArr:_img];
-                if (self.state > 2) {
+                if (self.state != 2) {
                     
-                    if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
-                        
-                        nextVC.isEdit = YES;
-                    }else{
-                        
-                        nextVC.isEdit = NO;
-                    }
+                    nextVC.isEdit = NO;
                 }else{
                     
                     nextVC.isEdit = YES;
