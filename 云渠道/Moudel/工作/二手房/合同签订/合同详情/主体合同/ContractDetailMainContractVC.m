@@ -10,7 +10,7 @@
 
 #import "MainContractCell.h"
 
-@interface ContractDetailMainContractVC ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UIImagePickerControllerDelegate>
+@interface ContractDetailMainContractVC ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     
     NSMutableArray *_dataArr;
@@ -51,7 +51,13 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return _dataArr.count + 1;
+    if (self.isEdit) {
+        
+        return _dataArr.count + 1;
+    }else{
+     
+        return _dataArr.count;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -85,7 +91,7 @@
     
     if (indexPath.item < _dataArr.count) {
         
-        cell.deleteBtn.hidden = NO;
+//        cell.deleteBtn.hidden = NO;
         [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataArr[indexPath.item][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
            
             if (error) {
@@ -93,12 +99,19 @@
                 cell.bigImg.image = [UIImage imageNamed:@"default_3"];
             }
         }];
+        
+        if (self.isEdit) {
+            
+            cell.deleteBtn.hidden = NO;
+        }else{
+            
+            cell.deleteBtn.hidden = YES;
+        }
     }else{
         
         cell.deleteBtn.hidden = YES;
         cell.bigImg.image = [UIImage imageNamed:@"uploadphotos"];
     }
-//
     
     return cell;
 }
