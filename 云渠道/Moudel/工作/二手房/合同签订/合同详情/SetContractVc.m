@@ -128,20 +128,56 @@
                    @"sale_brokerage":_tradedic[@"sale_brokerage"],
                    @"certificate_time":_tradedic[@"certificate_time"],
                    @"mortgage_cancel_time":_tradedic[@"mortgage_cancel_time"],
-                   @"pay_way":_tradedic[@"pay_way"],
-                   @"sale_reason":_tradedic[@"sale_reason"],
-                   @"buy_reason":_tradedic[@"buy_reason"],
+//                   @"pay_way":_tradedic[@"pay_way"],
+//                   @"sale_reason":_tradedic[@"sale_reason"],
+//                   @"buy_reason":_tradedic[@"buy_reason"],
                    @"comment":_tradedic[@"comment"],
                    @"type":@"1"
                    };
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:adddic];
+    NSArray *payArr = [self getDetailConfigArrByConfigState:PAY_WAY];
+    for (int i = 0; i < payArr.count; i++) {
+        
+        if ([_tradedic[@"pay_way"] isEqualToString:payArr[i][@"param"]]) {
+            
+            [tempDic setObject:[NSString stringWithFormat:@"%@",payArr[i][@"id"]] forKey:@"pay_way"];
+        }
+    }
     
-    [BaseRequest POST:AddContract_URL parameters:adddic success:^(id resposeObject) {
+    NSArray *buyArr = [self getDetailConfigArrByConfigState:BUY_HOUSE_RESON];
+    for (int i = 0; i < buyArr.count; i++) {
+        
+        if ([_tradedic[@"buy_reason"] isEqualToString:buyArr[i][@"param"]]) {
+            
+            [tempDic setObject:[NSString stringWithFormat:@"%@",buyArr[i][@"id"]] forKey:@"buy_reason"];
+        }
+    }
+    
+    NSArray *sellArr = [self getDetailConfigArrByConfigState:SELL_HOUSE_RESON];
+    for (int i = 0; i < sellArr.count; i++) {
+        
+        if ([_tradedic[@"sale_reason"] isEqualToString:sellArr[i][@"param"]]) {
+            
+            [tempDic setObject:[NSString stringWithFormat:@"%@",sellArr[i][@"id"]] forKey:@"sale_reason"];
+        }
+    }
+    
+    [tempDic setObject:self.dealId forKey:@"deal_id"];
+    [tempDic removeObjectForKey:@"type"];
+    [BaseRequest POST:TakeDealUpdate_URL parameters:tempDic success:^(id resposeObject) {
+        
         NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue]==200) {
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
             [self showContent:@"添加成功"];
+            if (self.setContractVcBlock) {
+                
+                self.setContractVcBlock();
+            }
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
+        
         NSLog(@"%@",error);
     }];
     
@@ -265,7 +301,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.payWayBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.payWayBtn->str = [NSString stringWithFormat:@"%@", ID];
-                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"pay_way"];
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", MC] forKey:@"pay_way"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
@@ -277,7 +313,7 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.buyReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.buyReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"buy_reason"];
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", MC] forKey:@"buy_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
@@ -288,13 +324,14 @@
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 cell.sellReasonBtn.content.text = [NSString stringWithFormat:@"%@",MC];
                 cell.sellReasonBtn->str = [NSString stringWithFormat:@"%@", ID];
-                [_tradedic setObject:[NSString stringWithFormat:@"%@", ID] forKey:@"sale_reason"];
+                [_tradedic setObject:[NSString stringWithFormat:@"%@", MC] forKey:@"sale_reason"];
                 //                [tableView reloadData];
             };
             [self.view addSubview:view];
         };
         
         cell.textFiledBlock = ^(NSMutableDictionary * _Nonnull datadic) {
+            
             _tradedic = datadic;
         };
         

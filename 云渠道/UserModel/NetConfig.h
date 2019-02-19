@@ -850,6 +850,9 @@ static NSString *const DealUpdateContact_URL = @"agent/take/deal/contact/update"
 //联系人置顶
 static NSString *const DealTopContact_URL = @"agent/take/deal/contact/changeSort";
 
+//修改合同
+static NSString *const TakeDealUpdate_URL = @"agent/take/deal/update";
+
 #pragma mark -- 租房 --
 
 #pragma mark -- 租房-消息

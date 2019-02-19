@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^SetContractVcBlock)(void);
+
 @interface SetContractVc : BaseViewController
+
+@property (nonatomic, copy) SetContractVcBlock setContractVcBlock;
+
+@property (nonatomic, strong) NSString *dealId;
 
 @property (nonatomic , strong) NSMutableDictionary *tradedic;
 

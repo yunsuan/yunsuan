@@ -139,7 +139,12 @@
 -(void)action_cantract
 {
     SetContractVc *vc = [[SetContractVc alloc]init];
-    vc.tradedic = _deal_info;
+    vc.dealId = _deal_id;
+    vc.tradedic = [NSMutableDictionary dictionaryWithDictionary:_deal_info];
+    vc.setContractVcBlock = ^{
+        
+        [self Post];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

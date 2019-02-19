@@ -67,6 +67,7 @@
 }
 
 -(void)setDataWithdic:(NSMutableDictionary *)dic{
+    
     if (dic) {
         _data = [NSMutableDictionary dictionaryWithDictionary:dic];
         _codeTF.textfield.text = _data[@"deal_code"];
@@ -79,7 +80,11 @@
         _cardTimeBtn.content.text =_data[@"mortgage_cancel_time"];
         _notesTV.text = _data[@"comment"];
         
-        }
+        _payWayBtn.content.text = _data[@"pay_way"];
+//        _payWayBtn->str = @"";
+        _buyReasonBtn.content.text = _data[@"buy_reason"];
+        _sellReasonBtn.content.text = _data[@"sale_reason"];
+    }
 }
 
 //@"construct_code":@"",
