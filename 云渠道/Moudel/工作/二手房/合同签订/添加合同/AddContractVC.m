@@ -30,9 +30,6 @@
 {
     NSArray *_titleArr;
     NSMutableArray *_foldArr;
-    NSMutableDictionary *_tradedic;
-    NSMutableArray *_buyarr;
-    NSMutableArray *_sellarr;
     NSDateFormatter *_formatter;
     BOOL _ischoose;
     BOOL _isadd;
@@ -71,8 +68,13 @@
                                                                @"buy_reason":@"",
                                                                @"comment":@""
                                                                }];
-    _buyarr =[NSMutableArray arrayWithArray:@[@""]];
-    _sellarr =[NSMutableArray arrayWithArray:@[@""]];
+    if (!_buyarr) {
+        _buyarr =[NSMutableArray arrayWithArray:@[@""]];
+    }
+    if (!_sellarr) {
+         _sellarr =[NSMutableArray arrayWithArray:@[@""]];
+    }
+   
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY-MM-dd"];
 //    _ischoose = NO;
