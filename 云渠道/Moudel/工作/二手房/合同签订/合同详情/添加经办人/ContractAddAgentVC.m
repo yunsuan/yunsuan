@@ -8,7 +8,15 @@
 
 #import "ContractAddAgentVC.h"
 
+#import "DropDownBtn.h"
+
 @interface ContractAddAgentVC ()
+
+@property (nonatomic, strong) DropDownBtn *flowBtn;
+
+@property (nonatomic, strong) DropDownBtn *agentBtn;
+
+@property (nonatomic, strong) DropDownBtn *timeBtn;
 
 @end
 
@@ -16,17 +24,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self initUI];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initUI{
+    
+    self.navBackgroundView.hidden = NO;
+    self.titleLabel.text = @"添加经办人";
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 175 *SIZE)];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view];
+    
+    
 }
-*/
 
 @end

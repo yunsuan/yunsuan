@@ -596,7 +596,7 @@
     [_advantageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(120 *SIZE);
-        make.top.equalTo(_priceView.mas_bottom).offset(22 *SIZE);
+        make.top.equalTo(_priceView.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
@@ -605,7 +605,7 @@
     [_followBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(240 *SIZE);
-        make.top.equalTo(_priceView.mas_bottom).offset(22 *SIZE);
+        make.top.equalTo(_priceView.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(47 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
