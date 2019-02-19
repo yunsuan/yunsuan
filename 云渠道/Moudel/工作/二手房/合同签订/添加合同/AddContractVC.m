@@ -663,7 +663,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==1) {
         if (_isadd ==NO) {
-            if (indexPath.row>0&&indexPath.row<_buyarr.count+1) {
+            if (indexPath.row>0&&indexPath.row<_buyarr.count) {
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
                 vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -674,7 +674,7 @@
             }
         }
         else{
-            if (indexPath.row>=0&&indexPath.row<_buyarr.count+1) {
+            if (indexPath.row>=0&&indexPath.row<_buyarr.count) {
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
                 vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -686,7 +686,7 @@
         }
         
     }else if (indexPath.section ==2){
-        if (indexPath.row >0&&indexPath.row<_sellarr.count+1) {
+        if (indexPath.row >0&&indexPath.row<_sellarr.count) {
             AddPeopleVC *vc = [[AddPeopleVC alloc]init];
             vc.dataDic = _sellarr[indexPath.row];
             vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
