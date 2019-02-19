@@ -527,6 +527,7 @@
 		0CE47B5A206B4401001ADD73 /* RoomDetailTableHeader5.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B59206B4401001ADD73 /* RoomDetailTableHeader5.m */; };
 		0CE47B65206B9D0E001ADD73 /* PersonalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B64206B9D0E001ADD73 /* PersonalVC.m */; };
 		0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B68206B9E33001ADD73 /* PersonalTableCell.m */; };
+		0CE8218A221BF06A00576742 /* ContractAddAgentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82189221BF06A00576742 /* ContractAddAgentVC.m */; };
 		0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */; };
 		0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */; };
 		0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */; };
@@ -1801,6 +1802,8 @@
 		0CE47B64206B9D0E001ADD73 /* PersonalVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalVC.m; sourceTree = "<group>"; };
 		0CE47B67206B9E33001ADD73 /* PersonalTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalTableCell.h; sourceTree = "<group>"; };
 		0CE47B68206B9E33001ADD73 /* PersonalTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalTableCell.m; sourceTree = "<group>"; };
+		0CE82188221BF06A00576742 /* ContractAddAgentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractAddAgentVC.h; sourceTree = "<group>"; };
+		0CE82189221BF06A00576742 /* ContractAddAgentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractAddAgentVC.m; sourceTree = "<group>"; };
 		0CEBDE3220AE6F7B004BAF7A /* AddressChooseView3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressChooseView3.h; sourceTree = "<group>"; };
 		0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView3.m; sourceTree = "<group>"; };
 		0CEC314B21EC3A85002B307F /* AddHouseRequireMentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddHouseRequireMentVC.h; sourceTree = "<group>"; };
@@ -5950,6 +5953,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		0CE82187221BF05000576742 /* 添加经办人 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE82188221BF06A00576742 /* ContractAddAgentVC.h */,
+				0CE82189221BF06A00576742 /* ContractAddAgentVC.m */,
+			);
+			path = "添加经办人";
+			sourceTree = "<group>";
+		};
 		0CEBDE6220AECDC3004BAF7A /* 引导图片 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7426,6 +7438,7 @@
 		10F7D0D521F86C29007818E3 /* 合同详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0CE82187221BF05000576742 /* 添加经办人 */,
 				0CC3546B2216B98500475324 /* 主体合同 */,
 				10AFF8A72215485A00657217 /* view */,
 				10F7D0D621F86C59007818E3 /* ContractDetailVC.h */,
@@ -7675,6 +7688,7 @@
 				0C6B6348211B04F500ABB506 /* CompleteSurveyInfoVC.m in Sources */,
 				10F7D0CE21F83AEA007818E3 /* AddContractCell4.m in Sources */,
 				0C997C8321E490D900F805AA /* LookFailCell.m in Sources */,
+				0CE8218A221BF06A00576742 /* ContractAddAgentVC.m in Sources */,
 				0C0BED2320A18F7A005A16A1 /* ComplaintCell.m in Sources */,
 				0CED0BF221E72C750016A029 /* ContractSignListVC.m in Sources */,
 				0C997B7121CB816300F805AA /* RentingModifyTagVC.m in Sources */,
