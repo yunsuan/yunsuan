@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ContractDetailVC : BaseViewController
+
+@property (nonatomic, assign) NSInteger state;
+
 @property (nonatomic , strong) NSString *deal_id;
 @end
 

@@ -52,7 +52,13 @@
 {
     self.titleLabel.text = @"合同详情";
     self.navBackgroundView.hidden = NO;
-    self.rightBtn.hidden = NO;
+    if (self.state > 2) {
+        
+        self.rightBtn.hidden = YES;
+    }else{
+        
+        self.rightBtn.hidden = NO;
+    }
     [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -221,15 +227,43 @@
 
     if (section == 2) {
         if (_index==0) {
+            
             if ([_deal_info[@"take_code"] isEqual:[NSNull null]]) {
-               return  _buy_info.count+1;
+               
+                return  _buy_info.count+1;
             }else{
-            return _buy_info.count+2;
+                
+                if (self.state > 2) {
+                    
+                    if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+                        
+                        return _buy_info.count + 2;
+                    }else{
+                        
+                        return _buy_info.count + 1;
+                    }
+                }else{
+                    
+                    return _buy_info.count+2;
+                }
             }
-        }else if (_index ==1)
-        {
-            return _sell_info.count+2;
+        }else if (_index ==1){
+            
+            if (self.state > 2) {
+                
+                if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+                    
+                    return _sell_info.count+2;
+                }else{
+                    
+                    return _sell_info.count + 1;
+                }
+            }else{
+                
+                return _sell_info.count+2;
+            }
         }else{
+            
             return 1;
         }
     }else if (section == 1){
@@ -306,6 +340,19 @@
         if (!header) {
             
             header = [[ContractHeader3 alloc] initWithReuseIdentifier:@"ContractHeader3"];
+        }
+        if (self.state > 2) {
+            
+            if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+                
+                header.AddBtn.hidden = NO;
+            }else{
+                
+                header.AddBtn.hidden = YES;
+            }
+        }else{
+            
+            header.AddBtn.hidden = NO;
         }
         
         return header;
@@ -541,6 +588,20 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.editBtn addTarget:self action:@selector(action_cantract) forControlEvents:UIControlEventTouchUpInside];
+            
+            if (self.state > 2) {
+                
+                 if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+                     
+                     cell.editBtn.hidden = NO;
+                 }else{
+                     
+                     cell.editBtn.hidden = YES;
+                 }
+            }else{
+                
+                cell.editBtn.hidden = NO;
+            }
             cell.dataDic = _deal_info;
             return cell;
         }
@@ -558,6 +619,19 @@
             cell.contractMainConCellBlock = ^{
                 
                 ContractDetailMainContractVC *nextVC = [[ContractDetailMainContractVC alloc] initWithDataArr:_img];
+                if (self.state > 2) {
+                    
+                    if ([[UserModel defaultModel].store_identity integerValue] == 1 && [[UserModel defaultModel].store_id isEqualToString:_deal_info[@"store_id"]]) {
+                        
+                        nextVC.isEdit = YES;
+                    }else{
+                        
+                        nextVC.isEdit = NO;
+                    }
+                }else{
+                    
+                    nextVC.isEdit = YES;
+                }
                 nextVC.contractDetailMainContractVCBlock = ^{
                   
                     [self Post];

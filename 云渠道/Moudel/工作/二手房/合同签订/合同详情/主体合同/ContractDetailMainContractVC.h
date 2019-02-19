@@ -16,6 +16,8 @@ typedef void(^ContractDetailMainContractVCBlock)(void);
 
 @property (nonatomic, copy) ContractDetailMainContractVCBlock contractDetailMainContractVCBlock;
 
+@property (nonatomic, assign) BOOL isEdit;
+
 @property (nonatomic, strong) NSString *dealId;
 
 - (instancetype)initWithDataArr:(NSArray *)dataArr;

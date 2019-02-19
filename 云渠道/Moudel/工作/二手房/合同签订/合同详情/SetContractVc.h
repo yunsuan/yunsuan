@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SetContractVc : BaseViewController
+
 @property (nonatomic , strong) NSMutableDictionary *tradedic;
+
 @end
 
 NS_ASSUME_NONNULL_END

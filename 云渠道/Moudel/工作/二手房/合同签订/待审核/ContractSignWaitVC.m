@@ -105,6 +105,7 @@
     
     ContractDetailVC *next_vc = [[ContractDetailVC alloc]init];
     next_vc.deal_id = _dataArr[indexPath.row][@"deal_id"];
+    next_vc.state = [_dataArr[indexPath.row][@"state"] integerValue];
     [self.navigationController pushViewController:next_vc animated:YES];
 }
 
@@ -118,7 +119,7 @@
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.mj_header= [GZQGifHeader headerWithRefreshingBlock:^{
-        _page =@"1";
+        _page = @"1";
         [self postWithpage:_page];
     }];
     _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{

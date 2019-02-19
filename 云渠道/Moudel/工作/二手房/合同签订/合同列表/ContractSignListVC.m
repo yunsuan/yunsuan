@@ -8,6 +8,8 @@
 
 #import "ContractSignListVC.h"
 
+#import "ContractDetailVC.h"
+
 #import "ContractSignListCell.h"
 
 @interface ContractSignListVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -93,6 +95,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.statusL.text = _dataArr[indexPath.row][@"state_name"];
     cell.dataDic = _dataArr[indexPath.row];
     
     return cell;
@@ -100,16 +103,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //    AgencyDoneDetailVC *nextVC = [[AgencyDoneDetailVC alloc] init];
-    //    nextVC.sub_id = _dataArr[indexPath.row][@"sub_id"];
-    //    nextVC.agencyDoneDetailVCBlock = ^{
-    //
-    //        if (self.roomAgencyDoneVCBlock) {
-    //
-    //            self.roomAgencyDoneVCBlock();
-    //        }
-    //    };
-    //    [self.navigationController pushViewController:nextVC animated:YES];
+    ContractDetailVC *next_vc = [[ContractDetailVC alloc]init];
+    next_vc.deal_id = _dataArr[indexPath.row][@"deal_id"];
+    next_vc.state = [_dataArr[indexPath.row][@"state"] integerValue];
+    [self.navigationController pushViewController:next_vc animated:YES];
 }
 
 - (void)initUI{
