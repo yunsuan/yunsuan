@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void(^AddContractVCBlock)(void);
 
 @interface AddContractVC : BaseViewController
-
+@property (nonatomic , strong)  NSMutableDictionary *tradedic;
+@property (nonatomic , strong)  NSMutableArray *buyarr;
+@property (nonatomic , strong)  NSMutableArray *sellarr;
 @property (nonatomic, copy) AddContractVCBlock addContractVCBlock;
 
 @end

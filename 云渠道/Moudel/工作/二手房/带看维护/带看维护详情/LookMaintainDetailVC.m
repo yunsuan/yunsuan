@@ -7,6 +7,7 @@
 //
 
 #import "LookMaintainDetailVC.h"
+#import "AddContractVC.h"
 
 #import "LookMaintainDetailAddFollowVC.h"
 #import "LookMaintainDetailLookRecordVC.h"

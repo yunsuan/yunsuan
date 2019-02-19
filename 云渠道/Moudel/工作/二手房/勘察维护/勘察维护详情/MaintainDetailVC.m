@@ -9,6 +9,8 @@
 #import "MaintainDetailVC.h"
 //#import "SurveySuccessRoomDetailVC.h"
 //#import "SurveySuccessOwnerDetailVC.h"
+#import "AddContractVC.h"
+
 #import "RoomSoldOutVC.h"
 #import "MaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
@@ -218,34 +220,74 @@
 ////        [self.navigationController pushViewController:nextVC animated:YES];
 //    }];
     
-    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转合同" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        [BaseRequest GET:HouseSubNeedAgent_URL parameters:@{@"store_id":_houseDic[@"store_id"]} success:^(id resposeObject) {
-            
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
-                nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
-                nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:_houseDic];
-                nextVC.roomAgencyAddProtocolVCBlock = ^{
-                    
-                    if (self.maintainDetailVCBlock) {
-                        
-                        self.maintainDetailVCBlock();
-                    }
-                };
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            NSLog(@"%@",error);
-            [self showContent:@"网络错误"];
-        }];
+        AddContractVC *VC = [[AddContractVC alloc]init];
+        NSMutableArray *arr1 = [NSMutableArray array];
+        [arr1 addObject:@{@"house_code":_houseDic[@"house_code"],
+                         @"title":[NSString stringWithFormat:@"%@  %@",_houseDic[@"project_name"],_houseDic[@"house"]],
+                         @"survey_agent_name":_houseDic[@"agent_name"],
+                         @"survey_agent_tel":_houseDic[@"agent_tel"]
+                         }];
+        NSMutableDictionary *dic;
+        for (int i=0; i<_peopleArr.count; i++) {
+            dic =[NSMutableDictionary dictionaryWithDictionary:
+                    @{
+                    @"name":_peopleArr[i][@"name"],
+                    @"tel":_peopleArr[i][@"tel"][0],
+                    @"card_type":_peopleArr[i][@"card_type"],
+                    @"card_type_name":_peopleArr[i][@"card_type_name"],
+                    @"card_id":_peopleArr[i][@"card_id"],
+                    @"address":_peopleArr[i][@"address"],
+                    @"sex":_peopleArr[i][@"sex"]
+                                                                }];
+            [arr1 addObject:dic];
+        }
+        
+        VC.sellarr =arr1;
+//        _dataDic =[NSMutableDictionary dictionaryWithDictionary:
+//                   @{@"name":_nameTF.textfield.text,
+//                     @"tel":_phoneTF.textfield.text,
+//                     @"card_type":_certTypeBtn->str,
+//                     @"card_type_name":_certTypeBtn.content.text,
+//                     @"card_id":_certNumTF.textfield.text,
+//                     @"address":_addressTF.textfield.text,
+//                     @"sex":_genderBtn->str
+//                     }];
+//        _numL.text =[NSString stringWithFormat:@"房源编号：%@",dataDic[@"house_code"]];
+//        _addressL.text = [NSString stringWithFormat:@"房源信息：%@",dataDic[@"title"]];
+//        _nameL.text =[NSString stringWithFormat:@"勘察经纪人：%@",dataDic[@"survey_agent_name"]];
+//        _telL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"survey_agent_tel"]];
+        [self.navigationController pushViewController:VC animated:YES];
     }];
+//    UIAlertAction *buy = [UIAlertAction actionWithTitle:@"转代购" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        
+//        [BaseRequest GET:HouseSubNeedAgent_URL parameters:@{@"store_id":_houseDic[@"store_id"]} success:^(id resposeObject) {
+//            
+//            NSLog(@"%@",resposeObject);
+//            if ([resposeObject[@"code"] integerValue] == 200) {
+//                
+//                RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
+//                nextVC.handleDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+//                nextVC.housedic = [NSMutableDictionary dictionaryWithDictionary:_houseDic];
+//                nextVC.roomAgencyAddProtocolVCBlock = ^{
+//                    
+//                    if (self.maintainDetailVCBlock) {
+//                        
+//                        self.maintainDetailVCBlock();
+//                    }
+//                };
+//                [self.navigationController pushViewController:nextVC animated:YES];
+//            }else{
+//                
+//                [self showContent:resposeObject[@"msg"]];
+//            }
+//        } failure:^(NSError *error) {
+//            
+//            NSLog(@"%@",error);
+//            [self showContent:@"网络错误"];
+//        }];
+//    }];
     
     UIAlertAction *soldout = [UIAlertAction actionWithTitle:@"下架房源" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
