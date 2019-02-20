@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractHeader3Block)(void);
+
 @interface ContractHeader3 : UITableViewHeaderFooterView
+
+@property (nonatomic, copy) ContractHeader3Block contractHeader3Block;
 
 @property (nonatomic, strong) UILabel *titleL;
 
