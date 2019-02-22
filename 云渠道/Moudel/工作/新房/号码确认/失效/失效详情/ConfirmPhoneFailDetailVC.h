@@ -1,5 +1,5 @@
 //
-//  ConfirmPhoneUseVC.h
+//  ConfirmPhoneFailDetailVC.h
 //  云渠道
 //
 //  Created by 谷治墙 on 2019/2/22.
@@ -10,11 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfirmPhoneUseVC : BaseViewController
-
-@property (nonatomic, strong) NSString *search;
-
-- (void)RequestMethod;
+@interface ConfirmPhoneFailDetailVC : BaseViewController
 
 @end
 

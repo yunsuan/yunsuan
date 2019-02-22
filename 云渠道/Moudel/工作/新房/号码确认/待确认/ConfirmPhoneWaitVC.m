@@ -8,12 +8,14 @@
 
 #import "ConfirmPhoneWaitVC.h"
 
+#import "ConfirmPhoneWaitDetailVC.h"
+
 #import "ConfrimPhoneWaitCell.h"
 
 @interface ConfirmPhoneWaitVC ()<UITableViewDelegate,UITableViewDataSource>
 {
-    NSArray *_dataArr;
-    NSString *_page;
+    NSMutableArray *_dataArr;
+    NSInteger _page;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -27,19 +29,124 @@
     
     [self initDataSouce];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)initDataSouce
 {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SearchMethod:) name:@"protocolSearch" object:nil];
-    _dataArr = @[];
-    _page =@"1";
+    _dataArr = [@[] mutableCopy];
+    _page = 1;
 }
 
 - (void)SearchMethod:(NSNotification *)noti{
     
 
+}
+
+- (void)RequestMethod{
+    
+    _page = 1;
+    _table.mj_footer.state = MJRefreshStateIdle;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:ButterTelConfirmList_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [_table.mj_header endRefreshing];
+                [self SetData:resposeObject[@"data"][@"data"]];
+                
+            }else{
+                
+                [_table.mj_header endRefreshing];
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+        }else{
+            
+            [_table.mj_header endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_table reloadData];
+    } failure:^(NSError *error) {
+        
+        [_table.mj_header endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    if (![self isEmpty:self.search]) {
+        
+        [dic setObject:self.search forKey:@"search"];
+    }
+    [BaseRequest GET:ButterTelConfirmList_URL parameters:dic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [_table.mj_footer endRefreshing];
+                [self SetData:resposeObject[@"data"][@"data"]];
+                
+            }else{
+                
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+        }else{
+            
+            _page -= 1;
+            [_table.mj_footer endRefreshing];
+            [self showContent:resposeObject[@"msg"]];
+        }
+        [_table reloadData];
+    } failure:^(NSError *error) {
+        
+        _page -= 1;
+        [_table.mj_footer endRefreshing];
+        NSLog(@"%@",error);
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSArray *)data{
+    
+    if (data.count < 15) {
+        
+        _table.mj_footer.state = MJRefreshStateNoMoreData;
+    }
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }];
+        
+        [_dataArr addObject:tempDic];
+    }
+    
+    [_table reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -55,13 +162,71 @@
         cell = [[ConfrimPhoneWaitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ConfrimPhoneWaitCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    cell.confrimPhoneWaitCellBlock = ^{
+      
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认号码" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *unuse = [UIAlertAction actionWithTitle:@"号码可用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+           
+            [BaseRequest GET:ClientTelCheckValue_URL parameters:@{@"client_id":_dataArr[indexPath.row][@"client_id"]} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    [_dataArr removeObjectAtIndex:indexPath.row];
+                    [tableView reloadData];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+               
+                [self showContent:@"网络错误"];
+            }];
+        }];
+        
+        UIAlertAction *used = [UIAlertAction actionWithTitle:@"号码重复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [BaseRequest GET:ClientTelCheckDisabled_URL parameters:@{@"client_id":_dataArr[indexPath.row][@"client_id"]} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    [_dataArr removeObjectAtIndex:indexPath.row];
+                    [tableView reloadData];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [self showContent:@"网络错误"];
+            }];
+        }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alert addAction:unuse];
+        [alert addAction:used];
+        [alert addAction:cancel];
+        
+        [self.navigationController presentViewController:alert animated:YES completion:^{
+            
+        }];
+    };
+    cell.dataDic = _dataArr[indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-
+    ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_dataArr[indexPath.row][@"client_id"]];
+    nextVC.confirmPhoneWaitDetailVCBlock = ^{
+      
+        [_dataArr removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+    };
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
@@ -75,12 +240,13 @@
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     _table.mj_header= [GZQGifHeader headerWithRefreshingBlock:^{
         
-        _page = @"1";
+        _page = 1;
+        [self RequestMethod];
     }];
     _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
-        NSInteger i = [_page integerValue];
-        i++;
+        _page ++;
+        [self RequestAddMethod];
     }];
     [self.view addSubview:_table];
 }

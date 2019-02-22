@@ -466,6 +466,28 @@ static NSString *const ButterValue_URL = @"agent/work/butter/value";
 //对接人无效客户列表
 static NSString *const ButterDisabled_URL = @"agent/work/butter/disabled";
 
+#pragma mark -- 二次确认 --
+
+//待确认列表
+static NSString *const ButterTelConfirmList_URL = @"agent/work/butter/tel/confirm/list";
+
+//待确认详情
+static NSString *const ButterTelConfirmDetail_URL = @"agent/work/butter/tel/confirm/detail";
+
+//号码有效
+static NSString *const ClientTelCheckValue_URL = @"agent/client/telCheckValue";
+
+//号码重复
+static NSString *const ClientTelCheckDisabled_URL = @"agent/client/telCheckDisabled";
+
+//有效列表
+static NSString *const ButterTelValueList_URL = @"agent/work/butter/tel/value/list";
+
+//有效详情
+static NSString *const ButterTelValueDetail_URL = @"agent/work/butter/tel/value/detail";
+
+//无效列表
+static NSString *const ButterTelDisabledList_URL = @"agent/work/butter/tel/disabled/list";
 #pragma 二手房/租房
 
 #pragma mark -- 二手房-认证

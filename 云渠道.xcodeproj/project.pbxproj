@@ -533,6 +533,9 @@
 		0CE8223D221F96AA00576742 /* ConfirmPhoneUseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8223C221F96AA00576742 /* ConfirmPhoneUseVC.m */; };
 		0CE82240221F96BC00576742 /* ConfirmPhoneFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */; };
 		0CE82244221F9AA500576742 /* ConfrimPhoneWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82243221F9AA400576742 /* ConfrimPhoneWaitCell.m */; };
+		0CE82248221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82247221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.m */; };
+		0CE8224D221FCCC500576742 /* ConfirmPhoneUseDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8224C221FCCC500576742 /* ConfirmPhoneUseDetailVC.m */; };
+		0CE82250221FCCD600576742 /* ConfirmPhoneFailDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8224F221FCCD600576742 /* ConfirmPhoneFailDetailVC.m */; };
 		0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */; };
 		0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */; };
 		0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */; };
@@ -1819,6 +1822,12 @@
 		0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneFailVC.m; sourceTree = "<group>"; };
 		0CE82242221F9AA400576742 /* ConfrimPhoneWaitCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfrimPhoneWaitCell.h; sourceTree = "<group>"; };
 		0CE82243221F9AA400576742 /* ConfrimPhoneWaitCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfrimPhoneWaitCell.m; sourceTree = "<group>"; };
+		0CE82246221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneWaitDetailVC.h; sourceTree = "<group>"; };
+		0CE82247221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneWaitDetailVC.m; sourceTree = "<group>"; };
+		0CE8224B221FCCC500576742 /* ConfirmPhoneUseDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneUseDetailVC.h; sourceTree = "<group>"; };
+		0CE8224C221FCCC500576742 /* ConfirmPhoneUseDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneUseDetailVC.m; sourceTree = "<group>"; };
+		0CE8224E221FCCD600576742 /* ConfirmPhoneFailDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneFailDetailVC.h; sourceTree = "<group>"; };
+		0CE8224F221FCCD600576742 /* ConfirmPhoneFailDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneFailDetailVC.m; sourceTree = "<group>"; };
 		0CEBDE3220AE6F7B004BAF7A /* AddressChooseView3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressChooseView3.h; sourceTree = "<group>"; };
 		0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView3.m; sourceTree = "<group>"; };
 		0CEC314B21EC3A85002B307F /* AddHouseRequireMentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddHouseRequireMentVC.h; sourceTree = "<group>"; };
@@ -6011,6 +6020,7 @@
 		0CE82236221F967500576742 /* 可使用 */ = {
 			isa = PBXGroup;
 			children = (
+				0CE82249221FCCB000576742 /* 可使用详情 */,
 				0CE8223B221F96AA00576742 /* ConfirmPhoneUseVC.h */,
 				0CE8223C221F96AA00576742 /* ConfirmPhoneUseVC.m */,
 			);
@@ -6020,6 +6030,7 @@
 		0CE82237221F967600576742 /* 失效 */ = {
 			isa = PBXGroup;
 			children = (
+				0CE8224A221FCCB600576742 /* 失效详情 */,
 				0CE8223E221F96BC00576742 /* ConfirmPhoneFailVC.h */,
 				0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */,
 			);
@@ -6038,8 +6049,28 @@
 		0CE82245221FA4BF00576742 /* 待确认详情 */ = {
 			isa = PBXGroup;
 			children = (
+				0CE82246221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.h */,
+				0CE82247221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.m */,
 			);
 			path = "待确认详情";
+			sourceTree = "<group>";
+		};
+		0CE82249221FCCB000576742 /* 可使用详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE8224B221FCCC500576742 /* ConfirmPhoneUseDetailVC.h */,
+				0CE8224C221FCCC500576742 /* ConfirmPhoneUseDetailVC.m */,
+			);
+			path = "可使用详情";
+			sourceTree = "<group>";
+		};
+		0CE8224A221FCCB600576742 /* 失效详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE8224E221FCCD600576742 /* ConfirmPhoneFailDetailVC.h */,
+				0CE8224F221FCCD600576742 /* ConfirmPhoneFailDetailVC.m */,
+			);
+			path = "失效详情";
 			sourceTree = "<group>";
 		};
 		0CEBDE6220AECDC3004BAF7A /* 引导图片 */ = {
@@ -7937,6 +7968,7 @@
 				0C3AD5682069DAE50059CE02 /* RoomDetailTableCell4.m in Sources */,
 				0CC19CF7206E21110007CC5F /* AuthenCollCell.m in Sources */,
 				0CEDBD5E21ED89B80095F171 /* RentAgencyEditCustomerDetailVC.m in Sources */,
+				0CE82250221FCCD600576742 /* ConfirmPhoneFailDetailVC.m in Sources */,
 				0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */,
 				0C997B6921CB7B0700F805AA /* RentingModifyNerborVC.m in Sources */,
 				0C2883D2210EFB8B00F69C5F /* RentingAgencyDoneDetailVC.m in Sources */,
@@ -7975,6 +8007,7 @@
 				0CB6BAF52074982000921C75 /* HouseTypeDetailVC.m in Sources */,
 				0C02360120BFC94C00B255AA /* DynamicDetailVC.m in Sources */,
 				0C997BF921D4B39600F805AA /* RentingRoomAgencyAddProtocolCell4.m in Sources */,
+				0CE82248221FCC7A00576742 /* ConfirmPhoneWaitDetailVC.m in Sources */,
 				0CD90AB020E2487800061B4A /* RoomAgencyAddProtocolCell4.m in Sources */,
 				0C9CD41220FF4841004894A3 /* AddPeopleCell.m in Sources */,
 				0CD90A3220DA5C9400061B4A /* MaintainAddFollowVC.m in Sources */,
@@ -8245,6 +8278,7 @@
 				0C9CD42A21009CC4004894A3 /* MaintainInfoImgCollCell.m in Sources */,
 				0CF04F55207B3CFE00A45F4A /* confirmDetailVC.m in Sources */,
 				0CA37B8B2089D511005609C7 /* BDDynamicTree.m in Sources */,
+				0CE8224D221FCCC500576742 /* ConfirmPhoneUseDetailVC.m in Sources */,
 				0C2883802109653100F69C5F /* RentingSurveyVC.m in Sources */,
 				0CF7424720622DCD001F926F /* BankCardListTableCell.m in Sources */,
 				0CC19CFB206E21110007CC5F /* CompanyModel.m in Sources */,

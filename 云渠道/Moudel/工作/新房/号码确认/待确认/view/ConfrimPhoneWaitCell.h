@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ConfrimPhoneWaitCellBlock)(void);
+
 @interface ConfrimPhoneWaitCell : UITableViewCell
+
+@property (nonatomic, copy) ConfrimPhoneWaitCellBlock confrimPhoneWaitCellBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 

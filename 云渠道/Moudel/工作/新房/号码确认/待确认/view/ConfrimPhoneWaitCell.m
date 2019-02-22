@@ -22,7 +22,19 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
+    if (self.confrimPhoneWaitCellBlock) {
+        
+        self.confrimPhoneWaitCellBlock();
+    }
+}
+
+- (void)setDataDic:(NSDictionary *)dataDic{
     
+    _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"name"]];
+    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"client_id"]];
+    _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",dataDic[@"project_name"]];
+    _timeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]];
+    _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
 }
 
 - (void)initUI{
@@ -31,6 +43,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
+        label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:12 *SIZE];
         switch (i) {
             case 0:
