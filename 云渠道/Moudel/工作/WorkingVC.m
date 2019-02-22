@@ -14,6 +14,7 @@
 #import "NomineeVC1.h"
 #import "BarginVC.h"
 #import "BarginVC1.h"
+#import "ConfirmPhoneVC.h"
 //二手房
 #import "RoomReportVC.h"
 #import "RoomSurveyVC.h"
@@ -128,14 +129,15 @@
         }
             break;
         case 2:{
-            _namelist = @[@"新房推荐"];
-            _imglist = @[@"recommended"];
-            _countdata  = @[@""];
+            _namelist = @[@"新房推荐",@"号码确认"];
+            _imglist = @[@"recommended",@"recommended"];
+            _countdata  = @[@"",@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
 
                 [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"] integerValue] ==200) {
-                    _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
+                    
+                    _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]],[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
 
                 _secCountData = @[//1房源报备
@@ -228,7 +230,7 @@
         }
         else{
 
-            return 1;
+            return 2;
         }
     }else if ([[UserModel defaultModel].workArr[section] isEqualToString:@"二手房"]){
 
@@ -288,7 +290,13 @@
             cell = [[WorkingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        [cell setTitle:_namelist[indexPath.row] content:_countdata[indexPath.row] img:_imglist[indexPath.row]];
+        if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
+            
+            [cell setTitle:_namelist[indexPath.row] content:_countdata[indexPath.row] img:_imglist[indexPath.row]];
+        }else{
+            
+            [cell setTitle:_namelist[indexPath.row] content:_countdata[indexPath.row] img:_imglist[indexPath.row]];
+        }
         return cell;
     }else if ([[UserModel defaultModel].workArr[indexPath.section] isEqualToString:@"二手房"]){
 
@@ -329,6 +337,10 @@
             if (indexPath.row == 0) {
 
                 RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                ConfirmPhoneVC *nextVC = [[ConfirmPhoneVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }

@@ -528,6 +528,11 @@
 		0CE47B65206B9D0E001ADD73 /* PersonalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B64206B9D0E001ADD73 /* PersonalVC.m */; };
 		0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE47B68206B9E33001ADD73 /* PersonalTableCell.m */; };
 		0CE8218A221BF06A00576742 /* ContractAddAgentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82189221BF06A00576742 /* ContractAddAgentVC.m */; };
+		0CE82234221F95A200576742 /* ConfirmPhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82233221F95A200576742 /* ConfirmPhoneVC.m */; };
+		0CE8223A221F969900576742 /* ConfirmPhoneWaitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82239221F969900576742 /* ConfirmPhoneWaitVC.m */; };
+		0CE8223D221F96AA00576742 /* ConfirmPhoneUseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8223C221F96AA00576742 /* ConfirmPhoneUseVC.m */; };
+		0CE82240221F96BC00576742 /* ConfirmPhoneFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */; };
+		0CE82244221F9AA500576742 /* ConfrimPhoneWaitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE82243221F9AA400576742 /* ConfrimPhoneWaitCell.m */; };
 		0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */; };
 		0CEC314D21EC3A85002B307F /* AddHouseRequireMentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC314C21EC3A85002B307F /* AddHouseRequireMentVC.m */; };
 		0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC62DE208DDA62006EC0BD /* RoomBrokerageTableCell.m */; };
@@ -1804,6 +1809,16 @@
 		0CE47B68206B9E33001ADD73 /* PersonalTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalTableCell.m; sourceTree = "<group>"; };
 		0CE82188221BF06A00576742 /* ContractAddAgentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractAddAgentVC.h; sourceTree = "<group>"; };
 		0CE82189221BF06A00576742 /* ContractAddAgentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractAddAgentVC.m; sourceTree = "<group>"; };
+		0CE82232221F95A200576742 /* ConfirmPhoneVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneVC.h; sourceTree = "<group>"; };
+		0CE82233221F95A200576742 /* ConfirmPhoneVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneVC.m; sourceTree = "<group>"; };
+		0CE82238221F969900576742 /* ConfirmPhoneWaitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneWaitVC.h; sourceTree = "<group>"; };
+		0CE82239221F969900576742 /* ConfirmPhoneWaitVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneWaitVC.m; sourceTree = "<group>"; };
+		0CE8223B221F96AA00576742 /* ConfirmPhoneUseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneUseVC.h; sourceTree = "<group>"; };
+		0CE8223C221F96AA00576742 /* ConfirmPhoneUseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneUseVC.m; sourceTree = "<group>"; };
+		0CE8223E221F96BC00576742 /* ConfirmPhoneFailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfirmPhoneFailVC.h; sourceTree = "<group>"; };
+		0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfirmPhoneFailVC.m; sourceTree = "<group>"; };
+		0CE82242221F9AA400576742 /* ConfrimPhoneWaitCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfrimPhoneWaitCell.h; sourceTree = "<group>"; };
+		0CE82243221F9AA400576742 /* ConfrimPhoneWaitCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfrimPhoneWaitCell.m; sourceTree = "<group>"; };
 		0CEBDE3220AE6F7B004BAF7A /* AddressChooseView3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressChooseView3.h; sourceTree = "<group>"; };
 		0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView3.m; sourceTree = "<group>"; };
 		0CEC314B21EC3A85002B307F /* AddHouseRequireMentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddHouseRequireMentVC.h; sourceTree = "<group>"; };
@@ -5962,6 +5977,71 @@
 			path = "添加经办人";
 			sourceTree = "<group>";
 		};
+		0CE82230221F958800576742 /* 新房 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE82231221F958800576742 /* 号码确认 */,
+			);
+			path = "新房";
+			sourceTree = "<group>";
+		};
+		0CE82231221F958800576742 /* 号码确认 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE82235221F967500576742 /* 待确认 */,
+				0CE82236221F967500576742 /* 可使用 */,
+				0CE82237221F967600576742 /* 失效 */,
+				0CE82232221F95A200576742 /* ConfirmPhoneVC.h */,
+				0CE82233221F95A200576742 /* ConfirmPhoneVC.m */,
+			);
+			path = "号码确认";
+			sourceTree = "<group>";
+		};
+		0CE82235221F967500576742 /* 待确认 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE82245221FA4BF00576742 /* 待确认详情 */,
+				0CE82241221F9A9000576742 /* view */,
+				0CE82238221F969900576742 /* ConfirmPhoneWaitVC.h */,
+				0CE82239221F969900576742 /* ConfirmPhoneWaitVC.m */,
+			);
+			path = "待确认";
+			sourceTree = "<group>";
+		};
+		0CE82236221F967500576742 /* 可使用 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE8223B221F96AA00576742 /* ConfirmPhoneUseVC.h */,
+				0CE8223C221F96AA00576742 /* ConfirmPhoneUseVC.m */,
+			);
+			path = "可使用";
+			sourceTree = "<group>";
+		};
+		0CE82237221F967600576742 /* 失效 */ = {
+			isa = PBXGroup;
+			children = (
+				0CE8223E221F96BC00576742 /* ConfirmPhoneFailVC.h */,
+				0CE8223F221F96BC00576742 /* ConfirmPhoneFailVC.m */,
+			);
+			path = "失效";
+			sourceTree = "<group>";
+		};
+		0CE82241221F9A9000576742 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0CE82242221F9AA400576742 /* ConfrimPhoneWaitCell.h */,
+				0CE82243221F9AA400576742 /* ConfrimPhoneWaitCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		0CE82245221FA4BF00576742 /* 待确认详情 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "待确认详情";
+			sourceTree = "<group>";
+		};
 		0CEBDE6220AECDC3004BAF7A /* 引导图片 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6758,6 +6838,7 @@
 		102DF96C2057A0A200E1859C /* 工作 */ = {
 			isa = PBXGroup;
 			children = (
+				0CE82230221F958800576742 /* 新房 */,
 				0C2883592107118C00F69C5F /* 租房 */,
 				0CDD6FFB20CFFB5A00D6609C /* 二手房 */,
 				0C0BED1320A17DAA005A16A1 /* 客源成交 */,
@@ -7714,6 +7795,7 @@
 				0CA37B8A2089D511005609C7 /* BDDynamicTreeCell.m in Sources */,
 				105E18EA206B66700031558D /* NomineeVC.m in Sources */,
 				0CDD705A20D36A6500D6609C /* RoomSurveyingVC.m in Sources */,
+				0CE82244221F9AA500576742 /* ConfrimPhoneWaitCell.m in Sources */,
 				0CC19CFC206E21110007CC5F /* SelectCompanyCollCell.m in Sources */,
 				0CA37B7020889028005609C7 /* AddTagView.m in Sources */,
 				0C73B09B21F5C190005F71F1 /* RecommendSuccessDetailVC.m in Sources */,
@@ -7948,12 +8030,14 @@
 				0CDD706220D390A200D6609C /* SurveyWaitDetailVC.m in Sources */,
 				0CBD857720848EC700E7B183 /* LevelView.m in Sources */,
 				10255A6D21A53D000042738C /* YBImageBrowserView.m in Sources */,
+				0CE8223A221F969900576742 /* ConfirmPhoneWaitVC.m in Sources */,
 				0C9CD44E21057E1E004894A3 /* RentingCommunityRoomVC.m in Sources */,
 				0C314A452184361E00F69F09 /* AgencyEditCustomerDetailVC.m in Sources */,
 				0C997C8F21E4A45E00F805AA /* LookFailDetailVC.m in Sources */,
 				0CED0BE121E6F1010016A029 /* RecommendComplaitCell.m in Sources */,
 				0CF04F9E207CC23300A45F4A /* GuideVC.m in Sources */,
 				0CD909F120D8FFD900061B4A /* CompleteSurveyInfoVC2.m in Sources */,
+				0CE82234221F95A200576742 /* ConfirmPhoneVC.m in Sources */,
 				0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */,
 				0C25223A215CCFC60031CC44 /* SecAllRoomStoreModel.m in Sources */,
 				0C0850D0214A6AAA0034ED44 /* CompleteSurveyOfficeVC.m in Sources */,
@@ -8083,6 +8167,7 @@
 				0C288360210711DB00F69C5F /* RentingReportVC.m in Sources */,
 				0C9CD41620FF4D6F004894A3 /* AgencyDoneCustomerDetailVC.m in Sources */,
 				0CDD706E20D3A24C00D6609C /* RoomValidApplyVC.m in Sources */,
+				0CE82240221F96BC00576742 /* ConfirmPhoneFailVC.m in Sources */,
 				0CD909E620D8A68B00061B4A /* SurveySuccessOwnerDetailVC.m in Sources */,
 				0C3062E620CE4AFB004D1996 /* SecdaryCommunityRoomVC.m in Sources */,
 				0C3AD5622069DAC90059CE02 /* RoomDetailTableCell2.m in Sources */,
@@ -8302,6 +8387,7 @@
 				0C0B82532064FF6400238D4F /* SystemMessageCell.m in Sources */,
 				0CDD701F20D20A6200D6609C /* RoomReportSucCell.m in Sources */,
 				0CD90AA420E21D9600061B4A /* AddAlbumView.m in Sources */,
+				0CE8223D221F96AA00576742 /* ConfirmPhoneUseVC.m in Sources */,
 				0C7492FC2201DBA3008F551B /* LookMaintainDetailAddAppointRoomModel.m in Sources */,
 				100D8F6D218004ED006839EB /* WMProgressView.m in Sources */,
 				0C0850EA214BA7810034ED44 /* SecAllRoomStoreVC.m in Sources */,
