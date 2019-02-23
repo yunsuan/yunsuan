@@ -129,6 +129,10 @@
 	<string>开启麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许云渠道打开相册以供你选择要发送的图片</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>是否允许云渠道访问你的日历</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>是否允许云渠道访问你的提醒事项</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
