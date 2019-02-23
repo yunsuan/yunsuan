@@ -487,7 +487,6 @@
             textField.text = [textField.text substringToIndex:20];
         }
     }
- 
 }
 
 

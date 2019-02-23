@@ -22,7 +22,10 @@
 
 - (void)ActionAddBtn:(UIButton *)btn{
     
-    
+    if (self.contractHeader3Block) {
+        
+        self.contractHeader3Block();
+    }
 }
 
 - (void)initUI{

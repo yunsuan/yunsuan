@@ -38,6 +38,16 @@
     _statusL.textColor = YJBlueBtnColor;
 }
 
+- (void)setUseDic:(NSMutableDictionary *)useDic{
+    
+    _nameL.text = useDic[@"name"];
+    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",useDic[@"client_id"]];
+    _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",useDic[@"project_name"]];
+    _timeL.text = [NSString stringWithFormat:@"确认时间：%@",useDic[@"confirmed_time"]];
+    _statusL.text = useDic[@"current_state"];
+    _statusL.textColor = YJBlueBtnColor;
+}
+
 - (void)setInValidDic:(NSMutableDictionary *)inValidDic{
     
     _nameL.text = inValidDic[@"name"];

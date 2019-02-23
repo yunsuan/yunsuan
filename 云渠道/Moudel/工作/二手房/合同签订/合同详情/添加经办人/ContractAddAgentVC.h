@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractAddAgentVCBlock)(void);
+
 @interface ContractAddAgentVC : BaseViewController
+
+@property (nonatomic, copy) ContractAddAgentVCBlock contractAddAgentVCBlock;
+
+@property (nonatomic, strong) NSString *dealId;
 
 @end
 

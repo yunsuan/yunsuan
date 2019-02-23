@@ -33,6 +33,8 @@ typedef void(^phoneBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) NSMutableDictionary *useDic;
+
 @property (nonatomic, strong) NSMutableDictionary *inValidDic;
 
 @end

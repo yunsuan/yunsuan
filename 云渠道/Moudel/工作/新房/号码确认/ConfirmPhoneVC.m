@@ -1,21 +1,20 @@
 //
-//  NomineeVC1.m
+//  ConfirmPhoneVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2019/1/18.
+//  Created by 谷治墙 on 2019/2/22.
 //  Copyright © 2019 xiaoq. All rights reserved.
 //
 
-#import "NomineeVC1.h"
+#import "ConfirmPhoneVC.h"
 
-#import "NomineeConfirmVC.h"
-#import "NomineeInvalidVC.h"
-#import "NomineeValidVC.h"
-#import "NomineeComplaintVC.h"
+#import "ConfirmPhoneWaitVC.h"
+#import "ConfirmPhoneUseVC.h"
+#import "ConfirmPhoneFailVC.h"
 
-#import "RoomReportCollCell.h"
+#import "RoomAgencyCollCell.h"
 
-@interface NomineeVC1 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UITextFieldDelegate>
+@interface ConfirmPhoneVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UITextFieldDelegate>
 {
     
     NSArray *_titleArr;
@@ -28,22 +27,19 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-@property (nonatomic, strong) NomineeConfirmVC *nomineeConfirmVC;
+@property (nonatomic, strong) ConfirmPhoneWaitVC *confirmPhoneWaitVC;
 
-@property (nonatomic, strong) NomineeValidVC *nomineeValidVC;
+@property (nonatomic, strong) ConfirmPhoneUseVC *confirmPhoneUseVC;
 
-@property (nonatomic, strong) NomineeInvalidVC *nomineeInvalidVC;
-
-@property (nonatomic, strong) NomineeComplaintVC *nomineeComplaintVC;
+@property (nonatomic, strong) ConfirmPhoneFailVC *confirmPhoneFailVC;
 
 @end
 
-@implementation NomineeVC1
+@implementation ConfirmPhoneVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionNomineeReload) name:@"recommendReload" object:nil];
     [self initDataSource];
     [self initUI];
     [_segmentColl selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:0];
@@ -51,52 +47,42 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"待确认",@"有效",@"无效",@"申诉"];
+    _titleArr = @[@"待确认",@"可使用",@"无效"];
 }
-
-- (void)ActionNomineeReload{
-    
-    [_nomineeConfirmVC RequestMethod];
-    [_nomineeValidVC RequestMethod];
-    [_nomineeInvalidVC RequestMethod];
-    [_nomineeComplaintVC RequestMethod];
-}
-
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
-    switch (index) {
-        case 0:
-        {
-            _nomineeConfirmVC.search = textField.text;
-            [_nomineeConfirmVC RequestMethod];
-            break;
-        }
-        case 1:
-        {
-            _nomineeValidVC.search = textField.text;
-            [_nomineeValidVC RequestMethod];
-            break;
-        }
-        case 2:
-        {
-            _nomineeInvalidVC.search = textField.text;
-            [_nomineeInvalidVC RequestMethod];
-            break;
-        }
-        case 3:
-        {
-            _nomineeComplaintVC.search = textField.text;
-            [_nomineeComplaintVC RequestMethod];
-            break;
-        }
-        default:
-            break;
-    }
+//    switch (index) {
+//        case 0:
+//        {
+//            _roomReportWaitVC.search = textField.text;
+//            [_roomReportWaitVC RequestMethod];
+//            break;
+//        }
+//        case 1:
+//        {
+//            _roomReportSuccessVC.search = textField.text;
+//            [_roomReportSuccessVC RequestMethod];
+//            break;
+//        }
+//        case 2:
+//        {
+//            _roomReportFailVC.search = textField.text;
+//            [_roomReportFailVC RequestMethod];
+//            break;
+//        }
+//        case 3:
+//        {
+//            _roomReportComplaitVC.search = textField.text;
+//            [_roomReportComplaitVC RequestMethod];
+//            break;
+//        }
+//        default:
+//            break;
+//    }
     return YES;
 }
-
 
 #pragma mark -- collectionview
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -106,10 +92,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    RoomReportCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomReportCollCell" forIndexPath:indexPath];
+    RoomAgencyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RoomAgencyCollCell" forIndexPath:indexPath];
     if (!cell) {
         
-        cell = [[RoomReportCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 4, 40 *SIZE)];
+        cell = [[RoomAgencyCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width / 3, 40 *SIZE)];
     }
     cell.titleL.text = _titleArr[indexPath.item];
     
@@ -129,9 +115,12 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"报备";
+    self.titleLabel.text = @"号码确认";
     self.line.hidden = YES;
     
+//    self.rightBtn.hidden = NO;
+//    [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
+//    [self.rightBtn addTarget:self action:@selector(action_add) forControlEvents:UIControlEventTouchUpInside];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -143,7 +132,6 @@
     _searchBar.backgroundColor = YJBackColor;
     _searchBar.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 11 *SIZE, 0)];
     //设置显示模式为永远显示(默认不显示)
-    _searchBar.delegate = self;
     _searchBar.leftViewMode = UITextFieldViewModeAlways;
     _searchBar.placeholder = @"输入电话/姓名";
     _searchBar.font = [UIFont systemFontOfSize:12 *SIZE];
@@ -160,7 +148,7 @@
     [whiteView addSubview:_searchBar];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 4, 40 *SIZE);
+    _flowLayout.itemSize = CGSizeMake(SCREEN_Width / 3, 40 *SIZE);
     _flowLayout.minimumLineSpacing = 0;
     _flowLayout.minimumInteritemSpacing = 0;
     _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -172,11 +160,11 @@
     _segmentColl.dataSource = self;
     _segmentColl.showsHorizontalScrollIndicator = NO;
     _segmentColl.bounces = NO;
-    [_segmentColl registerClass:[RoomReportCollCell class] forCellWithReuseIdentifier:@"RoomReportCollCell"];
+    [_segmentColl registerClass:[RoomAgencyCollCell class] forCellWithReuseIdentifier:@"RoomAgencyCollCell"];
     [self.view addSubview:_segmentColl];
     
     // 创建scrollView
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 81 *SIZE, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 81 *SIZE)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 80 *SIZE, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - NAVIGATION_BAR_HEIGHT - 80 *SIZE)];
     self.scrollView.scrollEnabled = NO;
     [self.view addSubview:self.scrollView];
     // 设置scrollView的内容
@@ -187,28 +175,25 @@
     self.scrollView.bounces = NO;
     
     // 创建控制器
-    _nomineeConfirmVC = [[NomineeConfirmVC alloc] init];
-    _nomineeValidVC = [[NomineeValidVC alloc] init];
-    _nomineeInvalidVC = [[NomineeInvalidVC alloc] init];
-    _nomineeComplaintVC = [[NomineeComplaintVC alloc] init];
+    _confirmPhoneWaitVC = [[ConfirmPhoneWaitVC alloc] init];
+    _confirmPhoneUseVC = [[ConfirmPhoneUseVC alloc] init];
+    _confirmPhoneFailVC = [[ConfirmPhoneFailVC alloc] init];
     
     // 添加为self的子控制器
-    [self addChildViewController:_nomineeConfirmVC];
-    [self addChildViewController:_nomineeValidVC];
-    [self addChildViewController:_nomineeInvalidVC];
-    [self addChildViewController:_nomineeComplaintVC];
+    [self addChildViewController:_confirmPhoneWaitVC];
+    [self addChildViewController:_confirmPhoneUseVC];
+    [self addChildViewController:_confirmPhoneFailVC];
     
-    _nomineeConfirmVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _nomineeValidVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _nomineeInvalidVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
-    _nomineeComplaintVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 3, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _confirmPhoneWaitVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 0, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _confirmPhoneUseVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 1, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
+    _confirmPhoneFailVC.view.frame = CGRectMake([UIScreen mainScreen].bounds.size.width * 2, 0, self.scrollView.frame.size.width, CGRectGetHeight(self.scrollView.frame));
     
-    [self.scrollView addSubview:_nomineeConfirmVC.view];
-    [self.scrollView addSubview:_nomineeValidVC.view];
-    [self.scrollView addSubview:_nomineeInvalidVC.view];
-    [self.scrollView addSubview:_nomineeComplaintVC.view];
+    [self.scrollView addSubview:_confirmPhoneWaitVC.view];
+    [self.scrollView addSubview:_confirmPhoneUseVC.view];
+    [self.scrollView addSubview:_confirmPhoneFailVC.view];
     // 设置scrollView的代理
     self.scrollView.delegate = self;
 }
+
 
 @end

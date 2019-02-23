@@ -9,6 +9,7 @@
 #import "ContractDetailVC.h"
 #import "AddPeopleVC.h"
 #import "ContractDetailMainContractVC.h"
+#import "ContractAddAgentVC.h"
 
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
@@ -347,6 +348,17 @@
             
             header.AddBtn.hidden = YES;
         }
+        
+        header.contractHeader3Block = ^{
+            
+            ContractAddAgentVC *nextVC = [[ContractAddAgentVC alloc] init];
+            nextVC.dealId = _deal_id;
+            nextVC.contractAddAgentVCBlock = ^{
+              
+                [self Post];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        };
         
         return header;
     }else{
