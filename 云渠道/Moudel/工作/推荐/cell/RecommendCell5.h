@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) UIView *lineView;
 
+@property (nonatomic, strong) NSMutableDictionary *failDic;
+
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @end

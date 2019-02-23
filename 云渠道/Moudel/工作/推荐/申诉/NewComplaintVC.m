@@ -75,6 +75,7 @@
     }else{
         
         [_dataArr removeAllObjects];
+        [_MainTableView.mj_header endRefreshing];
         _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
         [_MainTableView reloadData];
     }
@@ -119,6 +120,7 @@
     }else{
         
         [_dataArr removeAllObjects];
+        
         _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
         [_MainTableView reloadData];
     }

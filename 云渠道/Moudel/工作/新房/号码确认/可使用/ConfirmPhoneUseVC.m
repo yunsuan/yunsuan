@@ -8,6 +8,8 @@
 
 #import "ConfirmPhoneUseVC.h"
 
+#import "ConfirmPhoneUseDetailVC.h"
+
 #import "RecommendCell3.h"
 
 @interface ConfirmPhoneUseVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -167,7 +169,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    ConfirmPhoneUseDetailVC *nextVC = [[ConfirmPhoneUseDetailVC alloc] initWithClientId:_dataArr[indexPath.row][@"client_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{

@@ -44,6 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionRecommendReload) name:@"recommendReload" object:nil];
     [self initDataSource];
     [self initUI];
     [_segmentColl selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:0];
@@ -58,6 +59,14 @@
     
     QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",@""] clientId:@""];
     [self.navigationController pushViewController:nextVC animated:YES];
+}
+
+- (void)ActionRecommendReload{
+    
+    [_recommendUnconfirmVC RequestMethod];
+    [_recommendValidVC RequestMethod];
+    [_recommendInvalidVC RequestMethod];
+    [_recommendComplaintVC RequestMethod];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
