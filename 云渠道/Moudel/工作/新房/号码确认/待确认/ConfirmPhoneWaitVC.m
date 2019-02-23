@@ -60,10 +60,10 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            if ([resposeObject[@"data"][@"data"] count]) {
+            if ([resposeObject[@"data"] count]) {
                 
                 [_table.mj_header endRefreshing];
-                [self SetData:resposeObject[@"data"][@"data"]];
+                [self SetData:resposeObject[@"data"]];
                 
             }else{
                 
@@ -98,10 +98,10 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            if ([resposeObject[@"data"][@"data"] count]) {
+            if ([resposeObject[@"data"] count]) {
                 
                 [_table.mj_footer endRefreshing];
-                [self SetData:resposeObject[@"data"][@"data"]];
+                [self SetData:resposeObject[@"data"]];
                 
             }else{
                 
@@ -174,6 +174,7 @@
                     
                     [_dataArr removeObjectAtIndex:indexPath.row];
                     [tableView reloadData];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -192,6 +193,7 @@
                     
                     [_dataArr removeObjectAtIndex:indexPath.row];
                     [tableView reloadData];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];

@@ -38,6 +38,16 @@
     }
 }
 
+- (void)setFailDic:(NSMutableDictionary *)failDic{
+    
+    _nameL.text = failDic[@"name"];
+    _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",failDic[@"client_id"]];
+    _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",failDic[@"project_name"]];
+//    _confirmL.text = [NSString stringWithFormat:@"置业顾问：%@",failDic[@"project_client_id"]];
+    _recomTimeL.text = [NSString stringWithFormat:@"失效时间：%@",failDic[@"confirmed_time"]];
+    _timeL.text = [NSString stringWithFormat:@"无效原因：%@",failDic[@"disabled_state"]];
+}
+
 - (void)initUI{
     
     

@@ -48,13 +48,13 @@
 
 -(void)refresh{
     
-//    [BaseRequest GET:HouseSurveyTimeOut_URL parameters:nil success:^(id resposeObject) {
-//
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"secReload" object:nil];
-//        [self.navigationController popViewControllerAnimated:YES];
-//    } failure:^(NSError *error) {
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }];
+    [BaseRequest GET:FlushDate_URL parameters:nil success:^(id resposeObject) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneAllConfirm" object:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSError *error) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 - (void)RequestMethod{
@@ -80,6 +80,13 @@
     
     _dataDic = data;
     _titleArr = @[[NSString stringWithFormat:@"失效倒计时：%@",data[@"timeLimit"]],[NSString stringWithFormat:@"推荐编号：%@",data[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",data[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",data[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",data[@"project_name"]],[NSString stringWithFormat:@"项目地址：%@",data[@"absolute_address"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"tel"]],[NSString stringWithFormat:@"备注：%@",data[@"client_comment"]]];
+    if (![data[@"is_deal"] integerValue]) {
+        
+        [self.view addSubview:_invalidBtn];
+    }else{
+        
+        _detailTable.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
+    }
     [_detailTable reloadData];
 }
 
@@ -98,6 +105,7 @@
                     self.confirmPhoneWaitDetailVCBlock();
                     [self.navigationController popViewControllerAnimated:YES];
                 }
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -119,6 +127,7 @@
                     self.confirmPhoneWaitDetailVCBlock();
                     [self.navigationController popViewControllerAnimated:YES];
                 }
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -235,8 +244,7 @@
     _invalidBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_invalidBtn addTarget:self action:@selector(ActionInValidBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_invalidBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [self.view addSubview:_invalidBtn];
-    
+//    [self.view addSubview:_invalidBtn];
 }
 
 @end

@@ -84,8 +84,8 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [_dataArr removeAllObjects];
-                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                [self SetUnComfirmArr:resposeObject[@"data"]];
+                if ([resposeObject[@"data"] count] < 15) {
                     
                     _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -144,8 +144,8 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                [self SetUnComfirmArr:resposeObject[@"data"]];
+                if ([resposeObject[@"data"] count] < 15) {
                     
                     _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }else{

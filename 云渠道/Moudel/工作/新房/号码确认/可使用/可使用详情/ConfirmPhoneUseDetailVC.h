@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ConfirmPhoneUseDetailVCBlock)(void);
+
 @interface ConfirmPhoneUseDetailVC : BaseViewController
+
+@property (nonatomic, copy) ConfirmPhoneUseDetailVCBlock confirmPhoneUseDetailVCBlock;
+
+- (instancetype)initWithClientId:(NSString *)clientId;
 
 @end
 

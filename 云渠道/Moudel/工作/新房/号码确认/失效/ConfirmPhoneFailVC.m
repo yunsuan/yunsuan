@@ -8,6 +8,8 @@
 
 #import "ConfirmPhoneFailVC.h"
 
+#import "ConfirmPhoneFailDetailVC.h"
+
 #import "RecommendCell5.h"
 
 @interface ConfirmPhoneFailVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -27,6 +29,7 @@
     
     [self initDataSouce];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)initDataSouce
@@ -160,12 +163,15 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.failDic = _dataArr[indexPath.row];
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    ConfirmPhoneFailDetailVC *nextVC = [[ConfirmPhoneFailDetailVC alloc] initWithClientId:_dataArr[indexPath.row][@"client_id"]];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{

@@ -47,40 +47,50 @@
 
 - (void)initDataSource{
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionConfirmMethod) name:@"PhoneConfirm" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionConfirmAllMethod) name:@"PhoneAllConfirm" object:nil];
     _titleArr = @[@"待确认",@"可使用",@"无效"];
+}
+
+- (void)ActionConfirmMethod{
+    
+//    [_confirmPhoneWaitVC RequestMethod];
+    [_confirmPhoneUseVC RequestMethod];
+    [_confirmPhoneFailVC RequestMethod];
+}
+
+- (void)ActionConfirmAllMethod{
+    
+    [_confirmPhoneWaitVC RequestMethod];
+    [_confirmPhoneUseVC RequestMethod];
+    [_confirmPhoneFailVC RequestMethod];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     NSInteger index = _scrollView.contentOffset.x / SCREEN_Width;
-//    switch (index) {
-//        case 0:
-//        {
-//            _roomReportWaitVC.search = textField.text;
-//            [_roomReportWaitVC RequestMethod];
-//            break;
-//        }
-//        case 1:
-//        {
-//            _roomReportSuccessVC.search = textField.text;
-//            [_roomReportSuccessVC RequestMethod];
-//            break;
-//        }
-//        case 2:
-//        {
-//            _roomReportFailVC.search = textField.text;
-//            [_roomReportFailVC RequestMethod];
-//            break;
-//        }
-//        case 3:
-//        {
-//            _roomReportComplaitVC.search = textField.text;
-//            [_roomReportComplaitVC RequestMethod];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
+    switch (index) {
+        case 0:
+        {
+            _confirmPhoneWaitVC.search = textField.text;
+            [_confirmPhoneWaitVC RequestMethod];
+            break;
+        }
+        case 1:
+        {
+            _confirmPhoneUseVC.search = textField.text;
+            [_confirmPhoneUseVC RequestMethod];
+            break;
+        }
+        case 2:
+        {
+            _confirmPhoneFailVC.search = textField.text;
+            [_confirmPhoneFailVC RequestMethod];
+            break;
+        }
+        default:
+            break;
+    }
     return YES;
 }
 

@@ -15,6 +15,7 @@
 #import "ComfirmValidVC.h"
 #import "ComfirmInValidVC.h"
 #import "DealValidVC.h"
+#import "ConfirmPhoneWaitDetailVC.h"
 
 #import "SecWorkFailVC.h"
 #import "SecWorkSuccessVC.h"
@@ -200,6 +201,9 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if ([_data[indexPath.row][@"message_type"] integerValue] < 6) {
+        
+        [cell SetCellbytitle:_data[indexPath.row][@"title"] num:[NSString stringWithFormat:@"推荐编号：%@",_data[indexPath.row][@"client_id"]]  name:[NSString stringWithFormat:@"姓名：%@",_data[indexPath.row][@"name"]] project:[NSString stringWithFormat:@"项目：%@",_data[indexPath.row][@"project_name"]] time: _data[indexPath.row][@"create_time"] messageimg:[_data[indexPath.row][@"attribute"][@"is_read"] boolValue]];
+    }else if ([_data[indexPath.row][@"message_type"] integerValue] == 18){
         
         [cell SetCellbytitle:_data[indexPath.row][@"title"] num:[NSString stringWithFormat:@"推荐编号：%@",_data[indexPath.row][@"client_id"]]  name:[NSString stringWithFormat:@"姓名：%@",_data[indexPath.row][@"name"]] project:[NSString stringWithFormat:@"项目：%@",_data[indexPath.row][@"project_name"]] time: _data[indexPath.row][@"create_time"] messageimg:[_data[indexPath.row][@"attribute"][@"is_read"] boolValue]];
     }else{
@@ -448,6 +452,12 @@
                 NSLog(@"%@",error);
                 [self showContent:@"网络错误"];
             }];
+            break;
+        }
+        case 18:{
+            
+            ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_data[indexPath.row][@"client_id"]];
+            [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
         default:
