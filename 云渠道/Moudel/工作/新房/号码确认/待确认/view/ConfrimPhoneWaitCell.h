@@ -26,6 +26,8 @@ typedef void(^ConfrimPhoneWaitCellBlock)(void);
 
 @property (nonatomic, strong) UILabel *addressL;
 
+@property (nonatomic, strong) UILabel *phoneL;
+
 @property (nonatomic, strong) UIButton *confirmBtn;
 
 @property (nonatomic, strong) NSDictionary *dataDic;

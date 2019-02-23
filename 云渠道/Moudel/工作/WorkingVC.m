@@ -137,7 +137,7 @@
                 [_MainTableView.mj_header endRefreshing];
                 if ([resposeObject[@"code"] integerValue] ==200) {
                     
-                    _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]],[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
+                    _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"tel_check"][@"total"],resposeObject[@"data"][@"tel_check"][@"value"],resposeObject[@"data"][@"tel_check"][@"disabled"]],[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
                 }
 
                 _secCountData = @[//1房源报备

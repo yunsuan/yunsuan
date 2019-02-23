@@ -35,11 +35,12 @@
     _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",dataDic[@"project_name"]];
     _timeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]];
     _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
+    _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"tel"]];
 }
 
 - (void)initUI{
     
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJContentLabColor;
@@ -76,6 +77,12 @@
             {
                 _addressL = label;
                 [self.contentView addSubview:_addressL];
+                break;
+            }
+            case 5:
+            {
+                _phoneL = label;
+                [self.contentView addSubview:_phoneL];
                 break;
             }
             default:
@@ -137,6 +144,13 @@
         make.right.equalTo(self.contentView).offset(-150 *SIZE);
     }];
     
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(9 *SIZE);
+        make.top.equalTo(_addressL.mas_bottom).offset(10 *SIZE);
+        make.right.equalTo(self.contentView).offset(-150 *SIZE);
+    }];
+    
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(273 *SIZE);
@@ -148,7 +162,7 @@
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_addressL.mas_bottom).offset(15 *SIZE);
+        make.top.equalTo(_phoneL.mas_bottom).offset(15 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
