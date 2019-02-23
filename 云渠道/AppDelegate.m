@@ -68,7 +68,7 @@ static NSString *const kQQAPPID = @"1106811849";
     [self initUI];
     [self NetworkingStart];
     [self configThirdWithOptions:launchOptions];
-    
+
 //
     return YES;
 }

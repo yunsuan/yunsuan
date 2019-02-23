@@ -129,8 +129,8 @@
         }
             break;
         case 2:{
-            _namelist = @[@"新房推荐",@"号码确认"];
-            _imglist = @[@"recommended",@"recommended"];
+            _namelist = @[@"号码确认",@"新房推荐"];
+            _imglist = @[@"ys_find",@"recommended"];
             _countdata  = @[@"",@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
 
@@ -336,11 +336,12 @@
         if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
             if (indexPath.row == 0) {
 
-                RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
+                ConfirmPhoneVC *nextVC = [[ConfirmPhoneVC alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
+              
             }else{
                 
-                ConfirmPhoneVC *nextVC = [[ConfirmPhoneVC alloc] init];
+                RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }
