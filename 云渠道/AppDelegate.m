@@ -68,10 +68,10 @@ static NSString *const kQQAPPID = @"1106811849";
     [self initUI];
     [self NetworkingStart];
     [self configThirdWithOptions:launchOptions];
-    CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
-    NSDate *date =[NSDate date];
-
-    [manger createCalendarWithTitle:@"带看" location:@"高新区大禹东路1101" startDate:date endDate:date allDay:NO alarmArray:@[@"60",@"120"]];
+//    CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
+//    NSDate *date =[NSDate date];
+//
+//    [manger createCalendarWithTitle:@"带看" location:@"高新区大禹东路1101" startDate:date endDate:date allDay:NO alarmArray:@[@"60",@"120"]];
 //
     return YES;
 }
