@@ -112,10 +112,6 @@
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }];
-            //            SurveyWaitDetailVC *nextVC = [[SurveyWaitDetailVC alloc] initWithSurveyId:_recordId];
-            //            [self.navigationController pushViewController:nextVC animated:YES];
-            //            RentingSurveyWaitDetailVC *nextVC = [[RentingSurveyWaitDetailVC alloc] init];
-            //            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
             [self showContent:resposeObject[@"msg"]];

@@ -15,6 +15,7 @@
 
 @interface DealedVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
     NSString *_clientid;
@@ -85,6 +86,13 @@
                      }
                      NSString *adress =[NSString stringWithFormat:@"项目地址：%@-%@-%@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"]];
 
+                     
+                     if ([_dataDic[@"tel_check_info"] isKindOfClass:[NSDictionary class]] && [_dataDic[@"tel_check_info"] count]) {
+                         
+                         _checkArr = @[[NSString stringWithFormat:@"确认人：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"性别：%@",[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 0 ? @"":[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 1?@"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",_dataDic[@"tel_check_info"][@"confirmed_time"]]];
+                     }
+                     
+                     
                      if ([_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
                          
                          _data = @[@[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],adress,[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]],@[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"到访确认人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"确认人电话：%@",_dataDic[@"butter_tel"]]],@[[NSString stringWithFormat:@"房号：%@",_dataDic[@"house_info"]],[NSString stringWithFormat:@"成交总价：%@元",_dataDic[@"total_money"]],[NSString stringWithFormat:@"套内面积：%@㎡",_dataDic[@"inner_area"]],[NSString stringWithFormat:@"成交状态：%@",_dataDic[@"current_state"]],[NSString stringWithFormat:@"成交时间：%@",_dataDic[@"update_time"]]]];
@@ -111,7 +119,7 @@
 {
     
     _dataDic = [@{} mutableCopy];
-    _titleArr = @[@"推荐信息",@"到访信息",@"成交信息"];
+    _titleArr = @[@"推荐信息",@"到访信息",@"成交信息",@"确认信息"];
 }
 
 //- (void)ActionPrintBtn:(UIButton *)btn{
@@ -142,7 +150,7 @@
     }
     header.lineView.hidden = YES;
     
-    if (section < 3) {
+    if (section < 4) {
         
         header.titleL.text = _titleArr[section];
     }
@@ -152,7 +160,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section < 3) {
+    if (section < 4) {
         
         return 40 *SIZE;
     }
@@ -162,45 +170,96 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    return _data.count ? _Pace.count?_data.count + 1:_data.count:0;
+    if (_checkArr.count) {
+        
+        return _data.count ? _Pace.count?_data.count + 2:_data.count + 1:0;
+    }else{
+        
+        return _data.count ? _Pace.count?_data.count + 1:_data.count:0;
+    }
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 3){
+    if (_checkArr.count) {
         
-        BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
-        if (!cell) {
-            cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
-        if (indexPath.row == 0) {
+        if(indexPath.section == 4){
             
-            cell.upLine.hidden = YES;
+            BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+            if (!cell) {
+                cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+            if (indexPath.row == 0) {
+                
+                cell.upLine.hidden = YES;
+            }else{
+                
+                cell.upLine.hidden = NO;
+            }
+            if (indexPath.row == _Pace.count - 1) {
+                
+                cell.downLine.hidden = YES;
+            }else{
+                
+                cell.downLine.hidden = NO;
+            }
+            return cell;
         }else{
-            
-            cell.upLine.hidden = NO;
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            if (indexPath.section == 3) {
+                
+                [cell SetCellContentbystring:_checkArr[indexPath.row]];
+            }else{
+                
+                [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        if (indexPath.row == _Pace.count - 1) {
-            
-            cell.downLine.hidden = YES;
-        }else{
-            
-            cell.downLine.hidden = NO;
-        }
-        return cell;
     }else{
-        static NSString *CellIdentifier = @"InfoDetailCell";
-        InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+        if(indexPath.section == 3){
+            
+            BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+            if (!cell) {
+                cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+            if (indexPath.row == 0) {
+                
+                cell.upLine.hidden = YES;
+            }else{
+                
+                cell.upLine.hidden = NO;
+            }
+            if (indexPath.row == _Pace.count - 1) {
+                
+                cell.downLine.hidden = YES;
+            }else{
+                
+                cell.downLine.hidden = NO;
+            }
+            return cell;
+        }else{
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
     }
 }
 

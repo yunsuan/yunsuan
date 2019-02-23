@@ -19,7 +19,7 @@
 
 @interface TypeZeroVC ()<UITableViewDelegate,UITableViewDataSource>
 {
-    
+    NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
     NSMutableDictionary *_dataDic;
@@ -57,7 +57,7 @@
 {
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    _titleArr = @[@"无效信息",@"推荐信息"];
+    _titleArr = @[@"无效信息",@"推荐信息",@"确认信息"];
     _dataDic = [@{} mutableCopy];
     [self InValidRequestMethod];
 }
@@ -99,6 +99,11 @@
             }
             NSString *adress = _dataDic[@"absolute_address"];
             adress = [NSString stringWithFormat:@"项目地址：%@-%@-%@ %@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],adress];
+            
+            if ([_dataDic[@"tel_check_info"] isKindOfClass:[NSDictionary class]] && [_dataDic[@"tel_check_info"] count]) {
+                
+                _checkArr = @[[NSString stringWithFormat:@"确认人：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"性别：%@",[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 0 ? @"":[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 1?@"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",_dataDic[@"tel_check_info"][@"confirmed_time"]]];
+            }
             
             if ([_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
                 
@@ -177,6 +182,10 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
+    if (section == 2) {
+        
+        return _checkArr.count;
+    }
     return [_data[section] count];
 }
 
@@ -213,6 +222,10 @@
     
     if (_dataDic.count) {
         
+        if (_checkArr.count) {
+            
+            return 3;
+        }
         return 2;
     }else{
         
@@ -230,7 +243,13 @@
         cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+    if (indexPath.section == 2) {
+        
+        [cell SetCellContentbystring:_checkArr[indexPath.row]];
+    }else{
+        
+        [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

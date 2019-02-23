@@ -14,6 +14,7 @@
 
 @interface UnconfirmDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
     NSString *_str;
@@ -77,6 +78,10 @@
                      NSString *adress = _dataDic[@"absolute_address"];
                      adress = [NSString stringWithFormat:@"项目地址：%@-%@-%@ %@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],adress];
                      
+                     if ([_dataDic[@"tel_check_info"] isKindOfClass:[NSDictionary class]] && [_dataDic[@"tel_check_info"] count]) {
+                         
+                         _checkArr = @[[NSString stringWithFormat:@"确认人：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"性别：%@",[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 0 ? @"":[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 1?@"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",_dataDic[@"tel_check_info"][@"confirmed_time"]]];
+                     }
                      if (![_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
                          
                          _data = @[@[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],adress,[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
@@ -91,7 +96,7 @@
              }
              failure:^(NSError *error) {
                  
-                 
+                 [self showContent:@"网络错误"];
              }];
 }
 
@@ -106,7 +111,7 @@
 
 -(void)initDataSouce
 {
-    _titleArr = @[@"推荐信息"];
+    _titleArr = @[@"推荐信息",@"确认信息"];
     _data =@[];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(post) name:@"reloadCustom" object:nil];
@@ -143,10 +148,26 @@
 
 #pragma mark    -----  delegate   ------
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    if (_checkArr.count) {
+        
+        return _data.count + 1;
+    }
+    return _data.count;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *arr = _data[section];
-    return arr.count? arr.count + 1:0;
+    
+    if (section == 0) {
+        
+        NSArray *arr = _data[section];
+        return arr.count? arr.count + 1:0;
+    }else{
+        
+        return _checkArr.count;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -169,37 +190,44 @@
     return 53*SIZE;
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    
-    return _data.count;
-}
-
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 0) {
-        static NSString *CellIdentifier = @"CountDownCell";
-        CountDownCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[CountDownCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
+    if (indexPath.section == 0) {
         
-        cell.frame = CGRectMake(0, 0, 360*SIZE, 75*SIZE);
-        cell.countdownblock = ^{
-            [self refresh];
-        };
-        [cell setcountdownbyendtime:_endtime];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+        if (indexPath.row == 0) {
+            static NSString *CellIdentifier = @"CountDownCell";
+            CountDownCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[CountDownCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            
+            cell.frame = CGRectMake(0, 0, 360*SIZE, 75*SIZE);
+            cell.countdownblock = ^{
+                [self refresh];
+            };
+            [cell setcountdownbyendtime:_endtime];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else{
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            [cell SetCellContentbystring:_data[indexPath.section][indexPath.row - 1]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }
     }else{
+        
         static NSString *CellIdentifier = @"InfoDetailCell";
         InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-        [cell SetCellContentbystring:_data[indexPath.section][indexPath.row - 1]];
+        [cell SetCellContentbystring:_checkArr[indexPath.row]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -253,7 +281,7 @@
                     
                     [weakSelf alertControllerWithNsstring:@"失效确认成功" And:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-                    
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
                 }else{
                     
                     [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];

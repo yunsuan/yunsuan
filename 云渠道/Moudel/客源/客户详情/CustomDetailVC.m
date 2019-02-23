@@ -965,7 +965,7 @@
                             //                        NSLog(@"%@",resposeObject);
                             if ([resposeObject[@"code"] integerValue] == 200) {
                                 
-                                [self alertControllerWithNsstring:@"推荐成功" And:nil WithDefaultBlack:^{
+                                [self alertControllerWithNsstring:resposeObject[@"msg"] And:nil WithDefaultBlack:^{
                                     
                                     [self MatchRequest];
                                 }];

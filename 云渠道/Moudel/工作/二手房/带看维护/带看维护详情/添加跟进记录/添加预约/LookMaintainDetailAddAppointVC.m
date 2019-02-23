@@ -17,6 +17,8 @@
 #import "LookMaintainDetailAddAppointCell.h"
 #import "LookMaintainDetailAddAppointCell2.h"
 
+#import "CalendarsManger.h"
+
 @interface LookMaintainDetailAddAppointVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
@@ -121,6 +123,18 @@
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
+                if ([self.dataDic[@"follow_type"] integerValue] == 2) {
+                    
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"YYYY-MM-dd"];
+                    for (NSDictionary *dic in _dataArr) {
+                        
+                        LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
+                        CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
+                        
+                        [manger createCalendarWithTitle:@"预约带看" location:model.title startDate:[formatter dateFromString:dic[@"take_time"]] endDate:[formatter dateFromString:dic[@"take_time"]] allDay:NO alarmArray:@[@"86400"]];
+                    }
+                }
                 if (self.lookMaintainDetailAddAppointVCBlock) {
                     
                     self.lookMaintainDetailAddAppointVCBlock();
@@ -152,6 +166,18 @@
             NSLog(@"%@",resposeObject);
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
+                if ([self.dataDic[@"follow_type"] integerValue] == 2) {
+                    
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"YYYY-MM-dd"];
+                    for (NSDictionary *dic in _dataArr) {
+                        
+                        LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
+                        CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
+                        
+                        [manger createCalendarWithTitle:@"预约带看" location:model.title startDate:[formatter dateFromString:dic[@"take_time"]] endDate:[formatter dateFromString:dic[@"take_time"]] allDay:NO alarmArray:@[@"86400"]];
+                    }
+                }
                 if (self.lookMaintainDetailAddAppointVCBlock) {
                     
                     self.lookMaintainDetailAddAppointVCBlock();

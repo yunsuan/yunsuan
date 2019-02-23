@@ -1731,7 +1731,7 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self alertControllerWithNsstring:@"恭喜" And:@"推荐成功" WithDefaultBlack:^{
+                [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];

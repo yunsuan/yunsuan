@@ -21,7 +21,7 @@
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <Bugtags/Bugtags.h>
 #import <BaiduMapAPI_Map/BMKMapView.h>
-#import "CalendarsManger.h"
+//#import "CalendarsManger.h"
 
 
 //#define UmengAppkey @"5ac9debcb27b0a2147000050"
@@ -68,10 +68,7 @@ static NSString *const kQQAPPID = @"1106811849";
     [self initUI];
     [self NetworkingStart];
     [self configThirdWithOptions:launchOptions];
-    CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
-    NSDate *date =[NSDate date];
-
-    [manger createCalendarWithTitle:@"带看" location:@"高新区大禹东路1101" startDate:date endDate:date allDay:NO alarmArray:@[@"60",@"120"]];
+    
 //
     return YES;
 }

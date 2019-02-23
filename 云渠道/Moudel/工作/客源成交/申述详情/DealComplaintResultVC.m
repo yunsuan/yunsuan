@@ -15,6 +15,7 @@
 
 @interface DealComplaintResultVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
 //    NSString *_clientId;
@@ -53,7 +54,7 @@
 -(void)initDataSouce
 {
     
-    _titleArr = @[@"申诉信息",@"无效信息",@"推荐信息",@"到访信息"];
+    _titleArr = @[@"申诉信息",@"无效信息",@"推荐信息",@"到访信息",@"确认信息"];
     [self AppealRequestMethod];
 }
 
@@ -91,6 +92,11 @@
             }
             NSString *adress = _dataDic[@"absolute_address"];
             adress = [NSString stringWithFormat:@"项目地址：%@-%@-%@ %@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],adress];
+            
+            if ([_dataDic[@"tel_check_info"] isKindOfClass:[NSDictionary class]] && [_dataDic[@"tel_check_info"] count]) {
+                
+                _checkArr = @[[NSString stringWithFormat:@"确认人：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"性别：%@",[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 0 ? @"":[_dataDic[@"tel_check_info"][@"confirmed_agent_sex"] integerValue] == 1?@"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",_dataDic[@"tel_check_info"][@"confirmed_time"]]];
+            }
             
             if ([_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
                 
@@ -138,14 +144,31 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 3) {
+    if (_checkArr.count) {
         
-        return _Pace.count;
-    }
-    else
-    {
-        NSArray *arr = _data[section];
-        return arr.count;
+        if (section == 4) {
+            
+            return _Pace.count;
+        }else if (section == 3){
+            
+            return _checkArr.count;
+        }
+        else
+        {
+            NSArray *arr = _data[section];
+            return arr.count;
+        }
+    }else{
+        
+        if (section == 3) {
+            
+            return _Pace.count;
+        }
+        else
+        {
+            NSArray *arr = _data[section];
+            return arr.count;
+        }
     }
 }
 
@@ -158,7 +181,7 @@
     }
     header.lineView.hidden = YES;
     
-    if (section < 3) {
+    if (section < 4) {
         
         header.titleL.text = _titleArr[section];
     }
@@ -168,7 +191,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section < 3) {
+    if (section < 4) {
         
         return 40 *SIZE;
     }
@@ -178,49 +201,103 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    return _data.count ? _Pace.count?_data.count + 1:_data.count:0;
+    if (_checkArr.count) {
+        
+        return _data.count ? _Pace.count?_data.count + 2:_data.count + 1:0;
+    }else{
+        
+        return _data.count ? _Pace.count?_data.count + 1:_data.count:0;
+    }
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.section == 3) {
+    if (_checkArr.count) {
         
-        BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
-        if (!cell) {
+        if (indexPath.section == 4) {
             
-            cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
-        if (indexPath.row == 0) {
+            BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+            if (!cell) {
+                
+                cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.upLine.hidden = YES;
+            cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+            if (indexPath.row == 0) {
+                
+                cell.upLine.hidden = YES;
+            }else{
+                
+                cell.upLine.hidden = NO;
+            }
+            if (indexPath.row == _Pace.count - 1) {
+                
+                cell.downLine.hidden = YES;
+            }else{
+                
+                cell.downLine.hidden = NO;
+            }
+            return cell;
+            
         }else{
             
-            cell.upLine.hidden = NO;
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            if (indexPath.section == 3) {
+                
+                [cell SetCellContentbystring:_checkArr[indexPath.row]];
+            }else{
+                
+                [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        if (indexPath.row == _Pace.count - 1) {
-            
-            cell.downLine.hidden = YES;
-        }else{
-            
-            cell.downLine.hidden = NO;
-        }
-        return cell;
-        
     }else{
         
-        static NSString *CellIdentifier = @"InfoDetailCell";
-        InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        if (indexPath.section == 3) {
+            
+            BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+            if (!cell) {
+                
+                cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.titleL.text = [NSString stringWithFormat:@"%@时间：%@",_Pace[indexPath.row][@"process_name"],_Pace[indexPath.row][@"time"]];
+            if (indexPath.row == 0) {
+                
+                cell.upLine.hidden = YES;
+            }else{
+                
+                cell.upLine.hidden = NO;
+            }
+            if (indexPath.row == _Pace.count - 1) {
+                
+                cell.downLine.hidden = YES;
+            }else{
+                
+                cell.downLine.hidden = NO;
+            }
+            return cell;
+            
+        }else{
+            
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
     }
 }
 
