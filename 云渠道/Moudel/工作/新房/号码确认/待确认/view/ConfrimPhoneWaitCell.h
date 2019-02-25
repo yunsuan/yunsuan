@@ -11,10 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^ConfrimPhoneWaitCellBlock)(void);
+typedef void(^CopyPhoneWaitCellBlock)(void);
 
 @interface ConfrimPhoneWaitCell : UITableViewCell
 
 @property (nonatomic, copy) ConfrimPhoneWaitCellBlock confrimPhoneWaitCellBlock;
+
+@property (nonatomic, copy) CopyPhoneWaitCellBlock copyPhoneWaitCellBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -29,6 +32,8 @@ typedef void(^ConfrimPhoneWaitCellBlock)(void);
 @property (nonatomic, strong) UILabel *phoneL;
 
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic , strong) UIButton *copybtn;
 
 @property (nonatomic, strong) NSDictionary *dataDic;
 

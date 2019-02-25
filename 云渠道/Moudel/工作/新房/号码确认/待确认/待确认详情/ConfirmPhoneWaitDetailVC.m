@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) UIButton *invalidBtn;
 
+@property (nonatomic , strong) UIButton *CopyBtn;
+
 @end
 
 @implementation ConfirmPhoneWaitDetailVC
@@ -83,11 +85,19 @@
     if (![data[@"is_deal"] integerValue]) {
         
         [self.view addSubview:_invalidBtn];
+        [self.view addSubview:_CopyBtn];
     }else{
         
         _detailTable.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
     }
     [_detailTable reloadData];
+}
+
+-(void)ActionCopy:(UIButton *)btn
+{
+    [self showContent:@"复制成功!"];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = _dataDic[@"tel"];
 }
 
 - (void)ActionInValidBtn:(UIButton *)btn{
@@ -239,12 +249,21 @@
     [self.view addSubview:_detailTable];
     
     _invalidBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _invalidBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 360 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+    _invalidBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     [_invalidBtn setBackgroundColor:YJBlueBtnColor];
     _invalidBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_invalidBtn addTarget:self action:@selector(ActionInValidBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_invalidBtn setTitle:@"确认" forState:UIControlStateNormal];
-//    [self.view addSubview:_invalidBtn];
+    
+    _CopyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _CopyBtn.frame = CGRectMake(240*SIZE, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, 120 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+    [_CopyBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
+    _CopyBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_CopyBtn addTarget:self action:@selector(ActionCopy:) forControlEvents:UIControlEventTouchUpInside];
+    [_CopyBtn setTitle:@"号码复制" forState:UIControlStateNormal];
+//    [_CopyBtn addSubview:_invalidBtn];
 }
+
+
 
 @end

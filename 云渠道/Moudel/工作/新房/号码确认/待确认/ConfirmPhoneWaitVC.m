@@ -216,6 +216,15 @@
             
         }];
     };
+    
+    cell.copyPhoneWaitCellBlock = ^{
+     
+        [self showContent:@"复制成功!"];
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = _dataArr[indexPath.row][@"tel"];
+    
+    };
+
     cell.dataDic = _dataArr[indexPath.row];
     return cell;
 }

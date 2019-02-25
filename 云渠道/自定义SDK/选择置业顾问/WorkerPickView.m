@@ -213,7 +213,12 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView
              titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%@/%@/%@",_dataSource[row][@"GSMC"],_dataSource[row][@"RYXM"],_dataSource[row][@"RYDH"]];
+    if (_dataSource[row][@"GSMC"]) {
+         return [NSString stringWithFormat:@"%@/%@/%@",_dataSource[row][@"GSMC"],_dataSource[row][@"RYXM"],_dataSource[row][@"RYDH"]];
+    }
+    else{
+        return [NSString stringWithFormat:@"%@/%@",_dataSource[row][@"RYXM"],_dataSource[row][@"RYDH"]];
+    }
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component

@@ -28,6 +28,14 @@
     }
 }
 
+- (void)Action_copy:(UIButton *)btn{
+    
+    if (self.copyPhoneWaitCellBlock) {
+        
+        self.copyPhoneWaitCellBlock();
+    }
+}
+
 - (void)setDataDic:(NSDictionary *)dataDic{
     
     _nameL.text = [NSString stringWithFormat:@"%@",dataDic[@"name"]];
@@ -100,6 +108,16 @@
     [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_confirmBtn];
     
+    _copybtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _copybtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_copybtn addTarget:self action:@selector(Action_copy:) forControlEvents:UIControlEventTouchUpInside];
+    [_copybtn setTitle:@"复制号码" forState:UIControlStateNormal];
+    [_copybtn setBackgroundColor:YJBlueBtnColor];
+    _copybtn.layer.cornerRadius = 2 *SIZE;
+    _copybtn.clipsToBounds = YES;
+    [_copybtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.contentView addSubview:_copybtn];
+    
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
     [self.contentView addSubview:_line];
@@ -158,6 +176,16 @@
         make.width.mas_equalTo(77 *SIZE);
         make.height.mas_equalTo(30 *SIZE);
     }];
+    
+    
+    [_copybtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(273 *SIZE);
+        make.top.equalTo(_confirmBtn.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(77 *SIZE);
+        make.height.mas_equalTo(30 *SIZE);
+    }];
+    
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
