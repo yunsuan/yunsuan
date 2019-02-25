@@ -195,6 +195,7 @@
     CustomLookWaitDetailVC *nextVC = [[CustomLookWaitDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
     nextVC.customLookWaitDetailVCBlock = ^{
         
+        [self RequestMethod];
     };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
