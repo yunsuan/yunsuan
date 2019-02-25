@@ -24,7 +24,7 @@
 
 - (UILabel *)displayLabel{
     if (!_displayLabel) {
-        _displayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3.7*SIZE, self.contentView.frame.size.width, 11*SIZE)];
+        _displayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, (self.contentView.frame.size.height-11*SIZE)/2, self.contentView.frame.size.width, 11*SIZE)];
         _displayLabel.textAlignment = NSTextAlignmentCenter;
         _displayLabel.font = [UIFont systemFontOfSize:10.7*SIZE];
         _displayLabel.textColor = COLOR(115, 115, 115, 1);
@@ -35,7 +35,7 @@
 -(void)setstylebytype:(NSString *)type andsetlab:(NSString *)str{
     
     _displayLabel.text = str;
-    _displayLabel.frame = CGRectMake(0, 3.7*SIZE, 12*SIZE * str.length + 4.7*SIZE *2, 11*SIZE);
+    _displayLabel.frame = CGRectMake(0, (self.contentView.frame.size.height-11*SIZE)/2, 12*SIZE * str.length + 4.7*SIZE *2, 11*SIZE);
     if ([type isEqualToString:@"1"]) {
         self.layer.borderWidth = 0.5*SIZE;
         self.layer.borderColor = COLOR(181, 181, 181, 1).CGColor;
