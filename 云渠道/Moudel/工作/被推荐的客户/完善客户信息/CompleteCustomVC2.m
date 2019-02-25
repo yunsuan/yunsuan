@@ -233,7 +233,15 @@
             view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
                 
                 _agentname = [NSString stringWithFormat:@"%@",RYXM];
-                _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                
+                if (GSMC) {
+                    _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                }
+                else
+                {
+                    _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                }
+//                _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
                 _agentid = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
@@ -836,8 +844,15 @@
                     if (![_datadic[@"yunsuan_url"] isEqualToString:@""]) {
                         _agentbtn = [[DropDownBtn alloc]initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
                         if ([self.consulDic[@"id"] length]) {
+                            if (self.consulDic[@"comsulatent_advicer_company"]) {
+                                 _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",self.consulDic[@"comsulatent_advicer_company"],self.consulDic[@"comsulatent_advicer"],self.consulDic[@"comsulatent_advicer_tel"]];
+                            }
+                            else
+                            {
+                                 _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@",self.consulDic[@"comsulatent_advicer"],self.consulDic[@"comsulatent_advicer_tel"]];
+                            }
                             
-                            _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",self.consulDic[@"comsulatent_advicer_company"],self.consulDic[@"comsulatent_advicer"],self.consulDic[@"comsulatent_advicer_tel"]];
+                           
                             _agentname = self.consulDic[@"comsulatent_advicer"];
                             _agentid = self.consulDic[@"id"];
                         }

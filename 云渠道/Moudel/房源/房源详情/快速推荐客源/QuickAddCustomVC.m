@@ -168,7 +168,13 @@
                 _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
                 if (_selected == 1) {
                     
-                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
+                    if (_workArr[0][@"GSMC"]) {
+                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
+                    }else
+                    {
+                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
+                    }
+//                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
                     _workId = [NSString stringWithFormat:@"%@",_workArr[0][@"ID"]];
                 }
             }else{
@@ -518,7 +524,15 @@
             WorkerPickView *view = [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_workArr];
             view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
                 
-                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                if (GSMC) {
+                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                }
+                else
+                {
+                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                }
+                
+//                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
                 _workId = [NSString stringWithFormat:@"%@",ID];
 
             };
