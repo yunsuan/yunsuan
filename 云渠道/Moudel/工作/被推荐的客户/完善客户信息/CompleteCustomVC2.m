@@ -33,6 +33,7 @@
     NSDate *_date;
     NSString *_agentname;
     NSString *_agentid;
+    NSMutableArray *_ruleArr;
 //    NSString *_agentPhone;
 }
 
@@ -61,6 +62,10 @@
 @property (nonatomic, strong) BorderTF *signTF4;
 
 @property (nonatomic, strong) BorderTF *signTF5;
+
+@property (nonatomic, strong) UILabel *recommendTypeL;
+
+@property (nonatomic, strong) DropDownBtn *recommendTypeBtn;
 
 @property (nonatomic, strong) UILabel *visitL;
 
@@ -128,8 +133,29 @@
     
     [self.consulDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         
-        [self.consulDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+        if ([key isEqualToString:@"rule_type_tags"]) {
+            
+            [self.consulDic setObject:obj forKey:key];
+        }else{
+            
+            [self.consulDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+        }
+        
     }];
+    
+    if ([self.consulDic count] && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]]) {
+        
+        for (int i = 0; i < [self.consulDic[@"rule_type_tags"] count]; i++) {
+            
+            NSMutableDictionary *tempDic = [self.consulDic[@"rule_type_tags"][i] mutableCopy];
+            [tempDic setObject:tempDic[@"tag_id"] forKey:@"id"];
+            [tempDic setObject:tempDic[@"tag_name"] forKey:@"param"];
+            [tempDic removeObjectForKey:@"tag_id"];
+            [tempDic removeObjectForKey:@"tag_name"];
+            
+            [_ruleArr addObject:tempDic];
+        }
+    }
 }
 
 - (void)ActionAddBtn:(UIButton *)btn{
@@ -146,13 +172,36 @@
                 make.width.equalTo(@(258 *SIZE));
                 make.height.equalTo(@(33 *SIZE));
             }];
-            [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            if (self.consulDic.count && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
                 
-                make.left.equalTo(_infoView).offset(10 *SIZE);
-                make.top.equalTo(_signTF2.mas_bottom).offset(31 *SIZE);
-                make.width.equalTo(@(70 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
+                [_recommendTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF2.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+                
+                [_recommendTypeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(80 *SIZE);
+                    make.top.equalTo(_signTF2.mas_bottom).offset(21 *SIZE);
+                    make.width.equalTo(@(258 *SIZE));
+                    make.height.equalTo(@(33 *SIZE));
+                }];
+
+            }else{
+                
+                [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF2.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+            }
+
             break;
         }
         case 2:
@@ -165,13 +214,35 @@
                 make.width.equalTo(@(258 *SIZE));
                 make.height.equalTo(@(33 *SIZE));
             }];
-            [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            if (self.consulDic.count && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
                 
-                make.left.equalTo(_infoView).offset(10 *SIZE);
-                make.top.equalTo(_signTF3.mas_bottom).offset(31 *SIZE);
-                make.width.equalTo(@(70 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
+                [_recommendTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF3.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+                
+                [_recommendTypeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(80 *SIZE);
+                    make.top.equalTo(_signTF3.mas_bottom).offset(21 *SIZE);
+                    make.width.equalTo(@(258 *SIZE));
+                    make.height.equalTo(@(33 *SIZE));
+                }];
+                
+            }else{
+                
+                [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF3.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+            }
             break;
         }
         case 3:
@@ -184,13 +255,34 @@
                 make.width.equalTo(@(258 *SIZE));
                 make.height.equalTo(@(33 *SIZE));
             }];
-            [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            if (self.consulDic.count && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
                 
-                make.left.equalTo(_infoView).offset(10 *SIZE);
-                make.top.equalTo(_signTF4.mas_bottom).offset(31 *SIZE);
-                make.width.equalTo(@(70 *SIZE));
-                make.height.equalTo(@(13 *SIZE));
-            }];
+                [_recommendTypeL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF4.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+                
+                [_recommendTypeBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(80 *SIZE);
+                    make.top.equalTo(_signTF4.mas_bottom).offset(21 *SIZE);
+                    make.width.equalTo(@(258 *SIZE));
+                    make.height.equalTo(@(33 *SIZE));
+                }];
+                
+            }else{
+                
+                [_visitL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(_infoView).offset(10 *SIZE);
+                    make.top.equalTo(_signTF4.mas_bottom).offset(31 *SIZE);
+                    make.width.equalTo(@(70 *SIZE));
+                    make.height.equalTo(@(13 *SIZE));
+                }];
+            }
             break;
         }
         case 4:
@@ -316,6 +408,17 @@
             
             break;
         }
+        case 3:{
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_ruleArr];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.recommendTypeBtn.content.text = MC;
+                weakself.recommendTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+        }
         default:
             break;
     }
@@ -440,6 +543,10 @@
         [_dic setObject:_timeL.text forKey:@"visit_time"];
     }
     
+    if (_recommendTypeBtn.content.text) {
+        
+        [_dic setObject:_recommendTypeBtn->str forKey:@"rule_type"];
+    }
     
     _confirmBtn.userInteractionEnabled = NO;
     [BaseRequest POST:ConfirmValue_URL parameters:_dic success:^(id resposeObject) {
@@ -765,7 +872,7 @@
     [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
     [_infoView addSubview:_addBtn];
     
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 36 *SIZE + i * 54 *SIZE, 70 *SIZE, 12 *SIZE)];
         label.textColor = YJTitleLabColor;
@@ -809,11 +916,18 @@
                 [_infoView addSubview:_confirmL];
                 break;
             }
+            case 6:
+            {
+                label.text = @"推荐类型：";
+                _recommendTypeL = label;
+                [_infoView addSubview:_recommendTypeL];
+                break;
+            }
             default:
                 break;
         }
         
-        if (i < 3) {
+        if (i < 4) {
             
             DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
             btn.tag = i;
@@ -850,6 +964,20 @@
                         _adviserTF = borderTF;
                         [_infoView addSubview:_adviserTF];
                     }
+                    break;
+                }
+                case 3:
+                {
+                    _recommendTypeBtn = btn;
+                    if (self.consulDic && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
+                        
+                        _recommendTypeBtn.content.text = [NSString stringWithFormat:@"%@",self.consulDic[@"rule_type_tags"][0][@"tag_name"]];
+                        _recommendTypeBtn->str = [NSString stringWithFormat:@"%@",self.consulDic[@"rule_type_tags"][0][@"tag_id"]];
+                    }else{
+                        
+                        
+                    }
+                    [_infoView addSubview:_recommendTypeBtn];
                     break;
                 }
                 default:
@@ -993,13 +1121,44 @@
         make.height.equalTo(@(33 *SIZE));
     }];
     
-    [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
+    if (self.consulDic.count && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
         
-        make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_signTF1.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
+        [_recommendTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_infoView).offset(10 *SIZE);
+            make.top.equalTo(_signTF1.mas_bottom).offset(31 *SIZE);
+            make.width.equalTo(@(70 *SIZE));
+            make.height.equalTo(@(13 *SIZE));
+        }];
+        
+        [_recommendTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_infoView).offset(80 *SIZE);
+            make.top.equalTo(_signTF1.mas_bottom).offset(21 *SIZE);
+            make.width.equalTo(@(258 *SIZE));
+            make.height.equalTo(@(33 *SIZE));
+        }];
+        
+        [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_infoView).offset(10 *SIZE);
+            make.top.equalTo(_recommendTypeBtn.mas_bottom).offset(31 *SIZE);
+            make.width.equalTo(@(70 *SIZE));
+            make.height.equalTo(@(13 *SIZE));
+        }];
+    }else{
+        
+        _recommendTypeL.hidden = YES;
+        _recommendTypeBtn.hidden = YES;
+        [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(_infoView).offset(10 *SIZE);
+            make.top.equalTo(_signTF1.mas_bottom).offset(31 *SIZE);
+            make.width.equalTo(@(70 *SIZE));
+            make.height.equalTo(@(13 *SIZE));
+        }];
+    }
+    
     
     [_authenColl1 mas_makeConstraints:^(MASConstraintMaker *make) {
         

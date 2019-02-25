@@ -14,6 +14,7 @@
 
 #import "DropDownBtn.h"
 #import "DateChooseView.h"
+#import "CalendarsManger.h"
 
 @interface CustomLookConfirmSuccessVC ()
 {
@@ -94,7 +95,9 @@
                 
                 [self alertControllerWithNsstring:@"温馨提示" And:@"添加成功" WithDefaultBlack:^{
                     
+                    CalendarsManger *manger = [CalendarsManger sharedCalendarsManger];
                     
+                    [manger createCalendarWithTitle:@"预约带看" location:_dataDic[@"client_name"] startDate:[self.dateFormatter dateFromString:dic[@"take_time"]] endDate:[self.dateFormatter dateFromString:dic[@"take_time"]] allDay:NO alarmArray:@[@"86400"]];
                     if (self.customLookConfirmSuccessVCBlock) {
                         
                         self.customLookConfirmSuccessVCBlock();

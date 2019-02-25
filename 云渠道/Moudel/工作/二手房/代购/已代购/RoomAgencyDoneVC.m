@@ -114,10 +114,14 @@
         
         [cell.auditL mas_makeConstraints:^(MASConstraintMaker *make) {
             
-            make.left.equalTo(cell.validL.mas_right).offset(5 *SIZE);
+            make.left.equalTo(cell.contentView).offset(10 *SIZE);
             make.top.equalTo(cell.timeL.mas_bottom).offset(7 *SIZE);
             make.width.mas_equalTo(40 *SIZE);
             make.height.mas_equalTo(17 *SIZE);
+//            make.left.equalTo(cell.validL.mas_right).offset(5 *SIZE);
+//            make.top.equalTo(cell.timeL.mas_bottom).offset(7 *SIZE);
+//            make.width.mas_equalTo(40 *SIZE);
+//            make.height.mas_equalTo(17 *SIZE);
         }];
         cell.validL.hidden = YES;
         cell.auditL.hidden = NO;
