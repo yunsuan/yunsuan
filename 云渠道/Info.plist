@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.4</string>
+	<string>3.5</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -62,7 +62,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>wechat</string>
@@ -119,6 +119,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>是否允许云渠道访问你的日历</string>
 	<key>NSCameraUsageDescription</key>
 	<string>是否允许云渠道开启相机拍照以便拍照发送图片</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -129,8 +131,6 @@
 	<string>开启麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许云渠道打开相册以供你选择要发送的图片</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>是否允许云渠道访问你的日历</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>是否允许云渠道访问你的提醒事项</string>
 	<key>UIBackgroundModes</key>
