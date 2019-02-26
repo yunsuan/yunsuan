@@ -441,22 +441,22 @@
         return;
         
     }
-    
-     if (![_datadic[@"yunsuan_url"] isEqualToString:@""])
-         {
+//
+//     if (![_datadic[@"yunsuan_url"] isEqualToString:@""])
+//         {
              if (!_agentname.length) {
                  
                  [self showContent:@"请选择置业顾问"];
                  return;
              }
-         }
-         else{
-             if(_adviserTF.textfield.text.length==0)
-             {
-                 [self showContent:@"请填写置业顾问"];
-                 return;
-             }
-         }
+//         }
+//         else{
+//             if(_adviserTF.textfield.text.length==0)
+//             {
+//                 [self showContent:@"请填写置业顾问"];
+//                 return;
+//             }
+//         }
 
     
     
@@ -493,11 +493,9 @@
         }
     }
     
-    if (!(_datadic[@"yunsuan_id"]&&_datadic[@"yunsuan_url"]))
-    {
-        _agentname = _adviserTF.textfield.text;
-    }
-    
+
+
+
     if (_numBtn->str) {
         
         [_dic setObject:_numBtn->str forKey:@"visit_num"];
@@ -508,8 +506,8 @@
         [_dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
     }
     
-         if (![_datadic[@"yunsuan_url"] isEqualToString:@""])
-         {
+//         if (![_datadic[@"yunsuan_url"] isEqualToString:@""])
+//         {
              if (_agentid) {
                  
                  [_dic setObject:_agentid forKey:@"property_advicer_wish_id"];
@@ -519,11 +517,11 @@
                  
                  [_dic setObject:_agentname forKey:@"property_advicer_wish"];
              }
-         }
-         else{
-             [_dic setObject:@"0" forKey:@"property_advicer_wish_id"];
-             [_dic setObject:_adviserTF.textfield.text forKey:@"property_advicer_wish"];
-         }
+//         }
+//         else{
+//             [_dic setObject:@"0" forKey:@"property_advicer_wish_id"];
+//             [_dic setObject:_adviserTF.textfield.text forKey:@"property_advicer_wish"];
+//         }
     
  
     
@@ -955,7 +953,7 @@
                 }
                 case 2:
                 {
-                    if (![_datadic[@"yunsuan_url"] isEqualToString:@""]) {
+//                    if (![_datadic[@"yunsuan_url"] isEqualToString:@""]) {
                         _agentbtn = [[DropDownBtn alloc]initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
                         if ([self.consulDic[@"id"] length]) {
                             if (self.consulDic[@"comsulatent_advicer_company"]) {
@@ -972,13 +970,13 @@
                         }
                         [_agentbtn addTarget:self action:@selector(action_agent) forControlEvents:UIControlEventTouchUpInside];
                         [_infoView addSubview:_agentbtn];
-                    }
-                    else{
-                        
-                        BorderTF *borderTF = [[BorderTF alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
-                        _adviserTF = borderTF;
-                        [_infoView addSubview:_adviserTF];
-                    }
+//                    }
+//                    else{
+//
+//                        BorderTF *borderTF = [[BorderTF alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+//                        _adviserTF = borderTF;
+//                        [_infoView addSubview:_adviserTF];
+//                    }
                     break;
                 }
                 case 3:
