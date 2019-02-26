@@ -235,16 +235,15 @@
     _isHide = [_model.is_hide_tel boolValue];
     if (!_isHide) {
         
-        _phoneTF4.userInteractionEnabled = NO;
-        _phoneTF5.userInteractionEnabled = NO;
-        _phoneTF6.userInteractionEnabled = NO;
-        _phoneTF7.userInteractionEnabled = NO;
-        
         _hideReportL.text = @"当前显号报备";
         _hideL.text = @"需要补全电话号码";
         _hideImg.image = [UIImage imageNamed:@"eye_2"];
     }else{
         
+        _phoneTF4.userInteractionEnabled = NO;
+        _phoneTF5.userInteractionEnabled = NO;
+        _phoneTF6.userInteractionEnabled = NO;
+        _phoneTF7.userInteractionEnabled = NO;
         _hideReportL.text = @"当前隐号报备";
     }
     _name.textfield.text = _model.name;
@@ -939,7 +938,14 @@
             [_phoneTF5 becomeFirstResponder];
         }else{
             
-            _tel4 = textField.text;
+            if (_phoneTF4.text.length > 1) {
+                
+                _tel4 = [textField.text substringWithRange:NSMakeRange(0, 1)];
+            }else{
+                
+                _tel4 = textField.text;
+            }
+            
         }
     }
     if (textField == _phoneTF5) {
@@ -952,7 +958,13 @@
             [_phoneTF6 becomeFirstResponder];
         }else{
             
-            _tel5 = textField.text;
+            if (_phoneTF5.text.length > 1) {
+                
+                _tel5 = [textField.text substringWithRange:NSMakeRange(0, 1)];
+            }else{
+                
+                _tel5 = textField.text;
+            }
         }
     }
     if (textField == _phoneTF6) {
@@ -964,7 +976,13 @@
             [_phoneTF7 becomeFirstResponder];
         }else{
             
-            _tel6 = textField.text;
+            if (_phoneTF6.text.length > 1) {
+                
+                _tel6 = [textField.text substringWithRange:NSMakeRange(0, 1)];
+            }else{
+                
+                _tel6 = textField.text;
+            }
         }
     }
     if (textField == _phoneTF7) {
@@ -977,7 +995,13 @@
             [_phoneTF8 becomeFirstResponder];
         }else{
             
-            _tel7 = textField.text;
+            if (_phoneTF7.text.length > 1) {
+                
+                _tel7 = [textField.text substringWithRange:NSMakeRange(0, 1)];
+            }else{
+                
+                _tel7 = textField.text;
+            }
         }
     }
     if (textField == _phoneTF8) {
