@@ -236,7 +236,7 @@
     
     [BaseRequest GET:StoreAuthStoreList_URL parameters:tempDic success:^(id resposeObject) {
         
-        [_dataArr removeAllObjects];
+//        [_dataArr removeAllObjects];
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             

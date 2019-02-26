@@ -97,7 +97,6 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [_dataArr removeAllObjects];
             if ([resposeObject[@"data"] count]) {
                 
                 [_table.mj_footer endRefreshing];

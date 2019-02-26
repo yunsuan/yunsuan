@@ -143,6 +143,7 @@
         
     }];
     
+    _ruleArr = [@[] mutableCopy];
     if ([self.consulDic count] && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]]) {
         
         for (int i = 0; i < [self.consulDic[@"rule_type_tags"] count]; i++) {
@@ -560,6 +561,7 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
+            _confirmBtn.userInteractionEnabled = YES;
             for (UIViewController *vc in self.navigationController.viewControllers) {
                 
                 if ([vc isKindOfClass:[RecommendVC1 class]] || [vc isKindOfClass:[TypeOneVC class]]) {
@@ -571,9 +573,8 @@
         }else
         {
             [self showContent:resposeObject[@"msg"]];
+            _confirmBtn.userInteractionEnabled = YES;
         }
-        
-        _confirmBtn.userInteractionEnabled = YES;
     } failure:^(NSError *error) {
         
         [self showContent:@"网络错误"];

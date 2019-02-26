@@ -82,7 +82,6 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
             NSArray *arr=resposeObject[@"data"][@"data"];
             [_dataArr addObjectsFromArray:arr];
             [_table reloadData];
