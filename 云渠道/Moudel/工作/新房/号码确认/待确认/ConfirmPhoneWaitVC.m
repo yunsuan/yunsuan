@@ -185,22 +185,27 @@
             }];
         }];
         
-        UIAlertAction *used = [UIAlertAction actionWithTitle:@"号码重复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *used = [UIAlertAction actionWithTitle:@"号码重复" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
-            [BaseRequest GET:ClientTelCheckDisabled_URL parameters:@{@"client_id":_dataArr[indexPath.row][@"client_id"]} success:^(id resposeObject) {
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请仔细核对，一旦确认该号码重复，将无法再次推荐" WithCancelBlack:^{
                 
-                if ([resposeObject[@"code"] integerValue] == 200) {
+            } WithDefaultBlack:^{
+               
+                [BaseRequest GET:ClientTelCheckDisabled_URL parameters:@{@"client_id":_dataArr[indexPath.row][@"client_id"]} success:^(id resposeObject) {
                     
-                    [_dataArr removeObjectAtIndex:indexPath.row];
-                    [tableView reloadData];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
-                }else{
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        [_dataArr removeObjectAtIndex:indexPath.row];
+                        [tableView reloadData];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"PhoneConfirm" object:nil];
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
                     
-                    [self showContent:resposeObject[@"msg"]];
-                }
-            } failure:^(NSError *error) {
-                
-                [self showContent:@"网络错误"];
+                    [self showContent:@"网络错误"];
+                }];
             }];
         }];
         
