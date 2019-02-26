@@ -188,7 +188,6 @@
     }];
     _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
-        _page++;
         [self RequestAddMethod];
     }];
     [self.view addSubview:_table];

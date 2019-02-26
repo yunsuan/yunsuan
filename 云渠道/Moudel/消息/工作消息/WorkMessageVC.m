@@ -550,6 +550,7 @@
             [self postWithpage:@"1"];
         }];
         _systemmsgtable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+            
             _page++;
             [self postWithpage:[NSString stringWithFormat:@"%d",_page]];
         }];
