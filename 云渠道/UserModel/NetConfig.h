@@ -458,7 +458,7 @@ static NSString *const ProjectDeailDisableDetail_URL = @"agent/work/project/deal
 static NSString *const ProjectDealAppealList_URL = @"agent/work/project/dealAppealList";
 
 //对接人待确认列表
-static NSString *const ButterWaitConfirm_URL = @"agent/work/butter/waitConfirm";
+static NSString *const ButterWaitConfirm_URL = @"agent/work/butter/waitConfirm/v3.5";
 
 //对接人有效列表
 static NSString *const ButterValue_URL = @"agent/work/butter/value";
