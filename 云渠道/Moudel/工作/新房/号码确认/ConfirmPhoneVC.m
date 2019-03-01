@@ -125,7 +125,7 @@
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
-    self.titleLabel.text = @"号码确认";
+    self.titleLabel.text = @"号码判重";
     self.line.hidden = YES;
     
 //    self.rightBtn.hidden = NO;

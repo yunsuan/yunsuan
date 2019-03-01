@@ -129,7 +129,7 @@
         }
             break;
         case 2:{
-            _namelist = @[@"号码确认",@"新房推荐"];
+            _namelist = @[@"号码判重",@"新房推荐"];
             _imglist = @[@"ys_find",@"recommended"];
             _countdata  = @[@"",@""];
             [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
