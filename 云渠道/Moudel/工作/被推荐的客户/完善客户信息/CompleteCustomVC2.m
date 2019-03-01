@@ -322,22 +322,28 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:resposeObject[@"data"][@"rows"]];
-            view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+            if ([resposeObject[@"data"][@"rows"] count]) {
                 
-                _agentname = [NSString stringWithFormat:@"%@",RYXM];
+                WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:resposeObject[@"data"][@"rows"]];
+                view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+                    
+                    _agentname = [NSString stringWithFormat:@"%@",RYXM];
+                    
+                    if (GSMC) {
+                        _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                    }
+                    else
+                    {
+                        _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                    }
+                    //                _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                    _agentid = [NSString stringWithFormat:@"%@",ID];
+                };
+                [self.view addSubview:view];
+            }else{
                 
-                if (GSMC) {
-                    _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                }
-                else
-                {
-                    _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
-                }
-//                _agentbtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                _agentid = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
+                [self showContent:@"该项目暂未设置置业顾问"];
+            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -445,11 +451,11 @@
 //
 //     if (![_datadic[@"yunsuan_url"] isEqualToString:@""])
 //         {
-             if (!_agentname.length) {
-                 
-                 [self showContent:@"请选择置业顾问"];
-                 return;
-             }
+//             if (!_agentname.length) {
+//
+//                 [self showContent:@"请选择置业顾问"];
+//                 return;
+//             }
 //         }
 //         else{
 //             if(_adviserTF.textfield.text.length==0)
