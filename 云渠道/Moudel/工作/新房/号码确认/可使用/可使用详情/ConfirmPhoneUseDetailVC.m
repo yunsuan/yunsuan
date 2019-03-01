@@ -112,7 +112,7 @@
         header.titleL.text = @"推荐信息";
     }else{
         
-        header.titleL.text = @"确认信息";
+        header.titleL.text = @"判重信息";
     }
     header.lineView.hidden = YES;
     

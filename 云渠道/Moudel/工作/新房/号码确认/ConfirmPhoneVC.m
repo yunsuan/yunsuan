@@ -49,7 +49,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionConfirmMethod) name:@"PhoneConfirm" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionConfirmAllMethod) name:@"PhoneAllConfirm" object:nil];
-    _titleArr = @[@"待确认",@"可使用",@"无效"];
+    _titleArr = @[@"待确认",@"可带看",@"不可带看"];
 }
 
 - (void)ActionConfirmMethod{

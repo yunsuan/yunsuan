@@ -68,7 +68,7 @@
 {
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    _titleArr = @[@"无效信息",@"推荐信息",@"确认信息"];
+    _titleArr = @[@"无效信息",@"推荐信息",@"判重信息"];
     _dataDic = [@{} mutableCopy];
     [self InValidRequestMethod];
 }

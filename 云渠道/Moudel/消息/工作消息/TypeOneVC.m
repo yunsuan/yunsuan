@@ -127,7 +127,7 @@
 
 -(void)initDataSouce
 {
-    _titleArr = @[@"推荐信息",@"确认信息"];
+    _titleArr = @[@"推荐信息",@"判重信息"];
 }
 
 - (void)ActionConfirmBtn:(UIButton *)btn{

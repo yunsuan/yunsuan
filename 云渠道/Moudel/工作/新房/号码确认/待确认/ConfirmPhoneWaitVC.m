@@ -165,7 +165,7 @@
       
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认号码" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         
-        UIAlertAction *unuse = [UIAlertAction actionWithTitle:@"号码可用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *unuse = [UIAlertAction actionWithTitle:@"可带看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
            
             [BaseRequest GET:ClientTelCheckValue_URL parameters:@{@"client_id":_dataArr[indexPath.row][@"client_id"]} success:^(id resposeObject) {
                 
@@ -184,7 +184,7 @@
             }];
         }];
         
-        UIAlertAction *used = [UIAlertAction actionWithTitle:@"号码重复" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *used = [UIAlertAction actionWithTitle:@"不可带看" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
             
             [self alertControllerWithNsstring:@"温馨提示" And:@"请仔细核对，一旦确认该号码重复，将无法再次推荐" WithCancelBlack:^{
                 

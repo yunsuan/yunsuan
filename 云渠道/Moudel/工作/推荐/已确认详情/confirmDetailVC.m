@@ -48,7 +48,7 @@
 
 -(void)initDateSouce
 {
-    _titleArr = @[@"推荐信息",@"到访信息",@"确认信息"];
+    _titleArr = @[@"推荐信息",@"到访信息",@"判重信息"];
     _dataDic = [@{} mutableCopy];
     [self WaitConfirmRequest];
 }
