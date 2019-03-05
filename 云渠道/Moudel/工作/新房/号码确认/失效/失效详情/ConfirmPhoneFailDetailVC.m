@@ -76,7 +76,14 @@
 - (void)SetData:(NSDictionary *)data{
     
     _dataDic = data;
-    _titleArr = @[@[[NSString stringWithFormat:@"失效原因：%@",data[@"disabled_reason"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]]],@[[NSString stringWithFormat:@"推荐编号：%@",data[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",data[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",data[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",data[@"project_name"]],[NSString stringWithFormat:@"项目地址：%@",data[@"absolute_address"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"tel"]],[NSString stringWithFormat:@"备注：%@",data[@"client_comment"]]]];
+    if ([data[@"disabled_reason"] isEqualToString:@"号码重复"]) {
+        
+        _titleArr = @[@[[NSString stringWithFormat:@"失效原因：%@",data[@"disabled_reason"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]]],@[[NSString stringWithFormat:@"确认人：%@",data[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",data[@"tel_check_info"][@"confirmed_time"]],@"判重结果：不可带看"],@[[NSString stringWithFormat:@"推荐编号：%@",data[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",data[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",data[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",data[@"project_name"]],[NSString stringWithFormat:@"项目地址：%@",data[@"absolute_address"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"tel"]],[NSString stringWithFormat:@"备注：%@",data[@"client_comment"]]]];
+    }else{
+        
+        _titleArr = @[@[[NSString stringWithFormat:@"失效原因：%@",data[@"disabled_reason"]],[NSString stringWithFormat:@"失效时间：%@",data[@"disabled_time"]]],@[[NSString stringWithFormat:@"确认人：%@",data[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",data[@"tel_check_info"][@"confirmed_time"]],@"判重结果：可带看"],@[[NSString stringWithFormat:@"推荐编号：%@",data[@"client_id"]],[NSString stringWithFormat:@"推荐时间：%@",data[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",data[@"recommend_type"]],[NSString stringWithFormat:@"推荐人：%@",data[@"broker_name"]],[NSString stringWithFormat:@"联系方式：%@",data[@"broker_tel"]],[NSString stringWithFormat:@"项目名称：%@",data[@"project_name"]],[NSString stringWithFormat:@"项目地址：%@",data[@"absolute_address"]],[NSString stringWithFormat:@"客户姓名：%@",data[@"name"]],[NSString stringWithFormat:@"客户性别：%@",[data[@"sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"联系方式：%@",data[@"tel"]],[NSString stringWithFormat:@"备注：%@",data[@"client_comment"]]]];
+    }
+    
     [_detailTable reloadData];
 }
 
@@ -103,9 +110,12 @@
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
     
-    if (section == 1) {
+    if (section == 2) {
         
         header.titleL.text = @"推荐信息";
+    }else if(section == 1){
+        
+        header.titleL.text = @"判重信息";
     }else{
         
         header.titleL.text = @"失效信息";

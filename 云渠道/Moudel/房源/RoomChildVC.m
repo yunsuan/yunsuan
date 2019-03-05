@@ -869,6 +869,8 @@
                     cell = [[CompanyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 }
                 [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
+                
+                cell.statusImg.hidden = YES;
                 [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 return cell;

@@ -104,7 +104,7 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认号码" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *unuse = [UIAlertAction actionWithTitle:@"号码可用" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *unuse = [UIAlertAction actionWithTitle:@"可带看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [BaseRequest GET:ClientTelCheckValue_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
             
@@ -126,7 +126,7 @@
         }];
     }];
     
-    UIAlertAction *used = [UIAlertAction actionWithTitle:@"号码重复" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *used = [UIAlertAction actionWithTitle:@"不可带看" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [BaseRequest GET:ClientTelCheckDisabled_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
             
@@ -213,7 +213,8 @@
         cell.titleL.textColor = YJTitleLabColor;
         if (_titleArr.count) {
             
-            [cell setcountdownbyendtime:_titleArr[0]];
+            
+            [cell setcountdownbyendtime:[_titleArr[0] substringWithRange:NSMakeRange(6, [_titleArr[0] length] - 6)]];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
