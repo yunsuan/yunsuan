@@ -291,12 +291,11 @@
             }
             
             //调用分享接口
-            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+            [[UMSocialManager defaultManager]shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
                 if (error) {
                     
                     [self alertControllerWithNsstring:@"分享失败" And:nil];
                 }else{
-                    
                     [self showContent:@"分享成功"];
                     [self.transmitView removeFromSuperview];
                 }
