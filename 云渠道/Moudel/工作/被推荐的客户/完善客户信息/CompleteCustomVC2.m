@@ -352,43 +352,6 @@
         
         [self showContent:@"获取置业顾问失败"];
     }];
-    //    [BaseRequest GET:Advicer_URL parameters:@{
-    //                                              @"project_id":_datadic[@"project_id"],
-    //                                              @"broker_id":_datadic[@"broker_id"]
-    //                                      }
-    //             success:^(id resposeObject) {
-    //
-    //                 if ([resposeObject[@"code"] integerValue]==200) {
-    //                     NSArray *data = resposeObject[@"data"][@"rows"];
-    //                     NSMutableArray * agent = [[NSMutableArray alloc]init];
-    //                     for (int i = 0; i<data.count; i++) {
-    //                         NSDictionary *dic = @{
-    //                                               @"param":data[i][@"RYXM"],
-    //                                               @"id":data[i][@"ID"]
-    //                                               };
-    //                         [agent addObject:dic];
-    //                     }
-    //
-    //                     SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:agent];
-    //                     WS(weakself);
-    //                     view.selectedBlock = ^(NSString *MC, NSString *ID) {
-    //
-    //                         weakself.agentbtn.content.text = [NSString stringWithFormat:@"%@,%@",MC,ID];
-    //                         weakself.agentbtn.str = [NSString stringWithFormat:@"%@",ID];
-    //                         _agentid = ID;
-    //                         _agentname = MC;
-    //                     };
-    //                     [self.view addSubview:view];
-    //
-    //                 }
-    //
-    //
-    //    } failure:^(NSError *error) {
-    //
-    //        [self showContent:@"获取置业顾问失败"];
-    //    }];
-    
-    
 }
 
 - (void)ActionTagNumBtn:(UIButton *)btn{

@@ -606,6 +606,7 @@
 		0CF04FA4207CCDF000A45F4A /* MoreViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF04FA3207CCDF000A45F4A /* MoreViewCollCell.m */; };
 		0CF04FA7207CD1A100A45F4A /* MoreViewCollHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF04FA6207CD1A100A45F4A /* MoreViewCollHeader.m */; };
 		0CF46ED9223214BC008816E6 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46ED8223214BC008816E6 /* SignListVC.m */; };
+		0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */; };
 		0CF7423B206229C4001F926F /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7423A206229C4001F926F /* MessageTableCell.m */; };
 		0CF7424320622CE6001F926F /* BankCardListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7424220622CE6001F926F /* BankCardListVC.m */; };
 		0CF7424720622DCD001F926F /* BankCardListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7424620622DCD001F926F /* BankCardListTableCell.m */; };
@@ -1970,6 +1971,8 @@
 		0CF04FA6207CD1A100A45F4A /* MoreViewCollHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewCollHeader.m; sourceTree = "<group>"; };
 		0CF46ED7223214BC008816E6 /* SignListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
 		0CF46ED8223214BC008816E6 /* SignListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
+		0CF46EDB22324A1C008816E6 /* RecommendConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendConfirmVC.h; sourceTree = "<group>"; };
+		0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendConfirmVC.m; sourceTree = "<group>"; };
 		0CF74239206229C4001F926F /* MessageTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageTableCell.h; sourceTree = "<group>"; };
 		0CF7423A206229C4001F926F /* MessageTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageTableCell.m; sourceTree = "<group>"; };
 		0CF7424120622CE6001F926F /* BankCardListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BankCardListVC.h; sourceTree = "<group>"; };
@@ -4051,6 +4054,7 @@
 		0C96D9FE209C6A3700B6A8B8 /* 快速推荐客源 */ = {
 			isa = PBXGroup;
 			children = (
+				0CF46EDA22324A0B008816E6 /* 推荐确认 */,
 				0C96D9FF209C6A6700B6A8B8 /* QuickAddCustomVC.h */,
 				0C96DA00209C6A6700B6A8B8 /* QuickAddCustomVC.m */,
 				0C06B1F5209D7DBB00F11993 /* CustomListVC.h */,
@@ -6528,6 +6532,15 @@
 			path = "签字人";
 			sourceTree = "<group>";
 		};
+		0CF46EDA22324A0B008816E6 /* 推荐确认 */ = {
+			isa = PBXGroup;
+			children = (
+				0CF46EDB22324A1C008816E6 /* RecommendConfirmVC.h */,
+				0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */,
+			);
+			path = "推荐确认";
+			sourceTree = "<group>";
+		};
 		0CF74238206229B1001F926F /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -8278,6 +8291,7 @@
 				0C997C5B21E44FC500F805AA /* LookWorkConfirmCell.m in Sources */,
 				0CB3E2F521FEA7B4007D71CF /* LookMaintainAddFollowCell.m in Sources */,
 				0CDD706620D39A0300D6609C /* RoomInvalidApplyVC.m in Sources */,
+				0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */,
 				1016245B208863BB00AD53DE /* YJChooseView.m in Sources */,
 				10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */,
 				0CDD6FFA20CFCABC00D6609C /* ReportVew2.m in Sources */,

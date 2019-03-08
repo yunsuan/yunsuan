@@ -66,7 +66,7 @@
 -(void)SetCellContentbystring:(NSString *)str
 {
     _contentlab.text = str;
-    if ([str containsString:@"到访确认人"]) {
+    if ([str containsString:@"确认状态"]) {
         
         _moreBtn.hidden = NO;
         [_contentlab mas_remakeConstraints:^(MASConstraintMaker *make) {
