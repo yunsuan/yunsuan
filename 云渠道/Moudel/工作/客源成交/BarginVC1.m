@@ -45,6 +45,7 @@
     
     [self initDataSource];
     [self initUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionBarginReload) name:@"recommendReload" object:nil];
     [_segmentColl selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:0];
 }
 
@@ -53,6 +54,13 @@
     _titleArr = @[@"待成交",@"成交",@"未成交",@"申诉"];
 }
 
+- (void)ActionBarginReload{
+    
+    [_barginUndealVC RequestMethod];
+    [_barginDealVC RequestMethod];
+    [_barginUndealVC RequestMethod];
+    [_barginDealComplaintVC RequestMethod];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     

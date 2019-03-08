@@ -687,19 +687,19 @@
                 cell = [[RoomDetailTableCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RoomDetailTableCell2"];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            if(_model.total_float_url.length>0){
-            [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.total_float_url]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if(_model.total_float_url.length > 0){
                 
-                if (error) {
+                [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.total_float_url]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                    if (error) {
                     
-                    [UIImage imageNamed:@"banner_default_2"];
-                }
-            }];
+                        [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }else{
+              
+                cell.bigImg.image = [UIImage imageNamed:@"banner_default_2"];
             }
-            else{
-              cell.bigImg.image = [UIImage imageNamed:@"banner_default_2"];
-            }
-            
             return cell;
             break;
         }
@@ -939,7 +939,6 @@
     {
         NSLog(@"范围内检索发送失败");
     }
-    
 }
 
 #pragma mark implement BMKSearchDelegate

@@ -185,7 +185,7 @@
                 
                 if ([_dataDic[@"butter_name"] isEqualToString:@""]) {
                     
-                    if (_checkArr) {
+                    if (_checkArr.count) {
                         
                         _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
                         _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
@@ -214,7 +214,7 @@
                     }
                 }else{
                     
-                    if (_checkArr) {
+                    if (_checkArr.count) {
                         
                         _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
                         _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],

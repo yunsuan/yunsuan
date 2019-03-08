@@ -566,6 +566,7 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            cell.type = @"rent";
             cell.num = _houseArr.count;
             
             if (_houseArr.count) {
@@ -663,7 +664,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.num = _houseArr.count;
-            
+            cell.type = @"rent";
             if (_houseArr.count) {
                 
                 cell.dataArr = [NSMutableArray arrayWithArray:_houseArr];

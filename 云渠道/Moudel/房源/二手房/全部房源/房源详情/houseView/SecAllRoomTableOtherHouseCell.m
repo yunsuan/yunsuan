@@ -61,7 +61,13 @@
         }
         cell.nameL.text = self.dataArr[indexPath.item][@"title"];
         cell.areaL.text = [NSString stringWithFormat:@"%@㎡",self.dataArr[indexPath.item][@"build_area"]];
-        cell.priceL.text = [NSString stringWithFormat:@"%@万",self.dataArr[indexPath.item][@"price"]];
+        if ([self.type isEqualToString:@"rent"]) {
+            
+            cell.priceL.text = [NSString stringWithFormat:@"%@元/月",self.dataArr[indexPath.item][@"price"]];
+        }else{
+            
+            cell.priceL.text = [NSString stringWithFormat:@"%@万",self.dataArr[indexPath.item][@"price"]];
+        }
     }else{
         
         

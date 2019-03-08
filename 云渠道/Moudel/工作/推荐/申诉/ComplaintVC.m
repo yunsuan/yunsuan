@@ -76,15 +76,18 @@
                     
                     if ([vc isKindOfClass:[RecommendVC1 class]]) {
                         
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];
+                        
                     }
                     
                     if ([vc isKindOfClass:[NomineeVC1 class]]) {
                         
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"inValidReload" object:nil];
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:@"appealReload" object:nil];
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                     

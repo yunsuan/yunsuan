@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^InfoDetailCellBlock)(void);
+
 @interface InfoDetailCell : UITableViewCell
+
+@property (nonatomic, copy) InfoDetailCellBlock infoDetailCellBlock;
+
 @property (nonatomic , strong) UILabel *contentlab;
+
+@property (nonatomic, strong) UIButton *moreBtn;
+
 -(void)SetCellContentbystring:(NSString *)str;
 //-(CGFloat)calculateTextHeight;
 @end

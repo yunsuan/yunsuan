@@ -142,7 +142,6 @@
         [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 3)];
         _priceL.attributedText = attr;
     }
-    
 }
 
 - (void)ActionAttentBtn:(UIButton *)btn{
