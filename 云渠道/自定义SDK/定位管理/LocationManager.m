@@ -139,6 +139,5 @@
     }
     
     return citycode;
-  
 }
 @end

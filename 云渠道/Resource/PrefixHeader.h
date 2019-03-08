@@ -28,6 +28,7 @@
 #import "GZQGifFooter.h"
 #import <UMShare/UMShare.h>
 #import "TransmitView.h"
+#import "SignListVC.h"
 
 
 //#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]

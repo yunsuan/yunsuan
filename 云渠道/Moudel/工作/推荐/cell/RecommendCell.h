@@ -28,6 +28,8 @@ typedef void(^confirmBtnBlock)(NSInteger index);
 
 @property (nonatomic, strong) UILabel *confirmL;
 
+@property (nonatomic, strong) UILabel *statusL;
+
 @property (nonatomic, strong) UIImageView *statusImg;
 
 @property (nonatomic, strong) UILabel *projectL;

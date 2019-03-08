@@ -242,8 +242,16 @@
             if (!cell) {
                 cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
-            [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+        
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            
+            cell.infoDetailCellBlock = ^{
+                
+                SignListVC *nextVC = [[SignListVC alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            };
             return cell;
         }
     }else{
@@ -279,6 +287,12 @@
                 cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+            
+            cell.infoDetailCellBlock = ^{
+                
+                SignListVC *nextVC = [[SignListVC alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            };
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }

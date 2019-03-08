@@ -524,6 +524,7 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        cell.type = @"rent";
         if (_houseArr.count) {
             
             cell.num = _houseArr.count;

@@ -252,6 +252,12 @@
             }
             [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.infoDetailCellBlock = ^{
+                
+                SignListVC *nextVC = [[SignListVC alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            };
             return cell;
         }
     }else{
@@ -288,6 +294,12 @@
             }
             [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.infoDetailCellBlock = ^{
+                
+                SignListVC *nextVC = [[SignListVC alloc] init];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            };
             return cell;
         }
     }

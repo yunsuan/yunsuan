@@ -55,24 +55,31 @@
     _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_codeL];
     
-    _projectL = [[UILabel alloc] init];//WithFrame:CGRectMake(9 *SIZE, 65 *SIZE, 200 *SIZE, 11 *SIZE)];
+    _projectL = [[UILabel alloc] init];
     _projectL.textColor = YJ86Color;
     _projectL.numberOfLines = 0;
     _projectL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_projectL];
     
-    _timeL = [[UILabel alloc] init];//WithFrame:CGRectMake(9 *SIZE, 86 *SIZE, 300 *SIZE, 10 *SIZE)];
+    _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJBlueBtnColor;
     _timeL.numberOfLines = 0;
     _timeL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_timeL];
+    
+    _statusL = [[UILabel alloc] init];
+    _statusL.textColor = YJ86Color;
+//    _statusL.numberOfLines = 0;
+    _statusL.hidden = YES;
+    _statusL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [self.contentView addSubview:_statusL];
     
     _statusImg = [[UIImageView alloc] init];
     _statusImg.layer.cornerRadius = 10 *SIZE;
     _statusImg.clipsToBounds = YES;
     [self.contentView addSubview:_statusImg];
     
-    _addressL = [[UILabel alloc] init];//WithFrame:CGRectMake(9 *SIZE, 107 *SIZE, 300 *SIZE, 10 *SIZE)];
+    _addressL = [[UILabel alloc] init];
     _addressL.textColor = YJ170Color;
     _addressL.numberOfLines = 0;
     _addressL.font = [UIFont systemFontOfSize:11 *SIZE];
@@ -133,6 +140,13 @@
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(_projectL.mas_bottom).offset(10 *SIZE);
         make.right.equalTo(self.contentView).offset(-150 *SIZE);
+    }];
+    
+    [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(273 *SIZE);
+        make.top.equalTo(_projectL.mas_bottom).offset(10 *SIZE);
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {

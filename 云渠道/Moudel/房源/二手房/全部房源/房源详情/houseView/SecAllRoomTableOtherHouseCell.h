@@ -14,6 +14,8 @@ typedef void (^SecAllRoomTableOtherHouseCellCollBlock)(NSInteger index);
 
 @property (nonatomic, copy) SecAllRoomTableOtherHouseCellCollBlock secAllRoomTableOtherHouseCellCollBlock;
 
+@property (nonatomic, strong) NSString *type;
+
 @property (nonatomic, assign) NSInteger num;
 
 @property (nonatomic, strong) UICollectionView *cellColl;

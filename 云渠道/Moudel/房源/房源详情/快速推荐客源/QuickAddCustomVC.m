@@ -9,6 +9,7 @@
 #import "QuickAddCustomVC.h"
 
 #import "QuickRoomVC.h"
+#import "RecommendConfirmVC.h"
 
 #import "WorkerPickView.h"
 #import "AdressChooseView.h"
@@ -1764,7 +1765,8 @@
 ////
 ////            [dic removeObjectForKey:@"birth"];
 ////        }
-
+//        RecommendConfirmVC *nextVC = [[RecommendConfirmVC alloc] initWithData:dic];
+//        [self.navigationController pushViewController:nextVC animated:YES];
         [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
