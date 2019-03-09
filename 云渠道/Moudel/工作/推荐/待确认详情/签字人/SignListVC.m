@@ -71,7 +71,13 @@
     
     cell.titleL.text = _dataArr[indexPath.row][@"group_name"];
     cell.nameL.text = [NSString stringWithFormat:@"%@/%@",_dataArr[indexPath.row][@"sign_agent_name"],_dataArr[indexPath.row][@"sign_agent_tel"]];
-    cell.timeL.text = [NSString stringWithFormat:@"签字时间：%@",_dataArr[indexPath.row][@"create_time"]];
+    if ([_dataArr[indexPath.row][@"state"] integerValue] == 2) {
+        
+        cell.timeL.text = @"签字时间：";
+    }else{
+        
+        cell.timeL.text = [NSString stringWithFormat:@"签字时间：%@",_dataArr[indexPath.row][@"create_time"]];
+    }
     cell.statusL.text = _dataArr[indexPath.row][@"state_name"];
     return cell;
 }

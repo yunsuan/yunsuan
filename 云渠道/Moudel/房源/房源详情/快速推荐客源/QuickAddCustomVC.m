@@ -15,6 +15,7 @@
 #import "AdressChooseView.h"
 #import "SinglePickView.h"
 #import "DateChooseView.h"
+#import "SignWorkerPickView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
@@ -40,6 +41,10 @@
     NSInteger _selected;
     NSString *_workId;
     NSString *_clientNeedId;
+    NSMutableArray *_agentArr;
+    NSInteger _isSign;
+    NSInteger _needAppoint;
+    NSInteger _needComment;
 }
 @property (nonatomic, strong) UIScrollView *scrollview;
 @property (nonatomic, strong) UILabel *numclasslab;
@@ -146,6 +151,9 @@
         
         self.titleLabel.text = @"添加客户";
         _isHide = NO;
+        _hideReportL.text = @"当前显号报备";
+        _hideL.text = @"需要补全电话号码";
+        _hideImg.image = [UIImage imageNamed:@"eye_2"];
         _model = [[CustomerModel alloc] init];
     }
 }
@@ -153,6 +161,7 @@
 -(void)initDataSouce
 {
 
+    _agentArr = [@[] mutableCopy];
     _workArr = [@[] mutableCopy];
 }
 
@@ -162,27 +171,41 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
-            if ([resposeObject[@"data"][@"rows"] count]) {
+            if ([resposeObject[@"data"][@"agent_group"] count]) {
                 
-                _workArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"rows"] mutableCopy]];
-                _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                if (_selected == 1) {
+                _agentArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"agent_group"] mutableCopy]];
+                _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
+                _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
+                _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
+                if (_needAppoint == 1) {
                     
-                    if (_workArr[0][@"GSMC"]) {
-                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
-                    }else
-                    {
-                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
-                    }
-//                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
-                    _workId = [NSString stringWithFormat:@"%@",_workArr[0][@"ID"]];
+                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",_agentArr[0][@"name"],_agentArr[0][@"tel"]];
                 }
             }else{
                 
-                _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
+                _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
+                _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
+                if ([resposeObject[@"data"][@"rows"] count]) {
+                    
+                    _workArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"rows"] mutableCopy]];
+                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                    if (_selected == 1) {
+                        
+                        if (_workArr[0][@"GSMC"]) {
+                            _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",_workArr[0][@"GSMC"],_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
+                        }else
+                        {
+                            _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",_workArr[0][@"RYXM"],_workArr[0][@"RYDH"]];
+                        }
+                        _workId = [NSString stringWithFormat:@"%@",_workArr[0][@"ID"]];
+                    }
+                }else{
+                    
+                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                }
             }
         }else{
             
@@ -520,29 +543,40 @@
     
     if (_projectId.length) {
         
-        if (_workArr.count) {
+        if (_isSign) {
             
-            WorkerPickView *view = [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_workArr];
-            view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+            SignWorkerPickView *view = [[SignWorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
+            WS(weakSelf);
+            view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
                 
-                if (GSMC) {
-                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                }
-                else
-                {
-                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
-                }
-                
-//                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                _workId = [NSString stringWithFormat:@"%@",ID];
-
+                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
             };
             [self.view addSubview:view];
         }else{
             
-            
+            if (_workArr.count) {
+                
+                WorkerPickView *view = [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_workArr];
+                view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+                    
+                    if (GSMC) {
+                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                    }
+                    else
+                    {
+                        _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                    }
+                    
+                    //                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                    _workId = [NSString stringWithFormat:@"%@",ID];
+                    
+                };
+                [self.view addSubview:view];
+            }else{
+                
+                
+            }
         }
-
     }else{
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择项目"];
@@ -952,12 +986,14 @@
             
             if (_phoneTF4.text.length == 1) {
                 
+                _tel4 = textField.text;
                 [_phoneTF4 resignFirstResponder];
                 [_phoneTF5 becomeFirstResponder];
                 [_phoneTF5 setSelectedRange:NSMakeRange(0, 1)];
             }
             else if(_phoneTF4 .text.length == 0)
             {
+                _tel4 = @"";
                 [_phoneTF4 resignFirstResponder];
                 [_phoneTF3 becomeFirstResponder];
                 [_phoneTF3 setSelectedRange:NSMakeRange(0, 1)];
@@ -967,12 +1003,15 @@
             
             if (_phoneTF5.text.length == 1) {
                 
+                _tel5 = textField.text;
                 [_phoneTF5 resignFirstResponder];
                 [_phoneTF6 becomeFirstResponder];
                 [_phoneTF6 setSelectedRange:NSMakeRange(0, 1)];
             }
             else if(_phoneTF5 .text.length == 0)
             {
+                
+                _tel5 = @"";
                 [_phoneTF5 resignFirstResponder];
                 [_phoneTF4 becomeFirstResponder];
                 [_phoneTF4 setSelectedRange:NSMakeRange(0, 1)];
@@ -982,12 +1021,14 @@
             
             if (_phoneTF6.text.length == 1) {
                 
+                _tel6 = textField.text;
                 [_phoneTF6 resignFirstResponder];
                 [_phoneTF7 becomeFirstResponder];
                 [_phoneTF7 setSelectedRange:NSMakeRange(0, 1)];
             }
             else if(_phoneTF6 .text.length == 0)
             {
+                _tel6 = @"";
                 [_phoneTF6 resignFirstResponder];
                 [_phoneTF5 becomeFirstResponder];
                 [_phoneTF5 setSelectedRange:NSMakeRange(0, 1)];
@@ -997,12 +1038,14 @@
             
             if (_phoneTF7.text.length == 1) {
                 
+                _tel7 = textField.text;
                 [_phoneTF7 resignFirstResponder];
                 [_phoneTF8 becomeFirstResponder];
                 [_phoneTF8 setSelectedRange:NSMakeRange(0, 1)];
             }
             else if(_phoneTF7 .text.length == 0)
             {
+                _tel7 = @"";
                 [_phoneTF7 resignFirstResponder];
                 [_phoneTF6 becomeFirstResponder];
                 [_phoneTF6 setSelectedRange:NSMakeRange(0, 1)];

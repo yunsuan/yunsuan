@@ -14,8 +14,9 @@
 @interface SignNeedInfoVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-    NSArray *_dataArr;
+    NSMutableArray *_dataArr;
     NSString *_clientId;
+    NSMutableDictionary *_dataDic;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -37,8 +38,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initUI];
     [self RequestMethod];
+}
+
+- (void)initDataSource{
+    
+    _dataArr = [@[] mutableCopy];
 }
 
 - (void)RequestMethod{
@@ -48,7 +55,21 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            if (resposeObject[@"data"]) {
+                
+                NSData *JSONData = [resposeObject[@"data"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSError *err = nil;
+                NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
+                _dataDic = [NSMutableDictionary dictionaryWithDictionary:parameters];
+                [_dataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if (![key isEqualToString:@"visit_img_url"]) {
+                        
+                        [_dataArr addObject:[NSString stringWithFormat:@"%@：%@",key,obj]];
+                    }
+                }];
+            }
+            [_table reloadData];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -71,7 +92,7 @@
         
         header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
     }
-    
+    header.lineView.hidden = YES;
     header.titleL.text = @"需求信息";
     return header;
 }

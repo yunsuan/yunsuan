@@ -20,6 +20,7 @@
 @interface RecommendConfirmVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
 {
     
+    NSMutableDictionary *_dataDic;
     NSMutableDictionary *_getDic;
     NSMutableDictionary *_configDic;
     NSMutableDictionary *_dic;
@@ -335,6 +336,7 @@
             
             _dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
             [self ReMasonryUI];
+            [self InfoRequestMethod];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -345,6 +347,102 @@
     }];
 }
 
+- (void)InfoRequestMethod{
+    
+    [BaseRequest GET:AgentProjectClientNeedGet_URL parameters:@{@"client_id":_dic[@"client_id"]} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if (resposeObject[@"data"]) {
+                
+                NSData *JSONData = [resposeObject[@"data"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSError *err = nil;
+                NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
+                _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
+                [self SetData:parameters];
+            }
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    _numBtn.content.text = [NSString stringWithFormat:@"%@人",_dataDic[@"visit_num"]];
+    _numBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"visit_num"]];
+    [_imgUrl1 addObject:data[@"visit_img_url"]];
+    [_authenColl1 reloadData];
+    for (int i = 0; i < _moduleArr.count; i++) {
+        
+        NSDictionary *dic = _dataArr[i];
+        switch ([dic[@"type"] integerValue]) {
+            case 1:
+            {
+                BorderTF *tf = _moduleArr[i];
+                [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if ([dic[@"column_name"] isEqualToString:key]) {
+                        
+                        tf.textfield.text = [NSString stringWithFormat:@"%@",obj];
+                        [_moduleArr replaceObjectAtIndex:i withObject:tf];
+                    }
+                }];
+                
+                break;
+            }
+            case 2:
+            {
+                DropDownBtn *tf = _moduleArr[i];
+                [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if ([dic[@"column_name"] isEqualToString:key]) {
+                        
+                        tf.content.text = [NSString stringWithFormat:@"%@",obj];
+                        for (int j = 0; j < [dic[@"config"] count]; j++) {
+                            
+                            NSDictionary *tempDic = dic[@"config"][j];
+                            if ([tempDic[@"config_name"] isEqualToString:tf.content.text]) {
+                                
+                                tf->str = [NSString stringWithFormat:@"%@",tempDic[@"config_id"]];
+                            }
+                        }
+                        [_moduleArr replaceObjectAtIndex:i withObject:tf];
+                    }
+                }];
+                break;
+            }
+            case 3:
+            {
+                
+                UICollectionView *coll = _moduleArr[i];
+                
+                break;
+            }
+            case 4:
+            {
+                DropDownBtn *tf = _moduleArr[i];
+                [data enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                    
+                    if ([dic[@"column_name"] isEqualToString:key]) {
+                        
+                        tf.content.text = [NSString stringWithFormat:@"%@",obj];
+                        tf->str = [NSString stringWithFormat:@"%@",obj];
+                        [_moduleArr replaceObjectAtIndex:i withObject:tf];
+                    }
+                }];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
 
 - (void)textViewDidChange:(UITextView *)textView{
     
@@ -381,11 +479,18 @@
 
     if (collectionView == _authenColl1) {
         
-        if (_imgArr1.count) {
+        if (_imgUrl1.count) {
             
-            if (indexPath.item < _imgArr1.count) {
+            if (indexPath.item < _imgUrl1.count) {
                 
-                cell.imageView.image = _imgArr1[indexPath.item];
+//                cell.imageView.image = _imgUrl1[indexPath.item];
+                [cell.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgUrl1[indexPath.item]]] placeholderImage:[UIImage imageNamed:@"uploadphotos"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                   
+                    if (error) {
+                        
+                        cell.imageView.image = [UIImage imageNamed:@"uploadphotos"];
+                    }
+                }];
             }else{
                 
                 cell.imageView.image = [UIImage imageNamed:@"uploadphotos"];
@@ -690,13 +795,13 @@
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     _confirmBtn.layer.cornerRadius = 2 *SIZE;
     _confirmBtn.clipsToBounds = YES;
-    if (_dic.count) {
-        
-        [_confirmBtn setTitle:@"推荐" forState:UIControlStateNormal];
-    }else{
-        
-        [_confirmBtn setTitle:@"修改" forState:UIControlStateNormal];
-    }
+//    if (_dic.count) {
+//
+//        [_confirmBtn setTitle:@"推荐" forState:UIControlStateNormal];
+//    }else{
+//
+        [_confirmBtn setTitle:@"保存" forState:UIControlStateNormal];
+//    }
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_confirmBtn];
     

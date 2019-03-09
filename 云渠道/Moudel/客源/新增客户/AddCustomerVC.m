@@ -879,12 +879,14 @@
         
         if (_phoneTF4.text.length == 1) {
             
+            _tel4 = textField.text;
             [_phoneTF4 resignFirstResponder];
             [_phoneTF5 becomeFirstResponder];
             [_phoneTF5 setSelectedRange:NSMakeRange(0, 1)];
         }
         else if(_phoneTF4 .text.length == 0)
         {
+            _tel4 = @"";
             [_phoneTF4 resignFirstResponder];
             [_phoneTF3 becomeFirstResponder];
             [_phoneTF3 setSelectedRange:NSMakeRange(0, 1)];
@@ -894,12 +896,14 @@
         
         if (_phoneTF5.text.length == 1) {
             
+            _tel5 = textField.text;
             [_phoneTF5 resignFirstResponder];
             [_phoneTF6 becomeFirstResponder];
             [_phoneTF6 setSelectedRange:NSMakeRange(0, 1)];
         }
         else if(_phoneTF5 .text.length == 0)
         {
+            _tel5 = @"";
             [_phoneTF5 resignFirstResponder];
             [_phoneTF4 becomeFirstResponder];
             [_phoneTF4 setSelectedRange:NSMakeRange(0, 1)];
@@ -909,12 +913,14 @@
         
         if (_phoneTF6.text.length == 1) {
             
+            _tel6 = textField.text;
             [_phoneTF6 resignFirstResponder];
             [_phoneTF7 becomeFirstResponder];
             [_phoneTF7 setSelectedRange:NSMakeRange(0, 1)];
         }
         else if(_phoneTF6 .text.length == 0)
         {
+            _tel6 = @"";
             [_phoneTF6 resignFirstResponder];
             [_phoneTF5 becomeFirstResponder];
             [_phoneTF5 setSelectedRange:NSMakeRange(0, 1)];
@@ -924,12 +930,14 @@
         
         if (_phoneTF7.text.length == 1) {
             
+            _tel7 = textField.text;
             [_phoneTF7 resignFirstResponder];
             [_phoneTF8 becomeFirstResponder];
             [_phoneTF8 setSelectedRange:NSMakeRange(0, 1)];
         }
         else if(_phoneTF7 .text.length == 0)
         {
+            _tel7 = @"";
             [_phoneTF7 resignFirstResponder];
             [_phoneTF6 becomeFirstResponder];
             [_phoneTF6 setSelectedRange:NSMakeRange(0, 1)];
