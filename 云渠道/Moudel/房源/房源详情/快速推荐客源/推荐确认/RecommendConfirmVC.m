@@ -9,17 +9,24 @@
 #import "RecommendConfirmVC.h"
 
 #import "SinglePickView.h"
+#import "DateChooseView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 
 #import "AuthenCollCell.h"
+#import "CompleteSurveyCollCell.h"
 
 @interface RecommendConfirmVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
 {
     
+    NSMutableDictionary *_getDic;
+    NSMutableDictionary *_configDic;
     NSMutableDictionary *_dic;
     NSMutableArray *_peopleArr;
+    NSMutableArray *_dataArr;
+    NSMutableArray *_labelArr;
+    NSMutableArray *_moduleArr;
     
     NSInteger _index;
     NSMutableArray *_imgArr1;
@@ -53,37 +60,37 @@
 
 @property (nonatomic, strong) UIView *needInfoView;
 
-@property (nonatomic, strong) UILabel *yearL;
-
-@property (nonatomic, strong) DropDownBtn *yearBtn;
-
-@property (nonatomic, strong) UILabel *professionL;
-
-@property (nonatomic, strong) DropDownBtn *professionBtn;
-
-@property (nonatomic, strong) UILabel *addressL;
-
-@property (nonatomic, strong) DropDownBtn *addressBtn;
-
-@property (nonatomic, strong) UILabel *propertyL;
-
-@property (nonatomic, strong) DropDownBtn *propertyBtn;
-
-@property (nonatomic, strong) UILabel *priceL;
-
-@property (nonatomic, strong) DropDownBtn *priceBtn;
-
-@property (nonatomic, strong) UILabel *areaL;
-
-@property (nonatomic, strong) DropDownBtn *areaBtn;
-
-@property (nonatomic, strong) UILabel *houseTypeL;
-
-@property (nonatomic, strong) DropDownBtn *houseTypeBtn;
-
-@property (nonatomic, strong) UILabel *decorateL;
-
-@property (nonatomic, strong) DropDownBtn *decorateBtn;
+//@property (nonatomic, strong) UILabel *yearL;
+//
+//@property (nonatomic, strong) DropDownBtn *yearBtn;
+//
+//@property (nonatomic, strong) UILabel *professionL;
+//
+//@property (nonatomic, strong) DropDownBtn *professionBtn;
+//
+//@property (nonatomic, strong) UILabel *addressL;
+//
+//@property (nonatomic, strong) DropDownBtn *addressBtn;
+//
+//@property (nonatomic, strong) UILabel *propertyL;
+//
+//@property (nonatomic, strong) DropDownBtn *propertyBtn;
+//
+//@property (nonatomic, strong) UILabel *priceL;
+//
+//@property (nonatomic, strong) DropDownBtn *priceBtn;
+//
+//@property (nonatomic, strong) UILabel *areaL;
+//
+//@property (nonatomic, strong) DropDownBtn *areaBtn;
+//
+//@property (nonatomic, strong) UILabel *houseTypeL;
+//
+//@property (nonatomic, strong) DropDownBtn *houseTypeBtn;
+//
+//@property (nonatomic, strong) UILabel *decorateL;
+//
+//@property (nonatomic, strong) DropDownBtn *decorateBtn;
 
 @property (nonatomic, strong) UILabel *markL;
 
@@ -92,6 +99,8 @@
 @property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, strong) NSDateFormatter *formatter;
 
 @end
 
@@ -112,10 +121,20 @@
    
     [self initDataSource];
     [self initUI];
+    [self RequestMethod];
 }
 
 - (void)initDataSource{
     
+    _imagePickerController = [[UIImagePickerController alloc] init];
+    _imagePickerController.delegate = self;
+    
+    _formatter = [[NSDateFormatter alloc] init];
+    [_formatter setDateFormat:@"YYYY-MM-dd"];
+    
+    _getDic = [@{} mutableCopy];
+    _configDic = [@{} mutableCopy];
+    _dataArr = [@[] mutableCopy];
     _peopleArr = [[NSMutableArray alloc] init];
     for (int i = 1; i < 5; i++) {
         
@@ -131,7 +150,7 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-    
+    [_configDic setObject:_dic[@"client_id"] forKey:@"client_id"];
     if (!_numBtn->str) {
         
         [self showContent:@"请选择到访人数"];
@@ -141,16 +160,136 @@
     
     if (_numBtn->str) {
         
-        [_dic setObject:_numBtn->str forKey:@"visit_num"];
+        [_configDic setObject:_numBtn->str forKey:@"visit_num"];
     }
     
     if (_purposeBtn->str) {
         
-        [_dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+        [_configDic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+    }
+    
+    for (int i = 0; i < _dataArr.count; i++) {
+        
+        NSDictionary *dic = _dataArr[i];
+        switch ([dic[@"type"] integerValue]) {
+                
+            case 1:
+            {
+                BorderTF *tf = [_needInfoView viewWithTag:i];
+                if (![self isEmpty:tf.textfield.text]) {
+                    
+                    [_getDic setObject:tf.textfield.text forKey:dic[@"column_name"]];
+                }
+                break;
+            }
+            case 2:
+            {
+                DropDownBtn *btn = _moduleArr[i];
+                if (btn.content.text) {
+                    
+                    [_getDic setObject:btn.content.text forKey:dic[@"column_name"]];
+                }
+                break;
+            }
+            case 3:
+            {
+                break;
+            }
+            case 4:
+            {
+                DropDownBtn *btn = _moduleArr[i];
+                if (btn.content.text) {
+                    
+                    [_getDic setObject:btn.content.text forKey:dic[@"column_name"]];
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+    if (_imgUrl1) {
+        
+        [_getDic setObject:[_imgUrl1 componentsJoinedByString:@","] forKey:@"visit_img_url"];
+    }
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_getDic
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [_configDic setObject:jsonResult forKey:@"content"];
+    
+    [BaseRequest POST:ProjectClientNeedUpdate_URL parameters:_configDic success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if (self.recommendConfirmVCBlock) {
+                
+                self.recommendConfirmVCBlock();
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)ActionTagNumBtn:(DropDownBtn *)btn{
+    
+    for (int i = 0; i < _dataArr.count; i++) {
+        
+        if (i == btn.tag) {
+            
+            if ([_dataArr[i][@"type"] integerValue] == 2) {
+                
+                NSMutableArray *tempArr = [@[] mutableCopy];
+                for (int j = 0; j < [_dataArr[i][@"config"] count]; j++) {
+                    
+                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:_dataArr[i][@"config"][j]];
+                    [tempDic setObject:tempDic[@"config_name"] forKey:@"param"];
+                    [tempDic setObject:tempDic[@"config_id"] forKey:@"id"];
+                    [tempDic removeObjectForKey:@"config_id"];
+                    [tempDic removeObjectForKey:@"config_name"];
+                    [tempArr addObject:tempDic];
+                }
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    btn.content.text = MC;
+                    btn->str = [NSString stringWithFormat:@"%@",ID];
+                    [self->_moduleArr replaceObjectAtIndex:i withObject:btn];
+                };
+                [self.view addSubview:view];
+                break;
+            }else{
+                
+                DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.bounds];
+                view.dateblock = ^(NSDate *date) {
+                    
+                    btn.content.text = [self->_formatter stringFromDate:date];
+                    btn->str = [self->_formatter stringFromDate:date];
+                    [self->_moduleArr replaceObjectAtIndex:i withObject:btn];
+                };
+                [self.view addSubview:view];
+                break;
+            }
+        }
     }
 }
 
-- (void)ActionTagNumBtn:(UIButton *)btn{
+- (void)ActionNeedBtn:(UIButton *)btn{
     
     switch (btn.tag) {
         case 0:
@@ -177,58 +316,33 @@
             [self.view addSubview:view];
             break;
         }
-        case 2:
-        {
-            
-            break;
-        }
-        case 3:{
-            
-//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_ruleArr];
-//            WS(weakself);
-//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-//
-//                weakself.recommendTypeBtn.content.text = MC;
-//                weakself.recommendTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
-//            };
-//            [self.view addSubview:view];
-        }
         default:
             break;
     }
 }
 
-- (void)ActionNeedBtn:(UIButton *)btn{
+- (void)ActionTagBtn:(UIButton *)btn{
     
-    switch (btn.tag) {
-        case 0:
-        {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_peopleArr];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.numBtn.content.text = MC;
-                weakself.numBtn->str = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
-            break;
-        }
-        case 1:
-        {
+    
+}
 
-            break;
-        }
-        case 2:
-        {
+- (void)RequestMethod{
+    
+    [BaseRequest GET:ProjectConfigColunm_URL parameters:@{@"project_id":_dic[@"project_id"]} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
             
-            break;
-        }
-        case 3:{
+            _dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+            [self ReMasonryUI];
+        }else{
             
+            [self showContent:resposeObject[@"msg"]];
         }
-        default:
-            break;
-    }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 
@@ -388,6 +502,7 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         if ([info[UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
             
@@ -519,7 +634,7 @@
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
         btn.tag = i;
-        [btn addTarget:self action:@selector(ActionTagNumBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(ActionNeedBtn:) forControlEvents:UIControlEventTouchUpInside];
         switch (i) {
             case 0:
             {
@@ -556,144 +671,9 @@
     _needInfoView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_needInfoView];
     
-    for (int i = 0; i < 9; i++) {
-        
-        UILabel *label = [[UILabel alloc] init];
-        label.textColor = YJTitleLabColor;
-        label.font = [UIFont systemFontOfSize:13 *SIZE];
-        switch (i) {
-            case 0:
-            {
-                label.text = @"客户年龄:";
-                _yearL = label;
-                [_needInfoView addSubview:_yearL];
-                break;
-            }
-            case 1:
-            {
-                label.text = @"客户职业:";
-                _professionL = label;
-                [_needInfoView addSubview:_professionL];
-                break;
-            }
-            case 2:
-            {
-                label.text = @"客户来源:";
-                _addressL = label;
-                [_needInfoView addSubview:_addressL];
-                break;
-            }
-            case 3:
-            {
-                label.text = @"意向物业:";
-                _propertyL = label;
-                [_needInfoView addSubview:_propertyL];
-                break;
-            }
-            case 4:
-            {
-                label.text = @"意向总价:";
-                _priceL = label;
-                [_needInfoView addSubview:_priceL];
-                break;
-            }
-            case 5:
-            {
-                label.text = @"意向面积:";
-                _areaL = label;
-                [_needInfoView addSubview:_areaL];
-                break;
-            }
-            case 6:
-            {
-                label.text = @"意向户型:";
-                _houseTypeL = label;
-                [_needInfoView addSubview:_houseTypeL];
-                break;
-            }
-            case 7:
-            {
-                label.text = @"装修标准:";
-                _decorateL = label;
-                [_needInfoView addSubview:_decorateL];
-                break;
-            }
-            case 8:
-            {
-                label.text = @"备注:";
-                _markL = label;
-                [_needInfoView addSubview:_markL];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
-    for (int i = 0 ; i < 8; i++) {
-        
-        DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
-        btn.tag = i;
-        [btn addTarget:self action:@selector(ActionNeedBtn:) forControlEvents:UIControlEventTouchUpInside];
-        switch (i) {
-            case 0:
-            {
-                _yearBtn = btn;
-                [_needInfoView addSubview:_yearBtn];
-                break;
-            }
-            case 1:
-            {
-                _professionBtn = btn;
-                [_needInfoView addSubview:_professionBtn];
-                break;
-            }
-            case 2:
-            {
-                _addressBtn = btn;
-                [_needInfoView addSubview:_addressBtn];
-                break;
-            }
-            case 3:
-            {
-                _propertyBtn = btn;
-                [_needInfoView addSubview:_propertyBtn];
-                break;
-            }
-            case 4:
-            {
-                _priceBtn = btn;
-                [_needInfoView addSubview:_priceBtn];
-                break;
-            }
-            case 5:
-            {
-                _areaBtn = btn;
-                [_needInfoView addSubview:_areaBtn];
-                break;
-            }
-            case 6:
-            {
-                _houseTypeBtn = btn;
-                [_needInfoView addSubview:_houseTypeBtn];
-                break;
-            }
-            case 7:
-            {
-                _decorateBtn = btn;
-                [_needInfoView addSubview:_decorateBtn];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
     _markView = [[UITextView alloc] init];
     _markView.delegate = self;
-//    _markView.contentInset = UIEdgeInsetsMake(10 *SIZE, 12 *SIZE, 12 *SIZE, 12 *SIZE);
     _markView.layer.borderWidth = SIZE;
-//    _markView.layer.borderColor = YJBackColor.CGColor;
     _markView.layer.cornerRadius = 5*SIZE;
     _markView.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _markView.clipsToBounds = YES;
@@ -798,150 +778,150 @@
         make.bottom.equalTo(_infoView.mas_bottom).offset(-20 *SIZE);
     }];
     
-    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(_needInfoView).offset(21 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
+//    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(_needInfoView).offset(21 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_yearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(_needInfoView).offset(11 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_professionL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_yearBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_professionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_yearBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_professionBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_professionBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_addressBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_propertyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_addressBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
     
-    [_yearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(_needInfoView).offset(11 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
+//    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_priceBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_priceBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_areaBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_houseTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_areaBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
+//
+//    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(31 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(258 *SIZE));
+//        make.height.equalTo(@(33 *SIZE));
+//    }];
     
-    [_professionL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_yearBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_professionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_yearBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_professionBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_professionBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_addressBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_propertyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_addressBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_priceBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_priceBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_areaBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_houseTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_areaBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(31 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(258 *SIZE));
-        make.height.equalTo(@(33 *SIZE));
-    }];
-    
-    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(70 *SIZE));
-        make.height.equalTo(@(13 *SIZE));
-    }];
-    
-    [_markView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(270 *SIZE));
-        make.height.equalTo(@(117 *SIZE));
-        make.bottom.equalTo(_needInfoView.mas_bottom).offset(-20 *SIZE);
-    }];
+//    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+//        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(70 *SIZE));
+//        make.height.equalTo(@(13 *SIZE));
+//    }];
+//
+//    [_markView mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+//        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
+//        make.width.equalTo(@(270 *SIZE));
+//        make.height.equalTo(@(117 *SIZE));
+//        make.bottom.equalTo(_needInfoView.mas_bottom).offset(-20 *SIZE);
+//    }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -951,6 +931,238 @@
         make.height.equalTo(@(40 *SIZE));
         make.bottom.equalTo(_scrollView.mas_bottom).offset(-40 *SIZE);
     }];
+}
+
+- (void)ReMasonryUI{
+    
+    _labelArr = [@[] mutableCopy];
+    _moduleArr = [@[] mutableCopy];
+    for (int i = 0; i < _dataArr.count; i++) {
+        
+        UILabel *label = [[UILabel alloc] init];
+        label.textColor = YJTitleLabColor;
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        label.text = _dataArr[i][@"column_name"];
+        label.adjustsFontSizeToFitWidth = YES;
+        [_labelArr addObject:label];
+        
+        NSDictionary *dic = _dataArr[i];
+        switch ([dic[@"type"] integerValue]) {
+            case 1:
+            {
+                BorderTF *tf = [[BorderTF alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+                tf.tag = i;
+                [_moduleArr addObject:tf];
+                break;
+            }
+            case 2:
+            {
+                DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+                btn.tag = i;
+                [btn addTarget:self action:@selector(ActionTagNumBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [_moduleArr addObject:btn];
+                break;
+            }
+            case 3:
+            {
+                
+                UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+                flowLayout = flowLayout;
+                flowLayout.estimatedItemSize = CGSizeMake(80 *SIZE, 20 *SIZE);
+                flowLayout.minimumLineSpacing = 5 *SIZE;
+                flowLayout.minimumInteritemSpacing = 0;
+                
+                UICollectionView *coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:flowLayout];
+                coll.backgroundColor = [UIColor whiteColor];
+                coll.bounces = NO;
+                coll.delegate = self;
+                coll.dataSource = self;
+                [coll registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
+                [_moduleArr addObject:coll];
+                
+                break;
+            }
+            case 4:
+            {
+                DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+                btn.tag = i;
+                [btn addTarget:self action:@selector(ActionTagNumBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [_moduleArr addObject:btn];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+    for (int i = 0; i < _moduleArr.count; i++) {
+        
+        [_needInfoView addSubview:_labelArr[i]];
+        [_needInfoView addSubview:_moduleArr[i]];
+        
+        if (i == 0) {
+            
+            [_labelArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(_needInfoView).offset(10 *SIZE);
+                make.top.equalTo(_needInfoView).offset(21 *SIZE);
+                make.width.equalTo(@(70 *SIZE));
+                make.height.equalTo(@(13 *SIZE));
+            }];
+            
+            [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                make.top.equalTo(_needInfoView).offset(11 *SIZE);
+                make.width.equalTo(@(258 *SIZE));
+                make.height.equalTo(@(33 *SIZE));
+            }];
+        }else{
+    
+            NSDictionary *dic = _dataArr[i - 1];
+            switch ([dic[@"type"] integerValue]) {
+                
+                case 1:
+                {
+                    BorderTF *tf = _moduleArr[i - 1];
+                    [_labelArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                        
+                        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+                        make.top.equalTo(tf.mas_bottom).offset(31 *SIZE);
+                        make.width.equalTo(@(70 *SIZE));
+                        make.height.equalTo(@(13 *SIZE));
+                    }];
+                    
+                    if (i == _moduleArr.count - 1) {
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                            make.bottom.equalTo(_needInfoView).offset(-21 *SIZE);
+                        }];
+                    }else{
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                        }];
+                    }
+                    
+                    break;
+                }
+                case 2:
+                {
+                    DropDownBtn *tf = _moduleArr[i - 1];
+                    [_labelArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                        
+                        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+                        make.top.equalTo(tf.mas_bottom).offset(31 *SIZE);
+                        make.width.equalTo(@(70 *SIZE));
+                        make.height.equalTo(@(13 *SIZE));
+                    }];
+                    
+                    if (i == _moduleArr.count - 1) {
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_infoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                            make.bottom.equalTo(_needInfoView).offset(-21 *SIZE);
+                        }];
+                    }else{
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_infoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                        }];
+                    }
+                    
+                    break;
+                }
+                case 3:
+                {
+                    
+                    DropDownBtn *tf = _moduleArr[i - 1];
+                    UICollectionView *coll = _moduleArr[i];
+                    [_labelArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                        
+                        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+                        make.top.equalTo(tf.mas_bottom).offset(31 *SIZE);
+                        make.width.equalTo(@(70 *SIZE));
+                        make.height.equalTo(@(13 *SIZE));
+                    }];
+                    
+                    if (i == _moduleArr.count - 1) {
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.mas_equalTo(coll.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+                            make.bottom.equalTo(_needInfoView).offset(-21 *SIZE);
+                        }];
+                    }else{
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.mas_equalTo(coll.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+                        }];
+                    }
+
+                    break;
+                }
+                case 4:
+                {
+                    DropDownBtn *tf = _moduleArr[i - 1];
+                    [_labelArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                        
+                        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+                        make.top.equalTo(tf.mas_bottom).offset(31 *SIZE);
+                        make.width.equalTo(@(70 *SIZE));
+                        make.height.equalTo(@(13 *SIZE));
+                    }];
+                    
+                    if (i == _moduleArr.count - 1) {
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                            make.bottom.equalTo(_needInfoView).offset(-21 *SIZE);
+                        }];
+                    }else{
+                        
+                        [_moduleArr[i] mas_makeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(_needInfoView).offset(80 *SIZE);
+                            make.top.equalTo(tf.mas_bottom).offset(21 *SIZE);
+                            make.width.equalTo(@(258 *SIZE));
+                            make.height.equalTo(@(33 *SIZE));
+                        }];
+                    }
+                    
+                    break;
+                }
+            }
+        }
+    }
 }
 
 @end

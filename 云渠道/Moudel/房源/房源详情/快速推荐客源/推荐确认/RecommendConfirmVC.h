@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^RecommendConfirmVCBlock)(void);
+
 @interface RecommendConfirmVC : BaseViewController
+
+@property (nonatomic, copy) RecommendConfirmVCBlock recommendConfirmVCBlock;
 
 @property (nonatomic, strong) NSMutableDictionary *consulDic;
 

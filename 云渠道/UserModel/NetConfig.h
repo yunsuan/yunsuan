@@ -366,6 +366,15 @@ static NSString *const AgentSignNextAgent_URL = @"agent/sign/nextAgent";
 
 //x签字无效
 static NSString *const AgentSignDisabled_URL = @"agent/sign/disabled";
+
+//获取推荐客户需求信息
+static NSString *const AgentProjectClientNeedGet_URL = @"agent/project/client/need/get";
+
+//获取项目配置字段
+static NSString *const ProjectConfigColunm_URL = @"user/project/config/column";
+
+//修改推荐客户需求信息
+static NSString *const ProjectClientNeedUpdate_URL = @"agent/project/client/need/update";
 //static NSString *const RecommendList_URL = @"agent/work/getRecommendList";
 
 //经纪人信息统计

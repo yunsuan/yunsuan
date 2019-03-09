@@ -301,7 +301,7 @@
                         [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
                         cell.infoDetailCellBlock = ^{
                             
-                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] initWithClientId:_appealId];
                             [self.navigationController pushViewController:nextVC animated:YES];
                         };
                     }
@@ -364,7 +364,7 @@
                         [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
                         cell.infoDetailCellBlock = ^{
                             
-                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] initWithClientId:_appealId];
                             [self.navigationController pushViewController:nextVC animated:YES];
                         };
                     }

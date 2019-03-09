@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SignNeedInfoVC : BaseViewController
 
+- (instancetype)initWithClientId:(NSString *)clientId;
+
 @end
 
 NS_ASSUME_NONNULL_END

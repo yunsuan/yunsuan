@@ -15,6 +15,7 @@
 {
     
     NSArray *_dataArr;
+    NSString *_clientId;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -23,10 +24,39 @@
 
 @implementation SignNeedInfoVC
 
+- (instancetype)initWithClientId:(NSString *)clientId
+{
+    self = [super init];
+    if (self) {
+        
+        _clientId = clientId;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initUI];
+    [self RequestMethod];
+}
+
+- (void)RequestMethod{
+    
+    [BaseRequest GET:AgentProjectClientNeedGet_URL parameters:@{@"client_id":_clientId} success:^(id resposeObject) {
+        
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
