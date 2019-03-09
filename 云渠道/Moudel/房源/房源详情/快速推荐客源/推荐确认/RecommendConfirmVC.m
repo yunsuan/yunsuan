@@ -11,6 +11,7 @@
 #import "SinglePickView.h"
 
 #import "DropDownBtn.h"
+#import "BorderTF.h"
 
 #import "AuthenCollCell.h"
 
@@ -19,9 +20,7 @@
     
     NSMutableDictionary *_dic;
     NSMutableArray *_peopleArr;
-    NSMutableArray *_ruleArr;
     
-    BOOL _isOne;
     NSInteger _index;
     NSMutableArray *_imgArr1;
     NSMutableArray *_imgUrl1;
@@ -30,6 +29,9 @@
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
 }
+@property (nonatomic, strong) UIScrollView *scrollView;
+
+@property (nonatomic, strong) UIView *infoView;
 
 @property (nonatomic, strong) UILabel *numL;
 
@@ -44,14 +46,44 @@
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UICollectionView *authenColl1;
+//
+//@property (nonatomic, strong) UILabel *recommendTypeL;
+//
+//@property (nonatomic, strong) DropDownBtn *recommendTypeBtn;
 
-@property (nonatomic, strong) UILabel *confirmL;
+@property (nonatomic, strong) UIView *needInfoView;
 
-@property (nonatomic, strong) UICollectionView *authenColl2;
+@property (nonatomic, strong) UILabel *yearL;
 
-@property (nonatomic, strong) UILabel *recommendTypeL;
+@property (nonatomic, strong) DropDownBtn *yearBtn;
 
-@property (nonatomic, strong) DropDownBtn *recommendTypeBtn;
+@property (nonatomic, strong) UILabel *professionL;
+
+@property (nonatomic, strong) DropDownBtn *professionBtn;
+
+@property (nonatomic, strong) UILabel *addressL;
+
+@property (nonatomic, strong) DropDownBtn *addressBtn;
+
+@property (nonatomic, strong) UILabel *propertyL;
+
+@property (nonatomic, strong) DropDownBtn *propertyBtn;
+
+@property (nonatomic, strong) UILabel *priceL;
+
+@property (nonatomic, strong) DropDownBtn *priceBtn;
+
+@property (nonatomic, strong) UILabel *areaL;
+
+@property (nonatomic, strong) DropDownBtn *areaBtn;
+
+@property (nonatomic, strong) UILabel *houseTypeL;
+
+@property (nonatomic, strong) DropDownBtn *houseTypeBtn;
+
+@property (nonatomic, strong) UILabel *decorateL;
+
+@property (nonatomic, strong) DropDownBtn *decorateBtn;
 
 @property (nonatomic, strong) UILabel *markL;
 
@@ -152,14 +184,47 @@
         }
         case 3:{
             
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_ruleArr];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_ruleArr];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.recommendTypeBtn.content.text = MC;
+//                weakself.recommendTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
+//            };
+//            [self.view addSubview:view];
+        }
+        default:
+            break;
+    }
+}
+
+- (void)ActionNeedBtn:(UIButton *)btn{
+    
+    switch (btn.tag) {
+        case 0:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_peopleArr];
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
                 
-                weakself.recommendTypeBtn.content.text = MC;
-                weakself.recommendTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
+                weakself.numBtn.content.text = MC;
+                weakself.numBtn->str = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
+            break;
+        }
+        case 1:
+        {
+
+            break;
+        }
+        case 2:
+        {
+            
+            break;
+        }
+        case 3:{
+            
         }
         default:
             break;
@@ -242,13 +307,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     _index = indexPath.item;
-    if (collectionView == _authenColl1) {
-        
-        _isOne = YES;
-    }else{
-        
-        _isOne = NO;
-    }
+
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -343,31 +402,16 @@
                       
                       if ([resposeObject[@"code"] integerValue] == 200) {
                           
-                          if (_isOne) {
+                          if (_index < _imgArr1.count) {
                               
-                              if (_index < _imgArr1.count) {
-                                  
-                                  [_imgArr1 replaceObjectAtIndex:_index withObject:_image];
-                                  [_imgUrl1 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
-                              }else{
-                                  
-                                  [_imgArr1 addObject:_image];
-                                  [_imgUrl1 addObject:resposeObject[@"data"]];
-                              }
-                              [self.authenColl1 reloadData];
+                              [_imgArr1 replaceObjectAtIndex:_index withObject:_image];
+                              [_imgUrl1 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
                           }else{
                               
-                              if (_index < _imgArr2.count) {
-                                  
-                                  [_imgArr2 replaceObjectAtIndex:_index withObject:_image];
-                                  [_imgUrl2 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
-                              }else{
-                                  
-                                  [_imgArr2 addObject:_image];
-                                  [_imgUrl2 addObject:resposeObject[@"data"]];
-                              }
-                              [self.authenColl2 reloadData];
+                              [_imgArr1 addObject:_image];
+                              [_imgUrl1 addObject:resposeObject[@"data"]];
                           }
+                          [self.authenColl1 reloadData];
                       }else{
                           
                           [self showContent:resposeObject[@"msg"]];
@@ -392,31 +436,16 @@
                   
                   if ([resposeObject[@"code"] integerValue] == 200) {
                       
-                      if (_isOne) {
+                      if (_index < _imgArr1.count) {
                           
-                          if (_index < _imgArr1.count) {
-                              
-                              [_imgArr1 replaceObjectAtIndex:_index withObject:_image];
-                              [_imgUrl1 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
-                          }else{
-                              
-                              [_imgArr1 addObject:_image];
-                              [_imgUrl1 addObject:resposeObject[@"data"]];
-                          }
-                          [self.authenColl1 reloadData];
+                          [_imgArr1 replaceObjectAtIndex:_index withObject:_image];
+                          [_imgUrl1 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
                       }else{
                           
-                          if (_index < _imgArr2.count) {
-                              
-                              [_imgArr2 replaceObjectAtIndex:_index withObject:_image];
-                              [_imgUrl2 replaceObjectAtIndex:_index withObject:resposeObject[@"data"]];
-                          }else{
-                              
-                              [_imgArr2 addObject:_image];
-                              [_imgUrl2 addObject:resposeObject[@"data"]];
-                          }
-                          [self.authenColl2 reloadData];
+                          [_imgArr1 addObject:_image];
+                          [_imgUrl1 addObject:resposeObject[@"data"]];
                       }
+                      [self.authenColl1 reloadData];
                   }else{
                       
                       [self showContent:resposeObject[@"msg"]];
@@ -431,7 +460,6 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
         [_authenColl1 reloadData];
-        [_authenColl2 reloadData];
     }];
 }
 
@@ -443,12 +471,19 @@
 
 - (void)initUI{
     
-    self.titleLabel.text = @"推荐信息";
+    self.titleLabel.text = @"完善信息";
     self.navBackgroundView.hidden = NO;
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    _scrollView = [[UIScrollView alloc] init];
+    _scrollView.backgroundColor = YJBackColor;
+    _scrollView.bounces = NO;
+    [self.view addSubview:_scrollView];
     
-    for (int i = 0; i < 6; i++) {
+    _infoView = [[UIView alloc] init];
+    _infoView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_infoView];
+    
+    for (int i = 0; i < 3; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -458,42 +493,21 @@
             {
                 label.text = @"到访人数:";
                 _numL = label;
-                [self.view addSubview:_numL];
+                [_infoView addSubview:_numL];
                 break;
             }
             case 1:
             {
                 label.text = @"置业目的:";
                 _purposeL = label;
-                [self.view addSubview:_purposeL];
+                [_infoView addSubview:_purposeL];
                 break;
             }
             case 2:
             {
                 label.text = @"到访照片:";
                 _visitL = label;
-                [self.view addSubview:_visitL];
-                break;
-            }
-            case 3:
-            {
-                label.text = @"确认单时间:";
-                _confirmL = label;
-                [self.view addSubview:_confirmL];
-                break;
-            }
-            case 4:
-            {
-                label.text = @"推荐类型：";
-                _recommendTypeL = label;
-                [self.view addSubview:_recommendTypeL];
-                break;
-            }
-            case 5:
-            {
-                label.text = @"备注：";
-                _markL = label;
-                [self.view addSubview:_markL];
+                [_infoView addSubview:_visitL];
                 break;
             }
             default:
@@ -501,7 +515,7 @@
         }
     }
     
-    for (int i = 0 ; i < 3; i++) {
+    for (int i = 0 ; i < 2; i++) {
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
         btn.tag = i;
@@ -510,27 +524,13 @@
             case 0:
             {
                 _numBtn = btn;
-                [self.view addSubview:_numBtn];
+                [_infoView addSubview:_numBtn];
                 break;
             }
             case 1:
             {
                 _purposeBtn = btn;
-                [self.view addSubview:_purposeBtn];
-                break;
-            }
-            case 2:
-            {
-                _recommendTypeBtn = btn;
-                if (self.consulDic && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
-                    
-                    _recommendTypeBtn.content.text = [NSString stringWithFormat:@"%@",self.consulDic[@"rule_type_tags"][0][@"tag_name"]];
-                    _recommendTypeBtn->str = [NSString stringWithFormat:@"%@",self.consulDic[@"rule_type_tags"][0][@"tag_id"]];
-                }else{
-                    
-                    
-                }
-                [self.view addSubview:_recommendTypeBtn];
+                [_infoView addSubview:_purposeBtn];
                 break;
             }
             default:
@@ -549,15 +549,145 @@
     _authenColl1.dataSource = self;
     
     [_authenColl1 registerClass:[AuthenCollCell class] forCellWithReuseIdentifier:@"AuthenCollCell"];
-    [self.view addSubview:_authenColl1];
+    [_infoView addSubview:_authenColl1];
     
-    _authenColl2 = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50 *SIZE, SCREEN_Width, 91 *SIZE) collectionViewLayout:_flowLayout];
-    _authenColl2.backgroundColor = [UIColor whiteColor];
-    _authenColl2.delegate = self;
-    _authenColl2.dataSource = self;
     
-    [_authenColl2 registerClass:[AuthenCollCell class] forCellWithReuseIdentifier:@"AuthenCollCell"];
-    [self.view addSubview:_authenColl2];
+    _needInfoView = [[UIView alloc] init];
+    _needInfoView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_needInfoView];
+    
+    for (int i = 0; i < 9; i++) {
+        
+        UILabel *label = [[UILabel alloc] init];
+        label.textColor = YJTitleLabColor;
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        switch (i) {
+            case 0:
+            {
+                label.text = @"客户年龄:";
+                _yearL = label;
+                [_needInfoView addSubview:_yearL];
+                break;
+            }
+            case 1:
+            {
+                label.text = @"客户职业:";
+                _professionL = label;
+                [_needInfoView addSubview:_professionL];
+                break;
+            }
+            case 2:
+            {
+                label.text = @"客户来源:";
+                _addressL = label;
+                [_needInfoView addSubview:_addressL];
+                break;
+            }
+            case 3:
+            {
+                label.text = @"意向物业:";
+                _propertyL = label;
+                [_needInfoView addSubview:_propertyL];
+                break;
+            }
+            case 4:
+            {
+                label.text = @"意向总价:";
+                _priceL = label;
+                [_needInfoView addSubview:_priceL];
+                break;
+            }
+            case 5:
+            {
+                label.text = @"意向面积:";
+                _areaL = label;
+                [_needInfoView addSubview:_areaL];
+                break;
+            }
+            case 6:
+            {
+                label.text = @"意向户型:";
+                _houseTypeL = label;
+                [_needInfoView addSubview:_houseTypeL];
+                break;
+            }
+            case 7:
+            {
+                label.text = @"装修标准:";
+                _decorateL = label;
+                [_needInfoView addSubview:_decorateL];
+                break;
+            }
+            case 8:
+            {
+                label.text = @"备注:";
+                _markL = label;
+                [_needInfoView addSubview:_markL];
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+    for (int i = 0 ; i < 8; i++) {
+        
+        DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
+        btn.tag = i;
+        [btn addTarget:self action:@selector(ActionNeedBtn:) forControlEvents:UIControlEventTouchUpInside];
+        switch (i) {
+            case 0:
+            {
+                _yearBtn = btn;
+                [_needInfoView addSubview:_yearBtn];
+                break;
+            }
+            case 1:
+            {
+                _professionBtn = btn;
+                [_needInfoView addSubview:_professionBtn];
+                break;
+            }
+            case 2:
+            {
+                _addressBtn = btn;
+                [_needInfoView addSubview:_addressBtn];
+                break;
+            }
+            case 3:
+            {
+                _propertyBtn = btn;
+                [_needInfoView addSubview:_propertyBtn];
+                break;
+            }
+            case 4:
+            {
+                _priceBtn = btn;
+                [_needInfoView addSubview:_priceBtn];
+                break;
+            }
+            case 5:
+            {
+                _areaBtn = btn;
+                [_needInfoView addSubview:_areaBtn];
+                break;
+            }
+            case 6:
+            {
+                _houseTypeBtn = btn;
+                [_needInfoView addSubview:_houseTypeBtn];
+                break;
+            }
+            case 7:
+            {
+                _decorateBtn = btn;
+                [_needInfoView addSubview:_decorateBtn];
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
     _markView = [[UITextView alloc] init];
     _markView.delegate = self;
@@ -567,7 +697,7 @@
     _markView.layer.cornerRadius = 5*SIZE;
     _markView.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _markView.clipsToBounds = YES;
-    [self.view addSubview:_markView];
+    [_needInfoView addSubview:_markView];
     
     _placeL = [[UILabel alloc] initWithFrame:CGRectMake(6 *SIZE, 7 *SIZE, 40 *SIZE, 11 *SIZE)];
     _placeL.textColor = YJContentLabColor;
@@ -576,38 +706,68 @@
     [_markView addSubview:_placeL];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+//    _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     _confirmBtn.layer.cornerRadius = 2 *SIZE;
     _confirmBtn.clipsToBounds = YES;
-    [_confirmBtn setTitle:@"提交" forState:UIControlStateNormal];
+    if (_dic.count) {
+        
+        [_confirmBtn setTitle:@"推荐" forState:UIControlStateNormal];
+    }else{
+        
+        [_confirmBtn setTitle:@"修改" forState:UIControlStateNormal];
+    }
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_confirmBtn];
+    [_scrollView addSubview:_confirmBtn];
     
     [self MasonryUI];
 }
 
 - (void)MasonryUI{
     
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.view).offset(0);
+        make.top.equalTo(self.view).offset(NAVIGATION_BAR_HEIGHT);
+        make.right.equalTo(self.view).offset(0);
+        make.bottom.equalTo(self.view).offset(0);
+    }];
+    
+    [_infoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_scrollView).offset(0);
+        make.right.equalTo(_scrollView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
+    }];
+    
+    [_needInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(0);
+        make.top.equalTo(_infoView.mas_bottom).offset(5 *SIZE);
+        make.right.equalTo(_scrollView).offset(0);
+        make.width.equalTo(@(SCREEN_Width));
+    }];
+    
     [_numL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(10 *SIZE);
-        make.top.equalTo(self.view).offset(21 *SIZE + NAVIGATION_BAR_HEIGHT);
+        make.left.equalTo(_infoView).offset(10 *SIZE);
+        make.top.equalTo(_infoView).offset(21 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
     
     [_numBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(80 *SIZE);
-        make.top.equalTo(self.view).offset(11 *SIZE + NAVIGATION_BAR_HEIGHT);
+        make.left.equalTo(_infoView).offset(80 *SIZE);
+        make.top.equalTo(_infoView).offset(11 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
     }];
     
     [_purposeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.left.equalTo(_infoView).offset(10 *SIZE);
         make.top.equalTo(self->_numBtn.mas_bottom).offset(31 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
@@ -615,88 +775,181 @@
     
     [_purposeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(80 *SIZE);
+        make.left.equalTo(_infoView).offset(80 *SIZE);
         make.top.equalTo(self->_numBtn.mas_bottom).offset(21 *SIZE);
         make.width.equalTo(@(258 *SIZE));
         make.height.equalTo(@(33 *SIZE));
     }];
     
-    if (self.consulDic.count && [self.consulDic[@"rule_type_tags"] isKindOfClass:[NSArray class]] && [self.consulDic[@"rule_type_tags"] count]) {
+    [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        [_recommendTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.view).offset(10 *SIZE);
-            make.top.equalTo(self->_purposeBtn.mas_bottom).offset(31 *SIZE);
-            make.width.equalTo(@(70 *SIZE));
-            make.height.equalTo(@(13 *SIZE));
-        }];
-        
-        [_recommendTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.view).offset(80 *SIZE);
-            make.top.equalTo(self->_purposeBtn.mas_bottom).offset(21 *SIZE);
-            make.width.equalTo(@(258 *SIZE));
-            make.height.equalTo(@(33 *SIZE));
-        }];
-        
-        [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.view).offset(10 *SIZE);
-            make.top.equalTo(self->_recommendTypeBtn.mas_bottom).offset(31 *SIZE);
-            make.width.equalTo(@(70 *SIZE));
-            make.height.equalTo(@(13 *SIZE));
-        }];
-    }else{
-        
-        _recommendTypeL.hidden = YES;
-        _recommendTypeBtn.hidden = YES;
-        [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.view).offset(10 *SIZE);
-            make.top.equalTo(self->_purposeBtn.mas_bottom).offset(31 *SIZE);
-            make.width.equalTo(@(70 *SIZE));
-            make.height.equalTo(@(13 *SIZE));
-        }];
-    }
-    
-    [_authenColl1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.view).offset(0 *SIZE);
-        make.top.equalTo(_visitL.mas_bottom).offset(21 *SIZE);
-        make.width.equalTo(@(SCREEN_Width));
-        make.height.equalTo(@(91 *SIZE));
-    }];
-    
-    [_confirmL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.view).offset(10 *SIZE);
-        make.top.equalTo(_authenColl1.mas_bottom).offset(21 *SIZE);
+        make.left.equalTo(_infoView).offset(10 *SIZE);
+        make.top.equalTo(self->_purposeBtn.mas_bottom).offset(31 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
     
-    [_authenColl2 mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_authenColl1 mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(0 *SIZE);
-        make.top.equalTo(_confirmL.mas_bottom).offset(21 *SIZE);
+        make.left.equalTo(_infoView).offset(0 *SIZE);
+        make.top.equalTo(_visitL.mas_bottom).offset(21 *SIZE);
         make.width.equalTo(@(SCREEN_Width));
         make.height.equalTo(@(91 *SIZE));
+        make.bottom.equalTo(_infoView.mas_bottom).offset(-20 *SIZE);
+    }];
+    
+    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(_needInfoView).offset(21 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_yearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(_needInfoView).offset(11 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_professionL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_yearBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_professionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_yearBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_professionBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_professionBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_addressBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_propertyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_addressBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_priceBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_priceBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_areaBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_houseTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_areaBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
     }];
     
     [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(10 *SIZE);
-        make.top.equalTo(_authenColl2.mas_bottom).offset(21 *SIZE);
+        make.left.equalTo(_needInfoView).offset(10 *SIZE);
+        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
     
     [_markView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.view).offset(80 *SIZE);
-        make.top.equalTo(_authenColl2.mas_bottom).offset(21 *SIZE);
+        make.left.equalTo(_needInfoView).offset(80 *SIZE);
+        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
         make.width.equalTo(@(270 *SIZE));
         make.height.equalTo(@(117 *SIZE));
+        make.bottom.equalTo(_needInfoView.mas_bottom).offset(-20 *SIZE);
+    }];
+    
+    [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_scrollView).offset(22 *SIZE);
+        make.top.equalTo(_needInfoView.mas_bottom).offset(45 *SIZE);
+        make.right.equalTo(_scrollView).offset(-22 *SIZE);
+        make.height.equalTo(@(40 *SIZE));
+        make.bottom.equalTo(_scrollView.mas_bottom).offset(-40 *SIZE);
     }];
 }
 

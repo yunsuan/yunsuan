@@ -1765,27 +1765,27 @@
 ////
 ////            [dic removeObjectForKey:@"birth"];
 ////        }
-//        RecommendConfirmVC *nextVC = [[RecommendConfirmVC alloc] initWithData:dic];
-//        [self.navigationController pushViewController:nextVC animated:YES];
-        [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-                    [self.navigationController popViewControllerAnimated:YES];
-                }];
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        RecommendConfirmVC *nextVC = [[RecommendConfirmVC alloc] initWithData:dic];
+        [self.navigationController pushViewController:nextVC animated:YES];
+//        [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
+//            
+//            if ([resposeObject[@"code"] integerValue] == 200) {
+//                
+//                [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
+//                    
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                }];
+//            }else{
+//                
+//                [self showContent:resposeObject[@"msg"]];
+//            }
+//        } failure:^(NSError *error) {
+//            
+//            [self showContent:@"网络错误"];
+//        }];
     }
 }
 

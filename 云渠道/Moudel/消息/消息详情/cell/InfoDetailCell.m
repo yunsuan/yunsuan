@@ -39,7 +39,7 @@
     [self.contentView addSubview:_contentlab];
     
     _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_moreBtn setTitle:@"查看确认流程" forState:UIControlStateNormal];
     _moreBtn.backgroundColor = YJBlueBtnColor;
@@ -48,6 +48,7 @@
     [self.contentView addSubview:_moreBtn];
 
     [_contentlab mas_makeConstraints:^(MASConstraintMaker *make) {
+        
         make.left.equalTo(self.contentView).offset(28.3*SIZE);
         make.top.equalTo(self.contentView);
         make.width.mas_equalTo(300 *SIZE);
