@@ -26,85 +26,60 @@
 }
 
 - (void)initUI{
-    
-    UIView *alphaView = [[UIView alloc] initWithFrame:self.frame];
-    alphaView.backgroundColor = [UIColor blackColor];
-    alphaView.alpha = 0.4;
-    [self addSubview:alphaView];
-    
-    _whiteView = [[UIView alloc] init];
-    _whiteView.backgroundColor = [UIColor whiteColor];
-    _whiteView.layer.cornerRadius = 3 *SIZE;
-    _whiteView.clipsToBounds = YES;
-    [self addSubview:_whiteView];
-    
-    _titleL = [[UILabel alloc] init];
-    _titleL.textColor = YJTitleLabColor;
-    _titleL.font = [UIFont systemFontOfSize:15 *SIZE];
-    _titleL.numberOfLines = 0;
-    _titleL.textAlignment = NSTextAlignmentCenter;
-    _titleL.text = @"补全号码";
-    [_whiteView addSubview:_titleL];
-    
-    _lineView = [[DashesLineView alloc] initWithFrame:CGRectMake(23 *SIZE, 61 *SIZE, 203 *SIZE, 2 *SIZE)];
-    [_whiteView addSubview:_lineView];
-    
-    for (int i = 0; i < 4; i++) {
-        
-        UITextField *borderTF = [[UITextField alloc] initWithFrame:CGRectMake(80 *SIZE, 75 *SIZE, 19 *SIZE, 24 *SIZE)];
-        borderTF.textColor = YJContentLabColor;
-        borderTF.keyboardType = UIKeyboardTypePhonePad;
-        borderTF.font = [UIFont systemFontOfSize:13.3*SIZE];
-        borderTF.layer.cornerRadius = 5*SIZE;
-        borderTF.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
-        borderTF.layer.borderWidth = 1*SIZE;
-        borderTF.textAlignment = NSTextAlignmentCenter;
-        switch (i) {
-            case 0:
-            {
-                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
-                _phoneTF4 = borderTF;
-                _phoneTF4.delegate = self;
-                
-                [_whiteView addSubview:_phoneTF4];
-                break;
-            }
-            case 1:
-            {
-                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
-                _phoneTF5 = borderTF;
-                _phoneTF5.delegate = self;
-                
-                [_whiteView addSubview:_phoneTF5];
-                break;
-            }
-            case 2:
-            {
-                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
-                _phoneTF6 = borderTF;
-                _phoneTF6.delegate = self;
-                
-                [_whiteView addSubview:_phoneTF6];
-                break;
-            }
-            case 3:
-            {
-                borderTF.layer.borderColor = COLOR(169, 219, 255, 1).CGColor;
-                _phoneTF7 = borderTF;
-                _phoneTF7.delegate = self;
-                
-                [_whiteView addSubview:_phoneTF7];
-                break;
-            }
-            default:
-                break;
-        }
+    _textField = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    _textField.text = @"13438339177";
+    _textField.textColor = [UIColor whiteColor];
+    [_textField addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+    //    _textField.delegate = self;
+    [self addSubview:_textField];
+    _telstr = @"13438339177";
+    NSMutableArray *arr = [NSMutableArray array];
+    for (int i =0; i<11; i++) {
+        NSRange r = NSMakeRange(i, 1);
+        [arr addObject:[_telstr substringWithRange:r]];
     }
+    NSLog(@"%@",arr);
+    
+    
+    for (int i = 0; i < 11; i++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(80 *SIZE+i*25*SIZE, 75 *SIZE, 20 *SIZE, 25 *SIZE);
+        btn.titleLabel.font = [UIFont systemFontOfSize:13.3*SIZE];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        btn.layer.cornerRadius = 5*SIZE;
+        btn.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+        btn.layer.borderWidth = 1*SIZE;
+        btn.tag = i;
+//        NSRange r = NSMakeRange(i, 1);
+        [btn setTitle:arr[i] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(btn_action:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btn];
+
+    }
+    
 }
 
-- (void)MasonryUI{
+
+-(void)btn_action:(UIButton *)btn
+{
+    NSLog(@"%ld",(long)btn.tag);
     
-    
+    [_textField becomeFirstResponder];
+    UITextPosition* beginning = _textField.beginningOfDocument;
+    UITextPosition* startPosition = [_textField positionFromPosition:beginning offset:btn.tag];
+    UITextPosition* endPosition = [_textField positionFromPosition:beginning offset:btn.tag+1];
+    UITextRange* selectionRange = [_textField textRangeFromPosition:startPosition toPosition:endPosition];
+    [_textField setSelectedTextRange:selectionRange];
+
 }
+
+-(void)textFieldDidChange{
+    if (_textField.text.length>11) {
+        _textField.text = [_textField.text substringWithRange:NSMakeRange(0, 11)];
+    }
+    
+    NSLog(@"%@",_textField.text);
+}
+
 
 @end
