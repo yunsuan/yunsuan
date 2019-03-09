@@ -10,24 +10,24 @@
 
 
 @interface UserModel : NSObject
-@property (nonatomic, assign)  NSInteger comment;
+@property (nonatomic , assign)  NSInteger comment;
 @property (nonatomic , strong) NSString *Token;
 @property (nonatomic , strong) NSString *Account;
 @property (nonatomic , strong) NSString *Password;
 @property (nonatomic , strong) NSString *agent_id;
 @property (nonatomic , strong) NSString *agent_identity;
 @property (nonatomic , strong) NSString *store_identity;
-@property (nonatomic, strong) NSString *store_id;
+@property (nonatomic , strong) NSString *store_id;
 @property (nonatomic , strong) NSDictionary *Configdic;
-@property (nonatomic, strong) NSMutableArray *storeArr;
-@property (nonatomic, strong) NSMutableArray *officeArr;
-@property (nonatomic, strong) NSMutableArray *houseArr;
-@property (nonatomic, strong) NSMutableDictionary *tagDic;
-@property (nonatomic, strong) NSMutableArray *tagAllArr;
-@property (nonatomic, strong) NSMutableArray *tagSelectArr;
-@property (nonatomic, strong) NSMutableArray *workArr;
-@property (nonatomic, strong) NSMutableArray *cityArr;
-@property (nonatomic, strong) NSMutableArray *groupArr;
+@property (nonatomic , strong) NSMutableArray *storeArr;
+@property (nonatomic , strong) NSMutableArray *officeArr;
+@property (nonatomic , strong) NSMutableArray *houseArr;
+@property (nonatomic , strong) NSMutableDictionary *tagDic;
+@property (nonatomic , strong) NSMutableArray *tagAllArr;
+@property (nonatomic , strong) NSMutableArray *tagSelectArr;
+@property (nonatomic , strong) NSMutableArray *workArr;
+@property (nonatomic , strong) NSMutableArray *cityArr;
+@property (nonatomic , strong) NSMutableArray *groupArr;
 
 + (UserModel *)defaultModel;
 
