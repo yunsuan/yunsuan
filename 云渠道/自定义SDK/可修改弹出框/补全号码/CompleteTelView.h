@@ -14,19 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CompleteTelView : UIView
 
-@property (nonatomic, strong) DashesLineView *lineView;
+@property (nonatomic , strong) UITextField *textField;
+@property (nonatomic , strong) NSString *telstr;
 
-@property (nonatomic, strong) UIView *whiteView;
 
-@property (nonatomic, strong) UILabel *titleL;
 
-@property (nonatomic, strong) UITextField *phoneTF4;
-
-@property (nonatomic, strong) UITextField *phoneTF5;
-
-@property (nonatomic, strong) UITextField *phoneTF6;
-
-@property (nonatomic, strong) UITextField *phoneTF7;
 
 @end
 

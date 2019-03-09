@@ -671,6 +671,7 @@
 		102DF9792057A1DD00E1859C /* CustomerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF9782057A1DD00E1859C /* CustomerVC.m */; };
 		102DF97C2057A20100E1859C /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF97B2057A20100E1859C /* LoginVC.m */; };
 		102DF97F2057A21300E1859C /* MineVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 102DF97E2057A21300E1859C /* MineVC.m */; };
+		1035B7B62233CBD9008DA3BC /* UITextField+ExtentRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 1035B7B52233CBD9008DA3BC /* UITextField+ExtentRange.m */; };
 		1044B3F12099C3E5002D9BAE /* WebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1044B3F02099C3E5002D9BAE /* WebViewVC.m */; };
 		1044B3F4209C6BA1002D9BAE /* SingleHouseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1044B3F3209C6BA1002D9BAE /* SingleHouseCell.m */; };
 		1044B3FB20A03654002D9BAE /* TypeOneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1044B3FA20A03654002D9BAE /* TypeOneVC.m */; };
@@ -2106,6 +2107,8 @@
 		102DF97B2057A20100E1859C /* LoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		102DF97D2057A21300E1859C /* MineVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MineVC.h; sourceTree = "<group>"; };
 		102DF97E2057A21300E1859C /* MineVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MineVC.m; sourceTree = "<group>"; };
+		1035B7B42233CBD9008DA3BC /* UITextField+ExtentRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+ExtentRange.h"; sourceTree = "<group>"; };
+		1035B7B52233CBD9008DA3BC /* UITextField+ExtentRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+ExtentRange.m"; sourceTree = "<group>"; };
 		1044B3EF2099C3E5002D9BAE /* WebViewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewVC.h; sourceTree = "<group>"; };
 		1044B3F02099C3E5002D9BAE /* WebViewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewVC.m; sourceTree = "<group>"; };
 		1044B3F2209C6BA1002D9BAE /* SingleHouseCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SingleHouseCell.h; sourceTree = "<group>"; };
@@ -3425,6 +3428,8 @@
 			children = (
 				0C288FC021EDBF6100A142F6 /* CompleteTelView.h */,
 				0C288FC121EDBF6100A142F6 /* CompleteTelView.m */,
+				1035B7B42233CBD9008DA3BC /* UITextField+ExtentRange.h */,
+				1035B7B52233CBD9008DA3BC /* UITextField+ExtentRange.m */,
 			);
 			path = "补全号码";
 			sourceTree = "<group>";
@@ -7992,6 +7997,7 @@
 				0C997C5F21E452D000F805AA /* LookWorkWaitDetailVC.m in Sources */,
 				1044B40720A56857002D9BAE /* WaitAnimation.m in Sources */,
 				0C9B01D2217033360055A9A8 /* RoomTypeViewCollCell.m in Sources */,
+				1035B7B62233CBD9008DA3BC /* UITextField+ExtentRange.m in Sources */,
 				0CBD85802085EA7E00E7B183 /* NomineeCell2.m in Sources */,
 				0C8C98092216A09F00687AC8 /* ContractMainConCell.m in Sources */,
 				0CD90A2620DA560300061B4A /* RoomSoldOutVC.m in Sources */,
