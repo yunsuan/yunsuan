@@ -58,9 +58,9 @@
     [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(260 *SIZE);
-        make.top.equalTo(self.contentView).offset(0);
+        make.top.equalTo(self.contentView).offset(2 *SIZE);
         make.width.mas_equalTo(90 *SIZE);
-        make.height.mas_equalTo(30 *SIZE);
+        make.height.mas_equalTo(26 *SIZE);
     }];
 }
 

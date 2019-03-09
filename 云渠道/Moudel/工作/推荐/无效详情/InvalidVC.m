@@ -16,11 +16,11 @@
 //#import "TransmitView.h"
 #import "FailView.h"
 
-
-
-
 @interface InvalidVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    BOOL _sign;
+    NSArray *_signArr;
+    NSArray *_arrArr;
     NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
@@ -119,66 +119,139 @@
 
             }
             
+            if (_dataDic[@"sign"]) {
+                
+                _sign = YES;
+                _signArr = _dataDic[@"sign"];
+                _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"确认状态：%@",_dataDic[@"butter_name"]]];
+            }else{
+                
+                _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"到访确认人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"确认人电话：%@",_dataDic[@"butter_tel"]]];
+            }
+            
             if ([_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
                 
                 if ([_dataDic[@"butter_name"] isEqualToString:@""]) {
                     
                     if(_checkArr.count){
-                        
-                        _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
-                        
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_checkArr,
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                    
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_arrArr,_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }else{
                         
-                        _titleArr = @[@"无效信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_arrArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }
                 }else{
                     
                     if (_checkArr.count) {
                         
-                        _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_checkArr,
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_arrArr,_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }else{
                         
-                        _titleArr = @[@"无效信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_arrArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }
                 }
             }else{
@@ -187,59 +260,124 @@
                     
                     if (_checkArr.count) {
                         
-                        _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_checkArr,
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_arrArr,_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
+                        
                     }else{
                         
-                        _titleArr = @[@"无效信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],_arrArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+            
+                            _titleArr = @[@"无效信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]]],
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }
                 }else{
                     
                     if (_checkArr.count) {
                         
-                        _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_checkArr,
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                           
+                            _titleArr = @[@"无效信息",@"到访信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_arrArr,_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                        
+                            _titleArr = @[@"无效信息",@"判重信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_checkArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }else{
                         
-                        _titleArr = @[@"无效信息",@"推荐信息"];
-                        _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
-                                    [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
-                                    [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],
-                                  @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
-                                    [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
-                                    [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
-                                    [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
-                                    [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
-                                    adress,
-                                    [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        if (_sign) {
+                            
+                            _titleArr = @[@"无效信息",@"到访信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],_arrArr,
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }else{
+                            
+                            _titleArr = @[@"无效信息",@"推荐信息"];
+                            _data = @[@[[NSString stringWithFormat:@"无效类型：%@",_dataDic[@"disabled_state"]],
+                                        [NSString stringWithFormat:@"无效描述：%@",_dataDic[@"disabled_reason"]],
+                                        [NSString stringWithFormat:@"无效时间：%@",_dataDic[@"disabled_time"]],[NSString stringWithFormat:@"操作人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"操作人电话：%@",_dataDic[@"butter_tel"]]],
+                                      @[[NSString stringWithFormat:@"推荐编号：%@",_dataDic[@"client_id"]],
+                                        [NSString stringWithFormat:@"推荐时间：%@",_dataDic[@"create_time"]],[NSString stringWithFormat:@"推荐类别：%@",_dataDic[@"recommend_type"]],
+                                        [NSString stringWithFormat:@"推荐人：%@",_dataDic[@"broker_name"]],
+                                        [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"broker_tel"]],
+                                        [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]],
+                                        adress,
+                                        [NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],sex,tel,[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"comsulatent_advicer"]],[NSString stringWithFormat:@"备注：%@",_dataDic[@"client_comment"]]]];
+                        }
                     }
                 }
             }
@@ -300,10 +438,6 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-//    if (section == 2) {
-//
-//        return _checkArr.count;
-//    }
     return [_data[section] count];
 }
 
@@ -358,10 +492,33 @@
     }
 
     [cell SetCellContentbystring:_data[indexPath.section][indexPath.row]];
+    if (_sign) {
+        
+        cell.infoDetailCellBlock = ^{
+            
+            SignListVC *nextVC = [[SignListVC alloc] initWithDataArr:_signArr];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        };
+        if (indexPath.section == 1) {
+            
+            if (indexPath.row == 0) {
+                
+                if (_sign) {
+                    
+                    cell.moreBtn.hidden = NO;
+                    [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
+                    cell.infoDetailCellBlock = ^{
+                        
+                        SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    };
+                }
+            }
+        }
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
     return cell;
-
 }
 
 -(void)initUI

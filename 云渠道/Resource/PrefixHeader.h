@@ -29,6 +29,7 @@
 #import <UMShare/UMShare.h>
 #import "TransmitView.h"
 #import "SignListVC.h"
+#import "SignNeedInfoVC.h"
 
 
 //#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]

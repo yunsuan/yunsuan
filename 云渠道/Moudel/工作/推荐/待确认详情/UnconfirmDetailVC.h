@@ -10,6 +10,8 @@
 
 @interface UnconfirmDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *needConfirm;
+
 - (instancetype)initWithString:(NSString *)str;
 
 @end

@@ -10,10 +10,13 @@
 
 #import "UnconfirmDetailVC.h"
 #import "CompleteCustomVC1.h"
+#import "SignFailVC.h"
 
 #import "RecommendCell.h"
 
 #import "InvalidView.h"
+#import "SignSelectWorkerView.h"
+#import "SignFailView.h"
 
 @interface RecommendUnconfirmVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -213,57 +216,176 @@
     
     cell.confirmBtnBlock = ^(NSInteger index) {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认到访" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if ([_dataArr[index][@"need_confirm"] integerValue] == 1) {
             
-        }];
-        
-        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"已到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"签字确认" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
             
-            NSDictionary *dic = _dataArr[index];
-            CompleteCustomVC1 *nextVC = [[CompleteCustomVC1 alloc] initWithClientID:dic[@"client_id"] name:dic[@"name"] dataDic:dic];
-            [self.navigationController pushViewController:nextVC animated:YES];
-        }];
-        
-        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"未到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            InvalidView * invalidView = [[InvalidView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-            invalidView.client_id = _dataArr[indexPath.row][@"client_id"];
-            invalidView.invalidViewBlock = ^(NSDictionary *dic) {
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
-                [BaseRequest POST:ConfirmDisabled_URL parameters:dic success:^(id resposeObject) {
+            }];
+            
+            UIAlertAction *valid = [UIAlertAction actionWithTitle:@"客户有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [BaseRequest GET:AgentSignNextAgent_URL parameters:@{@"client_id":_dataArr[index][@"client_id"]} success:^(id resposeObject) {
                     
+                    NSLog(@"%@",resposeObject);
                     if ([resposeObject[@"code"] integerValue] == 200) {
                         
-                        [self alertControllerWithNsstring:@"失效确认成功" And:nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
-                        
+                        if ([resposeObject[@"data"][@"agentGroup"] count]) {
+                            
+                            SignSelectWorkerView *view = [[SignSelectWorkerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                            __strong __typeof(&*view)strongView = view;
+                            view.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"agentGroup"]];
+                            view.signSelectWorkerViewBlock = ^{
+                                
+                                NSMutableDictionary *dic;
+                                if ([self isEmpty:strongView.markTV.text]) {
+                                    
+                                    dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"agent_id":view.agentId,@"comment":view.markTV.text}];
+                                }else{
+                                    
+                                    dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"agent_id":view.agentId}];
+                                }
+                                [BaseRequest GET:AgentSignValue_URL parameters:dic success:^(id resposeObject) {
+                                    
+                                    NSLog(@"%@",resposeObject);
+                                    if ([resposeObject[@"code"] integerValue] == 200) {
+                                        
+                                        [self showContent:resposeObject[@"msg"]];
+                                        [self RequestMethod];
+                                    }else{
+                                        
+                                        [self showContent:resposeObject[@"msg"]];
+                                    }
+                                } failure:^(NSError *error) {
+                                    
+                                    [self showContent:@"网络错误"];
+                                }];
+                            };
+                            [[UIApplication sharedApplication].keyWindow addSubview:view];
+                        }else{
+                            
+                            [BaseRequest GET:AgentSignValue_URL parameters:@{@"client_id":_dataArr[index][@"client_id"]} success:^(id resposeObject) {
+                                
+                                NSLog(@"%@",resposeObject);
+                                if ([resposeObject[@"code"] integerValue] == 200) {
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                    [self RequestMethod];
+                                }else{
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                }
+                            } failure:^(NSError *error) {
+                               
+                                [self showContent:@"网络错误"];
+                            }];
+                        }
                     }else{
                         
-                        [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                        [self showContent:resposeObject[@"msg"]];
                     }
                 } failure:^(NSError *error) {
                     
-                    [self alertControllerWithNsstring:@"温馨提示" And:@"操作失败" WithDefaultBlack:^{
-                        
-                    }];
+                    [self showContent:@"网络错误"];
                 }];
-            };
+            }];
             
-            invalidView.invalidViewBlockFail = ^(NSString *str) {
+            UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客户无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
-                [self alertControllerWithNsstring:@"温馨提示" And:str];
-            };
-            [[UIApplication sharedApplication].keyWindow addSubview:invalidView];
-        }];
-        
-        [alert addAction:valid];
-        [alert addAction:invalid];
-        [alert addAction:cancel];
-        [self.navigationController presentViewController:alert animated:YES completion:^{
+                SignFailView *view = [[SignFailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                
+                __strong __typeof(&*view)strongView = view;
+                view.signFailViewBlock = ^{
+                    
+                    NSMutableDictionary *dic;
+                    if ([self isEmpty:strongView.markTV.text]) {
+                        
+                        dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"disabled_state":view.agentId,@"comment":view.markTV.text}];
+                    }else{
+                        
+                        dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"disabled_state":view.agentId}];
+                    }
+                    [BaseRequest GET:AgentSignDisabled_URL parameters:dic success:^(id resposeObject) {
+                        
+                        NSLog(@"%@",resposeObject);
+                        if ([resposeObject[@"code"] integerValue] == 200) {
+                            
+                            [self showContent:resposeObject[@"msg"]];
+                            [self RequestMethod];
+                        }else{
+                            
+                            [self showContent:resposeObject[@"msg"]];
+                        }
+                    } failure:^(NSError *error) {
+                        
+                        [self showContent:@"网络错误"];
+                    }];
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:view];
+            }];
             
-        }];
+            [alert addAction:valid];
+            [alert addAction:invalid];
+            [alert addAction:cancel];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+                
+            }];
+        }else{
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认到访" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            UIAlertAction *valid = [UIAlertAction actionWithTitle:@"已到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                NSDictionary *dic = _dataArr[index];
+                CompleteCustomVC1 *nextVC = [[CompleteCustomVC1 alloc] initWithClientID:dic[@"client_id"] name:dic[@"name"] dataDic:dic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }];
+            
+            UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"未到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                InvalidView * invalidView = [[InvalidView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                invalidView.client_id = _dataArr[indexPath.row][@"client_id"];
+                invalidView.invalidViewBlock = ^(NSDictionary *dic) {
+                    
+                    [BaseRequest POST:ConfirmDisabled_URL parameters:dic success:^(id resposeObject) {
+                        
+                        if ([resposeObject[@"code"] integerValue] == 200) {
+                            
+                            [self alertControllerWithNsstring:@"失效确认成功" And:nil];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+                            
+                        }else{
+                            
+                            [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+                        }
+                    } failure:^(NSError *error) {
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"操作失败" WithDefaultBlack:^{
+                            
+                        }];
+                    }];
+                };
+                
+                invalidView.invalidViewBlockFail = ^(NSString *str) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:str];
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:invalidView];
+            }];
+            
+            [alert addAction:valid];
+            [alert addAction:invalid];
+            [alert addAction:cancel];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+                
+            }];
+        }
+        
     };
     
     return cell;
@@ -274,7 +396,7 @@
 {
     
     UnconfirmDetailVC *nextVC = [[UnconfirmDetailVC alloc] initWithString:_dataArr[indexPath.row][@"client_id"]];
-    
+    nextVC.needConfirm = _dataArr[indexPath.row][@"need_confirm"];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

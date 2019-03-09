@@ -562,6 +562,12 @@
 		0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CED5B2B21A7C72800997B76 /* ReleaseDirectVC.m */; };
 		0CEDBD5B21ED89640095F171 /* RentAgencyDoneCustomerDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDBD5A21ED89640095F171 /* RentAgencyDoneCustomerDetailVC.m */; };
 		0CEDBD5E21ED89B80095F171 /* RentAgencyEditCustomerDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDBD5D21ED89B80095F171 /* RentAgencyEditCustomerDetailVC.m */; };
+		0CEDE8D322339800006000FB /* SignSelectWorkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8D222339800006000FB /* SignSelectWorkerView.m */; };
+		0CEDE8D6223399CF006000FB /* SignWorkerPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8D5223399CF006000FB /* SignWorkerPickView.m */; };
+		0CEDE8D922339D61006000FB /* SignFailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8D822339D61006000FB /* SignFailVC.m */; };
+		0CEDE8DC2233A161006000FB /* SignFailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8DB2233A161006000FB /* SignFailView.m */; };
+		0CEDE8DF2233AE70006000FB /* SignListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8DE2233AE70006000FB /* SignListCell.m */; };
+		0CEDE8E52233B109006000FB /* SignNeedInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEDE8E42233B109006000FB /* SignNeedInfoVC.m */; };
 		0CEF347821806BC900419D5E /* SystemoWorkVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347721806BC900419D5E /* SystemoWorkVC.m */; };
 		0CEF347E21807B5500419D5E /* SystemWorkWaitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF347D21807B5500419D5E /* SystemWorkWaitVC.m */; };
 		0CEF348221807C1500419D5E /* SystemWorkWaitTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEF348121807C1500419D5E /* SystemWorkWaitTableCell.m */; };
@@ -1883,6 +1889,18 @@
 		0CEDBD5A21ED89640095F171 /* RentAgencyDoneCustomerDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentAgencyDoneCustomerDetailVC.m; sourceTree = "<group>"; };
 		0CEDBD5C21ED89B80095F171 /* RentAgencyEditCustomerDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentAgencyEditCustomerDetailVC.h; sourceTree = "<group>"; };
 		0CEDBD5D21ED89B80095F171 /* RentAgencyEditCustomerDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentAgencyEditCustomerDetailVC.m; sourceTree = "<group>"; };
+		0CEDE8D122339800006000FB /* SignSelectWorkerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignSelectWorkerView.h; sourceTree = "<group>"; };
+		0CEDE8D222339800006000FB /* SignSelectWorkerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignSelectWorkerView.m; sourceTree = "<group>"; };
+		0CEDE8D4223399CF006000FB /* SignWorkerPickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignWorkerPickView.h; sourceTree = "<group>"; };
+		0CEDE8D5223399CF006000FB /* SignWorkerPickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignWorkerPickView.m; sourceTree = "<group>"; };
+		0CEDE8D722339D61006000FB /* SignFailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignFailVC.h; sourceTree = "<group>"; };
+		0CEDE8D822339D61006000FB /* SignFailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignFailVC.m; sourceTree = "<group>"; };
+		0CEDE8DA2233A161006000FB /* SignFailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignFailView.h; sourceTree = "<group>"; };
+		0CEDE8DB2233A161006000FB /* SignFailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignFailView.m; sourceTree = "<group>"; };
+		0CEDE8DD2233AE70006000FB /* SignListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignListCell.h; sourceTree = "<group>"; };
+		0CEDE8DE2233AE70006000FB /* SignListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignListCell.m; sourceTree = "<group>"; };
+		0CEDE8E32233B109006000FB /* SignNeedInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignNeedInfoVC.h; sourceTree = "<group>"; };
+		0CEDE8E42233B109006000FB /* SignNeedInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignNeedInfoVC.m; sourceTree = "<group>"; };
 		0CEF347621806BC900419D5E /* SystemoWorkVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemoWorkVC.h; sourceTree = "<group>"; };
 		0CEF347721806BC900419D5E /* SystemoWorkVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemoWorkVC.m; sourceTree = "<group>"; };
 		0CEF347C21807B5500419D5E /* SystemWorkWaitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemWorkWaitVC.h; sourceTree = "<group>"; };
@@ -6266,6 +6284,21 @@
 			path = "修改客户详情";
 			sourceTree = "<group>";
 		};
+		0CEDE8D0223397E5006000FB /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0CEDE8D122339800006000FB /* SignSelectWorkerView.h */,
+				0CEDE8D222339800006000FB /* SignSelectWorkerView.m */,
+				0CEDE8D4223399CF006000FB /* SignWorkerPickView.h */,
+				0CEDE8D5223399CF006000FB /* SignWorkerPickView.m */,
+				0CEDE8DA2233A161006000FB /* SignFailView.h */,
+				0CEDE8DB2233A161006000FB /* SignFailView.m */,
+				0CEDE8DD2233AE70006000FB /* SignListCell.h */,
+				0CEDE8DE2233AE70006000FB /* SignListCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		0CEF347521806B9C00419D5E /* 系统派单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6526,8 +6559,13 @@
 		0CF46ED622321499008816E6 /* 签字人 */ = {
 			isa = PBXGroup;
 			children = (
+				0CEDE8D0223397E5006000FB /* view */,
 				0CF46ED7223214BC008816E6 /* SignListVC.h */,
 				0CF46ED8223214BC008816E6 /* SignListVC.m */,
+				0CEDE8D722339D61006000FB /* SignFailVC.h */,
+				0CEDE8D822339D61006000FB /* SignFailVC.m */,
+				0CEDE8E32233B109006000FB /* SignNeedInfoVC.h */,
+				0CEDE8E42233B109006000FB /* SignNeedInfoVC.m */,
 			);
 			path = "签字人";
 			sourceTree = "<group>";
@@ -7872,6 +7910,7 @@
 				0C73B08821F1A5D5005F71F1 /* BarginDealVC.m in Sources */,
 				0C997BE221D0789400F805AA /* WWSliderView.m in Sources */,
 				0CD90ABD20E609B700061B4A /* ModifyTimeVC.m in Sources */,
+				0CEDE8D922339D61006000FB /* SignFailVC.m in Sources */,
 				0C997C4C21E4420100F805AA /* LookWorkConfirmVC.m in Sources */,
 				0CBD859720871B6900E7B183 /* RoomDetailModel.m in Sources */,
 				0CDD701320D0001D00D6609C /* RoomReportCollCell.m in Sources */,
@@ -8109,6 +8148,7 @@
 				0CED0BE121E6F1010016A029 /* RecommendComplaitCell.m in Sources */,
 				0CF04F9E207CC23300A45F4A /* GuideVC.m in Sources */,
 				0CD909F120D8FFD900061B4A /* CompleteSurveyInfoVC2.m in Sources */,
+				0CEDE8DF2233AE70006000FB /* SignListCell.m in Sources */,
 				0CE82234221F95A200576742 /* ConfirmPhoneVC.m in Sources */,
 				0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */,
 				0C25223A215CCFC60031CC44 /* SecAllRoomStoreModel.m in Sources */,
@@ -8251,6 +8291,7 @@
 				0CF04F43207B308000A45F4A /* InvalidVC.m in Sources */,
 				0C2883CE210EF61400F69C5F /* RentingRoomAgencyCancelVC.m in Sources */,
 				0C73B06D21F174BF005F71F1 /* NewComplaintVC.m in Sources */,
+				0CEDE8DC2233A161006000FB /* SignFailView.m in Sources */,
 				0C252241215CE8EC0031CC44 /* StoreAuthVC.m in Sources */,
 				0C997C6E21E4790100F805AA /* LookDealVC.m in Sources */,
 				0CBD85902085FE4500E7B183 /* RoomBrokerageVC.m in Sources */,
@@ -8313,6 +8354,7 @@
 				0CEC62EE208DED26006EC0BD /* AnalyzeTableCell.m in Sources */,
 				0CAF4DDD219EBFB60009873E /* AttentionHouseModel.m in Sources */,
 				0C0B82072063514500238D4F /* CustomDetailVC.m in Sources */,
+				0CEDE8E52233B109006000FB /* SignNeedInfoVC.m in Sources */,
 				0CD90AB820E601D100061B4A /* SurveyingDetailCell.m in Sources */,
 				0C3D3042218B06FA00B8B8C2 /* ReStatusTableCell.m in Sources */,
 				0C9CD42A21009CC4004894A3 /* MaintainInfoImgCollCell.m in Sources */,
@@ -8326,6 +8368,7 @@
 				10866683218952A8002473E0 /* UIControl+CYLTabBarControllerExtention.m in Sources */,
 				0CA37B762088A0C4005609C7 /* AddTagCollHeader.m in Sources */,
 				0C0BED3620A1A23F005A16A1 /* DealComplaintResultVC.m in Sources */,
+				0CEDE8D322339800006000FB /* SignSelectWorkerView.m in Sources */,
 				0C288FC221EDBF6100A142F6 /* CompleteTelView.m in Sources */,
 				10F7D0E521FAFE3B007818E3 /* StoreDetailCell.m in Sources */,
 				0C997C1521D5D08300F805AA /* RentingCancelAgencyProtocolVC.m in Sources */,
@@ -8342,6 +8385,7 @@
 				0C252244215CE9010031CC44 /* StoreAuthStatusVC.m in Sources */,
 				0C9CD42021004012004894A3 /* MaintainCell.m in Sources */,
 				0CDD707A20D3BCD800D6609C /* SurveyInvalidVC.m in Sources */,
+				0CEDE8D6223399CF006000FB /* SignWorkerPickView.m in Sources */,
 				100D8F7C2180189B006839EB /* HNTitleView.m in Sources */,
 				0C997C7121E4790F00F805AA /* LookFailVC.m in Sources */,
 				10255A6E21A53D000042738C /* YBImageBrowserModel.m in Sources */,

@@ -17,6 +17,10 @@
 
 @interface TypeOneVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    
+    BOOL _sign;
+    NSArray *_signArr;
+    NSArray *_arrArr;
     NSArray *_checkArr;
     NSArray *_data;
     NSArray *_titleArr;
@@ -83,6 +87,16 @@
                              _checkArr = @[[NSString stringWithFormat:@"确认人：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"tel_check_info"][@"confirmed_agent_tel"]],[NSString stringWithFormat:@"确认时间：%@",_dataDic[@"tel_check_info"][@"confirmed_time"]],@"判重结果:可带看"];
                          }
 
+                     }
+                     
+                     if (_dataDic[@"sign"]) {
+                         
+                         _sign = YES;
+                         _signArr = _dataDic[@"sign"];
+                         _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"确认状态：%@",_dataDic[@"butter_name"]]];
+                     }else{
+                         
+                         _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"到访确认人：%@",_dataDic[@"butter_name"]],[NSString stringWithFormat:@"确认人电话：%@",_dataDic[@"butter_tel"]]];
                      }
                      
                      if ([_dataDic[@"comsulatent_advicer"] isEqualToString:@""]) {
@@ -170,13 +184,25 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    if (section == 1) {
-        
-        return _checkArr.count;
-    }else{
+    if (section == 0) {
         
         NSArray *arr = _data[section];
         return arr.count? arr.count + 1:0;
+    }else{
+        
+        if (section == 1) {
+            
+            if (_checkArr.count) {
+                
+                return _checkArr.count;
+            }else{
+                
+                return _arrArr.count;
+            }
+        }else{
+            
+            return _arrArr.count;
+        }
     }
 }
 
@@ -204,9 +230,19 @@
     
     if (_checkArr.count) {
         
+        if (_sign) {
+            
+            return _data.count + 2;
+        }
         return _data.count + 1;
+    }else{
+        
+        if (_sign) {
+            
+            return _data.count + 1;
+        }
+        return _data.count;
     }
-    return _data.count;
     
 }
 
@@ -216,14 +252,80 @@
     
     if (indexPath.section == 1) {
         
-        static NSString *CellIdentifier = @"InfoDetailCell";
-        InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        if (indexPath.section == 1) {
+            
+            if (_checkArr.count) {
+                
+                static NSString *CellIdentifier = @"InfoDetailCell";
+                InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (!cell) {
+                    cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                [cell SetCellContentbystring:_checkArr[indexPath.row]];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }else{
+                
+                static NSString *CellIdentifier = @"InfoDetailCell";
+                InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (!cell) {
+                    cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                [cell SetCellContentbystring:_arrArr[indexPath.row]];
+                if (indexPath.row == 0) {
+                    
+                    if (_sign) {
+                        
+                        cell.moreBtn.hidden = NO;
+                        [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
+                        cell.infoDetailCellBlock = ^{
+                            
+                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        };
+                    }
+                }else{
+                    
+                    cell.infoDetailCellBlock = ^{
+                        
+                        SignListVC *nextVC = [[SignListVC alloc] initWithDataArr:_signArr];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    };
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+        }else{
+            
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            [cell SetCellContentbystring:_arrArr[indexPath.row]];
+            if (indexPath.row == 0) {
+                
+                if (_sign) {
+                    
+                    cell.moreBtn.hidden = NO;
+                    [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
+                    cell.infoDetailCellBlock = ^{
+                        
+                        SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    };
+                }
+            }else{
+                
+                cell.infoDetailCellBlock = ^{
+                    
+                    SignListVC *nextVC = [[SignListVC alloc] initWithDataArr:_signArr];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                };
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        [cell SetCellContentbystring:_checkArr[indexPath.row]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
     }else{
         
         if (indexPath.row == 0) {

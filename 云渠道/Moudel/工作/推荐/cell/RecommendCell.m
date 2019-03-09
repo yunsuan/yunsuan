@@ -39,6 +39,28 @@
     _timeL.attributedText = attr;
     
     _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
+    
+    if (dataDic[@"need_confirm"]) {
+        
+        if ([dataDic[@"need_confirm"] integerValue] == 1) {
+            
+            _confirmBtn.hidden = NO;
+            _statusL.hidden = YES;
+        }else{
+            
+            _confirmBtn.hidden = YES;;
+            _statusL.hidden = NO;
+        }
+    }else{
+        
+        if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+            
+            _confirmBtn.hidden = YES;
+        }else{
+            
+            _confirmBtn.hidden = NO;
+        }
+    }
 }
 
 - (void)initUI{
@@ -71,6 +93,8 @@
     _statusL.textColor = YJ86Color;
 //    _statusL.numberOfLines = 0;
     _statusL.hidden = YES;
+    _statusL.text = @"待确认";
+    _statusL.textAlignment = NSTextAlignmentRight;
     _statusL.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_statusL];
     

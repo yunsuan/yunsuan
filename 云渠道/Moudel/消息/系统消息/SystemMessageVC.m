@@ -14,7 +14,7 @@
 @interface SystemMessageVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSMutableArray *dataarr;
-    int page;
+    int _page;
 }
 
 @property (nonatomic , strong) UITableView *systemmsgtable;
@@ -50,6 +50,11 @@
 }
 
 -(void)postWithpage:(NSString *)page{
+    
+    if ([page isEqualToString:@"1"]) {
+     
+        _systemmsgtable.mj_footer.state = MJRefreshStateIdle;
+    }
     
     [BaseRequest GET:SystemInfoList_URL parameters:@{
                                                      @"page":page,
@@ -95,7 +100,7 @@
 -(void)initDateSouce
 {
     dataarr = [[NSMutableArray alloc]init];
-    page = 1;
+    _page = 1;
 }
 
 -(void)initUI
@@ -204,9 +209,8 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [self showContent:@"删除成功"];
+            _page = 1;
             [self postWithpage:@"1"];
-//            [dataarr removeObjectAtIndex:indexPath.row];
-//            [tableView reloadData];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -232,12 +236,14 @@
         _systemmsgtable.delegate = self;
         _systemmsgtable.dataSource = self;
         _systemmsgtable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+            
+            _page = 1;
             [self postWithpage:@"1"];
         }];
         _systemmsgtable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
             
-            page++;
-            [self postWithpage:[NSString stringWithFormat:@"%d",page]];
+            _page ++;
+            [self postWithpage:[NSString stringWithFormat:@"%d",_page]];
         }];
         [_systemmsgtable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     }

@@ -8,7 +8,8 @@
 
 #import "SignListVC.h"
 
-#import "BrokerageDetailTableCell3.h"
+//#import "BrokerageDetailTableCell3.h"
+#import "SignListCell.h"
 
 @interface SignListVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -45,13 +46,33 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    BrokerageDetailTableCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"BrokerageDetailTableCell3"];
+    SignListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SignListCell"];
     if (!cell) {
         
-        cell = [[BrokerageDetailTableCell3 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"BrokerageDetailTableCell3"];
+        cell = [[SignListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SignListCell"];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    if (indexPath.row == 0) {
+        
+        cell.upLine.hidden = YES;
+    }else{
+        
+        cell.upLine.hidden = NO;
+    }
+    
+    if (indexPath.row == _dataArr.count - 1) {
+        
+        cell.downLine.hidden = YES;
+    }else{
+        
+        cell.downLine.hidden = NO;
+    }
+    
+    cell.titleL.text = _dataArr[indexPath.row][@"group_name"];
+    cell.nameL.text = [NSString stringWithFormat:@"%@/%@",_dataArr[indexPath.row][@"sign_agent_name"],_dataArr[indexPath.row][@"sign_agent_tel"]];
+    cell.timeL.text = [NSString stringWithFormat:@"签字时间：%@",_dataArr[indexPath.row][@"create_time"]];
+    cell.statusL.text = [_dataArr[indexPath.row][@"state"] integerValue] ? @"签字通过":@"签字不通过";
     return cell;
 }
 

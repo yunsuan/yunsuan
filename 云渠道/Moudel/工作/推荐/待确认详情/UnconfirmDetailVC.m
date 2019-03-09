@@ -12,9 +12,15 @@
 #import "CompleteCustomVC1.h"
 #import "InvalidView.h"
 
+#import "SignSelectWorkerView.h"
+#import "SignFailView.h"
+
 @interface UnconfirmDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
+    BOOL _sign;
     NSArray *_checkArr;
+    NSArray *_signArr;
+    NSArray *_arrArr;
     NSArray *_data;
     NSArray *_titleArr;
     NSString *_str;
@@ -42,6 +48,7 @@
 }
 
 -(void)post{
+    
     [BaseRequest GET:WaitConfirmDetail_URL parameters:@{
                                                         @"client_id":_str
                                                         }
@@ -58,6 +65,24 @@
                          }
                      }];
                      
+                     if (_dataDic[@"sign"]) {
+                         
+                         _sign = YES;
+                         _signArr = _dataDic[@"sign"];
+                         _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"确认状态：%@",_dataDic[@"butter_name"]]];
+                         if ([self.needConfirm integerValue]) {
+                             
+                             
+                         }else{
+                             
+                             _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
+                             _confirmBtn.hidden = YES;
+                         }
+                     }else{
+                         
+                         
+                     }
+                    
                      NSString *sex = @"客户性别：";
                      if ([_dataDic[@"sex"] integerValue] == 1) {
                          sex = @"客户性别：男";
@@ -99,6 +124,15 @@
                      _endtime = _dataDic[@"timeLimit"];
                      [_Maintableview reloadData];
                      
+                     if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+                         
+                         [self.view addSubview:_confirmBtn];
+                     }
+                     
+                     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+                         
+                         _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
+                     }
                  }
              }
              failure:^(NSError *error) {
@@ -116,8 +150,7 @@
 }
 
 
--(void)initDataSouce
-{
+-(void)initDataSouce{
     _titleArr = @[@"推荐信息",@"判重信息"];
     _data =@[];
     
@@ -126,30 +159,147 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认到访" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    if (_sign) {
         
-    }];
-    
-    UIAlertAction *valid = [UIAlertAction actionWithTitle:@"已到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if ([self.needConfirm integerValue] == 1) {
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"签字确认" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            UIAlertAction *valid = [UIAlertAction actionWithTitle:@"客户有效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [BaseRequest GET:AgentSignNextAgent_URL parameters:@{@"client_id":_str} success:^(id resposeObject) {
+                    
+                    NSLog(@"%@",resposeObject);
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"] count]) {
+                            
+                            SignSelectWorkerView *view = [[SignSelectWorkerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                            view.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+                            __strong __typeof(&*view)strongView = view;
+                            view.signSelectWorkerViewBlock = ^{
+                                
+                                [BaseRequest GET:AgentSignValue_URL parameters:@{@"client_id":_str,@"agent_id":view.agentId} success:^(id resposeObject) {
+                                    
+                                    NSLog(@"%@",resposeObject);
+                                    if ([resposeObject[@"code"] integerValue] == 200) {
+                                        
+                                        [self showContent:resposeObject[@"msg"]];
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+                                        [self.navigationController popViewControllerAnimated:YES];
+                                    }else{
+                                        
+                                        [self showContent:resposeObject[@"msg"]];
+                                    }
+                                } failure:^(NSError *error) {
+                                    
+                                    [self showContent:@"网络错误"];
+                                }];
+                            };
+                            [[UIApplication sharedApplication].keyWindow addSubview:view];
+                        }else{
+                            
+                            [BaseRequest GET:AgentSignValue_URL parameters:@{@"client_id":_str} success:^(id resposeObject) {
+                                
+                                NSLog(@"%@",resposeObject);
+                                if ([resposeObject[@"code"] integerValue] == 200) {
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+                                    [self.navigationController popViewControllerAnimated:YES];
+                                }else{
+                                    
+                                    [self showContent:resposeObject[@"msg"]];
+                                }
+                            } failure:^(NSError *error) {
+                                
+                                [self showContent:@"网络错误"];
+                            }];
+                        }
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }];
+            
+            UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"客户无效" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                SignFailView *view = [[SignFailView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                
+                __strong __typeof(&*view)strongView = view;
+                view.signFailViewBlock = ^{
+                    
+                    NSMutableDictionary *dic;
+                    if ([self isEmpty:strongView.markTV.text]) {
+                        
+                        dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_str,@"disabled_state":view.agentId,@"comment":view.markTV.text}];
+                    }else{
+                        
+                        dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_str,@"disabled_state":view.agentId}];
+                    }
+                    [BaseRequest GET:AgentSignDisabled_URL parameters:dic success:^(id resposeObject) {
+                        
+                        NSLog(@"%@",resposeObject);
+                        if ([resposeObject[@"code"] integerValue] == 200) {
+                            
+                            [self showContent:resposeObject[@"msg"]];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+                            [self.navigationController popViewControllerAnimated:YES];
+                        }else{
+                            
+                            [self showContent:resposeObject[@"msg"]];
+                        }
+                    } failure:^(NSError *error) {
+                        
+                        [self showContent:@"网络错误"];
+                    }];
+                };
+                [[UIApplication sharedApplication].keyWindow addSubview:view];
+
+            }];
+            
+            [alert addAction:valid];
+            [alert addAction:invalid];
+            [alert addAction:cancel];
+            [self.navigationController presentViewController:alert animated:YES completion:^{
+                
+            }];
+        }
+    }else{
         
-        CompleteCustomVC1 *nextVC = [[CompleteCustomVC1 alloc] initWithClientID:_str name:_name dataDic:_dataDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
-    }];
-    
-    UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"未到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确认到访" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         
-        self.invalidView.client_id = _str;
-        [[UIApplication sharedApplication].keyWindow addSubview:self.invalidView];
-    }];
-    
-    [alert addAction:valid];
-    [alert addAction:invalid];
-    [alert addAction:cancel];
-    [self.navigationController presentViewController:alert animated:YES completion:^{
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
         
-    }];
+        UIAlertAction *valid = [UIAlertAction actionWithTitle:@"已到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            CompleteCustomVC1 *nextVC = [[CompleteCustomVC1 alloc] initWithClientID:_str name:_name dataDic:_dataDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
+        UIAlertAction *invalid = [UIAlertAction actionWithTitle:@"未到访" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            self.invalidView.client_id = _str;
+            [[UIApplication sharedApplication].keyWindow addSubview:self.invalidView];
+        }];
+        
+        [alert addAction:valid];
+        [alert addAction:invalid];
+        [alert addAction:cancel];
+        [self.navigationController presentViewController:alert animated:YES completion:^{
+            
+        }];
+    }
 }
 
 #pragma mark    -----  delegate   ------
@@ -158,9 +308,20 @@
     
     if (_checkArr.count) {
         
+        if (_sign) {
+            
+            return _data.count + 2;
+        }
         return _data.count + 1;
+    }else{
+        
+        if (_sign) {
+            
+            return _data.count + 1;
+        }
+        return _data.count;
     }
-    return _data.count;
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -172,7 +333,19 @@
         return arr.count? arr.count + 1:0;
     }else{
         
-        return _checkArr.count;
+        if (section == 1) {
+            
+            if (_checkArr.count) {
+                
+                return _checkArr.count;
+            }else{
+                
+                return _arrArr.count;
+            }
+        }else{
+            
+            return _arrArr.count;
+        }
     }
 }
 
@@ -186,7 +359,27 @@
     UILabel * title = [[UILabel alloc]initWithFrame:CGRectMake(27.3*SIZE, 19*SIZE, 300*SIZE, 16*SIZE)];
     title.font = [UIFont systemFontOfSize:15.3*SIZE];
     title.textColor = YJTitleLabColor;
-    title.text = _titleArr[section];
+//    title.text = _titleArr[section];
+    
+    if (section == 0) {
+        
+        title.text = _titleArr[section];
+    }else{
+        
+        if (section == 1) {
+            
+            if (_checkArr.count) {
+                
+                title.text = @"判重信息";
+            }else{
+                
+                title.text = @"到访信息";
+            }
+        }else{
+            
+            title.text = @"到访信息";
+        }
+    }
     [backview addSubview:title];
     return backview;
 }
@@ -228,14 +421,80 @@
         }
     }else{
         
-        static NSString *CellIdentifier = @"InfoDetailCell";
-        InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (!cell) {
-            cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        if (indexPath.section == 1) {
+            
+            if (_checkArr.count) {
+                
+                static NSString *CellIdentifier = @"InfoDetailCell";
+                InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (!cell) {
+                    cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                [cell SetCellContentbystring:_checkArr[indexPath.row]];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }else{
+                
+                static NSString *CellIdentifier = @"InfoDetailCell";
+                InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                if (!cell) {
+                    cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                }
+                [cell SetCellContentbystring:_arrArr[indexPath.row]];
+                if (indexPath.row == 0) {
+                    
+                    if (_sign) {
+                        
+                        cell.moreBtn.hidden = NO;
+                        [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
+                        cell.infoDetailCellBlock = ^{
+                            
+                            SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                            [self.navigationController pushViewController:nextVC animated:YES];
+                        };
+                    }
+                }else{
+                    
+                    cell.infoDetailCellBlock = ^{
+                        
+                        SignListVC *nextVC = [[SignListVC alloc] initWithDataArr:_signArr];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    };
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+        }else{
+            
+            static NSString *CellIdentifier = @"InfoDetailCell";
+            InfoDetailCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[InfoDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            [cell SetCellContentbystring:_arrArr[indexPath.row]];
+            if (indexPath.row == 0) {
+                
+                if (_sign) {
+                    
+                    cell.moreBtn.hidden = NO;
+                    [cell.moreBtn setTitle:@"查看需求信息" forState:UIControlStateNormal];
+                    cell.infoDetailCellBlock = ^{
+                        
+                        SignNeedInfoVC *nextVC = [[SignNeedInfoVC alloc] init];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    };
+                }
+            }else{
+                
+                cell.infoDetailCellBlock = ^{
+                    
+                    SignListVC *nextVC = [[SignListVC alloc] initWithDataArr:_signArr];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                };
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
-        [cell SetCellContentbystring:_checkArr[indexPath.row]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
     }
 }
 
@@ -251,10 +510,10 @@
     _Maintableview.delegate = self;
     _Maintableview.dataSource = self;
     [_Maintableview setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
-        
-        _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
-    }
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//
+//        _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
+//    }
     
     [self.view addSubview:_Maintableview];
     
@@ -265,10 +524,10 @@
     [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
-        
-        [self.view addSubview:_confirmBtn];
-    }
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+//
+//        [self.view addSubview:_confirmBtn];
+//    }
     
 }
 

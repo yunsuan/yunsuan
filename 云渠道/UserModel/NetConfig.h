@@ -355,6 +355,17 @@ static NSString *const TakeLookDisabledList_URL = @"agent/take/push/disabled/lis
 
 
 #pragma mark ---  工作  ---
+
+#pragma mark -- 签字流程 --
+
+//签字有效
+static NSString *const AgentSignValue_URL = @"agent/sign/value";
+
+//签字下一阶段人员
+static NSString *const AgentSignNextAgent_URL = @"agent/sign/nextAgent";
+
+//x签字无效
+static NSString *const AgentSignDisabled_URL = @"agent/sign/disabled";
 //static NSString *const RecommendList_URL = @"agent/work/getRecommendList";
 
 //经纪人信息统计
@@ -395,7 +406,6 @@ static NSString *const BrokerAppealDetail_URL = @"agent/work/broker/appealDetail
 
 //对接经纪人判断为有效到访
 static NSString *const ConfirmValue_URL = @"agent/client/confirmValue";
-
 
 //对接经纪人判断为无效
 static NSString *const ConfirmDisabled_URL = @"agent/client/confirmDisabled";
