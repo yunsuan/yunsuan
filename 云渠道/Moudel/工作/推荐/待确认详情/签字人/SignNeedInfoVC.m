@@ -57,7 +57,7 @@
             
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
-                NSData *JSONData = [resposeObject[@"data"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSData *JSONData = [resposeObject[@"data"][@"need_info"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
                 NSError *err = nil;
                 NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
                 _dataDic = [NSMutableDictionary dictionaryWithDictionary:parameters];

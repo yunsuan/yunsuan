@@ -10,7 +10,8 @@
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
-#import "WorkerPickView.h"
+//#import "WorkerPickView.h"
+#import "SignWorkerPickView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
@@ -142,6 +143,8 @@
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY-MM-dd"];
     
+    _agentname = @"";
+    _agentid = @"";
     _getDic = [@{} mutableCopy];
     _configDic = [@{} mutableCopy];
     _dataArr = [@[] mutableCopy];
@@ -180,12 +183,12 @@
     
     if (_agentid) {
         
-        [_configDic setObject:_agentid forKey:@"property_advicer_wish_id"];
-    }
-    
-    if (_agentname) {
+        if ([_agentid integerValue] != [_dataDic[@"appoint_agent_id"] integerValue]) {
+         
+            [_configDic setObject:_agentid forKey:@"appoint_agent_id"];
+            [_configDic setObject:_agentname forKey:@"log_id"];
+        }
         
-        [_configDic setObject:_agentname forKey:@"property_advicer_wish"];
     }
     for (int i = 0; i < _dataArr.count; i++) {
         
@@ -337,14 +340,7 @@
         }
         case 2:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.purposeBtn.content.text = MC;
-                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
+            [self action_agent];
             break;
         }
         default:
@@ -355,59 +351,18 @@
 -(void)action_agent
 {
     
-    if (_agentArr.count) {
+    if (_dataDic.count) {
         
-        WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
-        view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+        SignWorkerPickView *view = [[SignWorkerPickView alloc] initWithFrame:self.view.bounds WithData:_dataDic[@"agent_group"]];
+        //                    WS(weakSelf);
+        view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
             
-            _agentname = [NSString stringWithFormat:@"%@",RYXM];
-            
-            if (GSMC) {
-                _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-            }
-            else
-            {
-                _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
-            }
+            _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
+            _adviserBtn->str = [NSString stringWithFormat:@"%@",ID];
+//            _agentname = Name;
             _agentid = [NSString stringWithFormat:@"%@",ID];
         };
         [self.view addSubview:view];
-    }else{
-        
-        [BaseRequest GET:ProjectGetAdvicer_URL parameters:@{@"project_id":_dic[@"project_id"]} success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"][@"rows"] count]) {
-                    
-                    _agentArr = resposeObject[@"data"][@"rows"];
-                    WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:resposeObject[@"data"][@"rows"]];
-                    view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
-                        
-                        _agentname = [NSString stringWithFormat:@"%@",RYXM];
-                        
-                        if (GSMC) {
-                            _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
-                        }
-                        else
-                        {
-                            _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
-                        }
-                        _agentid = [NSString stringWithFormat:@"%@",ID];
-                    };
-                    [self.view addSubview:view];
-                }else{
-                    
-                    [self showContent:@"该项目暂未设置置业顾问"];
-                }
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"获取置业顾问失败"];
-        }];
     }
 }
 
@@ -440,7 +395,7 @@
             
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
-                NSData *JSONData = [resposeObject[@"data"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
+                NSData *JSONData = [resposeObject[@"data"][@"need_info"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
                 NSError *err = nil;
                 NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
                 _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
@@ -458,19 +413,38 @@
 
 - (void)SetData:(NSDictionary *)data{
     
-    _numBtn.content.text = [NSString stringWithFormat:@"%@人",_dataDic[@"visit_num"]];
-    _numBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"visit_num"]];
-    NSArray *arr = [self getDetailConfigArrByConfigState:BUY_TYPE];
-    [arr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-       
-        if ([_dataDic[@"buy_purpose"] integerValue] == [obj[@"id"] integerValue]) {
+    _numBtn.content.text = [NSString stringWithFormat:@"%@人",_dataDic[@"need_info"][@"visit_num"]];
+    _numBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"need_info"][@"visit_num"]];
+    if ([_dataDic[@"need_info"][@"buy_purpose"] integerValue]) {
+        
+        NSArray *arr = [self getDetailConfigArrByConfigState:BUY_TYPE];
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
-            _purposeBtn.content.text = [NSString stringWithFormat:@"%@",obj[@"param"]];
-            *stop = YES;
+            if ([_dataDic[@"need_info"][@"buy_purpose"] integerValue] == [obj[@"id"] integerValue]) {
+                
+                _purposeBtn.content.text = [NSString stringWithFormat:@"%@",obj[@"param"]];
+                *stop = YES;
+            }
+        }];
+        _purposeBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"need_info"][@"buy_purpose"]];
+    }
+    
+    if ([_dataDic[@"appoint_agent_id"] integerValue]) {
+        
+        for (int i = 0; i < [_dataDic[@"agent_group"] count]; i++) {
+            
+            if ([_dataDic[@"appoint_agent_id"] integerValue] == [_dataDic[@"agent_group"][i][@"agent_id"] integerValue]) {
+                
+                _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",_dataDic[@"agent_group"][i][@"name"],_dataDic[@"agent_group"][i][@"tel"]];
+            }
         }
-    }];
-    _purposeBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"buy_purpose"]];
-    [_imgUrl1 addObject:_dataDic[@"visit_img_url"]];
+//        _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",_dataDic[@"comsulatent_advicer"],_dataDic[@"consulatent_advicer_id"]];
+        _adviserBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"appoint_agent_id"]];
+        _agentid = [NSString stringWithFormat:@"%@",_dataDic[@"appoint_agent_id"]];
+        _agentname = [NSString stringWithFormat:@"%@",_dataDic[@"log_id"]];
+    }
+    
+    [_imgUrl1 addObject:_dataDic[@"need_info"][@"visit_img_url"]];
     [_authenColl1 reloadData];
     for (int i = 0; i < _moduleArr.count; i++) {
         
@@ -856,6 +830,7 @@
             case 2:
             {
                 _adviserBtn = btn;
+//                _adviserBtn
                 [_infoView addSubview:_adviserBtn];
                 break;
             }
