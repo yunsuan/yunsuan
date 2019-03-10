@@ -180,12 +180,13 @@
                 if (_needAppoint == 1) {
                     
                     _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",_agentArr[0][@"name"],_agentArr[0][@"tel"]];
+                    _workId = [NSString stringWithFormat:@"%@",_agentArr[0][@"agent_id"]];
                 }
             }else{
                 
-                _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
-                _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
-                _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
+//                _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
+//                _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
+//                _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
                 if ([resposeObject[@"data"][@"rows"] count]) {
                     
                     _workArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"rows"] mutableCopy]];
@@ -550,6 +551,7 @@
             view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
                 
                 _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
+                _workId = [NSString stringWithFormat:@"%@",ID];
             };
             [self.view addSubview:view];
         }else{
@@ -1846,8 +1848,16 @@
 ////
 ////            [dic removeObjectForKey:@"birth"];
 ////        }
-//        RecommendConfirmVC *nextVC = [[RecommendConfirmVC alloc] initWithData:dic];
-//        [self.navigationController pushViewController:nextVC animated:YES];
+        if (_isSign != 0) {
+            
+            [dic setObject:[NSString stringWithFormat:@"%ld",_isSign] forKey:@"sign_id"];
+            if (_selectWorkerBtn.content.text.length) {
+                
+                [dic setObject:_workId forKey:@"sign_agent_id"];
+            }
+            [dic removeObjectForKey:@"consultant_advicer_id"];
+        }
+
         [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {

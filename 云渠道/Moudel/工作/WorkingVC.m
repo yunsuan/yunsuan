@@ -168,7 +168,47 @@
             }];
         }
             break;
-
+        case 3:{
+            
+            _namelist = @[@"新房推荐"];
+            _imglist = @[@"recommended"];
+            _countdata  = @[@""];
+            [BaseRequest GET:Butterinfocount_URL parameters:nil success:^(id resposeObject) {
+                
+                [_MainTableView.mj_header endRefreshing];
+                if ([resposeObject[@"code"] integerValue] ==200) {
+                    
+                    _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend_count"],resposeObject[@"data"][@"value"],resposeObject[@"data"][@"valueDisabled"]]];
+                }
+                
+                _secCountData = @[//1房源报备
+                                  [NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],
+                                  //2勘察
+                                  [NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"house_survey"][@"value"],resposeObject[@"data"][@"house_survey"][@"disabled"],resposeObject[@"data"][@"house_survey"][@"total"]],
+                                  //3勘察维护
+                                  [NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],
+                                  //4客源推荐
+                                  [NSString stringWithFormat:@"推荐有效%@，推荐无效%@，累计%@",resposeObject[@"data"][@"house_take_recommend"][@"value"],resposeObject[@"data"][@"house_take_recommend"][@"disabled"],resposeObject[@"data"][@"house_take_recommend"][@"total"]],
+                                  //5带看
+                                  [NSString stringWithFormat:@"带看有效%@，带看无效%@，累计%@",resposeObject[@"data"][@"house_take"][@"value"],resposeObject[@"data"][@"house_take"][@"disabled"],resposeObject[@"data"][@"house_take"][@"total"]],
+                                  //6带看维护
+                                  [NSString stringWithFormat:@"累计%@条",resposeObject[@"data"][@"house_take_maintain"][@"total"]],
+                                  
+                                  //代购
+                                  [NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],
+                                  //8合同
+                                  [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
+                
+                
+                _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
+                
+                [_MainTableView reloadData];
+            } failure:^(NSError *error) {
+                
+                [_MainTableView.mj_header endRefreshing];
+            }];
+            break;
+        }
         default:{
             break;
         }
@@ -227,6 +267,9 @@
         if ([[UserModelArchiver unarchive].agent_identity integerValue]==1) {
 
             return 3;
+        }else if ([[UserModelArchiver unarchive].agent_identity integerValue]==3){
+            
+            return 1;
         }
         else{
 
@@ -344,8 +387,11 @@
                 RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
-        }
-        else{
+        }else if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
+            
+            RecommendVC1 *nextVC = [[RecommendVC1 alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
 
             if (indexPath.row == 0) {
 

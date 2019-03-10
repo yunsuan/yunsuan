@@ -111,7 +111,7 @@
     //        return;
     //    }
     
-    if ([_roleL.text isEqualToString:@"到访确认人"]) {
+    if ([_roleL.text isEqualToString:@"到访确认人"] || [_roleL.text isEqualToString:@"确认单签字人"]) {
         
         if ([_projectId isEqual:@""]) {
             
@@ -147,7 +147,7 @@
     [dic setObject:_companyId forKey:@"company_id"];
     [dic setObject:_role forKey:@"role"];
     [dic setObject:_numTextField.text forKey:@"work_code"];
-    if ([_roleL.text isEqualToString:@"到访确认人"]) {
+    if ([_roleL.text isEqualToString:@"到访确认人"] || [_roleL.text isEqualToString:@"确认单签字人"]) {
         
         [dic setObject:_projectId forKey:@"project_id"];
     }
@@ -256,12 +256,19 @@
                 self->_roleL.text = @"到访确认人";
             }];
             
+            UIAlertAction *sign = [UIAlertAction actionWithTitle:@"确认单签字人" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                self->_role = @"3";
+                self->_roleL.text = @"确认单签字人";
+            }];
+            
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 
             }];
             
             [alert addAction:agent];
             [alert addAction:comfirm];
+            [alert addAction:sign];
             [alert addAction:cancel];
             [self.navigationController presentViewController:alert animated:YES completion:^{
                 
@@ -270,7 +277,7 @@
         }
         case 3:
         {
-            if ([_role isEqualToString:@"2"]) {
+            if ([_role isEqualToString:@"2"] || [_role isEqualToString:@"3"]) {
                 
                 if (_companyId) {
                     

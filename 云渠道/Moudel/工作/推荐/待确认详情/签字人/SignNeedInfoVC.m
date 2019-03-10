@@ -55,7 +55,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if (resposeObject[@"data"]) {
+            if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
                 NSData *JSONData = [resposeObject[@"data"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
                 NSError *err = nil;

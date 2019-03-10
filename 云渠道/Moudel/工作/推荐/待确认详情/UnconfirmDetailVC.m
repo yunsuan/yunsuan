@@ -201,10 +201,10 @@
                         NSLog(@"%@",resposeObject);
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
-                            if ([resposeObject[@"data"] count]) {
+                            if ([resposeObject[@"data"][@"agentGroup"] count]) {
                                 
                                 SignSelectWorkerView *view = [[SignSelectWorkerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-                                view.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+                                view.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"agentGroup"]];
                                 __strong __typeof(&*view)strongView = view;
                                 view.signSelectWorkerViewBlock = ^{
                                     

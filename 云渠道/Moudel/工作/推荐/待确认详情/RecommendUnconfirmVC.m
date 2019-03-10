@@ -239,7 +239,7 @@
                             view.signSelectWorkerViewBlock = ^{
                                 
                                 NSMutableDictionary *dic;
-                                if ([self isEmpty:strongView.markTV.text]) {
+                                if (![self isEmpty:strongView.markTV.text]) {
                                     
                                     dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"agent_id":view.agentId,@"comment":view.markTV.text}];
                                 }else{
@@ -299,7 +299,7 @@
                 view.signFailViewBlock = ^{
                     
                     NSMutableDictionary *dic;
-                    if ([self isEmpty:strongView.markTV.text]) {
+                    if (![self isEmpty:strongView.markTV.text]) {
                         
                         dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_dataArr[index][@"client_id"],@"disabled_state":view.agentId,@"comment":view.markTV.text}];
                     }else{
