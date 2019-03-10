@@ -1857,9 +1857,10 @@
             }
             [dic removeObjectForKey:@"consultant_advicer_id"];
         }
-
+        _surebtn.userInteractionEnabled = NO;
         [BaseRequest POST:AddAndRecommend_URL parameters:dic success:^(id resposeObject) {
             
+            _surebtn.userInteractionEnabled = YES;
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
@@ -1875,6 +1876,7 @@
             }
         } failure:^(NSError *error) {
             
+            _surebtn.userInteractionEnabled = YES;
             [self showContent:@"网络错误"];
         }];
     }
