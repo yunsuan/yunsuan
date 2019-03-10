@@ -58,16 +58,19 @@
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
                 NSData *JSONData = [resposeObject[@"data"][@"need_info"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *err = nil;
-                NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
-                _dataDic = [NSMutableDictionary dictionaryWithDictionary:parameters];
-                [_dataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+                if (JSONData) {
                     
-                    if (![key isEqualToString:@"visit_img_url"]) {
+                    NSError *err = nil;
+                    NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
+                    _dataDic = [NSMutableDictionary dictionaryWithDictionary:parameters];
+                    [_dataDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
                         
-                        [_dataArr addObject:[NSString stringWithFormat:@"%@：%@",key,obj]];
-                    }
-                }];
+                        if (![key isEqualToString:@"visit_img_url"]) {
+                            
+                            [_dataArr addObject:[NSString stringWithFormat:@"%@：%@",key,obj]];
+                        }
+                    }];
+                }
             }
             [_table reloadData];
         }else{

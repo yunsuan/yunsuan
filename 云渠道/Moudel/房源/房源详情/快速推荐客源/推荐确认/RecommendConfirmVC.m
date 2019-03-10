@@ -347,7 +347,7 @@
                 if ([_dataArr[i][@"config"] isKindOfClass:[NSArray class]]) {
                     
                     NSMutableArray *tempArr = [@[] mutableCopy];
-                    for (int j = 0; j < [_dataArr[i][@"config"] count]; i++) {
+                    for (int j = 0; j < [_dataArr[i][@"config"] count]; j++) {
                         
                         if (j == 0) {
                             
@@ -385,10 +385,13 @@
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
                 NSData *JSONData = [resposeObject[@"data"][@"need_info"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *err = nil;
-                NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
-                _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
-                [self SetData:parameters];
+                if (JSONData) {
+                    
+                    NSError *err = nil;
+                    NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
+                    _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
+                    [self SetData:parameters];
+                }
             }
         }else{
             
