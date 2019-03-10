@@ -22,6 +22,8 @@
 @interface RecommendConfirmVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextViewDelegate>
 {
     
+//    NSMutableArray *_selectArr;
+    NSMutableArray *_selectAllArr;
     NSMutableDictionary *_dataDic;
     NSMutableDictionary *_getDic;
     NSMutableDictionary *_configDic;
@@ -64,44 +66,8 @@
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UICollectionView *authenColl1;
-//
-//@property (nonatomic, strong) UILabel *recommendTypeL;
-//
-//@property (nonatomic, strong) DropDownBtn *recommendTypeBtn;
 
 @property (nonatomic, strong) UIView *needInfoView;
-
-//@property (nonatomic, strong) UILabel *yearL;
-//
-//@property (nonatomic, strong) DropDownBtn *yearBtn;
-//
-//@property (nonatomic, strong) UILabel *professionL;
-//
-//@property (nonatomic, strong) DropDownBtn *professionBtn;
-//
-//@property (nonatomic, strong) UILabel *addressL;
-//
-//@property (nonatomic, strong) DropDownBtn *addressBtn;
-//
-//@property (nonatomic, strong) UILabel *propertyL;
-//
-//@property (nonatomic, strong) DropDownBtn *propertyBtn;
-//
-//@property (nonatomic, strong) UILabel *priceL;
-//
-//@property (nonatomic, strong) DropDownBtn *priceBtn;
-//
-//@property (nonatomic, strong) UILabel *areaL;
-//
-//@property (nonatomic, strong) DropDownBtn *areaBtn;
-//
-//@property (nonatomic, strong) UILabel *houseTypeL;
-//
-//@property (nonatomic, strong) DropDownBtn *houseTypeBtn;
-//
-//@property (nonatomic, strong) UILabel *decorateL;
-//
-//@property (nonatomic, strong) DropDownBtn *decorateBtn;
 
 @property (nonatomic, strong) UILabel *markL;
 
@@ -148,6 +114,8 @@
     _getDic = [@{} mutableCopy];
     _configDic = [@{} mutableCopy];
     _dataArr = [@[] mutableCopy];
+//    _selectArr = [@[] mutableCopy];
+    _selectAllArr = [@[] mutableCopy];
     _peopleArr = [[NSMutableArray alloc] init];
     for (int i = 1; i < 5; i++) {
         
@@ -374,6 +342,27 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             _dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"]];
+            for (int i = 0; i < _dataArr.count; i++) {
+                
+                if ([_dataArr[i][@"config"] isKindOfClass:[NSArray class]]) {
+                    
+                    NSMutableArray *tempArr = [@[] mutableCopy];
+                    for (int j = 0; j < [_dataArr[i][@"config"] count]; i++) {
+                        
+                        if (j == 0) {
+                            
+                            [tempArr addObject:@(1)];
+                        }else{
+                            
+                            [tempArr addObject:@(0)];
+                        }
+                    }
+                    [_selectAllArr addObject:tempArr];
+                }else{
+                    
+                    [_selectAllArr addObject:@[]];
+                }
+            }
             [self ReMasonryUI];
             [self InfoRequestMethod];
         }else{
@@ -531,21 +520,21 @@
         return 1;
     }else{
         
-        return 1;
+        return [_dataArr[collectionView.tag][@"config"] count];
     }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    AuthenCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AuthenCollCell" forIndexPath:indexPath];
-    if (!cell) {
-        
-        cell = [[AuthenCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 91 *SIZE)];
-    }
-    cell.cancelBtn.tag = indexPath.item;
-    cell.cancelBtn.hidden = YES;
-
     if (collectionView == _authenColl1) {
+        
+        AuthenCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AuthenCollCell" forIndexPath:indexPath];
+        if (!cell) {
+            
+            cell = [[AuthenCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 91 *SIZE)];
+        }
+        cell.cancelBtn.tag = indexPath.item;
+        cell.cancelBtn.hidden = YES;
         
         if (_imgUrl1.count) {
             
@@ -569,50 +558,51 @@
             cell.imageView.image = [UIImage imageNamed:@"uploadphotos"];
             cell.cancelBtn.hidden = YES;
         }
+        
+        return cell;
     }else{
         
-        if (_imgArr2.count) {
+        CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
+        if (!cell) {
             
-            if (indexPath.item < _imgArr2.count) {
-                
-                cell.imageView.image = _imgArr2[indexPath.item];
-            }else{
-                
-                cell.imageView.image = [UIImage imageNamed:@"uploadphotos"];
-                cell.cancelBtn.hidden = YES;
-            }
-        }else{
-            
-            cell.imageView.image = [UIImage imageNamed:@"uploadphotos"];
-            cell.cancelBtn.hidden = YES;
+            cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 130 *SIZE, 20 *SIZE)];
         }
+        cell.selectImg.image = [UIImage imageNamed:@"default"];
+//        [cell setIsSelect:[_selectAllArr[collectionView.tag][indexPath.item] integerValue]];
+        
+        cell.titleL.text = _dataArr[collectionView.tag][@"config"][indexPath.item][@"config_name"];
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    _index = indexPath.item;
-
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    if (collectionView == _authenColl1) {
         
-        [self selectPhotoAlbumPhotos];
-    }];
-    UIAlertAction *takePic = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        _index = indexPath.item;
         
-        [self takingPictures];
-    }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"选择照片" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *photo = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self selectPhotoAlbumPhotos];
+        }];
+        UIAlertAction *takePic = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self takingPictures];
+        }];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alertController addAction:takePic];
+        [alertController addAction:photo];
+        [alertController addAction:cancel];
+        [self.navigationController presentViewController:alertController animated:YES completion:^{
+            
+        }];
+    }else{
         
-    }];
-    [alertController addAction:takePic];
-    [alertController addAction:photo];
-    [alertController addAction:cancel];
-    [self.navigationController presentViewController:alertController animated:YES completion:^{
         
-    }];
+    }
 }
 
 #pragma mark - 选择头像
@@ -872,17 +862,10 @@
     [_markView addSubview:_placeL];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     _confirmBtn.layer.cornerRadius = 2 *SIZE;
     _confirmBtn.clipsToBounds = YES;
-//    if (_dic.count) {
-//
-//        [_confirmBtn setTitle:@"推荐" forState:UIControlStateNormal];
-//    }else{
-//
-        [_confirmBtn setTitle:@"保存" forState:UIControlStateNormal];
-//    }
+    [_confirmBtn setTitle:@"保存" forState:UIControlStateNormal];
     [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_confirmBtn];
     
@@ -1031,6 +1014,7 @@
                 
                 UICollectionView *coll = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 240 *SIZE, 20 *SIZE) collectionViewLayout:flowLayout];
                 coll.backgroundColor = [UIColor whiteColor];
+                coll.tag = i;
                 coll.bounces = NO;
                 coll.delegate = self;
                 coll.dataSource = self;
@@ -1076,7 +1060,7 @@
             }];
         }else{
     
-            NSDictionary *dic = _dataArr[i - 1];
+            NSDictionary *dic = _dataArr[i];
             switch ([dic[@"type"] integerValue]) {
                 
                 case 1:

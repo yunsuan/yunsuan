@@ -457,6 +457,11 @@
         case 18:{
             
             ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_data[indexPath.row][@"client_id"]];
+            nextVC.confirmPhoneWaitDetailVCBlock = ^{
+              
+                _page = 1;
+                [self postWithpage:@"1"];
+            };
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
