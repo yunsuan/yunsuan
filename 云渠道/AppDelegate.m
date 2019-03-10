@@ -504,6 +504,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 [UserModel defaultModel].agent_identity = @"2";
                 break;
             }
+            case 4:{
+                
+                [UserModel defaultModel].agent_identity = @"3";
+                break;
+            }
             default:
                 break;
         }
@@ -636,6 +641,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
             case 3:
             {
                 [UserModel defaultModel].agent_identity = @"2";
+                break;
+            }
+            case 4:{
+                
+                [UserModel defaultModel].agent_identity = @"3";
                 break;
             }
             default:
