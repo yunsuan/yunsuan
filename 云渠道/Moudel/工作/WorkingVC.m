@@ -221,6 +221,7 @@
 -(void)initDateSouce
 {
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadType) name:@"reloadType" object:nil];
     if (![UserModel defaultModel].workArr.count) {
 
         [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
@@ -237,6 +238,11 @@
     [self.rightBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.rightBtn setImage:[UIImage imageNamed:@"add_50"] forState:UIControlStateNormal];
     [self.view addSubview:self.MainTableView];
+}
+
+- (void)ReloadType{
+    
+    [self postWithidentify:[UserModelArchiver unarchive].agent_identity];
 }
 
 - (void)ActionMoreBtn:(UIButton *)btn{

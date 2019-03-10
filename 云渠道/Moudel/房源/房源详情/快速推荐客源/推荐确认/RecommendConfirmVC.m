@@ -10,6 +10,7 @@
 
 #import "SinglePickView.h"
 #import "DateChooseView.h"
+#import "WorkerPickView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
@@ -36,6 +37,10 @@
     NSMutableArray *_imgUrl2;
     UIImagePickerController *_imagePickerController;
     UIImage *_image;
+    
+    NSString *_agentname;
+    NSString *_agentid;
+    NSArray *_agentArr;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -48,6 +53,10 @@
 @property (nonatomic, strong) UILabel *purposeL;
 
 @property (nonatomic, strong) DropDownBtn *purposeBtn;
+
+@property (nonatomic, strong) UILabel *adviserL;
+
+@property (nonatomic, strong) DropDownBtn *adviserBtn;
 
 @property (nonatomic, strong) UILabel *visitL;
 
@@ -169,6 +178,15 @@
         [_configDic setObject:_purposeBtn->str forKey:@"buy_purpose"];
     }
     
+    if (_agentid) {
+        
+        [_configDic setObject:_agentid forKey:@"property_advicer_wish_id"];
+    }
+    
+    if (_agentname) {
+        
+        [_configDic setObject:_agentname forKey:@"property_advicer_wish"];
+    }
     for (int i = 0; i < _dataArr.count; i++) {
         
         NSDictionary *dic = _dataArr[i];
@@ -212,7 +230,7 @@
     
     if (_imgUrl1) {
         
-        [_getDic setObject:[_imgUrl1 componentsJoinedByString:@","] forKey:@"visit_img_url"];
+        [_configDic setObject:[_imgUrl1 componentsJoinedByString:@","] forKey:@"visit_img_url"];
     }
     
     NSError *error = nil;
@@ -317,14 +335,80 @@
             [self.view addSubview:view];
             break;
         }
+        case 2:
+        {
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:BUY_TYPE]];
+            WS(weakself);
+            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                
+                weakself.purposeBtn.content.text = MC;
+                weakself.purposeBtn->str = [NSString stringWithFormat:@"%@",ID];
+            };
+            [self.view addSubview:view];
+            break;
+        }
         default:
             break;
     }
 }
 
-- (void)ActionTagBtn:(UIButton *)btn{
+-(void)action_agent
+{
     
-    
+    if (_agentArr.count) {
+        
+        WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
+        view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+            
+            _agentname = [NSString stringWithFormat:@"%@",RYXM];
+            
+            if (GSMC) {
+                _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+            }
+            else
+            {
+                _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+            }
+            _agentid = [NSString stringWithFormat:@"%@",ID];
+        };
+        [self.view addSubview:view];
+    }else{
+        
+        [BaseRequest GET:ProjectGetAdvicer_URL parameters:@{@"project_id":_dic[@"project_id"]} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if ([resposeObject[@"data"][@"rows"] count]) {
+                    
+                    _agentArr = resposeObject[@"data"][@"rows"];
+                    WorkerPickView *view= [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:resposeObject[@"data"][@"rows"]];
+                    view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+                        
+                        _agentname = [NSString stringWithFormat:@"%@",RYXM];
+                        
+                        if (GSMC) {
+                            _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                        }
+                        else
+                        {
+                            _adviserBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                        }
+                        _agentid = [NSString stringWithFormat:@"%@",ID];
+                    };
+                    [self.view addSubview:view];
+                }else{
+                    
+                    [self showContent:@"该项目暂未设置置业顾问"];
+                }
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"获取置业顾问失败"];
+        }];
+    }
 }
 
 - (void)RequestMethod{
@@ -376,7 +460,17 @@
     
     _numBtn.content.text = [NSString stringWithFormat:@"%@人",_dataDic[@"visit_num"]];
     _numBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"visit_num"]];
-    [_imgUrl1 addObject:data[@"visit_img_url"]];
+    NSArray *arr = [self getDetailConfigArrByConfigState:BUY_TYPE];
+    [arr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        if ([_dataDic[@"buy_purpose"] integerValue] == [obj[@"id"] integerValue]) {
+            
+            _purposeBtn.content.text = [NSString stringWithFormat:@"%@",obj[@"param"]];
+            *stop = YES;
+        }
+    }];
+    _purposeBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"buy_purpose"]];
+    [_imgUrl1 addObject:_dataDic[@"visit_img_url"]];
     [_authenColl1 reloadData];
     for (int i = 0; i < _moduleArr.count; i++) {
         
@@ -703,7 +797,7 @@
     _infoView.backgroundColor = [UIColor whiteColor];
     [_scrollView addSubview:_infoView];
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -730,12 +824,18 @@
                 [_infoView addSubview:_visitL];
                 break;
             }
+            case 3:{
+                
+                label.text = @"置业顾问:";
+                _adviserL = label;
+                [_infoView addSubview:_adviserL];
+            }
             default:
                 break;
         }
     }
     
-    for (int i = 0 ; i < 2; i++) {
+    for (int i = 0 ; i < 3; i++) {
         
         DropDownBtn *btn = [[DropDownBtn alloc] initWithFrame:CGRectMake(80 *SIZE, 25 *SIZE + i * 55 *SIZE, 258 *SIZE, 33 *SIZE)];
         btn.tag = i;
@@ -751,6 +851,12 @@
             {
                 _purposeBtn = btn;
                 [_infoView addSubview:_purposeBtn];
+                break;
+            }
+            case 2:
+            {
+                _adviserBtn = btn;
+                [_infoView addSubview:_adviserBtn];
                 break;
             }
             default:
@@ -866,10 +972,26 @@
         make.height.equalTo(@(33 *SIZE));
     }];
     
-    [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_adviserL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
         make.top.equalTo(self->_purposeBtn.mas_bottom).offset(31 *SIZE);
+        make.width.equalTo(@(70 *SIZE));
+        make.height.equalTo(@(13 *SIZE));
+    }];
+    
+    [_adviserBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(80 *SIZE);
+        make.top.equalTo(self->_purposeBtn.mas_bottom).offset(21 *SIZE);
+        make.width.equalTo(@(258 *SIZE));
+        make.height.equalTo(@(33 *SIZE));
+    }];
+    
+    [_visitL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_infoView).offset(10 *SIZE);
+        make.top.equalTo(self->_adviserBtn.mas_bottom).offset(31 *SIZE);
         make.width.equalTo(@(70 *SIZE));
         make.height.equalTo(@(13 *SIZE));
     }];
@@ -882,151 +1004,6 @@
         make.height.equalTo(@(91 *SIZE));
         make.bottom.equalTo(_infoView.mas_bottom).offset(-20 *SIZE);
     }];
-    
-//    [_yearL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(_needInfoView).offset(21 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_yearBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(_needInfoView).offset(11 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_professionL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_yearBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_professionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_yearBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_addressL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_professionBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_professionBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_addressBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_propertyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_addressBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-    
-//    [_priceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_propertyBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_priceBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_priceBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_houseTypeL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_areaBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_houseTypeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_areaBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-//
-//    [_decorateL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(31 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_decorateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(self->_houseTypeBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(258 *SIZE));
-//        make.height.equalTo(@(33 *SIZE));
-//    }];
-    
-//    [_markL mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(10 *SIZE);
-//        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(70 *SIZE));
-//        make.height.equalTo(@(13 *SIZE));
-//    }];
-//
-//    [_markView mas_makeConstraints:^(MASConstraintMaker *make) {
-//
-//        make.left.equalTo(_needInfoView).offset(80 *SIZE);
-//        make.top.equalTo(_decorateBtn.mas_bottom).offset(21 *SIZE);
-//        make.width.equalTo(@(270 *SIZE));
-//        make.height.equalTo(@(117 *SIZE));
-//        make.bottom.equalTo(_needInfoView.mas_bottom).offset(-20 *SIZE);
-//    }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         

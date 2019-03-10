@@ -68,16 +68,6 @@
                          }
                      }];
                      
-                     if (_dataDic[@"sign"]) {
-                         
-                         _sign = YES;
-                         _signArr = _dataDic[@"sign"];
-                         _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"confirm_name"]],[NSString stringWithFormat:@"联系方式：%@",_dataDic[@"confirm_tel"]],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],[NSString stringWithFormat:@"到访时间：%@",_dataDic[@"process"][1][@"time"]],[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]],[NSString stringWithFormat:@"确认状态：%@",_dataDic[@"butter_name"]]];
-                     }else{
-                         
-                         
-                     }
-                    
                      NSString *sex = @"客户性别：";
                      if ([_dataDic[@"sex"] integerValue] == 1) {
                          sex = @"客户性别：男";
@@ -97,6 +87,19 @@
                      }
                      NSString *adress = _dataDic[@"absolute_address"];
                      adress = [NSString stringWithFormat:@"项目地址：%@-%@-%@ %@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],adress];
+                     
+                     if (_dataDic[@"sign"]) {
+                         
+                         _sign = YES;
+                         _signArr = _dataDic[@"sign"];
+                         _arrArr = @[[NSString stringWithFormat:@"客户姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"%@",tel],[NSString stringWithFormat:@"到访人数：%@人",_dataDic[@"visit_num"]],_signArr.count?[NSString stringWithFormat:@"到访时间：%@",_signArr[0][@"create_time"]]:@"到访时间：",_dataDic[@"property_advicer_wish"]?[NSString stringWithFormat:@"置业顾问：%@",_dataDic[@"property_advicer_wish"]]:@"置业顾问：",_signArr.count?[NSString stringWithFormat:@"确认状态：%@",_signArr[0][@"state_name"]]:@"确认状态："];
+                         
+                     }else{
+                         
+                         
+                     }
+                    
+                     
                      
                      if ([_dataDic[@"tel_check_info"] isKindOfClass:[NSDictionary class]] && [_dataDic[@"tel_check_info"] count]) {
                          

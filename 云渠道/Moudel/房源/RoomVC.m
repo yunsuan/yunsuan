@@ -66,6 +66,7 @@
 - (void)initDataSource{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionGoto:) name:@"goto" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadType) name:@"reloadType" object:nil];
     
     _titlearr = [UserModel defaultModel].tagSelectArr;
     
@@ -87,6 +88,11 @@
             }
         }];
     }
+}
+
+- (void)ReloadType{
+    
+    [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
 }
 
 - (void)StartLocation{
