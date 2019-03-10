@@ -122,7 +122,7 @@
                      _endtime = _dataDic[@"timeLimit"];
                      [_Maintableview reloadData];
                      
-                     if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+                     if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
                          
                          if ([self.needConfirm integerValue]) {
                              
@@ -185,7 +185,7 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
         
         if (_sign) {
             
