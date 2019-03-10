@@ -56,9 +56,11 @@
         if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
             
             _confirmBtn.hidden = YES;
+            _statusL.hidden = YES;
         }else{
             
             _confirmBtn.hidden = NO;
+            _statusL.hidden = YES;
         }
     }
 }
