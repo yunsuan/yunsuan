@@ -1749,6 +1749,7 @@
     if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"电话号码不完整"];
+        return;
     }else{
         
         if (!_phoneTF4.text.length) {

@@ -112,6 +112,7 @@
     _agentname = @"";
     _agentid = @"";
     _getDic = [@{} mutableCopy];
+    _dataDic = [@{} mutableCopy];
     _configDic = [@{} mutableCopy];
     _dataArr = [@[] mutableCopy];
 //    _selectArr = [@[] mutableCopy];
@@ -384,12 +385,12 @@
             
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
+                _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
                 NSData *JSONData = [resposeObject[@"data"][@"need_info"][@"content"] dataUsingEncoding:NSUTF8StringEncoding];
                 if (JSONData) {
                     
                     NSError *err = nil;
                     NSDictionary *parameters = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
-                    _dataDic = [NSMutableDictionary dictionaryWithDictionary:resposeObject[@"data"]];
                     [self SetData:parameters];
                 }
             }
