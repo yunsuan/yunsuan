@@ -49,22 +49,28 @@
 
 - (void)ActionCancelBtn:(UIButton *)btn{
     
-    [BaseRequest GET:CancelAuth_URL parameters:@{@"id":_dataDic[@"id"]} success:^(id resposeObject) {
+    [self alertControllerWithNsstring:@"温馨提示" And:@"你确认要取消当前公司认证？" WithCancelBlack:^{
         
-//        NSLog(@"%@",resposeObject);
-        [self showContent:resposeObject[@"msg"]];
-        if ([resposeObject[@"code"] integerValue] == 200) {
+    } WithDefaultBlack:^{
+        
+        [BaseRequest GET:CancelAuth_URL parameters:@{@"id":_dataDic[@"id"]} success:^(id resposeObject) {
             
-            [self alertControllerWithNsstring:@"取消认证成功" And:nil WithDefaultBlack:^{
-               
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-        }
-    } failure:^(NSError *error) {
-        
-        [self showContent:@"网络错误"];
-//        NSLog(@"%@",error);
+            //        NSLog(@"%@",resposeObject);
+            [self showContent:resposeObject[@"msg"]];
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self alertControllerWithNsstring:@"取消认证成功" And:nil WithDefaultBlack:^{
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            //        NSLog(@"%@",error);
+        }];
     }];
+    
 }
 
 #pragma mark    -----  delegate   ------

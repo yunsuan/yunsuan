@@ -139,7 +139,7 @@
     if (!_Account) {
         _Account = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, STATUS_BAR_HEIGHT+119*SIZE, 200*SIZE, 25*SIZE)];
         _Account.placeholder = @"请输入原始密码";
-        _Account.keyboardType = UIKeyboardTypePhonePad;
+        _Account.keyboardType = UIKeyboardTypeDefault;
         _Account.delegate = self;
         _Account.font = [UIFont systemFontOfSize:14*SIZE];
         

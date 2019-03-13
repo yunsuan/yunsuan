@@ -89,24 +89,30 @@
 
 - (void)ActionCancelBtn:(UIButton *)btn{
     
-    [BaseRequest GET:QuitAuth_URL parameters:@{@"id":_dataDic[@"id"]} success:^(id resposeObject) {
+    [self alertControllerWithNsstring:@"温馨提示" And:@"你确认要离职已认证的公司" WithCancelBlack:^{
         
-        if ([resposeObject[@"code"] integerValue] == 200) {
+        
+    } WithDefaultBlack:^{
+       
+        [BaseRequest GET:QuitAuth_URL parameters:@{@"id":_dataDic[@"id"]} success:^(id resposeObject) {
             
-            [self alertControllerWithNsstring:@"离职成功" And:nil WithDefaultBlack:^{
+            if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [UserModel defaultModel].agent_identity = @"1";
-                [UserModelArchiver archive];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
-                [self.navigationController popViewControllerAnimated:YES];
-            }];
-        }else{
+                [self alertControllerWithNsstring:@"离职成功" And:nil WithDefaultBlack:^{
+                    
+                    [UserModel defaultModel].agent_identity = @"1";
+                    [UserModelArchiver archive];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
             
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-        [self showContent:@"网络错误"];
+            [self showContent:@"网络错误"];
+        }];
     }];
 }
 
