@@ -329,31 +329,6 @@ static NSString *const kQQAPPID = @"1106811849";
     
 }
 
-
-//- (void)GotoMessVC{
-//
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-//    SystemMessageVC *next_vc = [[SystemMessageVC alloc] init];
-//    next_vc.hidesBottomBarWhenPushed = YES;
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
-//    nav.navigationBar.hidden = YES;
-//    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
-//
-//    }];
-//}
-//
-//- (void)GotoSystemVC{
-//
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
-//    WorkMessageVC *next_vc = [[WorkMessageVC alloc] init];
-//    next_vc.hidesBottomBarWhenPushed = YES;
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:next_vc];
-//    nav.navigationBar.hidden = YES;
-//    [self.window.rootViewController presentViewController:nav animated:YES completion:^{
-//
-//    }];
-//}
-
 - (void)GotoHome{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];

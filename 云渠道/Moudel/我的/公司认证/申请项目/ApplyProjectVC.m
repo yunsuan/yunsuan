@@ -7,7 +7,8 @@
 //
 
 #import "ApplyProjectVC.h"
-#import "PeopleCell.h"
+//#import "PeopleCell.h"
+#import "ApplyProjectCell.h"
 //#import "RoomListModel.h"
 #import "MyAttentionModel.h"
 
@@ -17,9 +18,14 @@
     NSString *_companyId;
     NSMutableArray *_dataArr;
     NSInteger _page;
+    NSMutableArray *_selectArr;
+    NSString *_projectId;
+    NSString *_projectName;
 }
 
 @property (nonatomic , strong) UITableView *MainTableView;
+
+@property (nonatomic, strong) UIButton *confirmBtn;
 
 @end
 
@@ -53,6 +59,7 @@
     
     _page = 1;
     _dataArr = [@[] mutableCopy];
+    _selectArr = [@[] mutableCopy];
     [self RequestMethod];
 }
 
@@ -144,12 +151,48 @@
         
         MyAttentionModel *model = [[MyAttentionModel alloc] initWithDictionary:tempDic];
         
+        [_selectArr addObject:@(0)];
         [_dataArr addObject:model];
     }
     
     [_MainTableView reloadData];
 }
 
+
+- (void)ActionConfirmBtn:(UIButton *)btn{
+    
+    if (self.applyProjectVCBlock) {
+        
+//        RoomListModel *model = _dataArr[indexPath.row];
+//        self.applyProjectVCBlock(model.project_id, model.project_name);
+        for (int i = 0; i < _selectArr.count; i++) {
+            
+            if ([_selectArr[i] integerValue] == 1) {
+                
+                RoomListModel *model = _dataArr[i];
+                if (!_projectId.length) {
+                    
+                    _projectId = [NSString stringWithFormat:@"%@",model.project_id];
+                    _projectName = [NSString stringWithFormat:@"%@",model.project_name];
+                }else{
+                    
+                    _projectId = [NSString stringWithFormat:@"%@,%@",_projectId,model.project_id];
+                    _projectName = [NSString stringWithFormat:@"%@,%@",_projectName,model.project_name];
+                }
+            }
+        }
+        if (_projectId.length) {
+            
+            
+            self.applyProjectVCBlock(_projectId, _projectName);
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择项目"];
+        }
+    }
+
+}
 
 #pragma mark  ---  delegate   ---
 
@@ -172,14 +215,22 @@
 {
     
     
-    static NSString *CellIdentifier = @"PeopleCell";
+    static NSString *CellIdentifier = @"ApplyProjectCell";
     
-    PeopleCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ApplyProjectCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[PeopleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[ApplyProjectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     MyAttentionModel *model = _dataArr[indexPath.row];
     [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
+    
+    if ([_selectArr[indexPath.row] integerValue] == 1) {
+        
+        cell.selectImg.image = [UIImage imageNamed:@"selected"];
+    }else{
+        
+        cell.selectImg.image = [UIImage imageNamed:@"default"];
+    }
     
     NSArray *tempArr1 = @[model.property_tags,model.project_tags_name];
     [cell settagviewWithdata:tempArr1];
@@ -207,12 +258,16 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.applyProjectVCBlock) {
+    
+    if ([_selectArr[indexPath.row] integerValue] == 1) {
         
-        RoomListModel *model = _dataArr[indexPath.row];
-        self.applyProjectVCBlock(model.project_id, model.project_name);
-        [self.navigationController popViewControllerAnimated:YES];
+        [_selectArr replaceObjectAtIndex:indexPath.row withObject:@(0)];
+    }else{
+        
+        [_selectArr replaceObjectAtIndex:indexPath.row withObject:@(1)];
     }
+    
+    [tableView reloadData];
 }
 
 -(void)initUI
@@ -221,7 +276,16 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"选择项目";
     
+    
     [self.view addSubview:self.MainTableView];
+    
+    _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _confirmBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+    _confirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_confirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [_confirmBtn setBackgroundColor:YJBlueBtnColor];
+    [self.view addSubview:_confirmBtn];
 }
 
 #pragma mark  ---  懒加载   ---
@@ -229,7 +293,7 @@
 {
     if(!_MainTableView)
     {
-        _MainTableView =   [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
+        _MainTableView =   [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_MORE - 47 *SIZE) style:UITableViewStylePlain];
         _MainTableView.backgroundColor = YJBackColor;
         _MainTableView.delegate = self;
         _MainTableView.dataSource = self;
