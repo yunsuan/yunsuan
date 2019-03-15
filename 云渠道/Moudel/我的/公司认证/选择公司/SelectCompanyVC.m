@@ -63,6 +63,7 @@
 
 - (void)RequestMethod{
     
+    _isSearch = NO;
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     if (_province) {
         
@@ -83,8 +84,6 @@
     _selecTable.mj_footer.state = MJRefreshStateIdle;
     [_dataArr removeAllObjects];
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
-        
-        //        NSLog(@"%@",resposeObject);
         
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -252,7 +251,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-    if (textField.text) {
+    if ([self isEmpty:textField.text]) {
 
         _isSearch = YES;
         [BaseRequest GET:GetCompanyList_URL parameters:@{@"company_name":textField.text} success:^(id resposeObject) {
@@ -283,7 +282,8 @@
         }];
     }else{
         
-        [self showContent:@"请输入公司名称"];
+//        [self showContent:@"请输入公司名称"];
+        [self RequestMethod];
     }
     return YES;
 }
@@ -560,7 +560,14 @@
     [self.view addSubview:_selecTable];
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
-        [self RequestMethod];
+        if (_isSearch) {
+            
+            [self SearchRequest];
+        }else{
+            
+            
+            [self RequestMethod];
+        }
     }];
     
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{

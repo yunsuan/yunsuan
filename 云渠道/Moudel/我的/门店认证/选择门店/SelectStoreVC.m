@@ -115,7 +115,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     _page = 1;
-    if (textField.text) {
+    if ([self isEmpty:textField.text]) {
         
         _isSearch = YES;
         
@@ -158,13 +158,15 @@
         }];
     }else{
         
-        [self showContent:@"请输入公司名称"];
+//        [self showContent:@"请输入公司名称"];
+        [self RequestMethod];
     }
     return YES;
 }
 
 - (void)RequestMethod{
     
+    _isSearch = NO;
     _page = 1;
     _selecTable.mj_footer.state = MJRefreshStateIdle;
     NSDictionary *dic;
@@ -560,24 +562,24 @@
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
 
         _page = 1;
-//        if (_isSearch) {
+        if (_isSearch) {
         
             [self SearchRequest];
-//        }else{
-//
-//            [self RequestMethod];
-//        }
+        }else{
+
+            [self RequestMethod];
+        }
     }];
 
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
 
-//        if (_isSearch) {
+        if (_isSearch) {
         
             [self SearchRequest];
-//        }else{
-//            
-//            [self RequestAddMethod];
-//        }
+        }else{
+            
+            [self RequestAddMethod];
+        }
 
     }];
     
