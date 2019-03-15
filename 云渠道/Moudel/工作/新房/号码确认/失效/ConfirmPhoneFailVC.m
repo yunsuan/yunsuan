@@ -124,10 +124,10 @@
 
 - (void)SetData:(NSArray *)data{
     
-    if (data.count < 15) {
-        
-        _table.mj_footer.state = MJRefreshStateNoMoreData;
-    }
+//    if (data.count < 15) {
+//        
+//        _table.mj_footer.state = MJRefreshStateNoMoreData;
+//    }
     for (int i = 0; i < data.count; i++) {
         
         NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:data[i]];

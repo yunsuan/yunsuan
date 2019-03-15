@@ -110,10 +110,10 @@
 
 - (void)SetData:(NSArray *)data{
     
-    if (data.count < 15) {
-        
-        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
-    }
+//    if (data.count < 15) {
+//        
+//        _waitTable.mj_footer.state = MJRefreshStateNoMoreData;
+//    }
     _dataArr = [NSMutableArray arrayWithArray:data];
     for (int i = 0; i < _dataArr.count; i++) {
         
