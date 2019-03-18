@@ -139,7 +139,7 @@
         [dic setObject:_district forKey:@"district"];
     }
     
-    _page += 1;
+    
     [dic setObject:@(_page) forKey:@"page"];
     
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
@@ -187,7 +187,7 @@
 - (void)SearchRequest{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    _page += 1;
+//    _page += 1;
     [dic setObject:@(_page) forKey:@"page"];
     
     if (![self isEmpty:_searchBar.text]) {
@@ -266,9 +266,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
+    _page = 1;
     if (![self isEmpty:textField.text]) {
 
-        _page = 0;
         _isSearch = YES;
         [self SearchRequest];
 
@@ -551,9 +551,9 @@
     [self.view addSubview:_selecTable];
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
+        _page = 1;
         if (_isSearch) {
-            
-            _page = 0;
+
             [self SearchRequest];
         }else{
             
@@ -564,6 +564,7 @@
     
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
+        _page += 1;
         if (_isSearch) {
             
             [self SearchRequest];
