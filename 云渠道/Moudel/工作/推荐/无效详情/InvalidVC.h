@@ -10,6 +10,8 @@
 
 @interface InvalidVC : BaseViewController
 
+//@property (nonatomic, strong) NSString *<#class#>;
+
 - (instancetype)initWithClientId:(NSString *)clientId;
 
 @end

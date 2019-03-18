@@ -58,8 +58,16 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+//            [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+//            if ([resposeObject[@"data"][@"data"] count] < 15) {
+//
+//                _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+//            }
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [_MainTableView.mj_footer endRefreshing];
+                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+            }else{
                 
                 _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
@@ -89,13 +97,14 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
-                
-                _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-            }else{
+//            [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [_MainTableView.mj_footer endRefreshing];
+                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+            }else{
+                
+                _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }
         else{

@@ -8,6 +8,7 @@
 
 #import "InvalidVC.h"
 #import "ComplaintVC.h"
+#import "QuickAddCustomVC.h"
 
 #import "BaseHeader.h"
 //#import "CountDownCell.h"
@@ -405,32 +406,39 @@
 
 - (void)ActionRecommendBtn:(UIButton *)btn{
     
-    [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_dataDic[@"project_id"],@"client_need_id":_dataDic[@"client_need_id"],@"client_id":_dataDic[@"client_info_id"]} success:^(id resposeObject) {
-
-        if ([resposeObject[@"code"] integerValue] == 200) {
-            
-            self.recommendView.codeL.text = [NSString stringWithFormat:@"推荐编号:%@",resposeObject[@"data"][@"client_id"]];
-            self.recommendView.nameL.text = [NSString stringWithFormat:@"客户：%@",_dataDic[@"name"]];
-            self.recommendView.projectL.text = [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]];
-            self.recommendView.addressL.text = [NSString stringWithFormat:@"项目地址：%@-%@-%@-%@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],_dataDic[@"absolute_address"]];
-//            self.recommendView.contactL.text = [NSString stringWithFormat:@"到访确认人：%@",_dataDic[@"butter_name"]];
-//            self.recommendView.phoneL.text = [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"butter_tel"]];
-            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间:%@",resposeObject[@"data"][@"end_time"]]];
-            [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 5)];
-            self.recommendView.timeL.attributedText = attr;
-            [[UIApplication sharedApplication].keyWindow addSubview:self.recommendView];
-        }else{
-            
-            self.failView.reasonL.text = resposeObject[@"msg"];
-            self.failView.timeL.text = [_formatter stringFromDate:[NSDate date]];
-            [[UIApplication sharedApplication].keyWindow addSubview:self.failView];
-        }
-    } failure:^(NSError *error) {
+    if (_dataDic.count) {
         
-        self.failView.reasonL.text = @"网络错误";
-        self.failView.timeL.text = [_formatter stringFromDate:[NSDate date]];
-        [[UIApplication sharedApplication].keyWindow addSubview:self.failView];
-    }];
+        QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_dataDic[@"project_id"]] clientId:[NSString stringWithFormat:@"%@",_dataDic[@"client_info_id"]]];
+        nextVC.projectName = _dataDic[@"project_name"];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+    
+//    [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_dataDic[@"project_id"],@"client_need_id":_dataDic[@"client_need_id"],@"client_id":_dataDic[@"client_info_id"]} success:^(id resposeObject) {
+//
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//            
+//            self.recommendView.codeL.text = [NSString stringWithFormat:@"推荐编号:%@",resposeObject[@"data"][@"client_id"]];
+//            self.recommendView.nameL.text = [NSString stringWithFormat:@"客户：%@",_dataDic[@"name"]];
+//            self.recommendView.projectL.text = [NSString stringWithFormat:@"项目名称：%@",_dataDic[@"project_name"]];
+//            self.recommendView.addressL.text = [NSString stringWithFormat:@"项目地址：%@-%@-%@-%@",_dataDic[@"province_name"],_dataDic[@"city_name"],_dataDic[@"district_name"],_dataDic[@"absolute_address"]];
+////            self.recommendView.contactL.text = [NSString stringWithFormat:@"到访确认人：%@",_dataDic[@"butter_name"]];
+////            self.recommendView.phoneL.text = [NSString stringWithFormat:@"联系方式：%@",_dataDic[@"butter_tel"]];
+//            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间:%@",resposeObject[@"data"][@"end_time"]]];
+//            [attr addAttribute:NSForegroundColorAttributeName value:YJContentLabColor range:NSMakeRange(0, 5)];
+//            self.recommendView.timeL.attributedText = attr;
+//            [[UIApplication sharedApplication].keyWindow addSubview:self.recommendView];
+//        }else{
+//            
+//            self.failView.reasonL.text = resposeObject[@"msg"];
+//            self.failView.timeL.text = [_formatter stringFromDate:[NSDate date]];
+//            [[UIApplication sharedApplication].keyWindow addSubview:self.failView];
+//        }
+//    } failure:^(NSError *error) {
+//        
+//        self.failView.reasonL.text = @"网络错误";
+//        self.failView.timeL.text = [_formatter stringFromDate:[NSDate date]];
+//        [[UIApplication sharedApplication].keyWindow addSubview:self.failView];
+//    }];
 }
 
 #pragma mark    -----  delegate   ------

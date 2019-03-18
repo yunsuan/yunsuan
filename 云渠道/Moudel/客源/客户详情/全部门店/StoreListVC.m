@@ -207,11 +207,14 @@
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
                 
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -257,14 +260,14 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
-                [_selecTable.mj_footer endRefreshing];
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [_selecTable.mj_footer endRefreshing];
@@ -319,14 +322,14 @@
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
-                [_selecTable.mj_footer endRefreshing];
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [_selecTable.mj_footer endRefreshing];

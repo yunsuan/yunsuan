@@ -69,13 +69,13 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self SetData:resposeObject[@"data"][@"data"]];
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                _attentionTable.mj_footer.state = MJRefreshStateNoMoreData;
+                _attentionTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
-                [_attentionTable.mj_footer endRefreshing];
+                _attentionTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
             

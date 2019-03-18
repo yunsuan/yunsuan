@@ -210,8 +210,11 @@
             [_dataArr removeAllObjects];
             if (_AllType == 0) {
                 
-                [self SetData:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                if ([resposeObject[@"data"][@"data"] count]) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                    [self SetData:resposeObject[@"data"][@"data"]];
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -219,30 +222,42 @@
                 
                 if ([self.status isEqualToString:@"关注"]) {
                     
-                    [self SetData:resposeObject[@"data"]];
-                    if ([resposeObject[@"data"] count] < 15) {
+                    if ([resposeObject[@"data"] count]) {
+                        
+                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                        [self SetData:resposeObject[@"data"]];
+                    }else{
                         
                         self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                     }
                 }else{
                     
-                    [self SetData:resposeObject[@"data"][@"data"]];
-                    if ([resposeObject[@"data"][@"data"] count] < 15) {
+                    if ([resposeObject[@"data"][@"data"] count]) {
+                        
+                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                        [self SetData:resposeObject[@"data"][@"data"]];
+                    }else{
                         
                         self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                     }
                 }
             }else if (_AllType == 3){
                 
-                [self SetData:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                if ([resposeObject[@"data"][@"data"] count]) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                    [self SetData:resposeObject[@"data"][@"data"]];
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
             }else{
                 
-                [self SetData:resposeObject[@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                if ([resposeObject[@"data"] count]) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                    [self SetData:resposeObject[@"data"]];
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -357,8 +372,11 @@
             
             if (_AllType == 0) {
                 
-                [self SetData:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                if ([resposeObject[@"data"][@"data"] count]) {
+                    
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                    [self SetData:resposeObject[@"data"][@"data"]];
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -366,30 +384,42 @@
                 
                 if ([self.status isEqualToString:@"关注"]) {
                     
-                    [self SetData:resposeObject[@"data"]];
-                    if ([resposeObject[@"data"] count] < 15) {
+                    if ([resposeObject[@"data"] count]) {
+                        
+                        [self SetData:resposeObject[@"data"]];
+                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                    }else{
                         
                         self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                     }
                 }else{
                     
-                    [self SetData:resposeObject[@"data"][@"data"]];
-                    if ([resposeObject[@"data"][@"data"] count] < 15) {
+                    if ([resposeObject[@"data"][@"data"] count]) {
+                        
+                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                        [self SetData:resposeObject[@"data"][@"data"]];
+                    }else{
                         
                         self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                     }
                 }
             }else if (_AllType == 3){
                 
-                [self SetData:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                if ([resposeObject[@"data"] count]) {
+                    
+                    [self SetData:resposeObject[@"data"]];
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
             }else{
                 
-                [self SetData:resposeObject[@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                if ([resposeObject[@"data"] count]) {
+                    
+                    [self SetData:resposeObject[@"data"]];
+                    self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                }else{
                     
                     self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -582,7 +612,7 @@
                     
                     if ([obj isKindOfClass:[NSNull class]]) {
                         
-                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"] || [key isEqualToString:@"receive_way"]) {
                             
                             [tempDic setObject:@[] forKey:key];
                         }else{
@@ -591,7 +621,7 @@
                         }
                     }else{
                         
-                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"]) {
+                        if ([key isEqualToString:@"house_tags"] || [key isEqualToString:@"project_tags"] || [key isEqualToString:@"receive_way"]) {
                             
                             
                         }else{
@@ -600,21 +630,21 @@
                         }
                     }
                 }];
-                RentingAllTableModel *model = [[RentingAllTableModel alloc] init];//WithDictionary:tempDic];
-                model.price_change = tempDic[@"price_change"];
-                model.img_url = tempDic[@"img_url"];
-                model.house_id = tempDic[@"house_id"];
-                model.title = tempDic[@"title"];
-                model.describe = tempDic[@"describe"];
-                model.price = tempDic[@"price"];
-                model.unit_price = tempDic[@"unit_price"];
-                model.property_type = tempDic[@"property_type"];
-                model.store_name = tempDic[@"store_name"];
-                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
-                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
-                model.type = tempDic[@"type"];
-                model.info_id = tempDic[@"info_id"];
-                model.level = tempDic[@"level"];
+                RentingAllTableModel *model = [[RentingAllTableModel alloc] initWithDictionary:tempDic];
+//                model.price_change = tempDic[@"price_change"];
+//                model.img_url = tempDic[@"img_url"];
+//                model.house_id = tempDic[@"house_id"];
+//                model.title = tempDic[@"title"];
+//                model.describe = tempDic[@"describe"];
+//                model.price = tempDic[@"price"];
+//                model.unit_price = tempDic[@"unit_price"];
+//                model.property_type = tempDic[@"property_type"];
+//                model.store_name = tempDic[@"store_name"];
+//                model.project_tags = [NSMutableArray arrayWithArray:tempDic[@"project_tags"]];
+//                model.house_tags = [NSMutableArray arrayWithArray:tempDic[@"house_tags"]];
+//                model.type = tempDic[@"type"];
+////                model.info_id = tempDic[@"info_id"];
+//                model.level = tempDic[@"level"];
                 [_dataArr addObject:model];
             }
         }else{
