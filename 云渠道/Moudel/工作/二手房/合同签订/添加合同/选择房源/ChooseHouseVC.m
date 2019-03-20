@@ -152,7 +152,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 90*SIZE;
 }
 
 - (void)initUI{

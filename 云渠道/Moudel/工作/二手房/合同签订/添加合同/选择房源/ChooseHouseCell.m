@@ -21,7 +21,7 @@
 //        _headimg.image = [UIImage imageNamed:@"Grabtheorder"];
         
         
-        _titlelab = [[UILabel alloc]initWithFrame:CGRectMake(93*SIZE, 16*SIZE, 200*SIZE, 15*SIZE)];
+        _titlelab = [[UILabel alloc]initWithFrame:CGRectMake(93*SIZE, 16*SIZE, 200*SIZE, 16*SIZE)];
         _titlelab.textColor = YJTitleLabColor;
         _titlelab.font = [UIFont boldSystemFontOfSize:14*SIZE];
         [self.contentView addSubview:_titlelab];
