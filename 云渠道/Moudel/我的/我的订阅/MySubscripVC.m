@@ -76,14 +76,16 @@
             
             RoomListModel *model = [[RoomListModel alloc] initWithDictionary:tempDic];
             NSDictionary *dic = @{@"model":model,
-                                  @"sub_type":tempDic[@"sub_type"]
+                                  @"sub_type":tempDic[@"sub_type"],
+                                  @"sub_id":tempDic[@"sub_id"]
                                   };
             [_dataArr addObject:dic];
         }else if ([tempDic[@"sub_type"] integerValue] == 1){
             
             SecdaryComModel *model = [[SecdaryComModel alloc] initWithDictionary:tempDic];
             NSDictionary *dic = @{@"model":model,
-                                  @"sub_type":tempDic[@"sub_type"]
+                                  @"sub_type":tempDic[@"sub_type"],
+                                  @"sub_id":tempDic[@"sub_id"]
                                   };
             [_dataArr addObject:dic];
 
@@ -168,8 +170,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    MySubscripModel *model = _dataArr[indexPath.row];
-    NSDictionary *dic = @{@"sub_id":model.sub_id};
+    NSDictionary *dic = @{@"sub_id":_dataArr[indexPath.row][@"sub_id"]};
     [BaseRequest GET:CancelFocusProject_URL parameters:dic success:^(id resposeObject) {
         
         
@@ -177,7 +178,8 @@
             
             [_dataArr removeObjectAtIndex:indexPath.row];
             [tableView reloadData];
-        }        else{
+        }else{
+            
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {

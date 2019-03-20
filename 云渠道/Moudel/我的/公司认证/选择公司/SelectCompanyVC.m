@@ -92,8 +92,11 @@
                 
                 if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
                     
-                    [self SetData:resposeObject[@"data"][@"data"]];
-                    if (_page == [resposeObject[@"data"][@"last_page"] integerValue]) {
+                    if ([resposeObject[@"data"][@"data"] count]) {
+                        
+//                        [_selecTable.mj_header endRefreshing];
+                        [self SetData:resposeObject[@"data"][@"data"]];
+                    }else{
                         
                         _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
                     }
@@ -136,7 +139,7 @@
         [dic setObject:_district forKey:@"district"];
     }
     
-    _page += 1;
+    
     [dic setObject:@(_page) forKey:@"page"];
     
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
@@ -149,10 +152,11 @@
                 
                 if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
                     
-                    [_selecTable.mj_footer endRefreshing];
-                    [self SetData:resposeObject[@"data"][@"data"]];
-                    
-                    if (_page == [resposeObject[@"data"][@"last_page"] integerValue]) {
+                    if ([resposeObject[@"data"][@"data"] count]) {
+                        
+                        [_selecTable.mj_footer endRefreshing];
+                        [self SetData:resposeObject[@"data"][@"data"]];
+                    }else{
                         
                         _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
                     }
@@ -183,7 +187,7 @@
 - (void)SearchRequest{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    _page += 1;
+//    _page += 1;
     [dic setObject:@(_page) forKey:@"page"];
     
     if (![self isEmpty:_searchBar.text]) {
@@ -196,23 +200,32 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
+            if (_page == 1) {
+                
+                [_dataArr removeAllObjects];
+            }
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 
                 if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
                     
-                    [_selecTable.mj_footer endRefreshing];
-                    [self SetData:resposeObject[@"data"][@"data"]];
-                    
-                    if (_page == [resposeObject[@"data"][@"last_page"] integerValue]) {
+                    if ([resposeObject[@"data"][@"data"] count]) {
                         
+                        [_selecTable.mj_header endRefreshing];
+                        [_selecTable.mj_footer endRefreshing];
+                        [self SetData:resposeObject[@"data"][@"data"]];
+                    }else{
+                        
+                        [_selecTable.mj_header endRefreshing];
                         _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
                     }
                 }else{
                     
+                    [_selecTable.mj_header endRefreshing];
                     _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
                 }
             }else{
                 
+                [_selecTable.mj_header endRefreshing];
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
         }else{
@@ -220,10 +233,12 @@
             [self showContent:resposeObject[@"msg"]];
             _page -= 1;
             _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+            [_selecTable.mj_header endRefreshing];
         }
     } failure:^(NSError *error) {
         
         _page -= 1;
+        [_selecTable.mj_header endRefreshing];
         [_selecTable.mj_footer endRefreshing];
         //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
@@ -251,38 +266,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-    if ([self isEmpty:textField.text]) {
+    _page = 1;
+    if (![self isEmpty:textField.text]) {
 
         _isSearch = YES;
-        [BaseRequest GET:GetCompanyList_URL parameters:@{@"company_name":textField.text} success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
-                    
-                    if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
-                        
-                        [_dataArr removeAllObjects];
-                        [self SetData:resposeObject[@"data"][@"data"]];
-                    }else{
-                        
-                        
-                    }
-                }else{
-                    
-                    
-                }
-            }        else{
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            //            NSLog(@"%@",error);
-            [self showContent:@"网络错误"];
-        }];
+        [self SearchRequest];
+
     }else{
         
-//        [self showContent:@"请输入公司名称"];
         [self RequestMethod];
     }
     return YES;
@@ -560,8 +551,9 @@
     [self.view addSubview:_selecTable];
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
+        _page = 1;
         if (_isSearch) {
-            
+
             [self SearchRequest];
         }else{
             
@@ -572,6 +564,7 @@
     
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
+        _page += 1;
         if (_isSearch) {
             
             [self SearchRequest];

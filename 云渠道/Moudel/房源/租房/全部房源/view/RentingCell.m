@@ -49,20 +49,20 @@
     _roomLevelL.text = model.level;
     _contentL.text = model.describe;
     
-    if (model.unit_price.length) {
+    if (model.price.length) {
         
-        _priceL.text = [NSString stringWithFormat:@"%@元/月",model.unit_price];
+        _priceL.text = [NSString stringWithFormat:@"%@元/月",model.price];
     }else{
         
         _priceL.text = @"暂无价格信息";
     }
     
-    if (model.unit_price.length) {
+    if (model.deposit.length) {
         
-        _payWayL.text = [NSString stringWithFormat:@"%@",model.unit_price];
+        _payWayL.text = [NSString stringWithFormat:@"押金：%@元",model.deposit];
     }else{
         
-        _payWayL.text = @"暂无付款信息";
+        _payWayL.text = @"暂无押金信息";
     }
     
     _typeL.text = [NSString stringWithFormat:@"物业类型：%@",model.property_type];
@@ -138,7 +138,8 @@
     _payWayL = [[UILabel alloc] init];
     _payWayL.textColor = YJContentLabColor;
     _payWayL.font = [UIFont systemFontOfSize:11 *SIZE];
-    _payWayL.numberOfLines = 0;
+//    _payWayL.numberOfLines = 0;
+    _payWayL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_payWayL];
     
     _typeL = [[UILabel alloc] init];
@@ -217,7 +218,7 @@
     
     [_payWayL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_statusImg.mas_right).offset(44 *SIZE);
+        make.left.equalTo(_statusImg.mas_right).offset(20 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];

@@ -63,8 +63,11 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [_dataArr removeAllObjects];
-                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
+                if ([resposeObject[@"data"][@"data"] count]) {
+                    
+                    [_MainTableView.mj_footer endRefreshing];
+                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+                }else{
                     
                     _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -87,8 +90,12 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [_dataArr removeAllObjects];
-                [self SetUnComfirmArr:resposeObject[@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                
+                if ([resposeObject[@"data"] count]) {
+                    
+                    [self SetUnComfirmArr:resposeObject[@"data"]];
+                    _MainTableView.mj_footer.state = MJRefreshStateIdle;
+                }else{
                     
                     _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
@@ -121,12 +128,13 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-                if ([resposeObject[@"data"][@"data"] count] < 15) {
-                    
-                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-                }else{
+                if ([resposeObject[@"data"][@"data"] count]) {
                     
                     [_MainTableView.mj_footer endRefreshing];
+                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+                }else{
+                    
+                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
             }
             else{
@@ -147,13 +155,13 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self SetUnComfirmArr:resposeObject[@"data"]];
-                if ([resposeObject[@"data"] count] < 15) {
+                if ([resposeObject[@"data"] count]) {
                     
-                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+                    [self SetUnComfirmArr:resposeObject[@"data"]];
+                    _MainTableView.mj_footer.state = MJRefreshStateIdle;
                 }else{
                     
-                    [_MainTableView.mj_footer endRefreshing];
+                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                 }
             }
             else{

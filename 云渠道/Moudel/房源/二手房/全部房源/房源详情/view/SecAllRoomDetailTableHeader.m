@@ -78,9 +78,10 @@
 //    _propertyL.text = storeModel.property_type;
     
     _priceL.text = [NSString stringWithFormat:@"￥%@元/㎡",storeModel.price];
-    _priceTL.text = @"租金";
+//    _priceTL.text = @"租金";
     
-    _typeL.text = storeModel.house_type;
+    _typeL.text = storeModel.shop_type;
+    _typeTL.text = @"商铺类型";
     
     _areaL.text = [NSString stringWithFormat:@"%@㎡",storeModel.build_area];
     

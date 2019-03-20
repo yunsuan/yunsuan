@@ -12,17 +12,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RentingAllTableModel : BaseModel
 
-@property (nonatomic, copy) NSString *hide;
-
-@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *deposit;
 
 @property (nonatomic, copy) NSString *describe;
+
+@property (nonatomic, copy) NSString *hide;
 
 @property (nonatomic, copy) NSString *house_id;
 
 @property (nonatomic, strong) NSMutableArray *house_tags;
 
 @property (nonatomic, copy) NSString *img_url;
+
+//@property (nonatomic, copy) NSString *info_id;
+
+@property (nonatomic, copy) NSString *level;
 
 @property (nonatomic, copy) NSString *price;
 
@@ -32,15 +36,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *property_type;
 
+@property (nonatomic, strong) NSMutableArray *receive_way;
+
+@property (nonatomic, copy) NSString *rent_type;
+
 @property (nonatomic, copy) NSString *store_name;
 
 @property (nonatomic, copy) NSString *title;
 
+@property (nonatomic, copy) NSString *type;
+
 @property (nonatomic, copy) NSString *unit_price;
-
-@property (nonatomic, copy) NSString *info_id;
-
-@property (nonatomic, copy) NSString *level;
 
 @end
 

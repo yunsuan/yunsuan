@@ -115,50 +115,13 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     _page = 1;
-    if ([self isEmpty:textField.text]) {
+    if (![self isEmpty:textField.text]) {
         
         _isSearch = YES;
         
-        NSDictionary *dic;
-        
-        if (_area.length) {
-            
-            dic = @{@"province":_province,
-                    @"city":_city,
-                    @"district":_area,
-                    @"store_name":textField.text
-                    };
-        }else if (_city.length){
-            
-            dic = @{@"province":_province,
-                    @"city":_city,
-                    @"store_name":textField.text
-                    };
-        }else{
-            
-            dic = @{@"province":_province,
-                    @"store_name":textField.text
-                    };
-        }
-        [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
-            
-            [_dataArr removeAllObjects];
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                [self SetData:resposeObject[@"data"][@"data"]];
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-            NSLog(@"%@",error.localizedDescription);
-        }];
+        [self SearchRequest];
     }else{
-        
-//        [self showContent:@"请输入公司名称"];
+
         [self RequestMethod];
     }
     return YES;
@@ -195,11 +158,14 @@
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
                 
                 _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -215,8 +181,7 @@
 - (void)RequestAddMethod{
     
     NSDictionary *dic;
-    
-    _page += 1;
+
     if (_area.length) {
         
         dic = @{@"province":_province,
@@ -242,14 +207,14 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
-                [_selecTable.mj_footer endRefreshing];
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [_selecTable.mj_footer endRefreshing];
@@ -294,21 +259,21 @@
         _selecTable.mj_footer.state = MJRefreshStateIdle;
     }
     
-    [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
+    [BaseRequest GET:StoreAuthStoreList_URL parameters:tempDic success:^(id resposeObject) {
         
         [_dataArr removeAllObjects];
         NSLog(@"%@",resposeObject);
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            if ([resposeObject[@"data"][@"data"] count] < 15) {
+            if ([resposeObject[@"data"][@"data"] count]) {
                 
-                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
+                _selecTable.mj_footer.state = MJRefreshStateIdle;
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
                 
-                [_selecTable.mj_footer endRefreshing];
+                _selecTable.mj_footer.state = MJRefreshStateNoMoreData;
             }
-            [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             
             [_selecTable.mj_footer endRefreshing];
@@ -573,6 +538,7 @@
 
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
 
+        _page += 1;
         if (_isSearch) {
         
             [self SearchRequest];
