@@ -10,7 +10,7 @@
 
 #import "SecAllRoomDetailHeaderModel.h"
 
-#import "TagView.h"
+//#import "TagView.h"
 
 @class SecAllRoomDetailTableHeader;
 
@@ -52,9 +52,9 @@ typedef void(^SecComHeaderTagBlock)(NSInteger btnNum);
 
 @property (nonatomic, strong) UIButton *moreBtn;
 
-@property (nonatomic , strong) TagView *tagview;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic , strong) TagView *wuyeview;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UIView *btnView;
 @end

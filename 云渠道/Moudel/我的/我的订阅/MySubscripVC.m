@@ -94,8 +94,6 @@
 //            MySubscripModel *model = [[MySubscripModel alloc] initWithDictionary:tempDic];
 
         }
-//
-//        [_dataArr addObject:model];
     }
     [_table reloadData];
 }
@@ -153,7 +151,7 @@
         }
         [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
         
-        
+        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
         return cell;
     }
 }

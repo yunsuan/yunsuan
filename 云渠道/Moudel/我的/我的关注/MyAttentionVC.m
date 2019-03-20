@@ -143,8 +143,6 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    SecdaryAllTableModel *model = _dataArr[indexPath.row];
-//    cell.model = model;
     NSDictionary *dic = _dataArr[indexPath.row];
     
     [cell.headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dic[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
@@ -187,14 +185,14 @@
         cell.statusImg.image = [UIImage imageNamed:@"falling"];
     }
     
-    [cell.tagView setData:dic[@"project_tags"]];
-    [cell.tagView2 setData:dic[@"house_tags"]];
     [cell.priceL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(cell.contentView).offset(123 *SIZE);
         make.top.equalTo(cell.contentL.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(cell.priceL.mj_textWith + 5 *SIZE));
     }];
+    
+    [cell SetTagArr:@[dic[@"project_tags"],dic[@"house_tags"]]];
     
     return cell;
 }

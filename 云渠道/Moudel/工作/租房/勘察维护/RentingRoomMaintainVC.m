@@ -59,7 +59,15 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            [self SetData:resposeObject[@"data"][@"data"]];
+            [_table reloadData];
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
+                
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            
         }else{
             
             [self showContent:resposeObject[@"msg"]];

@@ -58,6 +58,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_MainTableView reloadData];
 //            [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
 //            if ([resposeObject[@"data"][@"data"] count] < 15) {
 //

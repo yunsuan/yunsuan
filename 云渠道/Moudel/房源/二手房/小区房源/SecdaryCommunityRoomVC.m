@@ -116,21 +116,6 @@
     [self RequestMethod];
 }
 
-//- (void)SearchRequest{
-//
-//    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
-//
-//        //        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//            [self SetSearch:resposeObject[@"data"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        //        NSLog(@"%@",error);
-//    }];
-//}
 
 - (void)SetSearch:(NSDictionary *)data{
     
@@ -141,23 +126,7 @@
     }];
 }
 
-//- (void)SetData:(NSArray *)data{
-//
-//    for (int i = 0; i < data.count; i++) {
-//
-//        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
-//        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//            if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                [tempDic setObject:@"" forKey:key];
-//            }
-//        }];
-//
-//    }
-//
-//    [self.MainTableView reloadData];
-//}
+
 
 - (void)RequestMethod{
     

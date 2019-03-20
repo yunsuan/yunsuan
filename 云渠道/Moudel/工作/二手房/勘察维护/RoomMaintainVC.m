@@ -61,6 +61,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_table reloadData];
             [self SetData:resposeObject[@"data"][@"data"]];
         }else{
             

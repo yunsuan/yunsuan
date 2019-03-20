@@ -108,6 +108,7 @@
                 if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
                     
                     [_dataArr removeAllObjects];
+                    [_customerTable reloadData];
                     _customerTable.mj_footer.state = MJRefreshStateNoMoreData;
                 }
                 
@@ -161,7 +162,6 @@
                 if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
                     
                     if ([resposeObject[@"data"][@"data"] count]) {
-                        
                         
                         [self SetData:resposeObject[@"data"][@"data"]];
                         if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
@@ -223,17 +223,17 @@
                     }else{
                         
                         _customerTable.mj_footer.state = MJRefreshStateNoMoreData;
-                        //                        [self showContent:@"暂无数据"];
+                        
                     }
                 }else{
-                    //                    [self showContent:@"暂无数据"];
+                    
                 }
             }else{
-                //                [self showContent:@"暂无数据"];
+                
             }
         }else if([resposeObject[@"code"] integerValue] == 400){
             
-            //            [self showContent:resposeObject[@"msg"]];
+            
         }
         else{
             [self showContent:resposeObject[@"msg"]];
@@ -241,7 +241,7 @@
     } failure:^(NSError *error) {
         
         [_customerTable.mj_header endRefreshing];
-        //        NSLog(@"%@",error.localizedDescription);
+        
         [self showContent:@"网络错误"];
     }];
 }

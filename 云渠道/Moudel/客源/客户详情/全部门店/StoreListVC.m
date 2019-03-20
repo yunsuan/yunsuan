@@ -202,6 +202,7 @@
     [BaseRequest GET:AllStore_URL parameters:dic success:^(id resposeObject) {
         
         [_dataArr removeAllObjects];
+        [_selecTable reloadData];
         NSLog(@"%@",resposeObject);
         
         [_selecTable.mj_header endRefreshing];

@@ -10,15 +10,15 @@
 
 #import "RentingAllRoomProjectModel.h"
 
-#import "TagView.h"
+//#import "TagView.h"
 
 @interface RentingAllRoomTableCell : UITableViewCell
 
 @property (nonatomic, strong) RentingAllRoomProjectModel *model;
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic, strong) TagView *tagView2;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UILabel *depositL;
 

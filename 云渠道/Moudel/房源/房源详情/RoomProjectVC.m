@@ -232,25 +232,17 @@
         }
     } failure:^(NSError *error) {
         
-        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }
 
 - (void)SetData:(NSDictionary *)data{
-//    if (data[@"total_float_url_phone"]) {
-//        _phone_url =  [NSString stringWithFormat:@"%@",data[@"total_float_url_phone"]];
-//    }
+
     
     if (data[@"butter_tel"]) {
         
         _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
     }
-    
-//    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
-//
-//        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
-//    }
     
     if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
         
@@ -464,7 +456,7 @@
     
     if (!section) {
         
-        return 387.5 *SIZE;
+        return UITableViewAutomaticDimension;
     }else{
         
         if (section == 6) {
@@ -489,7 +481,7 @@
         RoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RoomDetailTableHeader"];
         if (!header) {
             
-            header = [[RoomDetailTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 402.5 *SIZE)];
+            header = [[RoomDetailTableHeader alloc] initWithReuseIdentifier:@"RoomDetailTableHeader"];
         }
         
         header.model = _model;
@@ -856,6 +848,8 @@
     _roomTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     _roomTable.rowHeight = UITableViewAutomaticDimension;
     _roomTable.estimatedRowHeight = 360 *SIZE;
+    _roomTable.sectionHeaderHeight = UITableViewAutomaticDimension;
+    _roomTable.estimatedSectionHeaderHeight = 400 *SIZE;
     _roomTable.backgroundColor = self.view.backgroundColor;
     _roomTable.delegate = self;
     _roomTable.dataSource = self;

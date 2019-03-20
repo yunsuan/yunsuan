@@ -345,8 +345,8 @@
     cell.payWayL.text = @"10342元/㎡";
     cell.typeL.text = @"物业类型：住宅";
 //    cell.classL.text = @"合租";
-    [cell.tagView setData:@[@"学区房",@"地铁房",@"商业房"]];
-    [cell.tagView2 setData:@[@"高性价比",@"房东人很好"]];
+//    [cell.tagView setData:@[@"学区房",@"地铁房",@"商业房"]];
+//    [cell.tagView2 setData:@[@"高性价比",@"房东人很好"]];
     return cell;
 }
 

@@ -56,6 +56,7 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [_dataArr removeAllObjects];
+                [_MainTableView reloadData];
                 if ([resposeObject[@"data"][@"data"] count]) {
                     
                     [_MainTableView.mj_footer endRefreshing];
@@ -83,6 +84,7 @@
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [_dataArr removeAllObjects];
+                [_MainTableView reloadData];
                 if ([resposeObject[@"data"][@"data"] count]) {
                     
                     [_MainTableView.mj_footer endRefreshing];

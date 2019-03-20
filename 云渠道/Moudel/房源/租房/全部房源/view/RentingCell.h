@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TagView.h"
 #import "RentingAllTableModel.h"
 
 @interface RentingCell : UITableViewCell
@@ -36,9 +35,9 @@
 
 @property (nonatomic, strong) UILabel *storeL;
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic, strong) TagView *tagView2;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UIView *line;
 

@@ -266,7 +266,7 @@
                     view.signFailViewBlock = ^{
                         
                         NSMutableDictionary *dic;
-                        if ([self isEmpty:strongView.markTV.text]) {
+                        if (![self isEmpty:strongView.markTV.text]) {
                             
                             dic = [NSMutableDictionary dictionaryWithDictionary:@{@"client_id":_str,@"disabled_state":view.agentId,@"comment":view.markTV.text}];
                         }else{

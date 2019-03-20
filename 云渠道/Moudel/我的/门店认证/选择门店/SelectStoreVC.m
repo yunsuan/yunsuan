@@ -153,6 +153,7 @@
     [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
         
         [_dataArr removeAllObjects];
+        [_selecTable reloadData];
         NSLog(@"%@",resposeObject);
         
         [_selecTable.mj_header endRefreshing];
@@ -261,7 +262,11 @@
     
     [BaseRequest GET:StoreAuthStoreList_URL parameters:tempDic success:^(id resposeObject) {
         
-        [_dataArr removeAllObjects];
+        if (_page == 1) {
+            
+            [_dataArr removeAllObjects];
+            [_selecTable reloadData];
+        }
         NSLog(@"%@",resposeObject);
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {

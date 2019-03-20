@@ -11,7 +11,7 @@
 #import "SecAllRoomProjectModel.h"
 #import "SecAllRoomOfficeModel.h"
 
-#import "TagView.h"
+//#import "TagView.h"
 
 @interface SecAllRoomTableCell : UITableViewCell
 
@@ -19,9 +19,9 @@
 
 @property (nonatomic, strong) SecAllRoomOfficeModel *officeModel;
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic, strong) TagView *tagView2;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UILabel *codeL;
 

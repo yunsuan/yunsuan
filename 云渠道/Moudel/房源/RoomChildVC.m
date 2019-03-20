@@ -405,9 +405,9 @@
                 }
             }else if (_AllType == 3){
                 
-                if ([resposeObject[@"data"] count]) {
+                if ([resposeObject[@"data"][@"data"] count]) {
                     
-                    [self SetData:resposeObject[@"data"]];
+                    [self SetData:resposeObject[@"data"][@"data"]];
                     self.MainTableView.mj_footer.state = MJRefreshStateIdle;
                 }else{
                     
@@ -697,32 +697,33 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (_AllType != 2) {
-        
-        if (_AllType == 1) {
-            
-            if ([self.status isEqualToString:@"关注"]) {
-                
-                if ([_dataArr[indexPath.row] isKindOfClass:[RoomListModel class]]) {
-                    
-                    return 120 *SIZE;
-                }else{
-                    
-                    return UITableViewAutomaticDimension;
-                }
-                
-            }else{
-                
-                return UITableViewAutomaticDimension;
-            }
-        }else{
-            
-            return UITableViewAutomaticDimension;
-        }
-    }else{
-        
-        return 120*SIZE;
-    }
+    return UITableViewAutomaticDimension;
+//    if (_AllType != 2) {
+//
+//        if (_AllType == 1) {
+//
+//            if ([self.status isEqualToString:@"关注"]) {
+//
+//                if ([_dataArr[indexPath.row] isKindOfClass:[RoomListModel class]]) {
+//
+//                    return 120 *SIZE;
+//                }else{
+//
+//                    return UITableViewAutomaticDimension;
+//                }
+//
+//            }else{
+//
+//                return UITableViewAutomaticDimension;
+//            }
+//        }else{
+//
+//            return UITableViewAutomaticDimension;
+//        }
+//    }else{
+//
+//        return 120*SIZE;
+//    }
 }
 
 

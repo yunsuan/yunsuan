@@ -10,7 +10,7 @@
 
 #import "SecAllRoomDetailHeaderModel.h"
 
-#import "TagView.h"
+//#import "TagView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -52,9 +52,9 @@ typedef void(^RentingComHeaderTagBlock)(NSInteger btnNum);
 
 @property (nonatomic, strong) UIButton *moreBtn;
 
-@property (nonatomic , strong) TagView *tagview;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic , strong) TagView *wuyeview;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UIView *btnView;
 
