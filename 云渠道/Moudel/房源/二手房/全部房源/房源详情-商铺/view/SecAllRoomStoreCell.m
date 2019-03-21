@@ -8,6 +8,15 @@
 
 #import "SecAllRoomStoreCell.h"
 
+@interface SecAllRoomStoreCell ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+{
+    
+    NSMutableArray *_propertyArr;
+    NSMutableArray *_tagArr;
+}
+
+@end
+
 @implementation SecAllRoomStoreCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -15,15 +24,27 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        [self initDataSource];
         [self initUI];
     }
     return self;
 }
 
+- (void)initDataSource{
+    
+    _propertyArr = [@[] mutableCopy];
+    _tagArr = [@[] mutableCopy];
+}
+
 - (void)setModel:(SecAllRoomStoreModel *)model{
     
-    [_tagView setData:model.project_tags];
-    [_tagView2 setData:model.house_tags];
+    _propertyArr = [NSMutableArray arrayWithArray:model.project_tags];
+    _tagArr = [NSMutableArray arrayWithArray:model.house_tags];
+    [_propertyColl reloadData];
+    
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
     
     if (model.house_code.length) {
         
@@ -99,13 +120,79 @@
     }
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    if (_propertyArr.count && _tagArr.count) {
+        
+        return 2;
+    }else if (!_propertyArr.count && !_tagArr.count){
+        
+        return 0;
+    }else{
+        
+        return 1;
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+    return CGSizeMake(SCREEN_Width, 3 *SIZE);
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    if (section == 1) {
+        
+        return _tagArr.count;
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            return _propertyArr.count;
+        }else{
+            
+            return _tagArr.count;
+        }
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TagCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TagCollCell" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[TagCollCell alloc] initWithFrame:CGRectMake(0, 0, 65 *SIZE, 17 *SIZE)];
+    }
+    
+    if (indexPath.section == 1) {
+        
+        [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            [cell setStyleByType:@"1" lab:_propertyArr[indexPath.item]];
+        }else{
+            
+            [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        }
+    }
+    
+    return cell;
+}
+
 - (void)initUI{
     
-    _tagView = [[TagView alloc] initWithFrame:CGRectMake(10 *SIZE, 15 *SIZE, 300 *SIZE, 20 *SIZE) type:@"1"];
-    [self.contentView addSubview:_tagView];
+    _propertyFlowLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:4 *SIZE];
+    _propertyFlowLayout.itemSize = CGSizeMake(65 *SIZE, 17 *SIZE);
     
-    _tagView2 = [[TagView alloc] initWithFrame:CGRectMake(10 *SIZE, 46 *SIZE, 300 *SIZE, 20 *SIZE) type:@"1"];
-    [self.contentView addSubview:_tagView2];
+    _propertyColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 15 *SIZE, 340 *SIZE, 50 *SIZE) collectionViewLayout:_propertyFlowLayout];
+    _propertyColl.backgroundColor = [UIColor whiteColor];
+    _propertyColl.delegate = self;
+    _propertyColl.dataSource = self;
+    [_propertyColl registerClass:[TagCollCell class] forCellWithReuseIdentifier:@"TagCollCell"];
+    [self.contentView addSubview:_propertyColl];
     
     _markView = [[UIView alloc] init];
     _markView.backgroundColor = COLOR(244, 244, 244, 1);
@@ -189,10 +276,18 @@
 //        make.width.equalTo(@(150 *SIZE));
 //    }];
     
+    [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
+        make.width.equalTo(@(340 *SIZE));
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
+    
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(self.contentView).offset(76 *SIZE);
+        make.top.equalTo(_propertyColl.mas_bottom).offset(14 *SIZE);
         make.width.equalTo(@(150 *SIZE));
 //        make.left.equalTo(self.contentView).offset(200 *SIZE);
 //        make.top.equalTo(self.contentView).offset(76 *SIZE);
@@ -202,7 +297,7 @@
     [_proLimitL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(200 *SIZE);
-        make.top.equalTo(self.contentView).offset(76 *SIZE);
+        make.top.equalTo(_propertyColl.mas_bottom).offset(14 *SIZE);
         make.width.equalTo(@(150 *SIZE));
 
 //        make.left.equalTo(self.contentView).offset(10 *SIZE);

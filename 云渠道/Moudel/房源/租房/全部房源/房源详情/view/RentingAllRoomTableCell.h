@@ -10,7 +10,6 @@
 
 #import "RentingAllRoomProjectModel.h"
 
-//#import "TagView.h"
 
 @interface RentingAllRoomTableCell : UITableViewCell
 

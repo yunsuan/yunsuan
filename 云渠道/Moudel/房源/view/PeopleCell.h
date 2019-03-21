@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "TagView.h"
 #import "LevelView.h"
 #import "RankView.h"
 

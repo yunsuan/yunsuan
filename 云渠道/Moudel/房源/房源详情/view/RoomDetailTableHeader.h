@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "RoomDetailModel.h"
-//#import "TagView.h"
 
 @class RoomDetailTableHeader;
 

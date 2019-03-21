@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//#import "TagView.h"
 #import "RentingAllRoomStoreModel.h"
 
 NS_ASSUME_NONNULL_BEGIN

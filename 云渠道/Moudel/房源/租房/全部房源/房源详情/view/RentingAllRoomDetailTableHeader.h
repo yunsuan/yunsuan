@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//#import "TagView.h"
-
 #import "RentingAllRoomProjectModel.h"
 #import "RentingAllRoomStoreModel.h"
 #import "RentingAllRoomOfficeModel.h"

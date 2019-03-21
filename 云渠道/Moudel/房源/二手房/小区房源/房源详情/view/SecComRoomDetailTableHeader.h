@@ -10,8 +10,6 @@
 
 #import "SecAllRoomDetailHeaderModel.h"
 
-//#import "TagView.h"
-
 @class SecAllRoomDetailTableHeader;
 
 typedef void(^SecAllDetailHeaderImgBtnBlock)(NSInteger num,NSArray *imgArr);

@@ -819,10 +819,12 @@
                     
                     if (_detailDic.count) {
                         
-                        [cell.tagView setData:_tagArr];
+                        [cell SetData:_tagArr];
+//                        [cell.tagView setData:_tagArr];
                     }else{
                         
-                        [cell.tagView setData:@[]];
+                        [cell SetData:@[]];
+//                        [cell.tagView setData:@[]];
                     }
                     
                     return cell;
@@ -928,11 +930,12 @@
                         
                         if (_detailDic.count) {
                             
-                            
-                            [cell.tagView setData:_tagArr];
+                            [cell SetData:_tagArr];
+//                            [cell.tagView setData:_tagArr];
                         }else{
                             
-                            [cell.tagView setData:@[]];
+                            [cell SetData:@[]];
+//                            [cell.tagView setData:@[]];
                         }
                         
                         

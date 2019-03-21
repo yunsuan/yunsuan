@@ -10,7 +10,6 @@
 
 #import "SecdaryAllTableModel.h"
 
-//#import "TagView.h"
 
 
 @interface SecdaryAllTableCell : UITableViewCell

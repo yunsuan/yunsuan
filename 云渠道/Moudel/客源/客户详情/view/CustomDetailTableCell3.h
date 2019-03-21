@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TagView.h"
 #import "LevelView.h"
 #import "RankView.h"
 
@@ -29,15 +28,17 @@ typedef void(^RecommendBtnBlock3)(NSInteger index);
 
 @property (nonatomic, strong) UIButton *recommentBtn;
 
-@property (nonatomic , strong) TagView *tagview;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic , strong) TagView *wuyeview;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
 @property (nonatomic, strong) RankView *rankView;
 
 @property (nonatomic, strong) LevelView *getLevel;
+
+@property (nonatomic, strong) UIView *line;
 
 - (void)settagviewWithdata:(NSArray *)data;
 

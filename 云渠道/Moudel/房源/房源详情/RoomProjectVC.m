@@ -786,6 +786,19 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = _peopleArr[indexPath.row];
             cell.recommendBtn.tag = indexPath.row;
+            if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+                
+                if ([self.isRecommend isEqualToString:@"NO"]) {
+                    
+                    cell.recommendBtn.hidden = YES;
+                }else{
+                    
+                    cell.recommendBtn.hidden = NO;
+                }
+            }else{
+                
+                cell.recommendBtn.hidden = YES;
+            }
             cell.recommendBtnBlock5 = ^(NSInteger index) {
               
                 CustomMatchModel *model = _peopleArr[index];
@@ -863,7 +876,8 @@
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
+        
         _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
     }else{
         

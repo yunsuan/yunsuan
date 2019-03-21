@@ -156,10 +156,10 @@
 		0C342FD02080ACD50058406D /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C342FCF2080ACD50058406D /* UserInfoModel.m */; };
 		0C36C52A2241EA68007BB162 /* GZQFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5292241EA68007BB162 /* GZQFlowLayout.m */; };
 		0C36C52E2241EB87007BB162 /* TagCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C52C2241EB87007BB162 /* TagCollCell.m */; };
-		0C36C53822424C06007BB162 /* TagViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53122424C05007BB162 /* TagViewCollCell.m */; };
-		0C36C53922424C06007BB162 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53322424C05007BB162 /* TagView.m */; };
-		0C36C53A22424C06007BB162 /* singleviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53422424C05007BB162 /* singleviewCell.m */; };
-		0C36C53B22424C06007BB162 /* TagView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53622424C05007BB162 /* TagView2.m */; };
+		0C36C5452242551E007BB162 /* TagViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53E2242551E007BB162 /* TagViewCollCell.m */; };
+		0C36C5462242551E007BB162 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5402242551E007BB162 /* TagView.m */; };
+		0C36C5472242551E007BB162 /* singleviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5412242551E007BB162 /* singleviewCell.m */; };
+		0C36C5482242551E007BB162 /* TagView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5432242551E007BB162 /* TagView2.m */; };
 		0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6C20A037D6005472CD /* IdentifyingVC.m */; };
 		0C382E7020A03A01005472CD /* IdentifyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6F20A03A01005472CD /* IdentifyTableCell.m */; };
 		0C382E7320A03C7B005472CD /* IdentifyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E7220A03C7B005472CD /* IdentifyHeader.m */; };
@@ -1088,14 +1088,14 @@
 		0C36C5292241EA68007BB162 /* GZQFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZQFlowLayout.m; sourceTree = "<group>"; };
 		0C36C52C2241EB87007BB162 /* TagCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagCollCell.m; sourceTree = "<group>"; };
 		0C36C52D2241EB87007BB162 /* TagCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagCollCell.h; sourceTree = "<group>"; };
-		0C36C53022424C05007BB162 /* singleviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleviewCell.h; sourceTree = "<group>"; };
-		0C36C53122424C05007BB162 /* TagViewCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagViewCollCell.m; sourceTree = "<group>"; };
-		0C36C53222424C05007BB162 /* TagView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView2.h; sourceTree = "<group>"; };
-		0C36C53322424C05007BB162 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
-		0C36C53422424C05007BB162 /* singleviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = singleviewCell.m; sourceTree = "<group>"; };
-		0C36C53522424C05007BB162 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
-		0C36C53622424C05007BB162 /* TagView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView2.m; sourceTree = "<group>"; };
-		0C36C53722424C05007BB162 /* TagViewCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewCollCell.h; sourceTree = "<group>"; };
+		0C36C53D2242551E007BB162 /* singleviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = singleviewCell.h; sourceTree = "<group>"; };
+		0C36C53E2242551E007BB162 /* TagViewCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagViewCollCell.m; sourceTree = "<group>"; };
+		0C36C53F2242551E007BB162 /* TagView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView2.h; sourceTree = "<group>"; };
+		0C36C5402242551E007BB162 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
+		0C36C5412242551E007BB162 /* singleviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = singleviewCell.m; sourceTree = "<group>"; };
+		0C36C5422242551E007BB162 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
+		0C36C5432242551E007BB162 /* TagView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView2.m; sourceTree = "<group>"; };
+		0C36C5442242551E007BB162 /* TagViewCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewCollCell.h; sourceTree = "<group>"; };
 		0C382E6B20A037D6005472CD /* IdentifyingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyingVC.h; sourceTree = "<group>"; };
 		0C382E6C20A037D6005472CD /* IdentifyingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentifyingVC.m; sourceTree = "<group>"; };
 		0C382E6E20A03A01005472CD /* IdentifyTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyTableCell.h; sourceTree = "<group>"; };
@@ -3628,17 +3628,17 @@
 			path = "标签Coll";
 			sourceTree = "<group>";
 		};
-		0C36C52F22424C05007BB162 /* 自定义标签 */ = {
+		0C36C53C2242551E007BB162 /* 自定义标签 */ = {
 			isa = PBXGroup;
 			children = (
-				0C36C53022424C05007BB162 /* singleviewCell.h */,
-				0C36C53122424C05007BB162 /* TagViewCollCell.m */,
-				0C36C53222424C05007BB162 /* TagView2.h */,
-				0C36C53322424C05007BB162 /* TagView.m */,
-				0C36C53422424C05007BB162 /* singleviewCell.m */,
-				0C36C53522424C05007BB162 /* TagView.h */,
-				0C36C53622424C05007BB162 /* TagView2.m */,
-				0C36C53722424C05007BB162 /* TagViewCollCell.h */,
+				0C36C53D2242551E007BB162 /* singleviewCell.h */,
+				0C36C53E2242551E007BB162 /* TagViewCollCell.m */,
+				0C36C53F2242551E007BB162 /* TagView2.h */,
+				0C36C5402242551E007BB162 /* TagView.m */,
+				0C36C5412242551E007BB162 /* singleviewCell.m */,
+				0C36C5422242551E007BB162 /* TagView.h */,
+				0C36C5432242551E007BB162 /* TagView2.m */,
+				0C36C5442242551E007BB162 /* TagViewCollCell.h */,
 			);
 			path = "自定义标签";
 			sourceTree = "<group>";
@@ -7385,7 +7385,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
-				0C36C52F22424C05007BB162 /* 自定义标签 */,
+				0C36C53C2242551E007BB162 /* 自定义标签 */,
 				10FE1865222123F0004C32BC /* 日历manger */,
 				0C73B08C21F36387005F71F1 /* 输入框继承 */,
 				0CED0C0B21E9DB5D0016A029 /* 选择工作 */,
@@ -8033,7 +8033,7 @@
 				0C549CF221E59FAB004CFA66 /* CustomRecommendVC.m in Sources */,
 				0CED0BE521E6F3600016A029 /* LookMaintainVC.m in Sources */,
 				0C997BE421D0789400F805AA /* WWSliderTrackLayer.m in Sources */,
-				0C36C53822424C06007BB162 /* TagViewCollCell.m in Sources */,
+				0C36C5452242551E007BB162 /* TagViewCollCell.m in Sources */,
 				0C15A1E22113031E00544F2E /* GetWorkVC.m in Sources */,
 				0C997C5F21E452D000F805AA /* LookWorkWaitDetailVC.m in Sources */,
 				1044B40720A56857002D9BAE /* WaitAnimation.m in Sources */,
@@ -8296,7 +8296,7 @@
 				0C9B01CC216EF2660055A9A8 /* SelectCustomVC.m in Sources */,
 				0C2883BB210EB1E100F69C5F /* RentingMaintainDetailVC.m in Sources */,
 				0C2883912109682900F69C5F /* RentingSurveySuccessVC.m in Sources */,
-				0C36C53922424C06007BB162 /* TagView.m in Sources */,
+				0C36C5462242551E007BB162 /* TagView.m in Sources */,
 				0C38826C21FAEE3500359423 /* LookMaintainDetailAddFollowVC.m in Sources */,
 				0CED0BFD21E740380016A029 /* AddContractVC.m in Sources */,
 				0C075DF921FB048700BDD123 /* LookMaintainCustomDetailVC.m in Sources */,
@@ -8595,7 +8595,7 @@
 				0C9CD459210581A1004894A3 /* RentingComRoomProjectVC.m in Sources */,
 				10DBB1F4207CCACE00CFE59D /* KyoCinameSeatScrollView.m in Sources */,
 				0CF04F4B207B36C100A45F4A /* ValidVC.m in Sources */,
-				0C36C53B22424C06007BB162 /* TagView2.m in Sources */,
+				0C36C5482242551E007BB162 /* TagView2.m in Sources */,
 				0C997C3921DC88D500F805AA /* RentingAddStoreRequireMentVC.m in Sources */,
 				0CDD706A20D39B9C00D6609C /* ReportFailComplaintVC.m in Sources */,
 				0CC19D0B206E3E9C0007CC5F /* CustomDetailTableCell3.m in Sources */,
@@ -8610,7 +8610,7 @@
 				0C38825E21F878CD00359423 /* LookMaintainDetailRoomCell.m in Sources */,
 				0C0BED2020A18E76005A16A1 /* DealedCell.m in Sources */,
 				10F7D0C821F71158007818E3 /* ChooseHouseCell.m in Sources */,
-				0C36C53A22424C06007BB162 /* singleviewCell.m in Sources */,
+				0C36C5472242551E007BB162 /* singleviewCell.m in Sources */,
 				0CD909C520D73FC300061B4A /* RoomSurveyComplaintCell.m in Sources */,
 				0C382E7320A03C7B005472CD /* IdentifyHeader.m in Sources */,
 				0CB6BAFF2074A82D00921C75 /* HouseTypeTableCell2.m in Sources */,
