@@ -160,6 +160,7 @@
 		0C36C5462242551E007BB162 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5402242551E007BB162 /* TagView.m */; };
 		0C36C5472242551E007BB162 /* singleviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5412242551E007BB162 /* singleviewCell.m */; };
 		0C36C5482242551E007BB162 /* TagView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5432242551E007BB162 /* TagView2.m */; };
+		0C36C54C224368FA007BB162 /* HouseTypePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C54B224368FA007BB162 /* HouseTypePickView.m */; };
 		0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6C20A037D6005472CD /* IdentifyingVC.m */; };
 		0C382E7020A03A01005472CD /* IdentifyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6F20A03A01005472CD /* IdentifyTableCell.m */; };
 		0C382E7320A03C7B005472CD /* IdentifyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E7220A03C7B005472CD /* IdentifyHeader.m */; };
@@ -1096,6 +1097,8 @@
 		0C36C5422242551E007BB162 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
 		0C36C5432242551E007BB162 /* TagView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView2.m; sourceTree = "<group>"; };
 		0C36C5442242551E007BB162 /* TagViewCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewCollCell.h; sourceTree = "<group>"; };
+		0C36C54A224368FA007BB162 /* HouseTypePickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseTypePickView.h; sourceTree = "<group>"; };
+		0C36C54B224368FA007BB162 /* HouseTypePickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseTypePickView.m; sourceTree = "<group>"; };
 		0C382E6B20A037D6005472CD /* IdentifyingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyingVC.h; sourceTree = "<group>"; };
 		0C382E6C20A037D6005472CD /* IdentifyingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentifyingVC.m; sourceTree = "<group>"; };
 		0C382E6E20A03A01005472CD /* IdentifyTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyTableCell.h; sourceTree = "<group>"; };
@@ -3641,6 +3644,15 @@
 				0C36C5442242551E007BB162 /* TagViewCollCell.h */,
 			);
 			path = "自定义标签";
+			sourceTree = "<group>";
+		};
+		0C36C54922436888007BB162 /* 户型筛选 */ = {
+			isa = PBXGroup;
+			children = (
+				0C36C54A224368FA007BB162 /* HouseTypePickView.h */,
+				0C36C54B224368FA007BB162 /* HouseTypePickView.m */,
+			);
+			path = "户型筛选";
 			sourceTree = "<group>";
 		};
 		0C38824821F8140200359423 /* view */ = {
@@ -7385,6 +7397,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0C36C54922436888007BB162 /* 户型筛选 */,
 				0C36C53C2242551E007BB162 /* 自定义标签 */,
 				10FE1865222123F0004C32BC /* 日历manger */,
 				0C73B08C21F36387005F71F1 /* 输入框继承 */,
@@ -8193,6 +8206,7 @@
 				0C997C8F21E4A45E00F805AA /* LookFailDetailVC.m in Sources */,
 				0CED0BE121E6F1010016A029 /* RecommendComplaitCell.m in Sources */,
 				0CF04F9E207CC23300A45F4A /* GuideVC.m in Sources */,
+				0C36C54C224368FA007BB162 /* HouseTypePickView.m in Sources */,
 				0CD909F120D8FFD900061B4A /* CompleteSurveyInfoVC2.m in Sources */,
 				0CEDE8DF2233AE70006000FB /* SignListCell.m in Sources */,
 				0CE82234221F95A200576742 /* ConfirmPhoneVC.m in Sources */,

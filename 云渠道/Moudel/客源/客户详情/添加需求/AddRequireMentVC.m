@@ -7,16 +7,20 @@
 //
 
 #import "AddRequireMentVC.h"
-#import "DropDownBtn.h"
-#import "BorderTF.h"
-#import "AddressChooseView3.h"
+#import "AddTagVC.h"
 #import "CustomerListVC.h"
 #import "CustomDetailVC.h"
-#import "SinglePickView.h"
+
 #import "CustomDetailTableCell4.h"
-#import "AddTagVC.h"
+
+#import "DropDownBtn.h"
+#import "BorderTF.h"
+
+#import "SinglePickView.h"
+#import "AddressChooseView3.h"
 #import "AddTagView.h"
 #import "WWSliderView.h"
+#import "HouseTypePickView.h"
 
 @interface AddRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
 {
@@ -316,13 +320,13 @@
         }
         case 6:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
             WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.typeBtn.content.text = MC;
-                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.typeBtn.content.text = MC;
+//                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
             [self.view addSubview:view];
             break;
         }

@@ -625,6 +625,7 @@
             header.moreBtnBlock = ^{
                 
                 CustomMatchListVC *nextVC = [[CustomMatchListVC alloc] initWithDataArr:_peopleArr projectId:_projectId];
+                nextVC.isRecommend = self.isRecommend;
                 nextVC.model = _model;
                 [self.navigationController pushViewController:nextVC animated:YES];
             };

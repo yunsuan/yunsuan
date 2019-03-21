@@ -12,6 +12,8 @@
 
 @interface CustomMatchListVC : BaseViewController
 
+@property (nonatomic, strong) NSString *isRecommend;
+
 @property (nonatomic, strong) RoomDetailModel *model;
 
 - (instancetype)initWithDataArr:(NSArray *)dataArr projectId:(NSString *)projectId;

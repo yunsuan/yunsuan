@@ -314,7 +314,49 @@
 
 - (void)ActionAttentBtn:(UIButton *)btn{
     
-    
+    if (_subId.length) {
+        
+        [BaseRequest GET:CancelFocusProject_URL parameters:@{@"sub_id":_subId} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                _subId = @"";
+                [self showContent:@"取消订阅成功"];
+                [_attentBtn setTitle:@"订阅" forState:UIControlStateNormal];
+                [self RequestMethod];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }else{
+        
+        [BaseRequest GET:PersonalFocusProject_URL parameters:@{@"project_id":_model.project_id,@"type":@"1"} success:^(id resposeObject) {
+            
+            NSLog(@"%@",resposeObject);
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                _subId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+                [self showContent:@"订阅成功"];
+                [_attentBtn setTitle:@"取消订阅" forState:UIControlStateNormal];
+                [self RequestMethod];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 #pragma mark -- BMKMap

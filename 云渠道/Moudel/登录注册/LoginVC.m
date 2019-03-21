@@ -541,9 +541,17 @@
         [dataarr writeToFile:filePath atomically:YES];
     }];
     
+    UIAlertAction *new  = [UIAlertAction actionWithTitle:@"新服" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+       
+        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
+        NSArray *dataarr  = @[@"http:/47.107.246.94/"];
+        [dataarr writeToFile:filePath atomically:YES];
+    }];
+    
     [alert addAction:cs];
     [alert addAction:ys];
     [alert addAction:zs];
+    [alert addAction:new];
     [alert addAction:cancel];
     [self.navigationController presentViewController:alert animated:YES completion:^{
         
