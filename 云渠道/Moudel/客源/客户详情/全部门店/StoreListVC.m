@@ -528,6 +528,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     StoreDetailVC *vc = [[StoreDetailVC alloc]init];
     vc.store_id = _dataArr[indexPath.row][@"store_id"];
     vc.client_id = _client_id;
@@ -536,7 +537,6 @@
     vc.tel =_tel;
     vc.sex =_sex;
     [self.navigationController pushViewController:vc animated:YES];
-    
 }
 
 - (void)initUI{

@@ -14,6 +14,7 @@
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 #import "BlueTitleMoreHeader.h"
+#import "HouseTypePickView.h"
 
 #import "StoreViewCollCell.h"
 //#import "SingleContentCell.h"
@@ -191,12 +192,20 @@
         }
         case 1:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
+//            };
+//            [self.view addSubview:view];
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
             WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
                 
-                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
+                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
             };
             [self.view addSubview:view];
             break;

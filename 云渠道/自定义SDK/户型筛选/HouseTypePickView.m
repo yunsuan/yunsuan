@@ -52,15 +52,10 @@
     if (self = [super initWithFrame:frame]) {
         
         [self initSuViews];
-        //        self.dataSource=date;
-        //        self.selected = 0;
-        //        if (date.count == 0) {
-        //            _dataSource = @[@{@"param":@"",
-        //                              @"id":@""
-        //                              }];
-        //        }
-        //        self.name = _dataSource[0][@"param"];
-        //        self.ID = _dataSource[0][@"id"];
+        
+        _room = @"0";
+        _bath = @"0";
+        _hall = @"0";
     }
     return self;
 }
@@ -121,7 +116,7 @@
 {
     
 //    return _dataSource.count;
-    return 5;
+    return 8;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView
@@ -143,6 +138,16 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     
+    if (component == 0) {
+        
+        _room = [NSString stringWithFormat:@"%ld",row];
+    }else if (component == 1){
+        
+        _hall = [NSString stringWithFormat:@"%ld",row];
+    }else{
+        
+        _bath = [NSString stringWithFormat:@"%ld",row];
+    }
 //    _name = _dataSource[(NSUInteger) row][@"param"];
 //    _ID = _dataSource[(NSUInteger) row][@"id"];
 }
@@ -166,7 +171,7 @@
     [self hidePickerView];
     if (self.houseTypePickViewBlock) {
         
-//        self.houseTypePickViewBlock(<#NSString * _Nonnull room#>, <#NSString * _Nonnull hall#>, <#NSString * _Nonnull bath#>)
+        self.houseTypePickViewBlock(_room, _hall, _bath);
     }
 //    if (self.selectedBlock != nil) {
 //        self.selectedBlock(_name, _ID);

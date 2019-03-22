@@ -8,16 +8,21 @@
 
 #import "AddHouseRequireMentVC.h"
 
-#import "DropDownBtn.h"
-#import "BorderTF.h"
-#import "AddressChooseView3.h"
+#import "AddTagVC.h"
 #import "CustomerListVC.h"
 #import "CustomDetailVC.h"
-#import "SinglePickView.h"
+
+#import "DropDownBtn.h"
+#import "BorderTF.h"
+
 #import "CustomDetailTableCell4.h"
-#import "AddTagVC.h"
+
+#import "AddressChooseView3.h"
+#import "SinglePickView.h"
 #import "AddTagView.h"
 #import "WWSliderView.h"
+#import "HouseTypePickView.h"
+
 
 @interface AddHouseRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
 {
@@ -313,12 +318,20 @@
         }
         case 6:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.typeBtn.content.text = MC;
+//                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
             WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
                 
-                weakself.typeBtn.content.text = MC;
-                weakself.typeBtn->str = [NSString stringWithFormat:@"%@", ID];
+                weakself.typeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+                weakself.typeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
             };
             [self.view addSubview:view];
             break;
@@ -1145,19 +1158,20 @@
     
     if ([_model.house_type length]) {
         
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
-        NSArray *typeArr = dic[@"param"];
-        NSUInteger i;
-        for (i = 0; i < typeArr.count; i++) {
-            
-            if ([typeArr[i][@"param"] isEqualToString:_model.house_type]) {
-                
-                _typeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
-                _typeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-                break;
-            }
-        }
+        _typeBtn.content.text = [NSString stringWithFormat:@"%@",_model.house_type];
+//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
+//        NSArray *typeArr = dic[@"param"];
+//        NSUInteger i;
+//        for (i = 0; i < typeArr.count; i++) {
+//
+//            if ([typeArr[i][@"param"] isEqualToString:_model.house_type]) {
+//
+//                _typeBtn.content.text = [NSString stringWithFormat:@"%@",typeArr[i][@"param"]];
+//                _typeBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+//                break;
+//            }
+//        }
     }
     
     if (_model.floor_min){
