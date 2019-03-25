@@ -30,6 +30,8 @@ typedef NS_ENUM(NSInteger, JLSliderType) {
 
 @interface JLSliderView : UIView
 
+@property (nonatomic, strong) NSString *unit;
+
 @property (strong, nonatomic) UIColor *thumbColor;
 
 @property (strong, nonatomic) UIColor *bgColor;
@@ -41,14 +43,18 @@ typedef NS_ENUM(NSInteger, JLSliderType) {
 
 @property (assign, nonatomic) JLSliderType sliderType;
 
-@property (assign, nonatomic, readonly) NSUInteger currentMinValue;
+@property (assign, nonatomic) NSUInteger currentMinValue;
 
-@property (assign, nonatomic, readonly) NSUInteger currentMaxValue;
+@property (assign, nonatomic) NSUInteger currentMaxValue;
+
+//@property (assign, nonatomic, readonly) NSUInteger currentMinValue;
+//
+//@property (assign, nonatomic, readonly) NSUInteger currentMaxValue;
 
 @property (assign, nonatomic) id<JLSliderViewDelegate> delegate;
 
 
--(instancetype)initWithFrame:(CGRect)frame sliderType:(JLSliderType )type;
+-(instancetype)initWithFrame:(CGRect)frame sliderType:(JLSliderType )type unit:(NSString *)unit maxValue:(NSUInteger ) maxValue;
 
 
 

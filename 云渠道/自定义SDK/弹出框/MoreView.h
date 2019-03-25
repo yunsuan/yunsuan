@@ -13,6 +13,7 @@ typedef void(^MoreBtnBlock)(NSString *tag,NSString *houseType,NSString *status);
 
 typedef void(^MoreViewClearBlock)(void);
 
+
 @interface MoreView : UIView
 
 @property (nonatomic, assign) NSInteger numOfSec;

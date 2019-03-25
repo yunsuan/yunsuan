@@ -164,6 +164,7 @@
 		0C36C55422438C0D007BB162 /* JLSliderMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C54E22438C0C007BB162 /* JLSliderMoveView.m */; };
 		0C36C55522438C0D007BB162 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C55022438C0C007BB162 /* UIView+Frame.m */; };
 		0C36C55622438C0D007BB162 /* JLSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C55222438C0D007BB162 /* JLSliderView.m */; };
+		0C36C5672248AB66007BB162 /* MoreViewHouseCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5662248AB66007BB162 /* MoreViewHouseCollCell.m */; };
 		0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6C20A037D6005472CD /* IdentifyingVC.m */; };
 		0C382E7020A03A01005472CD /* IdentifyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6F20A03A01005472CD /* IdentifyTableCell.m */; };
 		0C382E7320A03C7B005472CD /* IdentifyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E7220A03C7B005472CD /* IdentifyHeader.m */; };
@@ -1108,6 +1109,8 @@
 		0C36C55122438C0D007BB162 /* JLSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLSliderView.h; sourceTree = "<group>"; };
 		0C36C55222438C0D007BB162 /* JLSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLSliderView.m; sourceTree = "<group>"; };
 		0C36C55322438C0D007BB162 /* JLSliderMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLSliderMoveView.h; sourceTree = "<group>"; };
+		0C36C5652248AB66007BB162 /* MoreViewHouseCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewHouseCollCell.h; sourceTree = "<group>"; };
+		0C36C5662248AB66007BB162 /* MoreViewHouseCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewHouseCollCell.m; sourceTree = "<group>"; };
 		0C382E6B20A037D6005472CD /* IdentifyingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyingVC.h; sourceTree = "<group>"; };
 		0C382E6C20A037D6005472CD /* IdentifyingVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentifyingVC.m; sourceTree = "<group>"; };
 		0C382E6E20A03A01005472CD /* IdentifyTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyTableCell.h; sourceTree = "<group>"; };
@@ -6584,6 +6587,8 @@
 				0CF04FA3207CCDF000A45F4A /* MoreViewCollCell.m */,
 				0CF04FA5207CD1A100A45F4A /* MoreViewCollHeader.h */,
 				0CF04FA6207CD1A100A45F4A /* MoreViewCollHeader.m */,
+				0C36C5652248AB66007BB162 /* MoreViewHouseCollCell.h */,
+				0C36C5662248AB66007BB162 /* MoreViewHouseCollCell.m */,
 			);
 			path = "弹出框";
 			sourceTree = "<group>";
@@ -7970,6 +7975,7 @@
 				0CB6BAED20735A9E00921C75 /* AddRequireMentVC.m in Sources */,
 				0C08BF6C206CCF55005BB3B4 /* BrokerDetailHeader.m in Sources */,
 				0C2883752107131F00F69C5F /* RentingReportComplaitVC.m in Sources */,
+				0C36C5672248AB66007BB162 /* MoreViewHouseCollCell.m in Sources */,
 				0CB3E30122002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m in Sources */,
 				0CC19D19207202E80007CC5F /* ChangeNameVC.m in Sources */,
 				0C36C55622438C0D007BB162 /* JLSliderView.m in Sources */,

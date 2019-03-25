@@ -26,9 +26,9 @@
 
 @property (assign, nonatomic) CGFloat lineVHeight;
 
-@property (assign, nonatomic, readwrite) NSUInteger currentMinValue;
-
-@property (assign, nonatomic, readwrite) NSUInteger currentMaxValue;
+//@property (assign, nonatomic, readwrite) NSUInteger currentMinValue;
+//
+//@property (assign, nonatomic, readwrite) NSUInteger currentMaxValue;
 @end
 
 @implementation JLSliderView
@@ -43,11 +43,17 @@
     }
     return self;
 }
--(instancetype)initWithFrame:(CGRect)frame sliderType:(JLSliderType )type {
+-(instancetype)initWithFrame:(CGRect)frame sliderType:(JLSliderType )type unit:(NSString *)unit maxValue:(NSUInteger)maxValue{
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.unit = unit;
+        self.minValue = 0;
+        self.maxValue = maxValue;
+        self.currentMinValue = 0;
+        self.currentMaxValue = maxValue;
         [self initView];
+        
         self.sliderType = type;
     }
     return self;
@@ -59,10 +65,10 @@
     self.moveVHeight = 20;
     self.lineVHeight = 3;
     self.userInteractionEnabled = YES;
-    self.minValue = 18;
-    self.maxValue = 80;
-    self.currentMinValue = 18;
-    self.currentMaxValue = 80;
+//    self.minValue = 18;
+//    self.maxValue = 80;
+//    self.currentMinValue = 18;
+//    self.currentMaxValue = 80;
     [self initMoveView];
     //顶部左边脚标
     self.leftTopLabel = [self  creatLabelWithFrame:CGRectMake(self.lineView.left - iconwidth/2 , 0, iconwidth, iconheight)];
@@ -99,10 +105,10 @@
     self.bgView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:self.bgView];
     //改变颜色的线
-    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(30, iconheight +self.moveVHeight/2 + 5, kScreenWidth - 60, self.lineVHeight)];
+    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(30, iconheight +self.moveVHeight/2 + 5, self.frame.size.width - 60, self.lineVHeight)];
     self.bgView.backgroundColor = [UIColor blueColor];
     
-    self.lineView = [[UIView alloc]initWithFrame:CGRectMake(30, iconheight +self.moveVHeight/2 + 5, kScreenWidth - 60, self.lineVHeight)];
+    self.lineView = [[UIView alloc]initWithFrame:CGRectMake(30, iconheight +self.moveVHeight/2 + 5, self.frame.size.width - 60, self.lineVHeight)];
     self.lineView.backgroundColor = [UIColor blueColor];
     self.lineView.layer.cornerRadius = self.lineView.height/2                                                            ;
     self.lineView.layer.masksToBounds = YES;
@@ -149,8 +155,8 @@
     NSUInteger right  = self.minValue +(int) (self.lineView.right - self.bgView.x)/self.bgView.width * width;
     self.currentMinValue = left;
     self.currentMaxValue = right;
-    self.rightTopLabel.text = [NSString stringWithFormat:@"%lu岁", (unsigned long)right];
-    self.leftTopLabel.text  = [NSString stringWithFormat:@"%lu岁", (unsigned long)left];
+    self.rightTopLabel.text = [NSString stringWithFormat:@"%lu%@", (unsigned long)right,self.unit];
+    self.leftTopLabel.text  = [NSString stringWithFormat:@"%lu%@", (unsigned long)left,self.unit];
     
     if (self.lineView.width == 0) {
         self.lineView.width = 1;

@@ -40,7 +40,7 @@
 //    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
-//    NSString *_status;
+    NSString *_status;
     NSMutableArray *_searchArr;
     NSArray *_tagsArr;
     NSArray *_propertyArr;
@@ -222,6 +222,10 @@
         
         [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
     }
+    if (_status.length) {
+        
+        [dic setObject:[NSString stringWithFormat:@"%@",_status] forKey:@"sale_state"];
+    }
     
     [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
         
@@ -281,6 +285,10 @@
     if (_houseType.length) {
         
         [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
+    }
+    if (_status.length) {
+        
+        [dic setObject:[NSString stringWithFormat:@"%@",_status] forKey:@"sale_state"];
     }
     
     [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
@@ -1294,15 +1302,18 @@
                 _tag = [NSString stringWithFormat:@"%@",tag];
             }
             
-            if (houseType) {
+            if (![houseType isEqualToString:@"0"]) {
                 
                 _houseType = [NSString stringWithFormat:@"%@",houseType];
+            }else{
+                
+                _houseType = @"";
             }
             
-//            if (status) {
-//
-//                _status = [NSString stringWithFormat:@"%@",status];
-//            }
+            if (status) {
+
+                _status = [NSString stringWithFormat:@"%@",status];
+            }
             //
             //            [weakSelf RequestMethod];
             if (strongSelf->_city) {
@@ -1328,7 +1339,11 @@
         _moreView.moreViewClearBlock = ^{
             
             _is4 = NO;
+            _tag = @"";
+            _houseType = @"";
+            _status = @"";
             weakSelf.moreBtn.selected = NO;
+            [weakSelf RequestMethod];
         };
         
     }
