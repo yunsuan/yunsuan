@@ -906,7 +906,8 @@
                     _priceBtn.maxValue = 1000;
                     NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
                     customFormatter.positiveSuffix = @"万";
-                    _priceBtn.numberFormatterOverride = customFormatter;
+                    _priceBtn.maxFormatter = customFormatter;
+                    _priceBtn.minFormatter = customFormatter;
                     [_infoView addSubview:_priceBtn];
                     break;
                 }
@@ -918,7 +919,8 @@
                     _areaBtn.maxValue = 500;
                     NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
                     customFormatter.positiveSuffix = @"㎡";
-                    _areaBtn.numberFormatterOverride = customFormatter;
+                    _areaBtn.maxFormatter = customFormatter;
+                    _areaBtn.minFormatter = customFormatter;
                     [_infoView addSubview:_areaBtn];
                     break;
                 }

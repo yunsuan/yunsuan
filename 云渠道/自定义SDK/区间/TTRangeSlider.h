@@ -39,7 +39,9 @@ IB_DESIGNABLE
  * You can override this default here by supplying your own NSNumberFormatter. For example, you could supply an NSNumberFormatter that has a currency style, or a prefix or suffix.
  * If this property is nil, the default decimal format will be used. Note: If you want no labels at all, set this value to be `(NSNumberFormatter *)[NSNull null]` (as opposed to nil), to specifically mark that you want no labels
  */
-@property (nonatomic, strong) NSNumberFormatter *numberFormatterOverride;
+@property (nonatomic, strong) NSNumberFormatter *minFormatter;
+
+@property (nonatomic, strong) NSNumberFormatter *maxFormatter;
 
 /**
  * The color of the minimum value text label. If not set, the default is the tintColor.

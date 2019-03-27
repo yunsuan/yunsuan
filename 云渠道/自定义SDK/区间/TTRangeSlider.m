@@ -38,19 +38,19 @@ static const CGFloat kLabelsFontSize = 12.0f;
 
     //draw the slider line
     self.sliderLine = [CALayer layer];
-    self.sliderLine.backgroundColor = self.tintColor.CGColor;
+    self.sliderLine.backgroundColor = YJBlueBtnColor.CGColor;//self.tintColor.CGColor;
     [self.layer addSublayer:self.sliderLine];
     
     //draw the minimum slider handle
     self.leftHandle = [CALayer layer];
     self.leftHandle.cornerRadius = 8.0f;
-    self.leftHandle.backgroundColor = self.tintColor.CGColor;
+    self.leftHandle.backgroundColor = YJBlueBtnColor.CGColor;//self.tintColor.CGColor;
     [self.layer addSublayer:self.leftHandle];
     
     //draw the maximum slider handle
     self.rightHandle = [CALayer layer];
     self.rightHandle.cornerRadius = 8.0f;
-    self.rightHandle.backgroundColor = self.tintColor.CGColor;
+    self.rightHandle.backgroundColor = YJBlueBtnColor.CGColor;//self.tintColor.CGColor;
     [self.layer addSublayer:self.rightHandle];
 
     self.leftHandle.frame = CGRectMake(0, 0, HANDLE_DIAMETER, HANDLE_DIAMETER);
@@ -64,7 +64,7 @@ static const CGFloat kLabelsFontSize = 12.0f;
     self.minLabel.contentsScale = [UIScreen mainScreen].scale;
     self.minLabel.contentsScale = [UIScreen mainScreen].scale;
     if (self.minLabelColour == nil){
-        self.minLabel.foregroundColor = self.tintColor.CGColor;
+        self.minLabel.foregroundColor = YJBlueBtnColor.CGColor;//self.tintColor.CGColor;
     } else {
         self.minLabel.foregroundColor = self.minLabelColour.CGColor;
     }
@@ -76,7 +76,7 @@ static const CGFloat kLabelsFontSize = 12.0f;
     self.maxLabel.frame = CGRectMake(0, 0, 75, 14);
     self.maxLabel.contentsScale = [UIScreen mainScreen].scale;
     if (self.maxLabelColour == nil){
-        self.maxLabel.foregroundColor = self.tintColor.CGColor;
+        self.maxLabel.foregroundColor = YJBlueBtnColor.CGColor;//self.tintColor.CGColor;
     } else {
         self.maxLabel.foregroundColor = self.maxLabelColour.CGColor;
     }
@@ -153,15 +153,22 @@ static const CGFloat kLabelsFontSize = 12.0f;
 }
 
 - (void)updateLabelValues {
-    if ([self.numberFormatterOverride isEqual:[NSNull null]]){
-        self.minLabel.string = @"";
+    if ([self.maxFormatter isEqual:[NSNull null]]){
+//        self.minLabel.string = @"";
         self.maxLabel.string = @"";
         return;
     }
+    if ([self.minFormatter isEqual:[NSNull null]]){
+        self.minLabel.string = @"";
+//        self.maxLabel.string = @"";
+        return;
+    }
     
-    NSNumberFormatter *formatter = (self.numberFormatterOverride != nil) ? self.numberFormatterOverride : self.decimalNumberFormatter;
+    NSNumberFormatter *formatter = (self.maxFormatter != nil) ? self.maxFormatter : self.decimalNumberFormatter;
     
-    self.minLabel.string = [formatter stringFromNumber:@(self.selectedMinimum)];
+    NSNumberFormatter *formatter1 = (self.minFormatter != nil) ? self.minFormatter : self.decimalNumberFormatter;
+    
+    self.minLabel.string = [formatter1 stringFromNumber:@(self.selectedMinimum)];
     self.maxLabel.string = [formatter stringFromNumber:@(self.selectedMaximum)];
 }
 
@@ -431,8 +438,21 @@ static const CGFloat kLabelsFontSize = 12.0f;
     self.maxLabel.foregroundColor = _maxLabelColour.CGColor;
 }
 
--(void)setNumberFormatterOverride:(NSNumberFormatter *)numberFormatterOverride{
-    _numberFormatterOverride = numberFormatterOverride;
+//-(void)setNumberFormatterOverride:(NSNumberFormatter *)numberFormatterOverride{
+//
+//    _minFormatter = numberFormatterOverride;
+//    [self updateLabelValues];
+//}
+
+- (void)setMinFormatter:(NSNumberFormatter *)minFormatter{
+    
+    _minFormatter = minFormatter;
+    [self updateLabelValues];
+}
+
+- (void)setMaxFormatter:(NSNumberFormatter *)maxFormatter{
+    
+    _maxFormatter = maxFormatter;
     [self updateLabelValues];
 }
 

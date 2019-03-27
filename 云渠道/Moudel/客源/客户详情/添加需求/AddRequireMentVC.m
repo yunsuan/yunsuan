@@ -23,7 +23,7 @@
 #import "TTRangeSlider.h"
 #import "HouseTypePickView.h"
 
-@interface AddRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate>
+@interface AddRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate,TTRangeSliderDelegate>
 {
     
     NSMutableArray *_stairArr;
@@ -725,6 +725,30 @@
     _placeL.hidden = textView.text.length != 0;
 }
 
+- (void)rangeSlider:(TTRangeSlider *)sender didChangeSelectedMinimumValue:(float)selectedMinimum andMaximumValue:(float)selectedMaximum{
+    
+//    if (sender == _priceBtn) {
+//        
+//        if (selectedMaximum == 1000) {
+//            
+//            _priceBtn.maxFormatter.positiveSuffix = @"万以上";
+//        }else{
+//            
+//            _priceBtn.maxFormatter.positiveSuffix = @"万";
+//        }
+//        _priceBtn.minFormatter.positiveSuffix = @"万";
+//    }else{
+//        
+//        if (selectedMaximum == 1000) {
+//            
+//            _areaBtn.maxFormatter.positiveSuffix = @"㎡以上";
+//        }else{
+//            
+//            _areaBtn.maxFormatter.positiveSuffix = @"㎡";
+//        }
+//    }
+}
+
 - (void)initUI{
 
     if (_model) {
@@ -757,12 +781,12 @@
     label1.text = @"需求信息";
     [_infoView addSubview:label1];
     
-    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addBtn.frame = CGRectMake(313 *SIZE, 56 *SIZE, 25 *SIZE, 25 *SIZE);
-    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
-    _addBtn.hidden = YES;
-    [_infoView addSubview:_addBtn];
+//    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    _addBtn.frame = CGRectMake(313 *SIZE, 56 *SIZE, 25 *SIZE, 25 *SIZE);
+//    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
+//    _addBtn.hidden = YES;
+//    [_infoView addSubview:_addBtn];
     
     for(int i = 0; i < 13; i++){
         
@@ -895,9 +919,11 @@
                     _priceBtn = [[TTRangeSlider alloc] initWithFrame:btn.frame];
                     _priceBtn.minValue = 0;
                     _priceBtn.maxValue = 1000;
+                    _priceBtn.delegate = self;
                     NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
                     customFormatter.positiveSuffix = @"万";
-                    _priceBtn.numberFormatterOverride = customFormatter;
+                    _priceBtn.maxFormatter = customFormatter;
+                    _priceBtn.minFormatter = customFormatter;
                     [_infoView addSubview:_priceBtn];
                     break;
                 }
@@ -909,7 +935,8 @@
                     _areaBtn.maxValue = 500;
                     NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
                     customFormatter.positiveSuffix = @"㎡";
-                    _areaBtn.numberFormatterOverride = customFormatter;
+                    _areaBtn.maxFormatter = customFormatter;
+                    _areaBtn.minFormatter = customFormatter;
                     [_infoView addSubview:_areaBtn];
                     break;
                 }
