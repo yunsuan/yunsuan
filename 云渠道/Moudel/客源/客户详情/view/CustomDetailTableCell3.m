@@ -8,6 +8,15 @@
 
 #import "CustomDetailTableCell3.h"
 
+@interface CustomDetailTableCell3 ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+{
+    
+    NSMutableArray *_propertyArr;
+    NSMutableArray *_tagArr;
+}
+
+@end
+
 @implementation CustomDetailTableCell3
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -15,15 +24,27 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        [self initDataSource];
         [self initUI];
     }
     return self;
 }
 
+- (void)initDataSource{
+    
+    _propertyArr = [@[] mutableCopy];
+    _tagArr = [@[] mutableCopy];
+}
+
 - (void)settagviewWithdata:(NSArray *)data{
-    [_wuyeview setData:data[0]];
-    [_tagview setData:data[1]];
-   
+    
+    _propertyArr = [NSMutableArray arrayWithArray:data[0]];
+    _tagArr = [NSMutableArray arrayWithArray:data[1]];
+    [_propertyColl reloadData];
+    
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
@@ -88,6 +109,68 @@
     }
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    if (_propertyArr.count && _tagArr.count) {
+        
+        return 2;
+    }else if (!_propertyArr.count && !_tagArr.count){
+        
+        return 0;
+    }else{
+        
+        return 1;
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+    return CGSizeMake(SCREEN_Width, 3 *SIZE);
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    if (section == 1) {
+        
+        return _tagArr.count > 2 ? 2:_tagArr.count;
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            return _propertyArr.count > 2 ? 2:_propertyArr.count;
+        }else{
+            
+            return _tagArr.count > 2 ? 2:_tagArr.count;
+        }
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TagCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TagCollCell" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[TagCollCell alloc] initWithFrame:CGRectMake(0, 0, 65 *SIZE, 17 *SIZE)];
+    }
+    
+    if (indexPath.section == 1) {
+        
+        [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            [cell setStyleByType:@"0" lab:_propertyArr[indexPath.item]];
+        }else{
+            
+            [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        }
+    }
+    
+    return cell;
+}
+
 - (void)initUI{
     
     _headImg = [[UIImageView alloc]initWithFrame:CGRectMake((CGFloat) (11.7*SIZE),(CGFloat)16.3*SIZE, 100*SIZE, (CGFloat)88.3*SIZE)];
@@ -132,25 +215,49 @@
     _getLevel.titleL.text = @"结佣";
     [self.contentView addSubview:_getLevel];
     
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake((CGFloat)124.7*SIZE,(CGFloat) 66.7*SIZE, 150*SIZE,(CGFloat) 16.7*SIZE)  type:@"0"];
-    [self.contentView addSubview:_wuyeview];
+    _propertyFlowLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:4 *SIZE];
+    _propertyFlowLayout.itemSize = CGSizeMake(65 *SIZE, 17 *SIZE);
     
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake((CGFloat)124.7*SIZE, 88*SIZE, 150*SIZE,(CGFloat) 16.7*SIZE)  type:@"1"];
-    [self.contentView addSubview:_tagview];
+    _propertyColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 90 *SIZE, 340 *SIZE, 40 *SIZE) collectionViewLayout:_propertyFlowLayout];
+    _propertyColl.backgroundColor = [UIColor whiteColor];
+    _propertyColl.delegate = self;
+    _propertyColl.dataSource = self;
+    [_propertyColl registerClass:[TagCollCell class] forCellWithReuseIdentifier:@"TagCollCell"];
+    [self.contentView addSubview:_propertyColl];
     
-    [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    _line = [[UIView alloc]initWithFrame:CGRectMake(0*SIZE, 119*SIZE, 360*SIZE, 1*SIZE)];
+    _line.backgroundColor = YJBackColor;
+    [self.contentView addSubview:_line];
+
+    
+//    [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {
+//        
+//        make.left.equalTo(self.contentView).offset(125 *SIZE);
+//        make.top.equalTo(self.contentView).offset(88 *SIZE);
+//        make.width.equalTo(@(150 *SIZE));
+//        make.height.equalTo(@(17 *SIZE));
+//        make.bottom.equalTo(self.contentView).offset(-16 *SIZE);
+//        
+//    }];
+    
+    [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(125 *SIZE);
         make.top.equalTo(self.contentView).offset(88 *SIZE);
         make.width.equalTo(@(150 *SIZE));
-        make.height.equalTo(@(17 *SIZE));
-        make.bottom.equalTo(self.contentView).offset(-16 *SIZE);
-        
+        //        make.height.mas_equalTo(40 *SIZE);
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
-    UIView *lane = [[UIView alloc]initWithFrame:CGRectMake(0*SIZE, 119*SIZE, 360*SIZE, 1*SIZE)];
-    lane.backgroundColor = YJBackColor;
-    [self.contentView addSubview:lane];
-
+    
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(0 *SIZE);
+        make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
+        make.right.equalTo(self.contentView).offset(0 *SIZE);
+        make.height.equalTo(@(SIZE));
+        make.bottom.equalTo(self.contentView).offset(0);
+    }];
 }
 
 @end

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TagView.h"
 
 @interface MaintainRoomInfoCell2 : UITableViewCell
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
+
+@property (nonatomic, strong) UICollectionView *propertyColl;
+
+- (void)SetData:(NSArray *)data;
+
+//@property (nonatomic, strong) TagView *tagView;
 
 @end

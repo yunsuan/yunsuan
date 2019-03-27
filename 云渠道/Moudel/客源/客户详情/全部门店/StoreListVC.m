@@ -123,52 +123,12 @@
     
     _page = 1;
     if (textField.text) {
-        
-        _isSearch = YES;
-        
-        NSDictionary *dic;
-        
-        if (_area.length) {
-            
-            dic = @{@"province":_province,
-                    @"city":_city,
-                    @"district":_area,
-                    @"store_name":textField.text,
-                    @"type":_type
-                    };
-        }else if (_city.length){
-            
-            dic = @{@"province":_province,
-                    @"city":_city,
-                    @"store_name":textField.text,
-                    @"type":_type
-                    };
-        }else{
-            
-            dic = @{@"province":_province,
-                    @"store_name":textField.text,
-                    @"type":_type
-                    };
-        }
-        [BaseRequest GET:AllStore_URL parameters:dic success:^(id resposeObject) {
-            
-            [_dataArr removeAllObjects];
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                [self SetData:resposeObject[@"data"][@"data"]];
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-            NSLog(@"%@",error.localizedDescription);
-        }];
+         _isSearch = YES;
+        [self SearchRequest];
+
     }else{
         
-        [self showContent:@"请输入门店名称"];
+        [self RequestMethod];
     }
     return YES;
 }
@@ -202,6 +162,7 @@
     [BaseRequest GET:AllStore_URL parameters:dic success:^(id resposeObject) {
         
         [_dataArr removeAllObjects];
+        [_selecTable reloadData];
         NSLog(@"%@",resposeObject);
         
         [_selecTable.mj_header endRefreshing];
@@ -313,11 +274,13 @@
     if (_page == 1) {
         
         _selecTable.mj_footer.state = MJRefreshStateIdle;
+        [_dataArr removeAllObjects];
+        [_selecTable reloadData];
     }
     
     [BaseRequest GET:AllStore_URL parameters:dic success:^(id resposeObject) {
         
-        [_dataArr removeAllObjects];
+        
         NSLog(@"%@",resposeObject);
         [_selecTable.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
@@ -565,6 +528,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     StoreDetailVC *vc = [[StoreDetailVC alloc]init];
     vc.store_id = _dataArr[indexPath.row][@"store_id"];
     vc.client_id = _client_id;
@@ -573,7 +537,6 @@
     vc.tel =_tel;
     vc.sex =_sex;
     [self.navigationController pushViewController:vc animated:YES];
-    
 }
 
 - (void)initUI{
@@ -639,25 +602,25 @@
     _selecTable.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
         _page = 1;
-        //        if (_isSearch) {
+        if (_isSearch) {
         
-        [self SearchRequest];
-        //        }else{
-        //
-        //            [self RequestMethod];
-        //        }
+            [self SearchRequest];
+        }else{
+            
+            [self RequestMethod];
+        }
     }];
     
     _selecTable.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
-        //        if (_isSearch) {
+        _page += 1;
+        if (_isSearch) {
         
-        [self SearchRequest];
-        //        }else{
-        //
-        //            [self RequestAddMethod];
-        //        }
-        
+            [self SearchRequest];
+        }else{
+            
+            [self RequestAddMethod];
+        }
     }];
     
 

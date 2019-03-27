@@ -7,23 +7,32 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TagView.h"
 #import "LevelView.h"
 #import "RankView.h"
 
 @interface PeopleCell : UITableViewCell
+
 @property (nonatomic , strong) UILabel *titlelab;
+
 @property (nonatomic , strong) UIImageView *imageview;
+
 @property (nonatomic , strong) UILabel *contentlab;
+
 @property (nonatomic , strong) UILabel *statulab;
+
 @property (nonatomic , strong) UILabel *surelab;
-@property (nonatomic , strong) TagView *tagview;
+
 @property (nonatomic, strong) UIImageView *statusImg;
-@property (nonatomic , strong) TagView *wuyeview;
+
 @property (nonatomic, strong) RankView *rankView;
+
 @property (nonatomic, strong) LevelView *getLevel;
 
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
+@property (nonatomic, strong) UICollectionView *propertyColl;
+
+@property (nonatomic, strong) UIView *line;
 
 -(void)SetTitle:(NSString *)title
           image:(NSString *)imagename
@@ -31,4 +40,5 @@
           statu:(NSString *)statu;
 
 -(void)settagviewWithdata:(NSArray *)data;
+
 @end

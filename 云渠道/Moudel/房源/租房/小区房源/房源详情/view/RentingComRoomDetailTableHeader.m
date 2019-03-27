@@ -9,12 +9,14 @@
 #import "RentingComRoomDetailTableHeader.h"
 #import <MapKit/MapKit.h>
 
-@interface RentingComRoomDetailTableHeader()<UIScrollViewDelegate>
+@interface RentingComRoomDetailTableHeader()<UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 {
     NSInteger _num;
     NSInteger _nowNum;
     float _longitude;
     float _latitude;
+    NSMutableArray *_propertyArr;
+    NSMutableArray *_tagArr;
 }
 
 @end
@@ -26,9 +28,16 @@
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         
+        [self initDataSource];
         [self initUI];
     }
     return self;
+}
+
+- (void)initDataSource{
+    
+    _propertyArr = [@[] mutableCopy];
+    _tagArr = [@[] mutableCopy];
 }
 
 - (void)setImgArr:(NSMutableArray *)imgArr{
@@ -108,19 +117,13 @@
         _addressL.text = model.absolute_address;
     }
     
-//    if (model.sale_state) {
-//    
-//        _statusL.text = [NSString stringWithFormat:@"%@",model.sale_state];
-//    }
+    _propertyArr = [NSMutableArray arrayWithArray:model.property_type];
+    _tagArr = [NSMutableArray arrayWithArray:model.project_tags];
+    [_propertyColl reloadData];
     
-    
-//    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 200*SIZE, 20 *SIZE)  type:@"0"];
-    [_wuyeview setData:model.property_type];
-//    [self.contentView addSubview:_wuyeview];
-    
-//    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 245 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"1"];
-    [_tagview setData:model.project_tags];
-//    [self.contentView addSubview:_tagview];
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
     
     
     if (model.average_price) {
@@ -197,6 +200,68 @@
     _numL.text = [NSString stringWithFormat:@"%.0f/%ld",(scrollView.contentOffset.x / SCREEN_Width) + 1, (long)_num];
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    if (_propertyArr.count && _tagArr.count) {
+        
+        return 2;
+    }else if (!_propertyArr.count && !_tagArr.count){
+        
+        return 0;
+    }else{
+        
+        return 1;
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+    return CGSizeMake(SCREEN_Width, 3 *SIZE);
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    if (section == 1) {
+        
+        return _tagArr.count;
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            return _propertyArr.count;
+        }else{
+            
+            return _tagArr.count;
+        }
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TagCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TagCollCell" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[TagCollCell alloc] initWithFrame:CGRectMake(0, 0, 65 *SIZE, 17 *SIZE)];
+    }
+    
+    if (indexPath.section == 1) {
+        
+        [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            [cell setStyleByType:@"0" lab:_propertyArr[indexPath.item]];
+        }else{
+            
+            [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        }
+    }
+    
+    return cell;
+}
+
 - (void)initUI{
     
     self.contentView.backgroundColor = [UIColor whiteColor];
@@ -243,15 +308,15 @@
     _attentL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_attentL];
     
-    _wuyeview = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 235.5 *SIZE, 200 *SIZE, 20 *SIZE)  type:@"0"];
-    _wuyeview.collectionview.userInteractionEnabled = NO;
-    _wuyeview.userInteractionEnabled = NO;
-    [self.contentView addSubview:_wuyeview];
+    _propertyFlowLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:4 *SIZE];
+    _propertyFlowLayout.itemSize = CGSizeMake(65 *SIZE, 17 *SIZE);
     
-    _tagview = [[TagView alloc]initWithFrame:CGRectMake(10*SIZE, 265.5*SIZE, 200*SIZE, 20 *SIZE)  type:@"1"];
-    _tagview.collectionview.userInteractionEnabled = NO;
-    _tagview.userInteractionEnabled = NO;
-    [self.contentView addSubview:_tagview];
+    _propertyColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 216 *SIZE, 225 *SIZE, 50 *SIZE) collectionViewLayout:_propertyFlowLayout];
+    _propertyColl.backgroundColor = [UIColor whiteColor];
+    _propertyColl.delegate = self;
+    _propertyColl.dataSource = self;
+    [_propertyColl registerClass:[TagCollCell class] forCellWithReuseIdentifier:@"TagCollCell"];
+    [self.contentView addSubview:_propertyColl];
     
     _priceL = [[UILabel alloc] init];
     _priceL.textColor = COLOR(250, 70, 70, 1);
@@ -343,28 +408,18 @@
         make.height.equalTo(@(29 *SIZE));
     }];
     
-    [_wuyeview mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_titleL.mas_bottom).offset(11 *SIZE);
-        make.width.equalTo(@(200 *SIZE));
-        make.height.equalTo(@(20 *SIZE));
-        make.bottom.equalTo(_tagview.mas_top).offset(-9 *SIZE);
-    }];
-    
-    [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_wuyeview.mas_bottom).offset(9 *SIZE);
-        make.width.equalTo(@(200 *SIZE));
-        make.height.equalTo(@(20 *SIZE));
-        make.bottom.equalTo(_priceL.mas_top).offset(-18 *SIZE);
+        make.width.equalTo(@(225 *SIZE));
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
     
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_tagview.mas_bottom).offset(18 *SIZE);
+        make.top.equalTo(_propertyColl.mas_bottom).offset(18 *SIZE);
         make.right.equalTo(self.contentView).offset(-40 *SIZE);
     }];
     

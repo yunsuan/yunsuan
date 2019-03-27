@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "RoomDetailModel.h"
-#import "TagView.h"
 
 @class RoomDetailTableHeader;
 
@@ -44,11 +43,13 @@ typedef void(^RoomDetailHeaderMoreBlock)(void);
 
 @property (nonatomic, strong) UILabel *developerL;
 
+@property (nonatomic, strong) UIImageView *addressImg;
+
 @property (nonatomic, strong) UILabel *addressL;
 
-@property (nonatomic , strong) TagView *tagview;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic , strong) TagView *wuyeview;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) RoomDetailModel *model;
 

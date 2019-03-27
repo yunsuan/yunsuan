@@ -109,6 +109,7 @@
                 if (_page == [resposeObject[@"data"][@"last_page"] integerValue]) {
                     
                     [_dataArr removeAllObjects];
+                    [_customerTable reloadData];
                     _customerTable.mj_footer.state = MJRefreshStateNoMoreData;
                 }
                 

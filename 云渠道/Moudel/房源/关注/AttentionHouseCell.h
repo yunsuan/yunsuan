@@ -10,8 +10,6 @@
 
 #import "AttentionHouseModel.h"
 
-#import "TagView.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AttentionHouseCell : UITableViewCell
@@ -36,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *storeL;
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic, strong) TagView *tagView2;
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 @property (nonatomic, strong) UILabel *reasonL;
 

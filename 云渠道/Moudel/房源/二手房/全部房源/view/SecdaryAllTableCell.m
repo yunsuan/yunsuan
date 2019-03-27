@@ -8,6 +8,15 @@
 
 #import "SecdaryAllTableCell.h"
 
+@interface SecdaryAllTableCell ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+{
+    
+    NSMutableArray *_propertyArr;
+    NSMutableArray *_tagArr;
+}
+
+@end
+
 @implementation SecdaryAllTableCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -15,9 +24,27 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        [self initDataSource];
         [self initUI];
     }
     return self;
+}
+
+- (void)initDataSource{
+    
+    _propertyArr = [@[] mutableCopy];
+    _tagArr = [@[] mutableCopy];
+}
+
+- (void)SetTagArr:(NSArray *)data{
+    
+    _propertyArr = [NSMutableArray arrayWithArray:data[0]];
+    _tagArr = [NSMutableArray arrayWithArray:data[1]];
+    [_propertyColl reloadData];
+    
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
 }
 
 - (void)setModel:(SecdaryAllTableModel *)model{
@@ -78,19 +105,89 @@
         _statusImg.image = [UIImage imageNamed:@"falling"];
     }
     
-    [_tagView setData:model.project_tags];
-    [_tagView2 setData:model.house_tags];
+//    [_tagView setData:model.project_tags];
+//    [_tagView2 setData:model.house_tags];
     [_priceL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(_priceL.mj_textWith + 5 *SIZE));
     }];
+    
+    _propertyArr = [NSMutableArray arrayWithArray:model.project_tags];
+    _tagArr = [NSMutableArray arrayWithArray:model.house_tags];
+    [_propertyColl reloadData];
+    
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+    make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    if (_propertyArr.count && _tagArr.count) {
+        
+        return 2;
+    }else if (!_propertyArr.count && !_tagArr.count){
+        
+        return 0;
+    }else{
+        
+        return 1;
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+    return CGSizeMake(SCREEN_Width, 3 *SIZE);
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+    if (section == 1) {
+        
+        return _tagArr.count > 4 ? 4:_tagArr.count;
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            return _propertyArr.count > 4 ? 4:_propertyArr.count;
+        }else{
+            
+            return _tagArr.count > 4 ? 4:_tagArr.count;
+        }
+    }
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TagCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TagCollCell" forIndexPath:indexPath];
+    if (!cell) {
+        
+        cell = [[TagCollCell alloc] initWithFrame:CGRectMake(0, 0, 65 *SIZE, 17 *SIZE)];
+    }
+    
+    if (indexPath.section == 1) {
+        
+        [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        
+    }else{
+        
+        if (_propertyArr.count) {
+            
+            [cell setStyleByType:@"1" lab:_propertyArr[indexPath.item]];
+        }else{
+            
+            [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+        }
+    }
+    
+    return cell;
 }
 
 - (void)initUI{
     
-    _headImg = [[UIImageView alloc] init];//WithFrame:CGRectMake(12 *SIZE, 16 *SIZE, 100 *SIZE, 88 *SIZE)];
+    _headImg = [[UIImageView alloc] init];
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
     _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
@@ -152,16 +249,16 @@
     _storeL.font = [UIFont systemFontOfSize:11 *SIZE];
     _storeL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_storeL];
+
+    _propertyFlowLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:4 *SIZE];
+    _propertyFlowLayout.itemSize = CGSizeMake(65 *SIZE, 17 *SIZE);
     
-    _tagView = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 90 *SIZE, 340*SIZE, 17*SIZE)  type:@"1"];
-    _tagView.collectionview.userInteractionEnabled = NO;
-    _tagView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    [self.contentView addSubview:_tagView];
-    
-    _tagView2 = [[TagView alloc]initWithFrame:CGRectMake(10 *SIZE, 109 *SIZE, 340*SIZE, 17*SIZE)  type:@"1"];
-    _tagView2.collectionview.userInteractionEnabled = NO;
-    _tagView2.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    [self.contentView addSubview:_tagView2];
+    _propertyColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 90 *SIZE, 340 *SIZE, 40 *SIZE) collectionViewLayout:_propertyFlowLayout];
+    _propertyColl.backgroundColor = [UIColor whiteColor];
+    _propertyColl.delegate = self;
+    _propertyColl.dataSource = self;
+    [_propertyColl registerClass:[TagCollCell class] forCellWithReuseIdentifier:@"TagCollCell"];
+    [self.contentView addSubview:_propertyColl];
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -219,7 +316,6 @@
     [_averageL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(265 *SIZE);
-//        make.left.equalTo(_statusImg.mas_right).offset(44 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
@@ -238,26 +334,19 @@
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
     }];
     
-    [_tagView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+    [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
+       
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_headImg.mas_bottom).offset(5 *SIZE);
         make.width.equalTo(@(340 *SIZE));
-        make.height.equalTo(@(17 *SIZE));
-    }];
-    
-    [_tagView2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(10 *SIZE);
-        make.top.equalTo(_tagView.mas_bottom).offset(9 *SIZE);
-        make.width.equalTo(@(340 *SIZE));
-        make.height.equalTo(@(17 *SIZE));
+//        make.height.mas_equalTo(40 *SIZE);
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_tagView2.mas_bottom).offset(15 *SIZE);
+        make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
         make.right.equalTo(self.contentView).offset(0 *SIZE);
         make.height.equalTo(@(SIZE));
         make.bottom.equalTo(self.contentView).offset(0);

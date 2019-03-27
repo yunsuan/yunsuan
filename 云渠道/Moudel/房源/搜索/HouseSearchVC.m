@@ -459,7 +459,7 @@
         }
         
         [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
-        [cell.tagview reloadInputViews];
+//        [cell.tagview reloadInputViews];
         [cell.getLevel SetImage:[UIImage imageNamed:@"lightning_1"] selectImg:[UIImage imageNamed:@"lightning"] num:3];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -203,6 +203,7 @@
             if (_page == 1) {
                 
                 [_dataArr removeAllObjects];
+                [_selecTable reloadData];
             }
             if (![resposeObject[@"data"] isKindOfClass:[NSNull class]]) {
                 

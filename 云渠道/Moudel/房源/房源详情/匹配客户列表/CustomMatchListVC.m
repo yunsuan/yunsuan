@@ -11,6 +11,7 @@
 #import "ReportCustomConfirmView.h"
 #import "ReportCustomSuccessView.h"
 #import "SelectWorkerView.h"
+#import "QuickAddCustomVC.h"
 
 @interface CustomMatchListVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>{
     
@@ -99,92 +100,27 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.model = _tempArr[indexPath.row];
     cell.recommendBtn.tag = indexPath.row;
+    
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+        
+        if ([self.isRecommend isEqualToString:@"NO"]) {
+            
+            cell.recommendBtn.hidden = YES;
+        }else{
+            
+            cell.recommendBtn.hidden = NO;
+        }
+    }else{
+        
+        cell.recommendBtn.hidden = YES;
+    }
+    
     cell.recommendBtnBlock5 = ^(NSInteger index) {
         
-        CustomMatchModel *model = _tempArr[index];
-        self.selectWorkerView = [[SelectWorkerView alloc] initWithFrame:self.view.bounds];
-        SS(strongSelf);
-        WS(weakSelf);
-        self.selectWorkerView.selectWorkerRecommendBlock = ^{
-            
-            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"project_id":strongSelf->_projectId,@"client_need_id":model.need_id,@"client_id":model.client_id}];
-            if (weakSelf.selectWorkerView.nameL.text) {
-                
-                [dic setObject:weakSelf.selectWorkerView.ID forKey:@"consultant_advicer_id"];
-            }
-            ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-            NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
-                                      @"sex":model.sex,
-                                      @"tel":model.tel,
-                                      @"name":model.name
-                                      };
-            reportCustomConfirmView.state = strongSelf->_state;
-            reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-            reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                
-                [BaseRequest POST:RecommendClient_URL parameters:dic success:^(id resposeObject) {
-                    
-                    if ([resposeObject[@"code"] integerValue] == 200) {
-                        
-                        ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:weakSelf.view.frame];
-                        NSDictionary *tempDic = @{@"project":weakSelf.model.project_name,
-                                                  @"sex":model.sex,
-                                                  @"tel":model.tel,
-                                                  @"name":model.name
-                                                  };
-                        reportCustomSuccessView.state = strongSelf->_state;
-                        reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-                        reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
-                            
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
-                            [weakSelf.navigationController popViewControllerAnimated:YES];
-                        };
-                        [weakSelf.view addSubview:reportCustomSuccessView];
-                    }
-                    else{
-                        [weakSelf alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                    }
-                } failure:^(NSError *error) {
-                    
-                    [weakSelf showContent:@"网络错误"];
-                }];
-            };
-            [weakSelf.view addSubview:reportCustomConfirmView];
-        };
-        [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":strongSelf->_projectId} success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                if ([resposeObject[@"data"][@"rows"] count]) {
-                    weakSelf.selectWorkerView.dataArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"rows"]];
-                    _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
-                    _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
-                    weakSelf.selectWorkerView.advicerSelect = _selected;
-                    [weakSelf.view addSubview:weakSelf.selectWorkerView];
-                }else{
-                    
-                    ReportCustomConfirmView *reportCustomConfirmView = [[ReportCustomConfirmView alloc] initWithFrame:weakSelf.view.frame];
-                    NSDictionary *dic = @{@"project":weakSelf.model.project_name,
-                                          @"sex":model.sex,
-                                          @"tel":model.tel,
-                                          @"name":model.name
-                                          };
-                    reportCustomConfirmView.state = strongSelf->_state;
-                    reportCustomConfirmView.dataDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-                    reportCustomConfirmView.reportCustomConfirmViewBlock = ^{
-                        
-                        [weakSelf RecommendRequest:model];
-                    };
-                    [weakSelf.view addSubview:reportCustomConfirmView];
-                }
-            }else{
-                
-                [self showContent:resposeObject[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-            [self showContent:@"网络错误"];
-        }];
+        CustomMatchModel *model = _dataArr[index];
+        QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectId] clientId:model.client_id];
+        nextVC.projectName = _model.project_name;
+        [self.navigationController pushViewController:nextVC animated:YES];
     };
     return cell;
 }

@@ -9,11 +9,15 @@
 #import "MoreView.h"
 #import "MoreViewCollCell.h"
 #import "MoreViewCollHeader.h"
+#import "MoreViewHouseCollCell.h"
+#import "HouseTypePickView.h"
 
 @interface MoreView()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     
-    
+    NSString *_room;
+    NSString *_hall;
+    NSString *_bath;
 }
 
 @property (nonatomic, strong) NSMutableArray *tagArr;
@@ -37,6 +41,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        _room = @"0";
+        _hall = @"0";
+        _bath = @"0";
         self.numOfSec = 3;
         [self initUI];
     }
@@ -127,13 +134,20 @@
             }
         }];
         
-        [_houseTypeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        [_houseTypeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//            if ([_houseSelectArr[idx] integerValue] == 1) {
+//
+//                weakSelf.houseId = [NSString stringWithFormat:@"%@",_houseTypeArr[idx][@"id"]];
+//            }
+//        }];
+        if ([_room isEqualToString:@"0"] && [_hall isEqualToString:@"0"] && [_bath isEqualToString:@"0"]) {
             
-            if ([_houseSelectArr[idx] integerValue] == 1) {
-                
-                weakSelf.houseId = [NSString stringWithFormat:@"%@",_houseTypeArr[idx][@"id"]];
-            }
-        }];
+            _houseId = @"0";
+        }else{
+            
+            _houseId = [NSString stringWithFormat:@"%@,%@,%@",_room,_hall,_bath];
+        }
         
         [self.statusArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
@@ -187,7 +201,7 @@
         return self.tagArr.count;
     }else if (section == 1){
         
-        return self.houseTypeArr.count;
+        return 1;
     }else{
         
         return 3;
@@ -197,6 +211,17 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
     return CGSizeMake(SCREEN_Width, 35 *SIZE);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 1) {
+        
+        return CGSizeMake(SCREEN_Width, 30 *SIZE);
+    }else{
+        
+        return CGSizeMake(77 *SIZE, 30 *SIZE);
+    }
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
@@ -223,69 +248,97 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    MoreViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MoreViewCollCell" forIndexPath:indexPath];
-    if (!cell) {
-        
-        cell = [[MoreViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 77 *SIZE, 30 *SIZE)];
-    }
-    
-    cell.titleL.textColor = YJ86Color;
-    cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
-    cell.layer.borderWidth = 0;
-    
-    if (indexPath.section == 0) {
-        
-        cell.titleL.text = self.tagArr[indexPath.item][@"param"];
-        if ([self.tagSelectArr[indexPath.item] integerValue]) {
-            
-            cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
-            cell.titleL.textColor = [UIColor whiteColor];
-        }else{
-            
-            cell.titleL.textColor = YJ86Color;
-            cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
-        }
-    }
     if (indexPath.section == 1) {
         
-        cell.titleL.text = self.houseTypeArr[indexPath.item][@"param"];
-        if ([self.houseSelectArr[indexPath.item] integerValue]) {
+        MoreViewHouseCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MoreViewHouseCollCell" forIndexPath:indexPath];
+        if (!cell) {
             
-            cell.contentView.backgroundColor = [UIColor whiteColor];
-            cell.titleL.textColor = COLOR(133, 200, 255, 1);
-            cell.layer.borderWidth = 1;
-        }else{
-            
-            cell.titleL.textColor = YJ86Color;
-            cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+            cell = [[MoreViewHouseCollCell alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 50 *SIZE)];
         }
-    }
-    if (indexPath.section == 2) {
         
-        if (indexPath.row == 0) {
+        __strong __typeof(&*cell)strongCell = cell;
+        cell.moreViewHouseCollCellBlock = ^{
             
-            cell.titleL.text = @"在售";
+
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+                
+                strongCell.houseBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+                _room = [NSString stringWithFormat:@"%@",room];
+                _hall = [NSString stringWithFormat:@"%@",hall];
+                _bath = [NSString stringWithFormat:@"%@",bath];
+            };
+            [[UIApplication sharedApplication].keyWindow addSubview:view];
+//            [self addSubview:view];
+        };
+        
+        return cell;
+    }else{
+        
+        MoreViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MoreViewCollCell" forIndexPath:indexPath];
+        if (!cell) {
+            
+            cell = [[MoreViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 77 *SIZE, 30 *SIZE)];
         }
-        if (indexPath.row == 1) {
+        
+        cell.titleL.textColor = YJ86Color;
+        cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+        cell.layer.borderWidth = 0;
+        
+        if (indexPath.section == 0) {
             
-            cell.titleL.text = @"待售";
+            cell.titleL.text = self.tagArr[indexPath.item][@"param"];
+            if ([self.tagSelectArr[indexPath.item] integerValue]) {
+                
+                cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
+                cell.titleL.textColor = [UIColor whiteColor];
+            }else{
+                
+                cell.titleL.textColor = YJ86Color;
+                cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+            }
         }
-        if (indexPath.row == 2) {
+        if (indexPath.section == 1) {
             
-            cell.titleL.text = @"售罄";
+            //        cell.titleL.text = self.houseTypeArr[indexPath.item][@"param"];
+            //        if ([self.houseSelectArr[indexPath.item] integerValue]) {
+            //
+            //            cell.contentView.backgroundColor = [UIColor whiteColor];
+            //            cell.titleL.textColor = COLOR(133, 200, 255, 1);
+            //            cell.layer.borderWidth = 1;
+            //        }else{
+            //
+            //            cell.titleL.textColor = YJ86Color;
+            //            cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+            //        }
         }
-        if ([self.statusSelectArr[indexPath.item] integerValue]) {
+        if (indexPath.section == 2) {
             
-            cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
-            cell.titleL.textColor = [UIColor whiteColor];
-        }else{
-            
-            cell.titleL.textColor = YJ86Color;
-            cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+            if (indexPath.row == 0) {
+                
+                cell.titleL.text = @"在售";
+            }
+            if (indexPath.row == 1) {
+                
+                cell.titleL.text = @"待售";
+            }
+            if (indexPath.row == 2) {
+                
+                cell.titleL.text = @"售罄";
+            }
+            if ([self.statusSelectArr[indexPath.item] integerValue]) {
+                
+                cell.contentView.backgroundColor = COLOR(133, 200, 255, 1);
+                cell.titleL.textColor = [UIColor whiteColor];
+            }else{
+                
+                cell.titleL.textColor = YJ86Color;
+                cell.contentView.backgroundColor = COLOR(238, 238, 238, 1);
+            }
         }
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -300,15 +353,15 @@
         [_tagSelectArr replaceObjectAtIndex:indexPath.item withObject:@1];
     }
     
-    if (indexPath.section == 1) {
-        
-        [_houseSelectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            [_houseSelectArr replaceObjectAtIndex:idx withObject:@0];
-        }];
-        
-        [_houseSelectArr replaceObjectAtIndex:indexPath.item withObject:@1];
-    }
+//    if (indexPath.section == 1) {
+//        
+//        [_houseSelectArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//            
+//            [_houseSelectArr replaceObjectAtIndex:idx withObject:@0];
+//        }];
+//        
+//        [_houseSelectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+//    }
     
     if (indexPath.section == 2) {
         
@@ -331,7 +384,7 @@
     [self addSubview:alphaView];
     
     _flowlayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowlayout.itemSize = CGSizeMake(77 *SIZE, 30 *SIZE);
+//    _flowlayout.itemSize = CGSizeMake(77 *SIZE, 30 *SIZE);
     _flowlayout.minimumLineSpacing = 14 *SIZE;
     _flowlayout.minimumInteritemSpacing = 0 *SIZE;
     _flowlayout.sectionInset = UIEdgeInsetsMake(0, 10 *SIZE, 10 *SIZE, 10 *SIZE);
@@ -342,6 +395,7 @@
     _moreColl.dataSource = self;
     
     [_moreColl registerClass:[MoreViewCollCell class] forCellWithReuseIdentifier:@"MoreViewCollCell"];
+    [_moreColl registerClass:[MoreViewHouseCollCell class] forCellWithReuseIdentifier:@"MoreViewHouseCollCell"];
     [_moreColl registerClass:[MoreViewCollHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MoreViewCollHeader"];
     [self addSubview:_moreColl];
     

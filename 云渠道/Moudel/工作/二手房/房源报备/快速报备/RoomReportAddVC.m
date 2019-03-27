@@ -97,26 +97,9 @@
     _dataArr = [@[] mutableCopy];
     _page = 1;
     _asc = @"asc";
-//    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
-    //    [self RequestMethod];
-}
 
-//- (void)SearchRequest{
-//
-//    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
-//
-//        //        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//            [self SetSearch:resposeObject[@"data"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        //        NSLog(@"%@",error);
-//    }];
-//}
+}
 
 - (void)SetSearch:(NSDictionary *)data{
     
@@ -126,24 +109,7 @@
         [_searchArr addObject:key];
     }];
 }
-//
-//- (void)SetData:(NSArray *)data{
-//
-//    for (int i = 0; i < data.count; i++) {
-//
-//        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
-//        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-//
-//            if ([obj isKindOfClass:[NSNull class]]) {
-//
-//                [tempDic setObject:@"" forKey:key];
-//            }
-//        }];
-//
-//    }
-//
-//    [self.MainTableView reloadData];
-//}
+
 
 - (void)RequestMethod{
     
@@ -186,6 +152,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_MainTableView reloadData];
             if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [self SetData:resposeObject[@"data"][@"data"]];

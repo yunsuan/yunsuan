@@ -232,25 +232,17 @@
         }
     } failure:^(NSError *error) {
         
-        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }
 
 - (void)SetData:(NSDictionary *)data{
-//    if (data[@"total_float_url_phone"]) {
-//        _phone_url =  [NSString stringWithFormat:@"%@",data[@"total_float_url_phone"]];
-//    }
+
     
     if (data[@"butter_tel"]) {
         
         _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
     }
-    
-//    if ([data[@"build_info"] isKindOfClass:[NSDictionary class]]) {
-//
-//        _buildDic = [NSMutableDictionary dictionaryWithDictionary:data[@"build_info"]];
-//    }
     
     if ([data[@"dynamic"] isKindOfClass:[NSDictionary class]]) {
         
@@ -464,7 +456,7 @@
     
     if (!section) {
         
-        return 387.5 *SIZE;
+        return UITableViewAutomaticDimension;
     }else{
         
         if (section == 6) {
@@ -489,7 +481,7 @@
         RoomDetailTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RoomDetailTableHeader"];
         if (!header) {
             
-            header = [[RoomDetailTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 402.5 *SIZE)];
+            header = [[RoomDetailTableHeader alloc] initWithReuseIdentifier:@"RoomDetailTableHeader"];
         }
         
         header.model = _model;
@@ -634,6 +626,7 @@
             header.moreBtnBlock = ^{
                 
                 CustomMatchListVC *nextVC = [[CustomMatchListVC alloc] initWithDataArr:_peopleArr projectId:_projectId];
+                nextVC.isRecommend = self.isRecommend;
                 nextVC.model = _model;
                 [self.navigationController pushViewController:nextVC animated:YES];
             };
@@ -795,6 +788,19 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.model = _peopleArr[indexPath.row];
             cell.recommendBtn.tag = indexPath.row;
+            if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+                
+                if ([self.isRecommend isEqualToString:@"NO"]) {
+                    
+                    cell.recommendBtn.hidden = YES;
+                }else{
+                    
+                    cell.recommendBtn.hidden = NO;
+                }
+            }else{
+                
+                cell.recommendBtn.hidden = YES;
+            }
             cell.recommendBtnBlock5 = ^(NSInteger index) {
               
                 CustomMatchModel *model = _peopleArr[index];
@@ -857,6 +863,8 @@
     _roomTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     _roomTable.rowHeight = UITableViewAutomaticDimension;
     _roomTable.estimatedRowHeight = 360 *SIZE;
+    _roomTable.sectionHeaderHeight = UITableViewAutomaticDimension;
+    _roomTable.estimatedSectionHeaderHeight = 400 *SIZE;
     _roomTable.backgroundColor = self.view.backgroundColor;
     _roomTable.delegate = self;
     _roomTable.dataSource = self;
@@ -870,7 +878,8 @@
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
+        
         _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
     }else{
         

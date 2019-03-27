@@ -15,19 +15,23 @@
 #import <Foundation/Foundation.h>
 #endif
 
+#import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
-#import "NetConfig.h"
 #import <UITableView+FDTemplateLayoutCell.h>
 #import <Masonry.h>
-#import "UIImageView+WebCache.h"
+#import <UMShare/UMShare.h>
+
+#import "NetConfig.h"
 #import "UserModel.h"
 #import "UserInfoModel.h"
 #import "UserModelArchiver.h"
 #import "BaseRequest.h"
 #import "GZQGifHeader.h"
 #import "GZQGifFooter.h"
-#import <UMShare/UMShare.h>
+#import "TagCollCell.h"
+#import "GZQFlowLayout.h"
 #import "TransmitView.h"
+
 #import "SignListVC.h"
 #import "SignNeedInfoVC.h"
 

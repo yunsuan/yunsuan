@@ -10,7 +10,6 @@
 
 #import "SecAllRoomStoreModel.h"
 
-#import "TagView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,9 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SecAllRoomStoreModel *model;
 
-@property (nonatomic, strong) TagView *tagView;
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
 
-@property (nonatomic, strong) TagView *tagView2;
+@property (nonatomic, strong) UICollectionView *propertyColl;
+
 
 @property (nonatomic, strong) UILabel *codeL;//房源编号
 

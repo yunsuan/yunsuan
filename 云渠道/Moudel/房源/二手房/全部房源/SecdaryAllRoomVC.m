@@ -104,22 +104,7 @@
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     [self RequestMethod];
 }
-//
-//- (void)SearchRequest{
-//
-//    [BaseRequest GET:@"user/project/hotSearch" parameters:nil success:^(id resposeObject) {
-//
-//        //        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//
-//            [self SetSearch:resposeObject[@"data"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        //        NSLog(@"%@",error);
-//    }];
-//}
+
 
 - (void)SetSearch:(NSDictionary *)data{
     

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TagView.h"
 #import "LevelView.h"
 #import "RankView.h"
 
@@ -19,15 +18,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *selectImg;
 
 @property (nonatomic , strong) UILabel *titlelab;
+
 @property (nonatomic , strong) UIImageView *imageview;
+
 @property (nonatomic , strong) UILabel *contentlab;
+
 @property (nonatomic , strong) UILabel *statulab;
+
 @property (nonatomic , strong) UILabel *surelab;
-@property (nonatomic , strong) TagView *tagview;
+
 @property (nonatomic, strong) UIImageView *statusImg;
-@property (nonatomic , strong) TagView *wuyeview;
+
 @property (nonatomic, strong) RankView *rankView;
+
 @property (nonatomic, strong) LevelView *getLevel;
+
+@property (nonatomic, strong) GZQFlowLayout *propertyFlowLayout;
+
+@property (nonatomic, strong) UICollectionView *propertyColl;
 
 
 

@@ -16,6 +16,7 @@
 #import "SinglePickView.h"
 #import "DateChooseView.h"
 #import "AddTagView.h"
+#import "HouseTypePickView.h"
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
@@ -310,11 +311,20 @@
             SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
             WS(weakself);
             view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
+
                 weakself.houseBtn.content.text = MC;
                 weakself.houseBtn->str = [NSString stringWithFormat:@"%@", ID];
             };
             [self.view addSubview:view];
+            
+//            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            WS(weakself);
+//            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+//
+//                weakself.typeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+//                weakself.typeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 6:
@@ -1508,13 +1518,14 @@
     
     if ([_dataDic[@"house_type"] length]) {
         
+//        _houseBtn.content.text = [NSString stringWithFormat:@"%@",_dataDic[@"house_type"]];
         NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
         NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
         NSArray *typeArr = dic[@"param"];
         for (NSDictionary *dic in typeArr) {
-            
+
             if ([[NSString stringWithFormat:@"%@",dic[@"param"]] isEqualToString:_dataDic[@"house_type"]]) {
-                
+
                 _houseBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
                 _houseBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
             }
