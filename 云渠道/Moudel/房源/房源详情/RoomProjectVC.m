@@ -526,6 +526,7 @@
                 browser.delegate = self;
                 browser.dataArray = tempArr;
                 browser.albumArr = _albumArr;
+                
                 browser.infoid = _info_id;
                 browser.currentIndex = num;
                 [browser show];
@@ -1013,6 +1014,7 @@
     return nil;
     
 }
+
 
 
 

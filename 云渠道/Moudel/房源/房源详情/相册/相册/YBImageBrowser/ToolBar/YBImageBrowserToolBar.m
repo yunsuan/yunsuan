@@ -31,7 +31,7 @@
     if (self) {
         [self addGradient];
         [self addSubview:self.titleLabel];
-//        [self addSubview:self.rightButton];
+        [self addSubview:self.rightButton];
     }
     return self;
 }
