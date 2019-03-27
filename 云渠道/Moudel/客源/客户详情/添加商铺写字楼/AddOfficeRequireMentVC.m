@@ -21,6 +21,7 @@
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
+#import "TTRangeSlider.h"
 
 @interface AddOfficeRequireMentVC ()<UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
@@ -43,11 +44,13 @@
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) DropDownBtn *priceBtn;
+//@property (nonatomic, strong) DropDownBtn *priceBtn;
+@property (strong, nonatomic) TTRangeSlider *priceBtn;
 
 @property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) DropDownBtn *areaTF;
+//@property (nonatomic, strong) DropDownBtn *areaTF;
+@property (strong, nonatomic) TTRangeSlider *areaBtn;
 
 @property (nonatomic, strong) UILabel *useL;
 
@@ -193,26 +196,26 @@
         }
         case 1:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@万",MC];
-                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:TOTAL_PRICE]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.priceBtn.content.text = [NSString stringWithFormat:@"%@万",MC];
+//                weakself.priceBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 2:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.areaTF.content.text = [NSString stringWithFormat:@"%@㎡",MC];;
-                weakself.areaTF->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:AREA]];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.areaTF.content.text = [NSString stringWithFormat:@"%@㎡",MC];;
+//                weakself.areaTF->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 3:
@@ -278,14 +281,17 @@
         }
 
         
-        if (_priceBtn->str.length) {
-            
-            dic[@"total_price"] = _priceBtn->str;
-        }
-        if (_areaTF->str.length) {
-            
-            dic[@"area"] = _areaTF->str;
-        }
+//        if (_priceBtn->str.length) {
+//
+//            dic[@"total_price"] = _priceBtn->str;
+//        }
+        dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
+//        if (_areaTF->str.length) {
+//
+//            dic[@"area"] = _areaTF->str;
+//        }
+        
+        dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
 
         if (_useBtn->str.length) {
             
@@ -371,14 +377,17 @@
                 dic[@"region"] = self.addressBtn->str;
             }
         }
-        if (_priceBtn->str.length) {
-            
-            dic[@"total_price"] = _priceBtn->str;
-        }
-        if (_areaTF->str.length) {
-            
-            dic[@"area"] = _areaTF->str;
-        }
+//        if (_priceBtn->str.length) {
+//
+//            dic[@"total_price"] = _priceBtn->str;
+//        }
+        dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
+//        if (_areaTF->str.length) {
+//
+//            dic[@"area"] = _areaTF->str;
+//        }
+        
+        dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
 
         if (_useBtn->str.length) {
             
@@ -613,14 +622,26 @@
             }
             case 1:
             {
-                _priceBtn = btn;
+//                _priceBtn = btn;
+                _priceBtn = [[TTRangeSlider alloc] initWithFrame:btn.frame];
+                _priceBtn.minValue = 0;
+                _priceBtn.maxValue = 1000;
+                NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
+                customFormatter.positiveSuffix = @"万";
+                _priceBtn.numberFormatterOverride = customFormatter;
                 [_infoView addSubview:_priceBtn];
                 break;
             }
             case 2:
             {
-                _areaTF = btn;
-                [_infoView addSubview:_areaTF];
+//                _areaTF = btn;
+                _areaBtn = [[TTRangeSlider alloc] initWithFrame:btn.frame];
+                _areaBtn.minValue = 0;
+                _areaBtn.maxValue = 500;
+                NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
+                customFormatter.positiveSuffix = @"㎡";
+                _areaBtn.numberFormatterOverride = customFormatter;
+                [_infoView addSubview:_areaBtn];
                 break;
             }
             case 3:
@@ -805,35 +826,63 @@
     
     if (_model.total_price.length) {
         
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
+        NSArray *arr = [_model.total_price componentsSeparatedByString:@"-"];
+        if (arr.count == 2) {
             
-            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
-                
-                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
-                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-                break;
-            }
+            _priceBtn.selectedMinimum = [arr[0] floatValue];
+            _priceBtn.selectedMaximum = [arr[1] floatValue];
+        }else if (arr.count == 1){
+            
+            _priceBtn.selectedMinimum = [arr[0] floatValue];
+            _priceBtn.selectedMaximum = 1000.00;
+        }else{
+            
+            _priceBtn.selectedMaximum = 1000.00;
+            _priceBtn.selectedMinimum = 0.00;
         }
+//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",25]];
+//        NSArray *typeArr = dic[@"param"];
+//        for (NSUInteger i = 0; i < typeArr.count; i++) {
+//
+//            if ([typeArr[i][@"param"] isEqualToString:_model.total_price]) {
+//
+//                _priceBtn.content.text = [NSString stringWithFormat:@"%@万",typeArr[i][@"param"]];
+//                _priceBtn->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+//                break;
+//            }
+//        }
     }
 
     
     if ([_model.area length]) {
         
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSUInteger i = 0; i < typeArr.count; i++) {
+        NSArray *arr = [_model.area componentsSeparatedByString:@"-"];
+        if (arr.count == 2) {
             
-            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
-                
-                _areaTF.content.text = [NSString stringWithFormat:@"%@㎡",typeArr[i][@"param"]];
-                _areaTF->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
-                break;
-            }
+            _areaBtn.selectedMinimum = [arr[0] floatValue];
+            _areaBtn.selectedMaximum = [arr[1] floatValue];
+        }else if (arr.count == 1){
+            
+            _areaBtn.selectedMinimum = [arr[0] floatValue];
+            _areaBtn.selectedMaximum = 500.00;
+        }else{
+            
+            _areaBtn.selectedMaximum = 500.00;
+            _areaBtn.selectedMinimum = 0.00;
         }
+//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",26]];
+//        NSArray *typeArr = dic[@"param"];
+//        for (NSUInteger i = 0; i < typeArr.count; i++) {
+//
+//            if ([typeArr[i][@"param"] isEqualToString:_model.area]) {
+//
+//                _areaTF.content.text = [NSString stringWithFormat:@"%@㎡",typeArr[i][@"param"]];
+//                _areaTF->str = [NSString stringWithFormat:@"%@", typeArr[i][@"id"]];
+//                break;
+//            }
+//        }
     }
     
     if (_model.buy_use.length) {
@@ -947,7 +996,7 @@
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_areaTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_areaBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(80 *SIZE);
         make.top.equalTo(_priceBtn.mas_bottom).offset(20 *SIZE);
@@ -958,14 +1007,14 @@
     [_useL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(10 *SIZE);
-        make.top.equalTo(_areaTF.mas_bottom).offset(31 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(70 *SIZE);
     }];
     
     [_useBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_infoView).offset(80 *SIZE);
-        make.top.equalTo(_areaTF.mas_bottom).offset(20 *SIZE);
+        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];

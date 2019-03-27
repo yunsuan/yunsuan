@@ -161,9 +161,6 @@
 		0C36C5472242551E007BB162 /* singleviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5412242551E007BB162 /* singleviewCell.m */; };
 		0C36C5482242551E007BB162 /* TagView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5432242551E007BB162 /* TagView2.m */; };
 		0C36C54C224368FA007BB162 /* HouseTypePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C54B224368FA007BB162 /* HouseTypePickView.m */; };
-		0C36C55422438C0D007BB162 /* JLSliderMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C54E22438C0C007BB162 /* JLSliderMoveView.m */; };
-		0C36C55522438C0D007BB162 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C55022438C0C007BB162 /* UIView+Frame.m */; };
-		0C36C55622438C0D007BB162 /* JLSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C55222438C0D007BB162 /* JLSliderView.m */; };
 		0C36C5672248AB66007BB162 /* MoreViewHouseCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5662248AB66007BB162 /* MoreViewHouseCollCell.m */; };
 		0C382E6D20A037D6005472CD /* IdentifyingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6C20A037D6005472CD /* IdentifyingVC.m */; };
 		0C382E7020A03A01005472CD /* IdentifyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C382E6F20A03A01005472CD /* IdentifyTableCell.m */; };
@@ -409,6 +406,7 @@
 		0CB6BB022074A9A300921C75 /* HouseTypeTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BB012074A9A300921C75 /* HouseTypeTableHeader.m */; };
 		0CB6BB052074AA8100921C75 /* HouseTypeTableHeader2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BB042074AA8100921C75 /* HouseTypeTableHeader2.m */; };
 		0CB6BB082074C6DE00921C75 /* HouseHeaderCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB6BB072074C6DE00921C75 /* HouseHeaderCollCell.m */; };
+		0CBA09C9224B630200764DEA /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBA09C6224B630100764DEA /* TTRangeSlider.m */; };
 		0CBD857720848EC700E7B183 /* LevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD857620848EC700E7B183 /* LevelView.m */; };
 		0CBD857A2085931A00E7B183 /* MyAttentionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD85792085931A00E7B183 /* MyAttentionModel.m */; };
 		0CBD857D2085C6EA00E7B183 /* BankCardListTableCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD857C2085C6E900E7B183 /* BankCardListTableCell2.m */; };
@@ -1103,12 +1101,6 @@
 		0C36C5442242551E007BB162 /* TagViewCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagViewCollCell.h; sourceTree = "<group>"; };
 		0C36C54A224368FA007BB162 /* HouseTypePickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseTypePickView.h; sourceTree = "<group>"; };
 		0C36C54B224368FA007BB162 /* HouseTypePickView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseTypePickView.m; sourceTree = "<group>"; };
-		0C36C54E22438C0C007BB162 /* JLSliderMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLSliderMoveView.m; sourceTree = "<group>"; };
-		0C36C54F22438C0C007BB162 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
-		0C36C55022438C0C007BB162 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
-		0C36C55122438C0D007BB162 /* JLSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLSliderView.h; sourceTree = "<group>"; };
-		0C36C55222438C0D007BB162 /* JLSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLSliderView.m; sourceTree = "<group>"; };
-		0C36C55322438C0D007BB162 /* JLSliderMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLSliderMoveView.h; sourceTree = "<group>"; };
 		0C36C5652248AB66007BB162 /* MoreViewHouseCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewHouseCollCell.h; sourceTree = "<group>"; };
 		0C36C5662248AB66007BB162 /* MoreViewHouseCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewHouseCollCell.m; sourceTree = "<group>"; };
 		0C382E6B20A037D6005472CD /* IdentifyingVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyingVC.h; sourceTree = "<group>"; };
@@ -1589,6 +1581,9 @@
 		0CB6BB042074AA8100921C75 /* HouseTypeTableHeader2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseTypeTableHeader2.m; sourceTree = "<group>"; };
 		0CB6BB062074C6DE00921C75 /* HouseHeaderCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HouseHeaderCollCell.h; sourceTree = "<group>"; };
 		0CB6BB072074C6DE00921C75 /* HouseHeaderCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HouseHeaderCollCell.m; sourceTree = "<group>"; };
+		0CBA09C6224B630100764DEA /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
+		0CBA09C7224B630200764DEA /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
+		0CBA09C8224B630200764DEA /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
 		0CBD857520848EC700E7B183 /* LevelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelView.h; sourceTree = "<group>"; };
 		0CBD857620848EC700E7B183 /* LevelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LevelView.m; sourceTree = "<group>"; };
 		0CBD85782085931A00E7B183 /* MyAttentionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAttentionModel.h; sourceTree = "<group>"; };
@@ -3670,12 +3665,9 @@
 		0C36C54D22438BE0007BB162 /* 区间 */ = {
 			isa = PBXGroup;
 			children = (
-				0C36C55322438C0D007BB162 /* JLSliderMoveView.h */,
-				0C36C54E22438C0C007BB162 /* JLSliderMoveView.m */,
-				0C36C55122438C0D007BB162 /* JLSliderView.h */,
-				0C36C55222438C0D007BB162 /* JLSliderView.m */,
-				0C36C54F22438C0C007BB162 /* UIView+Frame.h */,
-				0C36C55022438C0C007BB162 /* UIView+Frame.m */,
+				0CBA09C8224B630200764DEA /* TTRangeSlider.h */,
+				0CBA09C6224B630100764DEA /* TTRangeSlider.m */,
+				0CBA09C7224B630200764DEA /* TTRangeSliderDelegate.h */,
 			);
 			path = "区间";
 			sourceTree = "<group>";
@@ -7960,6 +7952,7 @@
 			files = (
 				0CAF4DE0219EC08E0009873E /* AttetionComModel.m in Sources */,
 				0C6B6348211B04F500ABB506 /* CompleteSurveyInfoVC.m in Sources */,
+				0CBA09C9224B630200764DEA /* TTRangeSlider.m in Sources */,
 				10F7D0CE21F83AEA007818E3 /* AddContractCell4.m in Sources */,
 				0C997C8321E490D900F805AA /* LookFailCell.m in Sources */,
 				0CE8218A221BF06A00576742 /* ContractAddAgentVC.m in Sources */,
@@ -7978,7 +7971,6 @@
 				0C36C5672248AB66007BB162 /* MoreViewHouseCollCell.m in Sources */,
 				0CB3E30122002CB0007D71CF /* LookMaintainDetailLookRecordSingleVC.m in Sources */,
 				0CC19D19207202E80007CC5F /* ChangeNameVC.m in Sources */,
-				0C36C55622438C0D007BB162 /* JLSliderView.m in Sources */,
 				0C08BF5F206CB7CD005BB3B4 /* BrokerageDetailVC.m in Sources */,
 				0C549CFA21E5A06E004CFA66 /* RecommendWaitVC.m in Sources */,
 				0C6B634C211C225700ABB506 /* SecdaryAllTableModel.m in Sources */,
@@ -8036,7 +8028,6 @@
 				0C997BE321D0789400F805AA /* WWSliderKnobLayer.m in Sources */,
 				0C96CE6C21940A080049C1AC /* SecWorkSuccessVC.m in Sources */,
 				0CB3E2EF21FD7848007D71CF /* SecondaryMatchCell2.m in Sources */,
-				0C36C55422438C0D007BB162 /* JLSliderMoveView.m in Sources */,
 				0C997C6B21E4782A00F805AA /* CustomLookVC.m in Sources */,
 				0CD90A4620DB3CFA00061B4A /* MaintainLookCell.m in Sources */,
 				0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */,
@@ -8407,7 +8398,6 @@
 				0CD90A3E20DA677600061B4A /* RoomAgencyDoneCell.m in Sources */,
 				0CB6BB082074C6DE00921C75 /* HouseHeaderCollCell.m in Sources */,
 				0CDD701B20D00E0800D6609C /* ReportWaitDetailVC.m in Sources */,
-				0C36C55522438C0D007BB162 /* UIView+Frame.m in Sources */,
 				0C997BF321D4B0C200F805AA /* RentingRoomAgencyAddProtocolCell2.m in Sources */,
 				0C9CD4602105A8DB004894A3 /* RentingAllRoomProjectVC.m in Sources */,
 				0C30631320CE88A8004D1996 /* SecAllRoomTableCell2.m in Sources */,
