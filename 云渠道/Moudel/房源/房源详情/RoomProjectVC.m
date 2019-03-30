@@ -146,14 +146,12 @@
     
     [BaseRequest GET:ProjectMatching_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
         
-        //        NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [self SetMatchPeople:resposeObject[@"data"]];
         }
     } failure:^(NSError *error) {
         
-        //        NSLog(@"%@",error);
         [self showContent:@"网络错误"];
     }];
 }

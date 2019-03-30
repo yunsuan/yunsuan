@@ -1131,6 +1131,19 @@
     }
 }
 
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+////    if (_AllType == 1) {
+////
+////        if ([self.status isEqualToString:@"关注"]) {
+//    
+//            return YES;
+////        }
+////        return NO;
+////    }
+////    return NO;
+//}
+
 - (void)initUI{
     
     _MainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, SCREEN_Width, SCREEN_Height - 46 - 46 *SIZE - STATUS_BAR_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];

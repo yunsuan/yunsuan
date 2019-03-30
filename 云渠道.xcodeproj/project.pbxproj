@@ -623,6 +623,7 @@
 		0CF04FA1207CCC8E00A45F4A /* MoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF04FA0207CCC8E00A45F4A /* MoreView.m */; };
 		0CF04FA4207CCDF000A45F4A /* MoreViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF04FA3207CCDF000A45F4A /* MoreViewCollCell.m */; };
 		0CF04FA7207CD1A100A45F4A /* MoreViewCollHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF04FA6207CD1A100A45F4A /* MoreViewCollHeader.m */; };
+		0CF1F31B224E01DD00C92A54 /* RecommendMoreInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F31A224E01DD00C92A54 /* RecommendMoreInfoVC.m */; };
 		0CF46ED9223214BC008816E6 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46ED8223214BC008816E6 /* SignListVC.m */; };
 		0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */; };
 		0CF7423B206229C4001F926F /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7423A206229C4001F926F /* MessageTableCell.m */; };
@@ -2024,6 +2025,8 @@
 		0CF04FA3207CCDF000A45F4A /* MoreViewCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewCollCell.m; sourceTree = "<group>"; };
 		0CF04FA5207CD1A100A45F4A /* MoreViewCollHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewCollHeader.h; sourceTree = "<group>"; };
 		0CF04FA6207CD1A100A45F4A /* MoreViewCollHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewCollHeader.m; sourceTree = "<group>"; };
+		0CF1F319224E01DD00C92A54 /* RecommendMoreInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendMoreInfoVC.h; sourceTree = "<group>"; };
+		0CF1F31A224E01DD00C92A54 /* RecommendMoreInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendMoreInfoVC.m; sourceTree = "<group>"; };
 		0CF46ED7223214BC008816E6 /* SignListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
 		0CF46ED8223214BC008816E6 /* SignListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
 		0CF46EDB22324A1C008816E6 /* RecommendConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendConfirmVC.h; sourceTree = "<group>"; };
@@ -4407,6 +4410,8 @@
 				0C997C1F21D6124800F805AA /* RecommendInfoVC.m */,
 				0C997C2D21D760AE00F805AA /* RecommendTransmitView.h */,
 				0C997C2E21D760AE00F805AA /* RecommendTransmitView.m */,
+				0CF1F319224E01DD00C92A54 /* RecommendMoreInfoVC.h */,
+				0CF1F31A224E01DD00C92A54 /* RecommendMoreInfoVC.m */,
 			);
 			path = "推荐详情";
 			sourceTree = "<group>";
@@ -8554,6 +8559,7 @@
 				0C997C8721E4992800F805AA /* CustomLookWaitDetailVC.m in Sources */,
 				0C997C3621DC88C700F805AA /* RentingAddRequireMentVC.m in Sources */,
 				100D8F6A218004ED006839EB /* WMMenuItem.m in Sources */,
+				0CF1F31B224E01DD00C92A54 /* RecommendMoreInfoVC.m in Sources */,
 				0C9B01BC216B25740055A9A8 /* SelectStoreCollCell.m in Sources */,
 				0C3AD56B2069EF290059CE02 /* RoomCellCollCell.m in Sources */,
 				0C07BFCB2060D94C007F31EC /* BaseRequest.m in Sources */,
