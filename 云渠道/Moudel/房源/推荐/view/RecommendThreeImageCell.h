@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendThreeImageCell : UITableViewCell
 
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
+
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UIImageView *headImg2;

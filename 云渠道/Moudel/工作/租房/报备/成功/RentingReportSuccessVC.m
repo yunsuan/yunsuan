@@ -53,6 +53,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_succussTable reloadData];
             if ([resposeObject[@"data"] count]) {
                 
                 [self SetData:resposeObject[@"data"]];

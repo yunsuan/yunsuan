@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendRightImageCell : UITableViewCell
 
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
+
 @property (nonatomic, strong) UIImageView *headImg;
 
 @property (nonatomic, strong) UILabel *titleL;

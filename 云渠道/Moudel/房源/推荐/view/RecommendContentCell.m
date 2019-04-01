@@ -55,6 +55,37 @@
 //    }];
 //}
 
+- (void)setDataDic:(NSMutableDictionary *)dataDic{
+    
+//    if ([dataDic[@"img_url"] length] > 0) {
+//        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//
+//            if (error) {
+//
+//                _headImg.image = [UIImage imageNamed:@"default_3"];
+//            }
+//        }];
+//    }
+//    else{
+//        _headImg.image = [UIImage imageNamed:@"default_3"];
+//    }
+    
+    _titleL.text = dataDic[@"title"];
+    _contentL.text = dataDic[@"desc"];
+    
+    _timeL.text = [NSString stringWithFormat:@"%@",dataDic[@"adopt_time"]];
+    _sourceL.text = dataDic[@"label"];
+    _autherL.text = [NSString stringWithFormat:@"作者:%@",dataDic[@"nick_name"]];
+    
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
+        make.width.equalTo(@(_sourceL.mj_textWith + 5 *SIZE));
+    }];
+    
+}
+
 - (void)initUI{
     
     _titleL = [[UILabel alloc] init];
@@ -127,12 +158,12 @@
         
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
-        make.width.equalTo(@(200 *SIZE));
+        make.width.equalTo(@(80 *SIZE));
     }];
     
     [_autherL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(123 *SIZE);
+        make.left.equalTo(self.contentView).offset(80 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(200 *SIZE));
     }];

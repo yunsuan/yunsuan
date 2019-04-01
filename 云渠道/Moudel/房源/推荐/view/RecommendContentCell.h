@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendContentCell : UITableViewCell
 
+@property (nonatomic, strong) NSMutableDictionary *dataDic;
+
 @property (nonatomic, strong) UILabel *titleL;
 
 @property (nonatomic, strong) UILabel *contentL;

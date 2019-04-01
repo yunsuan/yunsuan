@@ -53,6 +53,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_mainTable reloadData];
             if ([resposeObject[@"data"] count]) {
                 
                 [_mainTable.mj_header endRefreshing];

@@ -55,6 +55,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
+            [_waitTable reloadData];
             if ([resposeObject[@"data"] count]) {
                 
                 [_waitTable.mj_header endRefreshing];

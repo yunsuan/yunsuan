@@ -21,6 +21,7 @@
 #import "RentingComRoomDetailVC.h"
 #import "RentingAllRoomDetailVC.h"
 #import "RecommendInfoVC.h"
+#import "RecommendNewInfoVC.h"
 
 #import "HouseSearchVC.h"
 
@@ -409,11 +410,16 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     };
     
-    vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {
+    vc.roomChildVCRecommendBlock = ^(NSDictionary *dataDic) {
         
-        RecommendInfoVC *vc = [[RecommendInfoVC alloc] initWithUrlStr:model.content_url titleStr:model.title imageUrl:model.img_url briefStr:model.desc];
+        RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"title"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"]];
         [self.navigationController pushViewController:vc animated:YES];
     };
+//    vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {
+//
+//        RecommendInfoVC *vc = [[RecommendInfoVC alloc] initWithUrlStr:model.content_url titleStr:model.title imageUrl:model.img_url briefStr:model.desc];
+//        [self.navigationController pushViewController:vc animated:YES];
+//    };
     
     vc.roomChildVCRentModelBlock = ^(RentingAllTableModel *model) {
         

@@ -16,7 +16,7 @@
 //static NSString *const Base_Net = @"http://120.27.21.136:2798/";
 
 //基础接口正式
-static NSString *const TestBase_Net = @"http://120.78.69.178:2902/";
+//static NSString *const TestBase_Net = @"http://120.78.69.178:2902/";
 
 //基础接口测试
 //static NSString *const TestBase_Net = @"http://120.27.21.136:2798/";
@@ -211,7 +211,13 @@ static NSString *const SCReconment_URL = @"agent/take/recommend";
 #pragma mark ---  房源  ---
 
 //推荐
-static NSString *const ProjectRecommendInfo_URL = @"user/project/recommendInfo";
+//static NSString *const ProjectRecommendInfo_URL = @"user/project/recommendInfo";
+
+//推荐列表
+static NSString *const RecommendGetList_URL = @"agent/recommend/getList";
+
+//推荐详情
+static NSString *const RencommendGetDetails_URL = @"agent/recommend/getDetails";
 
 //获取源标签
 static NSString *const ProjectResources_URL = @"user/project/resources";
