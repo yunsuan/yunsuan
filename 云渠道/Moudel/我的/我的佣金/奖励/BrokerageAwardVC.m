@@ -51,11 +51,6 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-//    cell.nameL.text = @"张三";
-//    cell.phoneL.text = @"15983804766";
-//    cell.priceL.text = @"￥20";
-//    cell.timeL.text = @"2018-02-10";
-    
     return cell;
 }
 

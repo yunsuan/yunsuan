@@ -236,7 +236,7 @@
             _priceL.frame = CGRectMake(120 *SIZE, 108 *SIZE, 120 *SIZE, 10 *SIZE);
             _priceL.font = [UIFont systemFontOfSize:12 *SIZE];
             _priceL.textColor = YJBlueBtnColor;
-            _priceL.text = @"￥2300";
+//            _priceL.text = @"￥2300";
             _priceL.textAlignment = NSTextAlignmentCenter;
             [whiteView addSubview:_priceL];
         }
