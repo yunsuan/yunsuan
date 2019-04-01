@@ -211,7 +211,7 @@ static NSString *const SCReconment_URL = @"agent/take/recommend";
 #pragma mark ---  房源  ---
 
 //推荐
-//static NSString *const ProjectRecommendInfo_URL = @"user/project/recommendInfo";
+static NSString *const ProjectRecommendInfo_URL = @"user/project/recommendInfo";
 
 //推荐列表
 static NSString *const RecommendGetList_URL = @"agent/recommend/getList";

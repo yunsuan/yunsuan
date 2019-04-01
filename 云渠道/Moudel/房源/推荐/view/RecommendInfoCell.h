@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendInfoCell : UITableViewCell
 
-//@property (nonatomic, strong) RecommendInfoModel *model;
+@property (nonatomic, strong) RecommendInfoModel *model;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 

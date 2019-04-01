@@ -124,13 +124,14 @@
                      
                      if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
                          
-                         if ([self.needConfirm integerValue]) {
-                             
-                             [self.view addSubview:_confirmBtn];
-                         }else{
+                         if (![self.needConfirm integerValue]) {
                              
                              _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
-//                             _confirmBtn.hidden = YES;
+                             //                             _confirmBtn.hidden = YES;
+                         }else{
+                             
+                             [self.view addSubview:_confirmBtn];
+                             
                          }
                      }
                      
