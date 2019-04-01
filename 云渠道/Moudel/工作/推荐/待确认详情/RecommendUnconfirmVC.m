@@ -405,7 +405,14 @@
 {
     
     UnconfirmDetailVC *nextVC = [[UnconfirmDetailVC alloc] initWithString:_dataArr[indexPath.row][@"client_id"]];
-    nextVC.needConfirm = _dataArr[indexPath.row][@"need_confirm"];
+    if (_dataArr[indexPath.row][@"need_confirm"]) {
+        
+        nextVC.needConfirm = _dataArr[indexPath.row][@"need_confirm"];
+    }else{
+        
+        nextVC.needConfirm = @"1";
+    }
+    
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 

@@ -12,6 +12,9 @@
 
 
 #pragma mark ---  基础接口  ---
+
+//新服务器
+static NSString *const TestBase_Net = @"http:/47.107.246.94/";
 //基础接口
 //static NSString *const Base_Net = @"http://120.27.21.136:2798/";
 
