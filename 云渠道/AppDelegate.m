@@ -120,31 +120,35 @@ static NSString *const kQQAPPID = @"1106811849";
     NSError *error;
     NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1371978352"]]] returningResponse:nil error:nil];
     if (response == nil) {
-    
+
 //        NSLog(@"你没有连接网络哦");
         return;
     }
     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    
+
     if (error) {
-        
+
         NSLog(@"hsUpdateAppError:%@",error);
         return;
     }
     NSArray *array = appInfoDic[@"results"];
     NSDictionary *dic = array[0];
     NSString *appStoreVersion = dic[@"version"];
-    if ([appStoreVersion floatValue] > [YQDversion floatValue]) {
-        
+    if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
+
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去APPStore下载最新版本" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-    
+
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
-                                        }]];
-    
+
+        }]];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
             [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
-        
+                
             }];
+        });
     }
 
     //打印版本号
@@ -152,7 +156,7 @@ static NSString *const kQQAPPID = @"1106811849";
     //4当前版本号小于商店版本号,就更新
 //        [BaseRequest GET:Version_URL parameters:nil success:^(id resposeObject) {
 //                if ([resposeObject[@"code"] integerValue] ==200) {
-//                        if ([resposeObject[@"data"] floatValue]>[YQDversion floatValue]) {
+//                        if (400 > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
 //                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去APPStore下载最新版本" preferredStyle:UIAlertControllerStyleAlert];
 //                                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
 //                                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];

@@ -37,7 +37,19 @@
 
 - (void)RequestMethod{
     
-    
+    [BaseRequest GET:RecommendFollowList_URL parameters:nil success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (void)SetData:(NSArray *)data{

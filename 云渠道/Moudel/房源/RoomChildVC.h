@@ -38,8 +38,8 @@ typedef void(^RoomChildVCAttentionRentModelBlock)(AtteionRentingHouseModel *mode
 
 typedef void(^RoomChildVCAttentionRentComModelBlock)(AttetionRentingComModel *model);
 
-//typedef void(^RoomChildVCRecommendBlock)(NSDictionary *dataDic);
-typedef void(^RoomChildVCRecommendBlock)(RecommendInfoModel *model);
+typedef void(^RoomChildVCRecommendBlock)(NSDictionary *dataDic);
+//typedef void(^RoomChildVCRecommendBlock)(RecommendInfoModel *model);
 
 //typedef void(^RoomChildVCBlock)(RentingComModel *model);
 

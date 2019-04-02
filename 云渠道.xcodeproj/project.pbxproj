@@ -627,6 +627,7 @@
 		0CF1F3222251F14300C92A54 /* CloudCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3212251F14300C92A54 /* CloudCodeVC.m */; };
 		0CF1F3262251F94200C92A54 /* CloudCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3252251F94200C92A54 /* CloudCodeCell.m */; };
 		0CF1F32A2251FCE900C92A54 /* RecommendMoreInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3292251FCE800C92A54 /* RecommendMoreInfoVC.m */; };
+		0CF1F32E22530AB400C92A54 /* MyCollageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F32D22530AB400C92A54 /* MyCollageVC.m */; };
 		0CF46ED9223214BC008816E6 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46ED8223214BC008816E6 /* SignListVC.m */; };
 		0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */; };
 		0CF7423B206229C4001F926F /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7423A206229C4001F926F /* MessageTableCell.m */; };
@@ -2036,6 +2037,8 @@
 		0CF1F3252251F94200C92A54 /* CloudCodeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudCodeCell.m; sourceTree = "<group>"; };
 		0CF1F3282251FCE800C92A54 /* RecommendMoreInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendMoreInfoVC.h; sourceTree = "<group>"; };
 		0CF1F3292251FCE800C92A54 /* RecommendMoreInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendMoreInfoVC.m; sourceTree = "<group>"; };
+		0CF1F32C22530AB400C92A54 /* MyCollageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollageVC.h; sourceTree = "<group>"; };
+		0CF1F32D22530AB400C92A54 /* MyCollageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollageVC.m; sourceTree = "<group>"; };
 		0CF46ED7223214BC008816E6 /* SignListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
 		0CF46ED8223214BC008816E6 /* SignListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
 		0CF46EDB22324A1C008816E6 /* RecommendConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendConfirmVC.h; sourceTree = "<group>"; };
@@ -6719,6 +6722,15 @@
 			path = "详情";
 			sourceTree = "<group>";
 		};
+		0CF1F32B22530A9500C92A54 /* 收藏文章 */ = {
+			isa = PBXGroup;
+			children = (
+				0CF1F32C22530AB400C92A54 /* MyCollageVC.h */,
+				0CF1F32D22530AB400C92A54 /* MyCollageVC.m */,
+			);
+			path = "收藏文章";
+			sourceTree = "<group>";
+		};
 		0CF46ED622321499008816E6 /* 签字人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7115,6 +7127,7 @@
 		102DF96D2057A0A200E1859C /* 我的 */ = {
 			isa = PBXGroup;
 			children = (
+				0CF1F32B22530A9500C92A54 /* 收藏文章 */,
 				0CF1F31F2251F13000C92A54 /* 云算号 */,
 				10AEEE6421A2A0B10049625B /* 我的团队 */,
 				0C3D304421912C6700B8B8C2 /* 我的订阅 */,
@@ -8108,6 +8121,7 @@
 				0CD90A4620DB3CFA00061B4A /* MaintainLookCell.m in Sources */,
 				0C73B07F21F1A54D005F71F1 /* BarginVC1.m in Sources */,
 				0CED5B2C21A7C72800997B76 /* ReleaseDirectVC.m in Sources */,
+				0CF1F32E22530AB400C92A54 /* MyCollageVC.m in Sources */,
 				0C3AD5562068E5C30059CE02 /* RoomDetailCollCell.m in Sources */,
 				0CC3546E2216B9A600475324 /* ContractDetailMainContractVC.m in Sources */,
 				0C7492E72201CD5E008F551B /* LookMaintainDetailAddAppointVC.m in Sources */,

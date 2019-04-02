@@ -14,7 +14,7 @@
 #pragma mark ---  基础接口  ---
 
 //新服务器
-static NSString *const TestBase_Net = @"http:/47.107.246.94/";
+//static NSString *const TestBase_Net = @"http:/47.107.246.94/";
 //基础接口
 //static NSString *const Base_Net = @"http://120.27.21.136:2798/";
 
@@ -76,6 +76,9 @@ static NSString *const GetFocusProjectList_URL = @"agent/personal/getFocusProjec
 
 //获取关注列表
 static NSString *const PersonalGetSubList_URL = @"agent/personal/getSubList";
+
+//云算号列表
+static NSString *const RecommendFollowList_URL = @"agent/recommend/followList";
 
 //获取个人信息
 static NSString *const GetPersonalBaseInfo_URL = @"agent/personal/getBaseInfo";
@@ -221,6 +224,12 @@ static NSString *const RecommendGetList_URL = @"agent/recommend/getList";
 
 //推荐详情
 static NSString *const RencommendGetDetails_URL = @"agent/recommend/getDetails";
+
+//推荐关注
+static NSString *const RecommendFollow_URL = @"agent/recommend/follow";
+
+//取消推荐关注
+static NSString *const RecommendFollowCancel_URL = @"agent/recommend/followCancel";
 
 //获取源标签
 static NSString *const ProjectResources_URL = @"user/project/resources";

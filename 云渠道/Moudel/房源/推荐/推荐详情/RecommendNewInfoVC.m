@@ -11,7 +11,7 @@
 #import <WebKit/WebKit.h>
 #import "WaitAnimation.h"
 
-#import "RecommendTransmitView.h"
+#import "TransmitView.h"
 
 @interface RecommendNewInfoVC ()<WKNavigationDelegate>
 {
@@ -21,6 +21,8 @@
     NSString *_imageUrl;
     NSString *_briefStr;
     NSString *_recommendId;
+    NSDictionary *_dataDic;
+    NSString *_isFollow;
 }
 @property (nonatomic, strong) UIImageView *headImg;
 
@@ -38,7 +40,7 @@
 
 @property (nonatomic, strong) WKWebView *wkWebView;
 
-@property (nonatomic, strong) RecommendTransmitView *tranView;
+@property (nonatomic, strong) TransmitView *transmitView;
 
 @end
 
@@ -69,7 +71,7 @@
     
     [super viewWillAppear:animated];
     
-    //    [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
+//    [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
 }
 
 - (void)viewDidLoad{
@@ -87,7 +89,15 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            _dataDic = resposeObject[@"data"];
+            _isFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_follow"]];
+            _fansL.text = [NSString stringWithFormat:@"%@",_dataDic[@"browse_number"]];
+            if (!_urlStr.length) {
+                
+                _urlStr = resposeObject[@"data"][@"content_url"];
+                //            NSURLRequest *request = ;
+                [_wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10]];
+            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -96,6 +106,57 @@
        
         [self showContent:@"网络错误"];
     }];
+}
+
+- (void)ActionAttentBtn:(UIButton *)btn{
+    
+    if (_dataDic.count) {
+        
+        if (![_isFollow integerValue]) {
+            
+            [BaseRequest POST:RecommendFollow_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    [self showContent:@"关注成功"];
+                    _isFollow = @"1";
+                    [self RequestMethod];
+                    [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [self showContent:@"网络错误"];
+                
+            }];
+        }else{
+            
+            [BaseRequest POST:RecommendFollowCancel_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    [self showContent:@"取关成功"];
+                    _isFollow = @"0";
+                    [self RequestMethod];
+                    [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+                
+                [self showContent:@"网络错误"];
+                
+            }];
+        }
+    }
+}
+
+- (void)ActionShareBtn:(UIButton *)btn{
+    
+    [self.view addSubview:self.transmitView];
 }
 
 #pragma mark ------ < KVO > ------
@@ -107,8 +168,8 @@
         webFrame.size.height = self.wkWebView.scrollView.contentSize.height;
         self.wkWebView.frame = webFrame;
         
-        _tranView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-        [_scrollView addSubview:_tranView];
+        _transmitView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
+        [_scrollView addSubview:_transmitView];
         [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
         
         //        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
@@ -123,18 +184,41 @@
     _headImg.image = [UIImage imageNamed:@"default"];
     [self.navBackgroundView addSubview:_headImg];
     
-    _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 160 *SIZE, 15 *SIZE)];
+    _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 140 *SIZE, 15 *SIZE)];
     _titleL.textColor = YJTitleLabColor;
     _titleL.font = [UIFont systemFontOfSize:14 *SIZE];
-    _titleL.text = @"云算软件";
+    _titleL.text = _titleStr;
     [self.navBackgroundView addSubview:_titleL];
     
-    _fansL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 26 *SIZE, 160 *SIZE, 14 *SIZE)];
+    _fansL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 26 *SIZE, 140 *SIZE, 14 *SIZE)];
     _fansL.textColor = YJTitleLabColor;
     _fansL.font = [UIFont systemFontOfSize:12 *SIZE];
-    _fansL.text = @"1248粉丝";
+//    _fansL.text = @"1248粉丝";
     [self.navBackgroundView addSubview:_fansL];
 //    self.titleLabel.text = @"推荐详情";
+    
+    _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _attentBtn.frame = CGRectMake(240 *SIZE, STATUS_BAR_HEIGHT + 7 *SIZE, 50 *SIZE, 30 *SIZE);
+    _attentBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+    [_attentBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+    _attentBtn.layer.cornerRadius = 5 *SIZE;
+    _attentBtn.clipsToBounds = YES;
+    [_attentBtn setBackgroundColor:YJBlueBtnColor];
+    [self.navBackgroundView addSubview:_attentBtn];
+    
+    _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _shareBtn.frame = CGRectMake(300 *SIZE, STATUS_BAR_HEIGHT + 7 *SIZE, 50 *SIZE, 30 *SIZE);
+    _shareBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+    [_shareBtn addTarget:self action:@selector(ActionShareBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_shareBtn setTitle:@"分享" forState:UIControlStateNormal];
+    [_shareBtn setTitleColor:YJTitleLabColor forState:UIControlStateNormal];
+    _shareBtn.layer.cornerRadius = 5 *SIZE;
+    _shareBtn.clipsToBounds = YES;
+    _shareBtn.layer.borderColor = YJTitleLabColor.CGColor;
+    _shareBtn.layer.borderWidth = SIZE;
+//    [_shareBtn setBackgroundColor:YJBlueBtnColor];
+    [self.navBackgroundView addSubview:_shareBtn];
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT)];
     _scrollView.backgroundColor = [UIColor whiteColor];
@@ -151,53 +235,56 @@
     [_scrollView addSubview:_wkWebView];
     
     [_wkWebView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (TransmitView *)transmitView{
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
-    [_wkWebView loadRequest:request];
-    
-    _tranView = [[RecommendTransmitView alloc] initWithFrame:CGRectMake(0, SCREEN_Height - 167 *SIZE - TAB_BAR_MORE, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE)];
-    WS(weakSelf);
-    _tranView.recommendTransmitTagBtnBlock = ^(NSInteger index) {
+    if (!_transmitView) {
         
-        if (index == 0) {
+        _transmitView = [[TransmitView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+        WS(weakSelf);
+        _transmitView.transmitTagBtnBlock = ^(NSInteger index) {
             
-            if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+            if (index == 0) {
                 
-                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_QQ];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
+                }
+            }else if (index == 1){
+                
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_Qzone];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
+                }
+            }else if (index == 2){
+                
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatSession];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
+                }
             }else{
                 
-                [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    
+                    [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
+                }else{
+                    
+                    [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
+                }
             }
-        }else if (index == 1){
-            
-            if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_QQ]) {
-                
-                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_Qzone];
-            }else{
-                
-                [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装手机QQ"];
-            }
-        }else if (index == 2){
-            
-            if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
-                
-                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatSession];
-            }else{
-                
-                [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
-            }
-        }else{
-            
-            if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
-                
-                [weakSelf shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
-            }else{
-                
-                [weakSelf alertControllerWithNsstring:@"温馨提示" And:@"请先安装微信"];
-            }
-        }
-    };
+        };
+    }
+    return _transmitView;
 }
 
 #pragma mark - WKNavigationDelegate
