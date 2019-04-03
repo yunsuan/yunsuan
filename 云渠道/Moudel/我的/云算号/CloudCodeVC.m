@@ -15,6 +15,7 @@
 @interface CloudCodeVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
+    NSInteger _page;
     NSMutableArray *_dataArr;
 }
 
@@ -26,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initDataSource];
     [self initUI];
     [self RequestMethod];
 }
@@ -37,24 +39,77 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:RecommendFollowList_URL parameters:nil success:^(id resposeObject) {
+    _table.mj_footer.state = MJRefreshStateIdle;
+    [BaseRequest GET:ApplyGetList_URL parameters:nil success:^(id resposeObject) {
         
+        [_table.mj_header endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
+                
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_table reloadData];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
+        [_table.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+    }];
+}
+
+- (void)RequestAddMethod{
+    
+    [BaseRequest GET:ApplyGetList_URL parameters:nil success:^(id resposeObject) {
+        
+        [_table.mj_footer endRefreshing];
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
+                
+                _table.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [_table reloadData];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [_table.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
     }];
 }
 
 - (void)SetData:(NSArray *)data{
     
-    
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }else{
+                
+                [tempDic setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
+            }
+        }];
+        
+        [_dataArr addObject:tempDic];
+    }
+    [_table reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -77,7 +132,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] init];
+    RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataArr[indexPath.row][@"recommend_apply_focus_id"] titleStr:_dataArr[indexPath.row][@"company_name"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
@@ -98,7 +153,21 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+    [BaseRequest POST:ApplyFollowCancel_URL parameters:@{@"recommend_apply_focus_id":_dataArr[indexPath.row][@"recommend_apply_focus_id"]} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeObjectAtIndex:indexPath.row];
+            [tableView reloadData];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        [self showContent:@"网络错误"];
+        
+    }];
 }
 
 - (void)initUI{
@@ -108,11 +177,24 @@
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
+    _table.rowHeight = UITableViewAutomaticDimension;
+    _table.estimatedRowHeight = 100 *SIZE;
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:_table];
+    _table.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
+        
+        _page = 1;
+        [self RequestMethod];
+    }];
+    
+    _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
+        
+        _page += 1;
+        [self RequestMethod];
+    }];
 }
 
 @end

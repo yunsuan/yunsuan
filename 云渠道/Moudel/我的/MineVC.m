@@ -137,9 +137,9 @@
 
 -(void)InitDataSouce
 {
-    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"云算号",@"我的收藏",@"我的订阅",@"我的团队"],@[@"意见反馈",@"关于云算",@"操作指南"]];
-    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"focus",@"focus",@"subs",@"team"],@[@"opinion",@"about",@"operation"]];
-    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@"",@"",@"",@""],@[@" ",YQDversion,@""]];
+    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"云算号",/*@"我的收藏",*/@"我的订阅",@"我的团队"],@[@"意见反馈",@"关于云算",@"操作指南"]];
+    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"focus",/*@"focus",*/@"subs",@"team"],@[@"opinion",@"about",@"operation"]];
+    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@""/*,@""*/,@"",@""],@[@" ",YQDversion,@""]];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
 
@@ -554,9 +554,9 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else if(indexPath.row == 3){
                 
-                MyCollageVC *nextVC = [[MyCollageVC alloc] init];
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else if (indexPath.row == 4){
+//                MyCollageVC *nextVC = [[MyCollageVC alloc] init];
+//                [self.navigationController pushViewController:nextVC animated:YES];
+//            }else if (indexPath.row == 4){
                 
                 MySubscripVC *nextVC = [[MySubscripVC alloc] init];
                 nextVC.hidesBottomBarWhenPushed = YES;

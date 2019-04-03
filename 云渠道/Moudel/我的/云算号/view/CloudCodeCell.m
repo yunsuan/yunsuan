@@ -22,7 +22,7 @@
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
-    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@""]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
         if (error) {
             
@@ -30,7 +30,7 @@
         }
     }];
     
-    _titleL.text = dataDic[@""];
+    _titleL.text = dataDic[@"company_name"];
     _identifyL.text = dataDic[@""];
     _briefL.text = dataDic[@""];
 }
@@ -97,7 +97,7 @@
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_briefL.mas_bottom).offset(-17 *SIZE);
+        make.top.equalTo(_headImg.mas_bottom).offset(17 *SIZE);
         make.right.equalTo(self.contentView).offset(0 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0);
         make.height.mas_equalTo(SIZE);

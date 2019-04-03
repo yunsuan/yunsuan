@@ -412,7 +412,7 @@
     
     vc.roomChildVCRecommendBlock = ^(NSDictionary *dataDic) {
 
-        RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"title"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"]];
+        RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"nick_name"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"]];
         [self.navigationController pushViewController:vc animated:YES];
     };
 //    vc.roomChildVCRecommendBlock = ^(RecommendInfoModel *model) {

@@ -22,7 +22,8 @@
     NSString *_briefStr;
     NSString *_recommendId;
     NSDictionary *_dataDic;
-    NSString *_isFollow;
+//    NSString *_isFollow;
+    NSString *_isApplyFollow;
 }
 @property (nonatomic, strong) UIImageView *headImg;
 
@@ -90,8 +91,29 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             _dataDic = resposeObject[@"data"];
-            _isFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_follow"]];
-            _fansL.text = [NSString stringWithFormat:@"%@",_dataDic[@"browse_number"]];
+//            _isFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_follow"]];
+            _isApplyFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_apply_follow"]];
+            if ([_isApplyFollow integerValue] == 1) {
+                
+                [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+            }else{
+                
+                [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+            }
+            _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"browse_number"]];
+            if ([_dataDic[@"img_url"] count]) {
+                
+                [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataDic[@"img_url"][0]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        _headImg.image = [UIImage imageNamed:@"default_3"];
+                    }
+                }];
+            }else{
+                
+                _headImg.image = [UIImage imageNamed:@"default_3"];
+            }
             if (!_urlStr.length) {
                 
                 _urlStr = resposeObject[@"data"][@"content_url"];
@@ -112,14 +134,14 @@
     
     if (_dataDic.count) {
         
-        if (![_isFollow integerValue]) {
+        if (![_isApplyFollow integerValue]) {
             
-            [BaseRequest POST:RecommendFollow_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
+            [BaseRequest POST:ApplyFollow_URL parameters:@{@"apply_id":_dataDic[@"apply_id"]} success:^(id resposeObject) {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
                     [self showContent:@"关注成功"];
-                    _isFollow = @"1";
+                    _isApplyFollow = @"1";
                     [self RequestMethod];
                     [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
                 }else{
@@ -133,12 +155,12 @@
             }];
         }else{
             
-            [BaseRequest POST:RecommendFollowCancel_URL parameters:@{@"recommend_id":_recommendId} success:^(id resposeObject) {
+            [BaseRequest POST:ApplyFollowCancel_URL parameters:@{@"apply_id":_dataDic[@"apply_id"]} success:^(id resposeObject) {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
                     [self showContent:@"取关成功"];
-                    _isFollow = @"0";
+                    _isApplyFollow = @"0";
                     [self RequestMethod];
                     [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
                 }else{
@@ -167,10 +189,10 @@
         CGRect webFrame = self.wkWebView.frame;
         webFrame.size.height = self.wkWebView.scrollView.contentSize.height;
         self.wkWebView.frame = webFrame;
-        
-        _transmitView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-        [_scrollView addSubview:_transmitView];
-        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
+    
+//        _transmitView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
+//        [_scrollView addSubview:_transmitView];
+//        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
         
         //        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -181,7 +203,7 @@
     self.navBackgroundView.hidden = NO;
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT + 2 *SIZE, 40 *SIZE, 40 *SIZE)];
-    _headImg.image = [UIImage imageNamed:@"default"];
+    _headImg.image = [UIImage imageNamed:@"default_3"];
     [self.navBackgroundView addSubview:_headImg];
     
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 140 *SIZE, 15 *SIZE)];
@@ -300,64 +322,40 @@
 // 页面加载完成之后调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     [WaitAnimation stopAnimation];
-    //    __block CGFloat webViewHeight;
-    //    self.height = webView.frame.size.height;
-    //    //获取内容实际高度（像素）@"document.getElementById(\"content\").offsetHeight;"
-    //    [webView evaluateJavaScript:@"document.body.scrollHeight" completionHandler:^(id _Nullable result,NSError * _Nullable error) {
-    //        // 此处js字符串采用scrollHeight而不是offsetHeight是因为后者并获取不到高度，看参考资料说是对于加载html字符串的情况下使用后者可以，但如果是和我一样直接加载原站内容使用前者更合适
-    //        //获取页面高度，并重置webview的frame
-    //        webViewHeight = [result doubleValue];
-    //        NSLog(@"%f",webViewHeight);
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    //            if (webViewHeight != self.height) {
-    //                webView.frame = CGRectMake(0, 0, self.view.frame.size.width, webViewHeight);
-    //
-    //                _tranView.frame = CGRectMake(0, webViewHeight, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-    //                [_scrollView addSubview:_tranView];
-    //                [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webViewHeight)];
-    //                [_wkWebView setNeedsLayout];
-    //
-    //            }else{
-    //
-    //                _tranView.frame = CGRectMake(0, self.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-    //                [_scrollView addSubview:_tranView];
-    //                [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
-    //                [_wkWebView setNeedsLayout];
-    //            }
-    //        });
-    //    }];
-    //    [_wkWebView setNeedsLayout];
+        __block CGFloat webViewHeight;
+        self.height = webView.frame.size.height;
+        //获取内容实际高度（像素）@"document.getElementById(\"content\").offsetHeight;"
+        [webView evaluateJavaScript:@"document.body.scrollHeight" completionHandler:^(id _Nullable result,NSError * _Nullable error) {
+            // 此处js字符串采用scrollHeight而不是offsetHeight是因为后者并获取不到高度，看参考资料说是对于加载html字符串的情况下使用后者可以，但如果是和我一样直接加载原站内容使用前者更合适
+            //获取页面高度，并重置webview的frame
+            webViewHeight = [result doubleValue];
+            NSLog(@"%f",webViewHeight);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (webViewHeight != self.height) {
+                    webView.frame = CGRectMake(0, 0, self.view.frame.size.width, webViewHeight);
+    
+//                    _tranView.frame = CGRectMake(0, webViewHeight, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
+//                    [_scrollView addSubview:_tranView];
+                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webViewHeight)];
+                    [_wkWebView setNeedsLayout];
+    
+                }else{
+    
+//                    _tranView.frame = CGRectMake(0, self.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
+//                    [_scrollView addSubview:_tranView];
+//                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
+                    [_wkWebView setNeedsLayout];
+                }
+            });
+        }];
+        [_wkWebView setNeedsLayout];
     
     NSLog(@"结束加载");
 }
 
-//- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-
-//    if (navigationAction.navigationType == WKNavigationTypeOther) {
-////        if ([[[navigationAction.request URL] scheme] isEqualToString:@"ready"]) {
-//            float contentHeight = [[[navigationAction.request URL] host] floatValue];
-//            CGRect webFrame = self.wkWebView.frame;
-//            webFrame.size.height = contentHeight;
-//            webView.frame = webFrame;
-//
-//            NSLog(@"onload = %f",contentHeight);
-//
-//            _tranView.frame = CGRectMake(0, contentHeight, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-//            [_scrollView addSubview:_tranView];
-//            [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + contentHeight)];
-//
-//
-//            decisionHandler(WKNavigationActionPolicyCancel);
-//            return;
-////        }
-//    }
-//    decisionHandler(WKNavigationActionPolicyAllow);
-//}
 
 // 页面加载失败时调用
-//- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
-//    [self showContent:@"网络错误"];
-//}
+
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
     [self showContent:@"网络错误"];
     
@@ -390,7 +388,6 @@
         }else{
             
             [self showContent:@"分享成功"];
-            //            [self.transmitView removeFromSuperview];
         }
     }];
 }

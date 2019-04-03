@@ -78,7 +78,13 @@ static NSString *const GetFocusProjectList_URL = @"agent/personal/getFocusProjec
 static NSString *const PersonalGetSubList_URL = @"agent/personal/getSubList";
 
 //云算号列表
-static NSString *const RecommendFollowList_URL = @"agent/recommend/followList";
+static NSString *const ApplyGetList_URL = @"agent/apply/getList";
+
+//云算号详情(头部)
+static NSString *const ApplyFollowGetCompany_URL = @"agent/applyFollow/getCompany";
+
+//云算号详情推荐列表(底部信息)
+static NSString *const ApplyFollowgetCompanyRecommend_URL = @"agent/applyFollow/getCompanyRecommend";
 
 //获取个人信息
 static NSString *const GetPersonalBaseInfo_URL = @"agent/personal/getBaseInfo";
@@ -224,6 +230,12 @@ static NSString *const RecommendGetList_URL = @"agent/recommend/getList";
 
 //推荐详情
 static NSString *const RencommendGetDetails_URL = @"agent/recommend/getDetails";
+
+//云算号关注
+static NSString *const ApplyFollow_URL = @"agent/apply/follow";
+
+//取消云算号关注
+static NSString *const ApplyFollowCancel_URL = @"agent/apply/followCancel";
 
 //推荐关注
 static NSString *const RecommendFollow_URL = @"agent/recommend/follow";

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecommendMoreInfoVC : WMPageController
 
-
+- (instancetype)initWithApplyFocusId:(NSString *)applyFocusId titleStr:(NSString *)titleStr;
 
 @end
 

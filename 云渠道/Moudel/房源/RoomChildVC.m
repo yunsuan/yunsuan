@@ -380,6 +380,12 @@
     }
     [dic setObject:_asc forKey:@"sort_type"];
     
+    if ([_urlString isEqualToString:RecommendGetList_URL]) {
+        
+        [dic removeAllObjects];
+        [dic setObject:_city forKey:@"city_code"];
+        [dic setObject:@(_page) forKey:@"page"];
+    }
     [BaseRequest GET:_urlString parameters:dic success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {

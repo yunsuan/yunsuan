@@ -77,13 +77,12 @@
     _sourceL.text = dataDic[@"label"];
     _autherL.text = [NSString stringWithFormat:@"作者:%@",dataDic[@"nick_name"]];
     
-    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_sourceL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(_contentL.mas_bottom).offset(8 *SIZE);
         make.width.equalTo(@(_sourceL.mj_textWith + 5 *SIZE));
     }];
-    
 }
 
 - (void)initUI{
