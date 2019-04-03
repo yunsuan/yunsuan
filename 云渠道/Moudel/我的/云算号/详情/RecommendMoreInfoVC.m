@@ -182,6 +182,8 @@
     
     self.titleLabel.text = _titleStr;
     self.rightBtn.hidden = NO;
+    self.rightBtn.center = CGPointMake(SCREEN_Width - 35 * SIZE, STATUS_BAR_HEIGHT+20);
+    self.rightBtn.bounds = CGRectMake(0, 0, 60 * SIZE, 33 * SIZE);
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
