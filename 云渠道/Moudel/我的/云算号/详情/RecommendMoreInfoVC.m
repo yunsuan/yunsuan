@@ -19,6 +19,8 @@
     NSMutableArray *_titlearr;
     NSMutableDictionary *_dataDic;
     NSString *_titleStr;
+    NSString *_isApplyFollow;
+    NSString *_applyId;
 }
 
 @property (nonatomic, strong) UIImageView *companyImg;
@@ -49,13 +51,14 @@
 
 @implementation RecommendMoreInfoVC
 
-- (instancetype)initWithApplyFocusId:(NSString *)applyFocusId titleStr:(NSString *)titleStr
+- (instancetype)initWithApplyFocusId:(NSString *)applyFocusId titleStr:(NSString *)titleStr applyId:(NSString *)applyId
 {
     self = [super init];
     if (self) {
         
         _applyFocusId = applyFocusId;
         _titleStr = titleStr;
+        _applyId = applyId;
     }
     return self;
 }
@@ -74,13 +77,14 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ActionGoto:) name:@"goto" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadType) name:@"reloadType" object:nil];
     
+//    _isApplyFollow = @"1";
     _titlearr = [@[] mutableCopy];
     _dataDic = [@{} mutableCopy];
 }
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ApplyFollowGetCompany_URL parameters:@{@"recommend_apply_focus_id":_applyFocusId} success:^(id resposeObject) {
+    [BaseRequest GET:ApplyFollowGetCompany_URL parameters:@{@"company_id":_applyFocusId} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -92,12 +96,21 @@
                     _companyImg.image = [UIImage imageNamed:@"default_3"];
                 }
             }];
-            
+            _isApplyFollow = resposeObject[@"data"][@"is_apply_follow"];
+            if ([_isApplyFollow integerValue] == 1) {
+                
+                [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            }else{
+                
+                [self.rightBtn setTitle:@"关注" forState:UIControlStateNormal];
+            }
             _titlearr = [NSMutableArray arrayWithArray:_dataDic[@"count"]];
             _fansL.text = [NSString stringWithFormat:@"%@",_dataDic[@"follow_number"]];
-            _commentL.text = [NSString stringWithFormat:@"%@",_dataDic[@""]];
-            _praiseL.text = [NSString stringWithFormat:@"%@",_dataDic[@""]];
-            _forwardL.text = [NSString stringWithFormat:@"%@",_dataDic[@""]];
+            _commentL.text = [NSString stringWithFormat:@"%@",_dataDic[@"comment_number"]];
+            _praiseL.text = [NSString stringWithFormat:@"%@",_dataDic[@"praise_number"]];
+            _forwardL.text = [NSString stringWithFormat:@"%@",_dataDic[@"forward_number"]];
+            _identityL.text = [NSString stringWithFormat:@"认证：%@",_dataDic[@"name"]];
+            _introL.text = [NSString stringWithFormat:@"简介：%@",_dataDic[@"desc"]];
             [self reloadData];
         }else{
             
@@ -107,6 +120,49 @@
         
         [self showContent:@"网络错误"];
     }];
+}
+
+- (void)ActionAttentBtn:(UIButton *)btn{
+    
+    if (![_isApplyFollow integerValue]) {
+        
+        [BaseRequest POST:ApplyFollow_URL parameters:@{@"apply_id":_applyId} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self showContent:@"关注成功"];
+                _isApplyFollow = @"1";
+                [self RequestMethod];
+                [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            
+        }];
+    }else{
+        
+        [BaseRequest POST:ApplyFollowCancel_URL parameters:@{@"apply_id":_applyId} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self showContent:@"取关成功"];
+                _isApplyFollow = @"0";
+                [self RequestMethod];
+                [self.rightBtn setTitle:@"关注" forState:UIControlStateNormal];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+            
+        }];
+    }
 }
 
 - (void)initUI{
@@ -126,6 +182,12 @@
     
     self.titleLabel.text = _titleStr;
     self.rightBtn.hidden = NO;
+    self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.rightBtn addTarget:self action:@selector(ActionAttentBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+    self.rightBtn.layer.cornerRadius = 5 *SIZE;
+    self.rightBtn.clipsToBounds = YES;
+    [self.rightBtn setBackgroundColor:YJBlueBtnColor];
 //    self.rightBtn setTitle:@"" forState:<#(UIControlState)#>
     
     _companyImg = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE + NAVIGATION_BAR_HEIGHT, 67 *SIZE, 67 *SIZE)];
@@ -201,7 +263,7 @@
     [_identityL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(self.view).offset(100 *SIZE);
-        make.top.equalTo(self.view).offset(70 *SIZE);
+        make.top.equalTo(self.view).offset(70 *SIZE + NAVIGATION_BAR_HEIGHT);
         make.right.equalTo(self.view).offset(-10 *SIZE);
     }];
     

@@ -30,9 +30,9 @@
         }
     }];
     
-    _titleL.text = dataDic[@"company_name"];
-    _identifyL.text = dataDic[@""];
-    _briefL.text = dataDic[@""];
+    _titleL.text = dataDic[@"nick_name"];
+    _identifyL.text = [NSString stringWithFormat:@"认证：%@",dataDic[@"name"]];
+    _briefL.text = [NSString stringWithFormat:@"简介：%@",dataDic[@"desc"]];
 }
 
 - (void)initUI{

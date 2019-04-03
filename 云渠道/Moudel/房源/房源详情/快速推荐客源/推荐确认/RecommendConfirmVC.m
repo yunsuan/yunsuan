@@ -166,7 +166,7 @@
                 
             case 1:
             {
-                BorderTF *tf = [_needInfoView viewWithTag:i];
+                BorderTF *tf = _moduleArr[i];
                 if (![self isEmpty:tf.textfield.text]) {
                     
                     [_getDic setObject:tf.textfield.text forKey:dic[@"column_name"]];

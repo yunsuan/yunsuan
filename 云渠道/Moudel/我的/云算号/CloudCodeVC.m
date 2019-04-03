@@ -132,7 +132,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataArr[indexPath.row][@"recommend_apply_focus_id"] titleStr:_dataArr[indexPath.row][@"company_name"]];
+    RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataArr[indexPath.row][@"company_id"] titleStr:_dataArr[indexPath.row][@"nick_name"] applyId:_dataArr[indexPath.row][@"apply_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
@@ -153,7 +153,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [BaseRequest POST:ApplyFollowCancel_URL parameters:@{@"recommend_apply_focus_id":_dataArr[indexPath.row][@"recommend_apply_focus_id"]} success:^(id resposeObject) {
+    [BaseRequest POST:ApplyFollowCancel_URL parameters:@{@"apply_id":_dataArr[indexPath.row][@"apply_id"]} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             

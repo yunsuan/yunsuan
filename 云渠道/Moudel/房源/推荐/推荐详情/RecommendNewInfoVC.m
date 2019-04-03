@@ -8,6 +8,8 @@
 
 #import "RecommendNewInfoVC.h"
 
+#import "RecommendMoreInfoVC.h"
+
 #import <WebKit/WebKit.h>
 #import "WaitAnimation.h"
 
@@ -30,6 +32,8 @@
 @property (nonatomic, strong) UILabel *titleL;
 
 @property (nonatomic, strong) UILabel *fansL;
+
+@property (nonatomic, strong) UIButton *headBtn;
 
 @property (nonatomic, strong) UIButton *attentBtn;
 
@@ -181,6 +185,15 @@
     [self.view addSubview:self.transmitView];
 }
 
+- (void)ActionHeadBtn:(UIButton *)btn{
+    
+    if (_dataDic.count) {
+        
+        RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataDic[@"company_id"] titleStr:_dataDic[@"company_name"] applyId:_dataDic[@"apply_id"]];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
+}
+
 #pragma mark ------ < KVO > ------
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     /**  < 法2 >  */
@@ -192,7 +205,7 @@
     
 //        _transmitView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
 //        [_scrollView addSubview:_transmitView];
-//        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
+        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
         
         //        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
     }
@@ -218,6 +231,11 @@
 //    _fansL.text = @"1248粉丝";
     [self.navBackgroundView addSubview:_fansL];
 //    self.titleLabel.text = @"推荐详情";
+    
+    _headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _headBtn.frame = CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT, 230 *SIZE, 40 *SIZE);
+    [_headBtn addTarget:self action:@selector(ActionHeadBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navBackgroundView addSubview:_headBtn];
     
     _attentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _attentBtn.frame = CGRectMake(240 *SIZE, STATUS_BAR_HEIGHT + 7 *SIZE, 50 *SIZE, 30 *SIZE);
@@ -343,7 +361,7 @@
     
 //                    _tranView.frame = CGRectMake(0, self.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
 //                    [_scrollView addSubview:_tranView];
-//                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
+                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
                     [_wkWebView setNeedsLayout];
                 }
             });
