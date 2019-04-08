@@ -15,6 +15,7 @@
 #import "BrokerageDetailVC.h"
 #import "MyAttentionVC.h"
 #import "MySubscripVC.h"
+#import "RecommendNewInfoVC.h"
 
 
 @interface RoomDetailVC1 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
@@ -80,6 +81,10 @@
                 [self.navigationController popViewControllerAnimated:YES];
             }
             if ([vc isKindOfClass:[MySubscripVC class]]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            if ([vc isKindOfClass:[RecommendNewInfoVC class]]) {
+                
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
