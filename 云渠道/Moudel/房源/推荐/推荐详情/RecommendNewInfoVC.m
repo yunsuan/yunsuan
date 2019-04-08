@@ -104,10 +104,10 @@
                 
                 [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
             }
-            _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"browse_number"]];
+            _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"follow_number"]];
             if ([_dataDic[@"img_url"] count]) {
                 
-                [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataDic[@"img_url"][0]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataDic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     
                     if (error) {
                         
@@ -189,7 +189,7 @@
     
     if (_dataDic.count) {
         
-        RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataDic[@"company_id"] titleStr:_dataDic[@"company_name"] applyId:_dataDic[@"apply_id"]];
+        RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataDic[@"company_id"] titleStr:_dataDic[@"nick_name"] applyId:_dataDic[@"apply_id"]];
         [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
@@ -215,8 +215,10 @@
     
     self.navBackgroundView.hidden = NO;
     
-    _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT + 2 *SIZE, 40 *SIZE, 40 *SIZE)];
+    _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT + 4 *SIZE, 36 *SIZE, 36 *SIZE)];
     _headImg.image = [UIImage imageNamed:@"default_3"];
+    _headImg.layer.masksToBounds = YES;
+    _headImg.layer.cornerRadius = 18*SIZE;
     [self.navBackgroundView addSubview:_headImg];
     
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 140 *SIZE, 15 *SIZE)];
