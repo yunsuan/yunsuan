@@ -192,9 +192,11 @@
     [self.rightBtn setBackgroundColor:YJBlueBtnColor];
 //    self.rightBtn setTitle:@"" forState:<#(UIControlState)#>
     
-    _companyImg = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE + NAVIGATION_BAR_HEIGHT, 67 *SIZE, 67 *SIZE)];
+    _companyImg = [[UIImageView alloc] initWithFrame:CGRectMake(10 *SIZE, 10 *SIZE + NAVIGATION_BAR_HEIGHT, 70 *SIZE, 70 *SIZE)];
     _companyImg.contentMode = UIViewContentModeScaleAspectFill;
     _companyImg.clipsToBounds = YES;
+    _companyImg.layer.masksToBounds = YES;
+    _companyImg.layer.cornerRadius = 35*SIZE;
     _companyImg.image = [UIImage imageNamed:@"default_3"];
     [self.view addSubview:_companyImg];
     
