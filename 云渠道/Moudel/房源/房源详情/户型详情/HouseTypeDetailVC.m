@@ -632,7 +632,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_baseInfoDic[@"house_type_name"]]  thumImage:[UIImage imageNamed:@"shareimg"]];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name]  thumImage:[UIImage imageNamed:@"shareimg"]];
     //设置网页地址
     shareObject.webpageUrl = _url;
     
@@ -640,7 +640,7 @@
     messageObject.shareObject = shareObject;
     
     if (platformType == UMSocialPlatformType_WechatTimeLine) {
-        shareObject.title = [NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_baseInfoDic[@"house_type_name"]];
+        shareObject.title = [NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
     }
     
     //调用分享接口

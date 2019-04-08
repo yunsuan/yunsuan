@@ -103,7 +103,7 @@
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             _dataDic = resposeObject[@"data"];
-//            _isFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_follow"]];
+            _titleL.text = _dataDic[@"nick_name"];
             [_dataArr removeAllObjects];
             for (int i = 0; i < [_dataDic[@"project_arr"] count]; i++) {
                 
@@ -267,18 +267,40 @@
     
     if (_dataArr.count) {
         
-        [_buildingArr removeAllObjects];
-        [_dataArr enumerateObjectsUsingBlock:^(RoomListModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (_dataArr.count == 1) {
             
-            NSDictionary *dic = @{@"id":model.info_id,
-                                  @"param":model.project_name
-                                  };
-            [_buildingArr addObject:dic];
-        }];
-        
-        SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:_buildingArr];
-        view.selectNumblook = ^(NSInteger idx) {
-
+            RoomListModel *model = _dataArr[0];
+            RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+            if ([model.guarantee_brokerage integerValue] == 2) {
+                
+                nextVC.brokerage = @"no";
+            }else{
+                
+                if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                    
+                }else{
+                    
+                    nextVC.isRecommend = @"NO";
+                }
+                nextVC.brokerage = @"yes";
+            }
+            
+            nextVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [_buildingArr removeAllObjects];
+            [_dataArr enumerateObjectsUsingBlock:^(RoomListModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+                
+                NSDictionary *dic = @{@"id":model.info_id,
+                                      @"param":model.project_name
+                                      };
+                [_buildingArr addObject:dic];
+            }];
+            
+            SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:_buildingArr];
+            view.selectNumblook = ^(NSInteger idx) {
+                
                 RoomListModel *model = _dataArr[idx];
                 RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
                 if ([model.guarantee_brokerage integerValue] == 2) {
@@ -297,8 +319,9 @@
                 
                 nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
-        };
-        [self.view addSubview:view];
+            };
+            [self.view addSubview:view];
+        }
     }
 }
 

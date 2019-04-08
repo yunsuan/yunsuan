@@ -68,24 +68,29 @@
             
             [self.navigationController setNavigationBarHidden:NO animated:YES];
             [self.navigationController popToViewController:vc animated:YES];
+            break;
         }else{
             
             if ([vc isKindOfClass:[RoomVC class]]) {
                 
                 [self.navigationController popViewControllerAnimated:YES];
-            }
-            if ([vc isKindOfClass:[BrokerageDetailVC class]]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            if ([vc isKindOfClass:[MyAttentionVC class]]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            if ([vc isKindOfClass:[MySubscripVC class]]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            if ([vc isKindOfClass:[RecommendNewInfoVC class]]) {
+                break;
+            }else if ([vc isKindOfClass:[BrokerageDetailVC class]]) {
                 
                 [self.navigationController popViewControllerAnimated:YES];
+                break;
+            }else if ([vc isKindOfClass:[MyAttentionVC class]]) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
+            }else if ([vc isKindOfClass:[MySubscripVC class]]) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
+            }else if ([vc isKindOfClass:[RecommendNewInfoVC class]]) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
             }
         }
     }
@@ -271,7 +276,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageNamed:@"shareimg"]];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageNamed:@"shareimg"]];
     //    //设置网页地址
     
     
@@ -292,7 +297,7 @@
             messageObject.shareObject = shareObject;
             if (platformType == UMSocialPlatformType_WechatTimeLine) {
                 shareObject.title =
-                [NSString stringWithFormat:@"【云渠道】%@(%@)邀请您参观【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
+                [NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
             }
             
             //调用分享接口
