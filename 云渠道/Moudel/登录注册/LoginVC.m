@@ -169,7 +169,7 @@
             
             if (platformType == UMSocialPlatformType_QQ) {
                 
-                [BaseRequest POST:Login_URL parameters:@{@"account":resp.openid,@"login_type":@"1"} success:^(id resposeObject) {
+                [BaseRequest ThirdLogin:Login_URL parameters:@{@"account":resp.openid,@"login_type":@"1"} success:^(id resposeObject) {
                     
                     NSLog(@"%@",resposeObject);
                     if ([resposeObject[@"code"] integerValue] == 400) {
@@ -206,7 +206,7 @@
                 }];
             }else{
                 
-                [BaseRequest POST:Login_URL parameters:@{@"account":resp.openid,@"login_type":@"2"} success:^(id resposeObject) {
+                [BaseRequest ThirdLogin:Login_URL parameters:@{@"account":resp.openid,@"login_type":@"2"} success:^(id resposeObject) {
                     
                     NSLog(@"%@",resposeObject);
                     if ([resposeObject[@"code"] integerValue] == 400) {

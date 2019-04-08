@@ -16,6 +16,9 @@
 
 + (void)POST:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id resposeObject))success failure:(void(^)(NSError *error))failure;
 
+
++ (void)ThirdLogin:(NSString *)url parameters:(NSDictionary *)parameters success:(void(^)(id resposeObject))success failure:(void(^)(NSError *error))failure;
+
 + (void)Updateimg:(NSString *)url parameters:(NSDictionary *)parameters  constructionBody:(void (^)(id <AFMultipartFormData> formData))blocks success:(void (^)(id resposeObject))success failure:(void (^)(NSError *error))failure;
 
 
