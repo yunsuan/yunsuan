@@ -40,6 +40,7 @@
     _headImg = [[UIImageView alloc] init];
     _headImg.clipsToBounds = YES;
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
+    _headImg.layer.cornerRadius = 33.5 *SIZE;
     [self.contentView addSubview:_headImg];
     
     _titleL = [[UILabel alloc] init];
