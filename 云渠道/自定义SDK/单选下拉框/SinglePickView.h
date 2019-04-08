@@ -11,9 +11,13 @@
 @class SinglePickView;
 typedef void(^selctblook)(NSString * MC, NSString * ID);//回传ID和名称
 
+typedef void(^SelectNumblook)(NSInteger idx);//回传ID和名称
+
 @interface SinglePickView : UIView
 
 @property(nonatomic, copy) selctblook selectedBlock;
+
+@property(nonatomic, copy) SelectNumblook selectNumblook;
 @property (nonatomic , strong) NSString *key;
 @property(nonatomic, strong) NSArray * dataSource;
 

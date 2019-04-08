@@ -9,11 +9,13 @@
 #import "RecommendNewInfoVC.h"
 
 #import "RecommendMoreInfoVC.h"
+#import "RoomDetailVC1.h"
 
 #import <WebKit/WebKit.h>
 #import "WaitAnimation.h"
 
 #import "TransmitView.h"
+#import "SinglePickView.h"
 
 @interface RecommendNewInfoVC ()<WKNavigationDelegate>
 {
@@ -26,6 +28,8 @@
     NSDictionary *_dataDic;
 //    NSString *_isFollow;
     NSString *_isApplyFollow;
+    NSMutableArray *_dataArr;
+    NSMutableArray *_buildingArr;
 }
 @property (nonatomic, strong) UIImageView *headImg;
 
@@ -42,6 +46,8 @@
 @property (nonatomic, assign) CGFloat height;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
+
+@property (nonatomic, strong) UIButton *moreBtn;
 
 @property (nonatomic, strong) WKWebView *wkWebView;
 
@@ -61,6 +67,8 @@
         _imageUrl = imageUrl;
         _briefStr = briefStr;
         _recommendId = recommendId;
+        _dataArr = [@[] mutableCopy];
+        _buildingArr = [@[] mutableCopy];
     }
     return self;
 }
@@ -96,6 +104,13 @@
             
             _dataDic = resposeObject[@"data"];
 //            _isFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_follow"]];
+            for (int i = 0; i < [_dataDic[@"project_arr"] count]; i++) {
+                
+                RoomListModel *model = [[RoomListModel alloc] initWithDictionary:_dataDic[@"project_arr"][i]];
+                
+                [_dataArr addObject:model];
+            }
+//            _dataArr = [NSMutableArray arrayWithArray:_dataDic[@"project_arr"]];
             _isApplyFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_apply_follow"]];
             if ([_isApplyFollow integerValue] == 1) {
                 
@@ -123,6 +138,12 @@
                 _urlStr = resposeObject[@"data"][@"content_url"];
                 //            NSURLRequest *request = ;
                 [_wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10]];
+            }
+            
+            if (_dataArr.count) {
+                
+                _scrollView.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE);
+                [self.view addSubview:_moreBtn];
             }
         }else{
             
@@ -194,6 +215,52 @@
     }
 }
 
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    if (_dataArr.count) {
+        
+        [_buildingArr removeAllObjects];
+        [_dataArr enumerateObjectsUsingBlock:^(RoomListModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSDictionary *dic = @{@"id":model.info_id,
+                                  @"param":model.project_name
+                                  };
+            [_buildingArr addObject:dic];
+//            [_dataArr replaceObjectAtIndex:idx withObject:dic];
+        }];
+        
+        SinglePickView *view = [[SinglePickView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height) WithData:_buildingArr];
+        view.selectNumblook = ^(NSInteger idx) {
+          
+//            if (idx == 0) {
+//
+//
+//            }else{
+            
+                RoomListModel *model = _dataArr[idx];
+                RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+                if ([model.guarantee_brokerage integerValue] == 2) {
+                    
+                    nextVC.brokerage = @"no";
+                }else{
+                    
+                    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                        
+                    }else{
+                        
+                        nextVC.isRecommend = @"NO";
+                    }
+                    nextVC.brokerage = @"yes";
+                }
+                
+                nextVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:nextVC animated:YES];
+//            }
+        };
+        [self.view addSubview:view];
+    }
+}
+
 #pragma mark ------ < KVO > ------
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     /**  < 法2 >  */
@@ -217,8 +284,10 @@
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT + 4 *SIZE, 36 *SIZE, 36 *SIZE)];
     _headImg.image = [UIImage imageNamed:@"default_3"];
-    _headImg.layer.masksToBounds = YES;
-    _headImg.layer.cornerRadius = 18*SIZE;
+    _headImg.contentMode = UIViewContentModeScaleAspectFill;
+//    _headImg.layer.masksToBounds = YES;
+    _headImg.layer.cornerRadius = 18 *SIZE;
+    _headImg.clipsToBounds = YES;
     [self.navBackgroundView addSubview:_headImg];
     
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 140 *SIZE, 15 *SIZE)];
@@ -275,6 +344,14 @@
     //    _wkWebView.
     
     [_scrollView addSubview:_wkWebView];
+    
+    _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _moreBtn.frame = CGRectMake(0, SCREEN_Height - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_moreBtn setBackgroundColor:YJBlueBtnColor];
+    [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_moreBtn setTitle:@"进入楼盘详情" forState:UIControlStateNormal];
+
     
     [_wkWebView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
 }

@@ -207,6 +207,7 @@
 {
     _name = _dataSource[(NSUInteger) row][@"param"];
     _ID = _dataSource[(NSUInteger) row][@"id"];
+    _selected = row;
 }
 
 
@@ -228,6 +229,10 @@
     [self hidePickerView];
     if (self.selectedBlock != nil) {
         self.selectedBlock(_name, _ID);
+    }
+    if (self.selectNumblook) {
+        
+        self.selectNumblook(_selected);
     }
 }
 
