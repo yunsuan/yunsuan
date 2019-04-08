@@ -115,10 +115,15 @@
             _isApplyFollow = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"is_apply_follow"]];
             if ([_isApplyFollow integerValue] == 1) {
                 
-                [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+                [_attentBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [_attentBtn setBackgroundColor:[UIColor whiteColor]];
+                _attentBtn.layer.borderWidth = SIZE;
+                [_attentBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
             }else{
                 
                 [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [_attentBtn setBackgroundColor:YJBlueBtnColor];
+                _attentBtn.layer.borderWidth = 0;
             }
             _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"follow_number"]];
             if ([_dataDic[@"img_url"] count]) {
@@ -169,7 +174,14 @@
                     [self showContent:@"关注成功"];
                     _isApplyFollow = @"1";
                     [self RequestMethod];
-                    [_attentBtn setTitle:@"取消关注" forState:UIControlStateNormal];
+                    [_attentBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                    [_attentBtn setBackgroundColor:[UIColor whiteColor]];
+                    [_attentBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                    _attentBtn.layer.borderWidth = SIZE;
+                    if (self.recommendNewInfoVCBlock) {
+                        
+                        self.recommendNewInfoVCBlock(@"1");
+                    }
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -189,6 +201,13 @@
                     _isApplyFollow = @"0";
                     [self RequestMethod];
                     [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+                    [_attentBtn setBackgroundColor:YJBlueBtnColor];
+                    [_attentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    _attentBtn.layer.borderWidth = 0;
+                    if (self.recommendNewInfoVCBlock) {
+                        
+                        self.recommendNewInfoVCBlock(@"0");
+                    }
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -212,6 +231,34 @@
     if (_dataDic.count) {
         
         RecommendMoreInfoVC *nextVC = [[RecommendMoreInfoVC alloc] initWithApplyFocusId:_dataDic[@"company_id"] titleStr:_dataDic[@"nick_name"] applyId:_dataDic[@"apply_id"]];
+        nextVC.recommendMoreInfoVCBlock = ^(NSString * attent) {
+            
+            if ([attent integerValue] == 1) {
+                
+                _isApplyFollow = @"1";
+                [self RequestMethod];
+                [_attentBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [_attentBtn setBackgroundColor:[UIColor whiteColor]];
+                [_attentBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                _attentBtn.layer.borderWidth = SIZE;
+                if (self.recommendNewInfoVCBlock) {
+                    
+                    self.recommendNewInfoVCBlock(@"1");
+                }
+            }else{
+                
+                _isApplyFollow = @"0";
+                [self RequestMethod];
+                [_attentBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [_attentBtn setBackgroundColor:YJBlueBtnColor];
+                [_attentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                _attentBtn.layer.borderWidth = 0;
+                if (self.recommendNewInfoVCBlock) {
+                    
+                    self.recommendNewInfoVCBlock(@"0");
+                }
+            }
+        };
         [self.navigationController pushViewController:nextVC animated:YES];
     }
 }
@@ -310,6 +357,9 @@
     _attentBtn.layer.cornerRadius = 5 *SIZE;
     _attentBtn.clipsToBounds = YES;
     [_attentBtn setBackgroundColor:YJBlueBtnColor];
+    _attentBtn.layer.borderColor = YJTitleLabColor.CGColor;
+//    _attentBtn.layer.borderWidth = SIZE;
+//    _attentBtn.layer.borderWidth =
     [self.navBackgroundView addSubview:_attentBtn];
     
     _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];

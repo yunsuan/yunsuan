@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^RecommendNewInfoVCBlock)(NSString *attent);
+
 @interface RecommendNewInfoVC : BaseViewController
+
+@property (nonatomic, copy) RecommendNewInfoVCBlock recommendNewInfoVCBlock;
 
 - (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId;
 

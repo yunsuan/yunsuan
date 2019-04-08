@@ -100,9 +100,15 @@
             if ([_isApplyFollow integerValue] == 1) {
                 
                 [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:[UIColor whiteColor]];
+                self.rightBtn.layer.borderWidth = SIZE;
             }else{
                 
                 [self.rightBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:YJBlueBtnColor];
+                self.rightBtn.layer.borderWidth = 0;
             }
             _titlearr = [NSMutableArray arrayWithArray:_dataDic[@"count"]];
             _fansL.text = [NSString stringWithFormat:@"%@",_dataDic[@"follow_number"]];
@@ -134,6 +140,13 @@
                 _isApplyFollow = @"1";
                 [self RequestMethod];
                 [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:[UIColor whiteColor]];
+                self.rightBtn.layer.borderWidth = SIZE;
+                if (self.recommendMoreInfoVCBlock) {
+                    
+                    self.recommendMoreInfoVCBlock(@"1");
+                }
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -153,6 +166,13 @@
                 _isApplyFollow = @"0";
                 [self RequestMethod];
                 [self.rightBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:YJBlueBtnColor];
+                self.rightBtn.layer.borderWidth = 0;
+                if (self.recommendMoreInfoVCBlock) {
+                    
+                    self.recommendMoreInfoVCBlock(@"0");
+                }
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -189,6 +209,8 @@
 //    [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
     self.rightBtn.layer.cornerRadius = 5 *SIZE;
     self.rightBtn.clipsToBounds = YES;
+    self.rightBtn.layer.borderWidth = SIZE;
+    self.rightBtn.layer.borderColor = YJ86Color.CGColor;
     [self.rightBtn setBackgroundColor:YJBlueBtnColor];
 //    self.rightBtn setTitle:@"" forState:<#(UIControlState)#>
     
@@ -322,6 +344,34 @@
     vc.recommendMoreInfoChildVCBlock = ^(NSDictionary * _Nonnull dataDic) {
         
         RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"nick_name"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"]];
+        vc.recommendNewInfoVCBlock = ^(NSString * attent) {
+            
+            if ([attent integerValue] == 1) {
+                
+                _isApplyFollow = @"1";
+                [self RequestMethod];
+                [self.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:[UIColor whiteColor]];
+                self.rightBtn.layer.borderWidth = SIZE;
+                if (self.recommendMoreInfoVCBlock) {
+                    
+                    self.recommendMoreInfoVCBlock(@"1");
+                }
+            }else{
+                
+                _isApplyFollow = @"0";
+                [self RequestMethod];
+                [self.rightBtn setTitle:@"关注" forState:UIControlStateNormal];
+                [self.rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [self.rightBtn setBackgroundColor:YJBlueBtnColor];
+                self.rightBtn.layer.borderWidth = 0;
+                if (self.recommendMoreInfoVCBlock) {
+                    
+                    self.recommendMoreInfoVCBlock(@"0");
+                }
+            }
+        };
         [self.navigationController pushViewController:vc animated:YES];
     };
     return vc;

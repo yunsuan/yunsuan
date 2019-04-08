@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^RecommendMoreInfoVCBlock)(NSString *attent);
+
 @interface RecommendMoreInfoVC : WMPageController
+
+@property (nonatomic, copy) RecommendMoreInfoVCBlock recommendMoreInfoVCBlock;
 
 - (instancetype)initWithApplyFocusId:(NSString *)applyFocusId titleStr:(NSString *)titleStr applyId:(NSString *)applyId;
 
