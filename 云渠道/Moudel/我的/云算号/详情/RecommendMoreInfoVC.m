@@ -343,7 +343,7 @@
     vc = [[RecommendMoreInfoChildVC alloc] initWithType:[_titlearr[index][@"recommend_type"] integerValue] companyId:_dataDic[@"company_id"]];
     vc.recommendMoreInfoChildVCBlock = ^(NSDictionary * _Nonnull dataDic) {
         
-        RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"nick_name"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"]];
+        RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"title"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"] companyStr:dataDic[@"nick_name"]];
         vc.recommendNewInfoVCBlock = ^(NSString * attent) {
             
             if ([attent integerValue] == 1) {

@@ -16,7 +16,7 @@ typedef void(^RecommendNewInfoVCBlock)(NSString *attent);
 
 @property (nonatomic, copy) RecommendNewInfoVCBlock recommendNewInfoVCBlock;
 
-- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId;
+- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId companyStr:(NSString *)companyStr;
 
 @end
 

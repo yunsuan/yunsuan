@@ -22,6 +22,7 @@
     
     NSString *_urlStr;
     NSString *_titleStr;
+    NSString *_companyStr;
     NSArray *_imageUrl;
     NSString *_briefStr;
     NSString *_recommendId;
@@ -57,7 +58,7 @@
 
 @implementation RecommendNewInfoVC
 
-- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(nonnull NSString *)titleStr imageUrl:(NSArray *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId
+- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(NSString *)titleStr imageUrl:(NSArray *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId companyStr:(NSString *)companyStr
 {
     self = [super init];
     if (self) {
@@ -69,6 +70,7 @@
         _recommendId = recommendId;
         _dataArr = [@[] mutableCopy];
         _buildingArr = [@[] mutableCopy];
+        _companyStr = companyStr;
     }
     return self;
 }
@@ -357,7 +359,7 @@
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 5 *SIZE, 140 *SIZE, 15 *SIZE)];
     _titleL.textColor = YJTitleLabColor;
     _titleL.font = [UIFont systemFontOfSize:14 *SIZE];
-    _titleL.text = _titleStr;
+    _titleL.text = _companyStr;
     [self.navBackgroundView addSubview:_titleL];
     
     _fansL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, STATUS_BAR_HEIGHT + 26 *SIZE, 140 *SIZE, 14 *SIZE)];

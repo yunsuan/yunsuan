@@ -147,7 +147,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:_dataArr[indexPath.row][@"content_url"] titleStr:_dataArr[indexPath.row][@"title"] imageUrl:_dataArr[indexPath.row][@"img_url"] briefStr:_dataArr[indexPath.row][@"desc"] recommendId:_dataArr[indexPath.row][@"recommend_id"]];
+    RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:_dataArr[indexPath.row][@"content_url"] titleStr:_dataArr[indexPath.row][@"nick_name"] imageUrl:_dataArr[indexPath.row][@"img_url"] briefStr:_dataArr[indexPath.row][@"desc"] recommendId:_dataArr[indexPath.row][@"recommend_id"] companyStr:_dataArr[indexPath.row][@"title"]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
