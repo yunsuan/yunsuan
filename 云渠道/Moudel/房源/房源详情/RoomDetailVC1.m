@@ -280,10 +280,10 @@
     //    //设置网页地址
     if (_model.img_url.length) {
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.img_url]]]]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_model.project_name descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_model.img_url]]]]];
     }else{
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageNamed:@"shareimg"]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_model.project_name descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name] thumImage:[UIImage imageNamed:@"shareimg"]];
     }
     
     

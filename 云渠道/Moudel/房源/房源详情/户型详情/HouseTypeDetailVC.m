@@ -36,6 +36,7 @@
     NSInteger _state;
     NSInteger _selected;
     NSString *_imgStr;
+    NSString *_titleStr;
 }
 @property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
@@ -67,6 +68,7 @@
             if ([[NSString stringWithFormat:@"%@",obj[@"id"]] isEqualToString:houseTypeId]) {
                 
                 _imgStr = obj[@"img_url"];
+                _titleStr = obj[@"house_type_name"];
                 [_houseArr removeObjectAtIndex:idx];
                 *stop = YES;
             }
@@ -637,10 +639,10 @@
     //创建网页内容对象
     if (_imgStr.length) {
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name]  thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgStr]]]]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】%@户型",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name,_titleStr]  thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgStr]]]]];
     }else{
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:[NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name]  thumImage:[UIImage imageNamed:@"shareimg"]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】%@户型",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name,_titleStr]  thumImage:[UIImage imageNamed:@"shareimg"]];
 
     }
     

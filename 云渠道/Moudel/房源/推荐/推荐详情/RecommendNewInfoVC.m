@@ -22,7 +22,7 @@
     
     NSString *_urlStr;
     NSString *_titleStr;
-    NSString *_imageUrl;
+    NSArray *_imageUrl;
     NSString *_briefStr;
     NSString *_recommendId;
     NSDictionary *_dataDic;
@@ -57,7 +57,7 @@
 
 @implementation RecommendNewInfoVC
 
-- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(nonnull NSString *)titleStr imageUrl:(NSString *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId
+- (instancetype)initWithUrlStr:(NSString *)urlStr titleStr:(nonnull NSString *)titleStr imageUrl:(NSArray *)imageUrl briefStr:(NSString *)briefStr recommendId:(NSString *)recommendId
 {
     self = [super init];
     if (self) {
@@ -532,7 +532,15 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imageUrl]]]]];
+    UMShareWebpageObject *shareObject;
+    if (_imageUrl.count) {
+        
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imageUrl[0]]]]]];
+    }else{
+        
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:_briefStr thumImage:[UIImage imageNamed:@"shareimg"]];
+    }
+    
     //设置网页地址
     
     

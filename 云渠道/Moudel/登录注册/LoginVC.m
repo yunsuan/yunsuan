@@ -326,6 +326,7 @@
             [UserModel defaultModel].agent_identity =resposeObject[@"data"][@"agent_identity"];
             [UserModel defaultModel].store_identity =resposeObject[@"data"][@"store_identity"];
             [UserModelArchiver archive];
+            [self InfoRequest];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goHome" object:nil];
 
         }else{
@@ -337,7 +338,59 @@
         
         [self showContent:@"网络错误"];
     }];
+}
+
+- (void)InfoRequest{
     
+    [BaseRequest POST:GetPersonalBaseInfo_URL parameters:nil success:^(id resposeObject) {
+        
+//        [self.Mytableview.mj_header endRefreshing];
+        //        NSLog(@"%@",resposeObject);
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] isKindOfClass:[NSDictionary class]]) {
+                
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+//                [self showContent:@"暂时没有用户资料"];
+            }
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+//        [self.Mytableview.mj_header endRefreshing];
+        [self showContent:@"网络错误"];
+        //        NSLog(@"%@",error);
+    }];
+}
+
+- (void)SetData:(NSDictionary *)data{
+    
+    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data];
+    [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        if ([obj isKindOfClass:[NSNull class]]) {
+            
+            [tempDic setObject:@"" forKey:key];
+        }
+    }];
+    [UserInfoModel defaultModel].absolute_address = tempDic[@"absolute_address"];
+    [UserInfoModel defaultModel].account = tempDic[@"account"];
+    [UserInfoModel defaultModel].birth = tempDic[@"birth"];
+    [UserInfoModel defaultModel].city = tempDic[@"city"];
+    [UserInfoModel defaultModel].district = tempDic[@"district"];
+    [UserInfoModel defaultModel].head_img = tempDic[@"head_img"];
+    [UserInfoModel defaultModel].name = tempDic[@"name"];
+    [UserInfoModel defaultModel].province = tempDic[@"province"];
+    [UserInfoModel defaultModel].sex = [NSString stringWithFormat:@"%@",tempDic[@"sex"]];
+    [UserInfoModel defaultModel].tel = tempDic[@"tel"];
+    [UserInfoModel defaultModel].is_accept_msg = [NSString stringWithFormat:@"%@",tempDic[@"is_accept_msg"]];
+    [UserInfoModel defaultModel].is_accept_grab = [NSString stringWithFormat:@"%@",tempDic[@"is_accept_grab"]];
+    [UserModelArchiver infoArchive];
 
 }
 
