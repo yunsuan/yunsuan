@@ -363,7 +363,6 @@ static NSString *const kQQAPPID = @"1106811849";
         NSError * errors;
         [[NSFileManager defaultManager]removeItemAtPath:cookiesFolderPath error:&errors];
     }
-    
 }
 
 - (void)GotoHome{

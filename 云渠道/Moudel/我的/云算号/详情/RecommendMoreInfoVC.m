@@ -84,7 +84,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ApplyFollowGetCompany_URL parameters:@{@"company_id":_applyFocusId} success:^(id resposeObject) {
+    [BaseRequest GET:ApplyFollowGetCompany_URL parameters:@{@"apply_id":_applyId} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -340,7 +340,7 @@
 //    NSString *tempStr = _titlearr[index][@"title"];
 //    NSDictionary *dic;
     RecommendMoreInfoChildVC *vc;
-    vc = [[RecommendMoreInfoChildVC alloc] initWithType:[_titlearr[index][@"recommend_type"] integerValue] companyId:_dataDic[@"company_id"]];
+    vc = [[RecommendMoreInfoChildVC alloc] initWithType:[_titlearr[index][@"recommend_type"] integerValue] companyId:_dataDic[@"apply_id"]];
     vc.recommendMoreInfoChildVCBlock = ^(NSDictionary * _Nonnull dataDic) {
         
         RecommendNewInfoVC *vc = [[RecommendNewInfoVC alloc] initWithUrlStr:dataDic[@"content_url"] titleStr:dataDic[@"title"] imageUrl:dataDic[@"img_url"] briefStr:dataDic[@"desc"] recommendId:dataDic[@"recommend_id"] companyStr:dataDic[@"nick_name"]];

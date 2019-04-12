@@ -60,7 +60,7 @@
 - (void)RequestMethod{
     
     _page = 1;
-    NSDictionary *dic = @{@"company_id":_companyId,
+    NSDictionary *dic = @{@"apply_id":_companyId,
                           @"recommend_type":@(_AllType)
                           };
     
@@ -99,7 +99,7 @@
 
 - (void)RequestAddMethod{
     
-    NSDictionary *dic = @{@"company_id":_companyId,
+    NSDictionary *dic = @{@"apply_id":_companyId,
                           @"recommend_type":@(_AllType),
                           @"page":@(_page)
                           };
