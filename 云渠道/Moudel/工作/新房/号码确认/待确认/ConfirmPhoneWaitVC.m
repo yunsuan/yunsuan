@@ -226,7 +226,7 @@
      
         [self showContent:@"复制成功!"];
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = _dataArr[indexPath.row][@"copy_content"];
+            pasteboard.string = _dataArr[indexPath.row][@"tel"];
     
     };
 

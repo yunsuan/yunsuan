@@ -111,7 +111,7 @@
     _copybtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _copybtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_copybtn addTarget:self action:@selector(Action_copy:) forControlEvents:UIControlEventTouchUpInside];
-    [_copybtn setTitle:@"复制确认信息" forState:UIControlStateNormal];
+    [_copybtn setTitle:@"复制号码" forState:UIControlStateNormal];
     [_copybtn setBackgroundColor:YJBlueBtnColor];
     _copybtn.layer.cornerRadius = 2 *SIZE;
     _copybtn.clipsToBounds = YES;

@@ -10,7 +10,8 @@
 
 #import "CountDownCell.h"
 #import "SingleContentCell.h"
-#import "BaseHeader.h"
+//#import "BaseHeader.h"
+#import "BlueTitleMoreHeader.h"
 
 @interface ConfirmPhoneWaitDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 {
@@ -97,7 +98,7 @@
 {
     [self showContent:@"复制成功!"];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = self.content;
+    pasteboard.string = _dataDic[@"tel"];
 }
 
 - (void)ActionInValidBtn:(UIButton *)btn{
@@ -173,15 +174,25 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+    BlueTitleMoreHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BlueTitleMoreHeader"];
     if (!header) {
         
-        header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+        header = [[BlueTitleMoreHeader alloc] initWithReuseIdentifier:@"BlueTitleMoreHeader"];
     }
     
     header.titleL.text = @"推荐信息";
     header.lineView.hidden = YES;
-    
+    [header.moreBtn setTitle:@"报备单" forState:UIControlStateNormal];
+    if (!self.content.length) {
+        
+        header.moreBtn.hidden = YES;
+    }
+    header.blueTitleMoreHeaderBlock = ^{
+      
+        [self showContent:@"复制成功!"];
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = self.content;
+    };
     return header;
 }
 
@@ -261,7 +272,7 @@
     [_CopyBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     _CopyBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_CopyBtn addTarget:self action:@selector(ActionCopy:) forControlEvents:UIControlEventTouchUpInside];
-    [_CopyBtn setTitle:@"复制确认信息" forState:UIControlStateNormal];
+    [_CopyBtn setTitle:@"号码复制" forState:UIControlStateNormal];
 //    [_CopyBtn addSubview:_invalidBtn];
 }
 
