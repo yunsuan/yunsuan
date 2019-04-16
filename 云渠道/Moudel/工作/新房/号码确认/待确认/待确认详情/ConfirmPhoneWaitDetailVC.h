@@ -16,6 +16,8 @@ typedef void(^ConfirmPhoneWaitDetailVCBlock)(void);
 
 @property (nonatomic, copy) ConfirmPhoneWaitDetailVCBlock confirmPhoneWaitDetailVCBlock;
 
+@property (nonatomic, strong) NSString *content;
+
 - (instancetype)initWithClientId:(NSString *)clientId;
 
 @end

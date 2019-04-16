@@ -226,7 +226,7 @@
      
         [self showContent:@"复制成功!"];
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            pasteboard.string = _dataArr[indexPath.row][@"tel"];
+            pasteboard.string = _dataArr[indexPath.row][@"copy_content"];
     
     };
 
@@ -237,6 +237,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_dataArr[indexPath.row][@"client_id"]];
+    nextVC.content = _dataArr[indexPath.row][@"copy_content"];
     nextVC.confirmPhoneWaitDetailVCBlock = ^{
       
         [_dataArr removeObjectAtIndex:indexPath.row];

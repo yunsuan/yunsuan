@@ -407,7 +407,20 @@
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.typeL.text = _baseInfoDic[@"house_type_name"];
-        cell.areaL.text = [NSString stringWithFormat:@"建筑面积：%@㎡-%@㎡",_baseInfoDic[@"property_area_min"],_baseInfoDic[@"property_area_max"]];
+        if ([_baseInfoDic[@"property_area_max"] integerValue] && [_baseInfoDic[@"property_area_min"] integerValue]) {
+            
+            cell.areaL.text = [NSString stringWithFormat:@"建筑面积：%@㎡-%@㎡",_baseInfoDic[@"property_area_min"],_baseInfoDic[@"property_area_max"]];
+        }else{
+            
+            if ([_baseInfoDic[@"property_area_min"] integerValue]) {
+                
+                cell.areaL.text = [NSString stringWithFormat:@"建筑面积：%@㎡",_baseInfoDic[@"property_area_min"]];
+            }else{
+                
+                cell.areaL.text = [NSString stringWithFormat:@"建筑面积：%@㎡",_baseInfoDic[@"property_area_max"]];
+            }
+        }
+        
         //        cell.houseDisL.text = @"户型分布：1栋、3栋";
         cell.titleL.text = @"户型卖点";
         cell.contentL.text = _baseInfoDic[@"sell_point"];

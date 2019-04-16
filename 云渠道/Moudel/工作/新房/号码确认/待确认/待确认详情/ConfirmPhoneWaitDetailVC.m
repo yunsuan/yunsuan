@@ -97,7 +97,7 @@
 {
     [self showContent:@"复制成功!"];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = _dataDic[@"tel"];
+    pasteboard.string = self.content;
 }
 
 - (void)ActionInValidBtn:(UIButton *)btn{
