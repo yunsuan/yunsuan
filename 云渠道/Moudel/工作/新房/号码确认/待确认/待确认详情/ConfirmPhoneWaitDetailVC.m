@@ -182,6 +182,10 @@
     
     header.titleL.text = @"推荐信息";
     header.lineView.hidden = YES;
+    [header.moreBtn setBackgroundColor:_invalidBtn.backgroundColor];
+    header.moreBtn.layer.cornerRadius = 3 *SIZE;
+    header.moreBtn.clipsToBounds = YES;
+    [header.moreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [header.moreBtn setTitle:@"报备单" forState:UIControlStateNormal];
     if (!self.content.length) {
         
