@@ -261,7 +261,7 @@
     [_CopyBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     _CopyBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_CopyBtn addTarget:self action:@selector(ActionCopy:) forControlEvents:UIControlEventTouchUpInside];
-    [_CopyBtn setTitle:@"号码复制" forState:UIControlStateNormal];
+    [_CopyBtn setTitle:@"复制确认信息" forState:UIControlStateNormal];
 //    [_CopyBtn addSubview:_invalidBtn];
 }
 

@@ -14,6 +14,7 @@
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[self archivePath]];
 }
 
+
 + (UserInfoModel *)InfoUnarchive {
     
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[self infoArchivePath]];
@@ -26,6 +27,7 @@
 //        NSLog(@"归档失败!");
     }
 }
+
 
 + (void)infoArchive{
     
