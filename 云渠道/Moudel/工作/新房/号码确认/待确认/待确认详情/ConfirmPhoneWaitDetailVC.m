@@ -187,15 +187,18 @@
     header.moreBtn.clipsToBounds = YES;
     [header.moreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [header.moreBtn setTitle:@"报备单" forState:UIControlStateNormal];
-    if (!self.content.length) {
+    if (!_dataDic[@"copy_content"]) {
         
         header.moreBtn.hidden = YES;
+    }else{
+        
+        header.moreBtn.hidden = NO;
     }
     header.blueTitleMoreHeaderBlock = ^{
       
         [self showContent:@"复制成功!"];
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        pasteboard.string = self.content;
+        pasteboard.string = _dataDic[@"copy_content"];
     };
     return header;
 }
@@ -244,7 +247,58 @@
         
         cell.lineView.hidden = YES;
         
-        cell.contentL.text = _titleArr[indexPath.row];
+        if (indexPath.row == _titleArr.count - 1) {
+            
+//            cell.textContent.text = @"备注：123123123123123123";
+            cell.textContent.text = _titleArr[indexPath.row];//赋值文本
+            NSMutableAttributedString * att =[[NSMutableAttributedString alloc] initWithString:cell.textContent.text];
+            NSMutableParagraphStyle * para = [[NSMutableParagraphStyle alloc] init];
+            para.lineSpacing = 5;
+            [att addAttribute:NSParagraphStyleAttributeName value:para range:NSMakeRange(0, cell.textContent.text.length)];
+            [att addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, cell.textContent.text.length)];
+            cell.textContent.attributedText = att;
+            CGFloat height = [att boundingRectWithSize:CGSizeMake(SCREEN_Width - 54 *SIZE, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size.height;
+            [cell.textContent mas_makeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(cell.contentView).offset(27*SIZE);
+                make.top.equalTo(cell.contentView).offset(9*SIZE);
+                make.right.equalTo(cell.contentView).offset(-27*SIZE);
+                make.height.mas_equalTo(height);
+            }];
+            [cell.lineView mas_updateConstraints:^(MASConstraintMaker *make) {
+                
+                make.top.equalTo(cell.textContent.mas_bottom).offset(9 *SIZE);
+            }];
+//            _contentLab.height = height;
+            cell.textContent.hidden = NO;
+        }else{
+            
+            cell.textContent.hidden = YES;
+            cell.contentL.text = _titleArr[indexPath.row];
+            [cell.contentL mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(cell.contentView).offset(27*SIZE);
+                make.top.equalTo(cell.contentView).offset(9*SIZE);
+                make.right.equalTo(cell.contentView).offset(-27*SIZE);
+            }];
+            
+            [cell.textContent mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(cell.contentView).offset(27*SIZE);
+                make.top.equalTo(cell.contentView).offset(9*SIZE);
+                make.right.equalTo(cell.contentView).offset(-27*SIZE);
+            }];
+            
+            [cell.lineView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(cell.contentView).offset(0);
+                make.top.equalTo(cell.contentL.mas_bottom).offset(9 *SIZE);
+                make.width.mas_equalTo(SCREEN_Width);
+                make.height.mas_equalTo(SIZE);
+                make.bottom.equalTo(cell.contentView).offset(0);
+            }];
+        }
+        
         return cell;
     }
 }

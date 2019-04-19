@@ -1744,6 +1744,11 @@
         [self showContent:@"请输入姓名！"];
         return;
     }
+    if (![_model.sex integerValue]) {
+        
+        [self showContent:@"请选择性别"];
+        return;
+    }
     
     NSString *tel;
     if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {

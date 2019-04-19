@@ -28,6 +28,14 @@
     _contentL.textColor = YJTitleLabColor;
     [self.contentView addSubview:_contentL];
     
+    _textContent = [[UITextView alloc] init];
+    _textContent.font = [UIFont systemFontOfSize:13.3*SIZE];
+    _textContent.editable = NO;
+    _textContent.scrollEnabled = NO;
+    _textContent.textContainer.lineFragmentPadding = 0;
+    _textContent.textContainerInset = UIEdgeInsetsZero;
+    [self.contentView addSubview:_textContent];
+    
     _lineView = [[UIView alloc] init];
     _lineView.backgroundColor = YJBackColor;
     [self.contentView addSubview:_lineView];
@@ -38,6 +46,13 @@
 - (void)MasonryUI{
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(27*SIZE);
+        make.top.equalTo(self.contentView).offset(9*SIZE);
+        make.right.equalTo(self.contentView).offset(-27*SIZE);
+    }];
+    
+    [_textContent mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(27*SIZE);
         make.top.equalTo(self.contentView).offset(9*SIZE);

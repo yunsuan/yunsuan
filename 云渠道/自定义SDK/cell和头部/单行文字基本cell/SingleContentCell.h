@@ -10,6 +10,8 @@
 
 @interface SingleContentCell : UITableViewCell
 
+@property (nonatomic, strong) UITextView *textContent;
+
 @property (nonatomic , strong) UILabel *contentL;
 
 @property (nonatomic, strong) UIView *lineView;

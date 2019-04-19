@@ -270,10 +270,10 @@
 {
     if ([[UserModel defaultModel].workArr[section] isEqualToString:@"新房"]) {
 
-        if ([[UserModelArchiver unarchive].agent_identity integerValue]==1) {
+        if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
 
             return 3;
-        }else if ([[UserModelArchiver unarchive].agent_identity integerValue]==3){
+        }else if ([[UserModelArchiver unarchive].agent_identity integerValue] == 3){
             
             return 1;
         }

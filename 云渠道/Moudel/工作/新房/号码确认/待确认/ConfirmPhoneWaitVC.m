@@ -237,10 +237,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_dataArr[indexPath.row][@"client_id"]];
-    if (_dataArr[indexPath.row][@"copy_content"]) {
-        
-        nextVC.content = _dataArr[indexPath.row][@"copy_content"];
-    }
+//    if (_dataArr[indexPath.row][@"copy_content"]) {
+//        
+//        nextVC.content = _dataArr[indexPath.row][@"copy_content"];
+//    }
     
     nextVC.confirmPhoneWaitDetailVCBlock = ^{
       
