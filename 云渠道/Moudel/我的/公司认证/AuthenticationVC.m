@@ -34,6 +34,7 @@
     NSString *_entryTime;
     NSString *_imgUrl;
 }
+@property (nonatomic, strong) UIView *collView;
 
 @property (nonatomic, strong) UICollectionView *authenColl;
 
@@ -41,21 +42,59 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
+@property (nonatomic, strong) UIView *whiteView;
+
 @property (nonatomic, strong) UIButton *commitBtn;
+
+@property (nonatomic, strong) UILabel *numTL;
+
+@property (nonatomic, strong) UIView *numLine;
 
 @property (nonatomic, strong) UITextField *numTextField;
 
+@property (nonatomic, strong) UILabel *companyTL;
+
+@property (nonatomic, strong) UIView *compantLine;
+
 @property (nonatomic, strong) UILabel *companyL;
+
+@property (nonatomic, strong) UIButton *companyBtn;
+
+@property (nonatomic, strong) UILabel *roleTL;
+
+@property (nonatomic, strong) UIView *roleLine;
 
 @property (nonatomic, strong) UILabel *roleL;
 
+@property (nonatomic, strong) UIButton *roleBtn;
+
+@property (nonatomic, strong) UILabel *projectTL;
+
+@property (nonatomic, strong) UIView *projectLine;
+
 @property (nonatomic, strong) UILabel *projectL;
+
+@property (nonatomic, strong) UIButton *projectBtn;
+
+@property (nonatomic, strong) UILabel *departTL;
+
+@property (nonatomic, strong) UIView *departLine;
 
 @property (nonatomic, strong) UITextField *departTextField;
 
+@property (nonatomic, strong) UILabel *positionTL;
+
+@property (nonatomic, strong) UIView *positionLine;
+
 @property (nonatomic, strong) UITextField *positionTextField;
 
+@property (nonatomic, strong) UILabel *timeTL;
+
+@property (nonatomic, strong) UIView *timeLine;
+
 @property (nonatomic, strong) UILabel *timeL;
+
+@property (nonatomic, strong) UIButton *timeBtn;
 
 @property (nonatomic, strong) DateChooseView *dateView;
 
@@ -77,7 +116,6 @@
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"yyyy-MM-dd"];
     _contentArr = [[NSMutableArray alloc] init];
-    //    _imgArr = [[NSMutableArray alloc] init];
     _titleArr = @[@"所属公司",@"工号",@"角色",@"申请项目",@"所属部门",@"职位",@"入职/申请时间"];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
@@ -286,6 +324,13 @@
                         
                         self->_projectL.text = name;
                         self->_projectId = [NSString stringWithFormat:@"%@",projectId];
+                        [self->_projectLine mas_remakeConstraints:^(MASConstraintMaker *make) {
+                            
+                            make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+                            make.top.equalTo(self->_projectL.mas_bottom).offset(16 *SIZE);
+                            make.width.mas_equalTo(360 *SIZE);
+                            make.height.mas_equalTo(SIZE);
+                        }];
                     };
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }else{
@@ -325,6 +370,36 @@
         }
         default:
             break;
+    }
+}
+
+- (void)ActionTap{
+    
+    if ([_role isEqualToString:@"2"] || [_role isEqualToString:@"3"]) {
+        
+        if (_companyId) {
+            
+            ApplyProjectVC *nextVC = [[ApplyProjectVC alloc] initWithCompanyId:_companyId];
+            nextVC.applyProjectVCBlock = ^(NSString *projectId, NSString *name) {
+                
+                self->_projectL.text = name;
+                self->_projectId = [NSString stringWithFormat:@"%@",projectId];
+                [self->_projectLine mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    
+                    make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+                    make.top.equalTo(self->_projectL.mas_bottom).offset(16 *SIZE);
+                    make.width.mas_equalTo(360 *SIZE);
+                    make.height.mas_equalTo(SIZE);
+                }];
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [self showContent:@"请先选择公司"];
+        }
+    }else{
+        
+        [self showContent:@"只有到访确认人才能申请固定项目"];
     }
 }
 
@@ -517,111 +592,350 @@
     _scrollView.bounces = NO;
     [self.view addSubview:_scrollView];
     
-    UIView *whiteView11 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 361 *SIZE)];
-    whiteView11.backgroundColor = [UIColor whiteColor];
-    [_scrollView addSubview:whiteView11];
+    _whiteView = [[UIView alloc] init];//WithFrame:CGRectMake(0, 0, SCREEN_Width, 361 *SIZE)];
+    _whiteView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_whiteView];
+    
+    [_whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self->_scrollView).offset(0);
+        make.top.equalTo(self->_scrollView).offset(0);
+        make.width.mas_equalTo(SCREEN_Width);
+    }];
     
     for (int i = 0; i < 7; i++) {
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(9 *SIZE, 16 *SIZE + i * 50 *SIZE, 100 *SIZE, 12 *SIZE)];
+        UILabel *label = [[UILabel alloc] init];//WithFrame:CGRectMake(9 *SIZE, 16 *SIZE + i * 50 *SIZE, 100 *SIZE, 12 *SIZE)];
         label.textColor = YJContentLabColor;
         label.font = [UIFont systemFontOfSize:13 *SIZE];
         label.text = _titleArr[i];
-        [whiteView11 addSubview:label];
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 49 *SIZE * (i + 1), SCREEN_Width, SIZE)];
+        UIView *line = [[UIView alloc] init];//WithFrame:CGRectMake(0, 49 *SIZE * (i + 1), SCREEN_Width, SIZE)];
         line.backgroundColor = YJBackColor;
-        [whiteView11 addSubview:line];
         
+        UILabel *label1 = [[UILabel alloc] init];//WithFrame:CGRectMake(100 *SIZE, 18 *SIZE + i * 50 *SIZE, 230 *SIZE, 12 *SIZE)];
+        label1.textColor = YJContentLabColor;
+        label1.textAlignment = NSTextAlignmentRight;
+        label1.font = [UIFont systemFontOfSize:13 *SIZE];
         
-        if (i == 1 || i == 4 || i == 5) {
-            
-            UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
-            textFiled.textAlignment = NSTextAlignmentRight;
-            if (i == 1) {
+        UIImageView *img = [[UIImageView alloc] init];//WithFrame:CGRectMake(343 *SIZE, 19 *SIZE + i * 50*SIZE, 12 *SIZE, 12 *SIZE)];
+        img.image = [UIImage imageNamed:@"rightarrow"];
+        [_whiteView addSubview:img];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//        button.frame = CGRectMake(0, i * 50 *SIZE, SCREEN_Width, 50 *SIZE);
+        [button addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
+        button.tag = i;
+        switch (i) {
+            case 0:
+            {
+                _companyTL = label;
+                [_whiteView addSubview:_companyTL];
+                _compantLine = line;
+                [_whiteView addSubview:_compantLine];
                 
+                _companyL = label1;
+                [_whiteView addSubview:_companyL];
+                _companyBtn = button;
+                [_whiteView addSubview:_companyBtn];
+                break;
+            }
+            case 1:
+            {
+                UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
+                textFiled.textAlignment = NSTextAlignmentRight;
                 _numTextField = textFiled;
                 _numTextField.keyboardType = UIKeyboardTypeNumberPad;
-                [whiteView11 addSubview:_numTextField];
-            }else if (i == 4){
+                [_whiteView addSubview:_numTextField];
                 
+                _numTL = label;
+                [_whiteView addSubview:_numTL];
+                _numLine = line;
+                [_whiteView addSubview:_numLine];
+                
+                break;
+            }
+            case 2:
+            {
+                _roleTL = label;
+                [_whiteView addSubview:_roleTL];
+                _roleLine = line;
+                [_whiteView addSubview:_roleLine];
+                
+                _roleL = label1;
+                [_whiteView addSubview:_roleL];
+                _role = @"1";
+                _roleL.text = @"经纪人";
+                
+                _roleBtn = button;
+                [_whiteView addSubview:_roleBtn];
+                break;
+            }
+            case 3:
+            {
+                _projectTL = label;
+                [_whiteView addSubview:_projectTL];
+                _projectLine = line;
+                [_whiteView addSubview:_projectLine];
+                
+                _projectL = label1;
+//                _projectL.textAlignment = NSTextAlignmentLeft;
+                _projectL.numberOfLines = 0;
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+                _projectL.userInteractionEnabled = YES;
+                [_projectL addGestureRecognizer:tap];
+                [_whiteView addSubview:_projectL];
+                
+                _projectBtn = button;
+                [_whiteView addSubview:_projectBtn];
+                break;
+            }
+            case 4:
+            {
+                
+                UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
+                textFiled.textAlignment = NSTextAlignmentRight;
                 _departTextField = textFiled;
-                [whiteView11 addSubview:_departTextField];
-            }else{
+                [_whiteView addSubview:_departTextField];
                 
+                _departTL = label;
+                [_whiteView addSubview:_departTL];
+                _departLine = line;
+                [_whiteView addSubview:_departLine];
+                break;
+            }
+            case 5:
+            {
+                
+                UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
+                textFiled.textAlignment = NSTextAlignmentRight;
                 _positionTextField = textFiled;
-                [whiteView11 addSubview:_positionTextField];
+                [_whiteView addSubview:_positionTextField];
+                
+                _positionTL = label;
+                [_whiteView addSubview:_positionTL];
+                _positionLine = line;
+                [_whiteView addSubview:_positionLine];
+                break;
             }
-        }else{
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100 *SIZE, 18 *SIZE + i * 50 *SIZE, 230 *SIZE, 12 *SIZE)];
-            label.textColor = YJContentLabColor;
-            label.textAlignment = NSTextAlignmentRight;
-            label.font = [UIFont systemFontOfSize:13 *SIZE];
-            
-            UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(343 *SIZE, 19 *SIZE + i * 50*SIZE, 12 *SIZE, 12 *SIZE)];
-            img.image = [UIImage imageNamed:@"rightarrow"];
-            [whiteView11 addSubview:img];
-            
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(0, i * 50 *SIZE, SCREEN_Width, 50 *SIZE);
-            [button addTarget:self action:@selector(ActionTagBtn:) forControlEvents:UIControlEventTouchUpInside];
-            button.tag = i;
-            switch (i) {
-                case 0:
-                {
-                    _companyL = label;
-                    [whiteView11 addSubview:_companyL];
-                    break;
-                }
-                case 2:
-                {
-                    _roleL = label;
-                    [whiteView11 addSubview:_roleL];
-                    _role = @"1";
-                    _roleL.text = @"经纪人";
-                    break;
-                }
-                case 3:
-                {
-                    _projectL = label;
-                    [whiteView11 addSubview:_projectL];
-                    break;
-                }
-                    //                case 4:
-                    //                {
-                    //                    _departL = label;
-                    //                    [whiteView11 addSubview:_departL];
-                    //                    break;
-                    //                }
-                    //                case 5:
-                    //                {
-                    //                    _positionL = label;
-                    //                    [whiteView11 addSubview:_positionL];
-                    //                    break;
-                    //                }
-                case 6:
-                {
-                    _timeL = label;
-                    [whiteView11 addSubview:_timeL];
-                    break;
-                }
-                default:
-                    break;
+            case 6:
+            {
+                _timeTL = label;
+                [_whiteView addSubview:_timeTL];
+                _timeLine = line;
+                [_whiteView addSubview:_timeLine];
+                
+                _timeL = label1;
+                [_whiteView addSubview:_timeL];
+                
+                _timeBtn = button;
+                [_whiteView addSubview:_timeBtn];
+                break;
             }
-            [whiteView11 addSubview:button];
+            default:
+                break;
         }
     }
     
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(whiteView11.frame), SCREEN_Width, 174 *SIZE)];
-    whiteView.backgroundColor = [UIColor whiteColor];
-    [_scrollView addSubview:whiteView];
+    [_companyTL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_whiteView).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_companyL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_whiteView).offset(16 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+    }];
+    
+    [_companyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_compantLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_companyBtn.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_numTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_compantLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_numTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_compantLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_numLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_numTextField.mas_bottom).offset(SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_roleTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_numLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_roleL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_numLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+    }];
+    
+    [_roleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_numLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_roleLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_roleBtn.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_projectTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_roleLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_projectL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_roleLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+    }];
+    
+    [_projectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_roleLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_projectLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_projectBtn.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_departTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_projectLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_departTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_projectLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_departLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_departTextField.mas_bottom).offset(SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_positionTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_departLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_positionTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_departLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_positionLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_positionTextField.mas_bottom).offset(SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+    }];
+    
+    [_timeTL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+        make.top.equalTo(self->_positionLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_positionLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+    }];
+    
+    [_timeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_positionLine.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(49 *SIZE);
+    }];
+    
+    [_timeLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+        make.top.equalTo(self->_timeBtn.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(SIZE);
+        make.bottom.equalTo(self->_whiteView).offset(0 *SIZE);
+    }];
+
+    _collView = [[UIView alloc] init];//WithFrame:CGRectMake(0, CGRectGetMaxY(_whiteView.frame), SCREEN_Width, 174 *SIZE)];
+    _collView.backgroundColor = [UIColor whiteColor];
+    [_scrollView addSubview:_collView];
     
     UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 100 *SIZE, 13 *SIZE)];
     label1.textColor = YJContentLabColor;
     label1.font = [UIFont systemFontOfSize:13 *SIZE];
     label1.text = @"工牌照片";
-    [whiteView addSubview:label1];
+    [_collView addSubview:label1];
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.itemSize = CGSizeMake(120 *SIZE, 91 *SIZE);
@@ -634,10 +948,18 @@
     _authenColl.dataSource = self;
     
     [_authenColl registerClass:[AuthenCollCell class] forCellWithReuseIdentifier:@"AuthenCollCell"];
-    [whiteView addSubview:_authenColl];
+    [_collView addSubview:_authenColl];
+    
+    [_collView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_scrollView).offset(0 *SIZE);
+        make.top.equalTo(self->_whiteView.mas_bottom).offset(0 *SIZE);
+        make.width.mas_equalTo(360 *SIZE);
+        make.height.mas_equalTo(174 *SIZE);
+    }];
     
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _commitBtn.frame = CGRectMake(21 *SIZE, 37 *SIZE + CGRectGetMaxY(whiteView.frame), 317 *SIZE, 40 *SIZE);
+//    _commitBtn.frame = CGRectMake(21 *SIZE, 37 *SIZE + CGRectGetMaxY(whiteView.frame), 317 *SIZE, 40 *SIZE);
     _commitBtn.layer.masksToBounds = YES;
     _commitBtn.layer.cornerRadius = 2 *SIZE;
     _commitBtn.backgroundColor = YJLoginBtnColor;
@@ -646,6 +968,15 @@
     _commitBtn.titleLabel.font = [UIFont systemFontOfSize:16 *SIZE];
     [_commitBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:_commitBtn];
+    
+    [_commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_scrollView).offset(0 *SIZE);
+        make.top.equalTo(self->_collView.mas_bottom).offset(37 *SIZE);
+        make.width.mas_equalTo(317 *SIZE);
+        make.height.mas_equalTo(40 *SIZE);
+        make.bottom.equalTo(self->_scrollView.mas_bottom).offset(-37 *SIZE);
+    }];
 }
 
 - (DateChooseView *)dateView{
