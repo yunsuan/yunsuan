@@ -130,6 +130,8 @@
 		0C2883DE21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2883DD21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.m */; };
 		0C288FBE21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C288FBD21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m */; };
 		0C288FC221EDBF6100A142F6 /* CompleteTelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C288FC121EDBF6100A142F6 /* CompleteTelView.m */; };
+		0C2A7023226EDADD00571EC1 /* AuthenImgCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2A7022226EDADD00571EC1 /* AuthenImgCell.m */; };
+		0C2A7026226EE24100571EC1 /* AuthenBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2A7025226EE24100571EC1 /* AuthenBtnCell.m */; };
 		0C2AB00B224CB76F00136E4D /* RecommendInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2AB009224CB76E00136E4D /* RecommendInfoCell.m */; };
 		0C2AB00E224CB80B00136E4D /* RecommendThreeImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2AB00D224CB80B00136E4D /* RecommendThreeImageCell.m */; };
 		0C2AB011224CBEC500136E4D /* RecommendBigImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C2AB010224CBEC500136E4D /* RecommendBigImageCell.m */; };
@@ -1049,6 +1051,10 @@
 		0C288FBD21ED8EA200A142F6 /* RentingAgencyEditTradeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAgencyEditTradeVC.m; sourceTree = "<group>"; };
 		0C288FC021EDBF6100A142F6 /* CompleteTelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteTelView.h; sourceTree = "<group>"; };
 		0C288FC121EDBF6100A142F6 /* CompleteTelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteTelView.m; sourceTree = "<group>"; };
+		0C2A7021226EDADD00571EC1 /* AuthenImgCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenImgCell.h; sourceTree = "<group>"; };
+		0C2A7022226EDADD00571EC1 /* AuthenImgCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthenImgCell.m; sourceTree = "<group>"; };
+		0C2A7024226EE24100571EC1 /* AuthenBtnCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenBtnCell.h; sourceTree = "<group>"; };
+		0C2A7025226EE24100571EC1 /* AuthenBtnCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthenBtnCell.m; sourceTree = "<group>"; };
 		0C2AB009224CB76E00136E4D /* RecommendInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendInfoCell.m; sourceTree = "<group>"; };
 		0C2AB00A224CB76E00136E4D /* RecommendInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendInfoCell.h; sourceTree = "<group>"; };
 		0C2AB00C224CB80B00136E4D /* RecommendThreeImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendThreeImageCell.h; sourceTree = "<group>"; };
@@ -5058,6 +5064,10 @@
 				0CC19CE5206E21100007CC5F /* AuthenCollCell.m */,
 				0CF04F98207CBBCB00A45F4A /* AuthenedTableHeader.h */,
 				0CF04F99207CBBCB00A45F4A /* AuthenedTableHeader.m */,
+				0C2A7021226EDADD00571EC1 /* AuthenImgCell.h */,
+				0C2A7022226EDADD00571EC1 /* AuthenImgCell.m */,
+				0C2A7024226EE24100571EC1 /* AuthenBtnCell.h */,
+				0C2A7025226EE24100571EC1 /* AuthenBtnCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -8204,6 +8214,7 @@
 				0CF89A6320C14BE600454EDD /* BingdingAccountVC.m in Sources */,
 				0CF04F8F207CAFB000A45F4A /* UIColor+PYSearchExtension.m in Sources */,
 				0C9CD4302100A66F004894A3 /* MaintainRoomInfoCell3.m in Sources */,
+				0C2A7026226EE24100571EC1 /* AuthenBtnCell.m in Sources */,
 				0C3062F220CE5FAD004D1996 /* SecComRoomDetailVC.m in Sources */,
 				0C997C4321E440BD00F805AA /* LookWorkVC.m in Sources */,
 				10F7D0C221F70EFA007818E3 /* ChooseHouseVC.m in Sources */,
@@ -8516,6 +8527,7 @@
 				0CDD706620D39A0300D6609C /* RoomInvalidApplyVC.m in Sources */,
 				0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */,
 				1016245B208863BB00AD53DE /* YJChooseView.m in Sources */,
+				0C2A7023226EDADD00571EC1 /* AuthenImgCell.m in Sources */,
 				10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */,
 				0CDD6FFA20CFCABC00D6609C /* ReportVew2.m in Sources */,
 				0C9CD4382101B6A9004894A3 /* ModifyTagVC.m in Sources */,

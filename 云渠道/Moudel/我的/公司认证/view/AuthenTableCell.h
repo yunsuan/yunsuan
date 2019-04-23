@@ -16,4 +16,6 @@
 
 @property (nonatomic, strong) UIImageView *rightView;
 
+@property (nonatomic, strong) UIView *line;
+
 @end

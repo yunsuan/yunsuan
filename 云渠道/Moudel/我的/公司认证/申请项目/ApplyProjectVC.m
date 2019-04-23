@@ -73,16 +73,23 @@
     [BaseRequest GET:GetCompanyProject_URL parameters:dic success:^(id resposeObject) {
         
         [self.MainTableView.mj_header endRefreshing];
-        //        NSLog(@"%@",resposeObject);
+        
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             [_dataArr removeAllObjects];
-            [self SetData:resposeObject[@"data"][@"data"]];
-            if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
+            
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+            }else{
                 
                 self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
+//            if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
+//
+//                self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+//            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -109,12 +116,13 @@
     [BaseRequest GET:GetCompanyProject_URL parameters:dic success:^(id resposeObject) {
         
         
-        //        NSLog(@"%@",resposeObject);
-        
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            [self SetData:resposeObject[@"data"][@"data"]];
-            if (_page >= [resposeObject[@"data"][@"last_page"] integerValue]) {
+            if ([resposeObject[@"data"][@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"][@"data"]];
+                [self.MainTableView.mj_footer endRefreshing];
+            }else{
                 
                 self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
@@ -129,7 +137,6 @@
         _page -= 1;
         [self.MainTableView.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
-        //        NSLog(@"%@",error.localizedDescription);
     }];
     
 }
@@ -240,20 +247,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
-    
-    //    if (indexPath.row == 1) {
-    //        static NSString *CellIdentifier = @"CompanyCell";
-    //
-    //        CompanyCell *cell  = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    //        if (!cell) {
-    //            cell = [[CompanyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    //        }
-    //        //    [cell setTitle:_namelist[indexPath.row] content:@"123" img:@""];
-    //        [cell SetTitle:@"新希望国际" image:@"" contentlab:@"高新区——天府三街" statu:@"在售"];
-    //        [cell settagviewWithdata:_arr[indexPath.row]];
-    //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //        return cell;
-    //    }else
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -267,7 +261,7 @@
         [_selectArr replaceObjectAtIndex:indexPath.row withObject:@(1)];
     }
     
-    [tableView reloadData];
+    [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 -(void)initUI
