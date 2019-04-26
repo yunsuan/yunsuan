@@ -971,7 +971,7 @@
     
     [_commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self->_scrollView).offset(0 *SIZE);
+        make.left.equalTo(self->_scrollView).offset(21 *SIZE);
         make.top.equalTo(self->_collView.mas_bottom).offset(37 *SIZE);
         make.width.mas_equalTo(317 *SIZE);
         make.height.mas_equalTo(40 *SIZE);
