@@ -631,6 +631,9 @@
 		0CF1F3262251F94200C92A54 /* CloudCodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3252251F94200C92A54 /* CloudCodeCell.m */; };
 		0CF1F32A2251FCE900C92A54 /* RecommendMoreInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3292251FCE800C92A54 /* RecommendMoreInfoVC.m */; };
 		0CF1F32E22530AB400C92A54 /* MyCollageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F32D22530AB400C92A54 /* MyCollageVC.m */; };
+		0CF43FA72276CF9700677844 /* CaptchaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF43FA62276CF9700677844 /* CaptchaView.m */; };
+		0CF43FA92276D07400677844 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF43FA82276D07300677844 /* CoreGraphics.framework */; };
+		0CF43FAC2276D11D00677844 /* GetCaptchaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF43FAB2276D11D00677844 /* GetCaptchaView.m */; };
 		0CF46ED9223214BC008816E6 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46ED8223214BC008816E6 /* SignListVC.m */; };
 		0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */; };
 		0CF7423B206229C4001F926F /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7423A206229C4001F926F /* MessageTableCell.m */; };
@@ -2047,6 +2050,11 @@
 		0CF1F3292251FCE800C92A54 /* RecommendMoreInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendMoreInfoVC.m; sourceTree = "<group>"; };
 		0CF1F32C22530AB400C92A54 /* MyCollageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollageVC.h; sourceTree = "<group>"; };
 		0CF1F32D22530AB400C92A54 /* MyCollageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollageVC.m; sourceTree = "<group>"; };
+		0CF43FA52276CF9700677844 /* CaptchaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptchaView.h; sourceTree = "<group>"; };
+		0CF43FA62276CF9700677844 /* CaptchaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptchaView.m; sourceTree = "<group>"; };
+		0CF43FA82276D07300677844 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0CF43FAA2276D11D00677844 /* GetCaptchaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetCaptchaView.h; sourceTree = "<group>"; };
+		0CF43FAB2276D11D00677844 /* GetCaptchaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetCaptchaView.m; sourceTree = "<group>"; };
 		0CF46ED7223214BC008816E6 /* SignListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignListVC.h; sourceTree = "<group>"; };
 		0CF46ED8223214BC008816E6 /* SignListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignListVC.m; sourceTree = "<group>"; };
 		0CF46EDB22324A1C008816E6 /* RecommendConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendConfirmVC.h; sourceTree = "<group>"; };
@@ -2355,6 +2363,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF43FA92276D07400677844 /* CoreGraphics.framework in Frameworks */,
 				105E18DD206A36C40031558D /* libssl.a in Frameworks */,
 				105E18DE206A36C40031558D /* libcrypto.a in Frameworks */,
 				0CAEDF1C20B55C8100AA3C97 /* Bugtags.framework in Frameworks */,
@@ -6744,6 +6753,17 @@
 			path = "收藏文章";
 			sourceTree = "<group>";
 		};
+		0CF43FA42276CF8300677844 /* 验证码 */ = {
+			isa = PBXGroup;
+			children = (
+				0CF43FA52276CF9700677844 /* CaptchaView.h */,
+				0CF43FA62276CF9700677844 /* CaptchaView.m */,
+				0CF43FAA2276D11D00677844 /* GetCaptchaView.h */,
+				0CF43FAB2276D11D00677844 /* GetCaptchaView.m */,
+			);
+			path = "验证码";
+			sourceTree = "<group>";
+		};
 		0CF46ED622321499008816E6 /* 签字人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7516,6 +7536,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0CF43FA42276CF8300677844 /* 验证码 */,
 				0C36C54D22438BE0007BB162 /* 区间 */,
 				0C36C54922436888007BB162 /* 户型筛选 */,
 				0C36C53C2242551E007BB162 /* 自定义标签 */,
@@ -7833,6 +7854,7 @@
 		588A381E570994FF347F095F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0CF43FA82276D07300677844 /* CoreGraphics.framework */,
 				105E18DC206A36C40031558D /* libcrypto.a */,
 				105E18DB206A36C40031558D /* libssl.a */,
 				F9F61246EF35319F3323AE5C /* libPods-云渠道.a */,
@@ -8147,6 +8169,7 @@
 				0C9CD45D2105A8C7004894A3 /* RentingAllRoomDetailVC.m in Sources */,
 				0C997C3C21DC88E200F805AA /* RentingAddOfficeRequireMentVC.m in Sources */,
 				0C252226215253FE0031CC44 /* SecAllRoomStoreDetailCell.m in Sources */,
+				0CF43FAC2276D11D00677844 /* GetCaptchaView.m in Sources */,
 				0C73B0AC21F5D12A005F71F1 /* RecommendComplaintDetailVC.m in Sources */,
 				10AFF8B6221AA1BD00657217 /* SetContractVc.m in Sources */,
 				0C0BED1620A17E3C005A16A1 /* BarginVC.m in Sources */,
@@ -8509,6 +8532,7 @@
 				0C997BF321D4B0C200F805AA /* RentingRoomAgencyAddProtocolCell2.m in Sources */,
 				0C9CD4602105A8DB004894A3 /* RentingAllRoomProjectVC.m in Sources */,
 				0C30631320CE88A8004D1996 /* SecAllRoomTableCell2.m in Sources */,
+				0CF43FA72276CF9700677844 /* CaptchaView.m in Sources */,
 				0CED0C0A21E85F440016A029 /* AddContractCell3.m in Sources */,
 				0C25223D215CDB9F0031CC44 /* SecAllRoomStoreCell.m in Sources */,
 				0C73B08F21F363AB005F71F1 /* PhoneTextField.m in Sources */,

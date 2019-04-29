@@ -9,6 +9,8 @@
 #import "FindPassWordVC.h"
 #import "LoginVC.h"
 
+#import "GetCaptchaView.h"
+
 @interface FindPassWordVC ()
 {
     NSInteger surplusTime;//重新发送短信的倒计时时间
@@ -21,6 +23,8 @@
 @property (nonatomic , strong) UIButton *RegisterBtn;
 @property (nonatomic , strong) UITextField *SurePassWord;
 @property (nonatomic, strong)  UILabel *timeLabel;
+
+@property (nonatomic, strong) GetCaptchaView *getCaptchaView;
 
 @end
 
@@ -113,47 +117,86 @@
 
 -(void)GetCode{
     //获取验证码
-    _GetCodeBtn.userInteractionEnabled = NO;
     if([self checkTel:_Account.text]) {
         
-        NSDictionary *parameter = @{
-                                    @"tel":_Account.text
-                                    };
-        [BaseRequest GET:Captcha_URL parameters:parameter success:^(id resposeObject) {
-            NSLog(@"%@",resposeObject);
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                _GetCodeBtn.hidden = YES;
-                _timeLabel.hidden = NO;
-                surplusTime = 60;
-                _timeLabel.text = [NSString stringWithFormat:@"%ldS", (long)surplusTime];
-                //倒计时
-                time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+        if (![UserModel defaultModel].registerUp) {
+            
+            [UserModel defaultModel].registerUp = 1;
+            [UserModelArchiver archive];
+        }else{
+            
+            [UserModel defaultModel].registerUp += 1;
+            [UserModelArchiver archive];
+        }
+        if ([UserModel defaultModel].registerUp > 5) {
+            
+            _GetCodeBtn.userInteractionEnabled = YES;
+            _getCaptchaView = [[GetCaptchaView alloc] initWithFrame:self.view.bounds];
+            _getCaptchaView.getCaptchaViewBlock = ^{
                 
-            }
-            else{
-                [self showContent:resposeObject[@"msg"]];
-            }
-            _GetCodeBtn.userInteractionEnabled = YES;
-        } failure:^(NSError *error) {
-            _GetCodeBtn.userInteractionEnabled = YES;
-            [self showContent:@"网络错误"];
-        }];
-        
-        
-        
-        
-        //            }
-        //
-        //
-        //        } failure:^(NSError *error) {
-        //            NSLog(@"%@",error);
-        //            _codebtn.userInteractionEnabled = YES;
-        //
-        //        }];
-        //
+                _GetCodeBtn.userInteractionEnabled = NO;
+                NSDictionary *parameter = @{
+                                            @"tel":_Account.text,
+                                            @"token":[self md5:@"yunsuankeji"]
+                                            };
+                [BaseRequest GET:Captcha_URL parameters:parameter success:^(id resposeObject) {
+                    NSLog(@"%@",resposeObject);
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        [self showContent:@"验证码有效期为60分钟"];
+                        
+                        _GetCodeBtn.hidden = YES;
+                        _timeLabel.hidden = NO;
+                        surplusTime = 60;
+                        _timeLabel.text = [NSString stringWithFormat:@"%ldS", (long)surplusTime];
+                        //倒计时
+                        time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+                        
+                    }
+                    else{
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                    _GetCodeBtn.userInteractionEnabled = YES;
+                } failure:^(NSError *error) {
+                    _GetCodeBtn.userInteractionEnabled = YES;
+                    [self showContent:@"网络错误"];
+                }];
+            };
+            [self.view addSubview:_getCaptchaView];
+        }else{
+            
+            _GetCodeBtn.userInteractionEnabled = NO;
+            NSDictionary *parameter = @{
+                                        @"tel":_Account.text,
+                                        @"token":[self md5:@"yunsuankeji"]
+                                        };
+            [BaseRequest GET:Captcha_URL parameters:parameter success:^(id resposeObject) {
+                NSLog(@"%@",resposeObject);
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    [self showContent:@"验证码有效期为60分钟"];
+                    
+                    _GetCodeBtn.hidden = YES;
+                    _timeLabel.hidden = NO;
+                    surplusTime = 60;
+                    _timeLabel.text = [NSString stringWithFormat:@"%ldS", (long)surplusTime];
+                    //倒计时
+                    time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+                    
+                }
+                else{
+                    [self showContent:resposeObject[@"msg"]];
+                }
+                _GetCodeBtn.userInteractionEnabled = YES;
+            } failure:^(NSError *error) {
+                _GetCodeBtn.userInteractionEnabled = YES;
+                [self showContent:@"网络错误"];
+            }];
+        }
     }
     else
     {
+        
         _GetCodeBtn.userInteractionEnabled = YES;
         [self showContent:@"请输入正确的电话号码"];
     }

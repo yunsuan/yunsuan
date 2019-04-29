@@ -10,6 +10,8 @@
 
 
 @interface UserModel : NSObject
+
+@property (nonatomic , assign)  NSInteger registerUp;
 @property (nonatomic , assign)  NSInteger comment;
 @property (nonatomic , strong) NSString *Token;
 @property (nonatomic , strong) NSString *Account;

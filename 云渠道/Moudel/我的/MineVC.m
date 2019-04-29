@@ -64,7 +64,7 @@
 - (void)LoadRequest{
     
     if (![UserModel defaultModel].comment) {
-        [UserModel defaultModel].comment = 0;
+        [UserModel defaultModel].comment = 1;
         [UserModelArchiver archive];
     }
     else{
