@@ -122,8 +122,8 @@
             _urlString = UserFocusNews_URL;
         }else{
             
-//            _urlString = RecommendGetList_URL;
-            _urlString = ProjectRecommendInfo_URL;
+            _urlString = RecommendGetList_URL;
+//            _urlString = ProjectRecommendInfo_URL;
         }
     }else if(_AllType == 3){
         
@@ -304,8 +304,8 @@
             _urlString = UserFocusNews_URL;
         }else{
             
-//            _urlString = RecommendGetList_URL;
-            _urlString = ProjectRecommendInfo_URL;
+            _urlString = RecommendGetList_URL;
+//            _urlString = ProjectRecommendInfo_URL;
         }
     }else if(_AllType == 3){
         
@@ -617,9 +617,9 @@
                     }
                 }];
                 
-                RecommendInfoModel *model = [[RecommendInfoModel alloc] initWithDictionary:tempDic];
-                [_dataArr addObject:model];
-//                [_dataArr addObject:tempDic];
+//                RecommendInfoModel *model = [[RecommendInfoModel alloc] initWithDictionary:tempDic];
+//                [_dataArr addObject:model];
+                [_dataArr addObject:tempDic];
             }
         }
     }else if (_AllType == 3){
@@ -900,80 +900,79 @@
                 }
             }else{
                 
-                
-//                switch ([_dataArr[indexPath.row][@"item_type"] integerValue]) {
-//                    case 1:
-//                    {
-//                        RecommendThreeImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendThreeImageCell"];
-//                        if (!cell) {
-//
-//                            cell = [[RecommendThreeImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendThreeImageCell"];
-//                        }
-//                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//                        cell.dataDic = _dataArr[indexPath.row];
-//                        return cell;
-//
-//                        break;
-//                    }
-//                    case 2:
-//                    {
-//                        RecommendBigImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendBigImageCell"];
-//                        if (!cell) {
-//
-//                            cell = [[RecommendBigImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendBigImageCell"];
-//                        }
-//                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//                        cell.dataDic = _dataArr[indexPath.row];
-//                        return cell;
-//
-//                        break;
-//                    }
-//                    case 3:
-//                    {
-//                        RecommendInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendInfoCell"];
-//                        if (!cell) {
-//
-//                            cell = [[RecommendInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendInfoCell"];
-//                        }
-//                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//                        cell.dataDic = _dataArr[indexPath.row];
-//                        return cell;
-//
-//                        break;
-//                    }
-//                    case 4:
-//                    {
-//                        RecommendRightImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendRightImageCell"];
-//                        if (!cell) {
-//
-//                            cell = [[RecommendRightImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendRightImageCell"];
-//                        }
-//                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//                        cell.dataDic = _dataArr[indexPath.row];
-//                        return cell;
-//
-//                        break;
-//                    }
-//                    case 5:
-//                    {
-//                        RecommendContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendContentCell"];
-//                        if (!cell) {
-//
-//                            cell = [[RecommendContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendContentCell"];
-//                        }
-//                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//                        cell.dataDic = _dataArr[indexPath.row];
-//                        return cell;
-//
-//                        break;
-//                    }
-//                    default:
-//                    {
+                switch ([_dataArr[indexPath.row][@"item_type"] integerValue]) {
+                    case 1:
+                    {
+                        RecommendThreeImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendThreeImageCell"];
+                        if (!cell) {
+
+                            cell = [[RecommendThreeImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendThreeImageCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                        cell.dataDic = _dataArr[indexPath.row];
+                        return cell;
+
+                        break;
+                    }
+                    case 2:
+                    {
+                        RecommendBigImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendBigImageCell"];
+                        if (!cell) {
+
+                            cell = [[RecommendBigImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendBigImageCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                        cell.dataDic = _dataArr[indexPath.row];
+                        return cell;
+
+                        break;
+                    }
+                    case 3:
+                    {
+                        RecommendInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendInfoCell"];
+                        if (!cell) {
+
+                            cell = [[RecommendInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendInfoCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                        cell.dataDic = _dataArr[indexPath.row];
+                        return cell;
+
+                        break;
+                    }
+                    case 4:
+                    {
+                        RecommendRightImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendRightImageCell"];
+                        if (!cell) {
+
+                            cell = [[RecommendRightImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendRightImageCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                        cell.dataDic = _dataArr[indexPath.row];
+                        return cell;
+
+                        break;
+                    }
+                    case 5:
+                    {
+                        RecommendContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendContentCell"];
+                        if (!cell) {
+
+                            cell = [[RecommendContentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"RecommendContentCell"];
+                        }
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                        cell.dataDic = _dataArr[indexPath.row];
+                        return cell;
+
+                        break;
+                    }
+                    default:
+                    {
                         RecommendInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecommendInfoCell"];
                         if (!cell) {
 
@@ -983,9 +982,9 @@
 
                         cell.model = _dataArr[indexPath.row];
                         return cell;
-//                    }
-//                    break;
-//                }
+                    }
+                    break;
+                }
             }
         }
         case 2:{
@@ -1178,16 +1177,16 @@
             }
         }else{
             
-            RecommendInfoModel *model = _dataArr[indexPath.row];
-            if (self.roomChildVCRecommendBlock) {
-
-                self.roomChildVCRecommendBlock(model);
-            }
-            
+//            RecommendInfoModel *model = _dataArr[indexPath.row];
 //            if (self.roomChildVCRecommendBlock) {
 //
-//                self.roomChildVCRecommendBlock(_dataArr[indexPath.row]);
+//                self.roomChildVCRecommendBlock(model);
 //            }
+            
+            if (self.roomChildVCRecommendBlock) {
+
+                self.roomChildVCRecommendBlock(_dataArr[indexPath.row]);
+            }
         }
     }else if(_AllType == 3){
         
