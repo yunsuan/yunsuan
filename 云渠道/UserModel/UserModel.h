@@ -11,6 +11,7 @@
 
 @interface UserModel : NSObject
 
+@property (nonatomic, strong) NSString *time;
 @property (nonatomic , assign)  NSInteger registerUp;
 @property (nonatomic , assign)  NSInteger comment;
 @property (nonatomic , strong) NSString *Token;

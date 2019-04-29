@@ -17,6 +17,7 @@
 
     NSInteger surplusTime;//重新发送短信的倒计时时间
     NSTimer *time;
+    NSDateFormatter *_formatter;
 }
 @property (nonatomic , strong) UITextField *Account;
 @property (nonatomic , strong) UITextField *Code;
@@ -47,9 +48,11 @@
     [super viewDidLoad];
     self.navBackgroundView.hidden = NO;
     self.navBackgroundView.backgroundColor = YJBackColor;
+    
+    _formatter = [[NSDateFormatter alloc] init];
+    [_formatter setDateFormat:@"YYYYMMdd"];
+    
     [self InitUI];
-    
-    
 }
 
 -(void)InitUI
@@ -155,13 +158,21 @@
     
     if([self checkTel:_Account.text]) {
         
-        if (![UserModel defaultModel].registerUp) {
+        if ([[UserModel defaultModel].time isEqualToString:[_formatter stringFromDate:[NSDate date]]]) {
             
-            [UserModel defaultModel].registerUp = 1;
-            [UserModelArchiver archive];
+            if (![UserModel defaultModel].registerUp) {
+                
+                [UserModel defaultModel].registerUp = 1;
+                [UserModelArchiver archive];
+            }else{
+                
+                [UserModel defaultModel].registerUp += 1;
+                [UserModelArchiver archive];
+            }
         }else{
             
-            [UserModel defaultModel].registerUp += 1;
+            [UserModel defaultModel].time = [_formatter stringFromDate:[NSDate date]];
+            [UserModel defaultModel].registerUp = 1;
             [UserModelArchiver archive];
         }
         if ([UserModel defaultModel].registerUp > 5) {

@@ -34,6 +34,7 @@
 
 - (void)initDataSource{
     
+    _page = 1;
     _dataArr = [@[] mutableCopy];
 }
 
@@ -67,14 +68,15 @@
 
 - (void)RequestAddMethod{
     
-    [BaseRequest GET:ApplyGetList_URL parameters:nil success:^(id resposeObject) {
+    NSDictionary *dic = @{@"page":@(_page)};
+    [BaseRequest GET:ApplyGetList_URL parameters:dic success:^(id resposeObject) {
         
-        [_table.mj_footer endRefreshing];
         if ([resposeObject[@"code"] integerValue] == 200) {
             
             if ([resposeObject[@"data"][@"data"] count]) {
                 
                 [self SetData:resposeObject[@"data"][@"data"]];
+                [_table.mj_footer endRefreshing];
             }else{
                 
                 _table.mj_footer.state = MJRefreshStateNoMoreData;
@@ -193,7 +195,7 @@
     _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
         _page += 1;
-        [self RequestMethod];
+        [self RequestAddMethod];
     }];
 }
 
