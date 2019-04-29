@@ -60,6 +60,16 @@
 				<string>wx3e34d92e8b8cb53e</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>jiguang</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>jiguang-2dd909361c253b51e0cd05a9</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>3</string>

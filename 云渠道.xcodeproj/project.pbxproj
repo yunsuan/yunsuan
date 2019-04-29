@@ -758,6 +758,7 @@
 		10B3930921AF894600DE73AB /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B3930821AF894600DE73AB /* LocationManager.m */; };
 		10B509772092EE0D004355C4 /* BrokerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B509762092EE0D004355C4 /* BrokerModel.m */; };
 		10B5097B209317C7004355C4 /* SelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B5097A209317C7004355C4 /* SelectView.m */; };
+		10BC3A3B2276D1F500DAB2D8 /* janalytics-ios-2.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10BC3A382276D1F500DAB2D8 /* janalytics-ios-2.0.0.a */; };
 		10DBB1E5207C805F00CFE59D /* DistributVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1E4207C805F00CFE59D /* DistributVC.m */; };
 		10DBB1E8207CB39200CFE59D /* HousedistributVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1E7207CB39200CFE59D /* HousedistributVC.m */; };
 		10DBB1F4207CCACE00CFE59D /* KyoCinameSeatScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DBB1EC207CCACE00CFE59D /* KyoCinameSeatScrollView.m */; };
@@ -2300,6 +2301,9 @@
 		10B509762092EE0D004355C4 /* BrokerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrokerModel.m; sourceTree = "<group>"; };
 		10B50979209317C7004355C4 /* SelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectView.h; sourceTree = "<group>"; };
 		10B5097A209317C7004355C4 /* SelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectView.m; sourceTree = "<group>"; };
+		10BC3A382276D1F500DAB2D8 /* janalytics-ios-2.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "janalytics-ios-2.0.0.a"; sourceTree = "<group>"; };
+		10BC3A392276D1F500DAB2D8 /* JANALYTICSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANALYTICSService.h; sourceTree = "<group>"; };
+		10BC3A3A2276D1F500DAB2D8 /* JANALYTICSEventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JANALYTICSEventObject.h; sourceTree = "<group>"; };
 		10DBB1E3207C805F00CFE59D /* DistributVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DistributVC.h; sourceTree = "<group>"; };
 		10DBB1E4207C805F00CFE59D /* DistributVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DistributVC.m; sourceTree = "<group>"; };
 		10DBB1E6207CB39200CFE59D /* HousedistributVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HousedistributVC.h; sourceTree = "<group>"; };
@@ -2356,6 +2360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				105E18DD206A36C40031558D /* libssl.a in Frameworks */,
+				10BC3A3B2276D1F500DAB2D8 /* janalytics-ios-2.0.0.a in Frameworks */,
 				105E18DE206A36C40031558D /* libcrypto.a in Frameworks */,
 				0CAEDF1C20B55C8100AA3C97 /* Bugtags.framework in Frameworks */,
 				BF3D5C8D28ABC2D033EBFE3F /* libPods-云渠道.a in Frameworks */,
@@ -7381,6 +7386,7 @@
 		106900032057974200E11F52 /* 第三方SDK */ = {
 			isa = PBXGroup;
 			children = (
+				10BC3A372276D1F500DAB2D8 /* janalities */,
 				0C997BDB21D0789400F805AA /* TwoSliderView */,
 				100D8F712180189B006839EB /* HNChannelView */,
 				100D8F5E218004ED006839EB /* WMPageController */,
@@ -7715,6 +7721,16 @@
 				10B5097A209317C7004355C4 /* SelectView.m */,
 			);
 			path = selectview;
+			sourceTree = "<group>";
+		};
+		10BC3A372276D1F500DAB2D8 /* janalities */ = {
+			isa = PBXGroup;
+			children = (
+				10BC3A382276D1F500DAB2D8 /* janalytics-ios-2.0.0.a */,
+				10BC3A392276D1F500DAB2D8 /* JANALYTICSService.h */,
+				10BC3A3A2276D1F500DAB2D8 /* JANALYTICSEventObject.h */,
+			);
+			path = janalities;
 			sourceTree = "<group>";
 		};
 		10DBB1E2207C7F6500CFE59D /* 楼栋信息 */ = {
@@ -8991,6 +9007,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
+					"$(PROJECT_DIR)/云渠道/第三方SDK/janalities",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9025,6 +9042,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
+					"$(PROJECT_DIR)/云渠道/第三方SDK/janalities",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";

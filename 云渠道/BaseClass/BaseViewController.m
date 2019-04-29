@@ -10,6 +10,7 @@
 #import "BaseViewController.h"
 #import "MBProgressHUD.h"
 #import "WaitAnimation.h"
+#import "JANALYTICSService.h"
 
 //#import "LogoinViewController.h"
 //#import <AFNetworkReachabilityManager.h>
@@ -18,6 +19,13 @@
 
 
 @implementation BaseViewController
+
+- (void)viewDidAppear:(BOOL)animated {
+    [JANALYTICSService startLogPageView:NSStringFromClass([self class])];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [JANALYTICSService stopLogPageView:NSStringFromClass([self class])];
+}
 
 
 - (void)viewDidLoad {

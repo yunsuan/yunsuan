@@ -8,6 +8,7 @@
 
 #import "RegisterVC.h"
 #import "LoginVC.h"
+#import "JANALYTICSService.h"
 
 @interface RegisterVC ()<UITextFieldDelegate>
 {
@@ -27,6 +28,15 @@
 @end
 
 @implementation RegisterVC
+
+//- (void)viewDidAppear:(BOOL)animated {
+//    [JANALYTICSService startLogPageView:@"register_page"];
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [JANALYTICSService stopLogPageView:@"register_page"];
+//}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,6 +123,16 @@
             [UserModelArchiver archive];
             [self.navigationController pushViewController:next_vc animated:YES];
             [self alertControllerWithNsstring:@"系统提示" And:@"恭喜你注册成功，请妥善保管好账号"];
+            JANALYTICSRegisterEvent * event = [[JANALYTICSRegisterEvent alloc] init];
+            
+            event.success = YES;
+            
+            event.method = @"ios";
+            
+            event.extra = @{@"tel":_Account.text};
+            
+            [JANALYTICSService eventRecord:event];
+            
         }
         else{
             [self showContent:resposeObject[@"msg"]];

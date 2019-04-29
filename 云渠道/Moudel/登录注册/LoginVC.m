@@ -305,6 +305,7 @@
 
 -(void)Login{
     
+    
     if (_PassWord.text.length<6) {
         [self showContent:@"密码长度至少为6位"];
         return;
