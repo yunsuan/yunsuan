@@ -7,6 +7,7 @@
 //
 
 #import "LocationManager.h"
+#import "JANALYTICSService.h"
 #import<BaiduMapAPI_Location/BMKLocationService.h>
 #import<BaiduMapAPI_Search/BMKGeocodeSearch.h>
 @interface LocationManager ()<BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
@@ -57,6 +58,8 @@
     [_locService stopUserLocationService];
     BMKReverseGeoCodeOption *reverseGeocodeSearchOption = [[BMKReverseGeoCodeOption alloc]init];
     reverseGeocodeSearchOption.reverseGeoPoint = userLocation.location.coordinate;
+    
+    [JANALYTICSService setLocation:userLocation.location];
     BOOL flag = [_geocodesearch reverseGeoCode:reverseGeocodeSearchOption];
     
     if(flag){
