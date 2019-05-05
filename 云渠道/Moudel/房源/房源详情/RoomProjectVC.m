@@ -548,7 +548,7 @@
                 [browser show];
             }else{
                 
-                [BaseRequest GET:GetImg_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+                [BaseRequest GET:GetImg_URL parameters:@{@"project_id":_projectId,@"info_id":_info_id} success:^(id resposeObject) {
                     
                     if ([resposeObject[@"code"] integerValue] == 200) {
                         

@@ -77,6 +77,7 @@
 		0C1A014020AC566100665BB9 /* DealValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1A013F20AC566100665BB9 /* DealValidVC.m */; };
 		0C1EEF9821BE00ED00C770D0 /* RentingComModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EEF9721BE00ED00C770D0 /* RentingComModel.m */; };
 		0C1EEF9C21BE03A800C770D0 /* RentingAllTableModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C1EEF9B21BE03A800C770D0 /* RentingAllTableModel.m */; };
+		0C221A86227EFFBE006B0510 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF43FA82276D07300677844 /* CoreGraphics.framework */; };
 		0C222D4521AF966800EF45B6 /* RentingComRoomDetailTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D4421AF966800EF45B6 /* RentingComRoomDetailTableHeader.m */; };
 		0C222D4B21B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D4A21B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.m */; };
 		0C222D5221B659B700EF45B6 /* RentingReportWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C222D5121B659B700EF45B6 /* RentingReportWaitDetailVC.m */; };
@@ -632,7 +633,6 @@
 		0CF1F32A2251FCE900C92A54 /* RecommendMoreInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F3292251FCE800C92A54 /* RecommendMoreInfoVC.m */; };
 		0CF1F32E22530AB400C92A54 /* MyCollageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF1F32D22530AB400C92A54 /* MyCollageVC.m */; };
 		0CF43FA72276CF9700677844 /* CaptchaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF43FA62276CF9700677844 /* CaptchaView.m */; };
-		0CF43FA92276D07400677844 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CF43FA82276D07300677844 /* CoreGraphics.framework */; };
 		0CF43FAC2276D11D00677844 /* GetCaptchaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF43FAB2276D11D00677844 /* GetCaptchaView.m */; };
 		0CF46ED9223214BC008816E6 /* SignListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46ED8223214BC008816E6 /* SignListVC.m */; };
 		0CF46EDD22324A1C008816E6 /* RecommendConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF46EDC22324A1C008816E6 /* RecommendConfirmVC.m */; };
@@ -949,6 +949,7 @@
 		0C1EEF9721BE00ED00C770D0 /* RentingComModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingComModel.m; sourceTree = "<group>"; };
 		0C1EEF9A21BE03A800C770D0 /* RentingAllTableModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllTableModel.h; sourceTree = "<group>"; };
 		0C1EEF9B21BE03A800C770D0 /* RentingAllTableModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllTableModel.m; sourceTree = "<group>"; };
+		0C221A87227F041D006B0510 /* libobjc.A.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libobjc.A.tbd; path = usr/lib/libobjc.A.tbd; sourceTree = SDKROOT; };
 		0C222D4321AF966800EF45B6 /* RentingComRoomDetailTableHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingComRoomDetailTableHeader.h; sourceTree = "<group>"; };
 		0C222D4421AF966800EF45B6 /* RentingComRoomDetailTableHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingComRoomDetailTableHeader.m; sourceTree = "<group>"; };
 		0C222D4921B62AB300EF45B6 /* RentingCompleteSurveyHouseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingCompleteSurveyHouseVC.h; sourceTree = "<group>"; };
@@ -2367,7 +2368,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CF43FA92276D07400677844 /* CoreGraphics.framework in Frameworks */,
+				0C221A86227EFFBE006B0510 /* CoreGraphics.framework in Frameworks */,
 				105E18DD206A36C40031558D /* libssl.a in Frameworks */,
 				10BC3A3B2276D1F500DAB2D8 /* janalytics-ios-2.0.0.a in Frameworks */,
 				105E18DE206A36C40031558D /* libcrypto.a in Frameworks */,
@@ -7870,6 +7871,7 @@
 		588A381E570994FF347F095F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C221A87227F041D006B0510 /* libobjc.A.tbd */,
 				0CF43FA82276D07300677844 /* CoreGraphics.framework */,
 				105E18DC206A36C40031558D /* libcrypto.a */,
 				105E18DB206A36C40031558D /* libssl.a */,
