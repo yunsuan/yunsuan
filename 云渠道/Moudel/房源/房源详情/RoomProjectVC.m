@@ -38,7 +38,7 @@
 #import <BaiduMapAPI_Map/BMKPointAnnotation.h>
 #import <BaiduMapAPI_Map/BMKPinAnnotationView.h>
 
-#import "JANALYTICSService.h"
+//#import "JANALYTICSService.h"
 
 
 @interface RoomProjectVC ()<UITableViewDelegate,UITableViewDataSource,BMKMapViewDelegate,RoomDetailTableCell4Delegate,BMKPoiSearchDelegate,UIGestureRecognizerDelegate,YBImageBrowserDelegate>
@@ -227,14 +227,14 @@
                 [self SetData:resposeObject[@"data"]];
                 
                 
-                JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
-                
-                event.eventID = @"项目浏览次数";
-                
-                event.extra = @{@"tel":[UserModelArchiver unarchive].Account,
-                                @"prject_id":_projectId};
-                
-                [JANALYTICSService eventRecord:event];
+//                JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
+//
+//                event.eventID = @"项目浏览次数";
+//
+//                event.extra = @{@"tel":[UserModelArchiver unarchive].Account,
+//                                @"prject_id":_projectId};
+//
+//                [JANALYTICSService eventRecord:event];
                 
             
                 
@@ -384,13 +384,13 @@
 - (void)ActionRecommendBtn:(UIButton *)btn{
     
     
-    JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
-    
-    event.eventID = @"房源进入推荐";
-    
-    event.extra = @{@"agent_id":[UserModelArchiver unarchive].agent_id};
-    
-    [JANALYTICSService eventRecord:event];
+//    JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
+//    
+//    event.eventID = @"房源进入推荐";
+//    
+//    event.extra = @{@"agent_id":[UserModelArchiver unarchive].agent_id};
+//    
+//    [JANALYTICSService eventRecord:event];
     
 
     

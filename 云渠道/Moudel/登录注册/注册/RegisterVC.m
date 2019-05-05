@@ -8,7 +8,7 @@
 
 #import "RegisterVC.h"
 #import "LoginVC.h"
-#import "JANALYTICSService.h"
+//#import "JANALYTICSService.h"
 
 #import "GetCaptchaView.h"
 
@@ -133,15 +133,15 @@
             [UserModelArchiver archive];
             [self.navigationController pushViewController:next_vc animated:YES];
             [self alertControllerWithNsstring:@"系统提示" And:@"恭喜你注册成功，请妥善保管好账号"];
-            JANALYTICSRegisterEvent * event = [[JANALYTICSRegisterEvent alloc] init];
-            
-            event.success = YES;
-            
-            event.method = @"ios";
-            
-            event.extra = @{@"tel":_Account.text};
-            
-            [JANALYTICSService eventRecord:event];
+//            JANALYTICSRegisterEvent * event = [[JANALYTICSRegisterEvent alloc] init];
+//            
+//            event.success = YES;
+//            
+//            event.method = @"ios";
+//            
+//            event.extra = @{@"tel":_Account.text};
+//            
+//            [JANALYTICSService eventRecord:event];
             
         }
         else{
