@@ -91,6 +91,7 @@ static NSString *const kACCESSROLE = @"agent";
             });
             return;
         }else{
+            success(responseObject);
             [BaseRequest showConten:responseObject[@"msg"]];
             return;
         }
