@@ -187,7 +187,7 @@
     header.moreBtn.clipsToBounds = YES;
     [header.moreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [header.moreBtn setTitle:@"报备单" forState:UIControlStateNormal];
-    if (!_dataDic[@"copy_content"]) {
+    if (![_dataDic[@"copy_content"] length]) {
         
         header.moreBtn.hidden = YES;
     }else{

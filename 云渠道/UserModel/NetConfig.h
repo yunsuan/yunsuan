@@ -14,7 +14,7 @@
 #pragma mark ---  基础接口  ---
 
 //新服务器
-//static NSString *const TestBase_Net = @"http:/47.107.246.94/";
+static NSString *const TestBase_Net = @"http://47.107.246.94/";
 
 //获取版本
 static NSString *const Version_URL = @"getVersion";

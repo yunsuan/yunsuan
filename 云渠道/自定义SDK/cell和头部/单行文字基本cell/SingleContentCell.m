@@ -32,6 +32,7 @@
     _textContent.font = [UIFont systemFontOfSize:13.3*SIZE];
     _textContent.editable = NO;
     _textContent.scrollEnabled = NO;
+    _textContent.hidden = YES;
     _textContent.textContainer.lineFragmentPadding = 0;
     _textContent.textContainerInset = UIEdgeInsetsZero;
     [self.contentView addSubview:_textContent];

@@ -282,7 +282,7 @@
     _introL = [[UILabel alloc] init];//WithFrame:CGRectMake(100 *SIZE, 14 *SIZE, 60 *SIZE, 20 *SIZE)];
     _introL.textColor = YJTitleLabColor;
     _introL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _introL.numberOfLines = 0;
+    _introL.numberOfLines = 2;
 //    _fansL.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_introL];
     

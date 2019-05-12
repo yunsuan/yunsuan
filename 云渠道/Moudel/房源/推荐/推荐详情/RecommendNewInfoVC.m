@@ -128,12 +128,19 @@
                 _attentBtn.layer.borderWidth = 0;
             }
             _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"follow_number"]];
-            if ([_dataDic[@"img_url"] count]) {
+            if ([_dataDic[@"logo"] length]) {
                 
+//                [_headImg sd_setImageWithURL:[NSURL URLWithString:@"http://47.107.246.94/upload/company/upload/59_company_img_1557390607.png"] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//
+//                    if (error) {
+//
+//                        _headImg.image = [UIImage imageNamed:@"default_3"];
+//                    }
+//                }];
                 [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataDic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                    
+
                     if (error) {
-                        
+
                         _headImg.image = [UIImage imageNamed:@"default_3"];
                     }
                 }];
@@ -350,7 +357,7 @@
     
     _headImg = [[UIImageView alloc] initWithFrame:CGRectMake(40 *SIZE, STATUS_BAR_HEIGHT + 4 *SIZE, 36 *SIZE, 36 *SIZE)];
     _headImg.image = [UIImage imageNamed:@"default_3"];
-    _headImg.contentMode = UIViewContentModeScaleAspectFill;
+    _headImg.contentMode = UIViewContentModeScaleAspectFit;
 //    _headImg.layer.masksToBounds = YES;
     _headImg.layer.cornerRadius = 18 *SIZE;
     _headImg.clipsToBounds = YES;

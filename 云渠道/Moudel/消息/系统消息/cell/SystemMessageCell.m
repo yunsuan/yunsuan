@@ -71,9 +71,9 @@
 
 -(void)SetCellbytitle:(NSString *)title content:(NSString *)content time:(NSString *)time messageimg:(BOOL)isopen
 {
-    _titlelab.text = title;
-    _contentlab.text =content;
-    _timelab.text = time;
+    _titlelab.text = [NSString stringWithFormat:@"%@",title];
+    _contentlab.text = [NSString stringWithFormat:@"%@",content];
+    _timelab.text = [NSString stringWithFormat:@"%@",time];
     if (isopen == 0) {
         _messageimg.image = [UIImage imageNamed:@"news_unread"];
     }else{

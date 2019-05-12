@@ -177,15 +177,6 @@ static NSString *const kQQAPPID = @"1106811849";
                             
                         }];
                     });
-
-                    //                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去APPStore下载最新版本" preferredStyle:UIAlertControllerStyleAlert];
-                    //
-//                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    
-//                                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
-//
-//                                        }];
-//                                    });
                 }
             } failure:^(NSError *error) {
                 
