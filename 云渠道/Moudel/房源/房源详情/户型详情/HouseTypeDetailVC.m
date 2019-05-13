@@ -25,6 +25,8 @@
 @interface HouseTypeDetailVC ()<UITableViewDelegate,UITableViewDataSource,YBImageBrowserDelegate>
 {
     
+    NSString *_area;
+    NSString *_houseType;
     NSString *_houseTypeId;
     NSMutableDictionary *_baseInfoDic;
     NSMutableArray *_imgArr;
@@ -70,6 +72,8 @@
                 _imgStr = obj[@"img_url"];
                 _titleStr = obj[@"house_type_name"];
                 [_houseArr removeObjectAtIndex:idx];
+                _houseType = obj[@"house_type"];
+                _area = obj[@"property_area_min"];
                 *stop = YES;
             }
         }];
@@ -652,10 +656,10 @@
     //创建网页内容对象
     if (_imgStr.length) {
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】%@户型",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name,_titleStr]  thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgStr]]]]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:@""  thumImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgStr]]]]];
     }else{
         
-        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:[NSString stringWithFormat:@"%@(%@)邀您悦览【%@】%@户型",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name,_titleStr]  thumImage:[UIImage imageNamed:@"shareimg"]];
+        shareObject = [UMShareWebpageObject shareObjectWithTitle:_titleStr descr:@""  thumImage:[UIImage imageNamed:@"shareimg"]];
 
     }
     
@@ -665,8 +669,12 @@
     //分享消息对象设置分享内容对象
     messageObject.shareObject = shareObject;
     
-    if (platformType == UMSocialPlatformType_WechatTimeLine) {
-        shareObject.title = [NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
+    if (platformType == UMSocialPlatformType_WechatTimeLine || platformType ==  UMSocialPlatformType_Qzone) {
+        shareObject.title = [NSString stringWithFormat:@"%@(%@)-%@-%.0f㎡",_model.project_name,_model.city_name,_houseType,[_area floatValue]];
+    }else if (platformType == UMSocialPlatformType_QQ || platformType == UMSocialPlatformType_WechatSession){
+        
+        shareObject.title = [NSString stringWithFormat:@"%@|%@",_model.project_name,_titleStr];
+        shareObject.descr = [NSString stringWithFormat:@"面积 %.0f㎡ \n%@",[_area floatValue],_houseType];
     }
     
     //调用分享接口

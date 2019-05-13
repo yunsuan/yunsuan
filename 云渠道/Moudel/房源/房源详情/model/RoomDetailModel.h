@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) NSString *project_name;
 
+@property (nonatomic, strong) NSString *city_name;
+
 @property (nonatomic, strong) NSMutableArray *project_tags;
 
 @property (nonatomic, strong) NSString *sale_state;

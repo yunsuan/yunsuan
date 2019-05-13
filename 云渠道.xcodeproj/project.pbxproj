@@ -386,6 +386,7 @@
 		0CA37B8C2089D511005609C7 /* BDDynamicTreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CA37B882089D510005609C7 /* BDDynamicTreeCell.xib */; };
 		0CA37B8F2089D7B9005609C7 /* AddressChooseView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA37B8E2089D7B9005609C7 /* AddressChooseView2.m */; };
 		0CA37B922089DE27005609C7 /* AddressTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA37B912089DE27005609C7 /* AddressTableCell.m */; };
+		0CAC928F228853C2006B2B79 /* MessageTelConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAC928E228853C2006B2B79 /* MessageTelConfirmVC.m */; };
 		0CAEDF1B20B55C8100AA3C97 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = 0CAEDF1620B55C8100AA3C97 /* .swift-version */; };
 		0CAEDF1C20B55C8100AA3C97 /* Bugtags.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CAEDF1720B55C8100AA3C97 /* Bugtags.framework */; };
 		0CAEDF1D20B55C8100AA3C97 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0CAEDF1820B55C8100AA3C97 /* README.md */; };
@@ -1562,6 +1563,8 @@
 		0CA37B8E2089D7B9005609C7 /* AddressChooseView2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressChooseView2.m; sourceTree = "<group>"; };
 		0CA37B902089DE27005609C7 /* AddressTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressTableCell.h; sourceTree = "<group>"; };
 		0CA37B912089DE27005609C7 /* AddressTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressTableCell.m; sourceTree = "<group>"; };
+		0CAC928D228853C2006B2B79 /* MessageTelConfirmVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageTelConfirmVC.h; sourceTree = "<group>"; };
+		0CAC928E228853C2006B2B79 /* MessageTelConfirmVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageTelConfirmVC.m; sourceTree = "<group>"; };
 		0CAEDF1620B55C8100AA3C97 /* .swift-version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
 		0CAEDF1720B55C8100AA3C97 /* Bugtags.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugtags.framework; sourceTree = "<group>"; };
 		0CAEDF1820B55C8100AA3C97 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -2740,6 +2743,8 @@
 				0C1A013C20AC3F7700665BB9 /* ComfirmInValidVC.m */,
 				0C1A013E20AC566100665BB9 /* DealValidVC.h */,
 				0C1A013F20AC566100665BB9 /* DealValidVC.m */,
+				0CAC928D228853C2006B2B79 /* MessageTelConfirmVC.h */,
+				0CAC928E228853C2006B2B79 /* MessageTelConfirmVC.m */,
 			);
 			path = "工作消息";
 			sourceTree = "<group>";
@@ -8471,6 +8476,7 @@
 				0CED0BFD21E740380016A029 /* AddContractVC.m in Sources */,
 				0C075DF921FB048700BDD123 /* LookMaintainCustomDetailVC.m in Sources */,
 				1026B0102201BDF500E4C6FA /* AddContractCell7.m in Sources */,
+				0CAC928F228853C2006B2B79 /* MessageTelConfirmVC.m in Sources */,
 				0CF04F73207C899D00A45F4A /* AuditStatusVC.m in Sources */,
 				0CF04F2D207A0DA300A45F4A /* DynamicListTableCell.m in Sources */,
 				10AEEE7521A2A0B20049625B /* MyTeamTableHeader.m in Sources */,
@@ -9011,7 +9017,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/云渠道/Resource/PrefixHeader.h";
 				INFOPLIST_FILE = "云渠道/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9046,7 +9052,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/云渠道/Resource/PrefixHeader.h";
 				INFOPLIST_FILE = "云渠道/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

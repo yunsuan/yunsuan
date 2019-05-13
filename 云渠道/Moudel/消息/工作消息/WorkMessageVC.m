@@ -16,6 +16,7 @@
 #import "ComfirmInValidVC.h"
 #import "DealValidVC.h"
 #import "ConfirmPhoneWaitDetailVC.h"
+#import "MessageTelConfirmVC.h"
 
 #import "SecWorkFailVC.h"
 #import "SecWorkSuccessVC.h"
@@ -456,8 +457,10 @@
         }
         case 18:{
             
-            ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_data[indexPath.row][@"client_id"]];
-            nextVC.confirmPhoneWaitDetailVCBlock = ^{
+//            ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_data[indexPath.row][@"client_id"]];
+
+            MessageTelConfirmVC *nextVC = [[MessageTelConfirmVC alloc] initWithClientId:_data[indexPath.row][@"client_id"] messageId:_data[indexPath.row][@"message_id"]];
+            nextVC.messageTelConfirmVCBlock = ^{
               
                 _page = 1;
                 [self postWithpage:@"1"];

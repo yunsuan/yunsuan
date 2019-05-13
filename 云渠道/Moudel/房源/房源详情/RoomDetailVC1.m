@@ -307,6 +307,9 @@
             if (platformType == UMSocialPlatformType_WechatTimeLine) {
                 shareObject.title =
                 [NSString stringWithFormat:@"【云渠道】%@(%@)邀您悦览【%@】",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name];
+            }else if (platformType == UMSocialPlatformType_QQ || platformType == UMSocialPlatformType_WechatSession){
+                
+                shareObject.descr =  [NSString stringWithFormat:@"%@(%@)邀您悦览【%@】 地址：%@",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel,_model.project_name,_model.absolute_address];
             }
             
             //调用分享接口
