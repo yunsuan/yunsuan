@@ -596,7 +596,7 @@
 {
     if(!_Mytableview)
     {
-        _Mytableview =   [[UITableView alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+115*SIZE, 360*SIZE, SCREEN_Height-STATUS_BAR_HEIGHT-115*SIZE) style:UITableViewStylePlain];
+        _Mytableview =   [[UITableView alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT+115*SIZE, 360*SIZE, SCREEN_Height-STATUS_BAR_HEIGHT-115*SIZE - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
         _Mytableview.backgroundColor = YJBackColor;
         _Mytableview.delegate = self;
         _Mytableview.dataSource = self;
