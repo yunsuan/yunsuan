@@ -186,8 +186,13 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 127*SIZE;
-    
+    if ([_data[indexPath.row][@"message_type"] integerValue] < 19) {
+        
+        return 127*SIZE;
+    }else{
+        
+        return 0*SIZE;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -200,6 +205,14 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if ([_data[indexPath.row][@"message_type"] integerValue] < 19) {
+        
+        cell.hidden = NO;
+    }else{
+        
+        cell.hidden = YES;
+    }
     
     if ([_data[indexPath.row][@"message_type"] integerValue] < 6) {
         
@@ -456,8 +469,6 @@
             break;
         }
         case 18:{
-            
-//            ConfirmPhoneWaitDetailVC *nextVC = [[ConfirmPhoneWaitDetailVC alloc] initWithClientId:_data[indexPath.row][@"client_id"]];
 
             MessageTelConfirmVC *nextVC = [[MessageTelConfirmVC alloc] initWithClientId:_data[indexPath.row][@"client_id"] messageId:_data[indexPath.row][@"message_id"]];
             nextVC.messageTelConfirmVCBlock = ^{

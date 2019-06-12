@@ -119,7 +119,24 @@
             
         } WithDefaultBlack:^{
             
-            [self StartLocation];
+            if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
+                
+                [self StartLocation];
+            }else{
+                [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
+                _city = [NSString stringWithFormat:@"510100"];
+                _cityName = @"成都市";
+                [self alertControllerWithNsstring:@"打开[定位服务权限]来允许[云渠道]确定您的位置" And:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" WithCancelBlack:^{
+                    
+                    
+                } WithDefaultBlack:^{
+                    
+                    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                    if( [[UIApplication sharedApplication]canOpenURL:url] ) {
+                        [[UIApplication sharedApplication] openURL:url];
+                    }
+                }];
+            }
         }];
     }];
 }
@@ -271,6 +288,7 @@
 - (NSInteger)numbersOfChildControllersInPageController:(WMPageController *)pageController {
     
     if (_titlearr.count == 0) {
+        
         return 0;
     }
     else{
@@ -288,7 +306,7 @@
             
         }else{
             
-            ((RoomChildVC *)viewController).city = _city;
+            ((RoomChildVC *) viewController).city = _city;
             
             [(RoomChildVC *) viewController RequestMethod];
         }
@@ -301,7 +319,6 @@
 
 
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
-    
     
     NSString *tempStr = _titlearr[index];
     NSDictionary *dic;

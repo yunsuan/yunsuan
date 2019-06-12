@@ -186,6 +186,26 @@ static NSString *const kACCESSROLE = @"agent";
     }];
 }
 
++ (void)VersionUpdateSuccess:(void(^)(id resposeObject))success failure:(void(^)(NSError *error))failure{
+    
+    AFHTTPSessionManager *htttmanger  =   [BaseRequest sharedHttpSessionManager];
+    NSString *str = @"https://itunes.apple.com/cn/lookup?id=1371978352";
+    [htttmanger POST:str parameters:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        success(responseObject);
+        return ;
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        //        [htttmanger invalidateSessionCancelingTasks:YES];
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 
 +(void)showConten:(NSString *)content
 {
