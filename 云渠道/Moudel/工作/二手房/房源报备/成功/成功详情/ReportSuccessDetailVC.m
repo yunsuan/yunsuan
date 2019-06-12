@@ -74,7 +74,7 @@
 
 - (void)SetData:(NSDictionary *)data{
     
-    if (data[@"sub_info"]) {
+    if (data[@"sub_info"] && ![data[@"sub_info"] isKindOfClass:[NSNull class]]) {
         
         NSDictionary *dic = data[@"sub_info"];
         _contentArr = @[@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]],@[[NSString stringWithFormat:@"抢单时间:%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"经办人姓名：%@",dic[@"agent_name"]],[NSString stringWithFormat:@"经办人电话：%@",dic[@"agent_tel"]],[NSString stringWithFormat:@"经办人性别：%@",[dic[@"agent_sex"] integerValue] == 1 ? @"男":@"女"],[NSString stringWithFormat:@"预付金：%@",dic[@"earnest_money"]],[NSString stringWithFormat:@"违约金：%@",dic[@"break_money"]],[NSString stringWithFormat:@"预定签约时间：%@",dic[@"appoint_construct_time"]]]];
@@ -164,43 +164,49 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
-    if (!header) {
+    if (section == _contentArr.count) {
         
-        header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
-    }
-    
-    if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
-        
-        if (section == 0) {
-            
-            header.titleL.text = @"报备信息";
-        }else if(section == 1){
-            
-            header.titleL.text = @"抢单信息";
-        }else{
-            
-            header.titleL.text = @"成交信息";
-        }
+        return nil;
     }else{
-        if (section == 0) {
+        
+        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+        if (!header) {
             
-            header.titleL.text = @"失效倒计时";
-        }else if (section == 1) {
-            
-            header.titleL.text = @"报备信息";
-        }else if (section == 2) {
-            
-            header.titleL.text = @"抢单信息";
-        }else{
-            
-            header.titleL.text = @"成交信息";
+            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
         }
+        
+        if (![_state isEqualToString:@"1"] && ![_state isEqualToString:@"2"]) {
+            
+            if (section == 0) {
+                
+                header.titleL.text = @"报备信息";
+            }else if(section == 1){
+                
+                header.titleL.text = @"抢单信息";
+            }else{
+                
+                header.titleL.text = @"成交信息";
+            }
+        }else{
+            if (section == 0) {
+                
+                header.titleL.text = @"失效倒计时";
+            }else if (section == 1) {
+                
+                header.titleL.text = @"报备信息";
+            }else if (section == 2) {
+                
+                header.titleL.text = @"抢单信息";
+            }else{
+                
+                header.titleL.text = @"成交信息";
+            }
+        }
+        
+        header.lineView.hidden = YES;
+        
+        return header;
     }
-    
-    header.lineView.hidden = YES;
-    
-    return header;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{

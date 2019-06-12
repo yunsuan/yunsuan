@@ -526,13 +526,6 @@ static NSInteger const kWMControllerCountUndefined = -1;
         [viewController setValue:self.values[index] forKey:self.keys[index]];
     }
     [self addChildViewController:viewController];
-    if (index>=_childViewFrames.count) {
-        _childViewFrames = [NSMutableArray array];
-        for (int i = 0; i < self.childControllersCount; i++) {
-            CGRect frame = CGRectMake(i * _contentViewFrame.size.width, 0, _contentViewFrame.size.width, _contentViewFrame.size.height);
-            [_childViewFrames addObject:[NSValue valueWithCGRect:frame]];
-        }
-    }
     CGRect frame = self.childViewFrames.count ? [self.childViewFrames[index] CGRectValue] : self.view.frame;
     viewController.view.frame = frame;
     [viewController didMoveToParentViewController:self];

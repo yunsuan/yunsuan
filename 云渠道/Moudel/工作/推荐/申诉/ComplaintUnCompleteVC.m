@@ -241,18 +241,28 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
-    if (!header) {
-        
-        header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
-    }
-    header.lineView.hidden = YES;
     
-    if (section < 4) {
+    if (section < _titleArr.count) {
         
-        header.titleL.text = _titleArr[section];
+        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+        if (!header) {
+            
+            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+        }
+        header.lineView.hidden = YES;
+        
+        if (section < _titleArr.count) {
+            
+            header.titleL.text = _titleArr[section];
+        }else{
+            
+            header.titleL.text = @"";
+        }
+        return header;
+    }else{
+        
+        return nil;
     }
-    return header;
 }
 
 
@@ -260,18 +270,24 @@
 {
     if (_checkArr.count) {
         
-        if (section < 4) {
+        if (section == 4) {
+            
+            return 0;
+            
+        }else{
             
             return 40 *SIZE;
         }
-        return 0;
+        
     }else{
         
-        if (section < 3) {
+        if (section == 3) {
+            
+            return 0;
+        }else{
             
             return 40 *SIZE;
         }
-        return 0;
     }
 }
 

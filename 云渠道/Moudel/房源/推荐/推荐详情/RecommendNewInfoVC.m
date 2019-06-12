@@ -78,6 +78,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
     [_wkWebView stopLoading];
     [WaitAnimation stopAnimation];
 }
