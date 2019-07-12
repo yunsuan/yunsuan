@@ -587,6 +587,47 @@
 
 #pragma mark -- TextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (textField == _phoneTF1) {
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF2){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF3){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF4){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF5){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF6){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF7){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF8){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF9){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF10){
+        
+        return [self validateNumber:string];
+    }else if (textField == _phoneTF11){
+        
+        return [self validateNumber:string];
+    }else{
+        
+        return YES;
+    }
+}
+
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 //
 //    if (textField.text.length) {
@@ -1750,6 +1791,12 @@
         return;
     }
     
+    if (!_projectId.length) {
+        
+        [self showContent:@"请选择项目"];
+        return;
+    }
+    
     NSString *tel;
     if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
         
@@ -1781,19 +1828,19 @@
             _phoneTF6.text = @"*";
             _phoneTF7.text = @"*";
             
-            if (!_tel4.length) {
+            if (!_tel4.length || ![self validateNumber:_tel4]) {
                 
                 _tel4 = @"0";
             }
-            if (!_tel5.length) {
+            if (!_tel5.length || ![self validateNumber:_tel4]) {
                 
                 _tel5 = @"0";
             }
-            if (!_tel6.length) {
+            if (!_tel6.length || ![self validateNumber:_tel4]) {
                 
                 _tel6 = @"0";
             }
-            if (!_tel7.length) {
+            if (!_tel7.length || ![self validateNumber:_tel4]) {
                 
                 _tel7 = @"0";
             }

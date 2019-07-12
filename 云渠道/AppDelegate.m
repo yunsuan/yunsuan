@@ -119,37 +119,13 @@ static NSString *const kQQAPPID = @"1106811849";
 
 - (void)UpdateRequest{
     
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1371978352"]]] returningResponse:nil error:nil];
-    if (response == nil) {
+    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
         
-        //        NSLog(@"你没有连接网络哦");
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    
-    if (error) {
-        
-        NSLog(@"hsUpdateAppError:%@",error);
-        return;
-    }
-    NSArray *array = appInfoDic[@"results"];
-    NSDictionary *dic = array[0];
-    NSString *appStoreVersion = dic[@"version"];
-    if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-        
-//        if ([UpdateAlert defaultAlert].alert) {
-//
-//            if ([UpdateAlert defaultAlert].isMust) {
-//
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//
-//                    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:[UpdateAlert defaultAlert].alert animated:YES completion:^{
-//
-//                    }];
-//                });
-//            }
-//        }else{
+        NSLog(@"%@",resposeObject);
+        NSArray *array = resposeObject[@"results"];
+        NSDictionary *dic = array[0];
+        NSString *appStoreVersion = dic[@"version"];
+        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
         
             [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
                 
@@ -182,8 +158,10 @@ static NSString *const kQQAPPID = @"1106811849";
                 
             }];
         }
+    } failure:^(NSError * _Nonnull error) {
         
-//    }
+        NSLog(@"%@",error);
+    }];
 }
 
 //网络请求
@@ -410,10 +388,6 @@ static NSString *const kQQAPPID = @"1106811849";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
     [UIApplication sharedApplication].keyWindow.cyl_tabBarController.selectedIndex = 0;
 }
-
-
-
-
 
 - (void)SetTagsAndAlias{
     NSString *logIndentifier = [[NSUserDefaults standardUserDefaults] objectForKey:LOGINENTIFIER];
@@ -729,57 +703,50 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 //    [self UpdateRequest];
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1371978352"]]] returningResponse:nil error:nil];
-    if (response == nil) {
+    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
         
-        //        NSLog(@"你没有连接网络哦");
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    
-    if (error) {
-        
-        NSLog(@"hsUpdateAppError:%@",error);
-        return;
-    }
-    NSArray *array = appInfoDic[@"results"];
-    NSDictionary *dic = array[0];
-    NSString *appStoreVersion = dic[@"version"];
-    if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-        
-        [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+        NSArray *array = resposeObject[@"results"];
+        NSDictionary *dic = array[0];
+        NSString *appStoreVersion = dic[@"version"];
+        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
             
-            if ([resposeObject[@"code"] integerValue] == 200) {
+            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
                 
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     
-                }]];
-                if (![resposeObject[@"data"][@"must"] integerValue]) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
                     
-                    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                         
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                         
                     }]];
-                }else{
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (![resposeObject[@"data"][@"must"] integerValue]) {
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                        [alert addAction:[UIAlertAction actionWithTitle:@"以后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                             
-                        }];
-                    });
+                            
+                        }]];
+                    }else{
+                        
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            
+                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                                
+                            }];
+                        });
+                    }
                 }
-            }
-        } failure:^(NSError *error) {
-            
-        }];
-    }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
 }
 
 
@@ -804,115 +771,100 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
     }
-//    [self UpdateRequest];
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1371978352"]]] returningResponse:nil error:nil];
-    if (response == nil) {
+    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
         
-        //        NSLog(@"你没有连接网络哦");
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    
-    if (error) {
-        
-        NSLog(@"hsUpdateAppError:%@",error);
-        return;
-    }
-    NSArray *array = appInfoDic[@"results"];
-    NSDictionary *dic = array[0];
-    NSString *appStoreVersion = dic[@"version"];
-    if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-        
-        [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+        NSArray *array = resposeObject[@"results"];
+        NSDictionary *dic = array[0];
+        NSString *appStoreVersion = dic[@"version"];
+        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
             
-            if ([resposeObject[@"code"] integerValue] == 200) {
+            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
                 
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     
-                }]];
-                if (![resposeObject[@"data"][@"must"] integerValue]) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
                     
-                    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                         
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                         
                     }]];
-                }else{
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (![resposeObject[@"data"][@"must"] integerValue]) {
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                        [alert addAction:[UIAlertAction actionWithTitle:@"以后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                             
-                        }];
-                    });
+                            
+                        }]];
+                    }else{
+                        
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            
+                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                                
+                            }];
+                        });
+                    }
                 }
-            }
-        } failure:^(NSError *error) {
-            
-        }];
-    }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 //    [self UpdateRequest];
-    NSError *error;
-    NSData *response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1371978352"]]] returningResponse:nil error:nil];
-    if (response == nil) {
+    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
         
-        //        NSLog(@"你没有连接网络哦");
-        return;
-    }
-    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-    
-    if (error) {
-        
-        NSLog(@"hsUpdateAppError:%@",error);
-        return;
-    }
-    NSArray *array = appInfoDic[@"results"];
-    NSDictionary *dic = array[0];
-    NSString *appStoreVersion = dic[@"version"];
-    if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-        
-        [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+        NSArray *array = resposeObject[@"results"];
+        NSDictionary *dic = array[0];
+        NSString *appStoreVersion = dic[@"version"];
+        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
             
-            if ([resposeObject[@"code"] integerValue] == 200) {
+            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
                 
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     
-                }]];
-                if (![resposeObject[@"data"][@"must"] integerValue]) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"系统更新" message:resposeObject[@"data"][@"content"] preferredStyle:UIAlertControllerStyleAlert];
                     
-                    [alert addAction:[UIAlertAction actionWithTitle:@"以后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [alert addAction:[UIAlertAction actionWithTitle:@"去下载" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                         
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                         
                     }]];
-                }else{
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (![resposeObject[@"data"][@"must"] integerValue]) {
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                        [alert addAction:[UIAlertAction actionWithTitle:@"以后再说" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                             
-                        }];
-                    });
+                            
+                        }]];
+                    }else{
+                        
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            
+                            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:^{
+                                
+                            }];
+                        });
+                    }
                 }
-            }
-        } failure:^(NSError *error) {
-            
-        }];
-    }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    } failure:^(NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
 }
 
 

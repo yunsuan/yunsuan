@@ -50,6 +50,13 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+//    @try {
+//        [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
+//    }
+//    @catch (NSException * __unused exception) {
+//        NSLog(@"%@",exception);
+//    }
     [_wkWebView stopLoading];
     [WaitAnimation stopAnimation];
 }
@@ -57,7 +64,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    
 //    [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
 }
 
@@ -68,22 +74,22 @@
     [self initUI];
 }
 
-#pragma mark ------ < KVO > ------
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    /**  < 法2 >  */
-    /**  < loading：防止滚动一直刷新，出现闪屏 >  */
-    if ([keyPath isEqualToString:@"contentSize"]) {
-        CGRect webFrame = self.wkWebView.frame;
-        webFrame.size.height = self.wkWebView.scrollView.contentSize.height;
-        self.wkWebView.frame = webFrame;
-        
-        _tranView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-        [_scrollView addSubview:_tranView];
-        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
-
-//        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
-    }
-}
+//#pragma mark ------ < KVO > ------
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+//    /**  < 法2 >  */
+//    /**  < loading：防止滚动一直刷新，出现闪屏 >  */
+//    if ([keyPath isEqualToString:@"contentSize"]) {
+//        CGRect webFrame = self.wkWebView.frame;
+//        webFrame.size.height = self.wkWebView.scrollView.contentSize.height;
+//        self.wkWebView.frame = webFrame;
+//
+//        _tranView.frame = CGRectMake(0, webFrame.size.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
+//        [_scrollView addSubview:_tranView];
+//        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webFrame.size.height)];
+//
+////        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil] withRowAnimation:UITableViewRowAnimationNone];
+//    }
+//}
 
 - (void)initUI{
     
@@ -103,9 +109,9 @@
     //    _wkWebView.
     
     [_scrollView addSubview:_wkWebView];
-    
-    [_wkWebView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
-    
+//
+//    [_wkWebView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+//
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:10];
     [_wkWebView loadRequest:request];

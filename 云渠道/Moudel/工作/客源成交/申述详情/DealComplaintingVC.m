@@ -210,19 +210,26 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
-    if (!header) {
-        
-        header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
-    }
-    header.lineView.hidden = YES;
     
-    if (section < 5) {
+    if (section < _titleArr.count) {
         
-        header.titleL.text = _titleArr[section];
+        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+        if (!header) {
+            
+            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+        }
+        header.lineView.hidden = YES;
+        
+        if (section < 5) {
+            
+            header.titleL.text = _titleArr[section];
+        }
+        
+        return header;
+    }else{
+        
+        return nil;
     }
-    
-    return header;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

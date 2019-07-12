@@ -110,6 +110,7 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
  */
 - (BOOL)checkTel:(NSString *)str;
 
+- (BOOL)validateNumber:(NSString*)number;
 
 - (BOOL)checkPassword:(NSString *)str;
 

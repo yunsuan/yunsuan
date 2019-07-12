@@ -21,6 +21,7 @@
 
 + (void)Updateimg:(NSString *)url parameters:(NSDictionary *)parameters  constructionBody:(void (^)(id <AFMultipartFormData> formData))blocks success:(void (^)(id resposeObject))success failure:(void (^)(NSError *error))failure;
 
++ (void)VersionUpdateSuccess:(void(^)(id resposeObject))success failure:(void(^)(NSError *error))failure;
 
 
 @end
