@@ -22,6 +22,8 @@ static NSString *const Version_URL = @"getVersion";
 #pragma mark ---  配置文件  ---
 //配置文件
 static NSString *const Config_URL = @"config";
+//获取分享地址
+static NSString *const GetShare = @"user/share/address";
 
 //static NSString *const Advicer_URL = @"user/yunsuan/advicer";
 

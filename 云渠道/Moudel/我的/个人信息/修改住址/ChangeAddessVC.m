@@ -164,7 +164,6 @@
         }
     }
     [_whiteView addSubview:_addressL];
-    
     _whiteView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(action_address)];
     [_whiteView addGestureRecognizer:tap];
