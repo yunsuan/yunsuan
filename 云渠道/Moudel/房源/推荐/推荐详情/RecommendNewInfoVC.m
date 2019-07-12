@@ -555,6 +555,13 @@
     
     //创建网页内容对象
     //        UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"云渠道" descr:@"房产渠道专业平台" thumImage:[UIImage imageNamed:@"shareimg"]];
+    
+    [BaseRequest GET:GetShare parameters:nil success:^(id resposeObject) {
+        NSLog(@"%@",resposeObject);
+    } failure:^(NSError *error) {
+        [self showContent:@"网络错误"];
+    }];
+    
     //    设置网页地址
     shareObject.webpageUrl = [NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr];
     //            shareObject.webpageUrl = resposeObject[@"data"];

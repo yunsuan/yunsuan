@@ -666,6 +666,7 @@
 		10174C0B2072179300D00B9A /* LicenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174C0A2072179300D00B9A /* LicenceCell.m */; };
 		10174C14207B010500D00B9A /* region.json in Resources */ = {isa = PBXBuildFile; fileRef = 10174C13207B010500D00B9A /* region.json */; };
 		10174C18207C4EF600D00B9A /* CustomerInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10174C17207C4EF600D00B9A /* CustomerInfoModel.m */; };
+		101E265A22CC9375007E505C /* RoomProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD858B2085F90500E7B183 /* RoomProjectVC.m */; };
 		101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101F10A821FD9FA3001CA1FC /* SHRecommenView.m */; };
 		101F10AC21FEA5B2001CA1FC /* SHRecomenSucessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 101F10AB21FEA5B2001CA1FC /* SHRecomenSucessView.m */; };
 		10255A6621A53D000042738C /* YBImageBrowserAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 10255A3921A53D000042738C /* YBImageBrowserAnimatedTransitioning.m */; };
@@ -8852,6 +8853,7 @@
 			files = (
 				0CBD85A42088448600E7B183 /* AddRequireMentVC.m in Sources */,
 				1069FFE9205795BE00E11F52 /* ___UITests.m in Sources */,
+				101E265A22CC9375007E505C /* RoomProjectVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
