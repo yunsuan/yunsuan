@@ -676,11 +676,11 @@
     }else if ([_dataDic[@"tel_complete_state"] integerValue] == 0){
         
         tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
-        if (![self checkTel:tel]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写正确的电话号码"];
-            return;
-        }
+//        if (![self checkTel:tel]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写正确的电话号码"];
+//            return;
+//        }
     }else{
         
         if (!_phoneTF1.text.length || !_phoneTF2.text.length || !_phoneTF3.text.length || !_phoneTF8.text.length || !_phoneTF9.text.length || !_phoneTF10.text.length || !_phoneTF11.text.length) {
@@ -690,27 +690,27 @@
             
             if (!_phoneTF4.text.length) {
                 
-                _phoneTF4.text = @"X";
+                _phoneTF4.text = @"*";
             }
             if (!_phoneTF5.text.length){
                 
-                _phoneTF5.text = @"X";
+                _phoneTF5.text = @"*";
             }
             if (!_phoneTF6.text.length){
                 
-                _phoneTF6.text = @"X";
+                _phoneTF6.text = @"*";
             }
             if (!_phoneTF7.text.length){
                 
-                _phoneTF7.text = @"X";
+                _phoneTF7.text = @"*";
             }
             
-            if ([_phoneTF4.text isEqualToString:@"X"] || [_phoneTF5.text isEqualToString:@"X"] || [_phoneTF6.text isEqualToString:@"X"] || [_phoneTF7.text isEqualToString:@"X"]) {
+            if ([_phoneTF4.text isEqualToString:@"*"] || [_phoneTF5.text isEqualToString:@"*"] || [_phoneTF6.text isEqualToString:@"*"] || [_phoneTF7.text isEqualToString:@"*"]) {
                 
-                _phoneTF4.text = @"X";
-                _phoneTF5.text = @"X";
-                _phoneTF6.text = @"X";
-                _phoneTF7.text = @"X";
+                _phoneTF4.text = @"*";
+                _phoneTF5.text = @"*";
+                _phoneTF6.text = @"*";
+                _phoneTF7.text = @"*";
             }
             
             tel = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@%@%@%@",_phoneTF1.text,_phoneTF2.text,_phoneTF3.text,_phoneTF4.text,_phoneTF5.text,_phoneTF6.text,_phoneTF7.text,_phoneTF8.text,_phoneTF9.text,_phoneTF10.text,_phoneTF11.text];
@@ -1132,6 +1132,10 @@
         borderTF.layer.borderWidth = 1*SIZE;
         borderTF.delegate = self;
         [borderTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+        if ([_dataDic[@"tel_complete_state"] integerValue] == 0 && [[NSString stringWithFormat:@"%@",_dataDic[@"tel_complete_state"]] containsString:@"****"]) {
+            
+            borderTF.userInteractionEnabled = NO;
+        }
         borderTF.textAlignment = NSTextAlignmentCenter;
         switch (i) {
             case 0:
@@ -1233,10 +1237,10 @@
     
     if ([_dataDic[@"tel_complete_state"] integerValue] == 2) {
         
-        _phoneTF4.text = @"X";
-        _phoneTF5.text = @"X";
-        _phoneTF6.text = @"X";
-        _phoneTF7.text = @"X";
+        _phoneTF4.text = @"*";
+        _phoneTF5.text = @"*";
+        _phoneTF6.text = @"*";
+        _phoneTF7.text = @"*";
         
         _hideReportL.hidden = YES;
         _hideL.hidden = YES;
@@ -1244,10 +1248,10 @@
         
     }else if ([_dataDic[@"tel_complete_state"] integerValue] == 5){
         
-        _phoneTF4.text = @"X";
-        _phoneTF5.text = @"X";
-        _phoneTF6.text = @"X";
-        _phoneTF7.text = @"X";
+        _phoneTF4.text = @"*";
+        _phoneTF5.text = @"*";
+        _phoneTF6.text = @"*";
+        _phoneTF7.text = @"*";
         
         _hideReportL.hidden = NO;
         _hideL.hidden = NO;
@@ -1630,7 +1634,6 @@
             [_phoneTF10 setSelectedRange:NSMakeRange(0, 1)];
         }
     }
-    
 }
 
 @end
