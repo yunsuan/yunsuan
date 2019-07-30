@@ -18,6 +18,8 @@ typedef void(^ConfirmPhoneWaitDetailVCBlock)(void);
 
 //@property (nonatomic, strong) NSString *content;
 
+@property (nonatomic, strong) NSString *recommend_check;
+
 - (instancetype)initWithClientId:(NSString *)clientId;
 
 @end

@@ -12,6 +12,8 @@
 
 @property (nonatomic, strong) NSString *needConfirm;
 
+@property (nonatomic, strong) NSString *recommend_check;
+
 - (instancetype)initWithString:(NSString *)str;
 
 @end

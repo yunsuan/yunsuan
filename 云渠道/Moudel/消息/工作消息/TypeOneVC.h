@@ -9,6 +9,9 @@
 #import "BaseViewController.h"
 
 @interface TypeOneVC : BaseViewController
+
+@property (nonatomic, strong) NSString *recommend_check;
+
 @property (nonatomic , strong) NSString *client_id;
 @property (nonatomic , strong) NSString *message_id;
 @property (nonatomic , strong) NSString *titleinfo;

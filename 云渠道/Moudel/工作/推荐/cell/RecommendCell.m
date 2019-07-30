@@ -34,11 +34,22 @@
     _codeL.text = [NSString stringWithFormat:@"推荐编号：%@",dataDic[@"client_id"]];
     _projectL.text = [NSString stringWithFormat:@"推荐项目：%@",dataDic[@"project_name"]];
     //    _confirmL.text = [NSString stringWithFormat:@"到访确认人：%@",dataDic[@"butter_name"]];
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]]];
-    [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
-    _timeL.attributedText = attr;
+    
+    
     
     _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
+    if ([dataDic[@"recommend_check"] integerValue] == 0) {
+        
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",@"已到访为准"]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
+        _timeL.attributedText = attr;
+    }else{
+        
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]]];
+        [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
+        _timeL.attributedText = attr;
+    }
+    
     
     if (dataDic[@"need_confirm"]) {
         

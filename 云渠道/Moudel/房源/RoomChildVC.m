@@ -237,7 +237,7 @@
                     
                     if ([resposeObject[@"data"] count]) {
                         
-                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+                        self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
                         [self SetData:resposeObject[@"data"]];
                     }else{
                         
@@ -404,14 +404,15 @@
                 
                 if ([self.status isEqualToString:@"关注"]) {
                     
-                    if ([resposeObject[@"data"] count]) {
-                        
-                        [self SetData:resposeObject[@"data"]];
-                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
-                    }else{
-                        
-                        self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-                    }
+                    self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+//                    if ([resposeObject[@"data"] count]) {
+//
+//                        [self SetData:resposeObject[@"data"]];
+//                        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+//                    }else{
+//
+//                        self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+//                    }
                 }else{
                     
                     if ([resposeObject[@"data"][@"data"] count]) {
@@ -527,6 +528,7 @@
         
         if ([self.status isEqualToString:@"关注"]) {
             
+            self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             for (int i = 0; i < data.count; i++) {
                 
                 NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];

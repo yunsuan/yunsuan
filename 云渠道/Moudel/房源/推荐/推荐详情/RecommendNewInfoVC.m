@@ -496,6 +496,7 @@
 // 页面加载完成之后调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     [WaitAnimation stopAnimation];
+    
         __block CGFloat webViewHeight;
         self.height = webView.frame.size.height;
         //获取内容实际高度（像素）@"document.getElementById(\"content\").offsetHeight;"
@@ -507,17 +508,15 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (webViewHeight != self.height) {
                     webView.frame = CGRectMake(0, 0, self.view.frame.size.width, webViewHeight);
-    
-//                    _tranView.frame = CGRectMake(0, webViewHeight, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
-//                    [_scrollView addSubview:_tranView];
-                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + webViewHeight)];
+                        [_scrollView setContentSize:CGSizeMake(SCREEN_Width, webViewHeight)];
                     [_wkWebView setNeedsLayout];
     
                 }else{
     
 //                    _tranView.frame = CGRectMake(0, self.height, SCREEN_Width, 167 *SIZE + TAB_BAR_MORE);
 //                    [_scrollView addSubview:_tranView];
-                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
+//                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, 167 *SIZE + TAB_BAR_MORE + self.height)];
+                    [_scrollView setContentSize:CGSizeMake(SCREEN_Width, webViewHeight)];
                     [_wkWebView setNeedsLayout];
                 }
             });
@@ -559,26 +558,34 @@
     
     [BaseRequest GET:GetShare parameters:nil success:^(id resposeObject) {
         NSLog(@"%@",resposeObject);
+        if([resposeObject[@"code"] integerValue]==200)
+        {
+            //    设置网页地址
+            shareObject.webpageUrl = [NSString stringWithFormat:@"%@%@",resposeObject[@"data"],_urlStr];
+            //            shareObject.webpageUrl = resposeObject[@"data"];
+            //分享消息对象设置分享内容对象
+            messageObject.shareObject = shareObject;
+            
+            //调用分享接口
+            [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+                if (error) {
+                    
+                    [self alertControllerWithNsstring:@"分享失败" And:nil];
+                }else{
+                    
+                    [self showContent:@"分享成功"];
+                }
+            }];
+        }else
+        {
+            [self showContent:@"网络错误"];
+        }
+        
     } failure:^(NSError *error) {
         [self showContent:@"网络错误"];
     }];
     
-    //    设置网页地址
-    shareObject.webpageUrl = [NSString stringWithFormat:@"%@%@",TestBase_Net,_urlStr];
-    //            shareObject.webpageUrl = resposeObject[@"data"];
-    //分享消息对象设置分享内容对象
-    messageObject.shareObject = shareObject;
-    
-    //调用分享接口
-    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
-        if (error) {
-            
-            [self alertControllerWithNsstring:@"分享失败" And:nil];
-        }else{
-            
-            [self showContent:@"分享成功"];
-        }
-    }];
+  
 }
 
 @end

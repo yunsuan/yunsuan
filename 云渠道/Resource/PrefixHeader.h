@@ -36,13 +36,13 @@
 #import "SignNeedInfoVC.h"
 
 
-#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
+//#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
 
 
 /**
  *  全局
  */
-#define YQDversion @"4.0.6"
+#define YQDversion @"4.0.9"
 #define LOGINENTIFIER @"logIndentifier"
 #define LOGINSUCCESS @"logInSuccessdentifier"
 #define redirectUrl @"http://www.ccsoft.com.cn/"

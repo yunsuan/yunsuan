@@ -646,6 +646,7 @@
 		0CF89A6620C14BFA00454EDD /* JudgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CF89A6520C14BFA00454EDD /* JudgeView.m */; };
 		0CFAA33C219143EA00BF6D35 /* SecAllRoomBrokerageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAA33B219143EA00BF6D35 /* SecAllRoomBrokerageVC.m */; };
 		0CFAA34121916F3700BF6D35 /* MySubscripModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAA34021916F3700BF6D35 /* MySubscripModel.m */; };
+		0CFDB30422EE9C9000F21976 /* RecommendCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFDB30322EE9C9000F21976 /* RecommendCheckCell.m */; };
 		100D8F69218004ED006839EB /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 100D8F60218004ED006839EB /* WMPageController.m */; };
 		100D8F6A218004ED006839EB /* WMMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 100D8F64218004ED006839EB /* WMMenuItem.m */; };
 		100D8F6B218004ED006839EB /* WMScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 100D8F66218004ED006839EB /* WMScrollView.m */; };
@@ -2082,6 +2083,8 @@
 		0CFAA33B219143EA00BF6D35 /* SecAllRoomBrokerageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecAllRoomBrokerageVC.m; sourceTree = "<group>"; };
 		0CFAA33F21916F3700BF6D35 /* MySubscripModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MySubscripModel.h; sourceTree = "<group>"; };
 		0CFAA34021916F3700BF6D35 /* MySubscripModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MySubscripModel.m; sourceTree = "<group>"; };
+		0CFDB30222EE9C9000F21976 /* RecommendCheckCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendCheckCell.h; sourceTree = "<group>"; };
+		0CFDB30322EE9C9000F21976 /* RecommendCheckCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendCheckCell.m; sourceTree = "<group>"; };
 		100D8F5F218004ED006839EB /* WMScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMScrollView.h; sourceTree = "<group>"; };
 		100D8F60218004ED006839EB /* WMPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPageController.m; sourceTree = "<group>"; };
 		100D8F61218004ED006839EB /* WMMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMMenuItem.h; sourceTree = "<group>"; };
@@ -7280,6 +7283,8 @@
 				105E18D62068C6000031558D /* InfoDetailCell.m */,
 				105E18D82069E3AB0031558D /* CountDownCell.h */,
 				105E18D92069E3AB0031558D /* CountDownCell.m */,
+				0CFDB30222EE9C9000F21976 /* RecommendCheckCell.h */,
+				0CFDB30322EE9C9000F21976 /* RecommendCheckCell.m */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -8497,6 +8502,7 @@
 				0C73B08521F1A5C4005F71F1 /* BarginUndealVC.m in Sources */,
 				0C15A1DA2112986700544F2E /* RentingModifyProjectAnalysisVC.m in Sources */,
 				0CC354752216C81200475324 /* ThreePartView.m in Sources */,
+				0CFDB30422EE9C9000F21976 /* RecommendCheckCell.m in Sources */,
 				0C9CD40220FF1AED004894A3 /* TextFieldImgCell.m in Sources */,
 				101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */,
 				0C342FB7207DEB540058406D /* BaseModel.m in Sources */,
