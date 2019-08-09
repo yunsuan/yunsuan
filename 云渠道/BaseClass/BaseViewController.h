@@ -136,5 +136,8 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 
 - (UIImage *)thumbnailWithImage:(UIImage *)originalImage size:(CGSize)size;
 
++ (UIImage *)addWaterText:(NSString *)text Attributes:(NSDictionary*)atts toImage:(UIImage *)img rect:(CGRect)rect;
+
++ (UIImage *)addWaterImage:(UIImage *)waterImg toImage:(UIImage *)img rect:(CGRect)rect;
 @end
 

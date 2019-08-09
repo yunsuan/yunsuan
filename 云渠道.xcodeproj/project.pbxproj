@@ -446,6 +446,7 @@
 		0CC3546E2216B9A600475324 /* ContractDetailMainContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3546D2216B9A600475324 /* ContractDetailMainContractVC.m */; };
 		0CC354722216BD0100475324 /* MainContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354712216BD0100475324 /* MainContractCell.m */; };
 		0CC354752216C81200475324 /* ThreePartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354742216C81200475324 /* ThreePartView.m */; };
+		0CC7E90222FD5EFC00AB0E1F /* UIImage+WaterImg.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7E90122FD5EFC00AB0E1F /* UIImage+WaterImg.m */; };
 		0CCBA132225383FB004872A5 /* RecommendMoreInfoChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBA131225383FB004872A5 /* RecommendMoreInfoChildVC.m */; };
 		0CD0BD88219E586700A95A87 /* SystemWorkWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0BD87219E586700A95A87 /* SystemWorkWaitDetailVC.m */; };
 		0CD7B5C3214799C5009517F2 /* RoomChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD7B5C2214799C5009517F2 /* RoomChildVC.m */; };
@@ -1679,6 +1680,8 @@
 		0CC354712216BD0100475324 /* MainContractCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainContractCell.m; sourceTree = "<group>"; };
 		0CC354732216C81200475324 /* ThreePartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreePartView.h; sourceTree = "<group>"; };
 		0CC354742216C81200475324 /* ThreePartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreePartView.m; sourceTree = "<group>"; };
+		0CC7E90022FD5EFC00AB0E1F /* UIImage+WaterImg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+WaterImg.h"; sourceTree = "<group>"; };
+		0CC7E90122FD5EFC00AB0E1F /* UIImage+WaterImg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WaterImg.m"; sourceTree = "<group>"; };
 		0CCBA130225383FB004872A5 /* RecommendMoreInfoChildVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendMoreInfoChildVC.h; sourceTree = "<group>"; };
 		0CCBA131225383FB004872A5 /* RecommendMoreInfoChildVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecommendMoreInfoChildVC.m; sourceTree = "<group>"; };
 		0CD0BD86219E586700A95A87 /* SystemWorkWaitDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemWorkWaitDetailVC.h; sourceTree = "<group>"; };
@@ -5226,6 +5229,15 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		0CC7E8FF22FD5ECA00AB0E1F /* 水印 */ = {
+			isa = PBXGroup;
+			children = (
+				0CC7E90022FD5EFC00AB0E1F /* UIImage+WaterImg.h */,
+				0CC7E90122FD5EFC00AB0E1F /* UIImage+WaterImg.m */,
+			);
+			path = "水印";
+			sourceTree = "<group>";
+		};
 		0CD0BD85219E580F00A95A87 /* 待确认详情 */ = {
 			isa = PBXGroup;
 			children = (
@@ -7548,6 +7560,7 @@
 		1069FFFB2057974100E11F52 /* 自定义SDK */ = {
 			isa = PBXGroup;
 			children = (
+				0CC7E8FF22FD5ECA00AB0E1F /* 水印 */,
 				0CF43FA42276CF8300677844 /* 验证码 */,
 				0C36C54D22438BE0007BB162 /* 区间 */,
 				0C36C54922436888007BB162 /* 户型筛选 */,
@@ -8682,6 +8695,7 @@
 				0C6B635C21218B0600ABB506 /* RoomMaintainModel.m in Sources */,
 				0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */,
 				0CEC62F1208F0017006EC0BD /* HouseTypeBriefModel.m in Sources */,
+				0CC7E90222FD5EFC00AB0E1F /* UIImage+WaterImg.m in Sources */,
 				0CD90A6420DB87AC00061B4A /* GetAgencyProtocolVC.m in Sources */,
 				0CF04F63207C4CBF00A45F4A /* RecommendView.m in Sources */,
 				0C2883692107128400F69C5F /* RentingReportWaitVC.m in Sources */,

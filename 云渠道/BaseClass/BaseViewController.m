@@ -662,7 +662,50 @@
     return dic[@"param"];
 }
 
+//添加文字水印到指定图片上
++(UIImage *)addWaterText:(NSString *)text Attributes:(NSDictionary*)atts toImage:(UIImage *)img rect:(CGRect)rect{
+    
+    CGFloat height = img.size.height;
+    CGFloat width = img.size.width;
+    //开启一个图形上下文
+    UIGraphicsBeginImageContext(img.size);
+    
+    //在图片上下文中绘制图片
+    [img drawInRect:CGRectMake(0, 0,width,height)];
+    
+    //在图片的指定位置绘制文字   -- 7.0以后才有这个方法
+    [text drawInRect:rect withAttributes:atts];
+    
+    //从图形上下文拿到最终的图片
+    UIImage *newImg = UIGraphicsGetImageFromCurrentImageContext();
+    
+    //关闭图片上下文
+    UIGraphicsEndImageContext();
+    
+    return newImg;
+}
 
++(UIImage *)addWaterImage:(UIImage *)waterImg toImage:(UIImage *)img rect:(CGRect)rect{
+    
+    CGFloat height = img.size.height;
+    CGFloat width = img.size.width;
+    //开启一个图形上下文
+    UIGraphicsBeginImageContext(img.size);
+    
+    //在图片上下文中绘制图片
+    [img drawInRect:CGRectMake(0, 0,width,height)];
+    
+    //在图片指定位置绘制图片
+    [waterImg drawInRect:rect];
+    
+    //从图形上下文拿到最终的图片
+    UIImage *newImg = UIGraphicsGetImageFromCurrentImageContext();
+    
+    //关闭图片上下文
+    UIGraphicsEndImageContext();
+    
+    return newImg;
+}
 
 @end
 
