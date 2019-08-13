@@ -52,10 +52,11 @@ static NSString *const kWechatAppId = @"wx3e34d92e8b8cb53e";
 static NSString *const kWechatSecret = @"200ee15186843d67c0d9ba6a66f3a6ba";
 static NSString *const kQQAPPID = @"1106811849";
 
-@interface AppDelegate ()<JPUSHRegisterDelegate,BMKMapViewDelegate>
+@interface AppDelegate ()<JPUSHRegisterDelegate,BMKMapViewDelegate,CLLocationManagerDelegate>
 {
     
     BMKMapManager* _mapManager;
+    CLLocationManager *_locationManager;
 }
 @end
 
@@ -70,6 +71,20 @@ static NSString *const kQQAPPID = @"1106811849";
 //            NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
 //            [dataarr writeToFile:filePath atomically:YES];
 //        }
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined /*|| [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways*/) {
+        
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager requestWhenInUseAuthorization];
+//        [_locationManager requestAlwaysAuthorization];
+    }else{
+        
+        [_locationManager startUpdatingHeading];
+    }
+    
+    
+    
     [self initUI];
     [self UpdateRequest];
     [self NetworkingStart];
@@ -78,6 +93,29 @@ static NSString *const kQQAPPID = @"1106811849";
 //
     return YES;
 }
+
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    
+//    [_locationManager requestWhenInUseAuthorization];
+//    [_locationManager requestAlwaysAuthorization];
+    [_locationManager startUpdatingHeading];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading{
+    
+    NSLog(@"%@",newHeading);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    
+    CLLocation *location = [locations firstObject];//取出第一个位置
+    CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
+    NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+    //如果不需要实时定位，使用完即使关闭定位服务
+    [_locationManager stopUpdatingLocation];
+}
+
 //初始化
 - (void)initUI{
     if (![UserModelArchiver unarchive].agent_id) {
@@ -241,6 +279,11 @@ static NSString *const kQQAPPID = @"1106811849";
                 [UserModelArchiver archive];
             }
         } failure:^(NSError *error) {
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self NetworkingStart];
+            });
             
         }];
         

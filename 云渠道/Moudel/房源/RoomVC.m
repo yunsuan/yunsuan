@@ -39,6 +39,7 @@
     NSString *_cityName;
     NSMutableArray *_titlearr;
     
+//    NSString *_index;
 }
 
 @property (nonatomic , strong) UIView *headerView;
@@ -57,11 +58,8 @@
     
     [super viewDidLoad];
     
-    
     [self initDataSource];
     [self initUI];
-    
-    
 }
 
 - (void)initDataSource{
@@ -111,9 +109,19 @@
             } while (!self->_titlearr.count);
         }
         
-        [self reloadData];
         [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
-//        [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
+        [self reloadData];
+        if ([UserModel defaultModel].index.length) {
+
+
+        }else{
+
+            [UserModel defaultModel].index = @"0";
+            [UserModelArchiver archive];
+            self.selectIndex = 2;
+            [self reloadData];
+        }
+
     } Faild:^{
         [self alertControllerWithNsstring:@"定位失败" And:@"是否要重新定位" WithCancelBlack:^{
             
@@ -317,6 +325,25 @@
     }
 }
 
+- (void)pageController:(WMPageController *)pageController didEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info{
+    
+    if ([viewController isKindOfClass:[RoomChildVC class]]) {
+        NSLog(@"%@",viewController);
+        if ([((RoomChildVC *)viewController).city isEqualToString:_city]) {
+            
+            
+        }else{
+            
+            ((RoomChildVC *) viewController).city = _city;
+            
+            [(RoomChildVC *) viewController RequestMethod];
+        }
+    }
+    else{
+        
+        
+    }
+}
 
 - (__kindof UIViewController *)pageController:(WMPageController *)pageController viewControllerAtIndex:(NSInteger)index {
     

@@ -21,7 +21,9 @@
 #import <Masonry.h>
 #import <UMShare/UMShare.h>
 #import "UIImage+WaterImg.h"
+#import <CoreLocation/CoreLocation.h>
 
+#import "LocationManager.h"
 #import "NetConfig.h"
 #import "UserModel.h"
 #import "UserInfoModel.h"
@@ -37,13 +39,13 @@
 #import "SignNeedInfoVC.h"
 
 
-#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
+//#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
 
 
 /**
  *  全局
  */
-#define YQDversion @"4.0.9"
+#define YQDversion @"4.1.1"
 #define LOGINENTIFIER @"logIndentifier"
 #define LOGINSUCCESS @"logInSuccessdentifier"
 #define redirectUrl @"http://www.ccsoft.com.cn/"

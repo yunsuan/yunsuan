@@ -73,7 +73,6 @@
                         img.image = [UIImage imageNamed:@"banner_default_2"];
                     }
                 }];
-//                img.image = [UIImage getWaterMarkImage:img.image andTitle:@"云算科技" andMarkFont:nil andMarkColor:nil];
             }
             else{
                 img.image = [UIImage imageNamed:@"banner_default_2"];

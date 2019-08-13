@@ -178,10 +178,10 @@ static NSInteger const kWMControllerCountUndefined = -1;
     
     if (!self.childControllersCount) return;
     
-    [self wm_resetScrollView];
     [self.memCache removeAllObjects];
     [self wm_resetMenuView];
     [self viewDidLayoutSubviews];
+    [self wm_resetScrollView];
     [self didEnterController:self.currentViewController atIndex:self.selectIndex];
 }
 

@@ -192,7 +192,7 @@
                             [tempData setObject:@"暂无数据" forKey:key];
                         }else{
                             
-                            [tempData setObject:[NSString stringWithFormat:@"%@%@",obj,@"%"] forKey:key];
+                            [tempData setObject:[NSString stringWithFormat:@"%@",obj] forKey:key];
                         }
                     }
                     

@@ -166,7 +166,7 @@
         }
     }else{
         
-        if ([self.param isEqualToString:@"houseProject"]) {
+        if ([self.param isEqualToString:@"houseProject"] || [self.param isEqualToString:@"rentProject"] || [self.param isEqualToString:@"project"]) {
             
             if (self.typeId.length && [self.typeId integerValue]) {
                 
@@ -343,7 +343,7 @@
         }
     }else{
         
-        if ([self.param isEqualToString:@"houseProject"]) {
+        if ([self.param isEqualToString:@"houseProject"] || [self.param isEqualToString:@"rentProject"] || [self.param isEqualToString:@"project"]) {
             
             if (self.typeId.length && [self.typeId integerValue]) {
                 
