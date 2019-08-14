@@ -45,6 +45,27 @@
     [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
+    if (!_propertyArr.count && !_tagArr.count) {
+        
+        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(0 *SIZE);
+            make.top.equalTo(_headImg.mas_bottom).offset(10 *SIZE);
+            make.right.equalTo(self.contentView).offset(0 *SIZE);
+            make.height.equalTo(@(SIZE));
+            make.bottom.equalTo(self.contentView).offset(0);
+        }];
+    }else{
+        
+        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(0 *SIZE);
+            make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
+            make.right.equalTo(self.contentView).offset(0 *SIZE);
+            make.height.equalTo(@(SIZE));
+            make.bottom.equalTo(self.contentView).offset(0);
+        }];
+    }
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{

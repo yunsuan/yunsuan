@@ -111,6 +111,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MapViewDismissNoti:) name:@"mapViewDismiss" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MatchRequest) name:@"matchReload" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"reloadType" object:nil];
     
     _dynamicNum = @"";
     _imgArr = [@[] mutableCopy];

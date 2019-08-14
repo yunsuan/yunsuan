@@ -561,6 +561,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         switch ([userInfo[@"agent_type"] integerValue]) {
             case 0:
             {
+                [UserModel defaultModel].agent_identity = @"1";
                 break;
             }
             case 1:
@@ -622,6 +623,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         switch ([userInfo[@"agent_type"] integerValue]) {
             case 0:
             {
+                [UserModel defaultModel].agent_identity = @"1";
                 break;
             }
             case 1:
@@ -700,6 +702,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         switch ([userInfo[@"agent_type"] integerValue]) {
             case 0:
             {
+                [UserModel defaultModel].agent_identity = @"1";
                 break;
             }
             case 1:

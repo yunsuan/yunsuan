@@ -98,6 +98,7 @@
 
 - (void)initDataSource{
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"reloadType" object:nil];
 //    _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
     _dataArr = [@[] mutableCopy];
     _page = 1;

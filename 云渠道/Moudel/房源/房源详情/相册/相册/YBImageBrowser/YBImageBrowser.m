@@ -673,7 +673,7 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
 
 - (void)savePhotoToAlbumWithImage:(UIImage *)image {
     
-    image = [UIImage getWaterMarkImage:image andTitle:@"云算·云渠道" andMarkFont:nil andMarkColor:nil];
+    image = [UIImage getWaterMarkImage:image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
     UIImageWriteToSavedPhotosAlbum(image, self.class, @selector(completedWithImage:error:context:), (__bridge void *)self);
 }
 

@@ -24,6 +24,7 @@
 #import "RecommendedStatusVC.h"
 #import "CustomSearchVC.h"
 #import "CustomerListVC.h"
+#import "QuickAddCustomVC.h"
 
 #import "CustomDetailTableCell.h"
 #import "CustomDetailTableCell2.h"
@@ -958,26 +959,28 @@
                     if (_dataArr.count) {
                         
                         CustomRequireModel *model = _dataArr[0];
-                        //                    self.customDetailTable.userInteractionEnabled = NO;
-                        [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectArr[index][@"project_id"],@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
-                            
-                            //                        self.customDetailTable.userInteractionEnabled = YES;
-                            //                        NSLog(@"%@",resposeObject);
-                            if ([resposeObject[@"code"] integerValue] == 200) {
-                                
-                                [self alertControllerWithNsstring:resposeObject[@"msg"] And:nil WithDefaultBlack:^{
-                                    
-                                    [self MatchRequest];
-                                }];
-                            }else{
-                                
-                                [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
-                            }
-                        } failure:^(NSError *error) {
-                            
-                            //                        NSLog(@"%@",error);
-                            [self showContent:@"网络错误"];
-                        }];
+
+//                        CustomMatchModel *model = _dataArr[index];
+                        QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectArr[indexPath.row][@"project_id"]] clientId:model.client_id];
+                        nextVC.projectName = _projectArr[indexPath.row][@"project_name"];//_model.project_name;
+                        [self.navigationController pushViewController:nextVC animated:YES];
+//                        [BaseRequest POST:RecommendClient_URL parameters:@{@"project_id":_projectArr[index][@"project_id"],@"client_need_id":model.need_id,@"client_id":model.client_id} success:^(id resposeObject) {
+//
+//                            if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                                [self alertControllerWithNsstring:resposeObject[@"msg"] And:nil WithDefaultBlack:^{
+//
+//                                    [self MatchRequest];
+//                                }];
+//                            }else{
+//
+//                                [self alertControllerWithNsstring:@"温馨提示" And:resposeObject[@"msg"]];
+//                            }
+//                        } failure:^(NSError *error) {
+//
+//                            //                        NSLog(@"%@",error);
+//                            [self showContent:@"网络错误"];
+//                        }];
                     }
                 };
                 return cell;

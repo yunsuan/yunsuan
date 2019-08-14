@@ -196,7 +196,7 @@
             [self countLayoutWithImage:model.image completed:nil];
         }
         self.imageView.image = model.image;
-        self.imageView.image = [UIImage getWaterMarkImage:model.image andTitle:@"云算·云渠道" andMarkFont:nil andMarkColor:nil];
+        self.imageView.image = [UIImage getWaterMarkImage:model.image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
         
     } else if (model.needCutToShow) {
         
