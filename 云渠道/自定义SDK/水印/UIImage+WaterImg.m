@@ -19,13 +19,8 @@
 + (UIImage *)getWaterMarkImage: (UIImage *)originalImage andTitle: (NSString *)title andMarkFont: (UIFont *)markFont andMarkColor: (UIColor *)markColor{
     
     float proportion;
-//    if (originalImage.size.width > originalImage.size.height) {
     
-        proportion = originalImage.size.width / SCREEN_Width;
-//    }else{
-//
-//        proportion = originalImage.size.height * originalImage.size.width / SCREEN_Width;
-//    }
+    proportion = originalImage.size.width / SCREEN_Width;
     
     UIFont *font = markFont;
     if (font == nil) {
@@ -34,7 +29,7 @@
     UIColor *color = markColor;
     if (color == nil) {
         
-        color = [UIColor lightGrayColor];
+        color = COLOR(255, 255, 255, 0.4);//[UIColor lightGrayColor];
     }
     //原始image的宽高
     CGFloat viewWidth = originalImage.size.width;

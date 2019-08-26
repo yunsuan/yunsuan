@@ -8,6 +8,10 @@
 
 #import "BaseViewController.h"
 
+typedef void(^PersonalVCBlock)(void);
+
 @interface PersonalVC : BaseViewController
+
+@property (nonatomic, copy) PersonalVCBlock personalVCBlock;
 
 @end
