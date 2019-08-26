@@ -8,17 +8,28 @@
 
 #import "UIImage+WaterImg.h"
 
+
 #define HORIZONTAL_SPACE 30//水平间距
 #define VERTICAL_SPACE 50//竖直间距
+//#define HorizontalSize
 #define CG_TRANSFORM_ROTATION (M_PI_2 / 3)//旋转角度(正旋45度 || 反旋45度)
 
 @implementation UIImage (WaterImg)
 
 + (UIImage *)getWaterMarkImage: (UIImage *)originalImage andTitle: (NSString *)title andMarkFont: (UIFont *)markFont andMarkColor: (UIColor *)markColor{
     
+    float proportion;
+//    if (originalImage.size.width > originalImage.size.height) {
+    
+        proportion = originalImage.size.width / SCREEN_Width;
+//    }else{
+//
+//        proportion = originalImage.size.height * originalImage.size.width / SCREEN_Width;
+//    }
+    
     UIFont *font = markFont;
     if (font == nil) {
-        font = [UIFont systemFontOfSize:22 *SIZE];
+        font = [UIFont systemFontOfSize:15 *SIZE * proportion];
     }
     UIColor *color = markColor;
     if (color == nil) {
@@ -44,8 +55,8 @@
     NSString* mark = title;
     NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:mark attributes:attr];
     //绘制文字的宽高
-    CGFloat strWidth = attrStr.size.width;
-    CGFloat strHeight = attrStr.size.height;
+    CGFloat strWidth = attrStr.size.width * proportion;
+    CGFloat strHeight = attrStr.size.height * proportion;
     
     //开始旋转上下文矩阵，绘制水印文字
     CGContextRef context = UIGraphicsGetCurrentContext();

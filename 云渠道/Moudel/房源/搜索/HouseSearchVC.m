@@ -427,7 +427,9 @@
             cell = [[CompanyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+        
+        //                cell.statusImg.hidden = YES;
+        //                [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -439,16 +441,20 @@
         if (!cell) {
             cell = [[PeopleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-//        RoomListModel *model = _dataArr[indexPath.row];
-        [cell SetTitle:model.project_name image:model.img_url contentlab:@"高新区——天府三街" statu:model.sale_state];
-        
+        [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
         if ([model.sort integerValue] == 0 && [model.cycle integerValue] == 0) {
             
             cell.statusImg.hidden = YES;
             cell.surelab.hidden = YES;
         }else{
             
-            cell.statusImg.hidden = NO;
+            if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+                
+                cell.statusImg.hidden = NO;
+            }else{
+                
+                cell.statusImg.hidden = YES;
+            }
             if ([model.guarantee_brokerage integerValue] == 1) {
                 
                 cell.surelab.hidden = NO;
@@ -457,10 +463,34 @@
                 cell.surelab.hidden = YES;
             }
         }
-        
-        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
-//        [cell.tagview reloadInputViews];
-        [cell.getLevel SetImage:[UIImage imageNamed:@"lightning_1"] selectImg:[UIImage imageNamed:@"lightning"] num:3];
+        NSArray *project_tags =model.project_tags?model.project_tags:@[];
+        NSArray *property_tags = model.property_tags?model.property_tags:@[];
+        [cell settagviewWithdata:@[property_tags,project_tags]];
+        if (model.sort) {
+            
+            cell.rankView.rankL.text = [NSString stringWithFormat:@"佣金:第%@名",model.sort];
+        }else{
+            
+            cell.rankView.rankL.text = [NSString stringWithFormat:@"佣金:无排名"];
+        }
+        [cell.rankView.rankL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(cell.rankView).offset(0);
+            make.top.equalTo(cell.rankView).offset(0);
+            make.height.equalTo(@(10 *SIZE));
+            make.width.equalTo(@(cell.rankView.rankL.mj_textWith + 5 *SIZE));
+        }];
+        if ([model.brokerSortCompare integerValue] == 0) {
+            
+            cell.rankView.statusImg.image = nil;
+        }else if ([model.brokerSortCompare integerValue] == 1){
+            
+            cell.rankView.statusImg.image = [UIImage imageNamed:@"rising"];
+        }else if ([model.brokerSortCompare integerValue] == 2){
+            
+            cell.rankView.statusImg.image = [UIImage imageNamed:@"falling"];
+        }
+        [cell.getLevel SetImage:[UIImage imageNamed:@"lightning_1"] selectImg:[UIImage imageNamed:@"lightning"] num:[model.cycle integerValue]];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
