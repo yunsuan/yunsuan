@@ -39,7 +39,7 @@
     //先将原始image绘制上
     [originalImage drawInRect:CGRectMake(0, 0, viewWidth, viewHeight)];
     //sqrtLength：原始image的对角线length。在水印旋转矩阵中只要矩阵的宽高是原始image的对角线长度，无论旋转多少度都不会有空白。
-    CGFloat sqrtLength = sqrt(viewWidth*viewWidth + viewHeight*viewHeight);
+    CGFloat sqrtLength = sqrt(viewWidth * viewWidth + viewHeight * viewHeight);
     //文字的属性
     NSDictionary *attr = @{
                            //设置字体大小
@@ -57,11 +57,11 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     //将绘制原点（0，0）调整到源image的中心
-    CGContextConcatCTM(context, CGAffineTransformMakeTranslation(viewWidth/2, viewHeight/2));
+    CGContextConcatCTM(context, CGAffineTransformMakeTranslation(viewWidth / 2, viewHeight / 2));
     //以绘制原点为中心旋转
     CGContextConcatCTM(context, CGAffineTransformMakeRotation(CG_TRANSFORM_ROTATION));
     //将绘制原点恢复初始值，保证当前context中心和源image的中心处在一个点(当前context已经旋转，所以绘制出的任何layer都是倾斜的)
-    CGContextConcatCTM(context, CGAffineTransformMakeTranslation(-viewWidth/2, -viewHeight/2));
+    CGContextConcatCTM(context, CGAffineTransformMakeTranslation(-viewWidth / 2, -viewHeight / 2));
     
     //计算需要绘制的列数和行数
     int horCount = sqrtLength / (strWidth + HORIZONTAL_SPACE) + 1;

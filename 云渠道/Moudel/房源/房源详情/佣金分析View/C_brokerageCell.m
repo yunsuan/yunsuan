@@ -47,6 +47,7 @@
     _ruleL.textColor = YJ86Color;
     _ruleL.font = [UIFont systemFontOfSize:12 *SIZE];
     _ruleL.numberOfLines = 0;
+    _ruleL.adjustsFontSizeToFitWidth = YES;
     [_ruleView addSubview:_ruleL];
     
     [self MasonryUI];
