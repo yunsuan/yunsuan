@@ -9,6 +9,7 @@
 #import "NomineeValidVC.h"
 
 #import "NoValidVC.h"
+#import "NewDealVC.h"
 
 #import "NomineeCell2.h"
 
@@ -176,7 +177,21 @@
             
         }
     };
-    
+    cell.nomineeCell2AddBlock = ^{
+      
+        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataArr[indexPath.row]];
+        nextVC.project_id = _dataArr[indexPath.row][@"project_id"];//self.project_id;
+        nextVC.newDealVCBlock = ^{
+            
+            [self RequestMethod];
+//            [self RequestWithPage:@"1"];
+//            if (self.customerListVCBlock) {
+//
+//                self.customerListVCBlock();
+//            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
     
     return cell;
 }

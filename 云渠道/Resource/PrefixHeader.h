@@ -39,13 +39,13 @@
 #import "SignNeedInfoVC.h"
 
 
-//#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
+#define TestBase_Net  [[[NSMutableArray alloc]initWithContentsOfFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"]] objectAtIndex:0]
 
 
 /**
  *  全局
  */
-#define YQDversion @"4.1.1"
+#define YQDversion @"4.1.2"
 #define LOGINENTIFIER @"logIndentifier"
 #define LOGINSUCCESS @"logInSuccessdentifier"
 #define redirectUrl @"http://www.ccsoft.com.cn/"
@@ -90,5 +90,9 @@
 #define YJ170Color   COLOR(170, 170, 170, 1)
 #define YJLoginBtnColor   COLOR(0x1b, 0x80, 0xfe, 1)
 #define YJBlueBtnColor   COLOR(27, 152, 255, 1)
+#define CLBackColor  COLOR(242, 246, 247, 1)
+#define CLPlaceColor  COLOR(217, 208, 208, 1)
+
+#define CLWhiteColor  [UIColor whiteColor]
 
 #endif /* Header_h */
