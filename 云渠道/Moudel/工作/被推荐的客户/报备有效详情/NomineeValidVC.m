@@ -184,11 +184,6 @@
         nextVC.newDealVCBlock = ^{
             
             [self RequestMethod];
-//            [self RequestWithPage:@"1"];
-//            if (self.customerListVCBlock) {
-//
-//                self.customerListVCBlock();
-//            }
         };
         [self.navigationController pushViewController:nextVC animated:YES];
     };

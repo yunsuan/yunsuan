@@ -146,25 +146,25 @@
 
 - (void)RequestMethod{
     
-    //    [BaseRequest GET:DealRuleList_URL parameters:@{@"project_id":self.project_id,@"company_id":[UserModel defaultModel].company_id} success:^(id resposeObject) {
-    //
-    //        if ([resposeObject[@"code"] integerValue] == 200) {
-    //
-    //            self->_ruleArr = resposeObject[@"data"];
-    //            for (int i = 0; i < self->_ruleArr.count; i++) {
-    //
-    //                [self->_ruleMArr addObject:@{@"param":self->_ruleArr[i][@"rule_type"],
-    //                                             @"id":self->_ruleArr[i][@"rule_id"]
-    //                                             }];
-    //            }
-    //        }else{
-    //
-    ////            [self showContent:resposeObject[@"msg"]];
-    //        }
-    //    } failure:^(NSError *error) {
-    //
-    ////        self showContent:@""
-    //    }];
+//        [BaseRequest GET:DealRuleList_URL parameters:@{@"project_id":self.project_id,@"company_id":[UserModel defaultModel].company_id} success:^(id resposeObject) {
+//
+//            if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                self->_ruleArr = resposeObject[@"data"];
+//                for (int i = 0; i < self->_ruleArr.count; i++) {
+//
+//                    [self->_ruleMArr addObject:@{@"param":self->_ruleArr[i][@"rule_type"],
+//                                                 @"id":self->_ruleArr[i][@"rule_id"]
+//                                                 }];
+//                }
+//            }else{
+//
+//    //            [self showContent:resposeObject[@"msg"]];
+//            }
+//        } failure:^(NSError *error) {
+//
+//    //        self showContent:@""
+//        }];
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -351,7 +351,7 @@
     }
     
     
-    [BaseRequest POST:@"" parameters:dic success:^(id resposeObject) {
+    [BaseRequest POST:@"agent/work/deal" parameters:dic success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             

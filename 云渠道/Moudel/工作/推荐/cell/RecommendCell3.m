@@ -28,6 +28,14 @@
     }
 }
 
+- (void)ActionAddBtn:(UIButton *)btn{
+    
+    if (self.recommendCell3AddBlock) {
+        
+        self.recommendCell3AddBlock();
+    }
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _nameL.text = dataDic[@"name"];
@@ -36,6 +44,13 @@
     _timeL.text = [NSString stringWithFormat:@"到访时间：%@",dataDic[@"visit_time"]];
     _statusL.text = dataDic[@"current_state"];
     _statusL.textColor = YJBlueBtnColor;
+    if ([dataDic[@"current_state"] isEqualToString:@"确认有效"] && [dataDic[@"is_sell_deal"] integerValue] == 1) {
+        
+        _addBtn.hidden = NO;
+    }else{
+        
+        _addBtn.hidden = YES;;
+    }
 }
 
 - (void)setUseDic:(NSMutableDictionary *)useDic{
@@ -92,6 +107,17 @@
     _statusL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_statusL];
     
+    _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    _addBtn.frame = CGRectMake(270 *SIZE, 65 *SIZE, 70 *SIZE, 23 *SIZE);
+    _addBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_addBtn addTarget:self action:@selector(ActionAddBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_addBtn setTitle:@"转成交" forState:UIControlStateNormal];
+    _addBtn.hidden = YES;
+    _addBtn.layer.cornerRadius = 2 *SIZE;
+    _addBtn.clipsToBounds = YES;
+    [_addBtn setBackgroundColor:COLOR(27, 152, 255, 1)];
+    [self.contentView addSubview:_addBtn];
+    
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 106 *SIZE, SCREEN_Width, SIZE)];
     _lineView.backgroundColor = YJBackColor;
     [self.contentView addSubview:_lineView];
@@ -141,6 +167,14 @@
         make.left.equalTo(self.contentView).offset(300 *SIZE);
         make.top.equalTo(self.contentView).offset(45 *SIZE);
         make.width.mas_equalTo(50 *SIZE);
+    }];
+    
+    [_addBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(self.contentView).offset(-15 *SIZE);
+        make.bottom.equalTo(_lineView.mas_top).offset(-15 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+        make.height.mas_equalTo(23 *SIZE);
     }];
     
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {

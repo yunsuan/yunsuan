@@ -30,7 +30,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:@"" parameters:@{@"project_id":self.project_id,@"company_id":@""} success:^(id resposeObject) {
+    [BaseRequest GET:@"agent/work/deal/ruleList" parameters:@{@"project_id":self.project_id,@"company_id":[UserModel defaultModel].company_id} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
