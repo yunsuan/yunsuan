@@ -24,7 +24,7 @@
     
     NSString* mark = title;
     
-    NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:15 *SIZE]};
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:15 *SIZE * proportion]};
 
     CGRect rect = [mark boundingRectWithSize:CGSizeMake(SCREEN_Width, 20 *SIZE * proportion)/*计算宽度时要确定高度*/ options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:dic context:nil];
     
@@ -49,10 +49,10 @@
     
     [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), 0, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];      //右上角
     
-    [mark drawInRect:CGRectMake(w, h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];  //右下角
+    [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];  //右下角
     
     [mark drawInRect:CGRectMake(0, h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];    //左下角
-//    [mark drawInRect:CGRectMake(, h - - , , ) withAttributes:attr];
+    [mark drawInRect:CGRectMake((w - CGRectGetWidth(rect)) / 2 , (h - 20 *SIZE *proportion) / 2 ,CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];
     
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     

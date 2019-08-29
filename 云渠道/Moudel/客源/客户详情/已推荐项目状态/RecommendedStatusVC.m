@@ -7,6 +7,9 @@
 //
 
 #import "RecommendedStatusVC.h"
+
+#import "UploadImageVC.h"
+
 #import "ReStatusTableCell.h"
 
 @interface RecommendedStatusVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -61,8 +64,19 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     cell.dataDic = _dataArr[indexPath.section];
+
 //    cell.titleL.text = _dataArr[indexPath.row][@"project_name"];
+    cell.reStatusTableCellVisitBlock = ^{
+        
+        UploadImageVC *nextVC = [[UploadImageVC alloc] initWithProjectClientId:_dataArr[indexPath.section][@"client_id"] type:@"2"];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
     
+    cell.reStatusTableCellDealBlock = ^{
+        
+        UploadImageVC *nextVC = [[UploadImageVC alloc] initWithProjectClientId:_dataArr[indexPath.section][@"client_id"] type:@"5"];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    };
     
     return cell;
 }

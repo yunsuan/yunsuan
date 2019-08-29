@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^AuthenCollCellDeleteBlock)(void);
+
 @interface AuthenCollCell : UICollectionViewCell
+
+@property (nonatomic, copy) AuthenCollCellDeleteBlock authenCollCellDeleteBlock;
 
 @property (nonatomic, strong) UIImageView *imageView;
 

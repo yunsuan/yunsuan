@@ -10,6 +10,8 @@
 
 @interface RecommendedStatusVC : BaseViewController
 
+@property (nonatomic, strong) NSString *clientId;
+
 - (instancetype)initWithData:(NSArray *)dataArr;
 
 @end

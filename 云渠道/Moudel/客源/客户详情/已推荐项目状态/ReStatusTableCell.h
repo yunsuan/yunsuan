@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ReStatusTableCellVisitBlock)(void);
+
+typedef void(^ReStatusTableCellDealBlock)(void);
+
 @interface ReStatusTableCell : UITableViewCell
+
+@property (nonatomic, copy) ReStatusTableCellVisitBlock reStatusTableCellVisitBlock;
+
+@property (nonatomic, copy) ReStatusTableCellDealBlock reStatusTableCellDealBlock;
 
 @property (nonatomic, strong) UILabel *titleL;
 
@@ -46,4 +54,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 
+@property (nonatomic, strong) UIButton *visitBtn;
+
+@property (nonatomic, strong) UIButton *dealBtn;
 @end
