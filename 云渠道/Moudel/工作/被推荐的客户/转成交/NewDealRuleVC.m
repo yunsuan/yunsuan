@@ -25,7 +25,29 @@
     
     _dataArr = [@[] mutableCopy];
     [self initUI];
-    [self RequestMethod];
+    if (![[UserModel defaultModel].company_id isKindOfClass:[NSNull class]] && [UserModel defaultModel].company_id) {
+        
+        [self RequestMethod];
+    }else{
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"未获取到公司ID,请重新登录" WithCancelBlack:^{
+            
+        } WithDefaultBlack:^{
+            
+            [BaseRequest GET:@"agent/user/logOut" parameters:nil success:^(id resposeObject) {
+                
+                //            NSLog(@"%@",resposeObject);
+            } failure:^(NSError *error) {
+                
+                //            NSLog(@"%@",error);
+            }];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LOGINENTIFIER];
+            [UserModel defaultModel].Token = @"";
+            [UserModelArchiver archive];
+            [UserModelArchiver ClearUserInfoModel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"goLoginVC" object:nil];
+        }];
+    }
 }
 
 - (void)RequestMethod{

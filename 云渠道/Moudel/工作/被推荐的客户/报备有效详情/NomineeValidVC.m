@@ -179,7 +179,8 @@
     };
     cell.nomineeCell2AddBlock = ^{
       
-        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataArr[indexPath.row]];
+        NSDictionary *dataDic = _dataArr[indexPath.row];
+        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:@{@"broker_name":dataDic[@"name"],@"tel":dataDic[@"tel"],@"agent_name":dataDic[@"broker_name"],@"project_name":dataDic[@"project_name"],@"client_id":dataDic[@"client_id"]}];
         nextVC.project_id = _dataArr[indexPath.row][@"project_id"];//self.project_id;
         nextVC.newDealVCBlock = ^{
             

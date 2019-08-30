@@ -238,16 +238,16 @@
         }
     };
     
-    cell.recommendCell3AddBlock = ^{
-        
-        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataArr[indexPath.row]];
-        nextVC.project_id = _dataArr[indexPath.row][@"project_id"];//self.project_id;
-        nextVC.newDealVCBlock = ^{
-            
-            [self RequestMethod];
-        };
-        [self.navigationController pushViewController:nextVC animated:YES];
-    };
+//    cell.recommendCell3AddBlock = ^{
+//
+//        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataArr[indexPath.row]];
+//        nextVC.project_id = _dataArr[indexPath.row][@"project_id"];//self.project_id;
+//        nextVC.newDealVCBlock = ^{
+//
+//            [self RequestMethod];
+//        };
+//        [self.navigationController pushViewController:nextVC animated:YES];
+//    };
     
     return cell;
 }

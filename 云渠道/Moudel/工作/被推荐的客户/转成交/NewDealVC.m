@@ -470,7 +470,7 @@
                 _nameTF.textfield.placeholder = @"姓名";
                 _nameTF.userInteractionEnabled = NO;
                 _nameTF.backgroundColor = CLBackColor;
-                _nameTF.textfield.text = _dic[@"name"];
+                _nameTF.textfield.text = _dic[@"broker_name"];
                 [_scrollView addSubview:_nameTF];
                 break;
             }

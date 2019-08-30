@@ -44,13 +44,13 @@
     _timeL.text = [NSString stringWithFormat:@"到访时间：%@",dataDic[@"visit_time"]];
     _statusL.text = dataDic[@"current_state"];
     _statusL.textColor = YJBlueBtnColor;
-    if ([dataDic[@"current_state"] isEqualToString:@"确认有效"] && [dataDic[@"is_sell_deal"] integerValue] == 1) {
-        
-        _addBtn.hidden = NO;
-    }else{
-        
-        _addBtn.hidden = YES;;
-    }
+//    if ([dataDic[@"current_state"] isEqualToString:@"确认有效"] && [dataDic[@"is_sell_deal"] integerValue] == 1) {
+//        
+//        _addBtn.hidden = NO;
+//    }else{
+//        
+//        _addBtn.hidden = YES;;
+//    }
 }
 
 - (void)setUseDic:(NSMutableDictionary *)useDic{

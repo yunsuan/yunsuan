@@ -517,8 +517,17 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
         
         _toolBar = [YBImageBrowserToolBar new];
         _toolBar.delegate = self;
+//        if (self.title) {
+//
+//            _toolBar.titleLabel.text = self.title;
+//        }
     }
     return _toolBar;
+}
+
+- (void)setTitle:(NSString *)title{
+    
+    _toolBar.titleLabel.text = title;
 }
 
 - (XGToolBar *)xgToolBar{

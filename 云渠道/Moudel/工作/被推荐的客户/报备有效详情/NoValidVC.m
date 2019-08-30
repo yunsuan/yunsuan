@@ -230,7 +230,7 @@
         [header.moreBtn setTitle:@"转成交" forState:UIControlStateNormal];
         header.blueTitleMoreHeaderBlock = ^{
 
-            NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataDic];
+            NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:@{@"broker_name":_dataDic[@"name"],@"tel":_dataDic[@"confirm_tel"],@"agent_name":_dataDic[@"broker_name"],@"project_name":_dataDic[@"project_name"],@"client_id":_dataDic[@"client_id"]}];
             nextVC.project_id = _dataDic[@"project_id"];//self.project_id;
             nextVC.newDealVCBlock = ^{
                 

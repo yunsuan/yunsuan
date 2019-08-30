@@ -8,9 +8,11 @@
 
 #import "UploadImageVC.h"
 
+#import "YBImageBrowser.h"
+
 #import "AuthenCollCell.h"
 
-@interface UploadImageVC ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface UploadImageVC ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource,YBImageBrowserDelegate>
 {
     
     NSInteger _index;
@@ -92,7 +94,7 @@
         
         cell = [[AuthenCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 91 *SIZE)];
     }
-    
+    [cell.cancelBtn setImage:[UIImage imageNamed:@"ibde"] forState:UIControlStateNormal];
     cell.cancelBtn.tag = indexPath.item;
     if (indexPath.item < _dataArr.count) {
         
@@ -126,7 +128,7 @@
     
     cell.authenCollCellDeleteBlock = ^{
       
-        [BaseRequest POST:@"agent/client/img/delete" parameters:@{@"img_id":_dataArr[indexPath.item][@"img_id"],@"type":_type} success:^(id resposeObject) {
+        [BaseRequest POST:@"agent/client/img/delete" parameters:@{@"img_id":[NSString stringWithFormat:@"%@",_dataArr[indexPath.item][@"img_id"]],@"type":_type} success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
@@ -172,7 +174,30 @@
         }];
     }else{
         
+        NSMutableArray *tempArr = [NSMutableArray array];
+        [_dataArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            YBImageBrowserModel *model = [YBImageBrowserModel new];
+            model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
+            [tempArr addObject:model];
+        }];
+        YBImageBrowser *browser = [YBImageBrowser new];
+        browser.delegate = self;
+        browser.dataArray = tempArr;
+        if ([_type isEqualToString:@"2"]) {
+            
+            browser.albumArr = @[@{@"name":@"到访凭证"}];
+            browser.title = @"到访凭证";
+        }else{
+            
+            browser.albumArr = @[@{@"name":@"成交凭证"}];
+            browser.title = @"成交凭证";
+        }
         
+        
+        browser.infoid = @"";
+        browser.currentIndex = indexPath.item;
+        [browser show];
     }
 }
 
@@ -344,7 +369,13 @@
     
     self.navBackgroundView.hidden = NO;
     
-    self.titleLabel.text = @"上传凭证";
+    if ([_type isEqualToString:@"2"]) {
+        
+        self.titleLabel.text = @"上传到访凭证";
+    }else{
+        
+        self.titleLabel.text = @"上传成交凭证";
+    }
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _flowLayout.itemSize = CGSizeMake(120 *SIZE, 91 *SIZE);

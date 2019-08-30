@@ -45,13 +45,13 @@
     _reportTimeL.text = [NSString stringWithFormat:@"报备日期：%@",dataDic[@"allot_time"]];
     _statusL.text = dataDic[@"current_state"];
     
-//    if ([dataDic[@"current_state"] isEqualToString:@"确认有效"] && [dataDic[@"is_sell_deal"] integerValue] == 1) {
-//        
-//        _addBtn.hidden = NO;
-//    }else{
-//        
-//        _addBtn.hidden = YES;;
-//    }
+    if ([dataDic[@"current_state"] isEqualToString:@"确认有效"] && [dataDic[@"is_sell_deal"] integerValue] == 1) {
+        
+        _addBtn.hidden = NO;
+    }else{
+        
+        _addBtn.hidden = YES;;
+    }
 }
 
 - (void)initUI{
