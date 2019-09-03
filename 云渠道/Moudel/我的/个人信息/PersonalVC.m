@@ -361,6 +361,13 @@
         case 2:
         {
             ChangeNameVC *nextVC = [[ChangeNameVC alloc] initWithName:[UserInfoModel defaultModel].name];
+            nextVC.changeNameVCBlock = ^{
+              
+                if (self.personalVCBlock) {
+                    
+                    self.personalVCBlock();
+                }
+            };
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }

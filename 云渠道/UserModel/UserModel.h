@@ -22,6 +22,7 @@
 @property (nonatomic , strong) NSString *agent_identity;
 @property (nonatomic , strong) NSString *store_identity;
 @property (nonatomic , strong) NSString *store_id;
+@property (nonatomic, strong) NSString *company_id;
 @property (nonatomic , strong) NSDictionary *Configdic;
 @property (nonatomic , strong) NSMutableArray *storeArr;
 @property (nonatomic , strong) NSMutableArray *officeArr;

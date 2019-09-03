@@ -11,9 +11,13 @@
 
 typedef void(^phoneBtnBlock)(NSInteger index);
 
+typedef void(^RecommendCell3AddBlock)(void);
+
 @interface RecommendCell3 : UITableViewCell
 
 @property (nonatomic, copy) phoneBtnBlock phoneBtnBlock;
+
+@property (nonatomic, copy) RecommendCell3AddBlock recommendCell3AddBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -30,6 +34,8 @@ typedef void(^phoneBtnBlock)(NSInteger index);
 @property (nonatomic, strong) UIButton *phoneBtn;
 
 @property (nonatomic, strong) UIView *lineView;
+
+@property (nonatomic, strong) UIButton *addBtn;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 

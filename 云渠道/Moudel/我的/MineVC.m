@@ -428,6 +428,16 @@
         if (indexPath.row == 0) {
             
             PersonalVC *nextVC = [[PersonalVC alloc] init];
+            nextVC.personalVCBlock = ^{
+                
+                if ([UserInfoModel defaultModel].name) {
+                    
+                    _nameL.text = [UserInfoModel defaultModel].name;
+                }else{
+                    
+                    _nameL.text = [UserInfoModel defaultModel].account;
+                }
+            };
             nextVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:nextVC animated:YES];
         }else if (indexPath.row == 1) {

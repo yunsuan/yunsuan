@@ -34,6 +34,7 @@
         self.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
         self.layer.borderWidth = 1*SIZE;
         [self addSubview:self.content];
+        [self addSubview:self.placeL];
         [self addSubview:self.dropimg];
     }
     return self;
@@ -47,6 +48,17 @@
         _content.textColor = YJContentLabColor;
     }
     return _content;
+}
+
+- (UILabel *)placeL
+{
+    if (!_placeL) {
+        
+        _placeL = [[UILabel alloc]initWithFrame:CGRectMake(10*SIZE, 11*SIZE, self.frame.size.width-24*SIZE, 14*SIZE)];
+        _placeL.font = [UIFont systemFontOfSize:14 *SIZE];
+        _placeL.textColor = CLPlaceColor;
+    }
+    return _placeL;
 }
 
 -(UIImageView *)dropimg

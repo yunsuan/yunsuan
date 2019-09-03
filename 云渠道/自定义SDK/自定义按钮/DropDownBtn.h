@@ -12,8 +12,10 @@
 @public
     NSString *str;
 }
+@property (nonatomic, strong) UILabel *placeL;
 
 @property (nonatomic , strong) UILabel *content;
+
 @property (nonatomic , strong) UIImageView *dropimg;
 
 @end

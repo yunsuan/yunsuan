@@ -614,6 +614,7 @@
                     header.customTableListHeaderStatusBlock = ^{
                         
                         RecommendedStatusVC *nextVC = [[RecommendedStatusVC alloc] initWithData:_statusArr];
+                        nextVC.clientId = _clientId;
                         [self.navigationController pushViewController:nextVC animated:YES];
                     };
                     

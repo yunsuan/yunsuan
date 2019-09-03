@@ -9,6 +9,7 @@
 #import "RecommendValidVC.h"
 
 #import "ValidVC.h"
+#import "NewDealVC.h"
 
 #import "RecommendCell3.h"
 
@@ -236,6 +237,17 @@
             
         }
     };
+    
+//    cell.recommendCell3AddBlock = ^{
+//
+//        NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataArr[indexPath.row]];
+//        nextVC.project_id = _dataArr[indexPath.row][@"project_id"];//self.project_id;
+//        nextVC.newDealVCBlock = ^{
+//
+//            [self RequestMethod];
+//        };
+//        [self.navigationController pushViewController:nextVC animated:YES];
+//    };
     
     return cell;
 }

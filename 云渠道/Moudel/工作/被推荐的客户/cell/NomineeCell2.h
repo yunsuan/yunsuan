@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^NomineeCell2AddBlock)(void);
+
 typedef void(^phoneBtnBlock)(NSInteger index);
 
 @interface NomineeCell2 : UITableViewCell
 
 @property (nonatomic, copy) phoneBtnBlock phoneBtnBlock;
+
+@property (nonatomic, copy) NomineeCell2AddBlock nomineeCell2AddBlock;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -31,5 +35,7 @@ typedef void(^phoneBtnBlock)(NSInteger index);
 @property (nonatomic, strong) UIView *lineView;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
+
+@property (nonatomic, strong) UIButton *addBtn;
 
 @end

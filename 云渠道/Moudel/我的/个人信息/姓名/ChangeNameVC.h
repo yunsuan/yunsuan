@@ -8,6 +8,11 @@
 
 #import "BaseViewController.h"
 
+typedef void(^ChangeNameVCBlock)(void);
+
 @interface ChangeNameVC : BaseViewController
+
+@property (nonatomic, copy) ChangeNameVCBlock changeNameVCBlock;
+
 - (instancetype)initWithName:(NSString *)name;
 @end

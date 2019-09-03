@@ -51,14 +51,18 @@
         NSDictionary *dic = @{@"name":_nameTF.text};
         [BaseRequest POST:UpdatePersonal_URL parameters:dic success:^(id resposeObject) {
             
-            //            NSLog(@"%@",resposeObject);
-            
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
                 [UserInfoModel defaultModel].name = _nameTF.text;
                 [UserModelArchiver infoArchive];
+                if (self.changeNameVCBlock) {
+                    
+                    self.changeNameVCBlock();
+                }
                 [self.navigationController popViewControllerAnimated:YES];
-            }        else{
+            }
+            else{
+                
                 [self showContent:resposeObject[@"msg"]];
             }
         } failure:^(NSError *error) {

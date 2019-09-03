@@ -94,6 +94,7 @@
             _content4.textColor = YJTitleLabColor;
             _content5.textColor = YJTitleLabColor;
             _timeL.text = [NSString stringWithFormat:@"%@到访",dataDic[@"state_change_time"]];
+            
             break;
         }
         case 3:
@@ -190,6 +191,22 @@
         make.width.equalTo(@(_titleL.mj_textWith + 5 *SIZE));
         make.bottom.equalTo(self.contentView).offset(-86 *SIZE);
     }];
+}
+
+- (void)ActionVisitBtn:(UIButton *)btn{
+    
+    if (self.reStatusTableCellVisitBlock) {
+        
+        self.reStatusTableCellVisitBlock();
+    }
+}
+
+- (void)ActionDealBtn:(UIButton *)btn{
+    
+    if (self.reStatusTableCellDealBlock) {
+        
+        self.reStatusTableCellDealBlock();
+    }
 }
 
 - (void)initUI{
@@ -294,13 +311,31 @@
         }
     }
     
+    _visitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _visitBtn.titleLabel.font = [UIFont systemFontOfSize:10 *SIZE];
+    [_visitBtn addTarget:self action:@selector(ActionVisitBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_visitBtn setBackgroundColor:COLOR(255, 165, 29, 1)];
+    _visitBtn.layer.cornerRadius = 14 *SIZE;
+    _visitBtn.clipsToBounds = YES;
+    [_visitBtn setTitle:@"上传到访凭证" forState:UIControlStateNormal];
+    [self.contentView addSubview:_visitBtn];
+    
+    _dealBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _dealBtn.titleLabel.font = [UIFont systemFontOfSize:10 *SIZE];
+    [_dealBtn addTarget:self action:@selector(ActionDealBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_dealBtn setBackgroundColor:COLOR(255, 165, 29, 1)];
+    _dealBtn.layer.cornerRadius = 14 *SIZE;
+    _dealBtn.clipsToBounds = YES;
+    [_dealBtn setTitle:@"上传成交凭证" forState:UIControlStateNormal];
+    [self.contentView addSubview:_dealBtn];
+    
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(self.contentView).offset(27 *SIZE);
         make.top.equalTo(self.contentView).offset(15 *SIZE);
 //        make.right.equalTo(_timeL.mas_left).offset(-22 *SIZE);
         make.width.equalTo(@(_titleL.mj_textWith + 5 *SIZE));
-        make.bottom.equalTo(self.contentView).offset(-86 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-100 *SIZE);
     }];
     
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -308,7 +343,23 @@
         make.right.equalTo(self.contentView).offset(-50 *SIZE);
         make.top.equalTo(self.contentView).offset(15 *SIZE);
         make.left.equalTo(_titleL.mas_right).offset(22 *SIZE);
-        make.bottom.equalTo(self.contentView).offset(-86 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-100 *SIZE);
+    }];
+    
+    [_visitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.contentView).offset(-100 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-5 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
+        make.height.mas_equalTo(28 *SIZE);
+    }];
+    
+    [_dealBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-5 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
+        make.height.mas_equalTo(28 *SIZE);
     }];
 }
 

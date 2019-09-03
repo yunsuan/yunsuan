@@ -326,6 +326,7 @@
             [UserModel defaultModel].agent_id =resposeObject[@"data"][@"agent_id"];
             [UserModel defaultModel].agent_identity =resposeObject[@"data"][@"agent_identity"];
             [UserModel defaultModel].store_identity =resposeObject[@"data"][@"store_identity"];
+            [UserModel defaultModel].company_id =resposeObject[@"data"][@"company_id"];
             [UserModelArchiver archive];
             [self InfoRequest];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goHome" object:nil];

@@ -8,8 +8,11 @@
 
 #import "ValidVC.h"
 
+#import "NewDealVC.h"
+
 #import "BaseHeader.h"
 //#import "CountDownCell.h"
+#import "BlueTitleMoreHeader.h"
 #import "InfoDetailCell.h"
 #import "BrokerageDetailTableCell3.h"
 
@@ -198,10 +201,10 @@
     
     if (section < _titleArr.count) {
         
-        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+        BlueTitleMoreHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BlueTitleMoreHeader"];
         if (!header) {
             
-            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+            header = [[BlueTitleMoreHeader alloc] initWithReuseIdentifier:@"BlueTitleMoreHeader"];
         }
         header.lineView.hidden = YES;
         if (section < _titleArr.count) {
@@ -212,6 +215,28 @@
             header.titleL.text = @"";
         }
         
+//        [header.moreBtn setBackgroundColor:YJBlueBtnColor];
+//        header.moreBtn.layer.cornerRadius = 3 *SIZE;
+//        header.moreBtn.clipsToBounds = YES;
+//        [header.moreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [header.moreBtn setTitle:@"转成交" forState:UIControlStateNormal];
+//        if (section == 0 && [_dataDic[@"is_sell_deal"] integerValue] == 1) {
+//
+//            header.moreBtn.hidden = NO;
+//        }else{
+//
+//            header.moreBtn.hidden = YES;
+//        }
+//        header.blueTitleMoreHeaderBlock = ^{
+//
+//            NewDealVC *nextVC = [[NewDealVC alloc] initWithDic:_dataDic];
+//            nextVC.project_id = _dataDic[@"project_id"];//self.project_id;
+//            nextVC.newDealVCBlock = ^{
+//
+//                [self post];
+//            };
+//            [self.navigationController pushViewController:nextVC animated:YES];
+//        };
         return header;
     }else{
         
