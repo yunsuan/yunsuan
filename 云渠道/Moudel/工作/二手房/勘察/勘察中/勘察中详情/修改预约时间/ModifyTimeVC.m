@@ -136,7 +136,7 @@
             label1.text = _dataDic[@"name"];
         }else if (i == 1){
             
-            label1.text = _dataDic[@"agent_tel"];
+            label1.text = _dataDic[@"tel"];
         }else{
             
             label1.text = [NSString stringWithFormat:@"%@",_dataDic[@"house"]];

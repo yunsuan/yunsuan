@@ -193,6 +193,9 @@
                 _tel = _reportView.tel1.textfield.text;
                 _tel = [NSString stringWithFormat:@"%@,%@",_tel,_reportView.tel2.textfield.text];
             }
+        }else{
+            
+            _tel = _reportView.tel1.textfield.text;
         }
     }else{
         
@@ -207,6 +210,23 @@
                 _tel = _reportView.tel1.textfield.text;
                 _tel = [NSString stringWithFormat:@"%@,%@",_tel,_reportView.tel2.textfield.text];
                 _tel = [NSString stringWithFormat:@"%@,%@",_tel,_reportView.tel3.textfield.text];
+            }
+        }else{
+            
+            if (![self isEmpty:_reportView.tel2.textfield.text]) {
+                
+                if (![self checkTel:_reportView.tel2.textfield.text] ) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"请输入正确的电话号码"];
+                    return;
+                }else{
+                    
+                    _tel = _reportView.tel1.textfield.text;
+                    _tel = [NSString stringWithFormat:@"%@,%@",_tel,_reportView.tel2.textfield.text];
+                }
+            }else{
+                
+                _tel = _reportView.tel1.textfield.text;
             }
         }
     }

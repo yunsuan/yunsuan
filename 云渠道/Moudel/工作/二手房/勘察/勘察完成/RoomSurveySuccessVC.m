@@ -157,7 +157,8 @@
 
     cell.roomSurveSuccessPhoneBlock = ^(NSInteger index) {
 
-        NSString *phone = _dataArr[index][@"tel"];
+//        NSString *phone = _dataArr[index][@"tel"];
+        NSString *phone = [_dataArr[index][@"tel"] componentsSeparatedByString:@","][0];
         if (phone.length) {
             
             //获取目标号码字符串,转换成URL

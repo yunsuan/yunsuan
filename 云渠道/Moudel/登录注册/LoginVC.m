@@ -46,7 +46,7 @@
     [self.view addSubview:self.RegisterBtn];
     [self.view addSubview:self.Account];
     [self.view addSubview:self.PassWord];
-//    [self.view addSubview:self.settingbtn];
+    [self.view addSubview:self.settingbtn];
     
     for (int i = 0; i<2; i++) {
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];

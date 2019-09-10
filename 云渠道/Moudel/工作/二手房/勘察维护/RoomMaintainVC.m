@@ -174,7 +174,8 @@
     
     cell.roomMaintainPhoneBlock = ^(NSInteger index) {
 
-        NSString *phone = model.tel;
+//        NSString *phone = model.tel;
+        NSString *phone = [model.tel componentsSeparatedByString:@","][0];
         if (phone.length) {
             
             //获取目标号码字符串,转换成URL

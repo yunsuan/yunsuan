@@ -225,9 +225,10 @@
         AddContractVC *VC = [[AddContractVC alloc]init];
         NSMutableArray *arr1 = [NSMutableArray array];
         [arr1 addObject:@{@"house_code":_houseDic[@"house_code"],
-                         @"title":[NSString stringWithFormat:@"%@  %@",_houseDic[@"project_name"],_houseDic[@"house"]],
-                         @"survey_agent_name":_houseDic[@"agent_name"],
-                         @"survey_agent_tel":_houseDic[@"agent_tel"]
+                          @"title":[NSString stringWithFormat:@"%@  %@",_houseDic[@"project_name"],_houseDic[@"house"]],
+                          @"survey_agent_name":_houseDic[@"agent_name"],
+                          @"survey_agent_tel":_houseDic[@"agent_tel"],
+                          @"house_id":_houseId
                          }];
         NSMutableDictionary *dic;
         for (int i=0; i<_peopleArr.count; i++) {

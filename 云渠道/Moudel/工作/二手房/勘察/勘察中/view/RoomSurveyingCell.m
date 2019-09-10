@@ -107,7 +107,7 @@
     
     if (dataDic[@"tel"]) {
         
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:dataDic[@"tel"]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[dataDic[@"tel"] componentsSeparatedByString:@","][0]];
         [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(0, 11)];
         [attr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, 11)];
         _phoneL.attributedText = attr;

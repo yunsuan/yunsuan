@@ -97,6 +97,12 @@
         return;
     }
     
+    if (!_certTypeBtn->str) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择证件编号"];
+        return;
+    }
+    
 
     _dataDic =[NSMutableDictionary dictionaryWithDictionary:
                @{@"name":_nameTF.textfield.text,
@@ -109,7 +115,8 @@
                  }];
     
     [self.navigationController popViewControllerAnimated:YES];
-    if (self.AddPeopleblock !=nil) {
+    if (self.AddPeopleblock != nil) {
+        
         self.AddPeopleblock(_dataDic);
     }
 }
