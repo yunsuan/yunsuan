@@ -21,4 +21,5 @@ target '云渠道' do
   pod 'FLAnimatedImage'
   pod 'UITableView+FDTemplateLayoutCell'
   # pod 'TencentOpenApiSDK'
+  pod 'ZXingObjC'
 end

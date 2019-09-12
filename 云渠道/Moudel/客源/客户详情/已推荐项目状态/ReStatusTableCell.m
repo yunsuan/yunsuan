@@ -44,10 +44,18 @@
         
         _statusL.text = @"有效";
         _statusL.textColor = YJBlueBtnColor;
+        if ([dataDic[@"current_state"] integerValue] == 1) {
+            
+            _codeBtn.hidden = NO;
+        }else{
+            
+            _codeBtn.hidden = YES;
+        }
     }else{
         
         _statusL.text = @"无效";
         _statusL.textColor = YJContentLabColor;
+        _codeBtn.hidden = YES;
     }
     
     
@@ -209,6 +217,14 @@
     }
 }
 
+- (void)ActionCodeBtn:(UIButton *)btn{
+    
+    if (self.reStatusTableCellCodeBlock) {
+        
+        self.reStatusTableCellCodeBlock();
+    }
+}
+
 - (void)initUI{
     
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(10 *SIZE, 14 *SIZE, 7 *SIZE, 13 *SIZE)];
@@ -329,6 +345,15 @@
     [_dealBtn setTitle:@"上传成交凭证" forState:UIControlStateNormal];
     [self.contentView addSubview:_dealBtn];
     
+    _codeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _codeBtn.titleLabel.font = [UIFont systemFontOfSize:10 *SIZE];
+    [_codeBtn addTarget:self action:@selector(ActionCodeBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_codeBtn setBackgroundColor:COLOR(255, 165, 29, 1)];
+    _codeBtn.layer.cornerRadius = 14 *SIZE;
+    _codeBtn.clipsToBounds = YES;
+    [_codeBtn setTitle:@"带看二维码" forState:UIControlStateNormal];
+    [self.contentView addSubview:_codeBtn];
+    
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(self.contentView).offset(27 *SIZE);
@@ -344,6 +369,14 @@
         make.top.equalTo(self.contentView).offset(15 *SIZE);
         make.left.equalTo(_titleL.mas_right).offset(22 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-100 *SIZE);
+    }];
+    
+    [_codeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(self.contentView).offset(-190 *SIZE);
+        make.bottom.equalTo(self.contentView).offset(-5 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
+        make.height.mas_equalTo(28 *SIZE);
     }];
     
     [_visitBtn mas_makeConstraints:^(MASConstraintMaker *make) {

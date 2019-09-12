@@ -42,6 +42,8 @@
 
 -(void)InitUI
 {
+    
+    self.view.backgroundColor = CLWhiteColor;
     [self.view addSubview:self.Headerimg];
     [self.view addSubview:self.RegisterBtn];
     [self.view addSubview:self.Account];
@@ -297,8 +299,8 @@
 -(UIImageView *)Headerimg
 {
     if (!_Headerimg) {
-        _Headerimg = [[UIImageView alloc]initWithFrame:CGRectMake(130*SIZE, 82*SIZE, 100*SIZE, 68*SIZE)];
-        _Headerimg.image = [UIImage imageNamed:@"logo_2"];
+        _Headerimg = [[UIImageView alloc]initWithFrame:CGRectMake(130*SIZE, 82*SIZE, 100*SIZE, 100*SIZE)];
+        _Headerimg.image = [UIImage imageNamed:@"appi"];
     }
     return _Headerimg;
 }

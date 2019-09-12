@@ -139,5 +139,9 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 + (UIImage *)addWaterText:(NSString *)text Attributes:(NSDictionary*)atts toImage:(UIImage *)img rect:(CGRect)rect;
 
 + (UIImage *)addWaterImage:(UIImage *)waterImg toImage:(UIImage *)img rect:(CGRect)rect;
+
+-(NSString *)base64EncodeString:(NSString *)string;
+
+-(NSString *)base64DecodeString:(NSString *)string;
 @end
 

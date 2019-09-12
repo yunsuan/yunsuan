@@ -45,13 +45,13 @@
                            
                            };
     
-    [mark drawInRect:CGRectMake(0, 0, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];         //左上角
-    
-    [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), 0, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];      //右上角
-    
-    [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];  //右下角
-    
-    [mark drawInRect:CGRectMake(0, h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];    //左下角
+//    [mark drawInRect:CGRectMake(0, 0, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];         //左上角
+//    
+//    [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), 0, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];      //右上角
+//    
+//    [mark drawInRect:CGRectMake(w - CGRectGetWidth(rect), h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];  //右下角
+//    
+//    [mark drawInRect:CGRectMake(0, h - 20 *SIZE * proportion, CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];    //左下角
     [mark drawInRect:CGRectMake((w - CGRectGetWidth(rect)) / 2 , (h - 20 *SIZE *proportion) / 2 ,CGRectGetWidth(rect), 20 *SIZE * proportion) withAttributes:attr];
     
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();

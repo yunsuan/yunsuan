@@ -12,11 +12,15 @@ typedef void(^ReStatusTableCellVisitBlock)(void);
 
 typedef void(^ReStatusTableCellDealBlock)(void);
 
+typedef void(^ReStatusTableCellCodeBlock)(void);
+
 @interface ReStatusTableCell : UITableViewCell
 
 @property (nonatomic, copy) ReStatusTableCellVisitBlock reStatusTableCellVisitBlock;
 
 @property (nonatomic, copy) ReStatusTableCellDealBlock reStatusTableCellDealBlock;
+
+@property (nonatomic, copy) ReStatusTableCellCodeBlock reStatusTableCellCodeBlock;
 
 @property (nonatomic, strong) UILabel *titleL;
 
@@ -57,4 +61,6 @@ typedef void(^ReStatusTableCellDealBlock)(void);
 @property (nonatomic, strong) UIButton *visitBtn;
 
 @property (nonatomic, strong) UIButton *dealBtn;
+
+@property (nonatomic, strong) UIButton *codeBtn;
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C02360120BFC94C00B255AA /* DynamicDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C02360020BFC94C00B255AA /* DynamicDetailVC.m */; };
+		0C04D6C92329D1DA003188BE /* CodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C04D6C82329D1DA003188BE /* CodeView.m */; };
 		0C0606A5207DAEC00045E3C1 /* CustomerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0606A4207DAEC00045E3C1 /* CustomerModel.m */; };
 		0C0606A9207DB3050045E3C1 /* RoomListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0606A8207DB3050045E3C1 /* RoomListModel.m */; };
 		0C06B1F7209D7DBB00F11993 /* CustomListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C06B1F6209D7DBB00F11993 /* CustomListVC.m */; };
@@ -817,6 +818,8 @@
 /* Begin PBXFileReference section */
 		0C0235FF20BFC94C00B255AA /* DynamicDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicDetailVC.h; sourceTree = "<group>"; };
 		0C02360020BFC94C00B255AA /* DynamicDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DynamicDetailVC.m; sourceTree = "<group>"; };
+		0C04D6C72329D1DA003188BE /* CodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeView.h; sourceTree = "<group>"; };
+		0C04D6C82329D1DA003188BE /* CodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeView.m; sourceTree = "<group>"; };
 		0C0606A3207DAEC00045E3C1 /* CustomerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomerModel.h; sourceTree = "<group>"; };
 		0C0606A4207DAEC00045E3C1 /* CustomerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerModel.m; sourceTree = "<group>"; };
 		0C0606A7207DB3050045E3C1 /* RoomListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoomListModel.h; sourceTree = "<group>"; };
@@ -3886,6 +3889,8 @@
 				0C3D3041218B06FA00B8B8C2 /* ReStatusTableCell.h */,
 				0C0C01162317B81B00DBA68E /* UploadImageVC.h */,
 				0C0C01172317B81B00DBA68E /* UploadImageVC.m */,
+				0C04D6C72329D1DA003188BE /* CodeView.h */,
+				0C04D6C82329D1DA003188BE /* CodeView.m */,
 			);
 			path = "已推荐项目状态";
 			sourceTree = "<group>";
@@ -8723,6 +8728,7 @@
 				100D8F6C218004ED006839EB /* WMMenuView.m in Sources */,
 				0C9CD45221057EA6004894A3 /* RentingComTableCell.m in Sources */,
 				0C581E05213E7BA40048546C /* SecProhectSearchVC.m in Sources */,
+				0C04D6C92329D1DA003188BE /* CodeView.m in Sources */,
 				0C6B635C21218B0600ABB506 /* RoomMaintainModel.m in Sources */,
 				0CEC62DF208DDA62006EC0BD /* RoomBrokerageTableCell.m in Sources */,
 				0CEC62F1208F0017006EC0BD /* HouseTypeBriefModel.m in Sources */,
