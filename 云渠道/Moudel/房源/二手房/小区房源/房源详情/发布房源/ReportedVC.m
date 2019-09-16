@@ -362,6 +362,7 @@
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"comleteSurvey" object:nil];
                         [self RequestMethod];
                     };
+                    nextVC.status = @"direct";   
                     nextVC.dataDic = resposeObject[@"data"];
                     nextVC.surveyId = resposeObject[@"data"][@"survey_id"];
                     [self.navigationController pushViewController:nextVC animated:YES];

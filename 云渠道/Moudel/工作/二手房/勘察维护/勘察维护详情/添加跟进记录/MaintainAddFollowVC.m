@@ -17,18 +17,20 @@
 
 @interface MaintainAddFollowVC ()<UIScrollViewDelegate,UITextViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
-    
+    NSInteger _follow;
     NSString *_houseId;
+    NSString *_payWay;
+    NSString *_seeWay;
+    NSString *_followTime;
+    
     NSArray *_titleArr;
     NSArray *_followArr;
     NSArray *_payArr;
+    
+    NSMutableDictionary *_dataDic;
+    
     NSMutableArray *_selectArr;
     NSMutableArray *_selectArr2;
-    NSString *_seeWay;
-    NSInteger _follow;
-    NSString *_followTime;
-    NSMutableDictionary *_dataDic;
-    NSString *_payWay;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -121,11 +123,18 @@
 
 - (void)initDataSource{
     
+//    _follow = -1;
     _followArr = [self getDetailConfigArrByConfigState:23];
     _selectArr = [@[] mutableCopy];
     for (int i = 0; i < _followArr.count; i++) {
         
-        [_selectArr addObject:@0];
+        if (i == 0) {
+            
+            [_selectArr addObject:@1];
+        }else{
+            
+            [_selectArr addObject:@0];
+        }
     }
     _payArr = [self
                getDetailConfigArrByConfigState:13];
@@ -650,7 +659,7 @@
     [_contentView addSubview:_publicBtn];
     if (_dataDic.count) {
         
-        if ([_dataDic[@"hide"] integerValue] == 1) {
+        if ([_dataDic[@"hide"] integerValue]) {
             
             _publicBtn.content.text = @"不公开";
             _publicBtn->str = @"1";
@@ -687,6 +696,7 @@
             if ([_dataDic[@"level"] isEqualToString:arr[i][@"param"]]) {
 
                 _roomLevelBtn->str = [NSString stringWithFormat:@"%@",arr[i][@"id"]];
+                break;
             }
         }
         _roomLevelBtn.content.text = _dataDic[@"level"];

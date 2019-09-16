@@ -545,6 +545,7 @@
     
     _table.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
+        _page += 1;
         [self RequestAddMethod];
     }];
 }
