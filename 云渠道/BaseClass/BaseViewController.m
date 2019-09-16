@@ -722,5 +722,17 @@
     return [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 }
 
+//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error  contextInfo:(void *)contextInfo{
+//    
+//    if (error) {
+//        
+//        [self showContent:@"保存失败"];
+//        
+//    }else{
+//        
+//        [self showContent:@"保存成功"];
+//    }
+//}
+
 @end
 

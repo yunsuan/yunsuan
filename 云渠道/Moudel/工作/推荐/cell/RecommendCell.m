@@ -28,6 +28,14 @@
     }
 }
 
+- (void)ActionQRBtn:(UIButton *)btn{
+    
+    if (self.recommendCellQRBlock) {
+        
+        self.recommendCellQRBlock(self.tag);
+    }
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _nameL.text = dataDic[@"name"];
@@ -138,6 +146,13 @@
     [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_confirmBtn];
     
+    _QRCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    _confirmBtn.frame = CGRectMake(273 *SIZE, 61 *SIZE, 77 *SIZE, 30 *SIZE);
+    [_QRCodeBtn addTarget:self action:@selector(ActionQRBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_QRCodeBtn setImage:[UIImage imageNamed:@"QRCode"] forState:UIControlStateNormal];
+    _QRCodeBtn.hidden = YES;
+    [self.contentView addSubview:_QRCodeBtn];
+    
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         _confirmBtn.hidden = YES;
@@ -191,6 +206,14 @@
         make.left.equalTo(self.contentView).offset(273 *SIZE);
         make.top.equalTo(_nameL.mas_bottom).offset(34 *SIZE);
         make.width.mas_equalTo(77 *SIZE);
+        make.height.mas_equalTo(30 *SIZE);
+    }];
+    
+    [_QRCodeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(313 *SIZE);
+        make.top.equalTo(self.contentView).offset(15 *SIZE);
+        make.width.mas_equalTo(30 *SIZE);
         make.height.mas_equalTo(30 *SIZE);
     }];
     

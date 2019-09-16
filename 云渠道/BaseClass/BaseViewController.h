@@ -143,5 +143,7 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 -(NSString *)base64EncodeString:(NSString *)string;
 
 -(NSString *)base64DecodeString:(NSString *)string;
+
+//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error  contextInfo:(void *)contextInfo;
 @end
 

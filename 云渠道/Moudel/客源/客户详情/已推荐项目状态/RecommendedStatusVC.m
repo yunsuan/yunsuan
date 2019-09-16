@@ -91,7 +91,14 @@
         view.recommendL.text = [NSString stringWithFormat:@"报备人员：%@/%@",[UserInfoModel defaultModel].name,[UserInfoModel defaultModel].tel];
         view.projectL.text = [NSString stringWithFormat:@"推荐项目：%@",_dataArr[indexPath.section][@"project_name"]];
         [view setErWeiMaWithUrl:[self base64EncodeString:[NSString stringWithFormat:@"%@",_dataArr[indexPath.section][@"client_id"]]] AndView:view];
-        _image = view.codeImg.image;
+//        _image = view.codeImg.image;
+        // 设置绘制图片的大小
+        UIGraphicsBeginImageContextWithOptions(view.whiteView.bounds.size, NO, 0.0);
+        // 绘制图片
+        [view.whiteView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        _image = image;
         view.codeViewSaveBlock = ^{
             
             UIImageWriteToSavedPhotosAlbum(self->_image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
@@ -111,12 +118,11 @@
     
     if (error) {
         
-        [self showContent:@"保存失败"];
+        [self showContent:@"二维码保存失败"];
         
     }else{
         
-        [self showContent:@"保存成功"];
-        
+        [self showContent:@"二维码保存成功"];
     }
 }
 
@@ -255,4 +261,6 @@
         }
     }];
 }
+
+
 @end

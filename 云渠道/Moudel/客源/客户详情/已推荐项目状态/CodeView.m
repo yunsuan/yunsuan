@@ -35,7 +35,7 @@
         
         self.codeViewSaveBlock();
     }
-    
+    [self removeFromSuperview];
 }
 
 - (void)initUI{

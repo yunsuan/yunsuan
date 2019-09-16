@@ -13,12 +13,17 @@
 
 typedef void(^confirmBtnBlock)(NSInteger index);
 
-@interface RecommendCell : UITableViewCell
+typedef void(^RecommendCellQRBlock)(NSInteger index);
 
+@interface RecommendCell : UITableViewCell
 
 @property (nonatomic, copy) confirmBtnBlock confirmBtnBlock;
 
+@property (nonatomic, copy) RecommendCellQRBlock recommendCellQRBlock;
+
 @property (nonatomic, strong) UIButton *confirmBtn;
+
+@property (nonatomic, strong) UIButton *QRCodeBtn;
 
 @property (nonatomic, strong) UILabel *nameL;
 
