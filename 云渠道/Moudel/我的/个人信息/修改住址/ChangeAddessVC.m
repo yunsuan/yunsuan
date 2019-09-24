@@ -155,7 +155,7 @@
                                 _provinceId = [UserInfoModel defaultModel].province;
                                 _cityId = [UserInfoModel defaultModel].city;
                                 _areaId = [UserInfoModel defaultModel].district;
-                                _addressL.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[0][@"name"],area[k][@"name"]];
+                                _addressL.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[j][@"name"],area[k][@"name"]];
                             }
                         }
                     }

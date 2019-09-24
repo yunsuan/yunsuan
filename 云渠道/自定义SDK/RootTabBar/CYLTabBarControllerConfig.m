@@ -16,7 +16,9 @@
 @implementation CYLBaseNavigationController
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
     if (self.viewControllers.count > 0) {
+        
         viewController.hidesBottomBarWhenPushed = YES;
     }
     [super pushViewController:viewController animated:animated];
@@ -62,14 +64,14 @@
     UIViewController *message_nav = [[CYLBaseNavigationController alloc] initWithRootViewController:message_vc];
     message_vc.navigationController.navigationBar.hidden = YES;
     //调整文字位置
-    message_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
+//    message_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
     
     
     RoomVC *room_vc = [[RoomVC alloc] init];
     UIViewController *room_nav = [[CYLBaseNavigationController alloc]
                                   initWithRootViewController:room_vc];
     room_vc.navigationController.navigationBar.hidden = YES;
-    room_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
+//    room_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
 //    RoomVC1 *room_vc = [[RoomVC1 alloc] init];
 //    UIViewController *room_nav = [[CYLBaseNavigationController alloc]
 //                                     initWithRootViewController:room_vc];
@@ -80,20 +82,20 @@
     UIViewController *customer_nav = [[CYLBaseNavigationController alloc]
                                           initWithRootViewController:customer_vc];
     customer_vc.navigationController.navigationBar.hidden = YES;
-    customer_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
+//    customer_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
 
     
     WorkingVC *working_vc  =[[WorkingVC alloc]init];
     UIViewController *working_nav = [[CYLBaseNavigationController alloc]initWithRootViewController:working_vc];
     working_vc.navigationController.navigationBar.hidden = YES;
-    working_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
+//    working_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
    
     
     MineVC *mine_vc = [[MineVC alloc] init];
     UIViewController *mine_nav = [[CYLBaseNavigationController alloc]
                                   initWithRootViewController:mine_vc];
     mine_vc.navigationController.navigationBar.hidden = YES;
-    mine_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
+//    mine_nav.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -4);
 
     /**
      * 以下两行代码目的在于手动设置让TabBarItem只显示图标，不显示文字，并让图标垂直居中。

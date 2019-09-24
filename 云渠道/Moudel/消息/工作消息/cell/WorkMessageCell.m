@@ -37,11 +37,11 @@
     _namelab.font = [UIFont systemFontOfSize:12*SIZE];
     _namelab.textColor = YJContentLabColor;
     [backview addSubview:_namelab];
-    _projectlab = [[UILabel alloc]initWithFrame:CGRectMake(11*SIZE, 92.7*SIZE, 300*SIZE, 14*SIZE)];
+    _projectlab = [[UILabel alloc]initWithFrame:CGRectMake(11*SIZE, 92.7*SIZE, 200*SIZE, 14*SIZE)];
     _projectlab.font = [UIFont systemFontOfSize:12*SIZE];
     _projectlab.textColor = YJContentLabColor;
     [backview addSubview:_projectlab];
-    _timelab = [[UILabel alloc]initWithFrame:CGRectMake(100*SIZE, 92.7*SIZE, 234*SIZE, 14*SIZE)];
+    _timelab = [[UILabel alloc]initWithFrame:CGRectMake(270*SIZE, 92.7*SIZE, 115*SIZE, 14*SIZE)];
     _timelab.font = [UIFont systemFontOfSize:12*SIZE];
     _timelab.textColor = YJContentLabColor;
     _timelab.textAlignment = NSTextAlignmentRight;

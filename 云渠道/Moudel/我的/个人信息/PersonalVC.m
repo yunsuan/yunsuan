@@ -102,10 +102,10 @@
                                 
                                 if ([UserInfoModel defaultModel].absolute_address.length) {
                                     
-                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@-%@", provice[i][@"name"], city[0][@"name"], area[k][@"name"], [UserInfoModel defaultModel].absolute_address];
+                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"], [UserInfoModel defaultModel].absolute_address];
                                 }else{
                                     
-                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@", provice[i][@"name"], city[0][@"name"], area[k][@"name"]];
+                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"]];
                                 }
                             }
                         }
@@ -309,7 +309,7 @@
                                     
                                     if([area[k][@"region"] integerValue] == [[UserInfoModel defaultModel].district integerValue]){
                                         
-                                        cell.contentL.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[0][@"name"],area[k][@"name"]];
+                                        cell.contentL.text = [NSString stringWithFormat:@"%@-%@-%@",provice[i][@"name"],city[j][@"name"],area[k][@"name"]];
                                     }
                                 }
                             }

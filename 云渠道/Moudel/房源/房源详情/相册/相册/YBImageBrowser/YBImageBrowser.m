@@ -107,8 +107,16 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
 }
 
 - (void)configStatusBarHide:(BOOL)hide {
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    statusBar.alpha = !hide;
+//    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].keyWindow.windowScene.statusBarManager;
+        UIView *_statusBar = nil;
+    if ([statusBarManager respondsToSelector:@selector(createLocalStatusBar)]) {
+        UIView *_localStatusBar = [statusBarManager performSelector:@selector(createLocalStatusBar)];
+        if ([_localStatusBar respondsToSelector:@selector(statusBar)]) {
+            _statusBar = [_localStatusBar performSelector:@selector(statusBar)];
+        }
+    }
+    _statusBar.alpha = !hide;
 }
 
 #pragma mark notification

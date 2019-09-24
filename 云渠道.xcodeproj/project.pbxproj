@@ -66,6 +66,7 @@
 		0C0BED5B20AA7F6A005A16A1 /* ApplyProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BED5A20AA7F6A005A16A1 /* ApplyProjectVC.m */; };
 		0C0C01182317B81B00DBA68E /* UploadImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0C01172317B81B00DBA68E /* UploadImageVC.m */; };
 		0C0C19E020ECABB10086E739 /* SecAllRoomDetailInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0C19DF20ECABB10086E739 /* SecAllRoomDetailInfoVC.m */; };
+		0C11BAAA2339B420000F77BD /* SGAdvertScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C11BAA82339B420000F77BD /* SGAdvertScrollView.m */; };
 		0C15A1D62111BF3400544F2E /* RentingAllRoomDetailInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C15A1D52111BF3400544F2E /* RentingAllRoomDetailInfoVC.m */; };
 		0C15A1DA2112986700544F2E /* RentingModifyProjectAnalysisVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C15A1D92112986700544F2E /* RentingModifyProjectAnalysisVC.m */; };
 		0C15A1DE21129B5F00544F2E /* ModifyProjectImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C15A1DD21129B5F00544F2E /* ModifyProjectImageVC.m */; };
@@ -935,6 +936,8 @@
 		0C0C01172317B81B00DBA68E /* UploadImageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadImageVC.m; sourceTree = "<group>"; };
 		0C0C19DE20ECABB10086E739 /* SecAllRoomDetailInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomDetailInfoVC.h; sourceTree = "<group>"; };
 		0C0C19DF20ECABB10086E739 /* SecAllRoomDetailInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecAllRoomDetailInfoVC.m; sourceTree = "<group>"; };
+		0C11BAA82339B420000F77BD /* SGAdvertScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGAdvertScrollView.m; sourceTree = "<group>"; };
+		0C11BAA92339B420000F77BD /* SGAdvertScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGAdvertScrollView.h; sourceTree = "<group>"; };
 		0C15A1D42111BF3400544F2E /* RentingAllRoomDetailInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomDetailInfoVC.h; sourceTree = "<group>"; };
 		0C15A1D52111BF3400544F2E /* RentingAllRoomDetailInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomDetailInfoVC.m; sourceTree = "<group>"; };
 		0C15A1D82112986700544F2E /* RentingModifyProjectAnalysisVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingModifyProjectAnalysisVC.h; sourceTree = "<group>"; };
@@ -2924,6 +2927,23 @@
 				0C0C19DF20ECABB10086E739 /* SecAllRoomDetailInfoVC.m */,
 			);
 			path = "房源信息";
+			sourceTree = "<group>";
+		};
+		0C11BAA62339B40F000F77BD /* 福报 */ = {
+			isa = PBXGroup;
+			children = (
+				0C11BAA72339B420000F77BD /* SGAdvertScrollView */,
+			);
+			path = "福报";
+			sourceTree = "<group>";
+		};
+		0C11BAA72339B420000F77BD /* SGAdvertScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				0C11BAA82339B420000F77BD /* SGAdvertScrollView.m */,
+				0C11BAA92339B420000F77BD /* SGAdvertScrollView.h */,
+			);
+			path = SGAdvertScrollView;
 			sourceTree = "<group>";
 		};
 		0C15A1D32111BF2A00544F2E /* 房源信息 */ = {
@@ -7161,6 +7181,7 @@
 		102DF96A2057A0A200E1859C /* 房源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C11BAA62339B40F000F77BD /* 福报 */,
 				0C997BFA21D4E35900F805AA /* 推荐 */,
 				0CAF4DD0219E5EB60009873E /* 关注 */,
 				0CD7B5C72147AF50009517F2 /* view1 */,
@@ -8556,6 +8577,7 @@
 				101F10A921FD9FA3001CA1FC /* SHRecommenView.m in Sources */,
 				0C342FB7207DEB540058406D /* BaseModel.m in Sources */,
 				0C288360210711DB00F69C5F /* RentingReportVC.m in Sources */,
+				0C11BAAA2339B420000F77BD /* SGAdvertScrollView.m in Sources */,
 				0C9CD41620FF4D6F004894A3 /* AgencyDoneCustomerDetailVC.m in Sources */,
 				0CDD706E20D3A24C00D6609C /* RoomValidApplyVC.m in Sources */,
 				0CE82240221F96BC00576742 /* ConfirmPhoneFailVC.m in Sources */,

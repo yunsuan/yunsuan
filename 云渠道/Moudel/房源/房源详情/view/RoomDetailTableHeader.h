@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RoomDetailModel.h"
 
+#import "SGAdvertScrollView.h"
+
 @class RoomDetailTableHeader;
 
 typedef void(^AttentBtnBlock)(void);
@@ -54,6 +56,10 @@ typedef void(^RoomDetailHeaderMoreBlock)(void);
 @property (nonatomic, strong) RoomDetailModel *model;
 
 @property (nonatomic, strong) NSMutableArray *imgArr;
+
+@property (nonatomic, strong) NSMutableArray *reportArr;;
+
+@property (nonatomic, strong) SGAdvertScrollView *advertScrollView;
 
 @property (nonatomic, strong) UIButton *moreBtn;
 

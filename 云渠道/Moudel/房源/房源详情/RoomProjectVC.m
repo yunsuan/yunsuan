@@ -64,6 +64,7 @@
     NSInteger _selected;
 //    NSString *_subId;
 
+    NSMutableArray *_reportArr;
 }
 @property (nonatomic, strong) SelectWorkerView *selectWorkerView;
 
@@ -122,6 +123,7 @@
     _houseArr = [@[] mutableCopy];
     _peopleArr = [@[] mutableCopy];
 //    _buildDic = [@{} mutableCopy];
+    _reportArr = [@[] mutableCopy];
     
     dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
     
@@ -252,7 +254,7 @@
 
 - (void)SetData:(NSDictionary *)data{
 
-    
+    _reportArr = [NSMutableArray arrayWithArray:data[@"report"]];
     if (data[@"butter_tel"]) {
         
         _phone = [NSString stringWithFormat:@"%@",data[@"butter_tel"]];
@@ -511,6 +513,7 @@
         
         header.model = _model;
         header.imgArr = _imgArr;
+        header.reportArr = _reportArr;
         header.moreBtn.tag = 1;
         [header.moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
         

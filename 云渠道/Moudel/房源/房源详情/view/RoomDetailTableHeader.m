@@ -17,6 +17,9 @@
     float _latitude;
     NSMutableArray *_propertyArr;
     NSMutableArray *_tagArr;
+    
+    NSMutableArray *_titleArr;
+    NSMutableArray *_imageArr;
 }
 
 @end
@@ -38,6 +41,80 @@
     
     _propertyArr = [@[] mutableCopy];
     _tagArr = [@[] mutableCopy];
+    
+    _titleArr = [@[] mutableCopy];
+    _imageArr = [@[] mutableCopy];
+}
+
+- (void)setReportArr:(NSMutableArray *)reportArr{
+    
+    if (reportArr) {
+        
+        for (int i = 0; i < reportArr.count; i++) {
+            
+            [_titleArr addObject:reportArr[i][@"comment"]];
+            [_imageArr addObject:@"icon_xi"];
+        }
+        
+        _advertScrollView.signImages = _imageArr;
+        _advertScrollView.titles = _titleArr;
+        [_titleL mas_remakeConstraints:^(MASConstraintMaker *make) {
+           
+            make.left.equalTo(self.contentView).offset(11 *SIZE);
+            make.top.equalTo(_advertScrollView.mas_bottom).offset(11 *SIZE);
+            make.width.mas_equalTo(280 *SIZE);
+        }];
+        
+        [_statusL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(321 *SIZE);
+            make.top.equalTo(_advertScrollView.mas_bottom).offset(11 *SIZE);
+            make.width.mas_equalTo(30 *SIZE);
+        }];
+        
+        [_attentBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(326 *SIZE);
+            make.top.equalTo(_advertScrollView.mas_bottom).offset(28 *SIZE);
+            make.width.height.mas_equalTo(29 *SIZE);
+        }];
+        
+        [_attentL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(230 *SIZE);
+            make.top.equalTo(_advertScrollView.mas_bottom).offset(35 *SIZE);
+            make.width.mas_equalTo(87 *SIZE);
+        }];
+    }else{
+        
+        [_titleL mas_remakeConstraints:^(MASConstraintMaker *make) {
+           
+            make.left.equalTo(self.contentView).offset(11 *SIZE);
+            make.top.equalTo(_imgScroll.mas_bottom).offset(11 *SIZE);
+            make.width.mas_equalTo(280 *SIZE);
+        }];
+        
+        [_statusL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(321 *SIZE);
+            make.top.equalTo(_imgScroll.mas_bottom).offset(11 *SIZE);
+            make.width.mas_equalTo(30 *SIZE);
+        }];
+        
+        [_attentBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(326 *SIZE);
+            make.top.equalTo(_imgScroll.mas_bottom).offset(28 *SIZE);
+            make.width.height.mas_equalTo(29 *SIZE);
+        }];
+        
+        [_attentL mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(230 *SIZE);
+            make.top.equalTo(_imgScroll.mas_bottom).offset(35 *SIZE);
+            make.width.mas_equalTo(87 *SIZE);
+        }];
+    }
 }
 
 - (void)setImgArr:(NSMutableArray *)imgArr{
@@ -268,6 +345,9 @@
     _numL.adjustsFontSizeToFitWidth = YES;
     [self.contentView addSubview:_numL];
     
+    _advertScrollView = [[SGAdvertScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
+    [self.contentView addSubview:_advertScrollView];
+    
     _titleL = [[UILabel alloc] init];//WithFrame:CGRectMake(11 *SIZE, 11 *SIZE + CGRectGetMaxY(_imgScroll.frame), 280 *SIZE, 13 *SIZE)];
     _titleL.textColor = YJTitleLabColor;
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
@@ -343,25 +423,40 @@
         make.height.mas_equalTo(202.5 *SIZE);
     }];
     
+    [_advertScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(0);
+        make.top.equalTo(_imgScroll.mas_bottom).offset(11 *SIZE);
+        make.width.mas_equalTo(SCREEN_Width);
+        make.height.mas_equalTo(40 *SIZE);
+    }];
+    
     [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(self.contentView).offset(11 *SIZE);
-        make.top.equalTo(_imgScroll.mas_bottom).offset(11 *SIZE);
+        make.top.equalTo(_advertScrollView.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(280 *SIZE);
     }];
     
     [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(321 *SIZE);
-        make.top.equalTo(_imgScroll.mas_bottom).offset(11 *SIZE);
+        make.top.equalTo(_advertScrollView.mas_bottom).offset(11 *SIZE);
         make.width.mas_equalTo(30 *SIZE);
     }];
     
     [_attentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(326 *SIZE);
-        make.top.equalTo(_imgScroll.mas_bottom).offset(28 *SIZE);
+        make.top.equalTo(_advertScrollView.mas_bottom).offset(28 *SIZE);
         make.width.height.mas_equalTo(29 *SIZE);
+    }];
+    
+    [_attentL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(230 *SIZE);
+        make.top.equalTo(_advertScrollView.mas_bottom).offset(35 *SIZE);
+        make.width.mas_equalTo(87 *SIZE);
     }];
     
     [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -372,13 +467,7 @@
         //        make.height.mas_equalTo(40 *SIZE);
         make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
     }];
-    
-    [_attentL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(230 *SIZE);
-        make.top.equalTo(_imgScroll.mas_bottom).offset(35 *SIZE);
-        make.width.mas_equalTo(87 *SIZE);
-    }];
+
     
     [_payL mas_makeConstraints:^(MASConstraintMaker *make) {
         
