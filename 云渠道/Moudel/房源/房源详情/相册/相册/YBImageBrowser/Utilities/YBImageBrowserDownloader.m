@@ -45,7 +45,9 @@ static SDWebImageDownloader *_downloader = nil;
 
 + (void)cancelTaskWithDownloadToken:(id)token {
     
-    if (token) [self.downloader cancel:token];
+    if (token) [self cancelTaskWithDownloadToken:token];
+//        self.downloader.sharedDownloader token
+//        [self.downloader cancel:token];
 }
 
 + (void)storeImageDataWithKey:(NSString *)key image:(UIImage *)image data:(NSData *)data {
@@ -61,14 +63,17 @@ static SDWebImageDownloader *_downloader = nil;
 
 + (void)queryCacheOperationForKey:(NSString *)key completed:(YBImageBrowserDownloaderCacheQueryCompletedBlock)completed {
     if (!key) return;
-    [self.imageCache queryCacheOperationForKey:key options:SDImageCacheQueryDataWhenInMemory|SDImageCacheQueryDiskSync done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
+    [self.imageCache queryCacheOperationForKey:key options:SDImageCacheQueryMemoryData|SDImageCacheQueryDiskDataSync done:^(UIImage * _Nullable image, NSData * _Nullable data, SDImageCacheType cacheType) {
         if (completed) completed(image, data);
     }];
+//    SDImageCacheQueryMemoryData
 }
 
 + (void)shouldDecompressImages:(BOOL)should {
-    self.downloader.shouldDecompressImages = should;
-    self.imageCache.config.shouldDecompressImages = should;
+    
+//    self.
+//    self.downloader.shouldDecompressImages = should;
+//    self.imageCache.config.shouldDecompressImages = should;
 }
 
 #pragma mark getter setter
@@ -77,7 +82,7 @@ static SDWebImageDownloader *_downloader = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _downloader = [SDWebImageDownloader sharedDownloader];
-        _downloader.shouldDecompressImages = YES;
+//        _downloader.shouldDecompressImages = YES;
     });
     return _downloader;
 }

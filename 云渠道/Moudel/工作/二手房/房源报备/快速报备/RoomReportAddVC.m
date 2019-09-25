@@ -19,9 +19,9 @@
 #import "MoreView.h"
 #import "SecdaryComTableCell.h"
 
-#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import <BMKLocationKit/BMKLocationComponent.h>
 
-@interface RoomReportAddVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
+@interface RoomReportAddVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationManagerDelegate,PYSearchViewControllerDelegate>
 {
     
     NSInteger _page;
@@ -258,6 +258,14 @@
 
 - (void)ActionCityBtn:(UIButton *)btn{
     
+    [self.priceView removeFromSuperview];
+    [self.typeView removeFromSuperview];
+    [self.moreView removeFromSuperview];
+    _is1 = NO;
+    _is2 = NO;
+    _is3 = NO;
+    _is4 = NO;
+    [_areaView removeFromSuperview];
     CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
         

@@ -16,9 +16,9 @@
 #import "MoreView.h"
 
 #import "RentingComTableCell.h"
-#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import <BMKLocationKit/BMKLocationComponent.h>
 
-@interface RentingCommunityRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
+@interface RentingCommunityRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationManagerDelegate,PYSearchViewControllerDelegate>
 {
     
     NSInteger _page;

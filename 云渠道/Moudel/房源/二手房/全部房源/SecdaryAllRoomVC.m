@@ -17,10 +17,10 @@
 #import "MoreView.h"
 
 #import "SecdaryAllTableCell.h"
-#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import <BMKLocationKit/BMKLocationComponent.h>
 
 
-@interface SecdaryAllRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
+@interface SecdaryAllRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationManagerDelegate,PYSearchViewControllerDelegate>
 {
     
     NSInteger _page;

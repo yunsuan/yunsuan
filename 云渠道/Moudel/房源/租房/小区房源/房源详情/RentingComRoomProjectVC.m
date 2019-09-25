@@ -888,10 +888,10 @@
 - (void)beginSearchWithname:(NSString *)name{
     _name = name;
     _poisearch = [self poisearch];
-    BMKBoundSearchOption *boundSearchOption = [[BMKBoundSearchOption alloc]init];
+    BMKPOIBoundSearchOption *boundSearchOption = [[BMKPOIBoundSearchOption alloc]init];
     boundSearchOption.pageIndex = 0;
-    boundSearchOption.pageCapacity = 20;
-    boundSearchOption.keyword = name;
+    boundSearchOption.pageSize = 20;
+    boundSearchOption.keywords = @[name];
     boundSearchOption.leftBottom =_leftBottomPoint;
     boundSearchOption.rightTop =_rightBottomPoint;
     
@@ -908,33 +908,61 @@
 }
 
 #pragma mark implement BMKSearchDelegate
-- (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPoiResult*)result errorCode:(BMKSearchErrorCode)error
-{
-    if (error == BMK_SEARCH_NO_ERROR) {
+
+- (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPOISearchResult *)poiResult errorCode:(BMKSearchErrorCode)errorCode{
+    
+    if (errorCode == BMK_SEARCH_NO_ERROR) {
         NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
         [_mapView removeAnnotations:array];
         array = [NSArray arrayWithArray:_mapView.overlays];
         [_mapView removeOverlays:array];
         //在此处理正常结果
-        for (int i = 0; i < result.poiInfoList.count; i++)
+        for (int i = 0; i < poiResult.poiInfoList.count; i++)
         {
-            BMKPoiInfo* poi = [result.poiInfoList objectAtIndex:i];
+            BMKPoiInfo* poi = [poiResult.poiInfoList objectAtIndex:i];
             [self addAnimatedAnnotationWithName:poi.name withAddress:poi.pt];
         }
         
-        //        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
-        //        [_mapView setCenterCoordinate:cllocation animated:YES];
-        //        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-        //        annotation.coordinate = cllocation;
-        //        annotation.title = _model.project_name;
-        //        [_mapView addAnnotation:annotation];
+        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+        [_mapView setCenterCoordinate:cllocation animated:YES];
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        annotation.coordinate = cllocation;
+        annotation.title = _model.project_name;
+        [_mapView addAnnotation:annotation];
         
-    } else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
+    } else if (errorCode == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
         NSLog(@"起始点有歧义");
     } else {
         // 各种情况的判断。。。
     }
 }
+//- (void)onGetPoiResult:(BMKPoiSearch *)searcher result:(BMKPoiResult*)result errorCode:(BMKSearchErrorCode)error
+//{
+//    if (error == BMK_SEARCH_NO_ERROR) {
+//        NSArray* array = [NSArray arrayWithArray:_mapView.annotations];
+//        [_mapView removeAnnotations:array];
+//        array = [NSArray arrayWithArray:_mapView.overlays];
+//        [_mapView removeOverlays:array];
+//        //在此处理正常结果
+//        for (int i = 0; i < result.poiInfoList.count; i++)
+//        {
+//            BMKPoiInfo* poi = [result.poiInfoList objectAtIndex:i];
+//            [self addAnimatedAnnotationWithName:poi.name withAddress:poi.pt];
+//        }
+//
+//        //        CLLocationCoordinate2D cllocation = CLLocationCoordinate2DMake([_model.latitude floatValue] , [_model.longitude floatValue]);
+//        //        [_mapView setCenterCoordinate:cllocation animated:YES];
+//        //        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+//        //        annotation.coordinate = cllocation;
+//        //        annotation.title = _model.project_name;
+//        //        [_mapView addAnnotation:annotation];
+//
+//    } else if (error == BMK_SEARCH_AMBIGUOUS_ROURE_ADDR){
+//        NSLog(@"起始点有歧义");
+//    } else {
+//        // 各种情况的判断。。。
+//    }
+//}
 // 添加动画Annotation
 - (void)addAnimatedAnnotationWithName:(NSString *)name withAddress:(CLLocationCoordinate2D)coor {
     BMKPointAnnotation*animatedAnnotation = [[BMKPointAnnotation alloc]init];

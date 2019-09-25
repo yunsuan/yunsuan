@@ -219,6 +219,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 }
 
 - (void)initialization {
+    
     _scrollTimeInterval = 3.0;
     
     [self addTimer];
@@ -375,6 +376,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 
 #pragma mark - - - NSTimer
 - (void)addTimer {
+    
     [self removeTimer];
 
     self.timer = [NSTimer timerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
@@ -382,6 +384,7 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 }
 
 - (void)removeTimer {
+    
     [_timer invalidate];
     _timer = nil;
 }

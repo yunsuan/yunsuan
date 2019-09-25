@@ -78,6 +78,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
     [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
     [_wkWebView stopLoading];
     [WaitAnimation stopAnimation];
@@ -87,6 +88,7 @@
     
     [super viewWillAppear:animated];
     
+    [_wkWebView.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
 //    [_wkWebView.scrollView removeObserver:self forKeyPath:@"contentSize"];
 }
 
@@ -131,13 +133,6 @@
             _fansL.text = [NSString stringWithFormat:@"粉丝数：%@",_dataDic[@"follow_number"]];
             if ([_dataDic[@"logo"] length]) {
                 
-//                [_headImg sd_setImageWithURL:[NSURL URLWithString:@"http://47.107.246.94/upload/company/upload/59_company_img_1557390607.png"] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//
-//                    if (error) {
-//
-//                        _headImg.image = [UIImage imageNamed:@"default_3"];
-//                    }
-//                }];
                 [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_dataDic[@"logo"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
 
                     if (error) {

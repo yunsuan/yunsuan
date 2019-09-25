@@ -113,6 +113,13 @@
 
 - (void)initUI{
     
+//    if (@available(iOS 13.0, *)) {
+//
+//        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+//    } else {
+//        // Fallback on earlier versions
+//    }
+    
     UIView *backView = [[UIView alloc] initWithFrame:self.bounds];
     backView.backgroundColor = [UIColor blackColor];
     backView.alpha = 0.3;

@@ -333,7 +333,9 @@ static NSString *const kQQAPPID = @"1106811849";
 //配置友盟
 - (void)configUSharePlatforms
 {
-    [[UMSocialManager defaultManager] setUmSocialAppkey:kUmengAppkey];
+//    [[UMSocialManager defaultManager] setUmSocialAppkey:kUmengAppkey];
+//    [ defaultManager]
+    [UMConfigure initWithAppkey:kUmengAppkey channel:@"App store"];
     /* 设置微信的appKey和appSecret */
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kWechatAppId appSecret:kWechatSecret redirectURL:redirectUrl];
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:kQQAPPID/*设置QQ平台的appID*/  appSecret:nil redirectURL:redirectUrl];

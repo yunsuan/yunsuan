@@ -376,10 +376,22 @@
     searchViewController.searchBar.returnKeyType = UIReturnKeySearch;
     searchViewController.hotSearchStyle = PYHotSearchStyleBorderTag; // 热门搜索风格根据选择
     searchViewController.searchHistoryStyle = PYHotSearchStyleDefault; // 搜索历史风格为
+//    if (@available(iOS 13.0, *)) {
+//
+//        [searchViewController setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+//    } else {
+//        // Fallback on earlier versions
+//    }
     // 4. 设置代理
     searchViewController.delegate = self;
     // 5. 跳转到搜索控制器
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    if (@available(iOS 13.0, *)) {
+        
+        [nav setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    } else {
+        // Fallback on earlier versions
+    }
     [self presentViewController:nav  animated:NO completion:nil];
     
 }

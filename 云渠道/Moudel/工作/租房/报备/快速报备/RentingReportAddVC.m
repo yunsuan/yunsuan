@@ -21,9 +21,9 @@
 //#import "SecdaryComTableCell.h"
 #import "RentingComTableCell.h"
 
-#import <BaiduMapAPI_Location/BMKLocationService.h>
+#import <BMKLocationKit/BMKLocationComponent.h>
 
-@interface RentingReportAddVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationServiceDelegate,PYSearchViewControllerDelegate>
+@interface RentingReportAddVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,BMKLocationManagerDelegate,PYSearchViewControllerDelegate>
 {
     
     NSInteger _page;

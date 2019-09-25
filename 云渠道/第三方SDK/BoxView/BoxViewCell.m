@@ -22,6 +22,13 @@
 
 - (void)initUI{
     
+    if (@available(iOS 13.0, *)) {
+        
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    } else {
+        // Fallback on earlier versions
+    }
+    
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 15 *SIZE, 300 *SIZE, 11 *SIZE)];
     _titleL.textColor = YJ86Color;
     _titleL.font = [UIFont systemFontOfSize:12 *SIZE];

@@ -48,7 +48,7 @@
 
 - (void)setReportArr:(NSMutableArray *)reportArr{
     
-    if (reportArr) {
+    if (reportArr.count) {
         
         for (int i = 0; i < reportArr.count; i++) {
             

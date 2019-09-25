@@ -83,6 +83,7 @@
     _page = 1;
     _selecTable.mj_footer.state = MJRefreshStateIdle;
     [_dataArr removeAllObjects];
+    [_selecTable reloadData];
     [BaseRequest GET:GetCompanyList_URL parameters:dic success:^(id resposeObject) {
         
         [_selecTable.mj_header endRefreshing];
@@ -383,8 +384,8 @@
                 }
             }];
             weakSelf.cityView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-            [weakSelf.selectColl reloadData];
             [weakSelf RequestMethod];
+//            [weakSelf.selectColl reloadData];
         };
         [[UIApplication sharedApplication].keyWindow addSubview:_provinceView];
     }else if (indexPath.item == 1){
@@ -417,8 +418,9 @@
                     }
                 }];
                 weakSelf.districtView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [weakSelf.selectColl reloadData];
+                
                 [weakSelf RequestMethod];
+//                [weakSelf.selectColl reloadData];
             };
             [[UIApplication sharedApplication].keyWindow addSubview:_cityView];
         }else{
@@ -438,8 +440,8 @@
                 _isSearch = NO;
                 _district = [NSString stringWithFormat:@"%@",ID];
                 _disName = [NSString stringWithFormat:@"%@",str];
-                [weakSelf.selectColl reloadData];
                 [weakSelf RequestMethod];
+//                [weakSelf.selectColl reloadData];
             };
             [[UIApplication sharedApplication].keyWindow addSubview:_districtView];
         }else{
