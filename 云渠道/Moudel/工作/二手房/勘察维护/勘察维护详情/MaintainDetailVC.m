@@ -390,7 +390,11 @@
         header.maintainTagHeaderBlock = ^(NSInteger index) {
           
             _item = index;
-            [tableView reloadData];
+            [self.mainTable reloadData];
+
+            [self.mainTable layoutIfNeeded]; //加上这段代码,
+
+            [self.mainTable setContentOffset:CGPointMake(0, 0)];
         };
         
         header.maintainDetailHeaderBlock = ^{
@@ -472,7 +476,7 @@
                     if (_type == 1) {
                         
                         ModifyProjectAnalysisVC *nextVC = [[ModifyProjectAnalysisVC alloc] initWithData:_detailDic];
-                        nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
                         nextVC.modifyProjectAnalysisVCBlock = ^{
                             
                             [self RequestMethod];
@@ -483,7 +487,7 @@
                         
                         AddEquipmentVC *nextVC = [[AddEquipmentVC alloc] initWithType:_type];
                         nextVC.titleStr = @"修改";
-                        nextVC.type = [NSString stringWithFormat:@"%ld",_type];
+                        nextVC.type = [NSString stringWithFormat:@"%ld",(long)_type];
                         nextVC.houseId = _houseId;
                         nextVC.data = [NSMutableArray arrayWithArray:_matchArr];
                         nextVC.addEquipmentVCBlock = ^(NSArray * _Nonnull data) {
@@ -498,7 +502,7 @@
                     
                     ModifyNerborVC *nextVC = [[ModifyNerborVC alloc] initWithData:_detailDic];
                     nextVC.houseId = _houseId;
-                    nextVC.type = [NSString stringWithFormat:@"%ld",_type];
+                    nextVC.type = [NSString stringWithFormat:@"%ld",(long)_type];
                     nextVC.seeWay = _houseDic[@"check_way"];
                     nextVC.modifyNerborVCBlock = ^{
                         
@@ -513,7 +517,7 @@
                         
                         [self RequestMethod];
                     };
-                    nextVC.typeId = [NSString stringWithFormat:@"%ld",_type];
+                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
                     nextVC.houseId = _houseId;
                     [self.navigationController pushViewController:nextVC animated:YES];
                 }

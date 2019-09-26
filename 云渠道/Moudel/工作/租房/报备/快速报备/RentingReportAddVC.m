@@ -628,12 +628,23 @@
             [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
-            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
-            nextVC.projiect_id = model.project_id;
-            nextVC.img_name = model.img_url;
-            nextVC.status = @"release";
-            nextVC.comName = model.project_name;
-            [self.navigationController pushViewController:nextVC animated:YES];
+            if ([self.status isEqualToString:@"rent"]) {
+                
+                SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                nextVC.projiect_id = model.project_id;
+                nextVC.img_name = model.img_url;
+                nextVC.status = self.status;
+                nextVC.comName = model.project_name;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+                nextVC.projiect_id = model.project_id;
+                nextVC.img_name = model.img_url;
+                nextVC.status = @"release";
+                nextVC.comName = model.project_name;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }
         }
     }
 }

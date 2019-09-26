@@ -58,6 +58,7 @@
     
     RentingReportAddVC *nextVC = [[RentingReportAddVC alloc] init];
     nextVC.hidesBottomBarWhenPushed = YES;
+    nextVC.status = @"rent";
     nextVC.rentingRoomReportAddHouseBlock = ^(NSDictionary *dic) {
       
         [_roomReportWaitVC RequestMethod];
