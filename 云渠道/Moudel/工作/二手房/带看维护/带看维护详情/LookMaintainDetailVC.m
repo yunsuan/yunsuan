@@ -142,7 +142,8 @@
 //        _telL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"butter_tel"]];
         [arr1 addObject:@{@"take_code": _baseInfoDic[@"take_code"],
                           @"butter_name":_baseInfoDic[@"agent_name"],
-                          @"butter_tel":_baseInfoDic[@"agent_tel"]
+                          @"butter_tel":_baseInfoDic[@"agent_tel"],
+                          @"take_id":_takeId
                           }];
         NSMutableDictionary *dic;
         for (int i=0; i<_contactArr.count; i++) {

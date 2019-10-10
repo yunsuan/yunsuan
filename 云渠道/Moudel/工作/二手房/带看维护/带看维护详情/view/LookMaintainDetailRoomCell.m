@@ -111,6 +111,8 @@
             case 2:
             {
                 _contentL = label;
+                _contentL.numberOfLines = 0;
+                _contentL.adjustsFontSizeToFitWidth = YES;
                 [self.contentView addSubview:_contentL];
                 break;
             }
@@ -223,21 +225,21 @@
         
         make.left.equalTo(self.contentView).offset(123 *SIZE);
         make.top.equalTo(_lastTimeL.mas_bottom).offset(7 *SIZE);
-        make.width.mas_equalTo(100 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
     }];
     
     [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.right.equalTo(self.contentView).offset(-12 *SIZE);
         make.top.equalTo(_lastTimeL.mas_bottom).offset(7 *SIZE);
-        make.width.mas_equalTo(100 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
         
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_roomImg.mas_bottom).offset(19 *SIZE);
+        make.top.equalTo(_numL.mas_bottom).offset(19 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);
     }];

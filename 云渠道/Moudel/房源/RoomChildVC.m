@@ -850,7 +850,10 @@
                             cell = [[CompanyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                         }
                         [cell SetTitle:model.project_name image:model.img_url contentlab:model.absolute_address statu:model.sale_state];
-                        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+                        NSArray *project_tags = model.project_tags?model.project_tags:@[];
+                        NSArray *property_tags = model.property_tags?model.property_tags:@[];
+                        [cell settagviewWithdata:@[property_tags,project_tags]];
+//                        [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                         return cell;
                         
@@ -1005,6 +1008,9 @@
                 
 //                cell.statusImg.hidden = YES;
 //                [cell settagviewWithdata:@[model.property_tags,model.project_tags]];
+                NSArray *project_tags =model.project_tags?model.project_tags:@[];
+                NSArray *property_tags = model.property_tags?model.property_tags:@[];
+                [cell settagviewWithdata:@[property_tags,project_tags]];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 return cell;
                 

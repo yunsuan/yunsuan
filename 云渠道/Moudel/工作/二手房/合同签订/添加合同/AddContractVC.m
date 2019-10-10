@@ -11,7 +11,7 @@
 #import "ChooseHouseVC.h"
 #import "ChooseCustomerVC.h"
 
-
+#import "LookMaintainVC.h"
 #import "SelectCustomVC.h"
 
 #import "BlueTitleMoreHeader.h"
@@ -246,7 +246,14 @@
                 
                 self.addContractVCBlock();
             }
-            [self.navigationController popViewControllerAnimated:YES];
+            for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                if ([vc isKindOfClass:[LookMaintainVC class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                }
+            }
+//            [self.navigationController popViewControllerAnimated:YES];
         }
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

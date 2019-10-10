@@ -115,6 +115,7 @@ static NSString * const YBImageBrowserViewCellIdentifier = @"YBImageBrowserViewC
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     YBImageBrowserCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:YBImageBrowserViewCellIdentifier forIndexPath:indexPath];
+    cell.status = self.status;
     cell.delegate = self;
     cell.isScaleImageText = self.isScaleImageText;
     cell.loadFailedText = self.loadFailedText;

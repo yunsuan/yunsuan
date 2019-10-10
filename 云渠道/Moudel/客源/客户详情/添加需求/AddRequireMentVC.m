@@ -1246,7 +1246,6 @@
     if (_model.house_type.length) {
         
         _typeBtn.content.text = [NSString stringWithFormat:@"%@",_model.house_type];
-
     }
     
     if (_model.floor_min){

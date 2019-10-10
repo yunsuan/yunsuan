@@ -516,6 +516,7 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
         _browserView = [[YBImageBrowserView alloc] initWithFrame:CGRectZero collectionViewLayout:[YBImageBrowserViewLayout new]];
         _browserView.yb_delegate = self;
         _browserView.yb_dataSource = self;
+        _browserView.status = self.status;
     }
     return _browserView;
 }
@@ -635,11 +636,11 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
     if (model.needCutToShow) {
         [self judgeAlbumAuthorizationStatusSuccess:^{
             UIImage *largeImage = [model valueForKey:YBImageBrowserModel_KVCKey_largeImage];
-            if (largeImage) [self savePhotoToAlbumWithImage:largeImage];
+            if (largeImage) [self savePhotoToAlbumWithImage:largeImage model:model];
         }];
     } if (model.image) {
         [self judgeAlbumAuthorizationStatusSuccess:^{
-            [self savePhotoToAlbumWithImage:model.image];
+            [self savePhotoToAlbumWithImage:model.image model:model];
         }];
     } else if (model.animatedImage) {
         if (model.animatedImage.data) {
@@ -688,10 +689,18 @@ static BOOL _statusBarIsHideBefore = NO;    //状态栏在模态切换之前是�
     }];
 }
 
-- (void)savePhotoToAlbumWithImage:(UIImage *)image {
+- (void)savePhotoToAlbumWithImage:(UIImage *)image model:(YBImageBrowserModel *)model{
     
-    image = [UIImage getWaterMarkImage:image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
-    UIImageWriteToSavedPhotosAlbum(image, self.class, @selector(completedWithImage:error:context:), (__bridge void *)self);
+    if (model.name) {
+        
+//        image = [UIImage getWaterMarkImage:image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
+        image = [UIImage getAgentWaterImage:image andTitle:@"云算云渠道" agent:model.name andMarkFont:nil andMarkColor:nil];
+        UIImageWriteToSavedPhotosAlbum(image, self.class, @selector(completedWithImage:error:context:), (__bridge void *)self);
+    }else{
+        
+        image = [UIImage getWaterMarkImage:image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
+        UIImageWriteToSavedPhotosAlbum(image, self.class, @selector(completedWithImage:error:context:), (__bridge void *)self);
+    }
 }
 
 + (void)completedWithImage:(UIImage *)image error:(NSError *)error context:(void *)context {

@@ -197,7 +197,7 @@
             case 3:
             {
                 _customLevelL = label;
-                _customLevelL.textAlignment = NSTextAlignmentRight;
+//                _customLevelL.textAlignment = NSTextAlignmentRight;
                 [_customView addSubview:_customLevelL];
                 break;
             }
@@ -377,14 +377,17 @@
         
         make.left.equalTo(_customView).offset(28 *SIZE);
         make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(200 *SIZE);
+        make.width.mas_equalTo(300 *SIZE);
     }];
     
     [_customLevelL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_customView).offset(210 *SIZE);
-        make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(140 *SIZE);
+        make.left.equalTo(_customView).offset(28 *SIZE);
+        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+//        make.left.equalTo(_customView).offset(230 *SIZE);
+//        make.top.equalTo(_phoneL.mas_bottom).offset(10 *SIZE);
+//        make.width.mas_equalTo(120 *SIZE);
     }];
     
 //    [_matchL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -398,7 +401,7 @@
     [_progressL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(_customView).offset(28 *SIZE);
-        make.top.equalTo(_followTimeL.mas_bottom).offset(10 *SIZE);
+        make.top.equalTo(_customLevelL.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(140 *SIZE);
         make.bottom.equalTo(_customView).offset(-17 *SIZE);
     }];

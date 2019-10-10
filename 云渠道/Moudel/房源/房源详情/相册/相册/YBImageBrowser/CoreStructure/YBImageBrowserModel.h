@@ -27,6 +27,8 @@ FOUNDATION_EXPORT char * const YBImageBrowserModel_SELName_cutImage;
 
 @interface YBImageBrowserModel : NSObject
 
+@property (nonatomic, strong) NSString *name;
+
 @property (nonatomic, strong) NSString *third_URL;
 /**
  本地图片

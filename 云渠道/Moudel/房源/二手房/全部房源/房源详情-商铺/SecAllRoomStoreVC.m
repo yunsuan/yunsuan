@@ -292,17 +292,20 @@
             NSMutableArray *tempArr = [NSMutableArray array];
             
             NSMutableArray *tempArr1 = [NSMutableArray array];
+            NSMutableArray *tempArr2 = [NSMutableArray array];
             for (NSDictionary *dic in imgArr) {
                 
                 for (NSDictionary *subDic in dic[@"list"]) {
                     
                     [tempArr1 addObject:subDic[@"img_url"]];
+                    [tempArr2 addObject:subDic[@"agent_name"]];
                 }
             }
             [tempArr1 enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 
                 YBImageBrowserModel *model = [YBImageBrowserModel new];
                 model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj]];
+                model.name = tempArr2[idx];
                 [tempArr addObject:model];
             }];
             

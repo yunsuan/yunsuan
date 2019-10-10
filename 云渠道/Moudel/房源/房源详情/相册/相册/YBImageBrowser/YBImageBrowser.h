@@ -79,6 +79,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YBImageBrowser : UIViewController <YBImageBrowserScreenOrientationProtocol>
 
+@property (nonatomic, copy) NSString *status;
+
 #pragma mark 基本功能 (basic function)
 
 /**

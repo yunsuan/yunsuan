@@ -36,6 +36,8 @@
 
 @interface YBImageBrowserView : UICollectionView <YBImageBrowserScreenOrientationProtocol>
 
+@property (nonatomic, strong) NSString *status;
+
 @property (nonatomic, weak) id <YBImageBrowserViewDelegate> yb_delegate;
 @property (nonatomic, weak) id <YBImageBrowserViewDataSource> yb_dataSource;
 

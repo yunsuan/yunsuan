@@ -196,7 +196,15 @@
             [self countLayoutWithImage:model.image completed:nil];
         }
         self.imageView.image = model.image;
-        self.imageView.image = [UIImage getWaterMarkImage:model.image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
+        if (model.name) {
+           
+//            self.imageView.image = [UIImage getWaterMarkImage:model.image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
+            self.imageView.image = [UIImage getAgentWaterImage:model.image andTitle:@"云算云渠道" agent:model.name andMarkFont:nil andMarkColor:nil];
+        }else{
+            
+            self.imageView.image = [UIImage getWaterMarkImage:model.image andTitle:@"云算云渠道" andMarkFont:nil andMarkColor:nil];
+        }
+        
         
     } else if (model.needCutToShow) {
         

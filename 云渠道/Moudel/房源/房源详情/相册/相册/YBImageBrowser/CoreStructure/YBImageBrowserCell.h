@@ -25,6 +25,8 @@
 
 @interface YBImageBrowserCell : UICollectionViewCell <YBImageBrowserScreenOrientationProtocol>
 
+@property (nonatomic, strong) NSString *status;
+
 @property (nonatomic, weak) id<YBImageBrowserCellDelegate> delegate;
 
 @property (nonatomic, strong) YBImageBrowserModel *model;

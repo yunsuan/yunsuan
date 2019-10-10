@@ -45,6 +45,9 @@
     NSMutableArray *_paySelectArr;
     NSMutableArray *_dataArr;
     NSMutableArray *_stairArr;
+//    NSMutableArray *_houseArr1;
+//    NSMutableArray *_houseArr2;
+//    NSMutableArray *_houseArr3;
     NSArray *_storeArr;
     NSMutableArray *_selectStoreArr;
 }
@@ -134,6 +137,13 @@
 
 @property (nonatomic, strong) DropDownBtn *houseBtn;//户型
 
+//@property (nonatomic, strong) DropDownBtn *houseBtn1;//户型
+//
+//@property (nonatomic, strong) DropDownBtn *houseBtn2;//户型
+//
+//@property (nonatomic, strong) DropDownBtn *houseBtn3;//户型
+
+
 @property (nonatomic, strong) UILabel *floorL;
 
 @property (nonatomic, strong) DropDownBtn *floorTF1;
@@ -208,6 +218,21 @@
         NSString *str = [NSString stringWithFormat:@"%d层",i];
         [_stairArr addObject:@{@"id":@(i),@"param":str}];
     }
+    
+//    _houseArr1 = [[NSMutableArray alloc] init];
+//    _houseArr2 = [[NSMutableArray alloc] init];
+//    _houseArr3 = [[NSMutableArray alloc] init];
+//    for (int i = 1; i < 5; i++) {
+//
+//        NSString *str1 = [NSString stringWithFormat:@"%d室",i];
+//        [_houseArr1 addObject:@{@"id":@(i),@"param":str1}];
+//
+//        NSString *str2 = [NSString stringWithFormat:@"%d厅",i];
+//        [_houseArr2 addObject:@{@"id":@(i),@"param":str2}];
+//
+//        NSString *str3 = [NSString stringWithFormat:@"%d卫",i];
+//        [_houseArr3 addObject:@{@"id":@(i),@"param":str3}];
+//    }
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -308,25 +333,61 @@
         }
         case 5:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-
-                weakself.houseBtn.content.text = MC;
-                weakself.houseBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
-            
-//            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
 //            WS(weakself);
-//            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
 //
-//                weakself.typeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
-//                weakself.typeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+//                weakself.houseBtn.content.text = MC;
+//                weakself.houseBtn->str = [NSString stringWithFormat:@"%@", ID];
 //            };
 //            [self.view addSubview:view];
+
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+            WS(weakself);
+            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+
+                weakself.houseBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+                weakself.houseBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+            };
+            [self.view addSubview:view];
             break;
         }
+//        case 5:
+//        {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_houseArr1];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.houseBtn1.content.text = MC;
+//                weakself.houseBtn1->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+//            break;
+//        }
+//        case 6:
+//        {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_houseArr2];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.houseBtn2.content.text = MC;
+//                weakself.houseBtn2->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+//            break;
+//        }
+//        case 7:
+//        {
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_houseArr3];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.houseBtn3.content.text = MC;
+//                weakself.houseBtn3->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+//            break;
+//        }
         case 6:
         {
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
@@ -518,10 +579,7 @@
             
             [dic setObject:@"1" forKey:@"property_type"];
             
-            if (_houseBtn.content.text.length) {
-                
-                [dic setObject:_houseBtn->str forKey:@"house_type"];
-            }
+//            i
             
             if (_floorTF1.content.text.length) {
                 
@@ -767,7 +825,7 @@
             [dic setObject:@"1" forKey:@"property_type"];
             
             if (_houseBtn.content.text.length) {
-                
+
                 [dic setObject:_houseBtn->str forKey:@"house_type"];
             }
             
@@ -1158,8 +1216,22 @@
             {
                 _houseBtn = btn;
                 [_contentView addSubview:_houseBtn];
+//                _houseBtn1 = btn;
+//                [_contentView addSubview:_houseBtn1];
                 break;
             }
+//            case 6:{
+//
+//                _houseBtn2 = btn;
+//                [_contentView addSubview:_houseBtn2];
+//                break;
+//            }
+//            case 7:{
+//
+//                _houseBtn3 = btn;
+//                [_contentView addSubview:_houseBtn3];
+//                break;
+//            }
             case 6:
             {
                 _nextTimeBtn = btn;
@@ -1518,18 +1590,19 @@
     
     if ([_dataDic[@"house_type"] length]) {
         
-//        _houseBtn.content.text = [NSString stringWithFormat:@"%@",_dataDic[@"house_type"]];
-        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
-        NSArray *typeArr = dic[@"param"];
-        for (NSDictionary *dic in typeArr) {
-
-            if ([[NSString stringWithFormat:@"%@",dic[@"param"]] isEqualToString:_dataDic[@"house_type"]]) {
-
-                _houseBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
-                _houseBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
-            }
-        }
+        _houseBtn.content.text = [NSString stringWithFormat:@"%@",_dataDic[@"house_type"]];
+        _houseBtn->str = [NSString stringWithFormat:@"%@,%@,%@",[_dataDic[@"house_type"] substringWithRange:NSMakeRange(0, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(2, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(4, 1)]];
+//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
+//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
+//        NSArray *typeArr = dic[@"param"];
+//        for (NSDictionary *dic in typeArr) {
+//
+//            if ([[NSString stringWithFormat:@"%@",dic[@"param"]] isEqualToString:_dataDic[@"house_type"]]) {
+//
+////                _houseBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
+////                _houseBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
+//            }
+//        }
     }
 }
 
@@ -1660,12 +1733,35 @@
     }];
     
     [_houseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+
         make.left.equalTo(_contentView).offset(80 *SIZE);
         make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(258 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
     }];
+//    [_houseBtn1 mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_contentView).offset(80 *SIZE);
+//        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(75 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
+//
+//    [_houseBtn2 mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_contentView).offset(175.5 *SIZE);
+//        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(75 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
+//
+//    [_houseBtn3 mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_contentView).offset(263 *SIZE);
+//        make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(75 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    }];
     
     [_floorL mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -1920,6 +2016,9 @@
 - (void)RemasonryUI{
     
     _houseBtn.hidden = YES;
+//    _houseBtn1.hidden = YES;
+//    _houseBtn2.hidden = YES;
+//    _houseBtn3.hidden = YES;
     _houseTypeL.hidden = YES;
     _floorL.hidden = YES;
     _floorTF1.hidden = YES;
@@ -2133,6 +2232,9 @@
         
         _purposeL.text = @"置业目的：";
         _houseBtn.hidden = NO;
+//        _houseBtn1.hidden = NO;
+//        _houseBtn2.hidden = NO;
+//        _houseBtn3.hidden = NO;
         _houseTypeL.hidden = NO;
         _floorL.hidden = NO;
         _floorTF1.hidden = NO;
@@ -2148,12 +2250,35 @@
         }];
         
         [_houseBtn mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
+
             make.left.equalTo(_contentView).offset(80 *SIZE);
             make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
             make.width.mas_equalTo(258 *SIZE);
             make.height.mas_equalTo(33 *SIZE);
         }];
+//        [_houseBtn1 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_contentView).offset(80 *SIZE);
+//            make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//            make.width.mas_equalTo(75 *SIZE);
+//            make.height.mas_equalTo(33 *SIZE);
+//        }];
+//
+//        [_houseBtn2 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_contentView).offset(175.5 *SIZE);
+//            make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//            make.width.mas_equalTo(75 *SIZE);
+//            make.height.mas_equalTo(33 *SIZE);
+//        }];
+//
+//        [_houseBtn3 mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//            make.left.equalTo(_contentView).offset(264 *SIZE);
+//            make.top.equalTo(_areaBtn.mas_bottom).offset(20 *SIZE);
+//            make.width.mas_equalTo(75 *SIZE);
+//            make.height.mas_equalTo(33 *SIZE);
+//        }];
         
         [_floorL mas_remakeConstraints:^(MASConstraintMaker *make) {
             

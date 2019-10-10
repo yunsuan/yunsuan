@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIImage *)getWaterMarkImage: (UIImage *)originalImage andTitle: (NSString *)title andMarkFont: (UIFont *)markFont andMarkColor: (UIColor *)markColor;
 
++ (UIImage *)getAgentWaterImage: (UIImage *)originalImage andTitle: (NSString *)title agent:(NSString *)agent andMarkFont: (UIFont *)markFont andMarkColor: (UIColor *)markColor;
+
 @end
 
 NS_ASSUME_NONNULL_END
