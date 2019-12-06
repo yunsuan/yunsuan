@@ -27,7 +27,7 @@
     _titleL.font = [UIFont systemFontOfSize:14*SIZE];
     _titleL.textColor = COLOR(249, 156, 59, 1);
     _titleL.textAlignment = NSTextAlignmentCenter;
-    _titleL.text = @"推荐已成功，已到访为准";
+    _titleL.text = @"推荐已成功，以到访为准";
     [self.contentView addSubview:_titleL];
 }
 

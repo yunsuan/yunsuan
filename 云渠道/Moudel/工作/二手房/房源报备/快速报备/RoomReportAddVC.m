@@ -740,12 +740,25 @@
         [_MainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
             
-            [self RequestMethod];
+            if (_city.length) {
+                
+                [self RequestMethod];
+            }else{
+                
+                [_MainTableView.mj_header endRefreshing];
+            }
+            
         }];
         
         _MainTableView.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
             
-            [self RequestAddMethod];
+            if (_city.length) {
+                
+                [self RequestAddMethod];
+            }else{
+                
+                [_MainTableView.mj_footer endRefreshing];
+            }
         }];
     }
     return _MainTableView;

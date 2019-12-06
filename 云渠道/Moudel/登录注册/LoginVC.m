@@ -581,7 +581,6 @@
         NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
         [dataarr writeToFile:filePath atomically:YES];
         
-        
     }];
     
     

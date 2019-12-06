@@ -46,7 +46,7 @@
     _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"tel"]];
     if ([dataDic[@"recommend_check"] integerValue] == 0) {
         
-        _timeL.text = [NSString stringWithFormat:@"失效时间：%@",@"已到访为准"];
+        _timeL.text = [NSString stringWithFormat:@"失效时间：%@",@"以到访为准"];
     }else{
         
         _timeL.text = [NSString stringWithFormat:@"失效时间：%@",dataDic[@"timsLimit"]];

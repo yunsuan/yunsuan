@@ -48,7 +48,7 @@
     _addressL.text = [NSString stringWithFormat:@"项目地址：%@",dataDic[@"absolute_address"]];
     if ([dataDic[@"recommend_check"] integerValue] == 0) {
         
-        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",@"已到访为准"]];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"失效时间：%@",@"以到访为准"]];
         [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 5)];
         _timeL.attributedText = attr;
     }else{

@@ -7,7 +7,10 @@
 //
 
 #import "CustomerVC.h"
+
 #import "CustomerListVC.h"
+#import "AreaCustomListVC.h"
+
 #import "WorkingCell.h"
 
 @interface CustomerVC ()<UITableViewDelegate,UITableViewDataSource>
@@ -35,9 +38,9 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"新房客户",@"二手房客户",@"租房客户"];
-    _imgArr = @[@"新房",@"二手房",@"租房"];
-    _dataArr = @[@"",@"",@""];
+    _titleArr = @[@"新房客户",@"二手房客户",@"租房客户",@"异地客户"];
+    _imgArr = @[@"新房",@"二手房",@"租房",@"租房"];
+    _dataArr = @[@"",@"",@"",@"租房"];
 }
 
 - (void)RequestMethod{
@@ -48,7 +51,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            _dataArr = @[[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"project"][@"today"],resposeObject[@"data"][@"project"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"house"][@"today"],resposeObject[@"data"][@"house"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]]];
+            _dataArr = @[[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"project"][@"today"],resposeObject[@"data"][@"project"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"house"][@"today"],resposeObject[@"data"][@"house"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]]];
             [_table reloadData];
         }else{
             
@@ -63,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -87,11 +90,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (indexPath.row < 3) {
+        
+        CustomerListVC *nextVC = [[CustomerListVC alloc] init];
+        nextVC.hidesBottomBarWhenPushed = YES;
+        nextVC.status = indexPath.row;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        AreaCustomListVC *nextVC = [[AreaCustomListVC alloc] init];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
     
-    CustomerListVC *nextVC = [[CustomerListVC alloc] init];
-    nextVC.hidesBottomBarWhenPushed = YES;
-    nextVC.status = indexPath.row;
-    [self.navigationController pushViewController:nextVC animated:YES];
 //    if (indexPath.row == 1) {
 //        StoreListVC *nextVC = [[StoreListVC alloc] init];
 //        nextVC.type = @"1";

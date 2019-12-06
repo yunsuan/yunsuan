@@ -212,6 +212,32 @@ static NSString *const DetailStore_URl = @"agent/store/detail";
 //二手房推荐
 static NSString *const SCReconment_URL = @"agent/take/recommend";
 
+#pragma mark --- 异地客源 ---
+
+//获取平台开放城市
+static NSString *const ForunOpenCityList_URL = @"user/forum/openCity/list";
+
+//获取平台开放区域
+static NSString *const ForumOpenDistrictList_URL = @"user/forum/openDistrict/list";
+
+//获取区域规则
+static NSString *const DistrictRuleDetail_URL = @"user/district/rule/detail";
+
+//获取功能列表
+static NSString *const ForumFuncList_URL = @"user/forum/func/list";
+
+//获取物业列表
+static NSString *const ForumPropertyList_URL = @"user/forum/property/list";
+
+//新增异地客户
+static NSString *const ClientOtherBuyAdd_URL = @"agent/client/other/buy/add";
+
+//获取客户列表
+static NSString *const ClientOtherButList_URL = @"agent/client/other/buy/list";
+
+//获取客户详情
+static NSString *const ClientOtherBuyDetail_URL = @"agent/client/other/buy/detail";
+
 #pragma mark ---  房源  ---
 
 //推荐
