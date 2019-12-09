@@ -40,6 +40,15 @@
     }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (textField == _phoneTF1.textfield) {
+        
+        return [self validateNumber:string];
+    }
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
     if (textField == _phoneTF1.textfield) {
@@ -237,6 +246,22 @@
     return result;
 }
 
+- (BOOL)validateNumber:(NSString*)number {
+    BOOL res = YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i = 0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i, 1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length == 0) {
+            res = NO;
+            break;
+        }
+        i++;
+    }
+    return res;
+}
+
 - (void)initUI{
     
     self.backgroundColor = CLWhiteColor;
@@ -289,6 +314,7 @@
                 [self addSubview:_regionBtn1];
                 
                 _phoneTF1 = tf;
+                _phoneTF1.textfield.keyboardType = UIKeyboardTypePhonePad;
                 [self addSubview:_phoneTF1];
                 break;
             }
@@ -379,6 +405,7 @@
         img.clipsToBounds = YES;
         img.contentMode = UIViewContentModeScaleAspectFill;
         img.userInteractionEnabled = YES;
+        img.tag = i;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap:)];
         [img addGestureRecognizer:tap];
         if (i == 0) {
@@ -577,23 +604,23 @@
        
         make.left.equalTo(self).offset(10 *SIZE);
         make.top.equalTo(_positiveL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
-        make.height.mas_equalTo(170 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
+        make.height.mas_equalTo(100 *SIZE);
     }];
     
     [_backL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self).offset(10 *SIZE);
-        make.top.equalTo(_positiveImg.mas_bottom).offset(14 *SIZE);
+        make.left.equalTo(self).offset(160 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(14 *SIZE);
         make.width.mas_equalTo(100 *SIZE);
     }];
     
     [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.left.equalTo(self).offset(10 *SIZE);
+        make.left.equalTo(self).offset(160 *SIZE);
         make.top.equalTo(_backL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
-        make.height.mas_equalTo(170 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
+        make.height.mas_equalTo(100 *SIZE);
         
     }];
     
@@ -608,8 +635,8 @@
        
         make.left.equalTo(self).offset(10 *SIZE);
         make.top.equalTo(_otherL.mas_bottom).offset(10 *SIZE);
-        make.width.mas_equalTo(340 *SIZE);
-        make.height.mas_equalTo(170 *SIZE);
+        make.width.mas_equalTo(140 *SIZE);
+        make.height.mas_equalTo(100 *SIZE);
         make.bottom.equalTo(self).offset(-20 *SIZE);
     }];
 }

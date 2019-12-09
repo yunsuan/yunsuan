@@ -10,7 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^AreaCustomDetailHeaderTagBlock)(NSInteger index);
+
 @interface AreaCustomDetailHeader : UITableViewHeaderFooterView
+
+@property (nonatomic, copy) AreaCustomDetailHeaderTagBlock areaCustomDetailHeaderTagBlock;
+
+@property (nonatomic, strong) UIButton *projectBtn;
+
+@property (nonatomic, strong) UIButton *rentBtn;
+
+@property (nonatomic, strong) UIButton *secondBtn;
+
 
 @end
 

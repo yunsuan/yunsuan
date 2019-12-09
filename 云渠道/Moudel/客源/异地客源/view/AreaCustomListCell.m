@@ -78,6 +78,8 @@
         
         _areaL.text = [NSString stringWithFormat:@"面积：0㎡"];
     }
+    
+    _statusL.text = dataDic[@"current_state_name"];
 }
 
 - (void)initUI{
@@ -136,6 +138,8 @@
             case 7:
             {
                 _statusL = label;
+                _statusL.textAlignment = NSTextAlignmentRight;
+                _statusL.textColor = YJBlueBtnColor;
                 [self.contentView addSubview:_statusL];
                 break;
             }
@@ -160,11 +164,18 @@
         make.width.mas_equalTo(150 *SIZE);
     }];
     
-    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_statusL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
         make.top.equalTo(self.contentView).offset(10 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_phoneL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
+        make.top.equalTo(self->_nameL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(160 *SIZE);
     }];
     
     [_regionL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,7 +188,7 @@
     [_intentL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
-        make.top.equalTo(self->_nameL.mas_bottom).offset(10 *SIZE);
+        make.top.equalTo(self->_regionL.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
@@ -191,7 +202,7 @@
     [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
-        make.top.equalTo(self->_regionL.mas_bottom).offset(10 *SIZE);
+        make.top.equalTo(self->_totalL.mas_bottom).offset(10 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     

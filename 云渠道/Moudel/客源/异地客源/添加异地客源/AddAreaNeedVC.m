@@ -8,6 +8,8 @@
 
 #import "AddAreaNeedVC.h"
 
+#import "AreaCustomListVC.h"
+
 #import "DropDownBtn.h"
 #import "BorderTF.h"
 #import "TTRangeSlider.h"
@@ -178,7 +180,16 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    
+    if (btn.tag == 2) {
+        
+        HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];
+        view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+            
+            _houseTypeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+            _houseTypeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+        };
+        [self.view addSubview:view];
+    }
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
@@ -236,7 +247,17 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            
+            if (self.addAreaNeedVCBlock) {
+                
+                self.addAreaNeedVCBlock();
+            }
+            for (UIViewController *vc in self.navigationController.viewControllers) {
+                
+                if ([vc isKindOfClass:[AreaCustomListVC class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                }
+            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -382,7 +403,7 @@
         }else if (i == 2){
             
             _regionL = label;
-            _regionL.text = [NSString stringWithFormat:@"区域：%@%@",_DataDic[@"recommend_district_name"],_DataDic[@"recommend_city_name"]];
+            _regionL.text = [NSString stringWithFormat:@"区域：%@%@",_DataDic[@"recommend_city_name"],_DataDic[@"recommend_district_name"]];
             [_scrollView addSubview:_regionL];
         }else if (i == 3){
             

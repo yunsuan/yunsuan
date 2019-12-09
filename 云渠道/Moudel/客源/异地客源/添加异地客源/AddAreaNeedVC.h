@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^AddAreaNeedVCBlock)(void);
+
 @interface AddAreaNeedVC : BaseViewController
+
+@property (nonatomic, copy) AddAreaNeedVCBlock addAreaNeedVCBlock;
 
 - (instancetype)initWithDataDic:(NSDictionary *)dataDic;
 

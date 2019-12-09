@@ -169,7 +169,7 @@ UIGestureRecognizerDelegate>
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:cellIndentifier];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ZZQ_ScreenWidth, kDefaultCellHeight)];
-        label.textColor = CLBackColor;//[UIColor darkTextColor];
+        label.textColor = YJTitleLabColor;//[UIColor darkTextColor];
         label.font = [UIFont systemFontOfSize:20.f];
         label.textAlignment = NSTextAlignmentCenter;
         label.tag = 12345;

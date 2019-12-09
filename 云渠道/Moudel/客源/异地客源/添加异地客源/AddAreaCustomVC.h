@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^AddAreaCustomVCBlock)(void);
+
 @interface AddAreaCustomVC : BaseViewController
+
+@property (nonatomic, copy) AddAreaCustomVCBlock addAreaCustomVCBlock;
 
 @end
 

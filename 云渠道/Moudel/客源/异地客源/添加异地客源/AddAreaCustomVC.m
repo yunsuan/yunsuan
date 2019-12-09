@@ -548,6 +548,9 @@
     if (_img1.length) {
         
         img = [NSString stringWithFormat:@"%@",_img1];
+    }else{
+        
+        img = @" ";
     }
     if (_img2.length) {
         
@@ -558,6 +561,9 @@
             
             img = [NSString stringWithFormat:@"%@",_img2];
         }
+    }else{
+        
+        img = [NSString stringWithFormat:@"%@,%@",img,@" "];
     }
     if (_img3.length) {
         
@@ -568,12 +574,22 @@
             
             img = [NSString stringWithFormat:@"%@",_img3];
         }
+    }else{
+        
+        img = [NSString stringWithFormat:@"%@,%@",img,@" "];
     }
     if (img.length) {
         
         [tempDic setValue:img forKey:@"card_img"];
     }
     AddAreaNeedVC *nextVC = [[AddAreaNeedVC alloc] initWithDataDic:tempDic];
+    nextVC.addAreaNeedVCBlock = ^{
+        
+        if (self.addAreaCustomVCBlock) {
+            
+            self.addAreaCustomVCBlock();
+        }
+    };
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
@@ -590,51 +606,39 @@
 
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            NSDictionary *dic = @{@"head_img":resposeObject[@"data"]};
-            [BaseRequest POST:RentSurveyUpdateImg_URL parameters:dic success:^(id resposeObject) {
+//            NSDictionary *dic = @{@"head_img":resposeObject[@"data"]};
+            
+            if (_idx == 0) {
                 
-                if ([resposeObject[@"code"] integerValue] == 200) {
+                _img1 = resposeObject[@"data"];
+                [_addAreaCustomView.positiveImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img1]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     
-                    if (_idx == 0) {
+                    if (error) {
                         
-                        _img1 = resposeObject[@"data"];
-                        [_addAreaCustomView.positiveImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img1]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                            
-                            if (error) {
-                                
-                                _addAreaCustomView.positiveImg.image = [UIImage imageNamed:@"banner_default_2"];
-                            }
-                        }];
-                    }else if (_idx == 1){
-                        
-                        _img2 = resposeObject[@"data"];
-                        [_addAreaCustomView.positiveImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img2]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                            
-                            if (error) {
-                                
-                                _addAreaCustomView.positiveImg.image = [UIImage imageNamed:@"banner_default_2"];
-                            }
-                        }];
-                    }else{
-                        
-                        _img3 = resposeObject[@"data"];
-                        [_addAreaCustomView.positiveImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img3]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                            
-                            if (error) {
-                                
-                                _addAreaCustomView.positiveImg.image = [UIImage imageNamed:@"banner_default_2"];
-                            }
-                        }];
+                        _addAreaCustomView.positiveImg.image = [UIImage imageNamed:@"banner_default_2"];
                     }
-                }else{
+                }];
+            }else if (_idx == 1){
+                
+                _img2 = resposeObject[@"data"];
+                [_addAreaCustomView.backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img2]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     
-                    [self showContent:resposeObject[@"msg"]];
-                }
-            } failure:^(NSError *error) {
-               
-
-                [self showContent:@"网络错误"];
-            }];
+                    if (error) {
+                        
+                        _addAreaCustomView.backImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }else{
+                
+                _img3 = resposeObject[@"data"];
+                [_addAreaCustomView.otherImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_img3]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        _addAreaCustomView.otherImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -684,16 +688,18 @@
 
             if (image) {
                 
-                if (idx == 0) {
-                    
-                    strongSelf->_addAreaCustomView.positiveImg.image = image;
-                }else if (idx == 1){
-                    
-                    strongSelf->_addAreaCustomView.backImg.image = image;
-                }else{
-                    
-                    strongSelf->_addAreaCustomView.otherImg.image = image;
-                }
+                strongSelf->_idx = idx;
+                [strongSelf updateheadimgbyimg:image];
+//                if (idx == 0) {
+//
+////                    strongSelf->_addAreaCustomView.positiveImg.image = image;
+//                }else if (idx == 1){
+//
+////                    strongSelf->_addAreaCustomView.backImg.image = image;
+//                }else{
+//
+////                    strongSelf->_addAreaCustomView.otherImg.image = image;
+//                }
             }
         }];
     };
