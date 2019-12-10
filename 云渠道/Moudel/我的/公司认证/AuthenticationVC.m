@@ -15,6 +15,8 @@
 #import "DateChooseView.h"
 #import "MineVC.h"
 
+#import "SinglePickView.h"
+
 @interface AuthenticationVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     
@@ -30,7 +32,9 @@
     NSString *_role;
     NSString *_projectId;
     NSString *_department;
+    NSString *_departmentId;
     NSString *_position;
+    NSString *_positionId;
     NSString *_entryTime;
     NSString *_imgUrl;
 }
@@ -78,11 +82,15 @@
 
 @property (nonatomic, strong) UILabel *departTL;
 
+@property (nonatomic, strong) UILabel *departL;
+
 @property (nonatomic, strong) UIView *departLine;
 
 @property (nonatomic, strong) UIButton *departTextField;
 
 @property (nonatomic, strong) UILabel *positionTL;
+
+@property (nonatomic, strong) UILabel *positionL;
 
 @property (nonatomic, strong) UIView *positionLine;
 
@@ -137,11 +145,11 @@
         return;
     }
     
-    if (!_numTextField.text) {
-        
-        [self showContent:@"请输入工号"];
-        return;
-    }
+//    if (!_numTextField.text) {
+//
+//        [self showContent:@"请输入工号"];
+//        return;
+//    }
     
     //    if (!_role) {
     //
@@ -158,17 +166,17 @@
         }
     }
     
-//    if (!_departTextField.text) {
-//
-//        [self showContent:@"请输入所属部门"];
-//        return;
-//    }
-//
-//    if (!_positionTextField.text) {
-//
-//        [self showContent:@"请输入职位"];
-//        return;
-//    }
+    if (!_departmentId.length) {
+
+        [self showContent:@"请输入所属部门"];
+        return;
+    }
+
+    if (!_positionId.length) {
+
+        [self showContent:@"请输入职位"];
+        return;
+    }
     
     //    if (!_timeL.text) {
     //
@@ -184,13 +192,15 @@
     
     [dic setObject:_companyId forKey:@"company_id"];
     [dic setObject:_role forKey:@"role"];
-    [dic setObject:_numTextField.text forKey:@"work_code"];
+//    [dic setObject:_numTextField.text forKey:@"work_code"];
     if ([_roleL.text isEqualToString:@"到访确认人"] || [_roleL.text isEqualToString:@"确认单签字人"]) {
         
         [dic setObject:_projectId forKey:@"project_id"];
     }
     [dic setObject:_department forKey:@"department"];
+    [dic setObject:_departmentId forKey:@"department_id"];
     [dic setObject:_position forKey:@"position"];
+    [dic setObject:_positionId forKey:@"post_id"];
     if (_timeL.text.length == 0) {
         
 //        [dic setObject:@"" forKey:@"entry_time"];
@@ -262,7 +272,7 @@
             SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
             nextVC.selectCompanyVCBlock = ^(NSString *companyId, NSString *name) {
                 
-                self->_companyId = companyId;
+                self->_companyId = [NSString stringWithFormat:@"%@",companyId];
                 self->_companyL.text = name;
                 self->_projectL.text = @"";
                 self->_projectId = @"";
@@ -344,31 +354,76 @@
             break;
         }
         case 4:
-                {
-        //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
+        {
+                  
+            if (!_companyId.length) {
+                
+                [self showContent:@"请先选择公司"];
+                return;
+            }
+            [BaseRequest GET:@"agent/company/person/organize/list" parameters:@{@"company_id":_companyId} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-                    __weak __typeof(&*self)weakSelf = self;
-                    view.dateblock = ^(NSDate *date) {
+                    NSMutableArray *tempArr = [@[] mutableCopy];
+                    for (int i = 0; i < [resposeObject[@"data"] count]; i++) {
                         
-                        weakSelf.timeL.text = [weakSelf.formatter stringFromDate:date];
+                        NSDictionary *dic = resposeObject[@"data"][i];
+                        [tempArr addObject:@{@"id":dic[@"department_id"],@"param":dic[@"department_name"]}];
+                    }
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        
+                        _departL.text = [NSString stringWithFormat:@"%@",MC];
+                        _departmentId = [NSString stringWithFormat:@"%@",ID];
+                        _department = [NSString stringWithFormat:@"%@",MC];
                     };
-                    [[[UIApplication sharedApplication] keyWindow] addSubview:view];
-                    break;
+                    [self.view addSubview:view];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
                 }
-        case 5:
-                        {
-                //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
-                            
-                            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
-                            __weak __typeof(&*self)weakSelf = self;
-                            view.dateblock = ^(NSDate *date) {
-                                
-                                weakSelf.timeL.text = [weakSelf.formatter stringFromDate:date];
-                            };
-                            [[[UIApplication sharedApplication] keyWindow] addSubview:view];
-                            break;
-                        }
+            } failure:^(NSError *error) {
+               
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
+        case 5:{
+            
+            if (!_departmentId.length) {
+                
+                [self showContent:@"请先选择部门"];
+                return;
+            }
+            [BaseRequest GET:@"agent/company/person/organize/post/list" parameters:@{@"department_id":_departmentId} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    NSMutableArray *tempArr = [@[] mutableCopy];
+                    for (int i = 0; i < [resposeObject[@"data"] count]; i++) {
+                        
+                        NSDictionary *dic = resposeObject[@"data"][i];
+                        [tempArr addObject:@{@"id":dic[@"post_id"],@"param":dic[@"post_name"]}];
+                    }
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        
+                        _positionL.text = [NSString stringWithFormat:@"%@",MC];
+                        _positionId = [NSString stringWithFormat:@"%@",ID];
+                        _position = [NSString stringWithFormat:@"%@",MC];
+                    };
+                    [self.view addSubview:view];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+               
+                [self showContent:@"网络错误"];
+            }];
+            break;
+        }
         case 6:
         {
 //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
@@ -656,16 +711,16 @@
             }
             case 1:
             {
-                UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
-                textFiled.textAlignment = NSTextAlignmentRight;
-                _numTextField = textFiled;
-                _numTextField.keyboardType = UIKeyboardTypeNumberPad;
-                [_whiteView addSubview:_numTextField];
-                
-                _numTL = label;
-                [_whiteView addSubview:_numTL];
-                _numLine = line;
-                [_whiteView addSubview:_numLine];
+//                UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
+//                textFiled.textAlignment = NSTextAlignmentRight;
+//                _numTextField = textFiled;
+//                _numTextField.keyboardType = UIKeyboardTypeNumberPad;
+//                [_whiteView addSubview:_numTextField];
+//
+//                _numTL = label;
+//                [_whiteView addSubview:_numTL];
+//                _numLine = line;
+//                [_whiteView addSubview:_numLine];
                 
                 break;
             }
@@ -712,6 +767,8 @@
                 _departTextField = button;
                 [_whiteView addSubview:_departTextField];
                 
+                _departL = label1;
+                [_whiteView addSubview:_departL];
                 _departTL = label;
                 [_whiteView addSubview:_departTL];
                 _departLine = line;
@@ -726,6 +783,8 @@
                 _positionTextField = button;
                 [_whiteView addSubview:_positionTextField];
                 
+                _positionL = label1;
+                [_whiteView addSubview:_positionL];
                 _positionTL = label;
                 [_whiteView addSubview:_positionTL];
                 _positionLine = line;
@@ -781,47 +840,47 @@
         make.height.mas_equalTo(SIZE);
     }];
     
-    [_numTL mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_numTL mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
+//        make.top.equalTo(self->_compantLine.mas_bottom).offset(16 *SIZE);
+//        make.width.mas_equalTo(100 *SIZE);
+//    }];
+//
+//    [_numTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+//        make.top.equalTo(self->_compantLine.mas_bottom).offset(0 *SIZE);
+//        make.width.mas_equalTo(220 *SIZE);
+//        make.height.mas_equalTo(49 *SIZE);
+//    }];
+//
+//    [_numLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
+//        make.top.equalTo(self->_numTextField.mas_bottom).offset(SIZE);
+//        make.width.mas_equalTo(360 *SIZE);
+//        make.height.mas_equalTo(SIZE);
+//    }];
+    
+    [_roleTL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_whiteView).offset(9 *SIZE);
         make.top.equalTo(self->_compantLine.mas_bottom).offset(16 *SIZE);
         make.width.mas_equalTo(100 *SIZE);
     }];
     
-    [_numTextField mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
-        make.top.equalTo(self->_compantLine.mas_bottom).offset(0 *SIZE);
-        make.width.mas_equalTo(220 *SIZE);
-        make.height.mas_equalTo(49 *SIZE);
-    }];
-    
-    [_numLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_whiteView).offset(0 *SIZE);
-        make.top.equalTo(self->_numTextField.mas_bottom).offset(SIZE);
-        make.width.mas_equalTo(360 *SIZE);
-        make.height.mas_equalTo(SIZE);
-    }];
-    
-    [_roleTL mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self->_whiteView).offset(9 *SIZE);
-        make.top.equalTo(self->_numLine.mas_bottom).offset(16 *SIZE);
-        make.width.mas_equalTo(100 *SIZE);
-    }];
-    
     [_roleL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_whiteView).offset(110 *SIZE);
-        make.top.equalTo(self->_numLine.mas_bottom).offset(16 *SIZE);
+        make.top.equalTo(self->_compantLine.mas_bottom).offset(16 *SIZE);
         make.width.mas_equalTo(220 *SIZE);
     }];
     
     [_roleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_whiteView).offset(0 *SIZE);
-        make.top.equalTo(self->_numLine.mas_bottom).offset(0 *SIZE);
+        make.top.equalTo(self->_compantLine.mas_bottom).offset(0 *SIZE);
         make.width.mas_equalTo(360 *SIZE);
         make.height.mas_equalTo(49 *SIZE);
     }];
@@ -871,6 +930,13 @@
         make.width.mas_equalTo(100 *SIZE);
     }];
     
+    [_departL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_projectLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
+    }];
+    
     [_departTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self->_whiteView).offset(110 *SIZE);
@@ -892,6 +958,13 @@
         make.left.equalTo(self->_whiteView).offset(9 *SIZE);
         make.top.equalTo(self->_departLine.mas_bottom).offset(16 *SIZE);
         make.width.mas_equalTo(100 *SIZE);
+    }];
+    
+    [_positionL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self->_whiteView).offset(110 *SIZE);
+        make.top.equalTo(self->_departLine.mas_bottom).offset(16 *SIZE);
+        make.width.mas_equalTo(220 *SIZE);
     }];
     
     [_positionTextField mas_makeConstraints:^(MASConstraintMaker *make) {

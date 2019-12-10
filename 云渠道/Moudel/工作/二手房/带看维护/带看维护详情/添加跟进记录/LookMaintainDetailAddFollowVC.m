@@ -20,13 +20,14 @@
 
 #import "DropDownBtn.h"
 #import "BorderTF.h"
+#import "TTRangeSlider.h"
 
 #import "LookMaintainDetailAddFollowCell.h"
 #import "CompleteSurveyCollCell.h"
 #import "BlueTitleMoreHeader.h"
 #import "StoreViewCollCell.h"
 
-@interface LookMaintainDetailAddFollowVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
+@interface LookMaintainDetailAddFollowVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,TTRangeSliderDelegate>
 {
     
     NSInteger _way;
@@ -77,11 +78,11 @@
 
 @property (nonatomic, strong) UILabel *priceL;
 
-@property (nonatomic, strong) BorderTF *priceBtn;
+@property (nonatomic, strong) TTRangeSlider *priceBtn;
 
 @property (nonatomic, strong) UILabel *areaL;
 
-@property (nonatomic, strong) BorderTF *areaBtn;
+@property (nonatomic, strong) TTRangeSlider *areaBtn;
 
 @property (nonatomic, strong) UILabel *purposeL;
 
@@ -445,17 +446,17 @@
         [dic setObject:@"1" forKey:@"type"];
         
         
-        if ([self isEmpty:_priceBtn.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
-            return;
-        }
-        
-        if ([self isEmpty:_areaBtn.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
-            return;
-        }
+//        if ([self isEmpty:_priceBtn.textfield.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
+//            return;
+//        }
+//
+//        if ([self isEmpty:_areaBtn.textfield.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
+//            return;
+//        }
         _payWay = @"";
         for (int i = 0; i < _paySelectArr.count; i++) {
             
@@ -602,8 +603,10 @@
             }
         }
         [dic setObject:_payWay forKey:@"pay_type"];
-        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
-        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
+        dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
+//        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
+        dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
+//        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
         [dic setObject:_timeContentL.text forKey:@"follow_time"];
         [dic setObject:_contentTV.text forKey:@"follow_comment"];
         [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
@@ -678,17 +681,17 @@
         [dic setObject:@"1" forKey:@"type"];
         
         
-        if ([self isEmpty:_priceBtn.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
-            return;
-        }
-        
-        if ([self isEmpty:_areaBtn.textfield.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
-            return;
-        }
+//        if ([self isEmpty:_priceBtn.textfield.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
+//            return;
+//        }
+//
+//        if ([self isEmpty:_areaBtn.textfield.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
+//            return;
+//        }
         _payWay = @"";
         for (int i = 0; i < _paySelectArr.count; i++) {
             
@@ -850,8 +853,10 @@
             }
         }
         [dic setObject:_payWay forKey:@"pay_type"];
-        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
-        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
+         dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
+//        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
+        dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
+//        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
         [dic setObject:_timeContentL.text forKey:@"follow_time"];
         [dic setObject:_contentTV.text forKey:@"follow_comment"];
         [dic setObject:_nextTimeBtn.content.text forKey:@"next_follow_time"];
@@ -911,6 +916,30 @@
             [self.navigationController pushViewController:nextVC animated:YES];
         }
     }
+}
+
+- (void)rangeSlider:(TTRangeSlider *)sender didChangeSelectedMinimumValue:(float)selectedMinimum andMaximumValue:(float)selectedMaximum{
+    
+//    if (sender == _priceBtn) {
+//
+//        if (selectedMaximum == 1000) {
+//
+//            _priceBtn.maxFormatter.positiveSuffix = @"万以上";
+//        }else{
+//
+//            _priceBtn.maxFormatter.positiveSuffix = @"万";
+//        }
+//        _priceBtn.minFormatter.positiveSuffix = @"万";
+//    }else{
+//
+//        if (selectedMaximum == 1000) {
+//
+//            _areaBtn.maxFormatter.positiveSuffix = @"㎡以上";
+//        }else{
+//
+//            _areaBtn.maxFormatter.positiveSuffix = @"㎡";
+//        }
+//    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -1260,15 +1289,30 @@
         BorderTF *tf = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 257 *SIZE, 33 *SIZE)];
         if (i == 0) {
             
-            _priceBtn = tf;
-            _priceBtn.unitL.text = @"万";
-            _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+//            _priceBtn = tf;
+//            _priceBtn.unitL.text = @"万";
+//            _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            _priceBtn = [[TTRangeSlider alloc] initWithFrame:tf.frame];
+            _priceBtn.minValue = 0;
+            _priceBtn.maxValue = 1000;
+            _priceBtn.delegate = self;
+            NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
+            customFormatter.positiveSuffix = @"万";
+            _priceBtn.maxFormatter = customFormatter;
+            _priceBtn.minFormatter = customFormatter;
             [_contentView addSubview:_priceBtn];
         }else if (i == 1){
             
-            _areaBtn = tf;
-            _areaBtn.unitL.text = @"㎡";
-            _areaBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+//            _areaBtn = tf;
+//            _areaBtn.unitL.text = @"㎡";
+//            _areaBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+            _areaBtn = [[TTRangeSlider alloc] initWithFrame:tf.frame];
+            _areaBtn.minValue = 0;
+            _areaBtn.maxValue = 500;
+            NSNumberFormatter *customFormatter = [[NSNumberFormatter alloc] init];
+            customFormatter.positiveSuffix = @"㎡";
+            _areaBtn.maxFormatter = customFormatter;
+            _areaBtn.minFormatter = customFormatter;
             [_contentView addSubview:_areaBtn];
         }else{
             
@@ -1473,11 +1517,11 @@
     }
     if ([_dataDic[@"total_price"] length]) {
         
-        _priceBtn.textfield.text = _dataDic[@"total_price"];
+//        _priceBtn.textfield.text = _dataDic[@"total_price"];
     }
     if ([_dataDic[@"area"] length]) {
         
-        _areaBtn.textfield.text = _dataDic[@"area"];
+//        _areaBtn.textfield.text = _dataDic[@"area"];
     }
     if ([_dataDic[@"used_years"] length]) {
         
@@ -1591,18 +1635,7 @@
     if ([_dataDic[@"house_type"] length]) {
         
         _houseBtn.content.text = [NSString stringWithFormat:@"%@",_dataDic[@"house_type"]];
-        _houseBtn->str = [NSString stringWithFormat:@"%@,%@,%@",[_dataDic[@"house_type"] substringWithRange:NSMakeRange(0, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(2, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(4, 1)]];
-//        NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;
-//        NSDictionary *dic =  [configdic valueForKey:[NSString stringWithFormat:@"%d",9]];
-//        NSArray *typeArr = dic[@"param"];
-//        for (NSDictionary *dic in typeArr) {
-//
-//            if ([[NSString stringWithFormat:@"%@",dic[@"param"]] isEqualToString:_dataDic[@"house_type"]]) {
-//
-////                _houseBtn.content.text = [NSString stringWithFormat:@"%@",dic[@"param"]];
-////                _houseBtn->str = [NSString stringWithFormat:@"%@",dic[@"id"]];
-//            }
-//        }
+//        _houseBtn->str = [NSString stringWithFormat:@"%@,%@,%@",[_dataDic[@"house_type"] substringWithRange:NSMakeRange(0, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(2, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(4, 1)]];
     }
 }
 

@@ -43,7 +43,7 @@
 -(void)initDataSouce
 {
     
-    _data = @[[NSString stringWithFormat:@"姓名：%@",[UserInfoModel defaultModel].name],[NSString stringWithFormat:@"公司名称：%@",_dataDic[@"company_name"]],[NSString stringWithFormat:@"工号：%@",_dataDic[@"work_code"]],[NSString stringWithFormat:@"部门：%@",_dataDic[@"department"]],[NSString stringWithFormat:@"位置：%@",_dataDic[@"position"]],[NSString stringWithFormat:@"申请时间：%@",_dataDic[@"create_time"]]];
+    _data = @[[NSString stringWithFormat:@"姓名：%@",[UserInfoModel defaultModel].name],[NSString stringWithFormat:@"公司名称：%@",_dataDic[@"company_name"]]/*,[NSString stringWithFormat:@"工号：%@",_dataDic[@"work_code"]]*/,[NSString stringWithFormat:@"部门：%@",_dataDic[@"department"]],[NSString stringWithFormat:@"位置：%@",_dataDic[@"position"]],[NSString stringWithFormat:@"申请时间：%@",_dataDic[@"create_time"]]];
     
 }
 
@@ -78,7 +78,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return 6;
+    return 5;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
