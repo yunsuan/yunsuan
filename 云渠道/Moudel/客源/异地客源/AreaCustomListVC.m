@@ -160,6 +160,10 @@
     AddAreaCustomVC *next_vc = [[AddAreaCustomVC alloc]init];
 //    next_vc.isSelect = self.isSelect;
 //    next_vc.status = self.status + 1;
+    next_vc.addAreaCustomVCBlock = ^{
+        
+        [self RequestMethod];
+    };
     [self.navigationController pushViewController:next_vc animated:YES];
 }
 

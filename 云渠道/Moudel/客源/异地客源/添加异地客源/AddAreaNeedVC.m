@@ -243,6 +243,7 @@
         [_DataDic setValue:_houseTypeBtn->str forKey:@"house_type"];
     }
     
+    
     [BaseRequest POST:ClientOtherBuyAdd_URL parameters:_DataDic success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {

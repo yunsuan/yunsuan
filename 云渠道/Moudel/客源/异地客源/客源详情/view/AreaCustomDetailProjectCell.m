@@ -143,6 +143,7 @@
     _statuL = [[UILabel alloc] init];
     _statuL.textColor = COLOR(27, 152, 255, 1);
     _statuL.font = [UIFont systemFontOfSize:12*SIZE];
+    _statuL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_statuL];
     
     _recommendL = [[UILabel alloc] init];
@@ -194,9 +195,9 @@
     
     [_statuL mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(327 *SIZE);
+        make.left.equalTo(self.contentView).offset(277 *SIZE);
         make.top.equalTo(self.contentView).offset(16 *SIZE);
-        make.width.mas_equalTo(50 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
         make.height.mas_equalTo(17 *SIZE);
     }];
     

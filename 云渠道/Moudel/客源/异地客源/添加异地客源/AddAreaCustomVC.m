@@ -74,13 +74,30 @@
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            _ruleL.text = [NSString stringWithFormat:@"%@",resposeObject[@"data"][@"recommend_desc"]];
+            if ([resposeObject[@"data"] count]) {
+                
+                _ruleL.text = @"";
+                NSArray *arr = resposeObject[@"data"];//[resposeObject[@"data"] componentsSeparatedByString:@","];
+                for (int i = 0; i < arr.count; i++) {
+                    
+                    if (i == 0) {
+                        
+                        _ruleL.text = [NSString stringWithFormat:@"%@",arr[i]];
+                    }else{
+                     
+                        _ruleL.text = [NSString stringWithFormat:@"%@\n%@",_ruleL.text,arr[i]];
+                    }
+                }
+                
+            }
         }else{
             
+            _ruleL.text = @" ";
 //            [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
+        _ruleL.text = @" ";
         [self showContent:@"网络错误"];
     }];
 }
@@ -527,10 +544,23 @@
         
         [tempDic setValue:_addAreaCustomView.cardTypeBtn->str forKey:@"card_type"];
         [tempDic setValue:_addAreaCustomView.cardNumTF.textfield.text forKey:@"card_id"];
+    }else{
+        
+//        [tempDic setValue:@" " forKey:@"card_type"];
+//        [tempDic setValue:@" " forKey:@"card_id"];
     }
     if (_addAreaCustomView.birthBtn.content.text.length) {
         
-        [tempDic setValue:_addAreaCustomView.birthBtn.content.text forKey:@"birth"];
+        if (![_addAreaCustomView.birthBtn.content.text isEqualToString:@"0000-00-00"]) {
+            
+            [tempDic setValue:_addAreaCustomView.birthBtn.content.text forKey:@"birth"];
+        }else{
+        
+            [tempDic setValue:@" " forKey:@"birth"];
+        }
+    }else{
+        
+        [tempDic setValue:@" " forKey:@"birth"];
     }
     if (_addAreaCustomView.addressBtn.content.text.length) {
         
@@ -541,6 +571,9 @@
             
             [tempDic setValue:_addAreaCustomView.addressTF.textfield.text forKey:@"address"];
         }
+    }else{
+        
+        
     }
     
     NSString *img = @"";
@@ -655,18 +688,21 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"添加客户";
     
-    _scroll = [[UIScrollView alloc] init];//WithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT)];
+    _scroll = [[UIScrollView alloc] init];
     _scroll.delegate = self;
     [self.view addSubview:_scroll];
     
     _header = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     _header.titleL.text = @"基本信息";
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(270 *SIZE, 5 *SIZE, 80 *SIZE, 30 *SIZE);
+    btn.frame = CGRectMake(250 *SIZE, 5 *SIZE, 100 *SIZE, 30 *SIZE);
     [btn setTitle:@"选择已有客户" forState:UIControlStateNormal];
+    [btn setBackgroundColor:YJBlueBtnColor];
     btn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
-    [btn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
+    [btn setTitleColor:CLWhiteColor forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(ActionSelectBtn:) forControlEvents:UIControlEventTouchUpInside];
+    btn.layer.cornerRadius = 3 *SIZE;
+    btn.clipsToBounds = YES;
     [_header addSubview:btn];
     [_scroll addSubview:_header];
     
@@ -690,16 +726,6 @@
                 
                 strongSelf->_idx = idx;
                 [strongSelf updateheadimgbyimg:image];
-//                if (idx == 0) {
-//
-////                    strongSelf->_addAreaCustomView.positiveImg.image = image;
-//                }else if (idx == 1){
-//
-////                    strongSelf->_addAreaCustomView.backImg.image = image;
-//                }else{
-//
-////                    strongSelf->_addAreaCustomView.otherImg.image = image;
-//                }
             }
         }];
     };

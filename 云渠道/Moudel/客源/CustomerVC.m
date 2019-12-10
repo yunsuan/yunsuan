@@ -39,8 +39,8 @@
 - (void)initDataSource{
     
     _titleArr = @[@"新房客户",@"二手房客户",@"租房客户",@"异地客户"];
-    _imgArr = @[@"新房",@"二手房",@"租房",@"租房"];
-    _dataArr = @[@"",@"",@"",@"租房"];
+    _imgArr = @[@"新房",@"二手房",@"租房",@"新房"];
+    _dataArr = @[@"",@"",@"",@""];
 }
 
 - (void)RequestMethod{
@@ -51,7 +51,7 @@
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue] == 200) {
             
-            _dataArr = @[[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"project"][@"today"],resposeObject[@"data"][@"project"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"house"][@"today"],resposeObject[@"data"][@"house"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]]];
+            _dataArr = @[[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"project"][@"today"],resposeObject[@"data"][@"project"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"house"][@"today"],resposeObject[@"data"][@"house"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"rent"][@"today"],resposeObject[@"data"][@"rent"][@"total"]],[NSString stringWithFormat:@"今日新增%@人 累计%@人",resposeObject[@"data"][@"other"][@"today"],resposeObject[@"data"][@"other"][@"total"]]];
             [_table reloadData];
         }else{
             

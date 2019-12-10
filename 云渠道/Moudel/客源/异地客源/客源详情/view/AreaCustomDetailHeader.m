@@ -58,7 +58,7 @@
         }else if (i == 1){
             
             _rentBtn = btn;
-            [self.contentView addSubview:_rentBtn];
+//            [self.contentView addSubview:_rentBtn];
         }else{
             
             _secondBtn = btn;
@@ -75,25 +75,25 @@
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(self.contentView).offset(0 *SIZE);
-        make.width.mas_equalTo(119 *SIZE);
+        make.width.mas_equalTo(179 *SIZE);
         make.height.mas_equalTo(40 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0);
     }];
     
-    [_rentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.contentView).offset(120 *SIZE);
-        make.top.equalTo(self.contentView).offset(0 *SIZE);
-        make.width.mas_equalTo(119 *SIZE);
-        make.height.mas_equalTo(40 *SIZE);
-        make.bottom.equalTo(self.contentView).offset(0);
-    }];
+//    [_rentBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(self.contentView).offset(120 *SIZE);
+//        make.top.equalTo(self.contentView).offset(0 *SIZE);
+//        make.width.mas_equalTo(119 *SIZE);
+//        make.height.mas_equalTo(40 *SIZE);
+//        make.bottom.equalTo(self.contentView).offset(0);
+//    }];
     
     [_secondBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self.contentView).offset(240 *SIZE);
+        make.left.equalTo(self.contentView).offset(180 *SIZE);
         make.top.equalTo(self.contentView).offset(0 *SIZE);
-        make.width.mas_equalTo(120 *SIZE);
+        make.width.mas_equalTo(180 *SIZE);
         make.height.mas_equalTo(40 *SIZE);
         make.bottom.equalTo(self.contentView).offset(0);
     }];

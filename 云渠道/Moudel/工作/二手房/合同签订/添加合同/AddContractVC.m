@@ -12,6 +12,8 @@
 #import "ChooseCustomerVC.h"
 
 #import "LookMaintainVC.h"
+#import "RoomMaintainVC.h"
+#import "ContractSignVC.h"
 #import "SelectCustomVC.h"
 
 #import "BlueTitleMoreHeader.h"
@@ -249,6 +251,14 @@
             for (UIViewController *vc in self.navigationController.viewControllers) {
                 
                 if ([vc isKindOfClass:[LookMaintainVC class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                }
+                if ([vc isKindOfClass:[RoomMaintainVC class]]) {
+                    
+                    [self.navigationController popToViewController:vc animated:YES];
+                }
+                if ([vc isKindOfClass:[ContractSignVC class]]) {
                     
                     [self.navigationController popToViewController:vc animated:YES];
                 }

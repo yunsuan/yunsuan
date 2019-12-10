@@ -50,13 +50,13 @@
     _regionL.text = [NSString stringWithFormat:@"推荐区域：%@",dataDic[@"city_name"]];
     if ([dataDic[@"price_max"] length] && [dataDic[@"price_min"] length]) {
         
-        _totalL.text = [NSString stringWithFormat:@"总价：%@-%@元",dataDic[@"price_min"],dataDic[@"price_max"]];
+        _totalL.text = [NSString stringWithFormat:@"总价：%@-%@万",dataDic[@"price_min"],dataDic[@"price_max"]];
     }else if ([dataDic[@"price_min"] length]){
 
-        _totalL.text = [NSString stringWithFormat:@"总价：%@元",dataDic[@"price_min"]];
+        _totalL.text = [NSString stringWithFormat:@"总价：%@万",dataDic[@"price_min"]];
     }else if ([dataDic[@"price_max"] length]){
         
-        _totalL.text = [NSString stringWithFormat:@"总价：%@元",dataDic[@"price_max"]];
+        _totalL.text = [NSString stringWithFormat:@"总价：%@万",dataDic[@"price_max"]];
     }else{
         
         _totalL.text = [NSString stringWithFormat:@"总价：0元"];

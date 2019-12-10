@@ -10,11 +10,14 @@
 
 #import "LookMaintainDetailLookRecordVC.h"
 
-#import "UnconfirmDetailVC.h"
-#import "ValidVC.h"
-#import "InvalidVC.h"
+#import "AreaUncomfirmVC.h"
+#import "AreaValidVC.h"
+#import "AreaInvalidVC.h"
+#import "AreaDealVC.h"
 
-#import "BaseHeader.h"
+#import "AreaCustomRuleView.h"
+
+#import "BlueTitleMoreHeader.h"
 #import "AreaCustomDetailHeader.h"
 
 #import "AreaCustomCollCell.h"
@@ -85,7 +88,7 @@
             NSDateFormatter *fortmatter = [[NSDateFormatter alloc] init];
             [fortmatter setDateFormat:@"YYYY-MM-dd"];
             
-            _contentArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"名称：%@",resposeObject[@"data"][@"client"][@"name"]],[NSString stringWithFormat:@"性别：%@",[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 1?@"男":[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 2?@"女":@""],[NSString stringWithFormat:@"年龄：%ld岁",[self getYearFromDate:[fortmatter dateFromString:resposeObject[@"data"][@"client"][@"birth"]] withDate2:[NSDate date]] / 12],[NSString stringWithFormat:@"出生年月：%@",resposeObject[@"data"][@"client"][@"birth"]],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client"][@"tel"]],[NSString stringWithFormat:@"证件类型：%@",resposeObject[@"data"][@"client"][@"card_type"]],[NSString stringWithFormat:@"证件号：%@",resposeObject[@"data"][@"client"][@"card_id"]],[NSString stringWithFormat:@"地址：%@%@%@",resposeObject[@"data"][@"client"][@"province_name"],resposeObject[@"data"][@"client"][@"city_name"],resposeObject[@"data"][@"client"][@"district_name"]],[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][0]],[NSString stringWithFormat:@"身份证背面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][1]],[NSString stringWithFormat:@"其他证明,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][2]]]];
+            _contentArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"名称：%@",resposeObject[@"data"][@"client"][@"name"]],[NSString stringWithFormat:@"性别：%@",[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 1?@"男":[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 2?@"女":@""],[NSString stringWithFormat:@"出生年月：%@",(resposeObject[@"data"][@"client"][@"birth"] && ![resposeObject[@"data"][@"client"][@"birth"] isKindOfClass:[NSNull class]])?resposeObject[@"data"][@"client"][@"birth"]:@""],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client"][@"tel"]],[NSString stringWithFormat:@"证件类型：%@",resposeObject[@"data"][@"client"][@"card_type"]],[NSString stringWithFormat:@"证件号：%@",resposeObject[@"data"][@"client"][@"card_id"]],[NSString stringWithFormat:@"地址：%@%@%@",resposeObject[@"data"][@"client"][@"province_name"],resposeObject[@"data"][@"client"][@"city_name"],resposeObject[@"data"][@"client"][@"district_name"]],[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][0]],[NSString stringWithFormat:@"身份证背面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][1]],[NSString stringWithFormat:@"其他证明,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][2]]]];
             _projectArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"recommend"][@"project"]];
             _dataArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"接待区域：%@",resposeObject[@"data"][@"butter"][@"recommend_district"]],[NSString stringWithFormat:@"接待公司名称：%@",resposeObject[@"data"][@"butter"][@"butter_company_name"]]]];
             _disabledReason = resposeObject[@"data"][@"client"][@"disabled_state"];
@@ -105,7 +108,41 @@
     }];
 }
 
-
+- (void)RuleRequest{
+    
+    [BaseRequest GET:DistrictRuleDetail_URL parameters:@{@"district":_dataDic[@"butter"][@"district_code"]} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] count]) {
+            
+                NSString *str = @"";
+                NSArray *arr = resposeObject[@"data"];//[resposeObject[@"data"] componentsSeparatedByString:@","];
+                for (int i = 0; i < arr.count; i++) {
+                    
+                    if (i == 0) {
+                        
+                        str = [NSString stringWithFormat:@"%@",arr[i]];
+                    }else{
+                     
+                        str = [NSString stringWithFormat:@"%@\n%@",str,arr[i]];
+                    }
+                }
+                AreaCustomRuleView *view = [[AreaCustomRuleView alloc] initWithFrame:self.view.bounds];
+                view.ruleL.text = str;
+                [self.view addSubview:view];
+            }
+        }else{
+            
+//            _ruleL.text = @" ";
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+//        _ruleL.text = @" ";
+        [self showContent:@"网络错误"];
+    }];
+}
 - (NSInteger)getYearFromDate:(NSDate *)date1 withDate2:(NSDate *)date2{
     
     //创建两个日期
@@ -167,19 +204,34 @@
     
     if (section < 2) {
 
-        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+        BlueTitleMoreHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BlueTitleMoreHeader"];
         if (!header) {
             
-            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+            header = [[BlueTitleMoreHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
         }
         
         if (section == 0) {
             
             header.titleL.text = @"基本信息";
+            header.moreBtn.hidden = YES;
         }else{
             
             header.titleL.text = @"接待信息";
+            header.moreBtn.hidden = NO;
         }
+        
+        header.moreBtn.frame = CGRectMake(250 *SIZE, 5 *SIZE, 100 *SIZE, 30 *SIZE);
+        [header.moreBtn setTitle:@"区域规则" forState:UIControlStateNormal];
+        [header.moreBtn setBackgroundColor:YJBlueBtnColor];
+        header.moreBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+        [header.moreBtn setTitleColor:CLWhiteColor forState:UIControlStateNormal];
+        header.moreBtn.layer.cornerRadius = 3 *SIZE;
+        header.moreBtn.clipsToBounds = YES;
+        
+        header.blueTitleMoreHeaderBlock = ^{
+            
+            [self RuleRequest];
+        };
         
         return header;
     }
@@ -195,6 +247,9 @@
     [header.rentBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     [header.secondBtn setBackgroundColor:COLOR(219, 219, 219, 1)];
     [header.secondBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+    
+    [header.projectBtn setTitle:[NSString stringWithFormat:@"新房 %lu",(unsigned long)_projectArr.count] forState:UIControlStateNormal];
+    [header.secondBtn setTitle:[NSString stringWithFormat:@"二手房 %lu",(unsigned long)_secondArr.count] forState:UIControlStateNormal];
     
     if (_idx == 0) {
         
@@ -279,7 +334,14 @@
             [tempDic setValue:_dataDic[@"client"][@"sex"] forKey:@"sex"];
             [tempDic setValue:_dataDic[@"client"][@"card_type"] forKey:@"card_type"];
             [tempDic setValue:_dataDic[@"client"][@"card_id"] forKey:@"card_id"];
-            [tempDic setValue:_dataDic[@"client"][@"birth"] forKey:@"birth"];
+            if ((_dataDic[@"client"][@"birth"] && ![_dataDic[@"client"][@"birth"] isKindOfClass:[NSNull class]])) {
+                
+                [tempDic setValue:_dataDic[@"client"][@"birth"] forKey:@"birth"];
+            }else{
+                
+                [tempDic setValue:@" " forKey:@"birth"];
+            }
+            
             [tempDic setValue:_dataDic[@"client"][@"province"] forKey:@"province"];
             [tempDic setValue:_dataDic[@"client"][@"city"] forKey:@"city"];
             [tempDic setValue:_dataDic[@"client"][@"district"] forKey:@"district"];
@@ -298,17 +360,6 @@
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
                     [self RequestMethod];
-//                    if (self.addAreaNeedVCBlock) {
-//
-//                        self.addAreaNeedVCBlock();
-//                    }
-//                    for (UIViewController *vc in self.navigationController.viewControllers) {
-//
-//                        if ([vc isKindOfClass:[AreaCustomListVC class]]) {
-//
-//                            [self.navigationController popToViewController:vc animated:YES];
-//                        }
-//                    }
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -374,17 +425,28 @@
         
         if (_idx == 0) {
             
-            if ([_projectArr[indexPath.row][@"current_state_name"] isEqualToString:@"推荐"]) {
+            if ([_projectArr[indexPath.row][@"disabled_state"] integerValue] == 0) {
+                
+                if ([_projectArr[indexPath.row][@"current_state"] integerValue] == 0 || [_projectArr[indexPath.row][@"current_state"] integerValue] == 1) {
 
-                UnconfirmDetailVC *nextVC = [[UnconfirmDetailVC alloc] initWithString:_projectArr[indexPath.row][@"client_id"]];
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else if ([_projectArr[indexPath.row][@"current_state_name"] isEqualToString:@"到访"]){
+                    AreaUncomfirmVC *nextVC = [[AreaUncomfirmVC alloc] initWithString:_projectArr[indexPath.row][@"client_id"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else if ([_projectArr[indexPath.row][@"current_state"] integerValue] == 2 || [_projectArr[indexPath.row][@"current_state"] integerValue] == 3){
 
-                ValidVC *nextVC = [[ValidVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
-                [self.navigationController pushViewController:nextVC animated:YES];
+                    AreaValidVC *nextVC = [[AreaValidVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else if ([_projectArr[indexPath.row][@"current_state"] integerValue] == 4 || [_projectArr[indexPath.row][@"current_state"] integerValue] == 5 || [_projectArr[indexPath.row][@"current_state"] integerValue] == 6){
+
+                    AreaDealVC *nextVC = [[AreaDealVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+
+                    AreaInvalidVC *nextVC = [[AreaInvalidVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
             }else{
 
-                InvalidVC *nextVC = [[InvalidVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
+                AreaInvalidVC *nextVC = [[AreaInvalidVC alloc] initWithClientId:_projectArr[indexPath.row][@"client_id"]];
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }else{

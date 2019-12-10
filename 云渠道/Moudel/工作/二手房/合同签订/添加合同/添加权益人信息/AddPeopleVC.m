@@ -97,7 +97,7 @@
         return;
     }
     
-    if (!_certTypeBtn->str) {
+    if (!_certTypeBtn->str.length) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择证件编号"];
         return;

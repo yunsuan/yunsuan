@@ -80,13 +80,13 @@
 
 @property (nonatomic, strong) UIView *departLine;
 
-@property (nonatomic, strong) UITextField *departTextField;
+@property (nonatomic, strong) UIButton *departTextField;
 
 @property (nonatomic, strong) UILabel *positionTL;
 
 @property (nonatomic, strong) UIView *positionLine;
 
-@property (nonatomic, strong) UITextField *positionTextField;
+@property (nonatomic, strong) UIButton *positionTextField;
 
 @property (nonatomic, strong) UILabel *timeTL;
 
@@ -158,17 +158,17 @@
         }
     }
     
-    if (!_departTextField.text) {
-        
-        [self showContent:@"请输入所属部门"];
-        return;
-    }
-    
-    if (!_positionTextField.text) {
-        
-        [self showContent:@"请输入职位"];
-        return;
-    }
+//    if (!_departTextField.text) {
+//
+//        [self showContent:@"请输入所属部门"];
+//        return;
+//    }
+//
+//    if (!_positionTextField.text) {
+//
+//        [self showContent:@"请输入职位"];
+//        return;
+//    }
     
     //    if (!_timeL.text) {
     //
@@ -189,8 +189,8 @@
         
         [dic setObject:_projectId forKey:@"project_id"];
     }
-    [dic setObject:_departTextField.text forKey:@"department"];
-    [dic setObject:_positionTextField.text forKey:@"position"];
+    [dic setObject:_department forKey:@"department"];
+    [dic setObject:_position forKey:@"position"];
     if (_timeL.text.length == 0) {
         
 //        [dic setObject:@"" forKey:@"entry_time"];
@@ -343,18 +343,32 @@
             }
             break;
         }
-            //        case 4:
-            //        {
-            //            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
-            //            [self.navigationController pushViewController:nextVC animated:YES];
-            //            break;
-            //        }
-            //        case 5:
-            //        {
-            ////            SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
-            ////            [self.navigationController pushViewController:nextVC animated:YES];
-            //            break;
-            //        }
+        case 4:
+                {
+        //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
+                    
+                    DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                    __weak __typeof(&*self)weakSelf = self;
+                    view.dateblock = ^(NSDate *date) {
+                        
+                        weakSelf.timeL.text = [weakSelf.formatter stringFromDate:date];
+                    };
+                    [[[UIApplication sharedApplication] keyWindow] addSubview:view];
+                    break;
+                }
+        case 5:
+                        {
+                //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
+                            
+                            DateChooseView *view = [[DateChooseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, SCREEN_Height)];
+                            __weak __typeof(&*self)weakSelf = self;
+                            view.dateblock = ^(NSDate *date) {
+                                
+                                weakSelf.timeL.text = [weakSelf.formatter stringFromDate:date];
+                            };
+                            [[[UIApplication sharedApplication] keyWindow] addSubview:view];
+                            break;
+                        }
         case 6:
         {
 //            [[[UIApplication sharedApplication] keyWindow] addSubview:self.dateView];
@@ -695,7 +709,7 @@
                 
                 UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
                 textFiled.textAlignment = NSTextAlignmentRight;
-                _departTextField = textFiled;
+                _departTextField = button;
                 [_whiteView addSubview:_departTextField];
                 
                 _departTL = label;
@@ -709,7 +723,7 @@
                 
                 UITextField *textFiled = [[UITextField alloc] initWithFrame:CGRectMake(100 *SIZE, 50 *SIZE * i, 230 *SIZE, 49 *SIZE)];
                 textFiled.textAlignment = NSTextAlignmentRight;
-                _positionTextField = textFiled;
+                _positionTextField = button;
                 [_whiteView addSubview:_positionTextField];
                 
                 _positionTL = label;
