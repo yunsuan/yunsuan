@@ -162,7 +162,7 @@
     
     cell.customLookConfirmCellBlock = ^(NSInteger index) {
         
-        LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[index][@"take_id"]];
+        LookMaintainDetailVC *nextVC = [[LookMaintainDetailVC alloc] initWithTakeId:_dataArr[indexPath.row][@"take_id"]];
         nextVC.edit = [NSString stringWithFormat:@"%@",_dataArr[index][@"is_edit"]];
         [self.navigationController pushViewController:nextVC animated:YES];
     };

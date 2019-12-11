@@ -88,7 +88,10 @@
     
     [cell.bigImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_imgArr[indexPath.item][@"param"]]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
        
-        cell.bigImg.image = [UIImage imageNamed:@"banner_default_2"];
+        if (error) {
+            
+            cell.bigImg.image = [UIImage imageNamed:@"banner_default_2"];
+        }
     }];
     
     return cell;

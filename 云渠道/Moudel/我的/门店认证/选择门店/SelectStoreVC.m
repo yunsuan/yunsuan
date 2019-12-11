@@ -19,6 +19,8 @@
 
 {
     
+    NSString *_companyId;
+    
     NSString *_province;
     NSString *_city;
     NSString *_area;
@@ -47,6 +49,16 @@
 @end
 
 @implementation SelectStoreVC
+
+- (instancetype)initWithCompanyId:(NSString *)companyId
+{
+    self = [super init];
+    if (self) {
+        
+        _companyId = companyId;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -138,16 +150,19 @@
         
         dic = @{@"province":_province,
                 @"city":_city,
-                @"district":_area
+                @"district":_area,
+                @"company_id":_companyId
                 };
     }else if (_city.length){
         
         dic = @{@"province":_province,
-                @"city":_city
+                @"city":_city,
+                @"company_id":_companyId
                 };
     }else{
         
-        dic = @{@"province":_province
+        dic = @{@"province":_province,
+                @"company_id":_companyId
                 };
     }
     [BaseRequest GET:StoreAuthStoreList_URL parameters:dic success:^(id resposeObject) {
@@ -187,16 +202,19 @@
         
         dic = @{@"province":_province,
                 @"city":_city,
-                @"district":_area
+                @"district":_area,
+                @"company_id":_companyId
                 };
     }else if (_city.length){
         
         dic = @{@"province":_province,
-                @"city":_city
+                @"city":_city,
+                @"company_id":_companyId
                 };
     }else{
         
-        dic = @{@"province":_province
+        dic = @{@"province":_province,
+                @"company_id":_companyId
                 };
     }
     NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
@@ -238,18 +256,21 @@
         dic = @{@"province":_province,
                 @"city":_city,
                 @"district":_area,
-                @"store_name":_searchBar.text
+                @"store_name":_searchBar.text,
+                @"company_id":_companyId
                 };
     }else if (_city.length){
         
         dic = @{@"province":_province,
                 @"city":_city,
-                @"store_name":_searchBar.text
+                @"store_name":_searchBar.text,
+                @"company_id":_companyId
                 };
     }else{
         
         dic = @{@"province":_province,
-                @"store_name":_searchBar.text
+                @"store_name":_searchBar.text,
+                @"company_id":_companyId
                 };
     }
     NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:dic];

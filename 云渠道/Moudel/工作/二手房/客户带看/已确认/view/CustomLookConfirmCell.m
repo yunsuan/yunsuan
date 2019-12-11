@@ -94,6 +94,7 @@
     _comfirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _comfirmBtn.layer.cornerRadius = 2 *SIZE;
     _comfirmBtn.clipsToBounds = YES;
+    _comfirmBtn.tag = self.tag;
     _comfirmBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_comfirmBtn setBackgroundColor:YJBlueBtnColor];
     [_comfirmBtn addTarget:self action:@selector(ActionConfirmBtn:) forControlEvents:UIControlEventTouchUpInside];

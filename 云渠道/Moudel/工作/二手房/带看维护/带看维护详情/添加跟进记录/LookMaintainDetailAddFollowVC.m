@@ -445,18 +445,6 @@
         [dic setObject:self.clientId forKey:@"client_id"];
         [dic setObject:@"1" forKey:@"type"];
         
-        
-//        if ([self isEmpty:_priceBtn.textfield.text]) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入总价"];
-//            return;
-//        }
-//
-//        if ([self isEmpty:_areaBtn.textfield.text]) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入面积"];
-//            return;
-//        }
         _payWay = @"";
         for (int i = 0; i < _paySelectArr.count; i++) {
             
@@ -590,6 +578,10 @@
             if (_floorTF2.content.text.length) {
                 
                 [dic setObject:_floorTF2->str forKey:@"floor_max"];
+            }
+            if (_houseBtn->str) {
+                
+                [dic setValue:[NSString stringWithFormat:@"%@",_houseBtn->str] forKey:@"house_type"];
             }
             
             if (_decorateBtn.content.text.length) {
@@ -1517,10 +1509,28 @@
     }
     if ([_dataDic[@"total_price"] length]) {
         
+        NSArray *arr = [_dataDic[@"total_price"] componentsSeparatedByString:@"-"];
+        if (arr.count) {
+            
+            _priceBtn.selectedMinimum = [arr[0] doubleValue];
+            if (arr.count > 1) {
+                
+                _priceBtn.selectedMaximum = [arr[1] doubleValue];
+            }
+        }
 //        _priceBtn.textfield.text = _dataDic[@"total_price"];
     }
     if ([_dataDic[@"area"] length]) {
         
+        NSArray *arr = [_dataDic[@"area"] componentsSeparatedByString:@"-"];
+        if (arr.count) {
+            
+            _areaBtn.selectedMinimum = [arr[0] doubleValue];
+            if (arr.count > 1) {
+                
+                _areaBtn.selectedMaximum = [arr[1] doubleValue];
+            }
+        }
 //        _areaBtn.textfield.text = _dataDic[@"area"];
     }
     if ([_dataDic[@"used_years"] length]) {
@@ -1635,7 +1645,7 @@
     if ([_dataDic[@"house_type"] length]) {
         
         _houseBtn.content.text = [NSString stringWithFormat:@"%@",_dataDic[@"house_type"]];
-//        _houseBtn->str = [NSString stringWithFormat:@"%@,%@,%@",[_dataDic[@"house_type"] substringWithRange:NSMakeRange(0, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(2, 1)],[_dataDic[@"house_type"] substringWithRange:NSMakeRange(4, 1)]];
+        _houseBtn->str = [NSString stringWithFormat:@"%@",_dataDic[@"house_type_value"]];
     }
 }
 

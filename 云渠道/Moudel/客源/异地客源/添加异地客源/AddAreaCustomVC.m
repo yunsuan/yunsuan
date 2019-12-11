@@ -517,7 +517,7 @@
         [self showContent:@"请选择区域"];
         return;
     }
-    if (!_addAreaCustomView.nameTF.textfield.text) {
+    if (!_addAreaCustomView.nameTF.textfield.text.length) {
         
         [self showContent:@"请输入名称"];
         return;
@@ -527,7 +527,7 @@
         [self showContent:@"请选择性别"];
         return;
     }
-    if (!_addAreaCustomView.phoneTF1.textfield.text) {
+    if (!_addAreaCustomView.phoneTF1.textfield.text.length) {
         
         [self showContent:@"请输入联系电话"];
         return;

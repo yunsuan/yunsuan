@@ -14,6 +14,8 @@ typedef void(^SelectStoreVCBlock)(NSString *storeId,NSString *storeName);
 
 @interface SelectStoreVC : BaseViewController
 
+- (instancetype)initWithCompanyId:(NSString *)companyId;
+
 @property (nonatomic, copy) SelectStoreVCBlock selectStoreVCBlock;
 
 @end

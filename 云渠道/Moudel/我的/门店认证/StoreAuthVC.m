@@ -9,53 +9,33 @@
 #import "StoreAuthVC.h"
 
 #import "SelectStoreVC.h"
+#import "SelectCompanyVC.h"
 
-//#import "TitleContentImgCell.h"
-//#import "StoreAuthCollCell.h"
-#import "CompleteSurveyCollCell.h"
+#import "SinglePickView.h"
 
-@interface StoreAuthVC ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
+#import "StoreAuthCell.h"
+#import "StoreAuthCollCell.h"
+
+@interface StoreAuthVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     
-//    NSArray *_titleArr;
+    NSArray *_titleArr;
 //    NSArray *_imgArr;
     
+    NSMutableArray *_contentArr;
     NSMutableArray *_selectArr;
     NSMutableArray *_roleArr;
     
-    
-    
-    NSString *_name;
-    NSString *_role;
+    NSString *_companyId;
     NSString *_storeId;
+    NSString *_departId;
+    NSString *_postId;
+    NSString *_roleId;
+
     BOOL _isEmp;
 }
 
-@property (nonatomic, strong) UIView *storeView;
-
-@property (nonatomic, strong) UILabel *storeTL;
-
-@property (nonatomic, strong) UILabel *storeL;
-
-@property (nonatomic, strong) UIImageView *rightImg;
-
-@property (nonatomic, strong) UIButton *storeBtn;
-
-@property (nonatomic, strong) UIView *roleView;
-
-@property (nonatomic, strong) UILabel *roleTL;
-
-@property (nonatomic, strong) UICollectionView *roleColl;
-
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
-
-@property (nonatomic, strong) UIView *employeeView;
-
-@property (nonatomic, strong) UILabel *employeeTL;
-
-@property (nonatomic, strong) UILabel *employeeL;
-
-@property (nonatomic, strong) UIButton *empBtn;
+@property (nonatomic, strong) UITableView *table;
 
 @property (nonatomic, strong) UIButton *commitBtn;
 
@@ -73,8 +53,11 @@
 
 - (void)initDataSource{
     
-//    _titleArr = @[@"所属门店",@"",@"是否为本店员工"];
+    _isEmp = YES;
+    _titleArr = @[@"选择公司",@"申请门店",@"是否为本店员工",@"部门",@"岗位",@"角色"];
 //    _imgArr = @[@"rightarrow",@"",@"downarrow1"];
+    
+    _contentArr = [[NSMutableArray alloc] initWithArray:@[@" ",@" ",@" ",@" ",@" ",@" "]];
     
     _selectArr = [@[] mutableCopy];
     _roleArr = [@[] mutableCopy];
@@ -92,15 +75,7 @@
                 
                 [_selectArr addObject:@(0)];
             }
-            [_roleColl reloadData];
-            [_roleColl mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(_roleView).offset(80 *SIZE);
-                make.top.equalTo(_roleView).offset(20 *SIZE);
-                make.width.mas_equalTo(280 *SIZE);
-                make.height.mas_equalTo(_roleColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE);
-                make.bottom.equalTo(_roleView).offset(-20 *SIZE);
-            }];
+            [_table reloadData];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -114,135 +89,247 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-    if (!_storeL.text.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
-        return;
-    }
-    _role = @"";
-    for (int i = 0; i < _selectArr.count; i++) {
-        
-        if ([_selectArr[i] integerValue] == 1) {
-            
-            if (!_role.length) {
-                
-                _role = [NSString stringWithFormat:@"%@",_roleArr[i][@"id"]];
-            }else{
-                
-                _role = [NSString stringWithFormat:@"%@,%@",_role,_roleArr[i][@"id"]];
-            }
-        }
-    }
-    if (!_role.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择权限"];
-        return;
-    }
+//    if (!_storeL.text.length) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
+//        return;
+//    }
+//    _role = @"";
+//    for (int i = 0; i < _selectArr.count; i++) {
+//
+//        if ([_selectArr[i] integerValue] == 1) {
+//
+//            if (!_role.length) {
+//
+//                _role = [NSString stringWithFormat:@"%@",_roleArr[i][@"id"]];
+//            }else{
+//
+//                _role = [NSString stringWithFormat:@"%@,%@",_role,_roleArr[i][@"id"]];
+//            }
+//        }
+//    }
+//    if (!_role.length) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择权限"];
+//        return;
+//    }
+//
+//    if ([_employeeL.text isEqualToString:@"是"]) {
+//
+//        _isEmp = YES;
+//    }else{
+//
+//        _isEmp = NO;
+//    }
+//    [BaseRequest POST:PersonalSoreAuth_URL parameters:@{@"store_id":@([_storeId integerValue]),@"role":_role,@"is_store_staff":@(_isEmp)} success:^(id resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"申请成功，等待审核通过" WithDefaultBlack:^{
+//
+//                [self.navigationController popToRootViewControllerAnimated:YES];
+//            }];
+//        }else{
+//
+//            [self showContent:resposeObject[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//        [self showContent:@"服务器网络错误，请稍后尝试"];
+//        NSLog(@"%@",error);
+//    }];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if ([_employeeL.text isEqualToString:@"是"]) {
+    if (_isEmp) {
+     
+        return 6;
+    }
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (_isEmp) {
         
-        _isEmp = YES;
+        StoreAuthCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoreAuthCell"];
+        if (!cell) {
+            
+            cell = [[StoreAuthCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"StoreAuthCell"];
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+//        cell.dataDic = @{};
+        cell.titleL.text = _titleArr[indexPath.row];
+        cell.contentL.text = _contentArr[indexPath.row];
+        
+        return cell;
     }else{
         
-        _isEmp = NO;
-    }
-    [BaseRequest POST:PersonalSoreAuth_URL parameters:@{@"store_id":@([_storeId integerValue]),@"role":_role,@"is_store_staff":@(_isEmp)} success:^(id resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        if ([resposeObject[@"code"] integerValue] == 200) {
+        if (indexPath.row < 3) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"申请成功，等待审核通过" WithDefaultBlack:^{
-               
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }];
+            StoreAuthCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoreAuthCell"];
+            if (!cell) {
+                
+                cell = [[StoreAuthCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"StoreAuthCell"];
+            }
+                    
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+            //        cell.dataDic = @{};
+            cell.titleL.text = _titleArr[indexPath.row];
+            cell.contentL.text = _contentArr[indexPath.row];
+                    
+            return cell;
         }else{
             
-            [self showContent:resposeObject[@"msg"]];
+            StoreAuthCollCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoreAuthCollCell"];
+            if (!cell) {
+                
+                cell = [[StoreAuthCollCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"StoreAuthCollCell"];
+            }
+                    
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.dataArr = @[_roleArr,_selectArr];
+            return cell;
         }
-    } failure:^(NSError *error) {
-        
-        [self showContent:@"服务器网络错误，请稍后尝试"];
-        NSLog(@"%@",error);
-    }];
-}
-
-- (void)ActionStoreBtn:(UIButton *)btn{
-    
-    SelectStoreVC *nextVC = [[SelectStoreVC alloc] init];
-    nextVC.selectStoreVCBlock = ^(NSString * _Nonnull storeId, NSString * _Nonnull storeName) {
-        
-        _storeL.text = storeName;
-        _storeId = storeId;
-
-    };
-    [self.navigationController pushViewController:nextVC animated:YES];
-
-}
-
-- (void)ActionEmpBtn:(UIButton *)btn{
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否为本店员工" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *male = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"您将同时认证到门店相应的公司，确认为本店员工？" WithCancelBlack:^{
-            
-            _employeeL.text = @"否";
-        } WithDefaultBlack:^{
-            
-            _employeeL.text = @"是";
-        }];
-    }];
-    
-    UIAlertAction *female = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        _employeeL.text = @"否";
-    }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    
-    [alert addAction:male];
-    [alert addAction:female];
-    [alert addAction:cancel];
-    [self.navigationController presentViewController:alert animated:YES completion:^{
-        
-    }];
-
-}
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
-    return _roleArr.count;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    CompleteSurveyCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteSurveyCollCell" forIndexPath:indexPath];
-    if (!cell) {
-        
-        cell = [[CompleteSurveyCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 30 *SIZE)];
     }
-    
-    [cell setIsSelect:[_selectArr[indexPath.item] integerValue]];
-    cell.titleL.text = _roleArr[indexPath.row][@"param"];
-    
-    return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([_selectArr[indexPath.item] integerValue]) {
+    if (indexPath.row == 0) {
         
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@0];
+        SelectCompanyVC *nextVC = [[SelectCompanyVC alloc] init];
+        nextVC.selectCompanyVCBlock = ^(NSString *companyId, NSString *name) {
+            
+            self->_companyId = [NSString stringWithFormat:@"%@",companyId];
+            self->_storeId = @"";
+            self->_departId = @"";
+            self->_postId = @"";
+            self->_roleId = @"";
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else if (indexPath.row == 1){
+        
+        SelectStoreVC *nextVC = [[SelectStoreVC alloc] initWithCompanyId:self->_companyId];
+        nextVC.selectStoreVCBlock = ^(NSString * _Nonnull storeId, NSString * _Nonnull storeName) {
+            
+            self->_storeId = storeId;
+            [self->_contentArr replaceObjectAtIndex:1 withObject:storeName];
+            self->_departId = @"";
+            self->_postId = @"";
+            self->_roleId = @"";
+            [tableView reloadData];
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else if (indexPath.row == 2){
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"是否为本店员工" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *male = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            
+            _isEmp = YES;
+            [_contentArr replaceObjectAtIndex:2 withObject:@"是"];
+            [tableView reloadData];
+        }];
+        
+        UIAlertAction *female = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            _isEmp = NO;
+            [_contentArr replaceObjectAtIndex:2 withObject:@"否"];
+            [tableView reloadData];
+        }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+        [alert addAction:male];
+        [alert addAction:female];
+        [alert addAction:cancel];
+        [self.navigationController presentViewController:alert animated:YES completion:^{
+            
+        }];
+    }else if (indexPath.row == 3){
+        
+        if (_isEmp) {
+            
+            if (!_companyId.length) {
+                
+                [self showContent:@"请先选择公司"];
+                return;
+            }
+            [BaseRequest GET:@"agent/company/person/organize/list" parameters:@{@"company_id":_companyId} success:^(id resposeObject) {
+                
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    NSMutableArray *tempArr = [@[] mutableCopy];
+                    for (int i = 0; i < [resposeObject[@"data"] count]; i++) {
+                        
+                        NSDictionary *dic = resposeObject[@"data"][i];
+                        [tempArr addObject:@{@"id":dic[@"department_id"],@"param":dic[@"department_name"]}];
+                    }
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        
+                        [_contentArr replaceObjectAtIndex:3 withObject:MC];
+                        _departId = [NSString stringWithFormat:@"%@",ID];
+                        [tableView reloadData];
+                    };
+                    [self.view addSubview:view];
+                }else{
+                    
+                    [self showContent:resposeObject[@"msg"]];
+                }
+            } failure:^(NSError *error) {
+               
+                [self showContent:@"网络错误"];
+            }];
+        }
+    }else if (indexPath.row == 4){
+        
+        if (!_departId.length) {
+            
+            [self showContent:@"请先选择部门"];
+            return;
+        }
+        [BaseRequest GET:@"agent/company/person/organize/post/list" parameters:@{@"department_id":_departId} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                NSMutableArray *tempArr = [@[] mutableCopy];
+                for (int i = 0; i < [resposeObject[@"data"] count]; i++) {
+                    
+                    NSDictionary *dic = resposeObject[@"data"][i];
+                    [tempArr addObject:@{@"id":dic[@"post_id"],@"param":dic[@"post_name"]}];
+                }
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    [_contentArr replaceObjectAtIndex:4 withObject:MC];
+                    _postId = [NSString stringWithFormat:@"%@",ID];
+                };
+                [self.view addSubview:view];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+           
+            [self showContent:@"网络错误"];
+        }];
     }else{
         
-        [_selectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+        
     }
-    [collectionView reloadData];
+    
 }
 
 - (void)initUI{
@@ -256,104 +343,14 @@
     label.text = @"认证需要审核 请仔细填写信息";
     [self.view addSubview:label];
     
-    _storeView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT + 40 *SIZE, SCREEN_Width, 50 *SIZE)];
-    _storeView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_storeView];
-    
-    _storeTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 70 *SIZE, 12 *SIZE)];
-    _storeTL.textColor = YJTitleLabColor;
-    _storeTL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _storeTL.text = @"所属门店";
-    [_storeView addSubview:_storeTL];
-    
-    _storeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 190 *SIZE, 12 *SIZE)];
-    _storeL.textColor = YJTitleLabColor;
-    _storeL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _storeL.textAlignment = NSTextAlignmentRight;
-    [_storeView addSubview:_storeL];
-    
-    UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(330 *SIZE, 18 *SIZE, 12 *SIZE, 12 *SIZE)];
-    img.image = [UIImage imageNamed:@"downarrow2"];
-    [_storeView addSubview:img];
-    
-    _storeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _storeBtn.frame = _storeView.bounds;
-    [_storeBtn addTarget:self action:@selector(ActionStoreBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_storeView addSubview:_storeBtn];
-    
-    _roleView = [[UIView alloc] init];
-    _roleView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_roleView];
-    
-    _roleTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 70 *SIZE, 12 *SIZE)];
-    _roleTL.textColor = YJTitleLabColor;
-    _roleTL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _roleTL.text = @"申请权限";
-    [_roleView addSubview:_roleTL];
-    
-    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.minimumLineSpacing = 20 *SIZE;
-    _flowLayout.minimumInteritemSpacing = 0 *SIZE;
-    _flowLayout.itemSize = CGSizeMake(110 *SIZE, 30 *SIZE);
-    
-    _roleColl = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 20 *SIZE, 280 *SIZE, 70 *SIZE) collectionViewLayout:_flowLayout];
-    _roleColl.backgroundColor = [UIColor whiteColor];
-    _roleColl.delegate = self;
-    _roleColl.dataSource = self;
-    
-    [_roleColl registerClass:[CompleteSurveyCollCell class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell"];
-    [_roleView addSubview:_roleColl];
-    
-    _employeeView = [[UIView alloc] init];
-    _employeeView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:_employeeView];
-    
-    _employeeTL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE , 18 *SIZE, 100 *SIZE, 12 *SIZE)];
-    _employeeTL.textColor = YJTitleLabColor;
-    _employeeTL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _employeeTL.text = @"是否为本店员工";
-    [_employeeView addSubview:_employeeTL];
-    
-    _employeeL = [[UILabel alloc] initWithFrame:CGRectMake(124 *SIZE , 18 *SIZE, 190 *SIZE, 12 *SIZE)];
-    _employeeL.textColor = YJTitleLabColor;
-    _employeeL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _employeeL.textAlignment = NSTextAlignmentRight;
-    [_employeeView addSubview:_employeeL];
-    
-    UIImageView *img1 = [[UIImageView alloc] initWithFrame:CGRectMake(330 *SIZE, 18 *SIZE, 12 *SIZE, 12 *SIZE)];
-    img1.image = [UIImage imageNamed:@"downarrow2"];
-    [_employeeView addSubview:img1];
-    
-    _empBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _empBtn.frame = CGRectMake(0, 0, SCREEN_Width, 50 *SIZE);
-    [_empBtn addTarget:self action:@selector(ActionEmpBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_employeeView addSubview:_empBtn];
-    
-    
-    [_roleView mas_makeConstraints:^(MASConstraintMaker *make) {
-       
-        make.left.equalTo(self.view).offset(0 *SIZE);
-        make.top.equalTo(self.view).offset(91 *SIZE + NAVIGATION_BAR_HEIGHT);
-        make.width.mas_equalTo(SCREEN_Width);
-    }];
-    
-    [_roleColl mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(_roleView).offset(80 *SIZE);
-        make.top.equalTo(_roleView).offset(20 *SIZE);
-        make.width.mas_equalTo(280 *SIZE);
-        make.height.mas_equalTo(_roleColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE);
-        make.bottom.equalTo(_roleView).offset(-20 *SIZE);
-    }];
-    
-    [_employeeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(self.view).offset(0 *SIZE);
-        make.top.equalTo(_roleView.mas_bottom).offset(SIZE);
-        make.width.mas_equalTo(SCREEN_Width);
-        make.height.mas_equalTo(50 *SIZE);
-    }];
-    
+    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, 27 *SIZE + NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - 27 *SIZE - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
+    _table.backgroundColor = CLBackColor;
+    _table.delegate = self;
+    _table.dataSource = self;
+    _table.rowHeight = UITableViewAutomaticDimension;
+    _table.estimatedRowHeight = 100 *SIZE;
+    _table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:_table];
     
     _commitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commitBtn.frame = CGRectMake(0, SCREEN_Height - TAB_BAR_MORE - 40 *SIZE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);

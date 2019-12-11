@@ -30,9 +30,9 @@
         }
     }];
     
-    _statusL.text = [NSString stringWithFormat:@"%@",data[@"house_state"]];
-    _codeL.text = [NSString stringWithFormat:@"%@",data[@"title"]];
-    _firstTimeL.text = [NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]];
+    _statusL.text = [NSString stringWithFormat:@"%@",[data[@"house_state"] length]?data[@"house_state"]:@" "];
+    _codeL.text = [NSString stringWithFormat:@"%@",[data[@"title"] length]?data[@"title"]:@" "];
+    _firstTimeL.text = [NSString stringWithFormat:@"房源编号：%@",[data[@"house_code"]  length]?data[@"house_code"]:@" "];
     
 }
 
@@ -46,17 +46,17 @@
         }
     }];
     
-    _statusL.text = [NSString stringWithFormat:@"%@",dataDic[@"house_state"]];
+    _statusL.text = [NSString stringWithFormat:@"%@",[dataDic[@"house_state"] length]?dataDic[@"house_state"]:@" "];
     
-    _contentL.text = [NSString stringWithFormat:@"%@",dataDic[@"describe"]];
+    _contentL.text = [NSString stringWithFormat:@"%@",[dataDic[@"describe"] length]?dataDic[@"describe"]:@" "];
     
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"满意度：%@%@",dataDic[@"intent"],@"%"]];
     [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(3, attr.length - 3)];
     _satisfyL.attributedText = attr;
     _codeL.text = [NSString stringWithFormat:@"%@",dataDic[@"title"]];
-    _firstTimeL.text = [NSString stringWithFormat:@"首次看房时间：%@",dataDic[@"first_take_time"]];
-    _lastTimeL.text = [NSString stringWithFormat:@"最后看房时间：%@",dataDic[@"last_take_time"]];
-    _compL.text = [NSString stringWithFormat:@"%@",dataDic[@"finish_state"]];
+    _firstTimeL.text = [NSString stringWithFormat:@"首次看房时间：%@",[dataDic[@"first_take_time"] length]?dataDic[@"first_take_time"]:@" "];
+    _lastTimeL.text = [NSString stringWithFormat:@"最后看房时间：%@",[dataDic[@"first_take_time"] length]?dataDic[@"first_take_time"]:@" "];
+    _compL.text = [NSString stringWithFormat:@"%@",[dataDic[@"finish_state"] length]?dataDic[@"finish_state"]:@" "];
     _numL.text = [NSString stringWithFormat:@"带看次数：%@",dataDic[@"take_num"]];
     NSMutableAttributedString *attrPrice;
     

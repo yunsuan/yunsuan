@@ -48,7 +48,7 @@
     [self.view addSubview:self.RegisterBtn];
     [self.view addSubview:self.Account];
     [self.view addSubview:self.PassWord];
-//    [self.view addSubview:self.settingbtn];
+    [self.view addSubview:self.settingbtn];
     
     for (int i = 0; i<2; i++) {
         UIView *line = [[UIView alloc]initWithFrame:CGRectMake(22*SIZE, 249*SIZE+47*SIZE*i, 316*SIZE, 0.5*SIZE)];
@@ -425,7 +425,7 @@
 -(UITextField *)Account{
     if (!_Account) {
         
-        _Account = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, 219*SIZE, 314*SIZE, 15*SIZE)];
+        _Account = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, 219*SIZE, 314*SIZE, 30*SIZE)];
         _Account.placeholder = @"请输入手机号";
         _Account.keyboardType = UIKeyboardTypeNumberPad;
         _Account.font = [UIFont systemFontOfSize:14*SIZE];
@@ -439,7 +439,7 @@
 -(UITextField *)PassWord{
     if (!_PassWord) {
         
-        _PassWord = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, 266*SIZE, 314*SIZE, 15*SIZE)];
+        _PassWord = [[UITextField alloc]initWithFrame:CGRectMake(22*SIZE, 266*SIZE, 314*SIZE, 30*SIZE)];
         _PassWord.placeholder = @"请输入密码";
         _PassWord.font = [UIFont systemFontOfSize:14*SIZE];
         [_PassWord addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];

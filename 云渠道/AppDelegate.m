@@ -106,7 +106,7 @@ static NSString *const kQQAPPID = @"1106811849";
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading{
     
-    NSLog(@"%@",newHeading);
+//    NSLog(@"%@",newHeading);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{

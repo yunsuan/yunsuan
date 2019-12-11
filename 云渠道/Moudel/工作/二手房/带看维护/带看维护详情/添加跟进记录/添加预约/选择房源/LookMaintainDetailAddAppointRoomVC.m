@@ -309,35 +309,35 @@
         _is3 = NO;
         _proBtn.selected = NO;
         _typeBtn.selected = NO;
-        if (_proArr.count) {
-            
-            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
-        }else{
-            
-            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
-                
-                if ([resposeObject[@"code"] integerValue] == 200) {
-                    
-                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
-                    for (int i = 0; i < _proArr.count; i++) {
-                        
-                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
-                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
-                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
-                        [tempDic removeObjectForKey:@"project_name"];
-                        [tempDic removeObjectForKey:@"project_id"];
-                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
-                    }
-                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
-                }else{
-                    
-                    [self showContent:resposeObject[@"msg"]];
-                }
-            } failure:^(NSError *error) {
-                
-                [self showContent:@"网络错误"];
-            }];
-        }
+//        if (_proArr.count) {
+//
+//            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+//        }else{
+//
+//            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
+//
+//                if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+//                    for (int i = 0; i < _proArr.count; i++) {
+//
+//                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
+//                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
+//                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
+//                        [tempDic removeObjectForKey:@"project_name"];
+//                        [tempDic removeObjectForKey:@"project_id"];
+//                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
+//                    }
+//                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+//                }else{
+//
+//                    [self showContent:resposeObject[@"msg"]];
+//                }
+//            } failure:^(NSError *error) {
+//
+//                [self showContent:@"网络错误"];
+//            }];
+//        }
         
         if (_is2) {
             
@@ -360,35 +360,35 @@
         _proBtn.selected = NO;
         _priceBtn.selected = NO;
         
-        if (_proArr.count) {
-            
-            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
-        }else{
-            
-            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
-                
-                if ([resposeObject[@"code"] integerValue] == 200) {
-                    
-                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
-                    for (int i = 0; i < _proArr.count; i++) {
-                        
-                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
-                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
-                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
-                        [tempDic removeObjectForKey:@"project_name"];
-                        [tempDic removeObjectForKey:@"project_id"];
-                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
-                    }
-                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
-                }else{
-                    
-                    [self showContent:resposeObject[@"msg"]];
-                }
-            } failure:^(NSError *error) {
-                
-                [self showContent:@"网络错误"];
-            }];
-        }
+//        if (_proArr.count) {
+//            
+//            [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+//        }else{
+//            
+//            [BaseRequest GET:TakeMaintainFollowProjectList_URL parameters:nil success:^(id resposeObject) {
+//                
+//                if ([resposeObject[@"code"] integerValue] == 200) {
+//                    
+//                    _proArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"] mutableCopy]];
+//                    for (int i = 0; i < _proArr.count; i++) {
+//                        
+//                        NSMutableDictionary *tempDic = [_proArr[i] mutableCopy];
+//                        [tempDic setObject:_proArr[i][@"project_id"] forKey:@"id"];
+//                        [tempDic setObject:_proArr[i][@"project_name"] forKey:@"param"];
+//                        [tempDic removeObjectForKey:@"project_name"];
+//                        [tempDic removeObjectForKey:@"project_id"];
+//                        [_proArr replaceObjectAtIndex:i withObject:tempDic];
+//                    }
+//                    [[UIApplication sharedApplication].keyWindow addSubview:self.proView];
+//                }else{
+//                    
+//                    [self showContent:resposeObject[@"msg"]];
+//                }
+//            } failure:^(NSError *error) {
+//                
+//                [self showContent:@"网络错误"];
+//            }];
+//        }
         if (_is3) {
             
             _is3 = !_is3;

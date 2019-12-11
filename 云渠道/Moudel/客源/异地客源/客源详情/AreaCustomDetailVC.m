@@ -88,7 +88,37 @@
             NSDateFormatter *fortmatter = [[NSDateFormatter alloc] init];
             [fortmatter setDateFormat:@"YYYY-MM-dd"];
             
-            _contentArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"名称：%@",resposeObject[@"data"][@"client"][@"name"]],[NSString stringWithFormat:@"性别：%@",[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 1?@"男":[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 2?@"女":@""],[NSString stringWithFormat:@"出生年月：%@",(resposeObject[@"data"][@"client"][@"birth"] && ![resposeObject[@"data"][@"client"][@"birth"] isKindOfClass:[NSNull class]])?resposeObject[@"data"][@"client"][@"birth"]:@""],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client"][@"tel"]],[NSString stringWithFormat:@"证件类型：%@",resposeObject[@"data"][@"client"][@"card_type"]],[NSString stringWithFormat:@"证件号：%@",resposeObject[@"data"][@"client"][@"card_id"]],[NSString stringWithFormat:@"地址：%@%@%@",resposeObject[@"data"][@"client"][@"province_name"],resposeObject[@"data"][@"client"][@"city_name"],resposeObject[@"data"][@"client"][@"district_name"]],[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][0]],[NSString stringWithFormat:@"身份证背面,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][1]],[NSString stringWithFormat:@"其他证明,%@",[resposeObject[@"data"][@"card_img"] componentsSeparatedByString:@","][2]]]];
+            _contentArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"名称：%@",resposeObject[@"data"][@"client"][@"name"]],[NSString stringWithFormat:@"性别：%@",[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 1?@"男":[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 2?@"女":@""],[NSString stringWithFormat:@"出生年月：%@",(resposeObject[@"data"][@"client"][@"birth"] && ![resposeObject[@"data"][@"client"][@"birth"] isKindOfClass:[NSNull class]])?resposeObject[@"data"][@"client"][@"birth"]:@""],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client"][@"tel"]],[NSString stringWithFormat:@"证件类型：%@",resposeObject[@"data"][@"client"][@"card_type"]],[NSString stringWithFormat:@"证件号：%@",resposeObject[@"data"][@"client"][@"card_id"]],[NSString stringWithFormat:@"地址：%@%@%@",resposeObject[@"data"][@"client"][@"province_name"],resposeObject[@"data"][@"client"][@"city_name"],resposeObject[@"data"][@"client"][@"district_name"]]]];
+            if ([resposeObject[@"data"][@"client"][@"card_img"] length]) {
+                
+                NSArray *arr = [resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","];
+                if (arr.count == 3) {
+                    
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][0]]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证背面,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][1]]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"其他证明,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][2]]];
+                }else if (arr.count == 2){
+                    
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][0]]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证背面,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][1]]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"其他证明,%@",@" "]];
+                }else if (arr.count == 1){
+                    
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证正面,%@",[resposeObject[@"data"][@"client"][@"card_img"] componentsSeparatedByString:@","][0]]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证背面,%@",@" "]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"其他证明,%@",@" "]];
+                }else{
+                    
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证正面,%@",@" "]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"身份证背面,%@",@" "]];
+                    [_contentArr addObject:[NSString stringWithFormat:@"其他证明,%@",@" "]];
+                }
+            }else{
+                
+                [_contentArr addObject:[NSString stringWithFormat:@"身份证正面,%@",@" "]];
+                [_contentArr addObject:[NSString stringWithFormat:@"身份证背面,%@",@" "]];
+                [_contentArr addObject:[NSString stringWithFormat:@"其他证明,%@",@" "]];
+            }
             _projectArr = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"recommend"][@"project"]];
             _dataArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"接待区域：%@",resposeObject[@"data"][@"butter"][@"recommend_district"]],[NSString stringWithFormat:@"接待公司名称：%@",resposeObject[@"data"][@"butter"][@"butter_company_name"]]]];
             _disabledReason = resposeObject[@"data"][@"client"][@"disabled_state"];
@@ -268,6 +298,7 @@
     header.areaCustomDetailHeaderTagBlock = ^(NSInteger index) {
       
         _idx = index;
+        [tableView setScrollsToTop:YES];
         [tableView reloadData];
     };
     return header;

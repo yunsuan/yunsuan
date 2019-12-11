@@ -32,6 +32,8 @@
 		0C0814AD239E57DB00176F88 /* AreaValidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0814AC239E57DB00176F88 /* AreaValidVC.m */; };
 		0C0814B0239E58BB00176F88 /* AreaInvalidVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0814AF239E58BB00176F88 /* AreaInvalidVC.m */; };
 		0C0814B6239E59A300176F88 /* AreaDealVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0814B5239E59A300176F88 /* AreaDealVC.m */; };
+		0C0814C023A0D35700176F88 /* StoreAuthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0814BF23A0D35700176F88 /* StoreAuthCell.m */; };
+		0C0814C323A0D38900176F88 /* StoreAuthCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0814C223A0D38900176F88 /* StoreAuthCollCell.m */; };
 		0C0850D0214A6AAA0034ED44 /* CompleteSurveyOfficeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0850CF214A6AAA0034ED44 /* CompleteSurveyOfficeVC.m */; };
 		0C0850D6214A72D00034ED44 /* CompleteSurveyHouseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0850D5214A72D00034ED44 /* CompleteSurveyHouseVC.m */; };
 		0C0850DE214A75E70034ED44 /* StoreViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0850DD214A75E70034ED44 /* StoreViewCollCell.m */; };
@@ -882,6 +884,10 @@
 		0C0814AF239E58BB00176F88 /* AreaInvalidVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AreaInvalidVC.m; sourceTree = "<group>"; };
 		0C0814B4239E59A300176F88 /* AreaDealVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AreaDealVC.h; sourceTree = "<group>"; };
 		0C0814B5239E59A300176F88 /* AreaDealVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AreaDealVC.m; sourceTree = "<group>"; };
+		0C0814BE23A0D35700176F88 /* StoreAuthCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreAuthCell.h; sourceTree = "<group>"; };
+		0C0814BF23A0D35700176F88 /* StoreAuthCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreAuthCell.m; sourceTree = "<group>"; };
+		0C0814C123A0D38900176F88 /* StoreAuthCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreAuthCollCell.h; sourceTree = "<group>"; };
+		0C0814C223A0D38900176F88 /* StoreAuthCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreAuthCollCell.m; sourceTree = "<group>"; };
 		0C0850CE214A6AAA0034ED44 /* CompleteSurveyOfficeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteSurveyOfficeVC.h; sourceTree = "<group>"; };
 		0C0850CF214A6AAA0034ED44 /* CompleteSurveyOfficeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteSurveyOfficeVC.m; sourceTree = "<group>"; };
 		0C0850D4214A72D00034ED44 /* CompleteSurveyHouseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteSurveyHouseVC.h; sourceTree = "<group>"; };
@@ -3250,6 +3256,10 @@
 		0C252248215DC13C0031CC44 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				0C0814BE23A0D35700176F88 /* StoreAuthCell.h */,
+				0C0814BF23A0D35700176F88 /* StoreAuthCell.m */,
+				0C0814C123A0D38900176F88 /* StoreAuthCollCell.h */,
+				0C0814C223A0D38900176F88 /* StoreAuthCollCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -8327,6 +8337,7 @@
 				0CDD705A20D36A6500D6609C /* RoomSurveyingVC.m in Sources */,
 				0CE82244221F9AA500576742 /* ConfrimPhoneWaitCell.m in Sources */,
 				0CC19CFC206E21110007CC5F /* SelectCompanyCollCell.m in Sources */,
+				0C0814C323A0D38900176F88 /* StoreAuthCollCell.m in Sources */,
 				0CF1F32A2251FCE900C92A54 /* RecommendMoreInfoVC.m in Sources */,
 				0CA37B7020889028005609C7 /* AddTagView.m in Sources */,
 				0C73B09B21F5C190005F71F1 /* RecommendSuccessDetailVC.m in Sources */,
@@ -8738,6 +8749,7 @@
 				10DBB1E8207CB39200CFE59D /* HousedistributVC.m in Sources */,
 				10255A6721A53D000042738C /* YBImageBrowserFunctionModel.m in Sources */,
 				0C9CD3F220FD8B8D004894A3 /* BlueTitleBaseCell.m in Sources */,
+				0C0814C023A0D35700176F88 /* StoreAuthCell.m in Sources */,
 				0CF04F43207B308000A45F4A /* InvalidVC.m in Sources */,
 				0C2883CE210EF61400F69C5F /* RentingRoomAgencyCancelVC.m in Sources */,
 				0C73B06D21F174BF005F71F1 /* NewComplaintVC.m in Sources */,
@@ -9244,7 +9256,7 @@
 				CODE_SIGN_ENTITLEMENTS = "云渠道/云渠道.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73DTNFMD65;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9262,7 +9274,7 @@
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/janalities",
 				);
-				MARKETING_VERSION = 4.1.5;
+				MARKETING_VERSION = 4.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -9281,7 +9293,7 @@
 				CODE_SIGN_ENTITLEMENTS = "云渠道/云渠道.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73DTNFMD65;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9299,7 +9311,7 @@
 					"$(PROJECT_DIR)/云渠道/第三方SDK/wechat",
 					"$(PROJECT_DIR)/云渠道/第三方SDK/janalities",
 				);
-				MARKETING_VERSION = 4.1.5;
+				MARKETING_VERSION = 4.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yskj.yunqudao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
