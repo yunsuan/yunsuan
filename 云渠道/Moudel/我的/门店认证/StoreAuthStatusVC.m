@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) UIView *statusView;
 
+@property (nonatomic, strong) UILabel *companyL;
+
 @property (nonatomic, strong) UILabel *nameL;
 
 @property (nonatomic, strong) UILabel *codeL;
@@ -27,6 +29,10 @@
 @property (nonatomic, strong) UILabel *phoneL;
 
 @property (nonatomic, strong) UIView *detailView;
+
+@property (nonatomic, strong) UILabel *departL;
+
+@property (nonatomic, strong) UILabel *postL;
 
 @property (nonatomic, strong) UILabel *permitL;
 
@@ -104,6 +110,13 @@
     label.text = @"审核中";
     [_statusView addSubview:label];
     
+    _companyL = [[UILabel alloc] init];
+    _companyL.textColor = [UIColor whiteColor];
+    _companyL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _companyL.numberOfLines = 0;
+    _companyL.text = [NSString stringWithFormat:@"公司名称：%@",_data[@"company_name"]];
+    [_statusView addSubview:_companyL];
+    
     _nameL = [[UILabel alloc] init];
     _nameL.textColor = [UIColor whiteColor];
     _nameL.font = [UIFont systemFontOfSize:13 *SIZE];
@@ -155,6 +168,25 @@
     _permitL.text = [NSString stringWithFormat:@"申请权限：%@",_data[@"role"]];
     [_detailView addSubview:_permitL];
     
+    if ([_data[@"is_store_staff"] integerValue]) {
+        
+        _departL = [[UILabel alloc] init];
+        _departL.textColor = YJContentLabColor;
+        _departL.font = [UIFont systemFontOfSize:13 *SIZE];
+        _departL.numberOfLines = 0;
+        _departL.text = [NSString stringWithFormat:@"部门：%@",_data[@"department_name"]];
+        [_detailView addSubview:_departL];
+        
+        _postL = [[UILabel alloc] init];
+        _postL.textColor = YJContentLabColor;
+        _postL.font = [UIFont systemFontOfSize:13 *SIZE];
+        _postL.numberOfLines = 0;
+        _postL.text = [NSString stringWithFormat:@"岗位：%@",_data[@"post_name"]];
+        [_detailView addSubview:_postL];
+        
+        _permitL.text = [NSString stringWithFormat:@"角色：%@",_data[@"role_name"]];
+    }
+    
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJContentLabColor;
     _timeL.font = [UIFont systemFontOfSize:13 *SIZE];
@@ -185,10 +217,17 @@
         make.width.mas_equalTo(SCREEN_Width);
     }];
     
-    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_companyL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(_statusView).offset(29 *SIZE);
         make.top.equalTo(_statusView).offset(69 *SIZE);
+        make.right.equalTo(_statusView).offset(-29 *SIZE);
+    }];
+    
+    [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_statusView).offset(29 *SIZE);
+        make.top.equalTo(_companyL.mas_bottom).offset(12 *SIZE);
         make.right.equalTo(_statusView).offset(-29 *SIZE);
     }];
     
@@ -220,13 +259,41 @@
         make.top.equalTo(_statusView.mas_bottom).offset(0);
         make.width.mas_equalTo(SCREEN_Width);
     }];
+    
+    if ([_data[@"is_store_staff"] integerValue]) {
 
-    [_permitL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        [_departL mas_makeConstraints:^(MASConstraintMaker *make) {
 
-        make.left.equalTo(_detailView).offset(29 *SIZE);
-        make.top.equalTo(_detailView).offset(54 *SIZE);
-        make.right.equalTo(_detailView).offset(-29 *SIZE);
-    }];
+            make.left.equalTo(_detailView).offset(29 *SIZE);
+            make.top.equalTo(_detailView).offset(54 *SIZE);
+            make.right.equalTo(_detailView).offset(-29 *SIZE);
+        }];
+        
+        [_postL mas_makeConstraints:^(MASConstraintMaker *make) {
+
+            make.left.equalTo(_detailView).offset(29 *SIZE);
+            make.top.equalTo(_departL.mas_bottom).offset(12 *SIZE);
+            make.right.equalTo(_detailView).offset(-29 *SIZE);
+        }];
+        
+        [_permitL mas_makeConstraints:^(MASConstraintMaker *make) {
+
+            make.left.equalTo(_detailView).offset(29 *SIZE);
+            make.top.equalTo(_postL.mas_bottom).offset(12 *SIZE);
+            make.right.equalTo(_detailView).offset(-29 *SIZE);
+        }];
+    }else{
+        
+        [_permitL mas_makeConstraints:^(MASConstraintMaker *make) {
+
+            make.left.equalTo(_detailView).offset(29 *SIZE);
+            make.top.equalTo(_detailView).offset(54 *SIZE);
+            make.right.equalTo(_detailView).offset(-29 *SIZE);
+        }];
+    }
+
+    
 
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
 

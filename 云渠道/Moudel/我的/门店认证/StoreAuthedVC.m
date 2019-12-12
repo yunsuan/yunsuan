@@ -14,8 +14,10 @@
 
 @interface StoreAuthedVC ()<UITableViewDataSource,UITableViewDelegate>
 {
+    NSInteger _isEmp;
     
     NSArray *_titleArr;
+    NSArray *_contentArr;
     NSDictionary *_data;
 }
 
@@ -48,7 +50,9 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"所属门店",@"申请权限",@"是否为本店员工"];
+    _isEmp = [_data[@"is_store_staff"] integerValue];
+    _titleArr = @[@"公司信息",@"所属门店",@"是否为本店员工",@"部门",@"岗位",@"角色",@"申请权限"];
+    _contentArr = @[_data[@"company_name"],_data[@"store_name"],[_data[@"is_store_staff"] integerValue] == 1?@"是":@"否",[_data[@"department_name"] length] ?_data[@"department_name"]:@" ",[_data[@"post_name"] length] ?_data[@"post_name"]:@" ",_data[@"role_name"],_data[@"role"]];
 }
 
 - (void)ActionRecommitBtn:(UIButton *)btn{
@@ -79,7 +83,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 3;
+    if (_isEmp == 1) {
+        
+        return 6;
+    }
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -91,17 +99,23 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.titleL.text = _titleArr[indexPath.row];
+    
     cell.contentL.textAlignment = NSTextAlignmentRight;
-    if (indexPath.row == 0) {
+    if ([_data[@"is_store_staff"] integerValue] == 1) {
         
-        cell.contentL.text = _data[@"store_name"];
-    }else if (indexPath.row == 1){
-        
-        cell.contentL.text = _data[@"role"];
+        cell.contentL.text = _contentArr[indexPath.row];
+        cell.titleL.text = _titleArr[indexPath.row];
     }else{
         
-        cell.contentL.text = [_data[@"is_store_staff"] integerValue] == 1?@"是":@"否";
+        if (indexPath.row == 3) {
+            
+            cell.contentL.text = _contentArr[6];
+            cell.titleL.text = _titleArr[6];
+        }else{
+            
+            cell.contentL.text = _contentArr[indexPath.row];
+            cell.titleL.text = _titleArr[indexPath.row];
+        }
     }
     return cell;
 }

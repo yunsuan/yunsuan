@@ -34,6 +34,19 @@
     
     _roleArr = [[NSMutableArray alloc] initWithArray:dataArr[0]];
     _selectArr = [[NSMutableArray alloc] initWithArray:dataArr[1]];
+    [_roleColl reloadData];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_roleColl mas_remakeConstraints:^(MASConstraintMaker *make) {
+            
+            make.left.equalTo(self.contentView).offset(80 *SIZE);
+            make.top.equalTo(self.contentView).offset(20 *SIZE);
+            make.width.mas_equalTo(280 *SIZE);
+            make.height.mas_equalTo(self->_roleColl.collectionViewLayout.collectionViewContentSize.height + 10 *SIZE);
+            make.bottom.equalTo(self.contentView).offset(-20 *SIZE);
+        }];
+//    });
+//    [_roleColl reloadData];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -63,6 +76,10 @@
     }else{
         
         [_selectArr replaceObjectAtIndex:indexPath.item withObject:@1];
+    }
+    if (self.storeAuthCollCellBlock) {
+        
+        self.storeAuthCollCellBlock(_selectArr);
     }
     [collectionView reloadData];
 }

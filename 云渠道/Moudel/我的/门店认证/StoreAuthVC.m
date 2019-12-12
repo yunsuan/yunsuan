@@ -31,6 +31,7 @@
     NSString *_departId;
     NSString *_postId;
     NSString *_roleId;
+    NSString *_role;
 
     BOOL _isEmp;
 }
@@ -57,7 +58,7 @@
     _titleArr = @[@"选择公司",@"申请门店",@"是否为本店员工",@"部门",@"岗位",@"角色"];
 //    _imgArr = @[@"rightarrow",@"",@"downarrow1"];
     
-    _contentArr = [[NSMutableArray alloc] initWithArray:@[@" ",@" ",@" ",@" ",@" ",@" "]];
+    _contentArr = [[NSMutableArray alloc] initWithArray:@[@" ",@" ",@"是",@" ",@" ",@" "]];
     
     _selectArr = [@[] mutableCopy];
     _roleArr = [@[] mutableCopy];
@@ -89,56 +90,81 @@
 
 - (void)ActionConfirmBtn:(UIButton *)btn{
     
-//    if (!_storeL.text.length) {
+    if (!_companyId.length) {
+
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择公司"];
+        return;
+    }
+    if (!_storeId.length) {
+
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
+        return;
+    }
+    if (_isEmp) {
+        
+//        if (!_roleId.length) {
 //
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
-//        return;
-//    }
-//    _role = @"";
-//    for (int i = 0; i < _selectArr.count; i++) {
-//
-//        if ([_selectArr[i] integerValue] == 1) {
-//
-//            if (!_role.length) {
-//
-//                _role = [NSString stringWithFormat:@"%@",_roleArr[i][@"id"]];
-//            }else{
-//
-//                _role = [NSString stringWithFormat:@"%@,%@",_role,_roleArr[i][@"id"]];
-//            }
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择门店"];
+//            return;
 //        }
-//    }
-//    if (!_role.length) {
-//
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择权限"];
-//        return;
-//    }
-//
-//    if ([_employeeL.text isEqualToString:@"是"]) {
-//
-//        _isEmp = YES;
-//    }else{
-//
-//        _isEmp = NO;
-//    }
-//    [BaseRequest POST:PersonalSoreAuth_URL parameters:@{@"store_id":@([_storeId integerValue]),@"role":_role,@"is_store_staff":@(_isEmp)} success:^(id resposeObject) {
-//
-//        NSLog(@"%@",resposeObject);
-//        if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//            [self alertControllerWithNsstring:@"温馨提示" And:@"申请成功，等待审核通过" WithDefaultBlack:^{
-//
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//            }];
-//        }else{
-//
-//            [self showContent:resposeObject[@"msg"]];
-//        }
-//    } failure:^(NSError *error) {
-//
-//        [self showContent:@"服务器网络错误，请稍后尝试"];
-//        NSLog(@"%@",error);
-//    }];
+    }else{
+        
+        for (int i = 0; i < _selectArr.count; i++) {
+
+            if ([_selectArr[i] integerValue] == 1) {
+
+                if (!_role.length) {
+
+                    _role = [NSString stringWithFormat:@"%@",_roleArr[i][@"id"]];
+                }else{
+
+                    _role = [NSString stringWithFormat:@"%@,%@",_role,_roleArr[i][@"id"]];
+                }
+            }
+        }
+        if (!_role.length) {
+
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择权限"];
+            return;
+        }
+    }
+
+    NSMutableDictionary *tempDic = [@{} mutableCopy];
+    [tempDic setValue:[NSString stringWithFormat:@"%@",_storeId] forKey:@"store_id"];
+    [tempDic setValue:[NSString stringWithFormat:@"%@",@(_isEmp)] forKey:@"is_store_staff"];
+    if (!_isEmp) {
+        
+        [tempDic setValue:[NSString stringWithFormat:@"%@",_role] forKey:@"role"];
+    }else{
+        
+        if (_departId) {
+            
+            [tempDic setValue:[NSString stringWithFormat:@"%@",_departId] forKey:@"department_id"];
+        }
+        if (_postId) {
+            
+            [tempDic setValue:[NSString stringWithFormat:@"%@",_postId] forKey:@"post_id"];
+        }
+        [tempDic setValue:[NSString stringWithFormat:@"%@",_roleId] forKey:@"role_id"];
+    }
+    [BaseRequest POST:PersonalSoreAuth_URL parameters:tempDic success:^(id resposeObject) {
+
+        NSLog(@"%@",resposeObject);
+        if ([resposeObject[@"code"] integerValue] == 200) {
+
+            [self alertControllerWithNsstring:@"温馨提示" And:@"申请成功，等待审核通过" WithDefaultBlack:^{
+
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
+        }else{
+
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+
+        [self showContent:@"服务器网络错误，请稍后尝试"];
+        NSLog(@"%@",error);
+    }];
 }
 
 
@@ -180,7 +206,6 @@
                     
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
-            //        cell.dataDic = @{};
             cell.titleL.text = _titleArr[indexPath.row];
             cell.contentL.text = _contentArr[indexPath.row];
                     
@@ -196,6 +221,10 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.dataArr = @[_roleArr,_selectArr];
+            cell.storeAuthCollCellBlock = ^(NSArray * _Nonnull arr) {
+              
+                _selectArr = [NSMutableArray arrayWithArray:arr];
+            };
             return cell;
         }
     }
@@ -209,10 +238,21 @@
         nextVC.selectCompanyVCBlock = ^(NSString *companyId, NSString *name) {
             
             self->_companyId = [NSString stringWithFormat:@"%@",companyId];
+            for (int i = 0; i < 6; i++) {
+                
+                if (i == 0) {
+                    
+                    [_contentArr replaceObjectAtIndex:i withObject:name];
+                }else if (i != 2) {
+                    
+                    [_contentArr replaceObjectAtIndex:i withObject:@" "];
+                }
+            }
             self->_storeId = @"";
             self->_departId = @"";
             self->_postId = @"";
             self->_roleId = @"";
+            [tableView reloadData];
         };
         [self.navigationController pushViewController:nextVC animated:YES];
     }else if (indexPath.row == 1){
@@ -221,7 +261,17 @@
         nextVC.selectStoreVCBlock = ^(NSString * _Nonnull storeId, NSString * _Nonnull storeName) {
             
             self->_storeId = storeId;
-            [self->_contentArr replaceObjectAtIndex:1 withObject:storeName];
+            for (int i = 1; i < 6; i++) {
+                
+                if (i == 1) {
+                    
+                    [self->_contentArr replaceObjectAtIndex:1 withObject:storeName];
+                }else if (i != 2) {
+                    
+                    [_contentArr replaceObjectAtIndex:i withObject:@" "];
+                }
+            }
+            
             self->_departId = @"";
             self->_postId = @"";
             self->_roleId = @"";
@@ -280,6 +330,8 @@
                     view.selectedBlock = ^(NSString *MC, NSString *ID) {
                         
                         [_contentArr replaceObjectAtIndex:3 withObject:MC];
+                        [_contentArr replaceObjectAtIndex:4 withObject:@" "];
+                        _postId = @"";
                         _departId = [NSString stringWithFormat:@"%@",ID];
                         [tableView reloadData];
                     };
@@ -315,6 +367,7 @@
                     
                     [_contentArr replaceObjectAtIndex:4 withObject:MC];
                     _postId = [NSString stringWithFormat:@"%@",ID];
+                    [tableView reloadData];
                 };
                 [self.view addSubview:view];
             }else{
@@ -327,7 +380,37 @@
         }];
     }else{
         
-        
+        if (!_companyId.length) {
+            
+            [self showContent:@"请先选择公司"];
+            return;
+        }
+        [BaseRequest GET:@"agent/personal/store/auth/houseRole/list" parameters:@{@"company_id":_companyId} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                NSMutableArray *tempArr = [@[] mutableCopy];
+                for (int i = 0; i < [resposeObject[@"data"] count]; i++) {
+                    
+                    NSDictionary *dic = resposeObject[@"data"][i];
+                    [tempArr addObject:@{@"id":dic[@"role_id"],@"param":dic[@"role_name"]}];
+                }
+                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    
+                    [_contentArr replaceObjectAtIndex:5 withObject:MC];
+                    _roleId = [NSString stringWithFormat:@"%@",ID];
+                    [tableView reloadData];
+                };
+                [self.view addSubview:view];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+           
+            [self showContent:@"网络错误"];
+        }];
     }
     
 }
@@ -343,7 +426,7 @@
     label.text = @"认证需要审核 请仔细填写信息";
     [self.view addSubview:label];
     
-    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, 27 *SIZE + NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - 27 *SIZE - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
+    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, 40 *SIZE + NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - 40 *SIZE - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) style:UITableViewStylePlain];
     _table.backgroundColor = CLBackColor;
     _table.delegate = self;
     _table.dataSource = self;

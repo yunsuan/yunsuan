@@ -8,6 +8,7 @@
 
 #import "CompanyDetailVC.h"
 #import "AuthenticationVC.h"
+#import "StoreAuthVC.h"
 
 #import "CompanyDetailCell.h"
 #import "SelectCompanyTableCell.h"
@@ -46,6 +47,14 @@
     for (UIViewController *vc in self.navigationController.viewControllers) {
         
         if ([vc isKindOfClass:[AuthenticationVC class]]) {
+            
+            if (self.companyDetailVCBlock) {
+                
+                self.companyDetailVCBlock(_model.company_id, _model.company_name);
+                [self.navigationController popToViewController:vc animated:YES];
+            }
+            
+        }if ([vc isKindOfClass:[StoreAuthVC class]]) {
             
             if (self.companyDetailVCBlock) {
                 

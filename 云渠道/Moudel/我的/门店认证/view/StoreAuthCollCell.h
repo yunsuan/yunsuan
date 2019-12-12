@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^StoreAuthCollCellBlock)(NSArray *arr);
+
 @interface StoreAuthCollCell : UITableViewCell
+
+@property (nonatomic, copy) StoreAuthCollCellBlock storeAuthCollCellBlock;
 
 @property (nonatomic, strong) UILabel *roleTL;
 
