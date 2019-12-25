@@ -72,15 +72,15 @@
         }
     }else{
         
-        if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//        if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
             
             _confirmBtn.hidden = YES;
             _statusL.hidden = YES;
-        }else{
-            
-            _confirmBtn.hidden = NO;
-            _statusL.hidden = YES;
-        }
+//        }else{
+//
+//            _confirmBtn.hidden = NO;
+//            _statusL.hidden = YES;
+//        }
     }
 }
 
@@ -153,13 +153,13 @@
     _QRCodeBtn.hidden = YES;
     [self.contentView addSubview:_QRCodeBtn];
     
-    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         _confirmBtn.hidden = YES;
-    }else{
-        
-        _confirmBtn.hidden = NO;
-    }
+//    }else{
+//        
+//        _confirmBtn.hidden = NO;
+//    }
     
     [self MasonryUI];
 }

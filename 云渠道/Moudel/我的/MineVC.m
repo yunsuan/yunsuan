@@ -57,7 +57,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self InitDataSouce];
     [self InitUI];
-    [self RequestMethod];
+//    [self RequestMethod];
     [self LoadRequest];
 }
 
@@ -385,6 +385,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     return 43.3*SIZE;
 }
 

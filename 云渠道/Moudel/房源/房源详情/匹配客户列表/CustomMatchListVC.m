@@ -101,7 +101,7 @@
     cell.model = _tempArr[indexPath.row];
     cell.recommendBtn.tag = indexPath.row;
     
-    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         if ([self.isRecommend isEqualToString:@"NO"]) {
             
@@ -110,10 +110,10 @@
             
             cell.recommendBtn.hidden = NO;
         }
-    }else{
-        
-        cell.recommendBtn.hidden = YES;
-    }
+//    }else{
+//        
+//        cell.recommendBtn.hidden = YES;
+//    }
     
     cell.recommendBtnBlock5 = ^(NSInteger index) {
         

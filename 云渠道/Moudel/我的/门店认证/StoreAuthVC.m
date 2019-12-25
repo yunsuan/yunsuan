@@ -257,6 +257,11 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     }else if (indexPath.row == 1){
         
+        if (!self->_companyId) {
+            
+            [self showContent:@"请选择公司"];
+            return;
+        }
         SelectStoreVC *nextVC = [[SelectStoreVC alloc] initWithCompanyId:self->_companyId];
         nextVC.selectStoreVCBlock = ^(NSString * _Nonnull storeId, NSString * _Nonnull storeName) {
             
@@ -326,16 +331,22 @@
                         NSDictionary *dic = resposeObject[@"data"][i];
                         [tempArr addObject:@{@"id":dic[@"department_id"],@"param":dic[@"department_name"]}];
                     }
-                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
-                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                    if (tempArr.count) {
                         
-                        [_contentArr replaceObjectAtIndex:3 withObject:MC];
-                        [_contentArr replaceObjectAtIndex:4 withObject:@" "];
-                        _postId = @"";
-                        _departId = [NSString stringWithFormat:@"%@",ID];
-                        [tableView reloadData];
-                    };
-                    [self.view addSubview:view];
+                        SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                        view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                            
+                            [_contentArr replaceObjectAtIndex:3 withObject:MC];
+                            [_contentArr replaceObjectAtIndex:4 withObject:@" "];
+                            _postId = @"";
+                            _departId = [NSString stringWithFormat:@"%@",ID];
+                            [tableView reloadData];
+                        };
+                        [self.view addSubview:view];
+                    }else{
+                        
+                        [self showContent:@"该公司暂无部门信息"];
+                    }
                 }else{
                     
                     [self showContent:resposeObject[@"msg"]];
@@ -362,14 +373,20 @@
                     NSDictionary *dic = resposeObject[@"data"][i];
                     [tempArr addObject:@{@"id":dic[@"post_id"],@"param":dic[@"post_name"]}];
                 }
-                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
-                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                if (tempArr.count) {
                     
-                    [_contentArr replaceObjectAtIndex:4 withObject:MC];
-                    _postId = [NSString stringWithFormat:@"%@",ID];
-                    [tableView reloadData];
-                };
-                [self.view addSubview:view];
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        
+                        [_contentArr replaceObjectAtIndex:4 withObject:MC];
+                        _postId = [NSString stringWithFormat:@"%@",ID];
+                        [tableView reloadData];
+                    };
+                    [self.view addSubview:view];
+                }else{
+                    
+                    [self showContent:@"该公司暂无岗位信息"];
+                }
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];
@@ -395,14 +412,20 @@
                     NSDictionary *dic = resposeObject[@"data"][i];
                     [tempArr addObject:@{@"id":dic[@"role_id"],@"param":dic[@"role_name"]}];
                 }
-                SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
-                view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                if (tempArr.count) {
                     
-                    [_contentArr replaceObjectAtIndex:5 withObject:MC];
-                    _roleId = [NSString stringWithFormat:@"%@",ID];
-                    [tableView reloadData];
-                };
-                [self.view addSubview:view];
+                    SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:tempArr];
+                    view.selectedBlock = ^(NSString *MC, NSString *ID) {
+                        
+                        [_contentArr replaceObjectAtIndex:5 withObject:MC];
+                        _roleId = [NSString stringWithFormat:@"%@",ID];
+                        [tableView reloadData];
+                    };
+                    [self.view addSubview:view];
+                }else{
+                
+                    [self showContent:@"该公司暂无角色信息"];
+                }
             }else{
                 
                 [self showContent:resposeObject[@"msg"]];

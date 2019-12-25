@@ -393,13 +393,13 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = _titleinfo;
     
-    if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
-        _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
-    }
-    else
-    {
+//    if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
+//        _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
+//    }
+//    else
+//    {
         _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
-    }
+//    }
     _invalidTable.rowHeight = UITableViewAutomaticDimension;
     _invalidTable.estimatedRowHeight = 150 *SIZE;
     _invalidTable.backgroundColor = YJBackColor;
@@ -425,14 +425,14 @@
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
     [_recommendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [self.view addSubview:_recommendBtn];
-    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
-        
-    }
-    else
-    {
+//    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 2) {
+//
+//    }
+//    else
+//    {
         [self.view addSubview:_complaintBtn];
         [self.view addSubview:_recommendBtn];
-    }
+//    }
 }
 
 - (FailView *)failView{

@@ -281,12 +281,12 @@
                 nextVC.brokerage = @"no";
             }else{
                 
-                if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
-                    
-                }else{
-                    
-                    nextVC.isRecommend = @"NO";
-                }
+//                if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+//
+//                }else{
+//
+//                    nextVC.isRecommend = @"NO";
+//                }
                 nextVC.brokerage = @"yes";
             }
             
@@ -313,12 +313,12 @@
                     nextVC.brokerage = @"no";
                 }else{
                     
-                    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
-                        
-                    }else{
-                        
-                        nextVC.isRecommend = @"NO";
-                    }
+//                    if ([[UserModelArchiver unarchive].agent_identity integerValue] == 1) {
+//                        
+//                    }else{
+//                        
+//                        nextVC.isRecommend = @"NO";
+//                    }
                     nextVC.brokerage = @"yes";
                 }
                 

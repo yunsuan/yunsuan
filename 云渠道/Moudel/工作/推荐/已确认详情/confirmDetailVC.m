@@ -287,12 +287,12 @@
     
     
     
-     if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
-    _confirmTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
-     }
-     else{
+//     if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
+//    _confirmTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
+//     }
+//     else{
          _confirmTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
-     }
+//     }
     _confirmTable.rowHeight = UITableViewAutomaticDimension;
     _confirmTable.estimatedRowHeight = 200 *SIZE;
     _confirmTable.backgroundColor = YJBackColor;

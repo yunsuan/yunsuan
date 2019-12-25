@@ -328,6 +328,10 @@
             
             _item = index;
             [tableView reloadData];
+            
+            [self.mainTable layoutIfNeeded]; //加上这段代码,
+
+            [self.mainTable setContentOffset:CGPointMake(0, 0)];
         };
         
         header.rentingMaintainDetailHeaderBlock = ^{

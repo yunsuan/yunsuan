@@ -59,6 +59,8 @@ static NSString *const kQQAPPID = @"1106811849";
     
     BMKMapManager* _mapManager;
     CLLocationManager *_locationManager;
+    
+    UpgradeTipsView *_updateView;
 }
 @end
 
@@ -67,19 +69,12 @@ static NSString *const kQQAPPID = @"1106811849";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]stringByAppendingPathComponent:@"ServerControl.plist"];
-//        NSMutableArray *arr = [[NSMutableArray alloc]initWithContentsOfFile:filePath];
-//        if (arr.count != 1) {
-//            NSArray *dataarr  = @[@"http://120.27.21.136:2798/"];
-//            [dataarr writeToFile:filePath atomically:YES];
-//        }
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined /*|| [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways*/) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         
         _locationManager = [[CLLocationManager alloc] init];
         [_locationManager requestWhenInUseAuthorization];
-//        [_locationManager requestAlwaysAuthorization];
     }else{
         
         [_locationManager startUpdatingHeading];
@@ -92,21 +87,18 @@ static NSString *const kQQAPPID = @"1106811849";
     [self NetworkingStart];
     [self configThirdWithOptions:launchOptions];
 
-//
     return YES;
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
-    
-//    [_locationManager requestWhenInUseAuthorization];
-//    [_locationManager requestAlwaysAuthorization];
+
     [_locationManager startUpdatingHeading];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading{
     
-//    NSLog(@"%@",newHeading);
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
@@ -171,20 +163,20 @@ static NSString *const kQQAPPID = @"1106811849";
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    UpgradeTipsView *view = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    view.contentL.text = dic[@"releaseNotes"];
-                    view.upgradeTipsViewBlock = ^{
+                    self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    self->_updateView.contentL.text = dic[@"releaseNotes"];
+                    self->_updateView.upgradeTipsViewBlock = ^{
                         
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     };
                     if ([resposeObject[@"data"][@"must"] integerValue]) {
 
-                        view.cancelBtn.hidden = YES;
+                        self->_updateView.cancelBtn.hidden = YES;
                     }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
                     });
                 }
             } failure:^(NSError *error) {
@@ -199,10 +191,7 @@ static NSString *const kQQAPPID = @"1106811849";
 
 //网络请求
 - (void)NetworkingStart {
-//    dispatch_queue_t queue1 = dispatch_queue_create("queue1", DISPATCH_QUEUE_CONCURRENT);
-//    dispatch_group_t group = dispatch_group_create();
-//    //版本
-//    dispatch_group_async(group, queue1, ^{
+
     
    //配置文件
 //    dispatch_group_async(group, queue1, ^{
@@ -328,8 +317,7 @@ static NSString *const kQQAPPID = @"1106811849";
 //配置友盟
 - (void)configUSharePlatforms
 {
-//    [[UMSocialManager defaultManager] setUmSocialAppkey:kUmengAppkey];
-//    [ defaultManager]
+    
     [UMConfigure initWithAppkey:kUmengAppkey channel:@"App store"];
     /* 设置微信的appKey和appSecret */
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:kWechatAppId appSecret:kWechatSecret redirectURL:redirectUrl];
@@ -441,14 +429,6 @@ static NSString *const kQQAPPID = @"1106811849";
     }
 }
 
-
-
-//-(void)tagsAliasCallback:(int)iResCode
-//                    tags:(NSSet*)tags
-//                   alias:(NSString*)alias
-//{
-//    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
-//}
 
 - (void)comeBackLoginVC {
     //未登录
@@ -659,8 +639,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         // 判断为本地通知
         NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
-    
-    //    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:[badge integerValue]];
+
     [UIApplication sharedApplication].applicationIconBadgeNumber += 1;
     
     completionHandler();  // 系统要求执行这个方法
@@ -758,20 +737,20 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    UpgradeTipsView *view = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    view.contentL.text = dic[@"releaseNotes"];
-                    view.upgradeTipsViewBlock = ^{
+                    self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    self->_updateView.contentL.text = dic[@"releaseNotes"];
+                    self->_updateView.upgradeTipsViewBlock = ^{
                         
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     };
                     if ([resposeObject[@"data"][@"must"] integerValue]) {
 
-                        view.cancelBtn.hidden = YES;
+                        self->_updateView.cancelBtn.hidden = YES;
                     }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
                     });
                 }
             } failure:^(NSError *error) {
@@ -818,20 +797,20 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
-                    UpgradeTipsView *view = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    view.contentL.text = dic[@"releaseNotes"];
-                    view.upgradeTipsViewBlock = ^{
+                    self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    self->_updateView.contentL.text = dic[@"releaseNotes"];
+                    self->_updateView.upgradeTipsViewBlock = ^{
                         
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     };
                     if ([resposeObject[@"data"][@"must"] integerValue]) {
 
-                        view.cancelBtn.hidden = YES;
+                        self->_updateView.cancelBtn.hidden = YES;
                     }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
                     });
                 }
             } failure:^(NSError *error) {
@@ -861,20 +840,20 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
                 if ([resposeObject[@"code"] integerValue] == 200) {
                     
                     
-                    UpgradeTipsView *view = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    view.contentL.text = dic[@"releaseNotes"];
-                    view.upgradeTipsViewBlock = ^{
+                    self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    self->_updateView.contentL.text = dic[@"releaseNotes"];
+                    self->_updateView.upgradeTipsViewBlock = ^{
                         
                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
                     };
                     if ([resposeObject[@"data"][@"must"] integerValue]) {
 
-                        view.cancelBtn.hidden = YES;
+                        self->_updateView.cancelBtn.hidden = YES;
                     }
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
                     });
                 }
             } failure:^(NSError *error) {

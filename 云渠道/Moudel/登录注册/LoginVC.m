@@ -319,16 +319,30 @@
     
     [BaseRequest POST:Login_URL parameters:parameter success:^(id resposeObject) {
         
-        if ([resposeObject[@"code"] integerValue]==200) {
+        if ([resposeObject[@"code"] integerValue] == 200) {
         
             [[NSUserDefaults standardUserDefaults]setValue:LOGINSUCCESS forKey:LOGINENTIFIER];
             [UserModel defaultModel].Token = resposeObject[@"data"][@"token"];
             [UserModel defaultModel].Account = _Account.text;
             [UserModel defaultModel].Password = _PassWord.text;
-            [UserModel defaultModel].agent_id =resposeObject[@"data"][@"agent_id"];
-            [UserModel defaultModel].agent_identity =resposeObject[@"data"][@"agent_identity"];
-            [UserModel defaultModel].store_identity =resposeObject[@"data"][@"store_identity"];
-            [UserModel defaultModel].company_id =resposeObject[@"data"][@"company_id"];
+            [UserModel defaultModel].agent_id = resposeObject[@"data"][@"agent_id"];
+            [UserModel defaultModel].agent_identity = resposeObject[@"data"][@"agent_identity"];
+            [UserModel defaultModel].store_identity = resposeObject[@"data"][@"store_identity"];
+            if ([resposeObject[@"data"][@"store_power"] length]) {
+                
+                NSData *JSONData = [resposeObject[@"data"][@"store_power"] dataUsingEncoding:NSUTF8StringEncoding];
+                if (JSONData) {
+                                   
+                    NSError *err = nil;
+                    NSArray *arr = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:&err];
+                    [UserModel defaultModel].secondPower = [[NSMutableArray alloc] initWithArray:arr];
+                }
+            }else{
+                
+                [UserModel defaultModel].secondPower = [[NSMutableArray alloc] initWithArray:@[]];
+            }
+            [UserModel defaultModel].secondType = [[NSMutableArray alloc] initWithArray:[[NSString stringWithFormat:@"%@",resposeObject[@"data"][@"store_type"]] componentsSeparatedByString:@","]];
+            [UserModel defaultModel].company_id = resposeObject[@"data"][@"company_id"];
             [UserModelArchiver archive];
             [self InfoRequest];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goHome" object:nil];

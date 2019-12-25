@@ -178,11 +178,11 @@
 -(void)initUI
 {
     
-    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
+//    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
         self.rightBtn.hidden = NO;
-    }else{
-        self.rightBtn.hidden = YES;
-    }
+//    }else{
+//        self.rightBtn.hidden = YES;
+//    }
     
     [self.view addSubview:self.MainTableView];
 }

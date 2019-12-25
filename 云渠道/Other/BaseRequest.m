@@ -13,7 +13,7 @@ static AFHTTPSessionManager *manager ;
 static AFHTTPSessionManager *updatemanager ;
 //header头
 static NSString *const kACCESSROLE = @"agent";
-//static MBProgressHUD *hud ;
+
 
 
 @implementation BaseRequest
@@ -160,7 +160,7 @@ static NSString *const kACCESSROLE = @"agent";
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [WaitAnimation stopAnimation];
-//        success(responseObject);
+
         
         if ([responseObject[@"code"] integerValue] == 200 || [responseObject[@"code"] integerValue] == 400)
         {

@@ -455,7 +455,7 @@
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor = [UIColor blackColor];
     titleL.font = [UIFont systemFontOfSize:17 * SIZE];
-    titleL.text = @"选择店铺";
+    titleL.text = @"选择门店";
     [whiteView addSubview:titleL];
     
     _searchBar = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 84 *SIZE, 340 *SIZE, 33 *SIZE)];
@@ -463,7 +463,7 @@
     _searchBar.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 11 *SIZE, 0)];
     //设置显示模式为永远显示(默认不显示)
     _searchBar.leftViewMode = UITextFieldViewModeAlways;
-    _searchBar.placeholder = @"请输入公司名称/营业执照号查询";
+    _searchBar.placeholder = @"请输入门店名称查询";
     _searchBar.font = [UIFont systemFontOfSize:12 *SIZE];
     _searchBar.layer.cornerRadius = 2 *SIZE;
     _searchBar.returnKeyType = UIReturnKeySearch;

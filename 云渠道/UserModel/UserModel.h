@@ -33,6 +33,8 @@
 @property (nonatomic , strong) NSMutableArray *workArr;
 @property (nonatomic , strong) NSMutableArray *cityArr;
 @property (nonatomic , strong) NSMutableArray *groupArr;
+@property (nonatomic , strong) NSMutableArray *secondPower;
+@property (nonatomic , strong) NSMutableArray *secondType;
 
 + (UserModel *)defaultModel;
 

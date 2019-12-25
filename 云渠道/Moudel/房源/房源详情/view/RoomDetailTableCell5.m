@@ -246,10 +246,10 @@
     [_recommendBtn setTitle:@"推荐" forState:UIControlStateNormal];
     [_recommendBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [self.contentView addSubview:_recommendBtn];
-    }
+//    }
     
     
     _line = [[UIView alloc] init];
@@ -337,7 +337,7 @@
     }];
     
     
-    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [_recommendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.contentView).offset(- 10 *SIZE);
@@ -345,7 +345,7 @@
             make.width.equalTo(@(77 *SIZE));
             make.height.equalTo(@(30 *SIZE));
         }];
-    }
+//    }
 
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -51,7 +51,12 @@ static CGFloat labelHeight = 40;
     if (self) {
         
         _myChannelArr =  [UserModel defaultModel].workArr;
-        _recommendChannelArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
+//        if ([UserModel defaultModel].secondPower.count) {
+//
+//            _recommendChannelArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房"]];
+//        }else{
+//
+            _recommendChannelArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
         for (int i=0; i<_myChannelArr.count; i++) {
             [_recommendChannelArr removeObject:_myChannelArr[i]];
         }
