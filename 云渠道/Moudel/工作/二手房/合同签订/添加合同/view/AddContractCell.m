@@ -66,6 +66,11 @@
     }
 }
 
+//- (void)setData:(NSMutableDictionary *)data{
+//
+//
+//}
+
 -(void)setDataWithdic:(NSMutableDictionary *)dic{
     
     if (dic) {

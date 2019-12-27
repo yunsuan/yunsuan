@@ -34,7 +34,7 @@
     NSMutableArray *_foldArr;
     NSDateFormatter *_formatter;
     BOOL _ischoose;
-    BOOL _isadd;
+//    BOOL _isadd;
 }
 
 @property (nonatomic, strong) UITableView *table;
@@ -57,7 +57,10 @@
     
     _titleArr = @[@"交易信息",@"买方信息",@"卖方信息"];
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0"]];
-    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"deal_code":@"",
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYYMMddhhmmss"];
+    NSString *str = [formatter stringFromDate:[NSDate date]];
+    _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"deal_code":str,
                                                                @"deal_money":@"",
                                                                @"buy_breach":@"",
                                                                @"sale_breach":@"",
@@ -71,7 +74,8 @@
                                                                @"comment":@""
                                                                }];
     if (!_buyarr) {
-        _buyarr =[NSMutableArray arrayWithArray:@[@""]];
+//        _buyarr =[NSMutableArray arrayWithArray:@[@""]];
+        _buyarr = [@[] mutableCopy];
     }
     if (!_sellarr) {
          _sellarr =[NSMutableArray arrayWithArray:@[@""]];
@@ -80,9 +84,7 @@
     _formatter = [[NSDateFormatter alloc] init];
     [_formatter setDateFormat:@"YYYY-MM-dd"];
 //    _ischoose = NO;
-    _isadd = NO;
-    
-    
+//    _isadd = NO;
 }
 
 - (void)ActionNextBtn:(UIButton *)btn{
@@ -287,14 +289,13 @@
         }
         else if(section ==1)
         {
-            if (_isadd) {
-
-                  return _buyarr.count+1;
-
-                
-            }else{
-                return _buyarr.count==1?1:_buyarr.count+1;
-            }
+            return _buyarr.count + 1;
+//            if (_isadd) {
+//
+//                return _buyarr.count+1;
+//            }else{
+//                return _buyarr.count==1?1:_buyarr.count+1;
+//            }
         }else{
             return _sellarr.count==1?1:_sellarr.count+1;
         }
@@ -385,27 +386,50 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section ==0) {
+        
         return NO;
-    }else if (indexPath.section ==1)
-    {
-        if (_isadd) {
-            if (indexPath.row ==0) {
-                return NO;
-            }
-            else{
-                return YES;
-            }
+    }else if (indexPath.section == 1){
+        
+        if ([_buyarr[0] isEqual:@""]) {
+            
+            return NO;
         }else{
-            if (indexPath.row<2) {
-                return NO;
-            }
-            else{
+            
+            if (indexPath.row == 0) {
+                
+                if (_buyarr[0][@"butter_tel"]){
+                    
+                    return NO;
+                }
+                return YES;
+            }else if (indexPath.row){
+                
+                
+            }else{
+                
                 return YES;
             }
         }
-    }
-    else{
-        if (indexPath.row<2) {
+//        if (_isadd) {
+//
+//            if (indexPath.row ==0) {
+//
+//                return NO;
+//            }else{
+//
+//                return YES;
+//            }
+//        }else{
+//            if (indexPath.row < 2) {
+//
+//                return NO;
+//            }else{
+//
+//                return YES;
+//            }
+//        }
+    }else{
+        if (indexPath.row < 2) {
             return NO;
         }
         else{
@@ -448,15 +472,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
-    AddContractCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell"];
-    if (!cell) {
+    
+        AddContractCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell"];
+        if (!cell) {
         
-        cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
+            cell = [[AddContractCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell"];
         
-    }
+        }
         cell.data = _tradedic;
+        [cell setDataWithdic:_tradedic];
         __weak AddContractCell *weakcell = cell;
         cell.cardTimeBlock = ^{
+            
             DateChooseView *view = [[DateChooseView alloc] initWithFrame:self.view.frame];
             view.dateblock = ^(NSDate *date) {
                 
@@ -517,31 +544,34 @@
             _tradedic = datadic;
         };
         
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    return cell;
+        return cell;
     }else if (indexPath.section == 1) {
 #pragma mark   ---- 买方信息
         if (indexPath.row ==0) {
-            if ([_buyarr[0] isEqual:@""]) {
+            
+            if (_buyarr.count) {
+                
+            }else{
+                
                 AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
                 if (!cell) {
                 
                     cell = [[AddContractCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell2"];
                     [cell.addbtn addTarget:self action:@selector(action_addbuy) forControlEvents:UIControlEventTouchUpInside];
                     [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
-                                  }
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    return cell;
-            }else{
-             if (_isadd == NO)
-            {
+                }
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
+            }
+             if (_isadd == NO){
+                
                 AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
-                    if (!cell) {
+                if (!cell) {
                 
-                        cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
-                
-                            }
+                    cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
+                }
                 [cell setDataDic:_buyarr[indexPath.row]];
                 [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -550,29 +580,28 @@
             }else{
                 
                 AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
-                          if (!cell) {
-                
-                              cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
-                
-                          }
-                          NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
-                          [cell setData:dic];
-                            cell.stickieBtn.hidden = YES;
-                       cell.titelL.text = @"主权益人";
-                        
-                          cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
-                          return cell;
+                if (!cell) {
+                    
+                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                }
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
+                [cell setData:dic];
+                cell.stickieBtn.hidden = YES;
+                cell.titelL.text = @"主权益人";
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                return cell;
             }}
-        }else if (indexPath.row==_buyarr.count)
-        {
+        }else if (indexPath.row==_buyarr.count){
+            
             AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
             if (!cell) {
+                
                 cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
-                          }
+            }
             [cell.addBtn addTarget:self action:@selector(action_addbuyer) forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }else{
+            
             AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
             if (!cell) {
                 cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
@@ -580,39 +609,45 @@
             NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
             [cell setData:dic];
             if (indexPath.row ==1 &&_isadd ==NO) {
-                    cell.stickieBtn.hidden = YES;
+                    
+                cell.stickieBtn.hidden = YES;
                 cell.titelL.text = @"主权益人";
-                }
-            else{
+            }else{
+                
                 cell.stickieBtn.hidden = NO;
                 cell.titelL.text = @"附权益人";
-                }
+            }
             cell.indexpath = indexPath;
             cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
+                
                 if (_isadd) {
+                    
                     [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:0];
                     [_table reloadData];
                 }else{
+                    
                     [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
                     [_table reloadData];
                 }
             };
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-        return cell;
-        }
+            return cell;
             
-
+        }
+        
     }else {
 #pragma mark  --卖方信息
 
         if (![_sellarr[0] isEqual:@""]) {
+            
             if (indexPath.row ==0) {
+                
                 AddContractCell6 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell6"];
                 if (!cell) {
                     
                     cell = [[AddContractCell6 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell6"];
-
+                    
                 }
                 [cell setDataDic:_sellarr[indexPath.row]];
                 [cell.choosebtn addTarget:self action:@selector(action_chooseseller) forControlEvents:UIControlEventTouchUpInside];
@@ -620,21 +655,17 @@
                 
                 return cell;
             }else if(indexPath.row ==_sellarr.count){
-                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"]; 
+                
+                AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
                 if (!cell) {
                     
                     cell = [[AddContractCell5 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell5"];
                 }
                 
                 [cell.addBtn addTarget:self action:@selector(action_addseller) forControlEvents:UIControlEventTouchUpInside];
-//                UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(action_addseller)];
-//                [cell.addImg addGestureRecognizer:tapGesturRecognizer];
-//
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                
                 return cell;
-            }
-            else{
+            }else{
+                
                 AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
                 if (!cell) {
                     
@@ -644,18 +675,19 @@
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sellarr[indexPath.row]];
                 [cell setData:dic];
                 if (indexPath.row ==1) {
+                    
                     cell.stickieBtn.hidden = YES;
                     cell.titelL.text = @"主权益人";
-                }
-                else{
+                }else{
+                 
                     cell.stickieBtn.hidden = NO;
                     cell.titelL.text = @"附权益人";
                 }
                 cell.indexpath = indexPath;
                 cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
               
-                        [_sellarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
-                        [_table reloadData];
+                    [_sellarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
+                    [_table reloadData];
                 
                 };
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -674,15 +706,14 @@
             
             return cell;
         }
-
     }
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==1) {
-        if (_isadd ==NO) {
-            if (indexPath.row>0&&indexPath.row<_buyarr.count) {
+        if (_isadd == NO) {
+            if (indexPath.row > 0 && indexPath.row < _buyarr.count) {
+                
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
                 vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -693,7 +724,7 @@
             }
         }
         else{
-            if (indexPath.row>=0&&indexPath.row<_buyarr.count) {
+            if (indexPath.row >= 0 && indexPath.row < _buyarr.count) {
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
                 vc.dataDic = _buyarr[indexPath.row];
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -705,7 +736,7 @@
         }
         
     }else if (indexPath.section ==2){
-        if (indexPath.row >0&&indexPath.row<_sellarr.count) {
+        if (indexPath.row > 0 && indexPath.row < _sellarr.count) {
             AddPeopleVC *vc = [[AddPeopleVC alloc]init];
             vc.dataDic = _sellarr[indexPath.row];
             vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
@@ -722,10 +753,10 @@
 
 -(void)action_addbuy
 {
-    _isadd = YES;
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
         [_buyarr removeAllObjects];
+        _isadd = YES;
         [_buyarr addObject:dic];
         [_table reloadData];
     };
@@ -767,11 +798,10 @@
                      if ([resposeObject[@"code"] integerValue]==200) {
                          [_buyarr removeAllObjects];
                          [_buyarr addObject:dic];
+//                         _isadd = YES;
                          [_buyarr addObjectsFromArray:resposeObject[@"data"]];
                          [_table reloadData];
                      }
-                     
-                     
                  }
                  failure:^(NSError *error) {
                      

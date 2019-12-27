@@ -26,6 +26,8 @@ typedef void(^LookMaintainDetailAddFollowVCBlock)(void);
 
 @property (nonatomic, strong) NSDictionary *dic;
 
+@property (nonatomic, strong) NSMutableDictionary *columnDic;
+
 - (instancetype)initWithTakeId:(NSString *)takeId dataDic:(NSDictionary *)dataDic;
 
 @end

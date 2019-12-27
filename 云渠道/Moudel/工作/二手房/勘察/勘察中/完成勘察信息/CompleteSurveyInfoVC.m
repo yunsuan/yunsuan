@@ -243,42 +243,137 @@
     }
     if ([str isEqualToString:@"写字楼"]) {
         
-        CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.completeSurveyOfficeBlock = ^{
-          
-            if (self.completeSurveyInfoVCBlock) {
+        [BaseRequest GET:HouseColumnConfig_URL parameters:@{@"type":@"3"} success:^(id resposeObject) {
                 
-                self.completeSurveyInfoVCBlock();
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.completeSurveyOfficeBlock = ^{
+                  
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.completeSurveyOfficeBlock = ^{
+                  
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+        //        self
+            CompleteSurveyOfficeVC *nextVC = [[CompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.completeSurveyOfficeBlock = ^{
+              
+                if (self.completeSurveyInfoVCBlock) {
+                    
+                    self.completeSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+    
     }else if ([str isEqualToString:@"商铺"]){
         
-        CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.completeSurveyStoreVCBlock = ^{
-            
-            if (self.completeSurveyInfoVCBlock) {
+        [BaseRequest GET:HouseColumnConfig_URL parameters:@{@"type":@"2"} success:^(id resposeObject) {
                 
-                self.completeSurveyInfoVCBlock();
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.completeSurveyStoreVCBlock = ^{
+                    
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.completeSurveyStoreVCBlock = ^{
+                    
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+        //        self
+            CompleteSurveyStoreVC *nextVC = [[CompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.completeSurveyStoreVCBlock = ^{
+                
+                if (self.completeSurveyInfoVCBlock) {
+                    
+                    self.completeSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+
     }else{
         
-        CompleteSurveyHouseVC *nextVC = [[CompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.completeSurveyHouseVCBlock = ^{
-            
-            if (self.completeSurveyInfoVCBlock) {
+        [BaseRequest GET:HouseColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                 
-                self.completeSurveyInfoVCBlock();
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                CompleteSurveyHouseVC *nextVC = [[CompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                nextVC.completeSurveyHouseVCBlock = ^{
+                    
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                CompleteSurveyHouseVC *nextVC = [[CompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.completeSurveyHouseVCBlock = ^{
+                    
+                    if (self.completeSurveyInfoVCBlock) {
+                        
+                        self.completeSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+        //        self
+            CompleteSurveyHouseVC *nextVC = [[CompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.completeSurveyHouseVCBlock = ^{
+                
+                if (self.completeSurveyInfoVCBlock) {
+                    
+                    self.completeSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
     }
-    
 }
 
 - (void)ActionSliderChange:(UISlider *)slider{

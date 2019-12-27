@@ -32,6 +32,7 @@
 //#import "SurveySuccessImgCell.h"
 #import "SecAllRoomDetailTableHeader2.h"
 #import "SecAllRoomTableCell2.h"
+#import "MaintainDetailFollowCell.h"
 #import "MaintainAddFollowHeader.h"
 #import "CustomDetailTableCell2.h"
 #import "AddPeopleCell.h"
@@ -1016,16 +1017,16 @@
         
         if (indexPath.section == 1) {
             
-            NSString * Identifier = @"CustomDetailTableCell2";
-            CustomDetailTableCell2 *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
+            NSString * Identifier = @"MaintainDetailFollowCell";
+            MaintainDetailFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier];
             if (!cell) {
                 
-                cell = [[CustomDetailTableCell2 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
+                cell = [[MaintainDetailFollowCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell.wayL.text = [NSString stringWithFormat:@"跟进方式：%@",_followArr[indexPath.row][@"follow_type"]];
-            cell.contentL.text = _followArr[indexPath.row][@"comment"];
+            cell.contentL.text = [NSString stringWithFormat:@"跟进内容：%@",_followArr[indexPath.row][@"comment"]];
             cell.timeL.text = _followArr[indexPath.row][@"follow_time"];
             
             return cell;

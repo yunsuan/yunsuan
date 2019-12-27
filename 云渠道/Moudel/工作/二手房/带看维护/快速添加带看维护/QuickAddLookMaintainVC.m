@@ -27,8 +27,10 @@
     NSString *_province;
     NSString *_city;
     NSString *_district;
+    
+    NSString *_cardStr;
 }
-@property (nonatomic, strong) UIView *whiteView;
+@property (nonatomic, strong) UIScrollView *whiteView;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -67,6 +69,10 @@
 @property (nonatomic, strong) DropDownBtn *addressBtn;
 
 @property (nonatomic, strong) UITextView *addressTF;
+
+@property (nonatomic, strong) UILabel *cardL;
+
+@property (nonatomic, strong) UIImageView *cardImg;
 
 @property (nonatomic, strong) UIButton *saveBtn;
 
@@ -152,6 +158,10 @@
         
         [dic setObject:_addressTF.text forKey:@"address"];
     }
+    if (_cardStr.length) {
+        
+        [dic setValue:_cardStr forKey:@"card_img"];
+    }
     
     if (_clientId.length) {
         
@@ -161,19 +171,53 @@
             
             if ([resposeObject[@"code"] integerValue] ==200) {
                 
-                LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-                nextVC.lookMaintainDetailAddFollowVCBlock = ^{
-                  
-                    if (self.quickAddLookMaintainVCBlock) {
+                [BaseRequest GET:HouseTakeColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
                         
-                        self.quickAddLookMaintainVCBlock();
+                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                          
+                            if (self.quickAddLookMaintainVCBlock) {
+                                
+                                self.quickAddLookMaintainVCBlock();
+                            }
+                        };
+                        nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                        nextVC.isSelect = YES;
+                        nextVC.property = _typeBtn.content.text;
+                        nextVC.clientId = _clientId;
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                          
+                            if (self.quickAddLookMaintainVCBlock) {
+                                
+                                self.quickAddLookMaintainVCBlock();
+                            }
+                        };
+                        nextVC.isSelect = YES;
+                        nextVC.property = _typeBtn.content.text;
+                        nextVC.clientId = _clientId;
+                        [self.navigationController pushViewController:nextVC animated:YES];
                     }
-//                    [self.navigationController popViewControllerAnimated:YES];
-                };
-                nextVC.isSelect = YES;
-                nextVC.property = _typeBtn.content.text;
-                nextVC.clientId = _clientId;
-                [self.navigationController pushViewController:nextVC animated:YES];
+                } failure:^(NSError *error) {
+                    
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                      
+                        if (self.quickAddLookMaintainVCBlock) {
+                            
+                            self.quickAddLookMaintainVCBlock();
+                        }
+                    };
+                    nextVC.isSelect = YES;
+                    nextVC.property = _typeBtn.content.text;
+                    nextVC.clientId = _clientId;
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }];
             }
             else{
                 
@@ -191,18 +235,53 @@
             
             if ([resposeObject[@"code"] integerValue] ==200) {
                 
-                LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-                nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                [BaseRequest GET:HouseTakeColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                     
-                    if (self.quickAddLookMaintainVCBlock) {
+                    if ([resposeObject[@"code"] integerValue] == 200) {
                         
-                        self.quickAddLookMaintainVCBlock();
+                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                            
+                            if (self.quickAddLookMaintainVCBlock) {
+                                
+                                self.quickAddLookMaintainVCBlock();
+                            }
+                        };
+                        nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                        nextVC.isSelect = YES;
+                        nextVC.property = _typeBtn.content.text;
+                        nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                            
+                            if (self.quickAddLookMaintainVCBlock) {
+                                
+                                self.quickAddLookMaintainVCBlock();
+                            }
+                        };
+                        nextVC.isSelect = YES;
+                        nextVC.property = _typeBtn.content.text;
+                        nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+                        [self.navigationController pushViewController:nextVC animated:YES];
                     }
-                };
-                nextVC.isSelect = YES;
-                nextVC.property = _typeBtn.content.text;
-                nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
-                [self.navigationController pushViewController:nextVC animated:YES];
+                } failure:^(NSError *error) {
+                    
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                        
+                        if (self.quickAddLookMaintainVCBlock) {
+                            
+                            self.quickAddLookMaintainVCBlock();
+                        }
+                    };
+                    nextVC.isSelect = YES;
+                    nextVC.property = _typeBtn.content.text;
+                    nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }];
             }
             else{
                 
@@ -366,6 +445,50 @@
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
+- (void)ActionTap{
+    
+    [ZZQAvatarPicker startSelected:^(UIImage * _Nonnull image) {
+
+        if (image) {
+            
+            [self updateheadimgbyimg:image];
+        }
+    }];
+}
+
+-(void)updateheadimgbyimg:(UIImage *)img
+{
+    NSData *data = [self resetSizeOfImageData:img maxSize:150];
+    
+    [BaseRequest Updateimg:UploadFile_URL parameters:@{
+                                                @"file_name":@"img"
+                                                    }
+          constructionBody:^(id<AFMultipartFormData> formData) {
+              [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+    } success:^(id resposeObject) {
+
+        if ([resposeObject[@"code"] integerValue] == 200) {
+
+            
+            _cardStr = resposeObject[@"data"];
+            [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                if (error) {
+                    
+                    _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
+                }
+            }];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+        
+    } failure:^(NSError *error) {
+
+        [self showContent:@"网络错误"];
+    }];
+}
+
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
@@ -373,7 +496,7 @@
     self.titleLabel.text = @"添加带看维护";
     
     
-    _whiteView = [[UIView alloc] init];
+    _whiteView = [[UIScrollView alloc] init];
     _whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_whiteView];
     
@@ -402,6 +525,13 @@
     [_whiteView addSubview:_addressBtn];
     NSArray *titleArr = @[@"主权益人：",@"性别：",@"物业类型：",@"联系电话：",@"联系电话2：",@"证件类型：",@"证件编号：",@"通讯地址："];
 
+    _cardL = [[UILabel alloc] init];
+    _cardL.textColor = YJTitleLabColor;
+    _cardL.text = @"身份证照片";
+    _cardL.adjustsFontSizeToFitWidth = YES;
+    _cardL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_whiteView addSubview:_cardL];
+    
     for (int i = 0; i < 8; i++) {
         
         UILabel *label = [[UILabel alloc] init];
@@ -520,6 +650,15 @@
         }
     }
     
+    _cardImg = [[UIImageView alloc] init];
+    _cardImg.contentMode = UIViewContentModeScaleAspectFill;
+    _cardImg.clipsToBounds = YES;
+    _cardImg.image = [UIImage imageNamed:@"default_3"];
+    _cardImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+    [_cardImg addGestureRecognizer:tap];
+    [_whiteView addSubview:_cardImg];
+    
     _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_saveBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -537,6 +676,7 @@
         make.left.equalTo(self.view).offset(0);
         make.top.equalTo(self.view).offset(NAVIGATION_BAR_HEIGHT);
         make.width.mas_equalTo(SCREEN_Width);
+        make.bottom.equalTo(self.view).offset(-40 * SIZE - TAB_BAR_MORE);
     }];
     
     [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -667,7 +807,23 @@
         make.top.equalTo(_addressBtn.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(88 *SIZE);
-        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+//        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+    }];
+    
+    [_cardL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(9 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(31 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+        make.left.equalTo(_whiteView).offset(81 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(130 *SIZE);
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     
     [_saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {

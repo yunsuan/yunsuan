@@ -19,5 +19,7 @@ typedef void(^CompleteSurveyHouseVCBlock)(void);
 
 @property (nonatomic, strong) NSString *surveyId;
 
+@property (nonatomic, strong) NSMutableDictionary *columnDic;
+
 - (instancetype)initWithTitle:(NSString *)titleStr;
 @end

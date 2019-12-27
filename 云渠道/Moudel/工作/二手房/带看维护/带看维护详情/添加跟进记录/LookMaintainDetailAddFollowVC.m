@@ -460,10 +460,13 @@
                 }
             }
         }
-        if (!_payWay.length) {
+        if ([_columnDic[@"house"][@"pay_type"] integerValue] == 1) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
-            return;
+            if (!_payWay.length) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+                return;
+            }
         }
         
         if (_dataArr.count) {
@@ -570,6 +573,14 @@
             
 //            i
             
+            if ([_columnDic[@"house"][@"floor"] integerValue] == 1) {
+                
+                if (!_floorTF1.content.text.length && !_floorTF2.content.text.length) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"请选择楼层"];
+                    return;
+                }
+            }
             if (_floorTF1.content.text.length) {
                 
                 [dic setObject:_floorTF1->str forKey:@"floor_min"];
@@ -579,9 +590,26 @@
                 
                 [dic setObject:_floorTF2->str forKey:@"floor_max"];
             }
+            if ([_columnDic[@"house"][@"house_type"] integerValue] == 1) {
+                
+                if (!_houseBtn->str) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"请选择户型"];
+                    return;
+                }
+            }
             if (_houseBtn->str) {
                 
                 [dic setValue:[NSString stringWithFormat:@"%@",_houseBtn->str] forKey:@"house_type"];
+            }
+            
+            if ([_columnDic[@"house"][@"decorate"] integerValue] == 1) {
+        
+                if (!_decorateBtn->str) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"请选择装修标准"];
+                    return;
+                }
             }
             
             if (_decorateBtn.content.text.length) {
@@ -589,12 +617,23 @@
                 [dic setObject:_decorateBtn->str forKey:@"decorate"];
             }
             
+            if ([_columnDic[@"house"][@"buy_purpose"] integerValue] == 1) {
+            
+                if (!_decorateBtn->str) {
+                    
+                    [self alertControllerWithNsstring:@"温馨提示" And:@"请选择置业目的"];
+                    return;
+                }
+            }
             if (_purposeBtn.content.text.length) {
                 
                 [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
             }
         }
-        [dic setObject:_payWay forKey:@"pay_type"];
+        if (_payWay.length) {
+            
+            [dic setObject:_payWay forKey:@"pay_type"];
+        }
         dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
 //        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
         dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
@@ -699,10 +738,13 @@
                 }
             }
         }
-        if (!_payWay.length) {
+        if ([_columnDic[@"house"][@"pay_type"] integerValue] == 1) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
-            return;
+            if (!_payWay.length) {
+                
+                [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+                return;
+            }
         }
         
         if (_dataArr.count) {
@@ -819,33 +861,68 @@
             
             [dic setObject:@"1" forKey:@"property_type"];
             
-            if (_houseBtn.content.text.length) {
-
-                [dic setObject:_houseBtn->str forKey:@"house_type"];
-            }
-            
-            if (_floorTF1.content.text.length) {
+            if ([_columnDic[@"house"][@"floor"] integerValue] == 1) {
+                    
+                    if (!_floorTF1.content.text.length && !_floorTF2.content.text.length) {
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择楼层"];
+                        return;
+                    }
+                }
+                if (_floorTF1.content.text.length) {
+                    
+                    [dic setObject:_floorTF1->str forKey:@"floor_min"];
+                }
                 
-                [dic setObject:_floorTF1->str forKey:@"floor_min"];
-            }
-            
-            if (_floorTF2.content.text.length) {
+                if (_floorTF2.content.text.length) {
+                    
+                    [dic setObject:_floorTF2->str forKey:@"floor_max"];
+                }
+                if ([_columnDic[@"house"][@"house_type"] integerValue] == 1) {
+                    
+                    if (!_houseBtn->str) {
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择户型"];
+                        return;
+                    }
+                }
+                if (_houseBtn->str) {
+                    
+                    [dic setValue:[NSString stringWithFormat:@"%@",_houseBtn->str] forKey:@"house_type"];
+                }
                 
-                [dic setObject:_floorTF2->str forKey:@"floor_max"];
-            }
+                if ([_columnDic[@"house"][@"decorate"] integerValue] == 1) {
             
-            if (_decorateBtn.content.text.length) {
+                    if (!_decorateBtn->str) {
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择装修标准"];
+                        return;
+                    }
+                }
                 
-                [dic setObject:_decorateBtn->str forKey:@"decorate"];
-            }
-            
-            if (_purposeBtn.content.text.length) {
+                if (_decorateBtn.content.text.length) {
+                    
+                    [dic setObject:_decorateBtn->str forKey:@"decorate"];
+                }
                 
-                [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
-            }
+                if ([_columnDic[@"house"][@"buy_purpose"] integerValue] == 1) {
+                
+                    if (!_decorateBtn->str) {
+                        
+                        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择置业目的"];
+                        return;
+                    }
+                }
+                if (_purposeBtn.content.text.length) {
+                    
+                    [dic setObject:_purposeBtn->str forKey:@"buy_purpose"];
+                }
         }
-        [dic setObject:_payWay forKey:@"pay_type"];
-         dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
+        if (_payWay.length) {
+            
+            [dic setObject:_payWay forKey:@"pay_type"];
+        }
+        dic[@"total_price"] = [NSString stringWithFormat:@"%.0f-%.0f",_priceBtn.selectedMinimum,_priceBtn.selectedMaximum];
 //        [dic setObject:_priceBtn.textfield.text forKey:@"total_price"];
         dic[@"area"] = [NSString stringWithFormat:@"%.0f-%.0f",_areaBtn.selectedMinimum,_areaBtn.selectedMaximum];
 //        [dic setObject:_areaBtn.textfield.text forKey:@"area"];
@@ -1135,12 +1212,24 @@
             case 6:
             {
                 _purposeL = label;
+                if ([_columnDic[@"house"][@"buy_purpose"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_purposeL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _purposeL.attributedText = attr;
+                }
                 [_contentView addSubview:_purposeL];
                 break;
             }
             case 7:
             {
                 _payWayL = label;
+                if ([_columnDic[@"house"][@"pay_type"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_payWayL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _payWayL.attributedText = attr;
+                }
                 [_contentView addSubview:_payWayL];
                 break;
             }
@@ -1177,18 +1266,36 @@
             case 13:
             {
                 _houseTypeL = label;
+                if ([_columnDic[@"house"][@"house_type"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_houseTypeL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _houseTypeL.attributedText = attr;
+                }
                 [_contentView addSubview:_houseTypeL];
                 break;
             }
             case 14:
             {
                 _floorL = label;
+                if ([_columnDic[@"house"][@"floor"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_floorL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _floorL.attributedText = attr;
+                }
                 [_contentView addSubview:_floorL];
                 break;
             }
             case 15:
             {
                 _decorateL = label;
+                if ([_columnDic[@"house"][@"decorate"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_decorateL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _decorateL.attributedText = attr;
+                }
                 [_contentView addSubview:_decorateL];
                 break;
             }

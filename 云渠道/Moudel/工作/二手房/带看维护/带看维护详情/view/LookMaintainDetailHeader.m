@@ -122,7 +122,7 @@
     _customHeader.titleL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"take_code"]];
     _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
     _wayL.text = [NSString stringWithFormat:@"方式：%@",dataDic[@"get_way"]];
-    _timeL.text = [NSString stringWithFormat:@"接单时间：%@",dataDic[@"accept_time"]];
+    _timeL.text = [NSString stringWithFormat:@"时间：%@",dataDic[@"accept_time"]];
     
     _nameL.text = dataDic[@"client_name"];
     _phoneL.text = [NSString stringWithFormat:@"联系方式：%@",dataDic[@"client_tel"]];

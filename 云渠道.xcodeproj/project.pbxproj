@@ -282,6 +282,7 @@
 		0C8C980322166B1E00687AC8 /* ContractHeader3.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C980222166B1E00687AC8 /* ContractHeader3.m */; };
 		0C8C9806221693EB00687AC8 /* ContractTradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C9805221693EB00687AC8 /* ContractTradeCell.m */; };
 		0C8C98092216A09F00687AC8 /* ContractMainConCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C98082216A09F00687AC8 /* ContractMainConCell.m */; };
+		0C8E694523B5902600FF41AA /* MaintainDetailFollowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E694423B5902600FF41AA /* MaintainDetailFollowCell.m */; };
 		0C920E8C21797C3C004B7F54 /* SlideBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8A21797C3C004B7F54 /* SlideBottomView.m */; };
 		0C920E8F2179AD6B004B7F54 /* MaintainFollowDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C920E8E2179AD6B004B7F54 /* MaintainFollowDetailVC.m */; };
 		0C92194C2092ECFC00EFE75C /* CustomMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C92194B2092ECFC00EFE75C /* CustomMatchModel.m */; };
@@ -1381,6 +1382,8 @@
 		0C8C9805221693EB00687AC8 /* ContractTradeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractTradeCell.m; sourceTree = "<group>"; };
 		0C8C98072216A09F00687AC8 /* ContractMainConCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContractMainConCell.h; sourceTree = "<group>"; };
 		0C8C98082216A09F00687AC8 /* ContractMainConCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContractMainConCell.m; sourceTree = "<group>"; };
+		0C8E694323B5902600FF41AA /* MaintainDetailFollowCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaintainDetailFollowCell.h; sourceTree = "<group>"; };
+		0C8E694423B5902600FF41AA /* MaintainDetailFollowCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaintainDetailFollowCell.m; sourceTree = "<group>"; };
 		0C920E8721797C3C004B7F54 /* SlideBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideBottomView.h; sourceTree = "<group>"; };
 		0C920E8A21797C3C004B7F54 /* SlideBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideBottomView.m; sourceTree = "<group>"; };
 		0C920E8D2179AD6B004B7F54 /* MaintainFollowDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaintainFollowDetailVC.h; sourceTree = "<group>"; };
@@ -5602,6 +5605,8 @@
 				0CD90A1920DA29F100061B4A /* view */,
 				0CD90A1620DA293500061B4A /* MaintainDetailVC.h */,
 				0CD90A1720DA293500061B4A /* MaintainDetailVC.m */,
+				0C8E694323B5902600FF41AA /* MaintainDetailFollowCell.h */,
+				0C8E694423B5902600FF41AA /* MaintainDetailFollowCell.m */,
 			);
 			path = "勘察维护详情";
 			sourceTree = "<group>";
@@ -8612,6 +8617,7 @@
 				0C997B4E21C886D100F805AA /* RentingCompleteSurveyStoreVC.m in Sources */,
 				0C6B6354211C3E7B00ABB506 /* SecAllRoomDetailHeaderModel.m in Sources */,
 				0C9B01C5216CA1E50055A9A8 /* RoomTypeView.m in Sources */,
+				0C8E694523B5902600FF41AA /* MaintainDetailFollowCell.m in Sources */,
 				10AEEE7C21A2BD7C0049625B /* CompanyDetailCell.m in Sources */,
 				0C3AD55C2069DA980059CE02 /* RoomDetailTableHeader.m in Sources */,
 				0CD7B5D4214A42E6009517F2 /* CompleteSurveyStoreVC.m in Sources */,

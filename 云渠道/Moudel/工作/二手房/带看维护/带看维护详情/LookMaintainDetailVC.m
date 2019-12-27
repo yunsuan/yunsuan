@@ -527,16 +527,47 @@
         
         if (indexPath.section == 0) {
             
-            NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
-            [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
-            nextVC.property = _needInfoDic[@"property_type"];
-            nextVC.status = @"2";
-            nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+            [BaseRequest GET:HouseTakeColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                 
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                    [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                    nextVC.property = _needInfoDic[@"property_type"];
+                    nextVC.status = @"2";
+                    nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                    [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                    nextVC.property = _needInfoDic[@"property_type"];
+                    nextVC.status = @"2";
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
+            } failure:^(NSError *error) {
+               
+                NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                nextVC.property = _needInfoDic[@"property_type"];
+                nextVC.status = @"2";
+                nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }];
         }else{
             
             LookMaintainDetailLookRecordVC *nextVC = [[LookMaintainDetailLookRecordVC alloc] initWithData:_takeHouseArr[indexPath.row]];
@@ -571,15 +602,44 @@
         
         if (indexPath.section == 0) {
             
-            NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
-            [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
-            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
-            nextVC.property = _needInfoDic[@"property_type"];
-            nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+            [BaseRequest GET:HouseTakeColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                 
-                [self RequestMethod];
-            };
-            [self.navigationController pushViewController:nextVC animated:YES];
+                if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                    NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                    [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                    nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                    nextVC.property = _needInfoDic[@"property_type"];
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                    
+                    NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                    [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                    LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                    nextVC.property = _needInfoDic[@"property_type"];
+                    nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                        
+                        [self RequestMethod];
+                    };
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }
+            } failure:^(NSError *error) {
+                
+                NSMutableDictionary *tempDic = [_needInfoDic mutableCopy];
+                [tempDic setObject:_baseInfoDic[@"client_level"] forKey:@"client_level"];
+                LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] initWithTakeId:_takeId dataDic:tempDic];
+                nextVC.property = _needInfoDic[@"property_type"];
+                nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                    
+                    [self RequestMethod];
+                };
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }];
         }else{
             
             

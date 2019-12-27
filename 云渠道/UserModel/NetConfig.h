@@ -760,6 +760,9 @@ static NSString *const HouseSurveyCancelSale_URL = @"agent/house/survey/cancelSa
 
 //勘察带看历史列表
 static NSString *const HouseSurveyTakeHisList_URL = @"agent/house/survey/take/his/list";
+
+//必填字段
+static NSString *const HouseColumnConfig_URL = @"agent/house/column/config";
 #pragma mark -- 二手房-代购合同 --
 
 //获取经办人信息
@@ -896,6 +899,8 @@ static NSString *const TakeMaintainFollowAgentList_URL = @"agent/take/maintain/f
 //门店下项目列表
 static NSString *const TakeMaintainFollowProjectList_URL = @"agent/take/maintain/follow/projectList";
 
+//必填字段
+static NSString *const HouseTakeColumnConfig_URL = @"agent/house/take/column/config";
 #pragma mark -- 二手房合同  --
 //选择房源
 static NSString *const TakeHouseList_URL = @"agent/take/deal/house/list";

@@ -57,10 +57,10 @@
     
     _seeView.daysL.text = [NSString stringWithFormat:@"%@",takeDic[@"range_take"]];
     _seeView.allL.text = [NSString stringWithFormat:@"%@",takeDic[@"total_take"]];
-    _seeView.intentL.text = [NSString stringWithFormat:@"%@",takeDic[@"last_price"]];
+    _seeView.intentL.text = [NSString stringWithFormat:@"%@万",takeDic[@"last_price"]];
     
-    _priceView.daysL.text = [NSString stringWithFormat:@"%@",takeDic[@"highest_price"]];
-    _priceView.allL.text = [NSString stringWithFormat:@"%@",takeDic[@"lowest_price"]];
+    _priceView.daysL.text = [NSString stringWithFormat:@"%@万",takeDic[@"highest_price"]];
+    _priceView.allL.text = [NSString stringWithFormat:@"%@万",takeDic[@"lowest_price"]];
     _priceView.intentL.text = [NSString stringWithFormat:@"%@",takeDic[@"price_person_count"]];
 }
 

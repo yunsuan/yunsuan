@@ -207,6 +207,12 @@
         _publicBtn->str = @"1";
     }];
     
+    UIAlertAction *share = [UIAlertAction actionWithTitle:@"共享盘" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        _publicBtn.content.text = @"共享盘";
+        _publicBtn->str = @"2";
+    }];
+    
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
 //        _publicBtn.content.text = @"否";
@@ -214,6 +220,7 @@
     
     [alert addAction:pub];
     [alert addAction:private];
+    [alert addAction:share];
     [alert addAction:cancel];
     
     [self.navigationController presentViewController:alert animated:YES completion:nil];
@@ -659,13 +666,17 @@
     [_contentView addSubview:_publicBtn];
     if (_dataDic.count) {
         
-        if ([_dataDic[@"hide"] integerValue]) {
+        if ([_dataDic[@"hide"] integerValue] == 1) {
             
-            _publicBtn.content.text = @"不公开";
+            _publicBtn.content.text = @"私盘";
             _publicBtn->str = @"1";
+        }else if([_dataDic[@"hides"] integerValue] == 2){
+            
+            _publicBtn.content.text = @"共享盘";
+            _publicBtn->str = @"2";
         }else{
             
-            _publicBtn.content.text = @"公开";
+            _publicBtn.content.text = @"公盘";
             _publicBtn->str = @"0";
         }
     }

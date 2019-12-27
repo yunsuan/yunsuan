@@ -37,7 +37,7 @@
         _dataDic = [data mutableCopy];
         _lookArr = [@[] mutableCopy];
         _lookArr = [data[@"list"] mutableCopy];
-        _customArr = @[[NSString stringWithFormat:@"意向度：%@",data[@"intent"]],[NSString stringWithFormat:@"带看时间：%@",data[@"take_time"]],[NSString stringWithFormat:@"带看人数：%@",data[@"take_visit_num"]],[NSString stringWithFormat:@"客户中意点：%@",data[@"client_like"]],[NSString stringWithFormat:@"客户抗性：%@",data[@"client_dislike"]],[NSString stringWithFormat:@"是否出价：%@",[data[@"price"] integerValue] == 0 ? @"否":@"是"],[NSString stringWithFormat:@"出价金额：%@",data[@"price"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"pay_way"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"附带看：%@",data[@"attach_agent"]],[NSString stringWithFormat:@"备注：%@",data[@"take_comment"]]];
+        _customArr = @[[NSString stringWithFormat:@"意向度：%@",data[@"intent"]],[NSString stringWithFormat:@"带看时间：%@",data[@"take_time"]],[NSString stringWithFormat:@"带看人数：%@",data[@"take_visit_num"]],[NSString stringWithFormat:@"客户中意点：%@",data[@"client_like"]],[NSString stringWithFormat:@"客户抗性：%@",data[@"client_dislike"]],[NSString stringWithFormat:@"是否出价：%@",[data[@"price"] integerValue] == 0 ? @"否":@"是"],[NSString stringWithFormat:@"出价金额：%@万",data[@"price"]],[NSString stringWithFormat:@"付款方式：%@",[data[@"pay_way"] componentsJoinedByString:@","]],[NSString stringWithFormat:@"附带看：%@",data[@"attach_agent"]],[NSString stringWithFormat:@"备注：%@",data[@"take_comment"]]];
     }
     return self;
 }
@@ -178,6 +178,8 @@
     
     _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
+    _table.rowHeight = UITableViewAutomaticDimension;
+    _table.estimatedRowHeight = 100 *SIZE;
     _table.delegate = self;
     _table.dataSource = self;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;

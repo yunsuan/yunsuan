@@ -71,7 +71,7 @@
     _matchL.text = [NSString stringWithFormat:@"匹配房源：%@",dataDic[@"fitNum"]];
     _numL.text = [NSString stringWithFormat:@"已看房源数量：%@",dataDic[@"house_take_num"]];
     _progressL.text = [NSString stringWithFormat:@"带看进度：%@",dataDic[@"take_num"]];
-    
+    _timeL.text = [NSString stringWithFormat:@"登记时间：%@",dataDic[@"create_time"]];
     
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
@@ -128,6 +128,12 @@
     _progressL.textColor = YJ86Color;
     _progressL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_progressL];
+    
+    _timeL = [[UILabel alloc] init];
+    _timeL.textColor = YJ86Color;
+    _timeL.textAlignment = NSTextAlignmentRight;
+    _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_timeL];
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -197,6 +203,13 @@
     [_progressL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_matchL.mas_bottom).offset(17 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(200 *SIZE);
         make.top.equalTo(_matchL.mas_bottom).offset(17 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];

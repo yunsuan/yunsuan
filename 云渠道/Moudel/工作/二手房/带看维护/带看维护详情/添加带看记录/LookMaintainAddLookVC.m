@@ -503,7 +503,7 @@
             case 1:
             {
                 _priceBtn = [[BorderTF alloc] initWithFrame:btn.frame];
-                _priceBtn.unitL.text = @"元";
+                _priceBtn.unitL.text = @"万";
                 _priceBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
                 [_contentView addSubview:_priceBtn];
                 break;
@@ -539,6 +539,7 @@
             
             _timeBtn = [[DropDownBtn alloc] initWithFrame:tf.frame];
             [_timeBtn addTarget:self action:@selector(ActionTimeBtn:) forControlEvents:UIControlEventTouchUpInside];
+            _timeBtn.content.text = [self.formatter stringFromDate:[NSDate date]];
             [_intentView addSubview:_timeBtn];
         }else{
             
