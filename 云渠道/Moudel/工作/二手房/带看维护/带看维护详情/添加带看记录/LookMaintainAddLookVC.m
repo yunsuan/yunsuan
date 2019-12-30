@@ -109,7 +109,7 @@
 - (void)initDataSource{
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     _agentArr = [@[] mutableCopy];
 }
 
@@ -249,17 +249,17 @@
 - (void)ActionCommitBtn:(UIButton *)btn{
     
     
-    if ([self isEmpty:self.favTV.text]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户中意点"];
-        return;
-    }
-    
-    if ([self isEmpty:self.resisTV.text]) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户抗性"];
-        return;
-    }
+//    if ([self isEmpty:self.favTV.text]) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户中意点"];
+//        return;
+//    }
+//
+//    if ([self isEmpty:self.resisTV.text]) {
+//
+//        [self alertControllerWithNsstring:@"温馨提示" And:@"请填写客户抗性"];
+//        return;
+//    }
     
     if ([self isEmpty:_intentTF.textfield.text]) {
         
@@ -294,21 +294,21 @@
             return;
         }
         
-        if ([self isEmpty:_markTV.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
-            return;
-        }
+//        if ([self isEmpty:_markTV.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
+//            return;
+//        }
         [dic setObject:_priceBtn.textfield.text forKey:@"price"];
         [dic setObject:_payWayBtn->str forKey:@"pay_way"];
         
     }else{
         
-        if ([self isEmpty:_markTV.text]) {
-            
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
-            return;
-        }
+//        if ([self isEmpty:_markTV.text]) {
+//
+//            [self alertControllerWithNsstring:@"温馨提示" And:@"请填写备注"];
+//            return;
+//        }
     }
     if (_secLookBtn.content.text.length) {
         
@@ -317,9 +317,15 @@
     [dic setObject:_favTV.text forKey:@"client_like"];
     [dic setObject:_resisTV.text forKey:@"client_dislike"];
     [dic setObject:_intentTF.textfield.text forKey:@"intent"];
-    [dic setObject:_timeBtn.content.text forKey:@"take_time"];
+    [dic setObject:_timeBtn->str forKey:@"take_time"];
     [dic setObject:_numTF.textfield.text forKey:@"take_visit_num"];
-    [dic setObject:_markTV.text forKey:@"comment"];
+    if (![self isEmpty:_markTV.text]) {
+        
+        [dic setObject:_markTV.text forKey:@"comment"];
+    }else{
+        
+        [dic setObject:@" " forKey:@"comment"];
+    }
     [dic setObject:_model.house_id forKey:@"house_id"];
     [dic setObject:_model forKey:@"model"];
     if (self.lookMaintainAddLookVCBlock) {
@@ -345,7 +351,8 @@
     __weak __typeof(&*self)weakSelf = self;
     view.dateblock = ^(NSDate *date) {
         
-        weakSelf.timeBtn.content.text = [weakSelf.formatter stringFromDate:date];
+        weakSelf.timeBtn.content.text = [[weakSelf.formatter stringFromDate:date] componentsSeparatedByString:@" "][0];
+        weakSelf.timeBtn->str = [weakSelf.formatter stringFromDate:date];
     };
     [self.view addSubview:view];
 }
@@ -533,19 +540,22 @@
             _intentTF = tf;
             _intentTF.unitL.text = @"%";
             _intentTF.textfield.delegate = self;
+            _intentTF.textfield.text = @"100";
             _intentTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_intentView addSubview:_intentTF];
         }else if (i == 1){
             
             _timeBtn = [[DropDownBtn alloc] initWithFrame:tf.frame];
             [_timeBtn addTarget:self action:@selector(ActionTimeBtn:) forControlEvents:UIControlEventTouchUpInside];
-            _timeBtn.content.text = [self.formatter stringFromDate:[NSDate date]];
+            _timeBtn.content.text = [[self.formatter stringFromDate:[NSDate date]] componentsSeparatedByString:@" "][0];
+            _timeBtn->str = [self.formatter stringFromDate:[NSDate date]];
             [_intentView addSubview:_timeBtn];
         }else{
             
             _numTF = tf;
             _numTF.unitL.text = @"人";
             _numTF.textfield.delegate = self;
+            _numTF.textfield.text = @"1";
             _numTF.textfield.keyboardType = UIKeyboardTypeNumberPad;
             [_intentView addSubview:_numTF];
         }

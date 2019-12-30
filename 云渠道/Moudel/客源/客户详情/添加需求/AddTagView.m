@@ -59,6 +59,10 @@
         
         [_dataArr removeObjectAtIndex:index];
         [collectionView reloadData];
+        if (self.deleteBtnBlock) {
+            
+            self.deleteBtnBlock(index);
+        }
         [self reloadInputViews];
     };
     return cell;

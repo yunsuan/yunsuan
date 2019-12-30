@@ -103,7 +103,7 @@
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0",@"0",@"0"]];
     _roomDic = [@{} mutableCopy];
     _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY-MM-dd"];
+    [_formatter setDateFormat:@"yyyy-MM-dd"];
 }
 
 - (void)RequestMethod{

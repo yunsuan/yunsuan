@@ -57,12 +57,12 @@
     }else{
         
         _hideView.hidden = NO;
-        if ([model.hide integerValue] == 1) {
-            
-            _hideL.text = @"不公开";
-        }else{
+        if ([model.hide integerValue] == 2) {
             
             _hideL.text = @"共享盘";
+        }else{
+            
+            _hideL.text = @"不公开";
         }
     }
     

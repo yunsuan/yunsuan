@@ -12,9 +12,13 @@
 
 typedef void(^AddBtnBlock)(void);
 
+typedef void(^DeleteBtnBlock)(NSInteger idx);
+
 @interface AddTagView : UIView
 
 @property (nonatomic, copy) AddBtnBlock addBtnBlock;
+
+@property (nonatomic, copy) DeleteBtnBlock deleteBtnBlock;
 
 @property (nonatomic, strong) UIButton *addBtn;
 

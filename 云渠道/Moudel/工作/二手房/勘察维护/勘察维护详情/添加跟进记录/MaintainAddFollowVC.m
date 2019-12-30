@@ -157,7 +157,7 @@
     
     NSDate *date = [NSDate date];
     _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [_formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     _followTime = [_formatter stringFromDate:date];
     _titleArr = @[[NSString stringWithFormat:@"跟进时间:%@",_followTime],@"跟进方式：",@"公开房源：",@"挂牌标题:",@"看房方式",@"挂牌价格",@"出售底价",@"收款方式",@"卖房意愿度",@"卖房紧急度",@"房源等级"];
 }

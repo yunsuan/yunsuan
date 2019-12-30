@@ -194,7 +194,7 @@
         
         make.right.equalTo(self.contentView).offset(-12 *SIZE);
         make.top.equalTo(self.contentView).offset(16 *SIZE);
-        make.width.mas_equalTo(70 *SIZE);
+        make.width.mas_equalTo(80 *SIZE);
     }];
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {

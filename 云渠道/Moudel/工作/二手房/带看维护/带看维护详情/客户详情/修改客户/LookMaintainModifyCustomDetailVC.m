@@ -764,16 +764,16 @@
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
-        make.height.mas_equalTo(60 *SIZE);
+        make.height.mas_equalTo(90 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     
-    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
             
-        make.left.equalTo(_whiteView).offset(-10 *SIZE);
+        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
-        make.height.mas_equalTo(60 *SIZE);
+        make.height.mas_equalTo(90 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     

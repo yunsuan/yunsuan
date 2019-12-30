@@ -36,14 +36,14 @@
     [_tradeView addSubview:_numLab];
  
     
-    _creattimeLab = [[UILabel alloc]initWithFrame:CGRectMake(93*SIZE, 38*SIZE, 130*SIZE, 13*SIZE)];
+    _creattimeLab = [[UILabel alloc]initWithFrame:CGRectMake(93*SIZE, 38*SIZE, 150*SIZE, 13*SIZE)];
     _creattimeLab.font = [UIFont systemFontOfSize:12*SIZE];
     _creattimeLab.textColor = YJContentLabColor;
 //    _creattimeLab.text = @"创建时间：2018/02/01";
     [_tradeView addSubview:_creattimeLab];
  
     
-    _passtimeLab = [[UILabel alloc]initWithFrame:CGRectMake(220*SIZE, 38*SIZE, 130*SIZE, 13*SIZE)];
+    _passtimeLab = [[UILabel alloc]initWithFrame:CGRectMake(240*SIZE, 38*SIZE, 110*SIZE, 13*SIZE)];
     _passtimeLab.font = [UIFont systemFontOfSize:12*SIZE];
     _passtimeLab.textColor = YJContentLabColor;
     _passtimeLab.textAlignment = NSTextAlignmentRight;

@@ -94,8 +94,8 @@
         NSString *jsonString = [[NSString alloc] initWithData:jsonData
                                                      encoding:NSUTF8StringEncoding];
         NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
-        [self.dataDic setObject:jsonResult forKey:@"take_group"];
+//        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.dataDic setObject:jsonTemp forKey:@"take_group"];
     }else{
         
         for (NSDictionary *dic in _dataArr) {
@@ -112,8 +112,8 @@
         NSString *jsonString = [[NSString alloc] initWithData:jsonData
                                                      encoding:NSUTF8StringEncoding];
         NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
-        [self.dataDic setObject:jsonResult forKey:@"take_group"];
+//        NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.dataDic setObject:jsonTemp forKey:@"take_group"];
     }
     
     if (self.isSelect) {
@@ -126,7 +126,7 @@
                 if ([self.dataDic[@"follow_type"] integerValue] == 2) {
                     
                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    [formatter setDateFormat:@"YYYY-MM-dd"];
+                    [formatter setDateFormat:@"yyyy-MM-dd"];
                     for (NSDictionary *dic in _dataArr) {
                         
                         LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];
@@ -169,7 +169,7 @@
                 if ([self.dataDic[@"follow_type"] integerValue] == 2) {
                     
                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                    [formatter setDateFormat:@"YYYY-MM-dd"];
+                    [formatter setDateFormat:@"yyyy-MM-dd"];
                     for (NSDictionary *dic in _dataArr) {
                         
                         LookMaintainDetailAddAppointRoomModel *model = dic[@"model"];

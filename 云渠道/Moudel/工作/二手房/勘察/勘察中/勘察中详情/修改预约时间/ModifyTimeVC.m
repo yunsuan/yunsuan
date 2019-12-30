@@ -53,7 +53,7 @@
 - (void)initDataSource{
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd"];
     _titleArr = @[@"联系人",@"联系电话",@"勘察地址"];
 }
 
@@ -91,7 +91,7 @@
     WS(weakSelf);
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *currentDate = [formatter dateFromString:self.dataDic[@"survey_time"]];

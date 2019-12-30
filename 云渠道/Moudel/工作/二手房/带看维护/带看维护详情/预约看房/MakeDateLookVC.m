@@ -62,7 +62,7 @@
 - (void)initDataSource{
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd"];
 }
 
 - (void)ActionTimeBtn:(UIButton *)btn{

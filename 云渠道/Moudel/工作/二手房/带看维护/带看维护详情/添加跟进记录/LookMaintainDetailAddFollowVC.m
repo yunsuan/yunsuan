@@ -178,9 +178,9 @@
     
     if (_timeContentL) {
         
-        [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+        [self.formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
         _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
-        [self.formatter setDateFormat:@"YYYY-MM-dd"];
+        [self.formatter setDateFormat:@"yyyy-MM-dd"];
     }
 }
 
@@ -197,7 +197,7 @@
     _way = [self.status integerValue];
     
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd"];
     
     _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"}];
     _levelArr = [UserModelArchiver unarchive].Configdic[@"54"][@"param"];
@@ -504,6 +504,15 @@
                     [dic setObject:str forKey:@"match_tags"];
                 }
             }
+        }else{
+            
+            if ([self.property isEqualToString:@"住宅"]) {
+                
+                [dic setValue:@"" forKey:@"need_tags"];
+            }else{
+                
+                [dic setValue:@"" forKey:@"match_tags"];
+            }
         }
         
         if ([self isEmpty:_contentTV.text]) {
@@ -781,6 +790,15 @@
                     
                     [dic setObject:str forKey:@"match_tags"];
                 }
+            }
+        }else{
+            
+            if ([self.property isEqualToString:@"住宅"]) {
+                
+                [dic setValue:@"" forKey:@"need_tags"];
+            }else{
+                
+                [dic setValue:@"" forKey:@"match_tags"];
             }
         }
         
@@ -1160,9 +1178,9 @@
     _timeContentL.font = [UIFont systemFontOfSize:12 *SIZE];
     [_contentView addSubview:_timeContentL];
     
-    [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     _timeContentL.text = [self.formatter stringFromDate:[NSDate date]];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd"];
     
     NSArray *titleArr = @[@"跟进时间",@"跟进方式：",@"客户等级：",@"物业类型：",@"总价：",@"面积：",@"置业目的：",@"付款方式：",@"跟进内容：",@"下次回访时间：",@"已使用年限：",@"写字楼等级：",@"商铺类型：",@"户型：",@"楼层：",@"装修标准："];
     for (int i = 0; i < 16; i++) {
@@ -1492,6 +1510,7 @@
     _tagView.dataArr = [NSMutableArray arrayWithArray:_dataArr];
     [_tagView reloadInputViews];
     WS(weak);
+    SS(strongSelf);
     _tagView.addBtnBlock = ^{
         
         AddTagVC *nextVC = [[AddTagVC alloc] initWithArray:weak.tagView.dataArr];
@@ -1506,6 +1525,10 @@
         [weak.navigationController pushViewController:nextVC animated:YES];
         
     };
+    _tagView.deleteBtnBlock = ^(NSInteger idx) {
+      
+        [strongSelf->_dataArr removeObjectAtIndex:idx];
+    };
     [_scrollView addSubview:_tagView];
     
     if ([_dataDic[@"match_tags"] count]) {
@@ -1518,7 +1541,7 @@
     [_collHeader.moreBtn setTitle:@"" forState:UIControlStateNormal];
     [_collHeader.moreBtn setImage:[UIImage imageNamed:@"add_40"] forState:UIControlStateNormal];
     WS(weakSelf);
-    SS(strongSelf);
+//    SS(strongSelf);
     _collHeader.blueTitleMoreHeaderBlock = ^{
         
         AddEquipmentVC *nextVC;

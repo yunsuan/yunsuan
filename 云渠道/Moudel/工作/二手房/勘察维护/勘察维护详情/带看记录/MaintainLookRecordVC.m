@@ -95,8 +95,8 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.timeL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"take_time"]];
-    cell.priceL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"price"]];
+    cell.timeL.text = [NSString stringWithFormat:@"%@",[_dataArr[indexPath.row][@"take_time"] componentsSeparatedByString:@" "][0]];
+    cell.priceL.text = [NSString stringWithFormat:@"%@万",_dataArr[indexPath.row][@"price"]];
     cell.agentL.text = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"agent_name"]];
     cell.tag = indexPath.row;
     

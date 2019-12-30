@@ -86,7 +86,7 @@
             _dataDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
             
             NSDateFormatter *fortmatter = [[NSDateFormatter alloc] init];
-            [fortmatter setDateFormat:@"YYYY-MM-dd"];
+            [fortmatter setDateFormat:@"yyyy-MM-dd"];
             
             _contentArr = [NSMutableArray arrayWithArray:@[[NSString stringWithFormat:@"名称：%@",resposeObject[@"data"][@"client"][@"name"]],[NSString stringWithFormat:@"性别：%@",[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 1?@"男":[resposeObject[@"data"][@"client"][@"sex"] integerValue] == 2?@"女":@""],[NSString stringWithFormat:@"出生年月：%@",(resposeObject[@"data"][@"client"][@"birth"] && ![resposeObject[@"data"][@"client"][@"birth"] isKindOfClass:[NSNull class]])?resposeObject[@"data"][@"client"][@"birth"]:@""],[NSString stringWithFormat:@"联系电话：%@",resposeObject[@"data"][@"client"][@"tel"]],[NSString stringWithFormat:@"证件类型：%@",resposeObject[@"data"][@"client"][@"card_type"]],[NSString stringWithFormat:@"证件号：%@",resposeObject[@"data"][@"client"][@"card_id"]],[NSString stringWithFormat:@"地址：%@%@%@",resposeObject[@"data"][@"client"][@"province_name"],resposeObject[@"data"][@"client"][@"city_name"],resposeObject[@"data"][@"client"][@"district_name"]]]];
             if ([resposeObject[@"data"][@"client"][@"card_img"] length]) {

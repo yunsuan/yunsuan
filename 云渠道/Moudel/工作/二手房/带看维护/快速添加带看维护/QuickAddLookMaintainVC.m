@@ -254,41 +254,27 @@
         
         [BaseRequest POST:AddCustomer_URL parameters:dic success:^(id resposeObject) {
             
-            
+            LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
+            nextVC.lookMaintainDetailAddFollowVCBlock = ^{
+                
+                if (self.quickAddLookMaintainVCBlock) {
+                    
+                    self.quickAddLookMaintainVCBlock();
+                }
+            };
+            nextVC.isSelect = YES;
+            nextVC.property = _typeBtn.content.text;
+            nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
             if ([resposeObject[@"code"] integerValue] ==200) {
                 
                 [BaseRequest GET:HouseTakeColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                     
                     if ([resposeObject[@"code"] integerValue] == 200) {
                         
-                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
-                            
-                            if (self.quickAddLookMaintainVCBlock) {
-                                
-                                self.quickAddLookMaintainVCBlock();
-                            }
-                        };
                         nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
-                        nextVC.isSelect = YES;
-                        nextVC.property = _typeBtn.content.text;
-                        nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
-                        [self.navigationController pushViewController:nextVC animated:YES];
-                    }else{
                         
-                        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-                        nextVC.lookMaintainDetailAddFollowVCBlock = ^{
-                            
-                            if (self.quickAddLookMaintainVCBlock) {
-                                
-                                self.quickAddLookMaintainVCBlock();
-                            }
-                        };
-                        nextVC.isSelect = YES;
-                        nextVC.property = _typeBtn.content.text;
-                        nextVC.clientId = [NSString stringWithFormat:@"%@",resposeObject[@"data"]];
-                        [self.navigationController pushViewController:nextVC animated:YES];
                     }
+                    [self.navigationController pushViewController:nextVC animated:YES];
                 } failure:^(NSError *error) {
                     
                     LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
@@ -697,6 +683,7 @@
         }
     }
     
+    
     _cardImg = [[UIImageView alloc] init];
     _cardImg.contentMode = UIViewContentModeScaleAspectFill;
     _cardImg.clipsToBounds = YES;
@@ -878,16 +865,16 @@
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
-        make.height.mas_equalTo(60 *SIZE);
+        make.height.mas_equalTo(90 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     
-    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
             
-        make.left.equalTo(_whiteView).offset(-10 *SIZE);
+        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
-        make.height.mas_equalTo(60 *SIZE);
+        make.height.mas_equalTo(90 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     

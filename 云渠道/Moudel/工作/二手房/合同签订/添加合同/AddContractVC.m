@@ -58,7 +58,7 @@
     _titleArr = @[@"交易信息",@"买方信息",@"卖方信息"];
     _foldArr = [[NSMutableArray alloc] initWithArray:@[@"1",@"0",@"0"]];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYYMMddhhmmss"];
+    [formatter setDateFormat:@"yyyyMMddhhmmss"];
     NSString *str = [formatter stringFromDate:[NSDate date]];
     _tradedic =[NSMutableDictionary dictionaryWithDictionary:@{@"deal_code":str,
                                                                @"deal_money":@"",
@@ -82,7 +82,7 @@
     }
    
     _formatter = [[NSDateFormatter alloc] init];
-    [_formatter setDateFormat:@"YYYY-MM-dd"];
+    [_formatter setDateFormat:@"yyyy-MM-dd"];
 //    _ischoose = NO;
 //    _isadd = NO;
 }
@@ -170,7 +170,7 @@
             NSDictionary *dic = @{
                                   @"name":_buyarr[i][@"name"],
                                   @"tel":_buyarr[i][@"tel"],
-                                  @"report_type":i==0?@"1":@"2",
+                                  @"report_type":i == 1?@"1":@"2",
                                   @"card_type":_buyarr[i][@"card_type"],
                                   @"card_id":_buyarr[i][@"card_id"],
                                   @"address":_buyarr[i][@"address"],
@@ -434,8 +434,19 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-    if (indexPath.section ==1) {
-        [_buyarr removeObjectAtIndex:indexPath.row];
+    if (indexPath.section == 1) {
+        if (_buyarr[0][@"butter_tel"]){
+            
+            [_buyarr removeObjectAtIndex:indexPath.row];
+            if (_buyarr.count == 1) {
+                
+                [_buyarr removeAllObjects];
+            }
+        }else{
+            
+            [_buyarr removeObjectAtIndex:indexPath.row];
+        }
+        
         [_table reloadData];
 //        [_table deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }else{

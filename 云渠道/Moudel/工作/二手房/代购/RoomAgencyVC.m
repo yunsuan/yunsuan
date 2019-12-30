@@ -79,7 +79,7 @@
             RoomAgencyAddProtocolVC *nextVC = [[RoomAgencyAddProtocolVC alloc] initWithDataArr:@[]];
             NSMutableDictionary *dic = [resposeObject[@"data"] mutableCopy];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"YYYY-MM-dd"];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
             [dic setObject:[formatter stringFromDate:[NSDate date]] forKey:@"regist_time"];
             [dic setObject:dic[@"name"] forKey:@"agent_name"];
             [dic setObject:dic[@"tel"] forKey:@"agent_tel"];

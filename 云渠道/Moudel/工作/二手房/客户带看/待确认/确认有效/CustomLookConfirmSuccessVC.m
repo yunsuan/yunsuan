@@ -65,7 +65,7 @@
 - (void)initDataSource{
     
     self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat:@"YYYY-MM-dd"];
+    [self.dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
 }
 

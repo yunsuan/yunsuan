@@ -189,7 +189,7 @@
     
     _isRent = 2;
     self.formatter = [[NSDateFormatter alloc] init];
-    [self.formatter setDateFormat:@"YYYY-MM-dd"];
+    [self.formatter setDateFormat:@"yyyy-MM-dd"];
     _dataArr = [@[] mutableCopy];
     _payArr = [self getDetailConfigArrByConfigState:13];
     _selectArr = [@[] mutableCopy];

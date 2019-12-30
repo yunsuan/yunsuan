@@ -61,7 +61,7 @@
     _districtArr = [@[] mutableCopy];
     
     _dateFormatter = [[NSDateFormatter alloc] init];
-    [_dateFormatter setDateFormat:@"YYYY-MM-dd"];
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
     _img1 = @"";
     _img2 = @"";
