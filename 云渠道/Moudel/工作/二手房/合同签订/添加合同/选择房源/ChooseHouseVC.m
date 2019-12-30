@@ -77,7 +77,7 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page)}];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:@{@"page":@(_page),@"type":@"1"}];
     if (![self isEmpty:_search]) {
         
         [dic setObject:_search forKey:@"search"];

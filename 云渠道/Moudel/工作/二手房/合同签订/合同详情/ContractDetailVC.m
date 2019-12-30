@@ -10,6 +10,7 @@
 #import "AddPeopleVC.h"
 #import "ContractDetailMainContractVC.h"
 #import "ContractAddAgentVC.h"
+#import "PerformanceContractVC.h"
 
 #import "ContractHeader1.h"
 #import "ContractHeader2.h"
@@ -34,6 +35,7 @@
     NSMutableDictionary *_house_info;
     NSMutableArray *_img;
     NSMutableArray *_sell_info;
+    NSMutableArray *_performanceArr;
 }
 @property (nonatomic , strong) UITableView *mainTable;
 
@@ -89,6 +91,7 @@
             _house_info = resposeObject[@"data"][@"house_info"];
             _img = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"img"]];
             _sell_info = [NSMutableArray arrayWithArray:resposeObject[@"data"][@"sale_info"]];
+            _performanceArr = [[NSMutableArray alloc] initWithArray:resposeObject[@"data"][@"broker"]];
             [_mainTable reloadData];
         }
         
@@ -324,6 +327,7 @@
         header.contractHeaderBlock  = ^(NSInteger index) {
             
             _index = index;
+            [tableView scrollsToTop];
             [tableView reloadData];
         };
         
@@ -376,7 +380,7 @@
             header.passtimeLab.text = @"";
         }
         header.peopleLab.text = [NSString stringWithFormat:@"签约人员：%@-%@",_deal_info[@"sub_agent"],_deal_info[@"store_name"]];
-        header.moneyLab.text = [NSString stringWithFormat:@"%@万",_deal_info[@"deal_money"]];
+        header.moneyLab.text = [NSString stringWithFormat:@"%@",_deal_info[@"deal_money"]];
         header.adressLab.text = [NSString stringWithFormat:@"%@ %@",_house_info[@"project_name"],_house_info[@"address"]];
         header.roomLab.text = [NSString stringWithFormat:@"房间信息:%@-%@-%@",_house_info[@"build_name"],_house_info[@"unit_name"],_house_info[@"house_name"]];
         header.buyLab.text = [NSString stringWithFormat:@"买房原因：%@",_deal_info[@"buy_reason"]];
@@ -418,6 +422,7 @@
                      }
                      NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row]];
                      [cell setData:dic];
+                     cell.propertyL.hidden = NO;
                      if (indexPath.row ==0) {
                          cell.stickieBtn.hidden = YES;
                          cell.titelL.text = @"主权益人";
@@ -486,6 +491,7 @@
                      }
                      NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buy_info[indexPath.row-1]];
                      [cell setData:dic];
+                     cell.propertyL.hidden = NO;
                      if (indexPath.row ==1) {
                          cell.stickieBtn.hidden = YES;
                          cell.titelL.text = @"主权益人";
@@ -553,6 +559,7 @@
                 }
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sell_info[indexPath.row-1]];
                 [cell setData:dic];
+                cell.propertyL.hidden = YES;
                 if (indexPath.row ==1) {
                     cell.stickieBtn.hidden = YES;
                     cell.titelL.text = @"主权益人";
@@ -593,7 +600,12 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.editBtn addTarget:self action:@selector(action_cantract) forControlEvents:UIControlEventTouchUpInside];
-            
+            cell.contractTradeCellMoreBlock = ^{
+              
+                PerformanceContractVC *nextVC = [[PerformanceContractVC alloc] initWithDataArr:_performanceArr];
+                nextVC.money = [NSString stringWithFormat:@"%.2f",[self AddNumber:[_deal_info[@"buy_brokerage"] doubleValue] num2:[_deal_info[@"sale_brokerage"] doubleValue]]];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            };
             if (self.state != 2) {
                 
                  cell.editBtn.hidden = YES;

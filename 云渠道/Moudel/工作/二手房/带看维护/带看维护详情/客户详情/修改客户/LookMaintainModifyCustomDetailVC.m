@@ -20,8 +20,12 @@
     NSString *_typeId;
     NSString *_gender;
     NSString *_cardType;
+    
+    NSString *_cardStr;
+    NSString *_backStr;
+    NSString *_index;
 }
-@property (nonatomic, strong) UIView *whiteView;
+@property (nonatomic, strong) UIScrollView *whiteView;
 
 @property (nonatomic, strong) UILabel *nameL;
 
@@ -56,6 +60,12 @@
 @property (nonatomic, strong) UILabel *addressL;
 
 @property (nonatomic, strong) BorderTF *addressTF;
+
+@property (nonatomic, strong) UILabel *cardL;
+
+@property (nonatomic, strong) UIImageView *cardImg;
+
+@property (nonatomic, strong) UIImageView *backImg;
 
 @property (nonatomic, strong) UIButton *saveBtn;
 
@@ -139,6 +149,27 @@
         [dic setObject:_addressTF.textfield.text forKey:@"address"];
     }
     
+    NSString *str = @"";
+        if (_cardStr.length) {
+            
+            str = _cardStr;
+    //        [dic setValue:_cardStr forKey:@"card_img"];
+        }
+        if (_backStr.length) {
+            
+            if (str.length) {
+                
+                str = [NSString stringWithFormat:@"%@,%@",_cardStr,_backStr];
+            }else{
+                
+                str = _backStr;
+            }
+    //        [dic setValue:_cardStr forKey:@"card_img"];
+        }
+        if (str.length) {
+            
+            [dic setValue:str forKey:@"card_img"];
+        }
     if ([self.status isEqualToString:@"添加"]) {
         
         [dic setObject:self.houseId forKey:@"take_id"];
@@ -284,6 +315,75 @@
     }];
 }
 
+- (void)ActionTap{
+    
+    _index = @"";
+    [ZZQAvatarPicker startSelected:^(UIImage * _Nonnull image) {
+
+        if (image) {
+            
+            [self updateheadimgbyimg:image];
+        }
+    }];
+}
+
+- (void)ActionTap1{
+    
+    _index = @"1";
+    [ZZQAvatarPicker startSelected:^(UIImage * _Nonnull image) {
+
+        if (image) {
+            
+            [self updateheadimgbyimg:image];
+        }
+    }];
+}
+
+-(void)updateheadimgbyimg:(UIImage *)img
+{
+    NSData *data = [self resetSizeOfImageData:img maxSize:150];
+    
+    [BaseRequest Updateimg:UploadFile_URL parameters:@{
+                                                @"file_name":@"img"
+                                                    }
+          constructionBody:^(id<AFMultipartFormData> formData) {
+              [formData appendPartWithFileData:data name:@"img" fileName:@"img.jpg" mimeType:@"image/jpg"];
+    } success:^(id resposeObject) {
+
+        if ([resposeObject[@"code"] integerValue] == 200) {
+
+            if (_index.length) {
+                
+                _backStr = resposeObject[@"data"];
+                [_backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_backStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        _backImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }else{
+                
+                _cardStr = resposeObject[@"data"];
+                [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+        }
+        
+    } failure:^(NSError *error) {
+
+        [self showContent:@"网络错误"];
+    }];
+}
+
 - (void)initUI{
     
     self.navBackgroundView.hidden = NO;
@@ -296,7 +396,7 @@
     }
     
     
-    _whiteView = [[UIView alloc] init];
+    _whiteView = [[UIScrollView alloc] init];
     _whiteView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_whiteView];
     
@@ -316,6 +416,14 @@
 //    [_whiteView addSubview:_addBtn];
     
     NSArray *titleArr = @[@"姓名：",@"性别：",@"类型：",@"联系电话：",@"联系电话2：",@"证件类型：",@"证件编号：",@"通讯地址："];
+    
+    _cardL = [[UILabel alloc] init];
+    _cardL.textColor = YJTitleLabColor;
+    _cardL.text = @"身份证照片";
+    _cardL.adjustsFontSizeToFitWidth = YES;
+    _cardL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_whiteView addSubview:_cardL];
+    
     NSArray *contentArr;
     if (self.dataDic.count) {
         
@@ -460,7 +568,49 @@
                 break;
         }
     }
+    if ([self.dataDic count]) {
+     
+        NSArray *arr = [self.dataDic[@"card_img"] componentsSeparatedByString:@","];
+        if (arr.count) {
+            
+            _cardStr = arr[0];
+            if (arr.count > 1) {
+                
+                _backStr = arr[1];
+            }
+        }
+    }
+    _cardImg = [[UIImageView alloc] init];
+    _cardImg.contentMode = UIViewContentModeScaleAspectFill;
+    _cardImg.clipsToBounds = YES;
+    _cardImg.image = [UIImage imageNamed:@"default_3"];
+    _cardImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+    [_cardImg addGestureRecognizer:tap];
+    [_whiteView addSubview:_cardImg];
+    [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_backStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+        if (error) {
+            
+            _backImg.image = [UIImage imageNamed:@"banner_default_2"];
+        }
+    }];
     
+    _backImg = [[UIImageView alloc] init];
+    _backImg.contentMode = UIViewContentModeScaleAspectFill;
+    _backImg.clipsToBounds = YES;
+    _backImg.image = [UIImage imageNamed:@"default_3"];
+    _backImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap1)];
+    [_backImg addGestureRecognizer:tap1];
+    [_whiteView addSubview:_backImg];
+    [_backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+        if (error) {
+            
+            _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
+        }
+    }];
     
     _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
@@ -600,6 +750,31 @@
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
         make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+    }];
+    
+    [_cardL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(9 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(31 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+        make.left.equalTo(_whiteView).offset(81 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(60 *SIZE);
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
+    }];
+    
+    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+        make.left.equalTo(_whiteView).offset(-10 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(60 *SIZE);
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     
     [_saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {

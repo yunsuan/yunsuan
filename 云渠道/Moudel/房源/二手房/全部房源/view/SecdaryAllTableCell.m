@@ -68,6 +68,13 @@
     }else{
         
         _hideView.hidden = NO;
+        if ([model.hide integerValue] == 1) {
+            
+            _hideL.text = @"不公开";
+        }else{
+            
+            _hideL.text = @"共享盘";
+        }
     }
     
     
@@ -203,7 +210,7 @@
     _hideL.textColor = [UIColor whiteColor];
     _hideL.font = [UIFont systemFontOfSize:11 *SIZE];
     _hideL.textAlignment = NSTextAlignmentCenter;
-    _hideL.text = @"非公开";
+    _hideL.text = @"不公开";
     [_hideView addSubview:_hideL];
     
     _titleL = [[UILabel alloc] init];

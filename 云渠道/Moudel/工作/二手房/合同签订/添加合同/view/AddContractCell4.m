@@ -35,7 +35,7 @@
     if ([dataDic[@"sex"] integerValue]==2) {
         _seximg.image =[UIImage imageNamed:@"girl"];
     }
-    
+    _propertyL.text = [NSString stringWithFormat:@"权益比例：%@",dataDic[@"property"]];
 }
 
 -(void)action_stickie
@@ -53,6 +53,12 @@
     _titelL.textColor = YJTitleLabColor;
     _titelL.font = [UIFont systemFontOfSize:14 *SIZE];
     [self.contentView addSubview:_titelL];
+    
+    _propertyL = [[UILabel alloc] init];
+    _propertyL.textColor = YJContentLabColor;
+//    _propertyL.textAlignment = NSTextAlignmentRight;
+    _propertyL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_propertyL];
     
     
     
@@ -102,7 +108,7 @@
         make.left.equalTo(self.contentView).offset(28 *SIZE);
         make.top.equalTo(_titelL.mas_bottom).offset(17 *SIZE);
         make.height.mas_equalTo(14*SIZE);
-
+        make.width.mas_lessThanOrEqualTo(150 *SIZE);
     }];
     
     [_seximg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -122,6 +128,14 @@
 //        make.bottom.equalTo(self.contentView).offset(4*SIZE);
         
         
+    }];
+    
+    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+        make.left.equalTo(_seximg.mas_right).offset(8 *SIZE);
+        make.top.equalTo(_titelL.mas_bottom).offset(17 *SIZE);
+        make.width.mas_equalTo(180 *SIZE);
+        make.height.mas_equalTo(14*SIZE);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -25,6 +25,14 @@
     
 }
 
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    if (self.contractTradeCellMoreBlock) {
+        
+        self.contractTradeCellMoreBlock();
+    }
+}
+
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _codeL.text = [NSString stringWithFormat:@"合同编号：%@",dataDic[@"deal_code"]];
@@ -47,6 +55,24 @@
 
     [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
     [self.contentView addSubview:_editBtn];
+    
+    _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _moreBtn.backgroundColor = YJBlueBtnColor;
+    _moreBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_moreBtn setTitle:@"查看业绩分佣" forState:UIControlStateNormal];
+    _moreBtn.layer.cornerRadius = 3 *SIZE;
+    _moreBtn.clipsToBounds = YES;
+    [_moreBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [_moreBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
+    [self.contentView addSubview:_moreBtn];
+    
+    [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.contentView).offset(-7 *SIZE);
+        make.top.equalTo(self.contentView).offset(52 *SIZE);
+        make.height.mas_equalTo(26 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+    }];
     
     [_editBtn mas_makeConstraints:^(MASConstraintMaker *make) {
        

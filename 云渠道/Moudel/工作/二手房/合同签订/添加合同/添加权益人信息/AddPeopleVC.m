@@ -11,7 +11,7 @@
 #import "DropDownBtn.h"
 #import "SinglePickView.h"
 
-@interface AddPeopleVC ()
+@interface AddPeopleVC ()<UITextFieldDelegate>
 {
     NSString *_typeId;
     NSString *_gender;
@@ -54,6 +54,10 @@
 
 @property (nonatomic, strong) BorderTF *addressTF;
 
+@property (nonatomic, strong) UILabel *radioL;
+
+@property (nonatomic, strong) BorderTF *radioTF;
+
 @property (nonatomic, strong) UIButton *saveBtn;
 
 @end
@@ -74,6 +78,26 @@
     }
     
     [self initUI];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (textField == _radioTF.textfield){
+        
+        return [self validateNumber:string];
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+
+    if (textField == _radioTF.textfield) {
+        
+        if ([textField.text integerValue] > 100) {
+            
+            textField.text = @"100";
+        }
+    }
 }
 
 - (void)ActionSaveBtn:(UIButton *)btn{
@@ -97,9 +121,15 @@
         return;
     }
     
-    if (!_certTypeBtn->str.length) {
+    if (!_certTypeBtn.content.text.length) {
         
         [self alertControllerWithNsstring:@"温馨提示" And:@"请选择证件编号"];
+        return;
+    }
+    
+    if ([self isEmpty:_radioTF.textfield.text]) {
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入权益比例"];
         return;
     }
     
@@ -107,11 +137,12 @@
     _dataDic =[NSMutableDictionary dictionaryWithDictionary:
                @{@"name":_nameTF.textfield.text,
                  @"tel":_phoneTF.textfield.text,
-                 @"card_type":_certTypeBtn->str,
+                 @"card_type":[NSString stringWithFormat:@"%@",_certTypeBtn->str],
                  @"card_type_name":_certTypeBtn.content.text,
                  @"card_id":_certNumTF.textfield.text,
                  @"address":_addressTF.textfield.text,
-                 @"sex":_genderBtn->str
+                 @"sex":[NSString stringWithFormat:@"%@",_genderBtn->str],
+                 @"property":_radioTF.textfield.text
                  }];
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -237,11 +268,11 @@
 //    [_addBtn setImage:[UIImage imageNamed:@"add_2"] forState:UIControlStateNormal];
 //    [_whiteView addSubview:_addBtn];
     
-    NSArray *titleArr = @[@"姓名：",@"性别：",@"联系电话：",@"证件类型：",@"证件编号：",@"通讯地址："];
+    NSArray *titleArr = @[@"姓名：",@"性别：",@"联系电话：",@"证件类型：",@"证件编号：",@"通讯地址：",@"权益比例:"];
     
 
     
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
@@ -336,6 +367,22 @@
                     _addressTF.textfield.text =_dataDic[@"address"];
                 }
                 [_whiteView addSubview:_addressTF];
+                break;
+            }
+            case 6:
+            {
+                _radioL = label;
+                [_whiteView addSubview:_radioL];
+                
+                _radioTF = textField;
+                if (_dataDic[@"property"]) {
+                    
+                    _radioTF.textfield.text = [NSString stringWithFormat:@"%@",_dataDic[@"property"]];
+                }else{
+                    
+                    _radioTF.textfield.text = @"0";
+                }
+                [_whiteView addSubview:_radioTF];
                 break;
             }
             default:
@@ -479,6 +526,22 @@
         
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_certNumTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(257 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+//        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+    }];
+    
+    [_radioL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(9 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(31 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_radioTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(81 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
         make.bottom.equalTo(_whiteView).offset(-25 *SIZE);

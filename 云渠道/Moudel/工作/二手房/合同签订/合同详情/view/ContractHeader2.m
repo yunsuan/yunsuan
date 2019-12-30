@@ -31,7 +31,7 @@
 
 - (void)initUI{
     
-    self.backgroundColor = YJBackColor;
+    self.contentView.backgroundColor = YJBackColor;
     
     
     for (int i = 0; i < 3; i++) {
@@ -44,15 +44,15 @@
         if (i == 0) {
             
             _buyBtn = btn;
-            [self addSubview:_buyBtn];
+            [self.contentView addSubview:_buyBtn];
         }else if (i == 1){
             
             _sellBtn = btn;
-            [self addSubview:_sellBtn];
+            [self.contentView addSubview:_sellBtn];
         }else{
             
             _infoBtn = btn;
-            [self addSubview:_infoBtn];
+            [self.contentView addSubview:_infoBtn];
         }
     }
     

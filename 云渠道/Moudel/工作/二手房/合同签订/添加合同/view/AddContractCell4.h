@@ -20,6 +20,7 @@ typedef void(^StickieBlock)(NSIndexPath* indexpath);
 @property (nonatomic , strong) UILabel *nameL;
 @property (nonatomic , strong) UIImageView *seximg;
 @property (nonatomic , strong) UILabel *telL;
+@property (nonatomic , strong) UILabel *propertyL;
 @property (nonatomic , strong) UIButton *stickieBtn;
 @property (nonatomic , strong) UIView *line;
 @property (nonatomic , strong) StickieBlock stickieBlock;

@@ -265,23 +265,23 @@
                 
                 if ([dic[@"detail"] integerValue] == 1) {
                     
-                    [_showArr replaceObjectAtIndex:6 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:6 withObject:@1];
                     [_showArr replaceObjectAtIndex:7 withObject:@1];
                 }
             }else if ([dic[@"type"] isEqualToString:@"客源管理"]){
                 
                 if ([dic[@"detail"] integerValue] == 1) {
                     
-                    [_showArr replaceObjectAtIndex:3 withObject:@1];
-                    [_showArr replaceObjectAtIndex:4 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:3 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:4 withObject:@1];
                     [_showArr replaceObjectAtIndex:5 withObject:@1];
                 }
             }else if ([dic[@"type"] isEqualToString:@"房源管理"]){
                 
                 if ([dic[@"detail"] integerValue] == 1) {
                     
-                    [_showArr replaceObjectAtIndex:0 withObject:@1];
-                    [_showArr replaceObjectAtIndex:1 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:0 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:1 withObject:@1];
                     [_showArr replaceObjectAtIndex:2 withObject:@1];
                 }
             }
@@ -298,17 +298,17 @@
             
             if ([tempDic objectForKey:@"1"]) {
                 
-                [_showArr replaceObjectAtIndex:0 withObject:@1];
-                [_showArr replaceObjectAtIndex:1 withObject:@1];
+//                [_showArr replaceObjectAtIndex:0 withObject:@1];
+//                [_showArr replaceObjectAtIndex:1 withObject:@1];
                 [_showArr replaceObjectAtIndex:2 withObject:@1];
             }else if ([tempDic objectForKey:@"2"]){
                 
-                [_showArr replaceObjectAtIndex:3 withObject:@1];
-                [_showArr replaceObjectAtIndex:4 withObject:@1];
+//                [_showArr replaceObjectAtIndex:3 withObject:@1];
+//                [_showArr replaceObjectAtIndex:4 withObject:@1];
                 [_showArr replaceObjectAtIndex:5 withObject:@1];
             }else if ([tempDic objectForKey:@"4"]){
                 
-                [_showArr replaceObjectAtIndex:6 withObject:@1];
+//                [_showArr replaceObjectAtIndex:6 withObject:@1];
                 [_showArr replaceObjectAtIndex:7 withObject:@1];
 //                [_showArr replaceObjectAtIndex:2 withObject:@1];
             }else{

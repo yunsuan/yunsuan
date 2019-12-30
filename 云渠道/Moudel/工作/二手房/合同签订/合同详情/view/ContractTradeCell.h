@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ContractTradeCellMoreBlock)(void);
+
 @interface ContractTradeCell : UITableViewCell
+
+@property (nonatomic, copy) ContractTradeCellMoreBlock contractTradeCellMoreBlock;
 
 @property (nonatomic, strong) UILabel *codeL;
 
@@ -37,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *sellReasonL;
 
 @property (nonatomic, strong) UIButton *editBtn;
+
+@property (nonatomic, strong) UIButton *moreBtn;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 

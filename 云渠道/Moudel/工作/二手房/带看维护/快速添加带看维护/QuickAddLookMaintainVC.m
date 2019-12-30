@@ -29,6 +29,8 @@
     NSString *_district;
     
     NSString *_cardStr;
+    NSString *_backStr;
+    NSString *_index;
 }
 @property (nonatomic, strong) UIScrollView *whiteView;
 
@@ -73,6 +75,8 @@
 @property (nonatomic, strong) UILabel *cardL;
 
 @property (nonatomic, strong) UIImageView *cardImg;
+
+@property (nonatomic, strong) UIImageView *backImg;
 
 @property (nonatomic, strong) UIButton *saveBtn;
 
@@ -158,9 +162,27 @@
         
         [dic setObject:_addressTF.text forKey:@"address"];
     }
+    
+    NSString *str = @"";
     if (_cardStr.length) {
         
-        [dic setValue:_cardStr forKey:@"card_img"];
+        str = _cardStr;
+//        [dic setValue:_cardStr forKey:@"card_img"];
+    }
+    if (_backStr.length) {
+        
+        if (str.length) {
+            
+            str = [NSString stringWithFormat:@"%@,%@",_cardStr,_backStr];
+        }else{
+            
+            str = _backStr;
+        }
+//        [dic setValue:_cardStr forKey:@"card_img"];
+    }
+    if (str.length) {
+        
+        [dic setValue:str forKey:@"card_img"];
     }
     
     if (_clientId.length) {
@@ -447,6 +469,19 @@
 
 - (void)ActionTap{
     
+    _index = @"";
+    [ZZQAvatarPicker startSelected:^(UIImage * _Nonnull image) {
+
+        if (image) {
+            
+            [self updateheadimgbyimg:image];
+        }
+    }];
+}
+
+- (void)ActionTap1{
+    
+    _index = @"1";
     [ZZQAvatarPicker startSelected:^(UIImage * _Nonnull image) {
 
         if (image) {
@@ -469,15 +504,27 @@
 
         if ([resposeObject[@"code"] integerValue] == 200) {
 
-            
-            _cardStr = resposeObject[@"data"];
-            [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            if (_index.length) {
                 
-                if (error) {
+                _backStr = resposeObject[@"data"];
+                [_backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_backStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                     
-                    _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
-                }
-            }];
+                    if (error) {
+                        
+                        _backImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }else{
+                
+                _cardStr = resposeObject[@"data"];
+                [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    
+                    if (error) {
+                        
+                        _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
+                    }
+                }];
+            }
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -659,6 +706,15 @@
     [_cardImg addGestureRecognizer:tap];
     [_whiteView addSubview:_cardImg];
     
+    _backImg = [[UIImageView alloc] init];
+    _backImg.contentMode = UIViewContentModeScaleAspectFill;
+    _backImg.clipsToBounds = YES;
+    _backImg.image = [UIImage imageNamed:@"default_3"];
+    _backImg.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap1)];
+    [_backImg addGestureRecognizer:tap1];
+    [_whiteView addSubview:_backImg];
+    
     _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _saveBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_saveBtn addTarget:self action:@selector(ActionSaveBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -821,8 +877,17 @@
             
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
-        make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(130 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(60 *SIZE);
+        make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
+    }];
+    
+    [_cardImg mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+        make.left.equalTo(_whiteView).offset(-10 *SIZE);
+        make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
+        make.width.mas_equalTo(120 *SIZE);
+        make.height.mas_equalTo(60 *SIZE);
         make.bottom.equalTo(_whiteView.mas_bottom).offset(-25 *SIZE);
     }];
     

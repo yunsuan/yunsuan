@@ -147,7 +147,7 @@
     }
     
     NSMutableArray *sellpeopel =[NSMutableArray array];
-    for (int i=1; i<_sellarr.count; i++) {
+    for (int i = 1; i<_sellarr.count; i++) {
         NSDictionary *dic = @{
                               @"name":_sellarr[i][@"name"],
                               @"tel":_sellarr[i][@"tel"],
@@ -164,9 +164,9 @@
     NSString *selljson = [[NSString alloc] initWithData:sellData encoding:NSUTF8StringEncoding];
     NSMutableArray *buypeopel =[NSMutableArray array];
     NSDictionary *adddic = [NSDictionary dictionary];
-    if (_isadd) {
+    if (_buyarr[0][@"butter_tel"]) {
         
-        for (int i=0; i<_buyarr.count; i++) {
+        for (int i = 1; i < _buyarr.count; i++) {
             NSDictionary *dic = @{
                                   @"name":_buyarr[i][@"name"],
                                   @"tel":_buyarr[i][@"tel"],
@@ -175,7 +175,8 @@
                                   @"card_id":_buyarr[i][@"card_id"],
                                   @"address":_buyarr[i][@"address"],
                                   @"sex":_buyarr[i][@"sex"],
-                                  @"sort":[NSString stringWithFormat:@"%d",i]
+                                  @"sort":[NSString stringWithFormat:@"%d",i - 1],
+                                  @"property":_buyarr[i][@"property"]
                                   };
             [buypeopel addObject:dic];
         }
@@ -196,6 +197,7 @@
                                  @"buy_reason":_tradedic[@"buy_reason"],
                                  @"comment":_tradedic[@"comment"],
                                  @"house_id":_sellarr[0][@"house_id"],
+                                 @"take_id":_buyarr[0][@"take_id"],
                                  @"sale_contact_group":selljson,
                                  @"buy_contact_group":buyjson,
                                  @"type":@"1"
@@ -203,7 +205,7 @@
     }
     else{
         
-        for (int i=1; i<_buyarr.count; i++) {
+        for (int i = 0; i < _buyarr.count; i++) {
             NSDictionary *dic = @{
                                   @"name":_buyarr[i][@"name"],
                                   @"tel":_buyarr[i][@"tel"],
@@ -212,7 +214,8 @@
                                   @"card_id":_buyarr[i][@"card_id"],
                                   @"address":_buyarr[i][@"address"],
                                   @"sex":_buyarr[i][@"sex"],
-                                  @"sort":[NSString stringWithFormat:@"%d",i-1]
+                                  @"sort":[NSString stringWithFormat:@"%d",i],
+                                  @"property":_buyarr[i][@"property"]
                                   };
             [buypeopel addObject:dic];
         }
@@ -233,14 +236,12 @@
                    @"buy_reason":_tradedic[@"buy_reason"],
                    @"comment":_tradedic[@"comment"],
                    @"house_id":_sellarr[0][@"house_id"],
-                   @"take_id":_buyarr[0][@"take_id"],
                    @"sale_contact_group":selljson,
                    @"buy_contact_group":buyjson,
                    @"type":@"1"
                    };
     }
 
-    
     [BaseRequest POST:AddContract_URL parameters:adddic success:^(id resposeObject) {
         NSLog(@"%@",resposeObject);
         if ([resposeObject[@"code"] integerValue]==200) {
@@ -390,7 +391,7 @@
         return NO;
     }else if (indexPath.section == 1){
         
-        if ([_buyarr[0] isEqual:@""]) {
+        if (!_buyarr.count) {
             
             return NO;
         }else{
@@ -402,34 +403,17 @@
                     return NO;
                 }
                 return YES;
-            }else if (indexPath.row){
-                
-                
-            }else{
+            }else if (indexPath.row < _buyarr.count){
                 
                 return YES;
+            }else{
+                
+                return NO;
             }
         }
-//        if (_isadd) {
-//
-//            if (indexPath.row ==0) {
-//
-//                return NO;
-//            }else{
-//
-//                return YES;
-//            }
-//        }else{
-//            if (indexPath.row < 2) {
-//
-//                return NO;
-//            }else{
-//
-//                return YES;
-//            }
-//        }
     }else{
         if (indexPath.row < 2) {
+            
             return NO;
         }
         else{
@@ -553,6 +537,33 @@
             
             if (_buyarr.count) {
                 
+                if (_buyarr[0][@"butter_tel"]) {
+                    
+                    AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
+                    if (!cell) {
+                    
+                        cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
+                    }
+                    [cell setDataDic:_buyarr[indexPath.row]];
+                    [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    return cell;
+                }else{
+                    
+                    AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
+                    if (!cell) {
+                        
+                        cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
+                    }
+                    NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
+                    [cell setData:dic];
+                    cell.propertyL.hidden = NO;
+                    cell.stickieBtn.hidden = YES;
+                    cell.titelL.text = @"主权益人";
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    return cell;
+                }
             }else{
                 
                 AddContractCell2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell2"];
@@ -565,33 +576,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 return cell;
             }
-             if (_isadd == NO){
-                
-                AddContractCell7 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell7"];
-                if (!cell) {
-                
-                    cell = [[AddContractCell7 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell7"];
-                }
-                [cell setDataDic:_buyarr[indexPath.row]];
-                [cell.choosebtn addTarget:self action:@selector(action_choosebuyer) forControlEvents:UIControlEventTouchUpInside];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                return cell;
-            }else{
-                
-                AddContractCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell4"];
-                if (!cell) {
-                    
-                    cell = [[AddContractCell4 alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"AddContractCell4"];
-                }
-                NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
-                [cell setData:dic];
-                cell.stickieBtn.hidden = YES;
-                cell.titelL.text = @"主权益人";
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                return cell;
-            }}
-        }else if (indexPath.row==_buyarr.count){
+        }else if (indexPath.row == _buyarr.count){
             
             AddContractCell5 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddContractCell5"];
             if (!cell) {
@@ -608,7 +593,8 @@
             }
             NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_buyarr[indexPath.row]];
             [cell setData:dic];
-            if (indexPath.row ==1 &&_isadd ==NO) {
+            cell.propertyL.hidden = NO;
+            if (indexPath.row == 1 && _buyarr[0][@"butter_tel"]) {
                     
                 cell.stickieBtn.hidden = YES;
                 cell.titelL.text = @"主权益人";
@@ -620,12 +606,12 @@
             cell.indexpath = indexPath;
             cell.stickieBlock = ^(NSIndexPath * _Nonnull indexpath) {
                 
-                if (_isadd) {
-                    
+                if (_buyarr[0][@"butter_tel"]) {
+
                     [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:0];
                     [_table reloadData];
                 }else{
-                    
+
                     [_buyarr exchangeObjectAtIndex:indexpath.row withObjectAtIndex:1];
                     [_table reloadData];
                 }
@@ -633,9 +619,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             return cell;
-            
         }
-        
     }else {
 #pragma mark  --卖方信息
 
@@ -674,6 +658,7 @@
                 }
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:_sellarr[indexPath.row]];
                 [cell setData:dic];
+                cell.propertyL.hidden = YES;
                 if (indexPath.row ==1) {
                     
                     cell.stickieBtn.hidden = YES;
@@ -711,7 +696,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==1) {
-        if (_isadd == NO) {
+        if (_buyarr[0][@"butter_tel"]) {
             if (indexPath.row > 0 && indexPath.row < _buyarr.count) {
                 
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
@@ -756,7 +741,7 @@
     AddPeopleVC *vc = [[AddPeopleVC alloc]init];
     vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
         [_buyarr removeAllObjects];
-        _isadd = YES;
+//        _isadd = YES;
         [_buyarr addObject:dic];
         [_table reloadData];
     };

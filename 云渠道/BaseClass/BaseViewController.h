@@ -160,5 +160,10 @@ typedef NS_OPTIONS(NSUInteger, ConfigState){
 -(NSString *)base64DecodeString:(NSString *)string;
 
 //- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error  contextInfo:(void *)contextInfo;
+
+- (double)AddNumber:(double)num1 num2:(double)num2;
+
+- (double)MultiplyingNumber:(double)num1 num2:(double)num2;
+
 @end
 
