@@ -95,6 +95,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.statusL.text = @"已审核";
     cell.dataDic = _dataArr[indexPath.row];
     
     return cell;

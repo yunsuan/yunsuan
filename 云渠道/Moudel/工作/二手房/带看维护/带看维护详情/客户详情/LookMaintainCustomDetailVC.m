@@ -10,6 +10,7 @@
 #import "LookMaintainModifyCustomDetailVC.h"
 
 #import "SingleContentCell.h"
+#import "LookMaintainCustomDetailCell.h"
 #import "NameSexImgCell.h"
 #import "BaseHeader.h"
 
@@ -47,7 +48,22 @@
     
     _contentArr = [@[] mutableCopy];
     
-    NSArray *tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
+    NSArray *arr = [_dataDic[@"card_img"] componentsSeparatedByString:@","];
+    NSArray *tempArr;
+    if (arr.count == 0) {
+        
+        tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",@""],[NSString stringWithFormat:@"%@",@""]];
+    }else{
+        
+        if (arr.count == 1) {
+            
+            tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",arr[0]],[NSString stringWithFormat:@"%@",@""]];
+        }else{
+            
+            tempArr = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",arr[0]],[NSString stringWithFormat:@"%@",arr[1]]];
+        }
+    }
+    
     _contentArr = [NSMutableArray arrayWithArray:tempArr];
     for (int i = 0; i < [_dataDic[@"tel"] count]; i++) {
         
@@ -100,7 +116,21 @@
         [_dataDic setObject:[dic[@"tel"] componentsSeparatedByString:@","] forKey:@"tel"];
 
         [_contentArr removeAllObjects];
-        NSArray *tempArr2 = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"类型：%@",_dataDic[@"report_type"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]]];
+        NSArray *arr = [dic[@"card_img"] componentsSeparatedByString:@","];
+        NSArray *tempArr2;
+        if (arr.count == 0) {
+            
+            tempArr2 = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",@""],[NSString stringWithFormat:@"%@",@""]];
+        }else{
+            
+            if (arr.count == 1) {
+                
+                tempArr2 = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",arr[0]],[NSString stringWithFormat:@"%@",@""]];
+            }else{
+                
+                tempArr2 = @[[NSString stringWithFormat:@"姓名：%@",_dataDic[@"name"]],[NSString stringWithFormat:@"证件类型：%@",_dataDic[@"card_type_name"]],[NSString stringWithFormat:@"证件号：%@",_dataDic[@"card_id"]],[NSString stringWithFormat:@"通讯地址：%@",_dataDic[@"address"]],[NSString stringWithFormat:@"%@",arr[0]],[NSString stringWithFormat:@"%@",arr[1]]];
+            }
+        }
         _contentArr = [NSMutableArray arrayWithArray:tempArr2];
         [_table reloadData];
         if (self.lookMaintainCustomDetailVCBlock) {
@@ -113,7 +143,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return _contentArr.count;
+    return _contentArr.count - 1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -156,6 +186,32 @@
         }];
         cell.sexImg.hidden = NO;
         cell.lineView.hidden = YES;
+        return cell;
+    }else if(indexPath.row == _contentArr.count - 2){
+        
+        LookMaintainCustomDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LookMaintainCustomDetailCell"];
+        if (!cell) {
+                   
+            cell = [[LookMaintainCustomDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LookMaintainCustomDetailCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        [cell.cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_contentArr[5]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+           
+            if (error) {
+                
+                cell.cardImg.image = [UIImage imageNamed:@"default_3"];
+            }
+        }];
+        
+        [cell.backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_contentArr[6]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+           
+            if (error) {
+                
+                cell.backImg.image = [UIImage imageNamed:@"default_3"];
+            }
+        }];
         return cell;
     }else{
         

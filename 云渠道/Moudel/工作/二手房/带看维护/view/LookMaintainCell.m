@@ -72,7 +72,7 @@
     _numL.text = [NSString stringWithFormat:@"已看房源数量：%@",dataDic[@"house_take_num"]];
     _progressL.text = [NSString stringWithFormat:@"带看进度：%@",dataDic[@"take_num"]];
     _timeL.text = [NSString stringWithFormat:@"登记时间：%@",dataDic[@"create_time"]];
-    
+    _agentL.text = [NSString stringWithFormat:@"经纪人：%@",dataDic[@"butter_name"]];
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
@@ -131,9 +131,15 @@
     
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJ86Color;
-    _timeL.textAlignment = NSTextAlignmentRight;
+//    _timeL.textAlignment = NSTextAlignmentRight;
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_timeL];
+    
+    _agentL = [[UILabel alloc] init];
+    _agentL.textColor = YJ86Color;
+    _agentL.font = [UIFont systemFontOfSize:12 *SIZE];
+    _agentL.textAlignment = NSTextAlignmentRight;
+    [self.contentView addSubview:_agentL];
     
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
@@ -207,17 +213,24 @@
         make.width.mas_equalTo(150 *SIZE);
     }];
     
-    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_agentL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(200 *SIZE);
         make.top.equalTo(_matchL.mas_bottom).offset(17 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];
     
+    [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_progressL.mas_bottom).offset(17 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_progressL.mas_bottom).offset(13 *SIZE);
+        make.top.equalTo(_timeL.mas_bottom).offset(13 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
         make.height.mas_equalTo(SIZE);
         make.bottom.equalTo(self.contentView).offset(0 *SIZE);

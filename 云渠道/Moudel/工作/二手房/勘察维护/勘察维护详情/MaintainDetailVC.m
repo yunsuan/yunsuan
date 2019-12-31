@@ -11,6 +11,10 @@
 //#import "SurveySuccessOwnerDetailVC.h"
 #import "AddContractVC.h"
 
+#import "YBImageBrowserModel.h"
+#import "YBImageBrowser.h"
+
+
 #import "RoomSoldOutVC.h"
 #import "MaintainAddFollowVC.h"
 #import "MaintainLookRecordVC.h"
@@ -42,7 +46,7 @@
 #import "MaintainRoomInfoEquipMentCell.h"
 #import "MaintainRoomInfoNeiborCell.h"
 
-@interface MaintainDetailVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface MaintainDetailVC ()<UITableViewDataSource,UITableViewDelegate,YBImageBrowserDelegate>
 {
 //    NSString *_surveyId;
     NSString *_houseId;
@@ -848,6 +852,45 @@
                         
                         cell.dataArr = [@[] mutableCopy];
                     }
+                    
+                    cell.maintainRoomInfoCellBlock = ^(NSInteger idx) {
+                        
+                        NSMutableArray *tempArr = [NSMutableArray array];
+                        
+                        NSMutableArray *tempArr1 = [NSMutableArray array];
+                        NSMutableArray *tempArr2 = [NSMutableArray array];
+                        NSMutableArray *tempArr3 = [NSMutableArray array];
+                        NSMutableArray *imgArr = [NSMutableArray array];
+                        
+                        for (NSDictionary *subDic in _detailDic[@"img_list"]) {
+                            
+                            [tempArr1 addObject:subDic[@"img_url"]];
+                            [tempArr2 addObject:subDic[@"name"]];
+                            [tempArr3 addObject:@{@"img_url":subDic[@"img_url"],
+                                                  @"agent_name":@" "}];
+                            [imgArr addObject:@{@"data":tempArr3,
+                                                @"list":tempArr3,
+                                                @"name":subDic[@"name"],
+                                                @"type":subDic[@"name"]}];
+                        }
+                        [tempArr1 enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                                            
+                            YBImageBrowserModel *model = [YBImageBrowserModel new];
+                            model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj]];
+                            model.name = tempArr2[idx];
+                            [tempArr addObject:model];
+                        }];
+                              
+                        
+                        YBImageBrowser *browser = [YBImageBrowser new];
+                        browser.delegate = self;
+                        browser.dataArray = tempArr;
+                        browser.albumArr = imgArr;
+                        browser.infoid = _houseId;
+                        browser.currentIndex = idx;
+                        browser.toolBar.titleLabel.text = @"房源相册";
+                        [browser show];
+                    };
                     
                     [cell.imgColl reloadData];
                     return cell;

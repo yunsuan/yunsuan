@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MaintainRoomInfoCellBlock)(NSInteger idx);
+
 @interface MaintainRoomInfoCell : UITableViewCell
+
+@property (nonatomic, strong) MaintainRoomInfoCellBlock maintainRoomInfoCellBlock;
 
 @property (nonatomic, strong) UICollectionView *imgColl;
 

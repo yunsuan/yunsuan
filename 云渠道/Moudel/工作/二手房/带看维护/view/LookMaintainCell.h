@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel *timeL;
 
+@property (nonatomic, strong) UILabel *agentL;
+
 @property (nonatomic, strong) UIView *line;
 
 @property (nonatomic, strong) NSMutableDictionary *dataDic;

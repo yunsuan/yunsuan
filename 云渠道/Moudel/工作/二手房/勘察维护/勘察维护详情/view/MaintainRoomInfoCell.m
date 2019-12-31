@@ -69,6 +69,14 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.maintainRoomInfoCellBlock) {
+        
+        self.maintainRoomInfoCellBlock(indexPath.item);
+    }
+}
+
 - (void)initUI{
     
     _flowLayout = [[UICollectionViewFlowLayout alloc] init];

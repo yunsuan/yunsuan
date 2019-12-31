@@ -13,6 +13,7 @@
 #import "DropDownBtn.h"
 
 #import "SinglePickView.h"
+#import "AdressChooseView.h"
 
 @interface LookMaintainModifyCustomDetailVC ()
 {
@@ -20,6 +21,9 @@
     NSString *_typeId;
     NSString *_gender;
     NSString *_cardType;
+    NSString *_province;
+    NSString *_city;
+    NSString *_district;
     
     NSString *_cardStr;
     NSString *_backStr;
@@ -59,7 +63,9 @@
 
 @property (nonatomic, strong) UILabel *addressL;
 
-@property (nonatomic, strong) BorderTF *addressTF;
+@property (nonatomic, strong) DropDownBtn *addressBtn;
+
+@property (nonatomic, strong) UITextView *addressTF;
 
 @property (nonatomic, strong) UILabel *cardL;
 
@@ -144,9 +150,16 @@
         [dic setObject:_certNumTF.textfield.text forKey:@"card_id"];
     }
     
-    if (![self isEmpty:_addressTF.textfield.text]) {
+//    if (_addressBtn.content.text.length) {
+//
+//        [dic setObject:_province forKey:@"province"];
+//        [dic setObject:_city forKey:@"city"];
+//        [dic setObject:_district forKey:@"district"];
+//    }
+    
+    if (![self isEmpty:_addressTF.text]) {
         
-        [dic setObject:_addressTF.textfield.text forKey:@"address"];
+        [dic setObject:_addressTF.text forKey:@"address"];
     }
     
     NSString *str = @"";
@@ -278,6 +291,18 @@
         strongSelf->_cardType = [NSString stringWithFormat:@"%@",ID];
     };
     [self.view addSubview:view];
+}
+
+- (void)ActionAddressBtn:(UIButton *)btn{
+    
+    AdressChooseView *view = [[AdressChooseView alloc]initWithFrame:self.view.frame withdata:@[]];
+    [self.view addSubview:view];
+    view.selectedBlock = ^(NSString *province, NSString *city, NSString *area, NSString *proviceid, NSString *cityid, NSString *areaid) {
+        _addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",province,city,area];
+        _province = proviceid;
+        _city = cityid;
+        _district = areaid;
+    };
 }
 
 - (void)ActionAddBtn:(UIButton *)btn{
@@ -449,6 +474,10 @@
         }
     }
     
+//    _addressBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(81 *SIZE, 0, 257 *SIZE, 33 *SIZE)];
+//    [_addressBtn addTarget:self action:@selector(ActionAddressBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [_whiteView addSubview:_addressBtn];
+    
     for (int i = 0; i < 8; i++) {
         
         UILabel *label = [[UILabel alloc] init];
@@ -560,7 +589,11 @@
             {
                 _addressL = label;
                 [_whiteView addSubview:_addressL];
-                _addressTF = textField;
+                _addressTF = [[UITextView alloc] init];
+                _addressTF.layer.cornerRadius = textField.layer.cornerRadius;
+                _addressTF.clipsToBounds = YES;
+                _addressTF.layer.borderColor = textField.layer.borderColor;
+                _addressTF.layer.borderWidth = textField.layer.borderWidth;
                 [_whiteView addSubview:_addressTF];
                 break;
             }
@@ -568,6 +601,19 @@
                 break;
         }
     }
+    if ([self.dataDic count]) {
+        
+        NSArray *arr = [self getDetailConfigArrByConfigState:2];
+        for (int i = 0; i < arr.count; i++) {
+            
+            if ([arr[i][@"id"] integerValue] == [self.dataDic[@"card_type"] integerValue]) {
+                
+                _certTypeBtn.content.text = arr[i][@"param"];
+                _cardType = [NSString stringWithFormat:@"%@",self.dataDic[@"card_type"]];
+            }
+        }
+    }
+    
     if ([self.dataDic count]) {
      
         NSArray *arr = [self.dataDic[@"card_img"] componentsSeparatedByString:@","];
@@ -636,6 +682,7 @@
         make.left.equalTo(self.view).offset(0);
         make.top.equalTo(self.view).offset(NAVIGATION_BAR_HEIGHT);
         make.width.mas_equalTo(SCREEN_Width);
+        make.bottom.equalTo(self.view).offset(-40 * SIZE - TAB_BAR_MORE);
     }];
     
     [_nameL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -743,13 +790,22 @@
         make.width.mas_equalTo(70 *SIZE);
     }];
     
-    [_addressTF mas_makeConstraints:^(MASConstraintMaker *make) {
+//    [_addressBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.left.equalTo(_whiteView).offset(81 *SIZE);
+//        make.top.equalTo(_certNumTF.mas_bottom).offset(20 *SIZE);
+//        make.width.mas_equalTo(257 *SIZE);
+//        make.height.mas_equalTo(33 *SIZE);
+//    //        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+//    }];
         
+    [_addressTF mas_makeConstraints:^(MASConstraintMaker *make) {
+            
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_certNumTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(33 *SIZE);
-        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+        make.height.mas_equalTo(88 *SIZE);
+    //        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
     }];
     
     [_cardL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -770,7 +826,7 @@
     
     [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
             
-        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
+        make.left.equalTo(_whiteView).offset(218 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(90 *SIZE);

@@ -158,7 +158,7 @@
         [dic setObject:_district forKey:@"district"];
     }
     
-    if ([self isEmpty:_addressTF.text]) {
+    if (![self isEmpty:_addressTF.text]) {
         
         [dic setObject:_addressTF.text forKey:@"address"];
     }
@@ -182,7 +182,7 @@
     }
     if (str.length) {
         
-        [dic setValue:str forKey:@"card_img"];
+        [dic setValue:str forKey:@"card_img_url"];
     }
     
     if (_clientId.length) {
@@ -871,7 +871,7 @@
     
     [_backImg mas_makeConstraints:^(MASConstraintMaker *make) {
             
-        make.right.equalTo(_whiteView.mas_right).offset(-10 *SIZE);
+        make.left.equalTo(_whiteView).offset(218 *SIZE);
         make.top.equalTo(_addressTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(120 *SIZE);
         make.height.mas_equalTo(90 *SIZE);
