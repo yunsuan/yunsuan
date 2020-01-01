@@ -60,6 +60,7 @@
     NSMutableDictionary *_moreDic;
     NSMutableArray *_followArr;
     NSMutableArray *_tagArr;
+    NSMutableArray *_selfArr;
     NSMutableArray *_matchArr;
     NSMutableDictionary *_detailDic;
     NSMutableDictionary *_takeDic;
@@ -109,6 +110,7 @@
 //    _infoDic = [@{} mutableCopy];
     _followArr = [@[] mutableCopy];
     _tagArr = [@[] mutableCopy];
+    _selfArr = [@[] mutableCopy];
     _matchArr = [@[] mutableCopy];
     _detailDic = [@{} mutableCopy];
     _takeDic = [@{} mutableCopy];
@@ -138,11 +140,13 @@
     
     _detailDic = [NSMutableDictionary dictionaryWithDictionary:data[@"detail"]];
     [_tagArr removeAllObjects];
+    [_selfArr removeAllObjects];
     NSArray *arr = _detailDic[@"house_tags"];
     for (NSDictionary *dic in arr) {
         
         [_tagArr addObject:dic[@"tag_name"]];
     }
+    _selfArr = [NSMutableArray arrayWithArray:[_detailDic[@"extra_tags"] componentsSeparatedByString:@","]];
     if ([data[@"house"] isKindOfClass:[NSDictionary class]]) {
         
         _houseDic = [NSMutableDictionary dictionaryWithDictionary:data[@"house"]];
@@ -395,10 +399,11 @@
         header.maintainTagHeaderBlock = ^(NSInteger index) {
           
             _item = index;
+            [self.mainTable layoutIfNeeded];
             [self.mainTable reloadData];
 
             [self.mainTable layoutIfNeeded]; //加上这段代码,
-
+//            self.mainTable settop
 //            [self.mainTable setContentOffset:CGPointMake(0, 0)];
         };
         
@@ -466,7 +471,7 @@
               
                 if (section == 2) {
                     
-                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] type:_type];
+                    ModifyTagVC *nextVC = [[ModifyTagVC alloc] initWithArray:_detailDic[@"house_tags"] selfArr:_selfArr type:_type];
 //                    nextVC.status = [NSString stringWithFormat:@"%ld",_type];
                     nextVC.houseId = _houseId;
 //                    nextVC.typeId = [NSString stringWithFormat:@"%ld",(long)_type];
@@ -906,10 +911,12 @@
                     if (_detailDic.count) {
                         
                         [cell SetData:_tagArr];
+                        [cell SetSelfArr:_selfArr];
 //                        [cell.tagView setData:_tagArr];
                     }else{
                         
                         [cell SetData:@[]];
+                        [cell SetSelfArr:@[]];
                     }
                     
                     return cell;

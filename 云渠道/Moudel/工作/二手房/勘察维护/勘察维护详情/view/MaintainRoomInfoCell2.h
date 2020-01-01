@@ -16,6 +16,8 @@
 
 - (void)SetData:(NSArray *)data;
 
+- (void)SetSelfArr:(NSArray *)data;
+
 //@property (nonatomic, strong) TagView *tagView;
 
 @end

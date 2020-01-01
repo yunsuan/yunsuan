@@ -22,5 +22,5 @@ typedef void(^ModifyTagSaveBtnBlock)(NSArray *array);
 
 //@property (nonatomic, strong) NSString *typeId;
 
-- (instancetype)initWithArray:(NSArray *)array type:(NSInteger )type;
+- (instancetype)initWithArray:(NSArray *)array selfArr:(NSArray *)selfArr type:(NSInteger )type;
 @end

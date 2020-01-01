@@ -11,17 +11,22 @@
 #import "AddTagCollHeader.h"
 #import "AddTagCollFooter.h"
 
+#import "GZQFlowLayout.h"
+
+#import "CompleteCustomCollCell.h"
+
 @interface ModifyTagVC ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     
     NSMutableArray *_dataArr;
+    NSMutableArray *_selfArr;
     NSArray *_tagArr;
     NSInteger _type;
     bool _isContain;
 }
 @property (nonatomic, strong) UICollectionView *tagColl;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) GZQFlowLayout *flowLayout;
 
 @property (nonatomic, strong) UIButton *saveBtn;
 
@@ -29,7 +34,7 @@
 
 @implementation ModifyTagVC
 
-- (instancetype)initWithArray:(NSArray *)array type:(NSInteger)type
+- (instancetype)initWithArray:(NSArray *)array  selfArr:(NSArray *)selfArr type:(NSInteger)type
 {
     self = [super init];
     if (self) {
@@ -47,6 +52,7 @@
         }
         
         _dataArr = [[NSMutableArray alloc] init];//WithArray:array];
+        _selfArr = [[NSMutableArray alloc] init];
         for (NSUInteger i = 0; i < array.count; i++) {
             
             NSDictionary *dic = @{@"id":array[i][@"tag_id"],
@@ -54,6 +60,7 @@
                                   };
             [_dataArr addObject:dic];
         }
+        _selfArr = [NSMutableArray arrayWithArray:selfArr];
     }
     return self;
 }
@@ -80,8 +87,28 @@
         
         tags = @"";
     }
+    NSString *custom;
+    for (NSUInteger i = 0; i < _selfArr.count; i++) {
+
+        if (!custom.length) {
+            
+            custom = _selfArr[0];
+        }else{
+            
+            custom = [NSString stringWithFormat:@"%@,%@", custom, _selfArr[i]];
+        }
+    }
+    if(!tags.length){
+        
+        tags = @"";
+    }
+    if (!custom.length) {
+        
+        custom = @"";
+    }
     NSDictionary *dic = @{@"house_id":self.houseId,
                           @"house_tags":tags,
+                          @"extra_tags":custom,
                           @"type":[NSString stringWithFormat:@"%ld",(long)_type]
                           };
     [BaseRequest POST:HouseSurveyUpdateHouseInfo_URL parameters:dic success:^(id resposeObject) {
@@ -106,7 +133,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    return CGSizeMake(80 *SIZE, 37*SIZE);
+    if (indexPath.section == 1) {
+        
+        if (indexPath.item >= _dataArr.count + _selfArr.count) {
+            
+            return CGSizeMake(SCREEN_Width, 40 *SIZE);
+        }
+    }
+    return CGSizeMake(70 *SIZE, 37*SIZE);
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -120,7 +154,7 @@
         
         return _tagArr.count;
     }
-    return _dataArr.count;
+    return _dataArr.count + _selfArr.count + 1;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -173,28 +207,70 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    AddTagViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddTagViewCollCell" forIndexPath:indexPath];
-    
-    cell.tag = indexPath.item;
-    
     if (indexPath.section == 0) {
         
+        AddTagViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddTagViewCollCell" forIndexPath:indexPath];
+        
+        cell.tag = indexPath.item;
         cell.cancelBtn.hidden = YES;
         [cell setstylebytype:@"0" andsetlab:_tagArr[(NSUInteger) indexPath.item][@"param"]];
+        
+        cell.deleteBtnBlock = ^(NSUInteger index) {
+
+            [_dataArr removeObjectAtIndex:index];
+            [collectionView reloadData];
+            [self reloadInputViews];
+        };
+        return cell;
     }else{
         
-        cell.cancelBtn.hidden = NO;
-        
-        [cell setstylebytype:@"0" andsetlab:_dataArr[(NSUInteger) indexPath.item][@"param"]];
+        if (indexPath.item < _dataArr.count + _selfArr.count) {
+            
+            AddTagViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddTagViewCollCell" forIndexPath:indexPath];
+            
+            cell.tag = indexPath.item;
+            cell.cancelBtn.hidden = NO;
+            
+            if (indexPath.item < _dataArr.count) {
+                
+                [cell setstylebytype:@"0" andsetlab:_dataArr[(NSUInteger) indexPath.item][@"param"]];
+            }else{
+                
+                [cell setstylebytype:@"0" andsetlab:_selfArr[(NSUInteger) indexPath.item - _dataArr.count]];
+            }
+            
+            cell.deleteBtnBlock = ^(NSUInteger index) {
+            
+                if (index < _dataArr.count) {
+                    
+                    [_dataArr removeObjectAtIndex:index];
+                }else{
+                    
+                    if (index < (_dataArr.count + _selfArr.count)) {
+                        
+                        [_selfArr removeObjectAtIndex:(indexPath.item - _dataArr.count)];
+                    }
+                }
+                [collectionView reloadData];
+                [self reloadInputViews];
+            };
+            return cell;
+        }else{
+            
+            CompleteCustomCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteCustomCollCell" forIndexPath:indexPath];
+            if (!cell) {
+                
+                cell = [[CompleteCustomCollCell alloc] initWithFrame:CGRectMake(0, 0, 280 *SIZE, 40 *SIZE)];
+            }
+            
+            cell.completeCustomCollCellBlock = ^(NSString * _Nonnull str) {
+                
+                [_selfArr addObject:str];
+                [collectionView reloadData];
+            };
+            return cell;
+        }
     }
-
-    cell.deleteBtnBlock = ^(NSUInteger index) {
-
-        [_dataArr removeObjectAtIndex:index];
-        [collectionView reloadData];
-        [self reloadInputViews];
-    };
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -224,8 +300,8 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"修改标签";
     
-    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.minimumInteritemSpacing = 2 *SIZE;
+    _flowLayout = [[GZQFlowLayout alloc] initWithType:0 betweenOfCell:2 *SIZE];
+//    _flowLayout.minimumInteritemSpacing = 2 *SIZE;
     _flowLayout.sectionInset = UIEdgeInsetsMake(0, 32 *SIZE, 31 *SIZE, 0);
     //    _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
@@ -238,6 +314,7 @@
     _tagColl.showsVerticalScrollIndicator = NO;
     
     [_tagColl registerClass:[AddTagViewCollCell class] forCellWithReuseIdentifier:@"AddTagViewCollCell"];
+    [_tagColl registerClass:[CompleteCustomCollCell class] forCellWithReuseIdentifier:@"CompleteCustomCollCell"];
     [_tagColl registerClass:[AddTagCollHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"AddTagCollHeader"];
     [_tagColl registerClass:[AddTagCollFooter class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"AddTagCollFooter"];
     [self.view addSubview:_tagColl];

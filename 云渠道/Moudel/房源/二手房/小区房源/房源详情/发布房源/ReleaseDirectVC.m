@@ -227,6 +227,10 @@
                 [_whiteView addSubview:_shipL];
                 _shipBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
                 [_shipBtn addTarget:self action:@selector(ActionShipBtn:) forControlEvents:UIControlEventTouchUpInside];
+                NSArray *arr = [self getDetailConfigArrByConfigState:30];
+                _reporterType = [NSString stringWithFormat:@"%@",arr[0][@"id"]];
+                _shipBtn.content.text = [NSString stringWithFormat:@"%@",arr[0][@"param"]];
+                
                 [_whiteView addSubview:_shipBtn];
                 break;
             }

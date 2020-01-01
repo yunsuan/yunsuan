@@ -12,6 +12,7 @@
 {
     
     NSMutableArray *_propertyArr;
+    NSMutableArray *_selfArr;;
     NSMutableArray *_tagArr;
 }
 
@@ -33,21 +34,23 @@
 - (void)initDataSource{
     
     _propertyArr = [@[] mutableCopy];
+    _selfArr = [@[] mutableCopy];
     _tagArr = [@[] mutableCopy];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    if (_propertyArr.count && _tagArr.count) {
-        
-        return 2;
-    }else if (!_propertyArr.count && !_tagArr.count){
-        
-        return 0;
-    }else{
-        
-        return 1;
-    }
+    return 2;
+//    if (_tagArr.count) {
+//
+//        return 2;
+//    }else if (!_propertyArr.count && !_tagArr.count){
+//
+//        return 0;
+//    }else{
+//
+//        return 1;
+//    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -62,13 +65,14 @@
         return _tagArr.count > 4 ? 4:_tagArr.count;
     }else{
         
-        if (_propertyArr.count) {
-            
-            return _propertyArr.count > 4 ? 4:_propertyArr.count;
-        }else{
-            
-            return _tagArr.count > 4 ? 4:_tagArr.count;
-        }
+        return _selfArr.count + _propertyArr.count;
+//        if (_propertyArr.count) {
+//
+//            return _propertyArr.count > 4 ? 4:_propertyArr.count;
+//        }else{
+//
+//            return _tagArr.count > 4 ? 4:_tagArr.count;
+//        }
     }
 }
 
@@ -86,12 +90,15 @@
         
     }else{
         
-        if (_propertyArr.count) {
+        if (indexPath.item < _propertyArr.count + _selfArr.count) {
             
-            [cell setStyleByType:@"1" lab:_propertyArr[indexPath.item]];
-        }else{
-            
-            [cell setStyleByType:@"1" lab:_tagArr[indexPath.item]];
+            if (indexPath.item < _propertyArr.count) {
+                
+                [cell setStyleByType:@"1" lab:_propertyArr[indexPath.item]];
+            }else{
+                
+                [cell setStyleByType:@"1" lab:_selfArr[indexPath.item - _propertyArr.count]];
+            }
         }
     }
     
@@ -102,6 +109,17 @@
     
     _propertyArr = [NSMutableArray arrayWithArray:data];
 //    _tagArr = [NSMutableArray arrayWithArray:model.house_tags];
+    [_propertyColl reloadData];
+    
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
+}
+
+- (void)SetSelfArr:(NSArray *)data{
+    
+    _selfArr = [NSMutableArray arrayWithArray:data];
+    
     [_propertyColl reloadData];
     
     [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {

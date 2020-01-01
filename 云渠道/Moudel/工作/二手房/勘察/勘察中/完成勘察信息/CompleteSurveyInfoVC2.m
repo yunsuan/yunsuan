@@ -12,12 +12,18 @@
 
 #import "BaseCollHeader.h"
 #import "CompleteSurveyCollCell2.h"
+#import "CompleteCustomCollCell.h"
 #import "BaseCollCell.h"
+
+#import "GZQFlowLayout.h"
 
 @interface CompleteSurveyInfoVC2 ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 {
     
     NSMutableArray *_dataArr;
+    
+    NSMutableArray *_selfArr;
+    
     NSArray *_titleArr;
     NSArray *_tagArr;
     NSArray *_contentArr;
@@ -26,9 +32,9 @@
 }
 @property (nonatomic, strong) UICollectionView *tagColl;
 
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) GZQFlowLayout *flowLayout;
 
-@property (nonatomic, strong) UICollectionViewLayout *layout;
+//@property (nonatomic, strong) UICollectionViewLayout *layout;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -45,9 +51,8 @@
 
 - (void)initDataSource{
     
-//    _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
-    
     _dataArr = [[NSMutableArray alloc] init];
+    _selfArr = [[NSMutableArray alloc] init];
     if ([self.dic[@"type"] integerValue] == 1) {
         
         _titleArr = @[@"核心卖点",@"装修描述",@"房源标签",@"已选标签"];
@@ -81,6 +86,23 @@
             
         }];
         [self.dic setObject:str forKey:@"house_tags"];
+    }
+    
+    if (_selfArr.count) {
+        
+        __block NSString *str;
+        [_selfArr enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if (idx == 0) {
+                
+                str = obj;
+            }else{
+                
+                str = [NSString stringWithFormat:@"%@,%@",str,obj];
+            }
+            
+        }];
+        [self.dic setObject:str forKey:@"extra_tags"];
     }
     
     if (_str1.length) {
@@ -138,7 +160,7 @@
         return _tagArr.count;
     }else{
         
-        return _dataArr.count;
+        return _dataArr.count + _selfArr.count + 1;
     }
 }
 
@@ -172,8 +194,21 @@
         return CGSizeMake(SCREEN_Width, size.height + 30 *SIZE);
     }else{
         
-        CGSize size = [_tagArr[indexPath.row][@"param"] boundingRectWithSize:CGSizeMake(332 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
-        return CGSizeMake(size.width + 28 *SIZE, size.height + 18 *SIZE);
+        if (indexPath.section == 3) {
+            
+            if (indexPath.item < _dataArr.count + _selfArr.count) {
+                
+                CGSize size = [_tagArr[indexPath.row][@"param"] boundingRectWithSize:CGSizeMake(332 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
+                return CGSizeMake(size.width + 28 *SIZE, size.height + 18 *SIZE);
+            }else{
+                
+                return CGSizeMake(SCREEN_Width, 40 *SIZE);
+            }
+        }else{
+            
+            CGSize size = [_tagArr[indexPath.row][@"param"] boundingRectWithSize:CGSizeMake(332 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
+            return CGSizeMake(size.width + 28 *SIZE, size.height + 18 *SIZE);
+        }
     }
 }
 
@@ -222,14 +257,38 @@
             return cell;
         }else{
             
-            BaseCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BaseCollCell" forIndexPath:indexPath];
-            if (!cell) {
+            if (indexPath.item < _dataArr.count + _selfArr.count) {
                 
-                cell = [[BaseCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 30 *SIZE)];
+                BaseCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BaseCollCell" forIndexPath:indexPath];
+                if (!cell) {
+                    
+                    cell = [[BaseCollCell alloc] initWithFrame:CGRectMake(0, 0, 120 *SIZE, 30 *SIZE)];
+                }
+                cell.colorView.backgroundColor = COLOR(213, 242, 255, 1);
+                if (indexPath.item < _dataArr.count) {
+                    
+                    cell.titleL.text = _dataArr[indexPath.row][@"param"];
+                }else{
+                    
+                    cell.titleL.text = _selfArr[indexPath.item - _dataArr.count];
+                }
+                
+                return cell;
+            }else{
+            
+                CompleteCustomCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CompleteCustomCollCell" forIndexPath:indexPath];
+                if (!cell) {
+                    
+                    cell = [[CompleteCustomCollCell alloc] initWithFrame:CGRectMake(0, 0, 280 *SIZE, 40 *SIZE)];
+                }
+                
+                cell.completeCustomCollCellBlock = ^(NSString * _Nonnull str) {
+                    
+                    [_selfArr addObject:str];
+                    [collectionView reloadData];
+                };
+                return cell;
             }
-            cell.colorView.backgroundColor = COLOR(213, 242, 255, 1);
-            cell.titleL.text = _dataArr[indexPath.row][@"param"];
-            return cell;
         }
     }
 }
@@ -246,6 +305,18 @@
 
             [_dataArr addObject:_tagArr[indexPath.item]];
         }
+    }else if (indexPath.section == 3){
+        
+        if (indexPath.item < _dataArr.count) {
+            
+            
+        }else{
+            
+            if (indexPath.item < (_dataArr.count + _selfArr.count)) {
+                
+                [_selfArr removeObjectAtIndex:(indexPath.item - _dataArr.count)];
+            }
+        }
     }
     [collectionView reloadData];
 }
@@ -256,9 +327,9 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"完成勘察信息";
     
-    _flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    _flowLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:2 *SIZE];
 //    _flowLayout.estimatedItemSize = CGSizeMake(120 *SIZE, 40 *SIZE);
-    _flowLayout.minimumInteritemSpacing = 2 *SIZE;
+//    _flowLayout.minimumInteritemSpacing = 2 *SIZE;
     _flowLayout.sectionInset = UIEdgeInsetsMake(17 *SIZE, 32 *SIZE, 31 *SIZE, 10 *SIZE);
     //    _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
@@ -272,6 +343,7 @@
     
     [_tagColl registerClass:[BaseCollCell class] forCellWithReuseIdentifier:@"BaseCollCell"];
     [_tagColl registerClass:[CompleteSurveyCollCell2 class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell2"];
+    [_tagColl registerClass:[CompleteCustomCollCell class] forCellWithReuseIdentifier:@"CompleteCustomCollCell"];
     [_tagColl registerClass:[BaseCollHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"BaseCollHeader"];
     [self.view addSubview:_tagColl];
     

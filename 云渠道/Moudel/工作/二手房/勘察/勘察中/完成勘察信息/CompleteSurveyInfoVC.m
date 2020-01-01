@@ -668,8 +668,8 @@
         _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
         _typeBtn.content.text = self.dataDic[@"WYMC"];
         _areaTF.textfield.text = self.dataDic[@"TNMJ"];
-        _buildYearTF.textfield.text = self.dataDic[@"JCNDC"];
-        _proLimitTF.textfield.text = self.dataDic[@"CQNX"];
+        _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
+        _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
     }
     
     [self MasonryUI];
