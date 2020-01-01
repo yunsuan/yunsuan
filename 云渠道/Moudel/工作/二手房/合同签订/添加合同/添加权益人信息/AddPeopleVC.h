@@ -14,6 +14,8 @@ typedef void(^AddPeopleBlock)(NSMutableDictionary *dic);
 
 @interface AddPeopleVC : BaseViewController
 
+@property (nonatomic, strong) NSString *status;
+
 @property (nonatomic, copy) AddPeopleBlock AddPeopleblock;
 @property (nonatomic, strong) NSMutableDictionary *dataDic;
 

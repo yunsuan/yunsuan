@@ -155,10 +155,11 @@
             [_MainTableView reloadData];
             if ([resposeObject[@"data"][@"data"] count]) {
                 
-                [self SetData:resposeObject[@"data"][@"data"]];
                 [_MainTableView.mj_header endRefreshing];
+                [self SetData:resposeObject[@"data"][@"data"]];
             }else{
 
+                [_MainTableView.mj_header endRefreshing];
                 _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
             }
             [self.MainTableView reloadData];

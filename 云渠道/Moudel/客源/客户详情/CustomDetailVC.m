@@ -876,6 +876,7 @@
                     
                     cell.tag = indexPath.row;
                     
+                    cell.recommendBtn.hidden = YES;
                     CustomRequireModel *model = _dataArr[0];
                     cell.dicData = model.fit_info[@"fit_store_list"][indexPath.row];
                     cell.secondaryMatchCell2Block = ^(NSInteger index) {
@@ -1029,7 +1030,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"客户详情";
 
-    self.rightBtn.hidden = NO;
+    self.rightBtn.hidden = YES;
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     

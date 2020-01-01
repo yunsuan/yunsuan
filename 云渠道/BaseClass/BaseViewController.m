@@ -410,8 +410,6 @@
                     }
                     
                 }
-                
-                
             }else {
                 return NO;
             }

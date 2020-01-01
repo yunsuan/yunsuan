@@ -344,7 +344,7 @@
 - (void)initUI{
      self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"门店详情";
-    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT-TAB_BAR_HEIGHT) style:UITableViewStylePlain];
+    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
     _table.rowHeight = UITableViewAutomaticDimension;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -370,7 +370,7 @@
         
     }];
     [self.view addSubview:_table];
-    [self.view addSubview:self.surebtn];
+//    [self.view addSubview:self.surebtn];
 }
 
 

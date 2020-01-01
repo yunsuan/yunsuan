@@ -519,6 +519,8 @@
         
         cell = [[StoreListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Identifier];
     }
+    
+    cell.recomentBtn.hidden = YES;
     [cell setDataBydata:_dataArr[indexPath.row] type:_type];
     [cell.recomentBtn addTarget:self action:@selector(action_recoment:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

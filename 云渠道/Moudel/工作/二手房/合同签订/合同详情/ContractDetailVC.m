@@ -55,13 +55,13 @@
 {
     self.titleLabel.text = @"合同详情";
     self.navBackgroundView.hidden = NO;
-    if (self.state > 2 || self.state == 0) {
-        
+//    if (self.state > 2 || self.state == 0) {
+//
         self.rightBtn.hidden = YES;
-    }else{
-        
-        self.rightBtn.hidden = NO;
-    }
+//    }else{
+//
+//        self.rightBtn.hidden = NO;
+//    }
     [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -327,8 +327,18 @@
         header.contractHeaderBlock  = ^(NSInteger index) {
             
             _index = index;
-            [tableView scrollsToTop];
-            [tableView reloadData];
+//            if(@avail/able(iOS 9.0, *)) {
+            if (@available(ios 11.0, *)) {
+                
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }else{
+                
+                [tableView reloadData];
+                [tableView layoutIfNeeded]; //加上这段代码,
+
+//                [tableView setContentOffset:CGPointMake(0, 0)];
+            }
+//            [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
         };
         
         return header;
@@ -693,6 +703,7 @@
                                            @"card_id":dic[@"card_id"],
                                            @"address":dic[@"address"],
                                            @"contact_type":@"1",
+                                           @"property":dic[@"property"]
                                            }
                                  success:^(id resposeObject) {
                                      if ([resposeObject[@"code"]integerValue]==200) {
@@ -708,6 +719,7 @@
                                             @"card_id":dic[@"card_id"],
                                             @"address":dic[@"address"],
                                             @"contact_type":@"1",
+                                            @"property":dic[@"property"]
                                             }];
                                          [_mainTable reloadData];
                                          
@@ -744,6 +756,7 @@
                                            @"card_id":dic[@"card_id"],
                                            @"address":dic[@"address"],
                                            @"contact_type":@"1",
+                                           @"property":dic[@"property"]
                                            }
                                  success:^(id resposeObject) {
                                      if ([resposeObject[@"code"]integerValue]==200) {
@@ -759,6 +772,7 @@
                                             @"card_id":dic[@"card_id"],
                                             @"address":dic[@"address"],
                                             @"contact_type":@"1",
+                                            @"property":dic[@"property"]
                                             }];
                                          [_mainTable reloadData];
                                          
@@ -785,6 +799,7 @@
                 
                 AddPeopleVC *vc = [[AddPeopleVC alloc]init];
                 vc.dataDic = _sell_info[indexPath.row-1];
+                vc.status = @"sell";
                 vc.AddPeopleblock = ^(NSMutableDictionary * _Nonnull dic) {
                     
                     

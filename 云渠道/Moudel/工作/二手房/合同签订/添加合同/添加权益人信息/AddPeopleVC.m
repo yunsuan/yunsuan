@@ -382,6 +382,11 @@
                     
                     _radioTF.textfield.text = @"0";
                 }
+                if ([self.status isEqualToString:@"sell"]) {
+                    
+                    _radioTF.hidden = YES;
+                    _radioL.hidden = YES;
+                }
                 [_whiteView addSubview:_radioTF];
                 break;
             }
@@ -523,13 +528,25 @@
     }];
     
     [_addressTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+            
         make.left.equalTo(_whiteView).offset(81 *SIZE);
         make.top.equalTo(_certNumTF.mas_bottom).offset(20 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
         make.height.mas_equalTo(33 *SIZE);
-//        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+    //        make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
     }];
+    
+    if ([self.status isEqualToString:@"sell"]) {
+        
+        [_addressTF mas_makeConstraints:^(MASConstraintMaker *make) {
+                
+            make.left.equalTo(_whiteView).offset(81 *SIZE);
+            make.top.equalTo(_certNumTF.mas_bottom).offset(20 *SIZE);
+            make.width.mas_equalTo(257 *SIZE);
+            make.height.mas_equalTo(33 *SIZE);
+            make.bottom.equalTo(_whiteView).offset(-25 *SIZE);
+        }];
+    }
     
     [_radioL mas_makeConstraints:^(MASConstraintMaker *make) {
         
