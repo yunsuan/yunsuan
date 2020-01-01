@@ -49,7 +49,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [BaseRequest GET:BrokerAppeal_URL parameters:dic success:^(id resposeObject) {
             
@@ -76,13 +76,13 @@
             [_MainTableView.mj_header endRefreshing];
             [self showContent:@"网络错误"];
         }];
-//    }else{
-//
-//        [_dataArr removeAllObjects];
-//        [_MainTableView.mj_header endRefreshing];
-//        _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-//        [_MainTableView reloadData];
-//    }
+    }else{
+
+        [_dataArr removeAllObjects];
+        [_MainTableView.mj_header endRefreshing];
+        _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+        [_MainTableView reloadData];
+    }
 }
 
 - (void)RequestAddMethod{
@@ -94,7 +94,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [BaseRequest GET:BrokerAppeal_URL parameters:dic success:^(id resposeObject) {
             
@@ -122,13 +122,13 @@
             [_MainTableView.mj_footer endRefreshing];
             [self showContent:@"网络错误"];
         }];
-//    }else{
-//
-//        [_dataArr removeAllObjects];
-//
-//        _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-//        [_MainTableView reloadData];
-//    }
+    }else{
+
+        [_dataArr removeAllObjects];
+
+        _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+        [_MainTableView reloadData];
+    }
 }
 
 - (void)SetUnComfirmArr:(NSArray *)data{
@@ -193,11 +193,11 @@
 -(void)initUI
 {
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
         self.rightBtn.hidden = NO;
-//    }else{
-//        self.rightBtn.hidden = YES;
-//    }
+    }else{
+        self.rightBtn.hidden = YES;
+    }
     
     [self.view addSubview:self.MainTableView];
 }

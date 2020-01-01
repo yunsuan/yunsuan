@@ -539,13 +539,13 @@
     
     
     
-//    if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
-//                    _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
-//    }
-//    else
-//    {
+    if ([[UserModelArchiver unarchive].agent_identity integerValue]==2) {
+                    _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
+    }
+    else
+    {
             _invalidTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_MORE) style:UITableViewStyleGrouped];
-//    }
+    }
     _invalidTable.rowHeight = UITableViewAutomaticDimension;
     _invalidTable.estimatedRowHeight = 150 *SIZE;
     _invalidTable.backgroundColor = YJBackColor;

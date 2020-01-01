@@ -324,16 +324,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
     
         RoomListModel *model = _dataArr[indexPath.row];
         QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",model.project_id] clientId:_model.client_id];
         nextVC.projectName = model.project_name;
         [self.navigationController pushViewController:nextVC animated:YES];
-//    }else{
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"到访确认人不可推荐客户"];
-//    }
+    }else{
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"到访确认人不可推荐客户"];
+    }
 }
 
 - (void)initUI{

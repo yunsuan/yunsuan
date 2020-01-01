@@ -221,10 +221,10 @@
     [_recommentBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommentBtn setTitle:@"推荐" forState:UIControlStateNormal];
     [_recommentBtn setBackgroundColor:YJBlueBtnColor];
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [self.contentView addSubview:_recommentBtn];
-//    }
+    }
     [self.contentView addSubview:_recommentBtn];
 //    [_recommentBtn setTitleColor:COLOR(<#_R#>, <#_G#>, <#_B#>, <#_A#>) forState:UIControlStateNormal];
     

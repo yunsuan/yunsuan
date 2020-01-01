@@ -139,7 +139,7 @@
 //                         }
 //                     }
                      
-//                     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+                     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
                          
                          if (_sign) {
                              
@@ -163,7 +163,7 @@
                              
                              _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
                          }
-//                     }
+                     }
                  }
              }
              failure:^(NSError *error) {

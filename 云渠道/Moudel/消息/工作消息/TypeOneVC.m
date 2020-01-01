@@ -384,10 +384,10 @@
     _Maintableview.delegate = self;
     _Maintableview.dataSource = self;
     [_Maintableview setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         _Maintableview.frame = CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT);
-//    }
+    }
     [self.view addSubview:_Maintableview];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -398,10 +398,10 @@
     [_confirmBtn setBackgroundColor:YJBlueBtnColor];
     [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _confirmBtn.hidden = YES;
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
-//        
-//        [self.view addSubview:_confirmBtn];
-//    }
+    if ([[UserModel defaultModel].agent_identity integerValue] == 2) {
+        
+        [self.view addSubview:_confirmBtn];
+    }
     
     
 }

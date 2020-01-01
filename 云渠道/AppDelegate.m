@@ -535,35 +535,35 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     if (userInfo[@"agent_type"]) {
         
-        switch ([userInfo[@"agent_type"] integerValue]) {
-            case 0:
-            {
+//        switch ([userInfo[@"agent_type"] integerValue]) {
+//            case 0:
+//            {
+////                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 1:
+//            {
+                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 2:
+//            {
 //                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 1:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 2:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 3:
-            {
-                [UserModel defaultModel].agent_identity = @"2";
-                break;
-            }
-            case 4:{
-                
-                [UserModel defaultModel].agent_identity = @"3";
-                break;
-            }
-            default:
-                break;
-        }
+//                break;
+//            }
+//            case 3:
+//            {
+//                [UserModel defaultModel].agent_identity = @"2";
+//                break;
+//            }
+//            case 4:{
+//
+//                [UserModel defaultModel].agent_identity = @"3";
+//                break;
+//            }
+//            default:
+//                break;
+//        }
         [UserModelArchiver archive];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
     }
@@ -597,35 +597,35 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     if (userInfo[@"agent_type"]) {
         
-        switch ([userInfo[@"agent_type"] integerValue]) {
-            case 0:
-            {
+//        switch ([userInfo[@"agent_type"] integerValue]) {
+//            case 0:
+//            {
+////                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 1:
+//            {
+                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 2:
+//            {
 //                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 1:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 2:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 3:
-            {
-                [UserModel defaultModel].agent_identity = @"2";
-                break;
-            }
-            case 4:{
-                
-                [UserModel defaultModel].agent_identity = @"3";
-                break;
-            }
-            default:
-                break;
-        }
+//                break;
+//            }
+//            case 3:
+//            {
+//                [UserModel defaultModel].agent_identity = @"2";
+//                break;
+//            }
+//            case 4:{
+//
+//                [UserModel defaultModel].agent_identity = @"3";
+//                break;
+//            }
+//            default:
+//                break;
+//        }
         [UserModelArchiver archive];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
     }
@@ -675,36 +675,36 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     if (userInfo[@"agent_type"]) {
         
-        switch ([userInfo[@"agent_type"] integerValue]) {
-            case 0:
-            {
+//        switch ([userInfo[@"agent_type"] integerValue]) {
+//            case 0:
+//            {
+////                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 1:
+//            {
+                [UserModel defaultModel].agent_identity = @"1";
+//                break;
+//            }
+//            case 2:
+//            {
 //                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 1:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 2:
-            {
-                [UserModel defaultModel].agent_identity = @"1";
-                break;
-            }
-            case 3:
-            {
-                [UserModel defaultModel].agent_identity = @"2";
-                break;
-            }
-            case 4:{
-                
-                [UserModel defaultModel].agent_identity = @"3";
-                break;
-            }
-            default:
-                break;
-        }
-        
+//                break;
+//            }
+//            case 3:
+//            {
+//                [UserModel defaultModel].agent_identity = @"2";
+//                break;
+//            }
+//            case 4:{
+//                
+//                [UserModel defaultModel].agent_identity = @"3";
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//        
         [UserModelArchiver archive];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadType" object:nil];
     }

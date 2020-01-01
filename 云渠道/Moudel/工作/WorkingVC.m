@@ -48,6 +48,7 @@
     NSArray *_rentCountData;
     
     NSMutableArray *_showArr;
+    NSMutableArray *_rentShowArr;
 }
 
 @property (nonatomic , strong) UITableView *MainTableView;
@@ -87,6 +88,105 @@
     }];
 }
 
+-(void)initDateSouce
+{
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadType) name:@"reloadType" object:nil];
+    if (![UserModel defaultModel].workArr.count) {
+
+        [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
+        [UserModelArchiver archive];
+    }else{
+        
+
+    }
+    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同",@"合同签订"];
+    _showArr = [@[] mutableCopy];
+    for (int i = 0; i < _secondArr.count; i++) {
+        
+        [_showArr addObject:@0];
+    }
+    
+    if ([UserModel defaultModel].secondPower.count) {
+        
+        for (int i = 0; i < [UserModel defaultModel].secondPower.count; i++) {
+            
+            NSDictionary *dic = [UserModel defaultModel].secondPower[i];
+            if ([dic[@"type"] isEqualToString:@"合同管理"]) {
+                
+                if ([dic[@"detail"] integerValue] == 1) {
+                    
+//                    [_showArr replaceObjectAtIndex:6 withObject:@1];
+                    [_showArr replaceObjectAtIndex:7 withObject:@1];
+                }
+            }else if ([dic[@"type"] isEqualToString:@"客源管理"]){
+                
+                if ([dic[@"detail"] integerValue] == 1) {
+                    
+//                    [_showArr replaceObjectAtIndex:3 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:4 withObject:@1];
+                    [_showArr replaceObjectAtIndex:5 withObject:@1];
+                }
+            }else if ([dic[@"type"] isEqualToString:@"房源管理"]){
+                
+                if ([dic[@"detail"] integerValue] == 1) {
+                    
+//                    [_showArr replaceObjectAtIndex:0 withObject:@1];
+//                    [_showArr replaceObjectAtIndex:1 withObject:@1];
+                    [_showArr replaceObjectAtIndex:2 withObject:@1];
+                }
+            }
+        }
+    }else{
+        
+        if ([UserModel defaultModel].secondType.count) {
+            
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
+            for (int i = 0; i < [UserModel defaultModel].secondType.count; i++) {
+                
+                [tempDic setValue:[UserModel defaultModel].secondType[i] forKey:[NSString stringWithFormat:@"%@",[UserModel defaultModel].secondType[i]]];
+            }
+            
+            if ([tempDic objectForKey:@"1"]) {
+                
+//                [_showArr replaceObjectAtIndex:0 withObject:@1];
+//                [_showArr replaceObjectAtIndex:1 withObject:@1];
+                [_showArr replaceObjectAtIndex:2 withObject:@1];
+            }else if ([tempDic objectForKey:@"2"]){
+                
+//                [_showArr replaceObjectAtIndex:3 withObject:@1];
+//                [_showArr replaceObjectAtIndex:4 withObject:@1];
+                [_showArr replaceObjectAtIndex:5 withObject:@1];
+            }else if ([tempDic objectForKey:@"4"]){
+                
+//                [_showArr replaceObjectAtIndex:6 withObject:@1];
+                [_showArr replaceObjectAtIndex:7 withObject:@1];
+//                [_showArr replaceObjectAtIndex:2 withObject:@1];
+            }else{
+                
+                
+            }
+        }
+    }
+    [self.MainTableView reloadData];
+    
+    _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
+    _rentShowArr = [@[] mutableCopy];
+    for (int i = 0; i < _rentArr.count; i++) {
+        
+        if (i == 0) {
+            
+            [_rentShowArr addObject:@0];
+        }else{
+        
+            [_rentShowArr addObject:@1];
+        }
+    }
+    
+    
+    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"kehutuijian",@"takelook",@"daikanweihu",@"contract",@"signing"];
+}
+
 -(void)postWithidentify:(NSString *)identify
 {
 //    switch ([identify integerValue]) {
@@ -110,14 +210,14 @@
                                       //3勘察维护
                                       [NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"house_maintain"][@"total"]],
                                       //4客源推荐
-                                    [NSString stringWithFormat:@"推荐有效%@，推荐无效%@，累计%@",resposeObject[@"data"][@"house_take_recommend"][@"value"],resposeObject[@"data"][@"house_take_recommend"][@"disabled"],resposeObject[@"data"][@"house_take_recommend"][@"total"]],
+                                      [NSString stringWithFormat:@"推荐有效%@，推荐无效%@，累计%@",resposeObject[@"data"][@"house_take_recommend"][@"value"],resposeObject[@"data"][@"house_take_recommend"][@"disabled"],resposeObject[@"data"][@"house_take_recommend"][@"total"]],
                                       //5带看
-                                    [NSString stringWithFormat:@"带看有效%@，带看无效%@，累计%@",resposeObject[@"data"][@"house_take"][@"value"],resposeObject[@"data"][@"house_take"][@"disabled"],resposeObject[@"data"][@"house_take"][@"total"]],
+                                      [NSString stringWithFormat:@"带看有效%@，带看无效%@，累计%@",resposeObject[@"data"][@"house_take"][@"value"],resposeObject[@"data"][@"house_take"][@"disabled"],resposeObject[@"data"][@"house_take"][@"total"]],
                                       //6带看维护
                                       [NSString stringWithFormat:@"累计%@条",resposeObject[@"data"][@"house_take_maintain"][@"total"]],
                               
-                                    //代购
-                                    [NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],
+                                      //代购
+                                      [NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"house_sub"][@"today"],resposeObject[@"data"][@"house_sub"][@"total"],resposeObject[@"data"][@"house_sub"][@"change"]],
                                       //8合同
                                       [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
 
@@ -220,109 +320,6 @@
 
 }
 
--(void)initDateSouce
-{
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReloadType) name:@"reloadType" object:nil];
-    if (![UserModel defaultModel].workArr.count) {
-
-        [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房",@"租房"]];
-        [UserModelArchiver archive];
-    }else{
-        
-//        if ([UserModel defaultModel].secondPower.count) {
-//
-//            [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房"]];//,@"租房"]];
-//            [UserModelArchiver archive];
-//        }else{
-//
-//            if ([UserModel defaultModel].secondType.count) {
-//
-//                [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房",@"二手房"]];//,@"租房"]];
-//                [UserModelArchiver archive];
-//            }else{
-//
-//                [UserModel defaultModel].workArr = [NSMutableArray arrayWithArray:@[@"新房"]];
-//                [UserModelArchiver archive];
-//            }
-//
-//        }
-    }
-    _secondArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"客源推荐",@"客源带看",@"带看维护",@"代购合同",@"合同签订"];
-    _showArr = [@[] mutableCopy];
-    for (int i = 0; i < _secondArr.count; i++) {
-        
-        [_showArr addObject:@0];
-    }
-    
-    if ([UserModel defaultModel].secondPower.count) {
-        
-    
-        for (int i = 0; i < [UserModel defaultModel].secondPower.count; i++) {
-            
-            NSDictionary *dic = [UserModel defaultModel].secondPower[i];
-            if ([dic[@"type"] isEqualToString:@"合同管理"]) {
-                
-                if ([dic[@"detail"] integerValue] == 1) {
-                    
-//                    [_showArr replaceObjectAtIndex:6 withObject:@1];
-                    [_showArr replaceObjectAtIndex:7 withObject:@1];
-                }
-            }else if ([dic[@"type"] isEqualToString:@"客源管理"]){
-                
-                if ([dic[@"detail"] integerValue] == 1) {
-                    
-//                    [_showArr replaceObjectAtIndex:3 withObject:@1];
-//                    [_showArr replaceObjectAtIndex:4 withObject:@1];
-                    [_showArr replaceObjectAtIndex:5 withObject:@1];
-                }
-            }else if ([dic[@"type"] isEqualToString:@"房源管理"]){
-                
-                if ([dic[@"detail"] integerValue] == 1) {
-                    
-//                    [_showArr replaceObjectAtIndex:0 withObject:@1];
-//                    [_showArr replaceObjectAtIndex:1 withObject:@1];
-                    [_showArr replaceObjectAtIndex:2 withObject:@1];
-                }
-            }
-        }
-    }else{
-        
-        if ([UserModel defaultModel].secondType.count) {
-            
-            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] init];
-            for (int i = 0; i < [UserModel defaultModel].secondType.count; i++) {
-                
-                [tempDic setValue:[UserModel defaultModel].secondType[i] forKey:[NSString stringWithFormat:@"%@",[UserModel defaultModel].secondType[i]]];
-            }
-            
-            if ([tempDic objectForKey:@"1"]) {
-                
-//                [_showArr replaceObjectAtIndex:0 withObject:@1];
-//                [_showArr replaceObjectAtIndex:1 withObject:@1];
-                [_showArr replaceObjectAtIndex:2 withObject:@1];
-            }else if ([tempDic objectForKey:@"2"]){
-                
-//                [_showArr replaceObjectAtIndex:3 withObject:@1];
-//                [_showArr replaceObjectAtIndex:4 withObject:@1];
-                [_showArr replaceObjectAtIndex:5 withObject:@1];
-            }else if ([tempDic objectForKey:@"4"]){
-                
-//                [_showArr replaceObjectAtIndex:6 withObject:@1];
-                [_showArr replaceObjectAtIndex:7 withObject:@1];
-//                [_showArr replaceObjectAtIndex:2 withObject:@1];
-            }else{
-                
-                
-            }
-        }
-    }
-    [self.MainTableView reloadData];
-    
-    _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
-    _secondImgArr = @[@"reported",@"investigate",@"maintenance",@"kehutuijian",@"takelook",@"daikanweihu",@"contract",@"signing"];
-}
-
 -(void)initUI
 {
     
@@ -413,7 +410,13 @@
         }
     }else{
         
-        return 84 *SIZE;
+        if ([_rentShowArr[indexPath.row] integerValue] == 1) {
+            
+            return 84 *SIZE;
+        }else{
+            
+            return 0;
+        }
     }
 }
 
@@ -490,6 +493,13 @@
 
         [cell setTitle:_rentArr[indexPath.row] content:_rentCountData[indexPath.row] img:_secondImgArr[indexPath.row]];
 
+        if ([_rentShowArr[indexPath.row] integerValue] == 1) {
+            
+            cell.hidden = NO;
+        }else{
+            
+            cell.hidden = YES;
+        }
         return cell;
     }
 }

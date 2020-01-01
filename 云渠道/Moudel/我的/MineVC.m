@@ -57,7 +57,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self InitDataSouce];
     [self InitUI];
-//    [self RequestMethod];
+    [self RequestMethod];
     [self LoadRequest];
 }
 

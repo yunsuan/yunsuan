@@ -832,7 +832,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         if ([self.ways isEqualToString:@"quickAdd"]) {
             
@@ -849,10 +849,10 @@
             nextVC.projectName = model.project_name;
             [self.navigationController pushViewController:nextVC animated:YES];
         }
-//    }else{
-//        
-//        [self alertControllerWithNsstring:@"温馨提示" And:@"到访确认人不可推荐客户"];
-//    }
+    }else{
+        
+        [self alertControllerWithNsstring:@"温馨提示" And:@"到访确认人不可推荐客户"];
+    }
 }
 
 

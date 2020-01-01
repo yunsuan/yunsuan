@@ -48,7 +48,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [BaseRequest GET:BrokerDisabled_URL parameters:dic success:^(id resposeObject) {
             
@@ -75,35 +75,35 @@
             [_MainTableView.mj_header endRefreshing];
             [self showContent:@"网络错误"];
         }];
-//    }else{
-//
-//        [BaseRequest GET:ButterDisabled_URL parameters:dic success:^(id resposeObject) {
-//
-//            [_MainTableView.mj_header endRefreshing];
-//
-//            if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//                [_dataArr removeAllObjects];
-//                [_MainTableView reloadData];
-//                if ([resposeObject[@"data"][@"data"] count]) {
-//
-//                    [_MainTableView.mj_footer endRefreshing];
-//                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-//                }else{
-//
-//                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-//                }
-//            }
-//            else{
-//
-//                [self showContent:resposeObject[@"msg"]];
-//            }
-//        } failure:^(NSError *error) {
-//
-//            [_MainTableView.mj_header endRefreshing];
-//            [self showContent:@"网络错误"];
-//        }];
-//    }
+    }else{
+
+        [BaseRequest GET:ButterDisabled_URL parameters:dic success:^(id resposeObject) {
+
+            [_MainTableView.mj_header endRefreshing];
+
+            if ([resposeObject[@"code"] integerValue] == 200) {
+
+                [_dataArr removeAllObjects];
+                [_MainTableView reloadData];
+                if ([resposeObject[@"data"][@"data"] count]) {
+
+                    [_MainTableView.mj_footer endRefreshing];
+                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+                }else{
+
+                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+                }
+            }
+            else{
+
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+
+            [_MainTableView.mj_header endRefreshing];
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (void)RequestAddMethod{
@@ -115,7 +115,7 @@
         
         [dic setObject:self.search forKey:@"search"];
     }
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         [BaseRequest GET:BrokerDisabled_URL parameters:dic success:^(id resposeObject) {
             
@@ -143,35 +143,35 @@
             [_MainTableView.mj_footer endRefreshing];
             [self showContent:@"网络错误"];
         }];
-//    }else{
-//
-//        [BaseRequest GET:ButterDisabled_URL parameters:dic success:^(id resposeObject) {
-//
-//            if ([resposeObject[@"code"] integerValue] == 200) {
-//
-//                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-//                if ([resposeObject[@"data"][@"data"] count]) {
-//
-//                    [_MainTableView.mj_footer endRefreshing];
-//                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
-//                }else{
-//
-//                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
-//                }
-//            }
-//            else{
-//
-//                _page -= 1;
-//                [_MainTableView.mj_footer endRefreshing];
-//                [self showContent:resposeObject[@"msg"]];
-//            }
-//        } failure:^(NSError *error) {
-//
-//            _page -= 1;
-//            [_MainTableView.mj_footer endRefreshing];
-//            [self showContent:@"网络错误"];
-//        }];
-//    }
+    }else{
+
+        [BaseRequest GET:ButterDisabled_URL parameters:dic success:^(id resposeObject) {
+
+            if ([resposeObject[@"code"] integerValue] == 200) {
+
+                [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+                if ([resposeObject[@"data"][@"data"] count]) {
+
+                    [_MainTableView.mj_footer endRefreshing];
+                    [self SetUnComfirmArr:resposeObject[@"data"][@"data"]];
+                }else{
+
+                    _MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+                }
+            }
+            else{
+
+                _page -= 1;
+                [_MainTableView.mj_footer endRefreshing];
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+
+            _page -= 1;
+            [_MainTableView.mj_footer endRefreshing];
+            [self showContent:@"网络错误"];
+        }];
+    }
 }
 
 - (void)SetUnComfirmArr:(NSArray *)data{
@@ -250,11 +250,11 @@
 -(void)initUI
 {
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
+    if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
         self.rightBtn.hidden = NO;
-//    }else{
-//        self.rightBtn.hidden = YES;
-//    }
+    }else{
+        self.rightBtn.hidden = YES;
+    }
     
     [self.view addSubview:self.MainTableView];
 }

@@ -67,12 +67,12 @@
                                                          
                                                          _model = [[BrokerModel alloc]initWithdata:resposeObject[@"data"]];
                                                          [_brokerageTable reloadData];
-//                                                         if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
-//
-//                                                             if (_model.brokerinfo.count== 0) {
-//                                                                 [self.view addSubview:self.DefaultView];
-//                                                             }
-//                                                         }else{
+                                                         if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
+
+                                                             if (_model.brokerinfo.count== 0) {
+                                                                 [self.view addSubview:self.DefaultView];
+                                                             }
+                                                         }else{
                                                              
                                                          
                                                          if ([_brokerage isEqualToString:@"no"]) {
@@ -86,7 +86,7 @@
                                                                  [self.view addSubview:self.DefaultView];
                                                              }
                                                          }
-//                                                         }
+                                                         }
                                                      }
                                                  } failure:^(NSError *error) {
                                                      
@@ -99,10 +99,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
+    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
         
-//        return _model.brokerinfo.count;
-//    }else{
+        return _model.brokerinfo.count;
+    }else{
         
         if ([_brokerage isEqualToString:@"no"]) {
             
@@ -112,10 +112,7 @@
             
             return _model.dataarr.count;
         }
-//    }
-    
-
-    
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -134,41 +131,41 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
-//
-//        RoomBrokerageTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RoomBrokerageTableHeader"];
-//        if (!header) {
-//
-//            header = [[RoomBrokerageTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 51 *SIZE)];
-//        }
-//
-//        if ([_model.brokerinfo[section][@"end_time"] isEqual:@"2037-12-31 23:59:59"]) {
-//            header.titleL.text = [NSString stringWithFormat:@"%@起",_model.companyarr[section][@"begin_time"]];
-//        }
-//        else{
-//            header.titleL.text = [NSString stringWithFormat:@"%@至%@",_model.companyarr[section][@"begin_time"],_model.companyarr[section][@"end_time"]];//@"2017-07-11至2017-08-10";
-//        }
-//        header.dropBtn.tag = section;
-//        if ([_selectArr[section] integerValue]) {
-//
-//            [header.dropBtn setImage:[UIImage imageNamed:@"uparrow"] forState:UIControlStateNormal];
-//        }else{
-//
-//            [header.dropBtn setImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
-//        }
-//        header.dropBtnBlock = ^(NSInteger index) {
-//
-//            if ([_selectArr[index] integerValue]) {
-//
-//                [_selectArr replaceObjectAtIndex:index withObject:@0];
-//            }else{
-//
-//                [_selectArr replaceObjectAtIndex:index withObject:@1];
-//            }
-//            [tableView reloadData];
-//        };
-//        return header;
-//    }else{
+    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
+
+        RoomBrokerageTableHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"RoomBrokerageTableHeader"];
+        if (!header) {
+
+            header = [[RoomBrokerageTableHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 51 *SIZE)];
+        }
+
+        if ([_model.brokerinfo[section][@"end_time"] isEqual:@"2037-12-31 23:59:59"]) {
+            header.titleL.text = [NSString stringWithFormat:@"%@起",_model.companyarr[section][@"begin_time"]];
+        }
+        else{
+            header.titleL.text = [NSString stringWithFormat:@"%@至%@",_model.companyarr[section][@"begin_time"],_model.companyarr[section][@"end_time"]];//@"2017-07-11至2017-08-10";
+        }
+        header.dropBtn.tag = section;
+        if ([_selectArr[section] integerValue]) {
+
+            [header.dropBtn setImage:[UIImage imageNamed:@"uparrow"] forState:UIControlStateNormal];
+        }else{
+
+            [header.dropBtn setImage:[UIImage imageNamed:@"downarrow"] forState:UIControlStateNormal];
+        }
+        header.dropBtnBlock = ^(NSInteger index) {
+
+            if ([_selectArr[index] integerValue]) {
+
+                [_selectArr replaceObjectAtIndex:index withObject:@0];
+            }else{
+
+                [_selectArr replaceObjectAtIndex:index withObject:@1];
+            }
+            [tableView reloadData];
+        };
+        return header;
+    }else{
         
     
     if ([_brokerage isEqualToString:@"no"])
@@ -242,22 +239,22 @@
         
         return header;
     }
-//    }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
-//
-//        C_brokerageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"C_brokerageCell"];
-//        if (!cell) {
-//
-//            cell = [[C_brokerageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"C_brokerageCell"];
-//        }
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.ruleL.text = _model.brokerinfo[indexPath.row][@"describe"];
-//        return cell;
-//    }else{
+    if ([[UserModel defaultModel].agent_identity integerValue] ==2) {
+
+        C_brokerageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"C_brokerageCell"];
+        if (!cell) {
+
+            cell = [[C_brokerageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"C_brokerageCell"];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.ruleL.text = _model.brokerinfo[indexPath.row][@"describe"];
+        return cell;
+    }else{
     
     if ([_brokerage isEqualToString:@"no"])
     {
@@ -319,7 +316,7 @@
             return cell;
         }
     }
-//    }
+    }
 }
 
 - (void)initUI{
