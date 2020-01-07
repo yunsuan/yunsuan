@@ -120,6 +120,7 @@
     }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     if (_city.length) {
         
         [dic setObject:_city forKey:@"city"];

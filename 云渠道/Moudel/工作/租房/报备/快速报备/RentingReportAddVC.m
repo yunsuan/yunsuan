@@ -146,6 +146,7 @@
         
         [dic setObject:[NSString stringWithFormat:@"%@",_houseType] forKey:@"house_type"];
     }
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
     [dic setObject:_asc forKey:@"sort_type"];
     [BaseRequest GET:RentProjectList_URL parameters:dic success:^(id resposeObject) {
         

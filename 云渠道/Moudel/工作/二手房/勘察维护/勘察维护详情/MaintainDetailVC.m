@@ -346,7 +346,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
-    return UITableViewAutomaticDimension;
+    if (section == 0) {
+        
+        return UITableViewAutomaticDimension;
+    }else{
+        
+        return 40 *SIZE;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -399,12 +405,15 @@
         header.maintainTagHeaderBlock = ^(NSInteger index) {
           
             _item = index;
-            [self.mainTable layoutIfNeeded];
-            [self.mainTable reloadData];
-
-            [self.mainTable layoutIfNeeded]; //加上这段代码,
-//            self.mainTable settop
-//            [self.mainTable setContentOffset:CGPointMake(0, 0)];
+//            [tableView layoutIfNeeded];
+            [tableView reloadData];
+//            [header reloadInputViews];
+            [tableView layoutIfNeeded]; //加上这段代码,
+//            [tableView reloadInputViews];
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//                tableView.contentOffset = CGPointZero;
+//            });
         };
         
         header.maintainDetailHeaderBlock = ^{
@@ -1153,12 +1162,16 @@
     _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
     _mainTable.rowHeight = UITableViewAutomaticDimension;
     _mainTable.estimatedRowHeight = 260 *SIZE;
-    _mainTable.estimatedSectionHeaderHeight = 476 *SIZE;
+    _mainTable.estimatedSectionHeaderHeight = 40 *SIZE;
+    _mainTable.sectionHeaderHeight = UITableViewAutomaticDimension;
     _mainTable.backgroundColor = self.view.backgroundColor;
     _mainTable.delegate = self;
     _mainTable.dataSource = self;
     _mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    if (@available(iOS 11.0, *)) {
+        
+        _mainTable.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     [self.view addSubview:_mainTable];
 }
 

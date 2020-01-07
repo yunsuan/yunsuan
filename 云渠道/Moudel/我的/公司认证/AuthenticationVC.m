@@ -166,17 +166,17 @@
         }
     }
     
-    if (!_departmentId.length) {
-
-        [self showContent:@"请输入所属部门"];
-        return;
-    }
-
-    if (!_positionId.length) {
-
-        [self showContent:@"请输入职位"];
-        return;
-    }
+//    if (!_departmentId.length) {
+//
+//        [self showContent:@"请输入所属部门"];
+//        return;
+//    }
+//
+//    if (!_positionId.length) {
+//
+//        [self showContent:@"请输入职位"];
+//        return;
+//    }
     
     //    if (!_timeL.text) {
     //
@@ -197,10 +197,19 @@
         
         [dic setObject:_projectId forKey:@"project_id"];
     }
-    [dic setObject:_department forKey:@"department"];
-    [dic setObject:_departmentId forKey:@"department_id"];
-    [dic setObject:_position forKey:@"position"];
-    [dic setObject:_positionId forKey:@"post_id"];
+    
+    if (_departmentId.length) {
+        
+        [dic setObject:_department forKey:@"department"];
+        [dic setObject:_departmentId forKey:@"department_id"];
+    }
+    if (_positionId.length) {
+        
+        [dic setObject:_position forKey:@"position"];
+        [dic setObject:_positionId forKey:@"post_id"];
+    }
+    
+    
     if (_timeL.text.length == 0) {
         
 //        [dic setObject:@"" forKey:@"entry_time"];
