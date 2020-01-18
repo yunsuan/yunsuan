@@ -836,6 +836,7 @@
     NSString*currentDateStr = [dateFormatter stringFromDate:date];
     return currentDateStr;
 }
+
 -(NSArray *)getDetailConfigArrByConfigState:(ConfigState)configState
 {
      NSDictionary *configdic = [UserModelArchiver unarchive].Configdic;

@@ -150,7 +150,7 @@
             if ([tempDic objectForKey:@"1"]) {
                 
 //                [_showArr replaceObjectAtIndex:0 withObject:@1];
-//                [_showArr replaceObjectAtIndex:1 withObject:@1];
+                [_showArr replaceObjectAtIndex:1 withObject:@1];
                 [_showArr replaceObjectAtIndex:2 withObject:@1];
             }else if ([tempDic objectForKey:@"2"]){
                 
@@ -168,6 +168,10 @@
             }
         }
     }
+//    [_showArr replaceObjectAtIndex:0 withObject:@1];
+//    [_showArr replaceObjectAtIndex:1 withObject:@1];
+//    [_showArr replaceObjectAtIndex:3 withObject:@1];
+//    [_showArr replaceObjectAtIndex:4 withObject:@1];
     [self.MainTableView reloadData];
     
     _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];

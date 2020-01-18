@@ -621,6 +621,17 @@
                 nextVC.status = weakSelf.status;
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 
+            }else if ([weakSelf.status isEqualToString:@"zhiyejia"]){
+                
+                ReleaseDirectVC *nextVC = [[ReleaseDirectVC alloc] init];
+                nextVC.dataDic = weakSelf.fjxx;
+                nextVC.projectID = weakSelf.project_id;
+                nextVC.buildId = weakSelf.build_id;
+                nextVC.unitId = weakSelf.unit_id;
+                nextVC.comName = weakSelf.comName;
+                nextVC.status = weakSelf.status;
+                nextVC.homeDic = weakSelf.homeDic;
+                [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
                 if ([weakSelf.status isEqualToString:@"rent"]) {

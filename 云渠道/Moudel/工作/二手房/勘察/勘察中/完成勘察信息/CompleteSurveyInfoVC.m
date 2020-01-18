@@ -231,7 +231,10 @@
                               };
         tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     }
-    
+    if ([self.status isEqualToString:@"zhiyejia"]) {
+        
+        [tempDic setValue:self.homeDic[@"record_id"] forKey:@"record_id"];
+    }
     NSString *str = self.dataDic[@"property_type"];
     if ([self.status isEqualToString:@"direct"]) {
         
@@ -432,6 +435,9 @@
             
             _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
         }
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+     
+        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
     }else{
         
         _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
@@ -444,6 +450,9 @@
     if ([self.dataDic[@"is_other"] integerValue] == 1) {
         
         _sourceL.text = @"来源：自行勘察";
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+        
+        _sourceL.text = @"来源：置业家";
     }else{
         
         if ([self.status isEqualToString:@"direct"]) {
@@ -668,8 +677,42 @@
         _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
         _typeBtn.content.text = self.dataDic[@"WYMC"];
         _areaTF.textfield.text = self.dataDic[@"TNMJ"];
-        _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
-        _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
+        if (self.dataDic[@"JCND"]) {
+            
+            _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
+        }else{
+            
+            _buildYearTF.textfield.text = @"";
+        }
+        if (self.dataDic[@"CQNX"]) {
+            
+            _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
+        }else{
+            
+            _proLimitTF.textfield.text = @"";
+        }
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+        
+        _addressBtn.content.text = self.dataDic[@"city_name"];
+        _addressBtn1.content.text = self.dataDic[@"district_name"];
+        _addressTF.textfield.text = self.dataDic[@"absolute_address"];
+        _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
+        _typeBtn.content.text = self.dataDic[@"WYMC"];
+        _areaTF.textfield.text = self.dataDic[@"TNMJ"];
+        if (self.dataDic[@"JCND"]) {
+            
+            _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
+        }else{
+            
+            _buildYearTF.textfield.text = @"";
+        }
+        if (self.dataDic[@"CQNX"]) {
+            
+            _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
+        }else{
+            
+            _proLimitTF.textfield.text = @"";
+        }
     }
     
     [self MasonryUI];

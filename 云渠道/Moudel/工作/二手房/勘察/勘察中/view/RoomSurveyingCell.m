@@ -83,25 +83,39 @@
         _codeL.text = @"房源编号：";
     }
     
-    if ([dataDic[@"is_other"] integerValue] == 1) {
+    if ([dataDic[@"is_from_home"] integerValue] == 1) {
         
-        _statusL.text = @"自己";
+        _statusL.text = @"置业家";
         _statusL.backgroundColor = COLOR(255, 237, 211, 1);
         _statusL.textColor = COLOR(255, 188, 87, 1);
     }else{
         
-        _statusL.text = @"他人";
-        _statusL.backgroundColor = COLOR(228, 240, 255, 1);
-        _statusL.textColor = YJBlueBtnColor;
+        if ([dataDic[@"is_other"] integerValue] == 1) {
+            
+            _statusL.text = @"自己";
+            _statusL.backgroundColor = COLOR(255, 237, 211, 1);
+            _statusL.textColor = COLOR(255, 188, 87, 1);
+        }else{
+            
+            _statusL.text = @"他人";
+            _statusL.backgroundColor = COLOR(228, 240, 255, 1);
+            _statusL.textColor = YJBlueBtnColor;
+        }
     }
     
     
-    if (dataDic[@"timeLimit"]) {
-
-        _countDownL.text = [NSString stringWithFormat:@"勘察失效倒计时：%@",[_formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[dataDic[@"timeLimit"] integerValue]]]];
+    if ([dataDic[@"is_from_home"] integerValue] == 1) {
+    
+        _countDownL.text = @"";
     }else{
         
-        _countDownL.text = [NSString stringWithFormat:@"勘察失效倒计时："];
+        if (dataDic[@"timeLimit"]) {
+
+            _countDownL.text = [NSString stringWithFormat:@"勘察失效倒计时：%@",[_formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[dataDic[@"timeLimit"] integerValue]]]];
+        }else{
+            
+            _countDownL.text = [NSString stringWithFormat:@"勘察失效倒计时："];
+        }
     }
     
     

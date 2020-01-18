@@ -153,6 +153,24 @@
             }
         };
         [self.navigationController pushViewController:nextVC animated:YES];
+    }else if ([self.status isEqualToString:@"zhiyejia"]) {
+        
+        CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+        nextVC.status = @"zhiyejia";
+        nextVC.dataDic = dic;
+        nextVC.projectID = self.projectID;
+        nextVC.buildId = self.buildId;
+        nextVC.unitId = self.unitId;
+        nextVC.comName = self.comName;
+        nextVC.homeDic = self.homeDic;
+        nextVC.completeSurveyInfoVCBlock = ^{
+            
+            if (self.releaseDirectVCBlock) {
+                
+                self.releaseDirectVCBlock();
+            }
+        };
+        [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
         CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
@@ -200,6 +218,10 @@
                 _contactL = label;
                 [_whiteView addSubview:_contactL];
                 _contactTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 117 *SIZE, 33 *SIZE)];
+                if ([self.status isEqualToString:@"zhiyejia"]) {
+                    
+                    _contactTF.textfield.text = self.homeDic[@"name"];
+                }
                 [_whiteView addSubview:_contactTF];
                 break;
             }
@@ -209,6 +231,11 @@
                 [_whiteView addSubview:_sexL];
                 _sexBtn = [[DropDownBtn alloc] initWithFrame:CGRectMake(0, 0, 87 *SIZE, 33 *SIZE)];
                 [_sexBtn addTarget:self action:@selector(ActionSexBtn:) forControlEvents:UIControlEventTouchUpInside];
+                if ([self.status isEqualToString:@"zhiyejia"]) {
+                    
+                    _sexBtn.content.text = [self.homeDic[@"sex"] integerValue] == 1 ?@"男":@"女";
+                    _gender = [NSString stringWithFormat:@"%@",self.homeDic[@"sex"]];
+                }
                 [_whiteView addSubview:_sexBtn];
                 break;
             }
@@ -218,6 +245,10 @@
                 [_whiteView addSubview:_phoneL];
                 _phoneTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
                 _phoneTF.textfield.keyboardType = UIKeyboardTypePhonePad;
+                if ([self.status isEqualToString:@"zhiyejia"]) {
+                    
+                    _phoneTF.textfield.text = [NSString stringWithFormat:@"%@",self.homeDic[@"tel"]];
+                }
                 [_whiteView addSubview:_phoneTF];
                 break;
             }

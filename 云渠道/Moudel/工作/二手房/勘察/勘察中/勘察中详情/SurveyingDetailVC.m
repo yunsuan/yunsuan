@@ -12,6 +12,7 @@
 #import "ModifyTimeVC.h"
 #import "ModifyRecordVC.h"
 
+#import "RoomReportAddVC.h"
 //#import "CountDownCell.h"
 #import "CountDownCell2.h"
 #import "SingleContentCell.h"
@@ -49,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _titleArr = @[@"",@"抢单信息",@"报备信息"];
+    _titleArr = @[@"",@"接单信息",@"报备信息"];
     _contentArr = [@[] mutableCopy];
     _dataDic = [@{} mutableCopy];
     [self initUI];
@@ -89,8 +90,14 @@
 - (void)SetData:(NSDictionary *)data{
     
     _dataDic = [NSMutableDictionary dictionaryWithDictionary:data];
-    _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"预约勘察时间：%@",[data[@"reserve_time"] substringWithRange:NSMakeRange(0, 10)]],data[@"timeLimit"]],@[[NSString stringWithFormat:@"抢单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]]];
-
+    
+    if ([_dataDic[@"is_from_home"] integerValue] == 1) {
+        
+        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"预约勘察时间：%@",[data[@"reserve_time"] substringWithRange:NSMakeRange(0, 10)]]],@[[NSString stringWithFormat:@"接单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]]];
+    }else{
+        
+        _contentArr = [NSMutableArray arrayWithArray:@[@[[NSString stringWithFormat:@"预约勘察时间：%@",[data[@"reserve_time"] substringWithRange:NSMakeRange(0, 10)]],data[@"timeLimit"]],@[[NSString stringWithFormat:@"接单时间：%@",data[@"survey_time"]],[NSString stringWithFormat:@"经纪人：%@",data[@"agent_name"]],[NSString stringWithFormat:@"联系电话：%@",data[@"agent_tel"]]],@[[NSString stringWithFormat:@"%@",data[@"house"]],[NSString stringWithFormat:@"房源编号：%@",data[@"house_code"]],[NSString stringWithFormat:@"归属门店：%@",data[@"store_name"]],[NSString stringWithFormat:@"联系人：%@",data[@"name"]],[NSString stringWithFormat:@"性别：%@",[data[@"sex"] integerValue] == 2? @"女":@"男"],[NSString stringWithFormat:@"证件类型：%@",data[@"card_type"]],[NSString stringWithFormat:@"证件编号：%@",data[@"card_id"]],[NSString stringWithFormat:@"联系电话：%@",data[@"tel"]],[NSString stringWithFormat:@"与业主关系：%@",data[@"report_type"]],[NSString stringWithFormat:@"报备时间：%@",data[@"record_time"]],[NSString stringWithFormat:@"备注：%@",data[@"comment"]]]]];
+    }
     [_detailTable reloadData];
 }
 
@@ -141,14 +148,27 @@
                 
                 if ([resposeObject[@"data"] integerValue] == 1) {
                     
-                    CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
-                    nextVC.completeSurveyInfoVCBlock = ^{
+                    if ([_dataDic[@"is_from_home"] integerValue] == 1) {
                         
-                        self.surveyingDetailVCBlock();
-                    };
-                    nextVC.surveyId = _surveyId;
-                    nextVC.dataDic = _dataDic;
-                    [self.navigationController pushViewController:nextVC animated:YES];
+                        RoomReportAddVC *nextVC = [[RoomReportAddVC alloc] init];
+                        nextVC.status = @"zhiyejia";
+                        nextVC.homeDic = _dataDic;
+                        nextVC.roomReportAddHouseBlock = ^(NSDictionary *dic) {
+                            
+                            [self RequestMethod];
+                        };
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }else{
+                        
+                        CompleteSurveyInfoVC *nextVC = [[CompleteSurveyInfoVC alloc] initWithTitle:@"完成勘察信息"];
+                        nextVC.completeSurveyInfoVCBlock = ^{
+                            
+                            self.surveyingDetailVCBlock();
+                        };
+                        nextVC.surveyId = _surveyId;
+                        nextVC.dataDic = _dataDic;
+                        [self.navigationController pushViewController:nextVC animated:YES];
+                    }
                 }else{
                     
                     [self alertControllerWithNsstring:@"温馨提示" And:@"您当前没有勘察权限，请联系门店负责人"];

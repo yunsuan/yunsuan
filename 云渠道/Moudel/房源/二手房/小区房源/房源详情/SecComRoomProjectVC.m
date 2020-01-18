@@ -43,22 +43,22 @@
     CLLocationCoordinate2D _leftBottomPoint;
     CLLocationCoordinate2D _rightBottomPoint;//地图矩形的顶点
     NSMutableDictionary *_dynamicDic;
-    NSString *_projectId;
     NSMutableDictionary *_focusDic;
-    NSString *_dynamicNum;
+    
     NSMutableArray *_imgArr;
     NSMutableArray *_albumArr;
-//    NSString *_focusId;
     NSMutableArray *_houseArr;
     NSMutableArray *_peopleArr;
-//    NSMutableDictionary *_buildDic;
+    
+    NSString *_projectId;
+    NSString *_dynamicNum;
     NSString *_phone;
-//    NSString *_phone_url;
     NSString *_name;
-    SecAllRoomDetailHeaderModel *_model;
     NSString *_city;
     NSString *_subId;
     NSString *_info_id;
+    
+    SecAllRoomDetailHeaderModel *_model;
 }
 
 @property (nonatomic, strong) UITableView *roomTable;
@@ -117,7 +117,6 @@
     _dynamicDic = [@{} mutableCopy];
     _houseArr = [@[] mutableCopy];
     _peopleArr = [@[] mutableCopy];
-//    _buildDic = [@{} mutableCopy];
     
     dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
     

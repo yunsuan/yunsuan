@@ -30,6 +30,7 @@ typedef void(^ReleaseDirectVCBlock)(void);
 
 @property (nonatomic, strong) NSString *status;
 
+@property (nonatomic, strong) NSDictionary *homeDic;
 @end
 
 NS_ASSUME_NONNULL_END

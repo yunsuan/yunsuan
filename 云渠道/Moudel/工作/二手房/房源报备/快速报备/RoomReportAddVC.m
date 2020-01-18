@@ -602,6 +602,22 @@
                 [self.navigationController popViewControllerAnimated:YES];
             };
             [self.navigationController pushViewController:nextVC animated:YES];
+        }else if ([self.status isEqualToString:@"zhiyejia"]){
+         
+            SecDistributVC *nextVC = [[SecDistributVC alloc] init];
+            nextVC.secDistributAddHouseBlock = ^(NSDictionary *dic) {
+                
+                if (self.roomReportAddHouseBlock) {
+                    
+                    self.roomReportAddHouseBlock(dic);
+                }
+            };
+            nextVC.homeDic = self.homeDic;
+            nextVC.projiect_id = model.project_id;
+            nextVC.img_name = model.img_url;
+            nextVC.status = self.status;
+            nextVC.comName = model.project_name;
+            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
             SecDistributVC *nextVC = [[SecDistributVC alloc] init];

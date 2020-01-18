@@ -53,16 +53,13 @@
     NSString *_dynamicNum;
     NSMutableArray *_imgArr;
     NSMutableArray *_albumArr;
-//    NSString *_focusId;
     NSMutableArray *_houseArr;
     NSMutableArray *_peopleArr;
-//    NSMutableDictionary *_buildDic;
     NSString *_phone;
-//    NSString *_phone_url;
     NSString *_name;
     NSInteger _state;
     NSInteger _selected;
-//    NSString *_subId;
+
 
     NSMutableArray *_reportArr;
 }
@@ -121,8 +118,7 @@
     _dynamicDic = [@{} mutableCopy];
     _model = [[RoomDetailModel alloc] init];
     _houseArr = [@[] mutableCopy];
-    _peopleArr = [@[] mutableCopy];
-//    _buildDic = [@{} mutableCopy];
+    _peopleArr = [@[] mutableCopy];;
     _reportArr = [@[] mutableCopy];
     
     dispatch_queue_t queue1 = dispatch_queue_create("com.test.gcg.group", DISPATCH_QUEUE_CONCURRENT);
@@ -377,6 +373,7 @@
     
     //    NSLog(@"%ld",btn.tag);
     if (btn.tag == 1) {
+        
         BuildingInfoVC *next_vc = [[BuildingInfoVC alloc]initWithinfoid:_info_id];
         [self.navigationController pushViewController:next_vc animated:YES];
     }

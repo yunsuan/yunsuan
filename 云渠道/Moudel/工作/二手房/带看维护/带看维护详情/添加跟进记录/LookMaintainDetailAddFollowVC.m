@@ -199,7 +199,7 @@
     self.formatter = [[NSDateFormatter alloc] init];
     [self.formatter setDateFormat:@"yyyy-MM-dd"];
     
-    _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"}];
+    _wayArr = @[@{@"id":@"1",@"param":@"沟通"},@{@"id":@"2",@"param":@"预约带看"},@{@"id":@"3",@"param":@"带看"},@{@"id":@"4",@"param":@"带看跟进"}];
     _levelArr = [UserModelArchiver unarchive].Configdic[@"54"][@"param"];
     _payArr = [UserModelArchiver unarchive].Configdic[@"13"][@"param"];
     _paySelectArr = [@[] mutableCopy];
@@ -698,9 +698,24 @@
                 }
             };
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+        }else if (_way == 2){
             
             [dic setObject:@"3" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] init];
+            nextVC.isSelect = self.isSelect;
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+                
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [dic setObject:@"4" forKey:@"follow_type"];
             LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] init];
             nextVC.isSelect = self.isSelect;
             nextVC.dataDic = dic;
@@ -987,9 +1002,23 @@
                 }
             };
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+        }else if (_way == 2){
             
             [dic setObject:@"3" forKey:@"follow_type"];
+            LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
+            nextVC.dataDic = dic;
+            nextVC.status = [NSString stringWithFormat:@"%ld",_way];
+            nextVC.lookMaintainDetailAddAppointVCBlock = ^{
+                
+                if (self.lookMaintainDetailAddFollowVCBlock) {
+                    
+                    self.lookMaintainDetailAddFollowVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+            
+            [dic setObject:@"4" forKey:@"follow_type"];
             LookMaintainDetailAddAppointVC *nextVC = [[LookMaintainDetailAddAppointVC alloc] initWithTakeId:_takeId];
             nextVC.dataDic = dic;
             nextVC.status = [NSString stringWithFormat:@"%ld",_way];

@@ -15,6 +15,9 @@ typedef void(^CompleteSurveyCollCell2Block)(NSString *str);
 @property (nonatomic, copy) CompleteSurveyCollCell2Block completeSurveyCollCell2Block;
 
 @property (nonatomic, strong) UITextView *contentTV;
+
+@property (nonatomic, strong) UILabel *placeL;
+
 @property (nonatomic, strong) UILabel *contentL;
 
 @end

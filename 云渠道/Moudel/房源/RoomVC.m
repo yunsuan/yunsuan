@@ -109,6 +109,7 @@
             } while (!self->_titlearr.count);
         }
         
+        [self reloadData];
         [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
         [self reloadData];
         if ([UserModel defaultModel].index.length) {

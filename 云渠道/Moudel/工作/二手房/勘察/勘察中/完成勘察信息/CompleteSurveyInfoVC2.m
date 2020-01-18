@@ -236,11 +236,12 @@
         if (indexPath.section == 0) {
             
             cell.contentTV.text = _str1;
+            cell.placeL.text = @"请填写该房间的核心卖点...\n1.如距离地铁近\n2.周边商圈多";
         }else{
             
             cell.contentTV.text = _str2;
+            cell.placeL.text = @"请填写该房间的装修描述...\n1.如内部结构\n2.老小区，新装修";
         }
-//        cell.titleL.text = @"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。";
         
         return cell;
     }else{

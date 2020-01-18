@@ -36,4 +36,6 @@ typedef void(^ReleaseSenceAddHouseBlock)(NSDictionary *dic);
 
 @property (nonatomic, strong) NSString *status;
 
+@property (nonatomic, strong) NSDictionary *homeDic;
+
 @end

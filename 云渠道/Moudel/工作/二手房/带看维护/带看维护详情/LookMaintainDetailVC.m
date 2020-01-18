@@ -155,7 +155,8 @@
                     @"card_type_name":_contactArr[i][@"card_type_name"],
                     @"card_id":_contactArr[i][@"card_id"],
                     @"address":_contactArr[i][@"address"],
-                    @"sex":_contactArr[i][@"sex"]
+                    @"sex":_contactArr[i][@"sex"],
+                    @"property":@"0"
                     }];
             [arr1 addObject:dic];
         }

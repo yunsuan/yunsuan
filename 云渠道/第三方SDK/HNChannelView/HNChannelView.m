@@ -51,7 +51,7 @@ static CGFloat labelHeight = 40;
     if (self) {
         _myChannelArr =  [UserModel defaultModel].tagSelectArr;
         _recommendChannelArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].tagAllArr];
-        for (int i=0; i<_myChannelArr.count; i++) {
+        for (int i = 0; i < _myChannelArr.count; i++) {
             [_recommendChannelArr removeObject:_myChannelArr[i]];
         }
         [self setUI];

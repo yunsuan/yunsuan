@@ -28,6 +28,8 @@ typedef void(^CompleteSurveyInfoVCBlock)(void);
 
 @property (nonatomic, strong) NSString *comName;;
 
+@property (nonatomic, strong) NSDictionary *homeDic;
+
 - (instancetype)initWithTitle:(NSString *)titleStr;
 
 @end

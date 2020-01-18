@@ -33,9 +33,26 @@
     }
 }
 
+- (void)textViewDidChange:(UITextView *)textView{
+    
+    if (textView.text.length) {
+        
+        _placeL.hidden = YES;
+    }else{
+        
+        _placeL.hidden = YES;
+    }
+}
+
 - (void)initUI{
     
     self.contentView.backgroundColor = [UIColor whiteColor];
+    
+    _placeL = [[UILabel alloc] init];
+    _placeL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _placeL.textColor = CLBackColor;
+    _placeL.numberOfLines = 0;
+    [_contentTV addSubview:_placeL];
     
     _contentTV = [[UITextView alloc] init];
     _contentTV.textColor = YJContentLabColor;
@@ -51,6 +68,13 @@
         make.right.equalTo(self.contentView).offset(-28 *SIZE);
         make.height.mas_equalTo(60 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-SIZE);
+    }];
+    
+    [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(_contentTV).offset(5 *SIZE);
+        make.top.equalTo(_contentTV).offset(7 *SIZE);
+        make.right.equalTo(_contentTV).offset(-28 *SIZE);
     }];
 }
 

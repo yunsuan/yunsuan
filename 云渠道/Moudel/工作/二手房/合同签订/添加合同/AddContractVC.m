@@ -147,7 +147,7 @@
     }
     
     NSMutableArray *sellpeopel =[NSMutableArray array];
-    for (int i = 1; i<_sellarr.count; i++) {
+    for (int i = 1; i < _sellarr.count; i++) {
         NSDictionary *dic = @{
                               @"name":_sellarr[i][@"name"],
                               @"tel":_sellarr[i][@"tel"],
@@ -209,7 +209,7 @@
             NSDictionary *dic = @{
                                   @"name":_buyarr[i][@"name"],
                                   @"tel":_buyarr[i][@"tel"],
-                                  @"report_type":i==1?@"1":@"2",
+                                  @"report_type": i == 0?@"1":@"2",
                                   @"card_type":_buyarr[i][@"card_type"],
                                   @"card_id":_buyarr[i][@"card_id"],
                                   @"address":_buyarr[i][@"address"],

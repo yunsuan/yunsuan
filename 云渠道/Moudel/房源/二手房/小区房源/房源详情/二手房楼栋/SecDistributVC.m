@@ -146,6 +146,18 @@
             next_vc.comName = self.comName;
             next_vc.titleinfo = [NSString stringWithFormat:@"%@详情",_lddic[@"LDMC"]];
             [self.navigationController pushViewController:next_vc animated:YES];
+        }else if ([self.status isEqualToString:@"zhiyejia"]){
+            
+            ReleaseSenceVC *next_vc = [[ReleaseSenceVC alloc]init];
+            next_vc.project_id = _projiect_id;
+            next_vc.build_id = _dylist[sender.tag-1000][@"LDID"];
+            next_vc.unit_id = @"0";
+            next_vc.LDdic = _lddic;
+            next_vc.status = self.status;
+            next_vc.comName = self.comName;
+            next_vc.titleinfo = [NSString stringWithFormat:@"%@详情",_lddic[@"LDMC"]];
+            next_vc.homeDic = self.homeDic;
+            [self.navigationController pushViewController:next_vc animated:YES];
         }else{
             
             HousedistributVC *next_vc = [[HousedistributVC alloc]init];
@@ -173,6 +185,25 @@
         next_vc.LDdic = _lddic;
         next_vc.titleinfo = [NSString stringWithFormat:@"%@%@详情",self.comName,_lddic[@"DYLIST"][sender.tag-100][@"DYMC"]];
         next_vc.comName = self.comName;
+        next_vc.releaseSenceAddHouseBlock = ^(NSDictionary *dic) {
+            
+            if (self.secDistributAddHouseBlock) {
+                
+                self.secDistributAddHouseBlock(dic);
+            }
+        };
+        [self.navigationController pushViewController:next_vc animated:YES];
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+        
+        ReleaseSenceVC *next_vc = [[ReleaseSenceVC alloc]init];
+        next_vc.project_id = _projiect_id;
+        next_vc.status = self.status;
+        next_vc.build_id = _lddic[@"LDID"];
+        next_vc.unit_id =_lddic[@"DYLIST"][sender.tag-100][@"DYID"];
+        next_vc.LDdic = _lddic;
+        next_vc.titleinfo = [NSString stringWithFormat:@"%@%@详情",self.comName,_lddic[@"DYLIST"][sender.tag-100][@"DYMC"]];
+        next_vc.comName = self.comName;
+        next_vc.homeDic = self.homeDic;
         next_vc.releaseSenceAddHouseBlock = ^(NSDictionary *dic) {
             
             if (self.secDistributAddHouseBlock) {
