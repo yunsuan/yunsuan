@@ -36,6 +36,8 @@ typedef void(^MaintainPriceHeaderBlock)(void);
 
 @property (nonatomic, strong) UILabel *codeL;
 
+@property (nonatomic, strong) UILabel *sourceL;
+
 @property (nonatomic, strong) UILabel *typeL;
 
 @property (nonatomic, strong) UIButton *editBtn;

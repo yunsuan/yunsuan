@@ -16,6 +16,8 @@
 
 @property (nonatomic, copy) NSString *house;
 
+@property (nonatomic, copy) NSString *is_from_home;
+
 @property (nonatomic, copy) NSString *sex;
 
 @property (nonatomic, copy) NSString *build_area;

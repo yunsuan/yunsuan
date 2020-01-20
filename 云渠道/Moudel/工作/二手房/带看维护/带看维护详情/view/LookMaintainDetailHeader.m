@@ -120,7 +120,14 @@
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
     
     _customHeader.titleL.text = [NSString stringWithFormat:@"客户编号：%@",dataDic[@"take_code"]];
-    _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    if (![dataDic[@"is_from_home"] isKindOfClass:[NSNull class]] && [dataDic[@"is_from_home"] integerValue] == 1) {
+        
+        _sourceL.text = [NSString stringWithFormat:@"来源：置业家"];
+    }else{
+        
+        _sourceL.text = [NSString stringWithFormat:@"来源：%@",dataDic[@"source"]];
+    }
+    
     _wayL.text = [NSString stringWithFormat:@"方式：%@",dataDic[@"get_way"]];
     _timeL.text = [NSString stringWithFormat:@"时间：%@",dataDic[@"accept_time"]];
     

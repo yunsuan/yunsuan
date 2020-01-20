@@ -98,6 +98,7 @@
     self.navBackgroundView.hidden = NO;
     [self initDateSouce];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

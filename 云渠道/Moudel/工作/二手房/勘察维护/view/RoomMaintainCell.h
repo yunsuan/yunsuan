@@ -44,7 +44,7 @@ typedef void(^RoomMaintainPhoneBlock)(NSInteger index);
 
 @property (nonatomic, strong) UILabel *registerL;
 
-//@property (nonatomic, strong) UILabel *typeL;
+@property (nonatomic, strong) UILabel *sourceL;
 
 @property (nonatomic, strong) UILabel *statusL;
 

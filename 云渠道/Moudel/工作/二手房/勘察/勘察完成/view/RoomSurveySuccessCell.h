@@ -24,6 +24,8 @@ typedef void(^RoomSurveSuccessPhoneBlock)(NSInteger index);
 
 @property (nonatomic, strong) UILabel *roomL;
 
+@property (nonatomic, strong) UILabel *sourceL;
+
 @property (nonatomic, strong) UILabel *codeL;
 
 @property (nonatomic, strong) UILabel *timeL;

@@ -132,7 +132,7 @@
                 if ([dic[@"detail"] integerValue] == 1) {
                     
 //                    [_showArr replaceObjectAtIndex:0 withObject:@1];
-//                    [_showArr replaceObjectAtIndex:1 withObject:@1];
+                    [_showArr replaceObjectAtIndex:1 withObject:@1];
                     [_showArr replaceObjectAtIndex:2 withObject:@1];
                 }
             }

@@ -84,6 +84,7 @@
     self.navBackgroundView.hidden = NO;
     [self initDateSouce];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -98,7 +99,6 @@
     _page = 1;
     _asc = @"asc";
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
-
 }
 
 - (void)SetSearch:(NSDictionary *)data{

@@ -38,6 +38,15 @@
         
         _nameL.text = @"";
     }
+    
+    if ([dataDic[@"is_from_home"] integerValue] == 1) {
+        
+        _sourceL.text = @"(置业家)";
+    }else{
+        
+        _sourceL.text = @"";
+    }
+    
     [_nameL mas_remakeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
@@ -132,6 +141,11 @@
     _codeL.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.contentView addSubview:_codeL];
     
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.textColor = YJ86Color;
+    _sourceL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_sourceL];
+    
     _timeL = [[UILabel alloc] init];
     _timeL.textColor = YJ170Color;
     _timeL.font = [UIFont systemFontOfSize:12 *SIZE];
@@ -177,12 +191,19 @@
         
         make.left.equalTo(self.contentView).offset(9 *SIZE);
         make.top.equalTo(self.contentView).offset(11 *SIZE);
-        make.width.mas_equalTo(_nameL.mj_textWith + 5 *SIZE);
+        make.width.mas_lessThanOrEqualTo(180 *SIZE);
+    }];
+    
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_nameL.mas_right).offset(0 *SIZE);
+        make.top.equalTo(self.contentView).offset(13 *SIZE);
+        make.width.mas_lessThanOrEqualTo(50 *SIZE);
     }];
     
     [_sexImg mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_nameL.mas_right).offset(9 *SIZE);
+        make.left.equalTo(_sourceL.mas_right).offset(9 *SIZE);
         make.top.equalTo(self.contentView).offset(11 *SIZE);
         make.width.mas_equalTo(14 *SIZE);
         make.height.mas_equalTo(14 *SIZE);

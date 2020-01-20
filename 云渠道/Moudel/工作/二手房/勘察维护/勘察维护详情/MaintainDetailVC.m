@@ -1032,6 +1032,7 @@
                         if (_detailDic.count) {
                             
                             [cell SetData:_tagArr];
+                            [cell SetSelfArr:_selfArr];
 //                            [cell.tagView setData:_tagArr];
                         }else{
                             

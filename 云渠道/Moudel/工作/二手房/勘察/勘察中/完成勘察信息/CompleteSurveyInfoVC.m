@@ -231,11 +231,13 @@
                               };
         tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     }
+    
+    NSString *str = self.dataDic[@"property_type"];
     if ([self.status isEqualToString:@"zhiyejia"]) {
         
         [tempDic setValue:self.homeDic[@"record_id"] forKey:@"record_id"];
+        str = self.dataDic[@"WYMC"];
     }
-    NSString *str = self.dataDic[@"property_type"];
     if ([self.status isEqualToString:@"direct"]) {
         
         str = self.dataDic[@"WYMC"];
@@ -676,7 +678,7 @@
         _addressTF.textfield.text = self.dataDic[@"absolute_address"];
         _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
         _typeBtn.content.text = self.dataDic[@"WYMC"];
-        _areaTF.textfield.text = self.dataDic[@"TNMJ"];
+        _areaTF.textfield.text = self.dataDic[@"JZMJ"];
         if (self.dataDic[@"JCND"]) {
             
             _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
@@ -698,7 +700,7 @@
         _addressTF.textfield.text = self.dataDic[@"absolute_address"];
         _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
         _typeBtn.content.text = self.dataDic[@"WYMC"];
-        _areaTF.textfield.text = self.dataDic[@"TNMJ"];
+        _areaTF.textfield.text = self.dataDic[@"JZMJ"];
         if (self.dataDic[@"JCND"]) {
             
             _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];

@@ -25,6 +25,14 @@
     _codeL.text = [NSString stringWithFormat:@"客源编号：%@",dataDic[@"take_code"]];
     _nameL.text = [NSString stringWithFormat:@"客户姓名：%@",dataDic[@"name"]];
     
+    if (![dataDic[@"is_from_home"] isKindOfClass:[NSNull class]] && [dataDic[@"is_from_home"] integerValue] == 1) {
+        
+        _sourceL.text = @"来源：置业家";
+    }else{
+        
+        _sourceL.text = @"";
+    }
+    
     if ([dataDic[@"sex"] integerValue] == 1) {
         
         _genderImg.image = [UIImage imageNamed:@"man"];
@@ -141,6 +149,12 @@
     _agentL.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_agentL];
     
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.textColor = YJ86Color;
+    _sourceL.textAlignment = NSTextAlignmentRight;
+    _sourceL.font = [UIFont systemFontOfSize:12 *SIZE];
+    [self.contentView addSubview:_sourceL];
+    
     _line = [[UIView alloc] init];
     _line.backgroundColor = YJBackColor;
     [self.contentView addSubview:_line];
@@ -223,6 +237,13 @@
     [_timeL mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.equalTo(self.contentView).offset(10 *SIZE);
+        make.top.equalTo(_progressL.mas_bottom).offset(17 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(self.contentView).offset(-10 *SIZE);
         make.top.equalTo(_progressL.mas_bottom).offset(17 *SIZE);
         make.width.mas_equalTo(150 *SIZE);
     }];

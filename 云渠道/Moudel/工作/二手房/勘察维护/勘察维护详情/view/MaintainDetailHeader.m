@@ -74,6 +74,14 @@
         _codeL.text = [NSString stringWithFormat:@"房源编号:暂无数据"];
     }
     
+    if ([dataDic[@"is_from_home"] integerValue] == 1) {
+        
+        _sourceL.text = @"来源：置业家";
+    }else{
+        
+        
+    }
+    
     if (dataDic[@"project_name"]|| dataDic[@"house"]) {
         
         _projectL.text = [NSString stringWithFormat:@"%@ %@",dataDic[@"project_name"],dataDic[@"house"]];
@@ -244,6 +252,11 @@
     _projectL.font = [UIFont systemFontOfSize:13 *SIZE];
     [_codeView addSubview:_projectL];
     
+    _sourceL = [[UILabel alloc] init];
+    _sourceL.textColor = YJ86Color;
+    _sourceL.font = [UIFont systemFontOfSize:13 *SIZE];
+    [_codeView addSubview:_sourceL];
+    
     _editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_editBtn addTarget:self action:@selector(ActionEditBtn:) forControlEvents:UIControlEventTouchUpInside];
 //    [_editBtn setImage:[UIImage imageNamed:@"edit"] forState:UIControlStateNormal];
@@ -266,6 +279,8 @@
     _roomLevelL.numberOfLines = 0;
     _roomLevelL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.contentView addSubview:_roomLevelL];
+    
+    
     
     for (int i = 0; i < 13 ; i++) {
         
@@ -420,7 +435,7 @@
         make.left.equalTo(self.contentView).offset(0 *SIZE);
         make.top.equalTo(self.contentView).offset(0 *SIZE);
         make.width.mas_equalTo(SCREEN_Width);
-        make.height.mas_equalTo(87 *SIZE);
+//        make.height.mas_equalTo(87 *SIZE);
     }];
     
     [_blueView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -443,6 +458,14 @@
         make.left.equalTo(_codeView).offset(28 *SIZE);
         make.top.equalTo(_codeL.mas_bottom).offset(19 *SIZE);
         make.right.equalTo(_codeView).offset(-50 *SIZE);
+    }];
+    
+    [_sourceL mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_codeView).offset(28 *SIZE);
+        make.top.equalTo(_projectL.mas_bottom).offset(19 *SIZE);
+        make.right.equalTo(_codeView).offset(-50 *SIZE);
+        make.bottom.equalTo(_codeView.mas_bottom).offset(-10 *SIZE);
     }];
     
     [_typeL mas_makeConstraints:^(MASConstraintMaker *make) {

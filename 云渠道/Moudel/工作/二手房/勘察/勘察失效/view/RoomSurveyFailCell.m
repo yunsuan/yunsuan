@@ -67,16 +67,24 @@
         _codeL.text = @"房源编号：";
     }
     
-    if ([dataDic[@"is_other"] integerValue] == 1) {
+    if ([dataDic[@"is_from_home"] integerValue] == 1) {
         
-        _statusL.text = @"自己";
+        _statusL.text = @"置业家";
         _statusL.backgroundColor = COLOR(255, 237, 211, 1);
         _statusL.textColor = COLOR(255, 188, 87, 1);
     }else{
         
-        _statusL.text = @"他人";
-        _statusL.backgroundColor = COLOR(228, 240, 255, 1);
-        _statusL.textColor = YJBlueBtnColor;
+        if ([dataDic[@"is_other"] integerValue] == 1) {
+            
+            _statusL.text = @"自己";
+            _statusL.backgroundColor = COLOR(255, 237, 211, 1);
+            _statusL.textColor = COLOR(255, 188, 87, 1);
+        }else{
+            
+            _statusL.text = @"他人";
+            _statusL.backgroundColor = COLOR(228, 240, 255, 1);
+            _statusL.textColor = YJBlueBtnColor;
+        }
     }
     
     if (dataDic[@"disabled_state"]) {

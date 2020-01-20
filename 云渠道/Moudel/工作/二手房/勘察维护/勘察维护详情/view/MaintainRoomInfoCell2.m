@@ -66,13 +66,6 @@
     }else{
         
         return _selfArr.count + _propertyArr.count;
-//        if (_propertyArr.count) {
-//
-//            return _propertyArr.count > 4 ? 4:_propertyArr.count;
-//        }else{
-//
-//            return _tagArr.count > 4 ? 4:_tagArr.count;
-//        }
     }
 }
 
