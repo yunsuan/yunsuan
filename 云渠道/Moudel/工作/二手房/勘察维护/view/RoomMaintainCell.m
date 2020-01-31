@@ -59,7 +59,7 @@
     
     _roomL.text = [NSString stringWithFormat:@"%@-%@",model.project_name,model.house];
     _codeL.text = [NSString stringWithFormat:@"房源编号%@",model.house_code];
-    _priceL.text = [NSString stringWithFormat:@"%@万/%@㎡%@",model.price,model.build_area,model.house_type_id];
+    _priceL.text = [NSString stringWithFormat:@"%@元/月",model.price];
     _typeL.text = [NSString stringWithFormat:@"类型：%@",model.property_type];
 //    _areaL.text = [NSString stringWithFormat:@"面积：%@",model.build_area];
 //    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",model.house_type_id];
