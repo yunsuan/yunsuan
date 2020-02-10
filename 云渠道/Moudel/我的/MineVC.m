@@ -198,6 +198,9 @@
     [UserInfoModel defaultModel].tel = tempDic[@"tel"];
     [UserInfoModel defaultModel].is_accept_msg = [NSString stringWithFormat:@"%@",tempDic[@"is_accept_msg"]];
     [UserInfoModel defaultModel].is_accept_grab = [NSString stringWithFormat:@"%@",tempDic[@"is_accept_grab"]];
+    [UserInfoModel defaultModel].self_desc = [NSString stringWithFormat:@"%@",tempDic[@"self_desc"]];
+    [UserInfoModel defaultModel].slef_desc = [NSString stringWithFormat:@"%@",tempDic[@"slef_desc"]];
+    [UserInfoModel defaultModel].wx_code = [NSString stringWithFormat:@"%@",tempDic[@"wx_code"]];
     [UserModelArchiver infoArchive];
     
     if ([UserInfoModel defaultModel].head_img.length>0) {

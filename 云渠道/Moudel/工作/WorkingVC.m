@@ -29,6 +29,7 @@
 #import "RentingReportVC.h"
 #import "RentingSurveyVC.h"
 #import "RentingRoomMaintainVC.h"
+#import "RentLookMaintainVC.h"
 #import "RentingRoomAgencyVC.h"
 
 
@@ -174,17 +175,17 @@
 //    [_showArr replaceObjectAtIndex:4 withObject:@1];
     [self.MainTableView reloadData];
     
-    _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"定租合同"];//,@"合同签订"];
+    _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"带看维护",@"定租合同",@"合同签订"];
     _rentShowArr = [@[] mutableCopy];
     for (int i = 0; i < _rentArr.count; i++) {
         
-        if (i == 0) {
-            
-            [_rentShowArr addObject:@0];
-        }else{
+//        if (i == 0) {
+//
+//            [_rentShowArr addObject:@0];
+//        }else{
         
             [_rentShowArr addObject:@1];
-        }
+//        }
     }
     
     
@@ -205,7 +206,19 @@
 
                     _countdata = @[[NSString stringWithFormat:@"累计推荐%@，有效%@，无效%@",resposeObject[@"data"][@"recommend"][@"total"],resposeObject[@"data"][@"recommend"][@"value"],resposeObject[@"data"][@"recommend"][@"disabled"]],[NSString stringWithFormat:@"累计报备%@，有效%@，无效%@",resposeObject[@"data"][@"preparation"][@"total"],resposeObject[@"data"][@"preparation"][@"value"],resposeObject[@"data"][@"preparation"][@"disabled"]],[NSString stringWithFormat:@"累计笔数%@，成交%@，未成交%@",resposeObject[@"data"][@"deal"][@"total"],resposeObject[@"data"][@"deal"][@"value"],resposeObject[@"data"][@"deal"][@"disabled"]]];
 
-                    _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
+                    _rentCountData = @[
+                        //1房源报备
+                        [NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],
+                        //2勘察
+                        [NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],
+                        //3勘察维护
+                        [NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],
+                        //6带看维护
+                        [NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],
+                        //代购
+                        [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]],
+                        //8合同
+                        [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
 
                     _secCountData = @[//1房源报备
                                       [NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"house_record"][@"value"],resposeObject[@"data"][@"house_record"][@"disabled"],resposeObject[@"data"][@"house_record"][@"total"]],
@@ -384,7 +397,7 @@
         return 8;
     }else{
 
-        return 4;
+        return _rentArr.count;
     }
 }
 
@@ -560,10 +573,17 @@
 
             RentingRoomMaintainVC *nextVC = [[RentingRoomMaintainVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else{
+        }else if (indexPath.row == 3){
+
+            RentLookMaintainVC *nextVC = [[RentLookMaintainVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else if (indexPath.row == 4){
 
             RentingRoomAgencyVC *nextVC = [[RentingRoomAgencyVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
+
+            
         }
     }else{
 

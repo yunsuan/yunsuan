@@ -77,6 +77,9 @@
 		0C0BED5B20AA7F6A005A16A1 /* ApplyProjectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0BED5A20AA7F6A005A16A1 /* ApplyProjectVC.m */; };
 		0C0C01182317B81B00DBA68E /* UploadImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0C01172317B81B00DBA68E /* UploadImageVC.m */; };
 		0C0C19E020ECABB10086E739 /* SecAllRoomDetailInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0C19DF20ECABB10086E739 /* SecAllRoomDetailInfoVC.m */; };
+		0C0ED99823EAA11C00FB2D9B /* RentLookMaintainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0ED99723EAA11C00FB2D9B /* RentLookMaintainVC.m */; };
+		0C0ED99C23EAA23D00FB2D9B /* RentLookMaintainDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0ED99B23EAA23D00FB2D9B /* RentLookMaintainDetailVC.m */; };
+		0C0ED9A023EC3B3100FB2D9B /* RentLookMaintainDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0ED99F23EC3B3100FB2D9B /* RentLookMaintainDetailHeader.m */; };
 		0C11BAAA2339B420000F77BD /* SGAdvertScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C11BAA82339B420000F77BD /* SGAdvertScrollView.m */; };
 		0C11BAAE233A1C81000F77BD /* CYLTabBarControllerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C11BAAD233A1C80000F77BD /* CYLTabBarControllerConfig.m */; };
 		0C15A1D62111BF3400544F2E /* RentingAllRoomDetailInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C15A1D52111BF3400544F2E /* RentingAllRoomDetailInfoVC.m */; };
@@ -979,6 +982,12 @@
 		0C0C01172317B81B00DBA68E /* UploadImageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadImageVC.m; sourceTree = "<group>"; };
 		0C0C19DE20ECABB10086E739 /* SecAllRoomDetailInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecAllRoomDetailInfoVC.h; sourceTree = "<group>"; };
 		0C0C19DF20ECABB10086E739 /* SecAllRoomDetailInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecAllRoomDetailInfoVC.m; sourceTree = "<group>"; };
+		0C0ED99623EAA11C00FB2D9B /* RentLookMaintainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentLookMaintainVC.h; sourceTree = "<group>"; };
+		0C0ED99723EAA11C00FB2D9B /* RentLookMaintainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentLookMaintainVC.m; sourceTree = "<group>"; };
+		0C0ED99A23EAA23D00FB2D9B /* RentLookMaintainDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentLookMaintainDetailVC.h; sourceTree = "<group>"; };
+		0C0ED99B23EAA23D00FB2D9B /* RentLookMaintainDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentLookMaintainDetailVC.m; sourceTree = "<group>"; };
+		0C0ED99E23EC3B3100FB2D9B /* RentLookMaintainDetailHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentLookMaintainDetailHeader.h; sourceTree = "<group>"; };
+		0C0ED99F23EC3B3100FB2D9B /* RentLookMaintainDetailHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentLookMaintainDetailHeader.m; sourceTree = "<group>"; };
 		0C11BAA82339B420000F77BD /* SGAdvertScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGAdvertScrollView.m; sourceTree = "<group>"; };
 		0C11BAA92339B420000F77BD /* SGAdvertScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGAdvertScrollView.h; sourceTree = "<group>"; };
 		0C11BAAC233A1C80000F77BD /* CYLTabBarControllerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYLTabBarControllerConfig.h; sourceTree = "<group>"; };
@@ -3017,6 +3026,35 @@
 			path = "房源信息";
 			sourceTree = "<group>";
 		};
+		0C0ED99523EAA10B00FB2D9B /* 带看维护 */ = {
+			isa = PBXGroup;
+			children = (
+				0C0ED99923EAA23000FB2D9B /* 带看维护详情 */,
+				0C0ED99623EAA11C00FB2D9B /* RentLookMaintainVC.h */,
+				0C0ED99723EAA11C00FB2D9B /* RentLookMaintainVC.m */,
+			);
+			path = "带看维护";
+			sourceTree = "<group>";
+		};
+		0C0ED99923EAA23000FB2D9B /* 带看维护详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0C0ED99D23EC3B1B00FB2D9B /* view */,
+				0C0ED99A23EAA23D00FB2D9B /* RentLookMaintainDetailVC.h */,
+				0C0ED99B23EAA23D00FB2D9B /* RentLookMaintainDetailVC.m */,
+			);
+			path = "带看维护详情";
+			sourceTree = "<group>";
+		};
+		0C0ED99D23EC3B1B00FB2D9B /* view */ = {
+			isa = PBXGroup;
+			children = (
+				0C0ED99E23EC3B3100FB2D9B /* RentLookMaintainDetailHeader.h */,
+				0C0ED99F23EC3B3100FB2D9B /* RentLookMaintainDetailHeader.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		0C11BAA62339B40F000F77BD /* 福报 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3294,6 +3332,7 @@
 		0C2883592107118C00F69C5F /* 租房 */ = {
 			isa = PBXGroup;
 			children = (
+				0C0ED99523EAA10B00FB2D9B /* 带看维护 */,
 				0C28835D210711B100F69C5F /* 报备 */,
 				0C28835C210711B100F69C5F /* 代购合同 */,
 				0C28835B210711B100F69C5F /* 勘察 */,
@@ -8494,6 +8533,7 @@
 				10DBB1F5207CCACE00CFE59D /* KyoCenterLineView.m in Sources */,
 				10255A6F21A53D000042738C /* YBImageBrowserViewLayout.m in Sources */,
 				0CED5B2921A5422600997B76 /* CustomerListVC.m in Sources */,
+				0C0ED99823EAA11C00FB2D9B /* RentLookMaintainVC.m in Sources */,
 				0C9CD43C2101B95C004894A3 /* ModifyProjectAnalysisVC.m in Sources */,
 				0C73B06721F17483005F71F1 /* RecommendValidVC.m in Sources */,
 				0C3AD55F2069DABC0059CE02 /* RoomDetailTableCell1.m in Sources */,
@@ -8578,6 +8618,7 @@
 				0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */,
 				0C96DA01209C6A6700B6A8B8 /* QuickAddCustomVC.m in Sources */,
 				0C8C97F52213F63100687AC8 /* SecondryStatusTableCell.m in Sources */,
+				0C0ED9A023EC3B3100FB2D9B /* RentLookMaintainDetailHeader.m in Sources */,
 				0C73B07621F19E3E005F71F1 /* NomineeInvalidVC.m in Sources */,
 				0CDD700C20CFFC6E00D6609C /* RoomReportFailVC.m in Sources */,
 				0C2883D5210FFB8800F69C5F /* RentingSurveyingDetailVC.m in Sources */,
@@ -8593,6 +8634,7 @@
 				0C0C19E020ECABB10086E739 /* SecAllRoomDetailInfoVC.m in Sources */,
 				0CBD85AD2088842100E7B183 /* AddTagVC.m in Sources */,
 				0C2AB014224CBF9E00136E4D /* RecommendRightImageCell.m in Sources */,
+				0C0ED99C23EAA23D00FB2D9B /* RentLookMaintainDetailVC.m in Sources */,
 				0C0C01182317B81B00DBA68E /* UploadImageVC.m in Sources */,
 				0C1A013A20AC28C300665BB9 /* ComfirmValidVC.m in Sources */,
 				0C9CD4632105B234004894A3 /* RentingComRoomAnalyzeVC.m in Sources */,

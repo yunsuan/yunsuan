@@ -34,6 +34,12 @@
 
 @property (nonatomic, strong) NSString *is_accept_msg;
 
+@property (nonatomic, strong) NSString *self_desc;
+
+@property (nonatomic, strong) NSString *slef_desc;
+
+@property (nonatomic, strong) NSString *wx_code;
+
 + (UserInfoModel *)defaultModel;
 
 
