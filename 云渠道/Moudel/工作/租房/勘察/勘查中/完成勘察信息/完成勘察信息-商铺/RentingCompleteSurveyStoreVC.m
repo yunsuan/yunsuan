@@ -31,7 +31,7 @@
     NSArray *_payArr;
     NSMutableArray *_dataArr;
     NSArray *_periodArr;
-    NSArray *_freeArr;
+//    NSArray *_freeArr;
     
     NSString *_payWay;
     NSString *_titleStr;
@@ -116,7 +116,7 @@
 
 @property (nonatomic, strong) UILabel *rentFreeL;
 
-@property (nonatomic, strong) DropDownBtn *rentFreeBtn;
+@property (nonatomic, strong) BorderTF *rentFreeBtn;
 
 @property (nonatomic, strong) UIView *CollView;
 
@@ -195,13 +195,13 @@
                    @{@"param":@"半年",@"id":@"180"},
                    @{@"param":@"一年",@"id":@"360"},
                    @{@"param":@"两年",@"id":@"720"}];
-    _freeArr = @[@{@"param":@"无免租期",@"id":@"0"},
-                   @{@"param":@"一个月",@"id":@"1"},
-                   @{@"param":@"二个月",@"id":@"2"},
-                   @{@"param":@"三个月",@"id":@"3"},
-                   @{@"param":@"六个月",@"id":@"6"},
-                   @{@"param":@"九个月",@"id":@"9"},
-                   @{@"param":@"十二个月",@"id":@"12"}];
+//    _freeArr = @[@{@"param":@"无免租期",@"id":@"0"},
+//                   @{@"param":@"一个月",@"id":@"1"},
+//                   @{@"param":@"二个月",@"id":@"2"},
+//                   @{@"param":@"三个月",@"id":@"3"},
+//                   @{@"param":@"六个月",@"id":@"6"},
+//                   @{@"param":@"九个月",@"id":@"9"},
+//                   @{@"param":@"十二个月",@"id":@"12"}];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
@@ -280,14 +280,14 @@
         }
         case 6:{
             
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_freeArr];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.rentFreeBtn.content.text = MC;
-                weakself.rentFreeBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_freeArr];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//
+//                weakself.rentFreeBtn.content.text = MC;
+//                weakself.rentFreeBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
             break;
         }
         case 7:{
@@ -806,8 +806,9 @@
             }
             case 6:
             {
-                _rentFreeBtn = btn;
-                _rentFreeBtn.content.text = @"无免租期";
+                _rentFreeBtn = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 258 *SIZE, 33 *SIZE)];
+                _rentFreeBtn.textfield.delegate = self;;
+//                _rentFreeBtn.content.text = @"无免租期";
                 [_contentView addSubview:_rentFreeBtn];
                 break;
             }
@@ -1164,7 +1165,7 @@
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
         make.top.equalTo(self->_rentBtn2.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
+        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height);
     }];
     
     [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {

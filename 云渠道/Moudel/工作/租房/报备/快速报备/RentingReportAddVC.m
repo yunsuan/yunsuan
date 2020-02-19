@@ -86,6 +86,7 @@
     self.navBackgroundView.hidden = NO;
     [self initDateSouce];
     [self initUI];
+    [self RequestMethod];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -99,9 +100,7 @@
     _dataArr = [@[] mutableCopy];
     _page = 1;
     _asc = @"asc";
-    //    _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
-    //    [self RequestMethod];
 }
 
 - (void)SetSearch:(NSDictionary *)data{
@@ -549,7 +548,6 @@
                                     self.rentingRoomReportAddHouseBlock(dic);
                                 }
                             };
-//                            nextVC.urlfor3d = model.total_float_url_panorama;
                             nextVC.projiect_id = model.project_id;
                             nextVC.img_name = model.img_url;
                             nextVC.status = self.status;

@@ -36,11 +36,11 @@
 - (void)textViewDidChange:(UITextView *)textView{
     
     if (textView.text.length) {
-        
+
         _placeL.hidden = YES;
     }else{
-        
-        _placeL.hidden = YES;
+
+        _placeL.hidden = NO;
     }
 }
 
@@ -48,18 +48,18 @@
     
     self.contentView.backgroundColor = [UIColor whiteColor];
     
-    _placeL = [[UILabel alloc] init];
-    _placeL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _placeL.textColor = CLBackColor;
-    _placeL.numberOfLines = 0;
-    [_contentTV addSubview:_placeL];
-    
     _contentTV = [[UITextView alloc] init];
     _contentTV.textColor = YJContentLabColor;
     _contentTV.font = [UIFont systemFontOfSize:13 *SIZE];
     _contentTV.delegate = self;
 //    _titleL.numberOfLines = 0;
     [self.contentView addSubview:_contentTV];
+    
+    _placeL = [[UILabel alloc] init];
+    _placeL.font = [UIFont systemFontOfSize:13 *SIZE];
+    _placeL.textColor = CLBackColor;
+    _placeL.numberOfLines = 0;
+    [_contentTV addSubview:_placeL];
     
     [_contentTV mas_makeConstraints:^(MASConstraintMaker *make) {
        
@@ -72,9 +72,9 @@
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.left.equalTo(_contentTV).offset(5 *SIZE);
-        make.top.equalTo(_contentTV).offset(7 *SIZE);
-        make.right.equalTo(_contentTV).offset(-28 *SIZE);
+        make.left.equalTo(_contentTV.mas_left).offset(5 *SIZE);
+        make.top.equalTo(_contentTV.mas_top).offset(7 *SIZE);
+        make.right.equalTo(_contentTV.mas_right).offset(-28 *SIZE);
     }];
 }
 

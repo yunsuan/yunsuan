@@ -1118,7 +1118,7 @@
 		0C2883D6210FFC2F00F69C5F /* RentingCompleteSurveyInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingCompleteSurveyInfoVC.h; sourceTree = "<group>"; };
 		0C2883D7210FFC2F00F69C5F /* RentingCompleteSurveyInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingCompleteSurveyInfoVC.m; sourceTree = "<group>"; };
 		0C2883D921103D6800F69C5F /* RentingCompleteSurveyInfoVC2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingCompleteSurveyInfoVC2.h; sourceTree = "<group>"; };
-		0C2883DA21103D6800F69C5F /* RentingCompleteSurveyInfoVC2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingCompleteSurveyInfoVC2.m; sourceTree = "<group>"; };
+		0C2883DA21103D6800F69C5F /* RentingCompleteSurveyInfoVC2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingCompleteSurveyInfoVC2.m; sourceTree = "<group>"; wrapsLines = 0; };
 		0C2883DC21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingCompleteSurveyInfoVC3.h; sourceTree = "<group>"; };
 		0C2883DD21103FE800F69C5F /* RentingCompleteSurveyInfoVC3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingCompleteSurveyInfoVC3.m; sourceTree = "<group>"; };
 		0C288FBC21ED8EA200A142F6 /* RentingAgencyEditTradeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAgencyEditTradeVC.h; sourceTree = "<group>"; };

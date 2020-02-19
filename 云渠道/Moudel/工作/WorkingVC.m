@@ -169,23 +169,19 @@
             }
         }
     }
-//    [_showArr replaceObjectAtIndex:0 withObject:@1];
-//    [_showArr replaceObjectAtIndex:1 withObject:@1];
-//    [_showArr replaceObjectAtIndex:3 withObject:@1];
-//    [_showArr replaceObjectAtIndex:4 withObject:@1];
     [self.MainTableView reloadData];
     
     _rentArr = @[@"房源报备",@"房源勘察",@"勘察维护",@"带看维护",@"定租合同",@"合同签订"];
     _rentShowArr = [@[] mutableCopy];
     for (int i = 0; i < _rentArr.count; i++) {
         
-//        if (i == 0) {
-//
-//            [_rentShowArr addObject:@0];
-//        }else{
+        if (i == 0 || i == 3 || i == 5) {
+
+            [_rentShowArr addObject:@0];
+        }else{
         
             [_rentShowArr addObject:@1];
-//        }
+        }
     }
     
     

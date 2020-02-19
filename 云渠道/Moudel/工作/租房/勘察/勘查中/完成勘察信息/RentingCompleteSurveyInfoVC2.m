@@ -17,6 +17,7 @@
 {
     
     NSMutableArray *_dataArr;
+    
     NSArray *_titleArr;
     NSArray *_tagArr;
     NSArray *_contentArr;
@@ -47,6 +48,7 @@
     _contentArr = @[@"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。"];
     
     _dataArr = [[NSMutableArray alloc] init];
+    
     if ([self.dic[@"type"] integerValue] == 1) {
         
         _titleArr = @[@"房源概述",@"装修描述",@"房屋配套",@"已选配套"];
@@ -164,11 +166,8 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section < 2) {
-        
-        
-        //        return CGSizeMake(SCREEN_Width, 60 *SIZE);
-        CGSize size = [_contentArr[0] boundingRectWithSize:CGSizeMake(307 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
-        return CGSizeMake(SCREEN_Width, size.height + 30 *SIZE);
+
+        return CGSizeMake(SCREEN_Width, 60 *SIZE);
     }else{
         
         CGSize size = [_tagArr[indexPath.row][@"param"] boundingRectWithSize:CGSizeMake(332 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
@@ -204,8 +203,16 @@
             
             cell.contentTV.text = _str2;
         }
-        //        cell.titleL.text = @"房子二梯三户边套，南北通透户型，产证面积89平实用95平，可谈朝南带阳台，厨房朝北带很大生活阳台，一个卧室朝南，二个朝南。非常方正，没有一点浪费空间。";
         
+        if (indexPath.section == 0) {
+            
+            cell.contentTV.text = _str1;
+            cell.placeL.text = @"请填写该房间的核心卖点...\n1.如距离地铁近\n2.周边商圈多";
+        }else{
+            
+            cell.contentTV.text = _str2;
+            cell.placeL.text = @"请填写该房间的装修描述...\n1.如内部结构\n2.老小区，新装修";
+        }
         return cell;
     }else{
         
@@ -228,6 +235,7 @@
             }
             cell.colorView.backgroundColor = COLOR(213, 242, 255, 1);
             cell.titleL.text = _dataArr[indexPath.row][@"param"];
+            
             return cell;
         }
     }
@@ -237,17 +245,30 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 2) {
-        
+
         if ([_dataArr containsObject:_tagArr[indexPath.item]]) {
             
             [_dataArr removeObject:_tagArr[indexPath.item]];
         }else{
-            
+
             [_dataArr addObject:_tagArr[indexPath.item]];
+        }
+    }else if (indexPath.section == 3){
+        
+        if (indexPath.item < _dataArr.count) {
+            
+            
+        }else{
+            
+//            if (indexPath.item < (_dataArr.count + _selfArr.count)) {
+//
+//                [_selfArr removeObjectAtIndex:(indexPath.item - _dataArr.count)];
+//            }
         }
     }
     [collectionView reloadData];
 }
+
 
 
 - (void)initUI{
@@ -271,6 +292,7 @@
     
     [_tagColl registerClass:[BaseCollCell class] forCellWithReuseIdentifier:@"BaseCollCell"];
     [_tagColl registerClass:[CompleteSurveyCollCell2 class] forCellWithReuseIdentifier:@"CompleteSurveyCollCell2"];
+//    [_tagColl registerClass:[CompleteCustomCollCell class] forCellWithReuseIdentifier:@"CompleteCustomCollCell"];
     [_tagColl registerClass:[BaseCollHeader class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"BaseCollHeader"];
     [self.view addSubview:_tagColl];
     

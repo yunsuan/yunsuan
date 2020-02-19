@@ -8,6 +8,8 @@
 
 #import "RentingCompleteSurveyInfoVC3.h"
 
+#import "RentingRoomMaintainVC.h"
+
 #import "RentingSurveyVC.h"
 #import "SecDistributVC.h"
 #import "SystemoWorkVC.h"
@@ -120,6 +122,10 @@
                     
                     if ([vc isKindOfClass:[SystemoWorkVC class]]) {
                         
+                        [self.navigationController popToViewController:vc animated:YES];
+                    }
+                    if ([vc isKindOfClass:[RentingRoomMaintainVC class]]) {
+                                           
                         [self.navigationController popToViewController:vc animated:YES];
                     }
                 }

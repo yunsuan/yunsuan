@@ -447,7 +447,7 @@
         
         if (!_seeWayBtn.content.text.length) {
             
-            [self alertControllerWithNsstring:@"温馨提示" And:@"请看房方式"];
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择看房方式"];
             return;
         }
     }

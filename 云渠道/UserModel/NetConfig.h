@@ -14,7 +14,7 @@
 #pragma mark ---  基础接口  ---
 
 //新服务器
-//static NSString *const TestBase_Net = @"http://47.107.246.94/";
+static NSString *const TestBase_Net = @"http://47.107.246.94/";
 
 //获取版本
 static NSString *const Version_URL = @"getVersion";
@@ -595,7 +595,6 @@ static NSString *const UserFocusNews_URL = @"user/focusNews/list";
 
 //项目列表
 static NSString *const HouseProjectList_URL = @"user/house/project/list";
-//static NSString *const HouseProjectList_URL = @"user/house/project/list";
 
 //房源列表
 static NSString *const HouseHouseList_URL = @"user/house/house/list";
@@ -1089,6 +1088,8 @@ static NSString *const RentSurveyUpdateImg_URL = @"agent/rent/survey/updateImg";
 //下架房源
 static NSString *const RentSurveyCancelSale_URL = @"agent/rent/survey/cancelSale";
 
+//必填字段
+static NSString *const RentColumnConfig_URL = @"agent/rent/column/config";
 #pragma mark -- 租房-定租合同
 //获取经办人信息
 static NSString *const RentSubNeedAgent_URL = @"agent/rent/sub/need/agent";

@@ -188,8 +188,6 @@
 
     if (indexPath.section < 2) {
 
-        
-//        return CGSizeMake(SCREEN_Width, 60 *SIZE);
         CGSize size = [_contentArr[0] boundingRectWithSize:CGSizeMake(307 *SIZE, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13 *SIZE]} context:nil].size;
         return CGSizeMake(SCREEN_Width, size.height + 30 *SIZE);
     }else{

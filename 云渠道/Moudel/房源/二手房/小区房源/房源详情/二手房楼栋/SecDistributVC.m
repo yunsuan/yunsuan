@@ -145,6 +145,10 @@
             next_vc.status = self.status;
             next_vc.comName = self.comName;
             next_vc.titleinfo = [NSString stringWithFormat:@"%@详情",_lddic[@"LDMC"]];
+            next_vc.releaseSenceAddHouseBlock = ^(NSDictionary *dic) {
+              
+                self.secDistributAddHouseBlock(dic);
+            };
             [self.navigationController pushViewController:next_vc animated:YES];
         }else if ([self.status isEqualToString:@"zhiyejia"]){
             
@@ -157,6 +161,10 @@
             next_vc.comName = self.comName;
             next_vc.titleinfo = [NSString stringWithFormat:@"%@详情",_lddic[@"LDMC"]];
             next_vc.homeDic = self.homeDic;
+            next_vc.releaseSenceAddHouseBlock = ^(NSDictionary *dic) {
+              
+                self.secDistributAddHouseBlock(dic);
+            };
             [self.navigationController pushViewController:next_vc animated:YES];
         }else{
             

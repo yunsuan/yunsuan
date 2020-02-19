@@ -192,22 +192,22 @@
         }
         case 1:
         {
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-
-                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
-                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
-//            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
 //            WS(weakself);
-//            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
 //
-//                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
-//                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+//                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@",MC];
+//                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@",ID];
 //            };
 //            [self.view addSubview:view];
+            HouseTypePickView *view = [[HouseTypePickView alloc] initWithFrame:self.view.bounds];// WithData:[self getDetailConfigArrByConfigState:HOUSE_TYPE]];
+            WS(weakself);
+            view.houseTypePickViewBlock = ^(NSString * _Nonnull room, NSString * _Nonnull hall, NSString * _Nonnull bath) {
+
+                weakself.houseTypeBtn.content.text = [NSString stringWithFormat:@"%@室%@厅%@卫",room,hall,bath];
+                weakself.houseTypeBtn->str = [NSString stringWithFormat:@"%@,%@,%@",room,hall,bath];
+            };
+            [self.view addSubview:view];
             break;
         }
         case 2:{
@@ -363,21 +363,39 @@
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
-    if ([self isEmpty:_titleTF.textfield.text]) {
+    if ([_columnDic[@"title"] integerValue] == 1) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌标题"];
-        return;
+        if ([self isEmpty:_titleTF.textfield.text]) {
+        
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入挂牌标题"];
+            return;
+        }
     }
-    if ([self isEmpty:_priceTF.textfield.text]) {
+    if ([_columnDic[@"price"] integerValue] == 1) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请输入出租价格"];
-        return;
+        if ([self isEmpty:_priceTF.textfield.text]) {
+        
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入出租价格"];
+            return;
+        }
     }
     
-    if ([self isEmpty:_roomLevelBtn->str]) {
+    if ([_columnDic[@"minimum"] integerValue] == 1) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
-        return;
+        if ([self isEmpty:_depositTF.textfield.text]) {
+        
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入押金"];
+            return;
+        }
+    }
+    
+    if ([_columnDic[@"level"] integerValue] == 1) {
+        
+        if ([self isEmpty:_roomLevelBtn->str]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择房源等级"];
+            return;
+        }
     }
  
     _payWay = @"";
@@ -395,22 +413,31 @@
         }
     }
 
-    if (!_payWay.length) {
+    if ([_columnDic[@"pay_way"] integerValue] == 1) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择收款方式"];
-        return;
+        if (!_payWay.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择付款方式"];
+            return;
+        }
+    }
+    if ([_columnDic[@"house_type_id"] integerValue] == 1) {
+        
+        if (!_houseTypeBtn.content.text.length) {
+        
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择户型"];
+            return;
+        }
     }
     
-    if (!_houseTypeBtn.content.text.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择户型"];
-        return;
-    }
     
-    if (!_decorateBtn.content.text.length) {
+    if ([_columnDic[@"decoration"] integerValue] == 1) {
         
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请选择装修标准"];
-        return;
+        if (!_decorateBtn.content.text.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择装修标准"];
+            return;
+        }
     }
 
     if (!_floorBtn.content.text.length) {
@@ -419,25 +446,78 @@
         return;
     }
     
-    if (!_seeWayBtn.content.text.length) {
-        
-        [self alertControllerWithNsstring:@"温馨提示" And:@"请看房方式"];
-        return;
+    if ([_columnDic[@"check_in_time"] integerValue] == 1) {
+    
+        if (!_inTimeBtn.content.text.length) {
+
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择入住时间"];
+            return;
+        }
     }
     
+    if ([_columnDic[@"check_way"] integerValue] == 1) {
+        
+        if (!_seeWayBtn.content.text.length) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请选择看房方式"];
+            return;
+        }
+    }
+    
+    if ([_columnDic[@"comment"] integerValue] == 1) {
+        
+        if ([self isEmpty:_markView.text]) {
+            
+            [self alertControllerWithNsstring:@"温馨提示" And:@"请输入其他要求"];
+            return;
+        }
+    }
 
     [self.dataDic setObject:@(1) forKey:@"type"];
     [self.dataDic setObject:@(_rentType) forKey:@"rent_type"];
-    [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
-    [self.dataDic setValue:_priceTF.textfield.text forKey:@"price"];
+    if (_titleTF.textfield.text.length) {
+        
+        [self.dataDic setValue:_titleTF.textfield.text forKey:@"title"];
+    }else{
+        
+        [self.dataDic setValue:@" " forKey:@"title"];
+    }
+    
+    if (_priceTF.textfield.text.length) {
+        
+        [self.dataDic setValue:_priceTF.textfield.text forKey:@"price"];
+    }else{
+        
+        [self.dataDic setValue:@"0" forKey:@"price"];
+    }
     if (_depositTF.textfield.text.length) {
         
         [self.dataDic setObject:_depositTF.textfield.text forKey:@"deposit"];
     }
     [self.dataDic setObject:_publicBtn->str forKey:@"hide"];
-    [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
-    [self.dataDic setValue:_payWay forKey:@"receive_way"];
-    [self.dataDic setValue:_houseTypeBtn->str forKey:@"house_type_id"];
+    if (_roomLevelBtn.content.text.length) {
+            
+        [self.dataDic setValue:_roomLevelBtn->str forKey:@"level"];
+    }else{
+            
+    //        [self.dataDic setValue:@"0" forKey:@"price"];
+    }
+    
+    if (_payWay.length) {
+            
+        [self.dataDic setValue:_payWay forKey:@"receive_way"];
+    }else{
+            
+
+    }
+    
+    if (_houseTypeBtn.content.text.length) {
+            
+        [self.dataDic setValue:_houseTypeBtn->str forKey:@"house_type_id"];
+    }else{
+            
+
+    }
     if (_decorateBtn.content.text.length) {
         
         [self.dataDic setObject:_decorateBtn->str forKey:@"decoration"];
@@ -463,7 +543,14 @@
         [self.dataDic setObject:_maxPeriodBtn.content.text forKey:@"rent_max_comment"];
     }
   
-    [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
+    if (_seeWayBtn.content.text.length) {
+            
+        [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
+    }else{
+            
+    //        [self.dataDic setValue:@"0" forKey:@"price"];
+    }
+    
     if (![_inTimeBtn.content.text isEqualToString:@"随时入住"]) {
         
         [self.dataDic setValue:_inTimeBtn.content.text forKey:@"check_in_time"];
@@ -630,30 +717,60 @@
             case 0:
             {
                 _titleL = label;
+                if ([_columnDic[@"title"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_titleL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _titleL.attributedText = attr;
+                }
                 [_contentView addSubview:_titleL];
                 break;
             }
             case 1:
             {
                 _priceL = label;
+                if ([_columnDic[@"price"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_priceL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _priceL.attributedText = attr;
+                }
                 [_contentView addSubview:_priceL];
                 break;
             }
             case 2:
             {
                 _depositL = label;
+                if ([_columnDic[@"minimum"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_depositL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _depositL.attributedText = attr;
+                }
                 [_contentView addSubview:_depositL];
                 break;
             }
             case 3:
             {
                 _roomLevelL = label;
+                if ([_columnDic[@"level"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_roomLevelL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _roomLevelL.attributedText = attr;
+                }
                 [_contentView addSubview:_roomLevelL];
                 break;
             }
             case 4:
             {
                 _payL = label;
+                if ([_columnDic[@"pay_way"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_payL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _payL.attributedText = attr;
+                }
                 [_contentView addSubview:_payL];
                 break;
             }
@@ -666,12 +783,24 @@
             case 6:
             {
                 _houseTypeL = label;
+                if ([_columnDic[@"house_type_id"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_houseTypeL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _houseTypeL.attributedText = attr;
+                }
                 [_contentView addSubview:_houseTypeL];
                 break;
             }
             case 7:
             {
                 _decorateL = label;
+                if ([_columnDic[@"decoration"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_decorateL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _decorateL.attributedText = attr;
+                }
                 [_contentView addSubview:_decorateL];
                 break;
             }
@@ -702,18 +831,36 @@
             case 12:
             {
                 _inTimeL = label;
+                if ([_columnDic[@"check_in_time"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_inTimeL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _inTimeL.attributedText = attr;
+                }
                 [_contentView addSubview:_inTimeL];
                 break;
             }
             case 13:
             {
                 _seeWayL = label;
+                if ([_columnDic[@"check_way"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_seeWayL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _seeWayL.attributedText = attr;
+                }
                 [_contentView addSubview:_seeWayL];
                 break;
             }
             case 14:
             {
                 _markL = label;
+                if ([_columnDic[@"comment"] integerValue] == 1) {
+                    
+                    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"*%@",_markL.text]];
+                    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+                    _markL.attributedText = attr;
+                }
                 [_contentView addSubview:_markL];
                 break;
             }

@@ -365,9 +365,7 @@
     _headarr = @[@"房源",@"价格",[NSString stringWithFormat:@"物业：%@",_fjxx[@"WYMC"]]];
     _titlearr = @[@[@"房号：",@"楼栋：",@"单元：",@"楼层："],@[@"计价规则：",@"单价：",@"总价："],@[@"建筑面积：",@"套内面积：",@"户型信息："]];
     _contentarr = @[@[_fjxx[@"FJMC"],_fjxx[@"LDMC"],_fjxx[@"DYMC"],_fjxx[@"FLOORNUM"]],@[_fjxx[@"JJGZ"],_fjxx[@"JZDJ"],_fjxx[@"FJZJ"]],@[_fjxx[@"JZMJ"],_fjxx[@"TNMJ"],_fjxx[@"HXMC"]]];
-    
-//    [self.view addSubview:self.maskView1];
-//    [self.view addSubview:self.detailView];
+
     
     self.reportRoomDetailView.titleL.text = self.comName;
     self.reportRoomDetailView.room.text = @"房源";
@@ -390,15 +388,6 @@
 
 #pragma mark --------------------
 #pragma mark - Methods
-
-
-//-(UIColor *)getSeatColorWithState:(KyoCinameSeatState)state {
-//
-//    if (state ==  KyoCinameSeatStateHadBuy)
-//        return [UIColor redColor];
-//    else
-//        return [UIColor redColor];
-//}
 
 //根据座位类型返回实际图片
 - (UIImage *)getSeatImageWithState:(KyoCinameSeatState)state {
@@ -429,7 +418,7 @@
 
 
 - (void)setNeedsDisplay {
-    //[super setNeedsDisplay];
+  
 
     if (self.rowIndexView) {
         [self.rowIndexView setNeedsDisplay];
@@ -443,54 +432,11 @@
 #pragma mark --------------------
 #pragma mark - Events
 - (void)btnSeatTouchIn:(UIButton *)btn {
-    //    NSArray *arraySeat = self.dictSeat[@(btn.tag)];
-    //    NSUInteger columns = [arraySeat indexOfObject:btn];
-    //    NetConfitModel *model=[[NetConfitModel alloc]init];
-    //    [BaseNetRequest startpost:@"/TelService.ashx" parameters:[model configFJZTWithFJID:_datasouce[btn.tag][@"LIST"][columns][@"FJID"]] success:^(id resposeObject) {
-    //
-    //        NSInteger state = [resposeObject[0][@"content"][0][@"state"] integerValue];
-    //        if (state == 0 ||state ==1) {
-    //            NSLog(@"btnSeatTouchIn-btn.tag=%ld",(long)btn.tag);
-    //            if (self.SMCinameSeatScrollViewDelegate &&
-    //                [self.SMCinameSeatScrollViewDelegate respondsToSelector:@selector(kyoCinameSeatScrollViewDidTouchInSeatWithRow:withColumn:)]) {
-    //
+
     NSArray *arraySeat = self.dictSeat[@(btn.tag)];
     NSUInteger column = [arraySeat indexOfObject:btn];
-    //
-    //
+
     [self.SMCinameSeatScrollViewDelegate kyoCinameSeatScrollViewDidTouchInSeatWithRow:btn.tag withColumn:column];
-    //
-    //                [self drawSeat];
-    //                [self setNeedsDisplay];
-    //            }
-    //
-    //        }
-    //        else if (state == 4)
-    //        {
-    //            [self alertControllerWithNsstring:@"温馨提示" And:@"房屋状态已改变"];
-    //            btn.backgroundColor = KyishouColor;
-    //            btn.userInteractionEnabled = NO;
-    //        }
-    //        else
-    //        {
-    //            [self alertControllerWithNsstring:@"温馨提示" And:@"房屋状态已改变"];
-    //            btn.backgroundColor =KyidingColor;
-    //            btn.userInteractionEnabled = NO;
-    //        }
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //    } failure:^(NSError *error) {
-    //        NSLog(@"%@",error);
-    //
-    //    }];
-    
-    
 }
 
 
@@ -619,6 +565,10 @@
                 nextVC.unitId = weakSelf.unit_id;
                 nextVC.comName = weakSelf.comName;
                 nextVC.status = weakSelf.status;
+                nextVC.releaseDirectVCBlock = ^{
+                    
+                    weakSelf.releaseSenceAddHouseBlock(weakSelf.fjxx);
+                };
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
                 
             }else if ([weakSelf.status isEqualToString:@"zhiyejia"]){
@@ -631,6 +581,10 @@
                 nextVC.comName = weakSelf.comName;
                 nextVC.status = weakSelf.status;
                 nextVC.homeDic = weakSelf.homeDic;
+                nextVC.releaseDirectVCBlock = ^{
+                  
+                    weakSelf.releaseSenceAddHouseBlock(weakSelf.fjxx);
+                };
                 [weakSelf.navigationController pushViewController:nextVC animated:YES];
             }else{
                 

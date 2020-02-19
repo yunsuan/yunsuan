@@ -243,42 +243,133 @@
     }
     if ([str isEqualToString:@"写字楼"]) {
         
-        RentingCompleteSurveyOfficeVC *nextVC = [[RentingCompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.rentingCompleteSurveyOfficeBlock = ^{
+        [BaseRequest GET:RentColumnConfig_URL parameters:@{@"type":@"3"} success:^(id resposeObject) {
+                
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                RentingCompleteSurveyOfficeVC *nextVC = [[RentingCompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.rentingCompleteSurveyOfficeBlock = ^{
 
-            if (self.rentingCompleteSurveyInfoVCBlock) {
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
 
-                self.rentingCompleteSurveyInfoVCBlock();
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                RentingCompleteSurveyOfficeVC *nextVC = [[RentingCompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.rentingCompleteSurveyOfficeBlock = ^{
+
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+            RentingCompleteSurveyOfficeVC *nextVC = [[RentingCompleteSurveyOfficeVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.rentingCompleteSurveyOfficeBlock = ^{
+
+                if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                    self.rentingCompleteSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
     }else if ([str isEqualToString:@"商铺"]){
         
-        RentingCompleteSurveyStoreVC *nextVC = [[RentingCompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.rentingCompleteSurveyStoreVCBlock = ^{
+        [BaseRequest GET:RentColumnConfig_URL parameters:@{@"type":@"2"} success:^(id resposeObject) {
+                
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                RentingCompleteSurveyStoreVC *nextVC = [[RentingCompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.rentingCompleteSurveyStoreVCBlock = ^{
 
-            if (self.rentingCompleteSurveyInfoVCBlock) {
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
 
-                self.rentingCompleteSurveyInfoVCBlock();
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                RentingCompleteSurveyStoreVC *nextVC = [[RentingCompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.rentingCompleteSurveyStoreVCBlock = ^{
+
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+            RentingCompleteSurveyStoreVC *nextVC = [[RentingCompleteSurveyStoreVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.rentingCompleteSurveyStoreVCBlock = ^{
+
+                if (self.rentingCompleteSurveyInfoVCBlock) {
+
+                    self.rentingCompleteSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
     }else{
         
-        RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
-        nextVC.rentingCompleteSurveyHouseVCBlock = ^{
-            
-            if (self.rentingCompleteSurveyInfoVCBlock) {
+        [BaseRequest GET:RentColumnConfig_URL parameters:@{@"type":@"1"} success:^(id resposeObject) {
                 
-                self.rentingCompleteSurveyInfoVCBlock();
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                    
+                RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.columnDic = [[NSMutableDictionary alloc] initWithDictionary:resposeObject[@"data"]];
+                nextVC.rentingCompleteSurveyHouseVCBlock = ^{
+                    
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
+                        
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                    
+                RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+                nextVC.rentingCompleteSurveyHouseVCBlock = ^{
+                    
+                    if (self.rentingCompleteSurveyInfoVCBlock) {
+                        
+                        self.rentingCompleteSurveyInfoVCBlock();
+                    }
+                };
+                nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                [self.navigationController pushViewController:nextVC animated:YES];
             }
-        };
-        nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        } failure:^(NSError *error) {
+                
+            RentingCompleteSurveyHouseVC *nextVC = [[RentingCompleteSurveyHouseVC alloc] initWithTitle:@"完成勘察信息"];
+            nextVC.rentingCompleteSurveyHouseVCBlock = ^{
+                
+                if (self.rentingCompleteSurveyInfoVCBlock) {
+                    
+                    self.rentingCompleteSurveyInfoVCBlock();
+                }
+            };
+            nextVC.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }];
+        
     }
-    
 }
 
 - (void)ActionSliderChange:(UISlider *)slider{
@@ -329,9 +420,17 @@
     
     _codeHeader = [[BaseFrameHeader alloc] initWithFrame:CGRectMake(0, 0, SCREEN_Width, 40 *SIZE)];
     if ([self.status isEqualToString:@"direct"]) {
-        
+
+        if (_dataDic[@"house_code"]) {
+            
+            _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
+        }else{
+            
+            _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
+        }
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+     
         _codeHeader.titleL.text = [NSString stringWithFormat:@"房源：%@%@%@",self.comName,self.dataDic[@"LDMC"],self.dataDic[@"FJMC"]];
-        //        _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
     }else{
         
         _codeHeader.titleL.text = [NSString stringWithFormat:@"房源编号：%@",_dataDic[@"house_code"]];
@@ -344,6 +443,9 @@
     if ([self.dataDic[@"is_other"] integerValue] == 1) {
         
         _sourceL.text = @"来源：自行勘察";
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+        
+        _sourceL.text = @"来源：置业家";
     }else{
         
         if ([self.status isEqualToString:@"direct"]) {
@@ -564,9 +666,43 @@
         _addressTF.textfield.text = self.dataDic[@"absolute_address"];
         _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
         _typeBtn.content.text = self.dataDic[@"WYMC"];
-        _areaTF.textfield.text = self.dataDic[@"TNMJ"];
-        _buildYearTF.textfield.text = self.dataDic[@""];
-        _proLimitTF.textfield.text = self.dataDic[@""];
+        _areaTF.textfield.text = self.dataDic[@"JZMJ"];
+        if (self.dataDic[@"JCND"]) {
+            
+            _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
+        }else{
+            
+            _buildYearTF.textfield.text = @"";
+        }
+        if (self.dataDic[@"CQNX"]) {
+            
+            _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
+        }else{
+            
+            _proLimitTF.textfield.text = @"";
+        }
+    }else if ([self.status isEqualToString:@"zhiyejia"]){
+        
+        _addressBtn.content.text = self.dataDic[@"city_name"];
+        _addressBtn1.content.text = self.dataDic[@"district_name"];
+        _addressTF.textfield.text = self.dataDic[@"absolute_address"];
+        _roomNumTF.textfield.text = [NSString stringWithFormat:@"%@%@%@",self.dataDic[@"LDMC"],self.dataDic[@"DYMC"],self.dataDic[@"FJMC"]];
+        _typeBtn.content.text = self.dataDic[@"WYMC"];
+        _areaTF.textfield.text = self.dataDic[@"JZMJ"];
+        if (self.dataDic[@"JCND"]) {
+            
+            _buildYearTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"JCND"]];
+        }else{
+            
+            _buildYearTF.textfield.text = @"";
+        }
+        if (self.dataDic[@"CQNX"]) {
+            
+            _proLimitTF.textfield.text = [NSString stringWithFormat:@"%@",self.dataDic[@"CQNX"]];
+        }else{
+            
+            _proLimitTF.textfield.text = @"";
+        }
     }
     
     [self MasonryUI];
