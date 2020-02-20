@@ -34,7 +34,7 @@
     NSArray *_payArr;
     NSMutableArray *_dataArr;
     NSArray *_periodArr;
-    NSArray *_freeArr;
+//    NSArray *_freeArr;
     
     NSString *_payWay;
     NSString *_seeWay;
@@ -123,7 +123,7 @@
 
 @property (nonatomic, strong) UILabel *rentFreeL;
 
-@property (nonatomic, strong) DropDownBtn *rentFreeBtn;
+@property (nonatomic, strong) BorderTF *rentFreeBtn;
 
 @property (nonatomic, strong) UIView *CollView;
 
@@ -200,17 +200,27 @@
                    @{@"param":@"半年",@"id":@"180"},
                    @{@"param":@"一年",@"id":@"360"},
                    @{@"param":@"两年",@"id":@"720"}];
-    _freeArr = @[@{@"param":@"无免租期",@"id":@"0"},
-                 @{@"param":@"一个月",@"id":@"1"},
-                 @{@"param":@"二个月",@"id":@"2"},
-                 @{@"param":@"三个月",@"id":@"3"},
-                 @{@"param":@"六个月",@"id":@"6"},
-                 @{@"param":@"九个月",@"id":@"9"},
-                 @{@"param":@"十二个月",@"id":@"12"}];
+//    _freeArr = @[@{@"param":@"无免租期",@"id":@"0"},
+//                 @{@"param":@"一个月",@"id":@"1"},
+//                 @{@"param":@"二个月",@"id":@"2"},
+//                 @{@"param":@"三个月",@"id":@"3"},
+//                 @{@"param":@"六个月",@"id":@"6"},
+//                 @{@"param":@"九个月",@"id":@"9"},
+//                 @{@"param":@"十二个月",@"id":@"12"}];
 }
 
 - (void)ActionDropBtn:(UIButton *)btn{
     
+    [_titleTF.textfield endEditing:YES];
+    [_maxPriceTF.textfield endEditing:YES];
+    [_transferTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
+    [_highTF.textfield endEditing:YES];
+    [_widthTF.textfield endEditing:YES];
+    [_rentFreeBtn.textfield endEditing:YES];
+    [_accommodateTF.textfield endEditing:YES];
+    [_leftTF.textfield endEditing:YES];
+    [_rightTF.textfield endEditing:YES];
     switch (btn.tag) {
         case 0:{
             
@@ -285,15 +295,15 @@
         }
         case 6:{
             
-            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_freeArr];
-            WS(weakself);
-            view.selectedBlock = ^(NSString *MC, NSString *ID) {
-                
-                weakself.rentFreeBtn.content.text = MC;
-                weakself.rentFreeBtn->str = [NSString stringWithFormat:@"%@", ID];
-            };
-            [self.view addSubview:view];
-            break;
+//            SinglePickView *view = [[SinglePickView alloc] initWithFrame:self.view.bounds WithData:_freeArr];
+//            WS(weakself);
+//            view.selectedBlock = ^(NSString *MC, NSString *ID) {
+//                
+//                weakself.rentFreeBtn.content.text = MC;
+//                weakself.rentFreeBtn->str = [NSString stringWithFormat:@"%@", ID];
+//            };
+//            [self.view addSubview:view];
+//            break;
         }
         case 7:{
             
@@ -314,6 +324,16 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
+    [_titleTF.textfield endEditing:YES];
+    [_maxPriceTF.textfield endEditing:YES];
+    [_transferTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
+    [_highTF.textfield endEditing:YES];
+    [_widthTF.textfield endEditing:YES];
+    [_rentFreeBtn.textfield endEditing:YES];
+    [_accommodateTF.textfield endEditing:YES];
+    [_leftTF.textfield endEditing:YES];
+    [_rightTF.textfield endEditing:YES];
     if (btn.tag == 1) {
         
         _rentImg1.image = [UIImage imageNamed:@"selected"];
@@ -467,6 +487,14 @@
     
     [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
 
+    if (_rentFreeBtn.textfield.text.length) {
+        
+        [self.dataDic setValue:_rentFreeBtn.textfield.text forKey:@"rent_free_month"];
+    }else{
+        
+        [self.dataDic setValue:@"0" forKey:@"rent_free_month"];
+    }
+    
     if (![self isEmpty:_accommodateTF.textfield.text]) {
         
         [self.dataDic setValue:_accommodateTF.textfield.text forKey:@"work_station_hold"];
@@ -511,6 +539,19 @@
     };
     nextVC.dic = [NSMutableDictionary dictionaryWithDictionary:self.dataDic];
     [self.navigationController pushViewController:nextVC animated:YES];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (string.length == 0) return YES;
+    
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 2) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark -- Collection
@@ -850,8 +891,11 @@
             }
             case 6:
             {
-                _rentFreeBtn = btn;
-                _rentFreeBtn.content.text = @"无免租期";
+                _rentFreeBtn = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 258 *SIZE, 33 *SIZE)];
+                _rentFreeBtn.textfield.delegate = self;
+                _rentFreeBtn.textfield.placeholder = @"无免租期";
+                _rentFreeBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+                _rentFreeBtn.unitL.text = @"月";
                 [_contentView addSubview:_rentFreeBtn];
                 break;
             }
@@ -1194,7 +1238,7 @@
         make.left.equalTo(self->_contentView).offset(81 *SIZE);
         make.top.equalTo(self->_rentBtn1.mas_bottom).offset(31 *SIZE);
         make.width.mas_equalTo(257 *SIZE);
-        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height + 3 *SIZE * 20);
+        make.height.mas_equalTo(self->_payColl.collectionViewLayout.collectionViewContentSize.height);
     }];
     
     [_minPeriodL mas_makeConstraints:^(MASConstraintMaker *make) {

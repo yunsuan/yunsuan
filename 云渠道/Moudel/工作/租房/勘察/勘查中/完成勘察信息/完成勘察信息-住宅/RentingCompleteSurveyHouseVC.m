@@ -177,6 +177,11 @@
 
 - (void)ActionDropBtn:(UIButton *)btn{
     
+    
+    [_titleTF.textfield endEditing:YES];
+    [_priceTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
+    
     switch (btn.tag) {
         case 0:{
             
@@ -316,6 +321,9 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
+    [_titleTF.textfield endEditing:YES];
+    [_priceTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
     if (btn.tag == 1) {
         
         _rentImg1.image = [UIImage imageNamed:@"selected"];

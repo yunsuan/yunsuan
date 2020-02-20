@@ -57,7 +57,7 @@
     
     _placeL = [[UILabel alloc] init];
     _placeL.font = [UIFont systemFontOfSize:13 *SIZE];
-    _placeL.textColor = CLBackColor;
+    _placeL.textColor = CLPlaceColor;
     _placeL.numberOfLines = 0;
     [_contentTV addSubview:_placeL];
     
@@ -70,7 +70,7 @@
         make.bottom.equalTo(self.contentView).offset(-SIZE);
     }];
     
-    [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_placeL mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.equalTo(_contentTV.mas_left).offset(5 *SIZE);
         make.top.equalTo(_contentTV.mas_top).offset(7 *SIZE);

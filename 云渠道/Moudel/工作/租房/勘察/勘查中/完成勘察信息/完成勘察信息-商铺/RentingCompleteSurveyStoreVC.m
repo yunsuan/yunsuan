@@ -206,6 +206,15 @@
 
 - (void)ActionDropBtn:(UIButton *)btn{
     
+    [_titleTF.textfield endEditing:YES];
+    [_maxPriceTF.textfield endEditing:YES];
+    [_transferTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
+    [_highTF.textfield endEditing:YES];
+    [_widthTF.textfield endEditing:YES];
+    [_rentFreeBtn.textfield endEditing:YES];
+    [_leftTF.textfield endEditing:YES];
+    [_rightTF.textfield endEditing:YES];
     switch (btn.tag) {
         case 0:{
             
@@ -309,6 +318,15 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
+    [_titleTF.textfield endEditing:YES];
+    [_maxPriceTF.textfield endEditing:YES];
+    [_transferTF.textfield endEditing:YES];
+    [_depositTF.textfield endEditing:YES];
+    [_highTF.textfield endEditing:YES];
+    [_widthTF.textfield endEditing:YES];
+    [_rentFreeBtn.textfield endEditing:YES];
+    [_leftTF.textfield endEditing:YES];
+    [_rightTF.textfield endEditing:YES];
     if (btn.tag == 1) {
         
         _rentImg1.image = [UIImage imageNamed:@"selected"];
@@ -458,6 +476,14 @@
     [self.dataDic setValue:_typeBtn->str forKey:@"shop_type"];
     [self.dataDic setValue:_commercialBtn->str forKey:@"format_tags"];
     
+    if (_rentFreeBtn.textfield.text.length) {
+        
+        [self.dataDic setValue:_rentFreeBtn.textfield.text forKey:@"rent_free_month"];
+    }else{
+        
+        [self.dataDic setValue:@"0" forKey:@"rent_free_month"];
+    }
+    
     [self.dataDic setValue:_seeWayBtn->str forKey:@"check_way"];
 
     if (![self isEmpty:_markView.text]) {
@@ -500,6 +526,19 @@
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (string.length == 0) return YES;
+    
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 2) {
+        return NO;
+    }
+    return YES;
+}
 
 #pragma mark -- Collection
 
@@ -807,8 +846,10 @@
             case 6:
             {
                 _rentFreeBtn = [[BorderTF alloc] initWithFrame:CGRectMake(81 *SIZE, 47 *SIZE, 258 *SIZE, 33 *SIZE)];
-                _rentFreeBtn.textfield.delegate = self;;
-//                _rentFreeBtn.content.text = @"无免租期";
+                _rentFreeBtn.textfield.delegate = self;
+                _rentFreeBtn.textfield.placeholder = @"无免租期";
+                _rentFreeBtn.textfield.keyboardType = UIKeyboardTypeNumberPad;
+                _rentFreeBtn.unitL.text = @"月";
                 [_contentView addSubview:_rentFreeBtn];
                 break;
             }

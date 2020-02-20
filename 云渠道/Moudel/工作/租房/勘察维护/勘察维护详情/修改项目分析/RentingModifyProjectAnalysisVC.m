@@ -9,14 +9,18 @@
 #import "RentingModifyProjectAnalysisVC.h"
 
 #import "BaseHeader.h"
-@interface RentingModifyProjectAnalysisVC ()
+@interface RentingModifyProjectAnalysisVC ()<UITextViewDelegate>
 {
     
     NSMutableDictionary *_dataDic;
 }
 @property (nonatomic, strong) UITextView *sellTV;
 
+@property (nonatomic, strong) UILabel *sellL;
+
 @property (nonatomic, strong) UITextView *decoTV;
+
+@property (nonatomic, strong) UILabel *decoL;
 
 @property (nonatomic, strong) UIButton *nextBtn;
 
@@ -122,6 +126,28 @@
 
 
 
+- (void)textViewDidChange:(UITextView *)textView{
+    
+    if (textView == _sellTV) {
+        
+        if (_sellTV.text.length) {
+            
+            _sellL.hidden = YES;
+        }else{
+            
+            _sellL.hidden = NO;
+        }
+    }else{
+        
+        if (_decoTV.text.length) {
+            
+            _decoL.hidden = YES;
+        }else{
+            
+            _decoL.hidden = NO;
+        }
+    }
+}
 
 - (void)initUI{
     
@@ -148,7 +174,15 @@
         
         UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(28 *SIZE, 47 *SIZE, 314 *SIZE, 75 *SIZE)];
         tv.font = [UIFont systemFontOfSize:12 *SIZE];
+        tv.delegate = self;
         tv.textColor = YJContentLabColor;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5 *SIZE, 7 *SIZE, 280 *SIZE, 45 *SIZE)];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        label.textColor = CLPlaceColor;
+        label.numberOfLines = 0;
+//        [tv addSubview:label];
         if (i == 0) {
             
             if ([self.typeId integerValue] == 1) {
@@ -159,6 +193,9 @@
                 tv.text = _dataDic[@"advantage"];
             }
             _sellTV = tv;
+            _sellL = label;
+            _sellL.text = @"请填写该房间的核心卖点...\n1.如距离地铁近\n2.周边商圈多";
+            [_sellTV addSubview:_sellL];
             [whiteView addSubview:_sellTV];
         }else{
             
@@ -170,6 +207,9 @@
                 tv.text = _dataDic[@"describe"];
             }
             _decoTV = tv;
+            _decoL = label;
+            _decoL.text = @"请填写该房间的装修描述...\n1.如内部结构\n2.老小区，新装修";
+            [_decoTV addSubview:_decoL];
             [whiteView addSubview:_decoTV];
         }
         [self.view addSubview:whiteView];

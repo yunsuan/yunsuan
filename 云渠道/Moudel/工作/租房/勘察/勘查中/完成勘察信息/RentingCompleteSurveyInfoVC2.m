@@ -84,6 +84,8 @@
         [self.dic setObject:str forKey:@"house_tags"];
     }
     
+    
+    
     if (_str1.length) {
         
         if ([self.dic[@"type"] integerValue] == 1) {
@@ -247,7 +249,7 @@
     if (indexPath.section == 2) {
 
         if ([_dataArr containsObject:_tagArr[indexPath.item]]) {
-            
+
             [_dataArr removeObject:_tagArr[indexPath.item]];
         }else{
 
