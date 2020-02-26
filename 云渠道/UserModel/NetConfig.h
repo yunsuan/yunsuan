@@ -319,6 +319,16 @@ static NSString *const AddAndRecommend_URL = @"project/client/addAndRecommend";
 
 //获取客源列表用于推荐
 static NSString *const FastRecommendList_URL = @"agent/matching/fastRecommendList";
+
+#pragma mark ---  新房-活动房源  ---
+//活动房源列表
+static NSString *const ProjectGetHouseList_URL = @"agent/project/getHouseList";
+
+//获取楼栋及单元
+static NSString *const ProjectGetProjectBuildUnitTitle_URL = @"user/project/getProjectBuildUnitTitle";
+
+//活动房源详情
+static NSString *const ProjectGetHouseDetail_URL = @"agent/project/getHouseDetail";
 #pragma mark ---  消息  ---
 
 //获取消息未读数量

@@ -25,6 +25,7 @@
 #import "CloudCodeVC.h"
 #import "MyCollageVC.h"
 //#import <StoreKit/StoreKit.h>
+#import "MyShopVC.h"
 
 #import "MineCell.h"
 
@@ -140,9 +141,9 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"goHome" object:nil];
 
-    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅",@"云算号"/*,@"我的收藏"*/,@"我的团队"],@[@"意见反馈",@"关于云算",@"操作指南"]];
-    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"subs",@"icon_yunsuan",/*@"focus",*/@"team"],@[@"opinion",@"about",@"operation"]];
-    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@"",@"",@"",@""],@[@" ",YQDversion,@""]];
+    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅",@"云算号"/*,@"我的收藏"*/,@"我的团队",@"我的店铺"],@[@"意见反馈",@"关于云算",@"操作指南"]];
+    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"subs",@"icon_yunsuan",/*@"focus",*/@"team",@""],@[@"opinion",@"about",@"operation"]];
+    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@"",@"",@"",@"",@""],@[@" ",YQDversion,@""]];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
 }
@@ -577,10 +578,15 @@
                 MySubscripVC *nextVC = [[MySubscripVC alloc] init];
                 nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
-            }else
-            {
+            }else if(indexPath.row == 4){
+                
                 MyTeamVC *nextVC = [[MyTeamVC alloc] init];
                 nextVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:nextVC animated:YES];
+            }else{
+                
+                MyShopVC *nextVC = [[MyShopVC alloc] init];
+//                nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }
         }

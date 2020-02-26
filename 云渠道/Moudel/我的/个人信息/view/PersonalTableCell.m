@@ -30,7 +30,7 @@
 
 - (void)initUI{
     
-    _titleL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 110 *SIZE, 13 *SIZE)];
+    _titleL = [[UILabel alloc] initWithFrame:CGRectMake(10 *SIZE, 19 *SIZE, 110 *SIZE, 15 *SIZE)];
     _titleL.textColor = YJContentLabColor;
     _titleL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.contentView addSubview:_titleL];
@@ -41,7 +41,7 @@
     [self.contentView addSubview:_headImg];
     _headImg.hidden = YES;
     
-    _contentL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, 19 *SIZE, 255 *SIZE, 13 *SIZE)];
+    _contentL = [[UILabel alloc] initWithFrame:CGRectMake(85 *SIZE, 19 *SIZE, 255 *SIZE, 15 *SIZE)];
     _contentL.textColor = YJTitleLabColor;
     _contentL.font = [UIFont systemFontOfSize:13 *SIZE];
     _contentL.textAlignment = NSTextAlignmentRight;

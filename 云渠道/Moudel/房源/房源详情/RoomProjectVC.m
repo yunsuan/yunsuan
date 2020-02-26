@@ -16,6 +16,7 @@
 #import "DynamicDetailVC.h"
 #import "CustomListVC.h"
 #import "QuickAddCustomVC.h"
+#import "ActiveRoomListVC.h"
 
 #import "RoomDetailTableHeader.h"
 #import "RoomDetailTableHeader5.h"
@@ -397,11 +398,25 @@
 //    
 //    [JANALYTICSService eventRecord:event];
     
+    if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+            
+        if ([self.isRecommend isEqualToString:@"NO"]) {
+                
+            ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }else{
 
+            CustomListVC *nextVC = [[CustomListVC alloc] initWithProjectId:_projectId];
+            nextVC.model = _model;
+            [self.navigationController pushViewController:nextVC animated:YES];
+        }
+    }else{
+
+        ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }
     
-    CustomListVC *nextVC = [[CustomListVC alloc] initWithProjectId:_projectId];
-    nextVC.model = _model;
-    [self.navigationController pushViewController:nextVC animated:YES];
+    
 }
 
 - (void)ActionCounselBtn:(UIButton *)btn{
@@ -908,35 +923,38 @@
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
-
-        _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
-    }else{
-        
-        if ([self.isRecommend isEqualToString:@"NO"]) {
-            
-            _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
-        }
-    }
+//    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
+//
+//        _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+//    }else{
+//
+//        if ([self.isRecommend isEqualToString:@"NO"]) {
+//
+//            _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
+//        }
+//    }
     [self.view addSubview:_counselBtn];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(120 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_recommendBtn setTitle:@"快速推荐" forState:UIControlStateNormal];
+    [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
+    [self.view addSubview:_recommendBtn];
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         if ([self.isRecommend isEqualToString:@"NO"]) {
             
+            [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
         }else{
             
-            [self.view addSubview:_recommendBtn];
+            [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
+//            [self.view addSubview:_recommendBtn];
         }
     }else{
 
-
+        [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
     }
 }
 

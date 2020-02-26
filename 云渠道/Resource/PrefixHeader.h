@@ -94,6 +94,7 @@
 #define YJBlueBtnColor   COLOR(27, 152, 255, 1)
 #define CLBackColor  COLOR(242, 246, 247, 1)
 #define CLPlaceColor  COLOR(217, 208, 208, 1)
+#define CLOrangeColor  COLOR(253, 164, 51, 1)
 
 #define CLWhiteColor  [UIColor whiteColor]
 

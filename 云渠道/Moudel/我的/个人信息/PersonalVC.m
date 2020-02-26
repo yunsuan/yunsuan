@@ -11,6 +11,7 @@
 #import "ChangePassWordVC.h"
 #import "BirthVC.h"
 #import "ChangeNameVC.h"
+#import "ChangeWXCodeVC.h"
 #import "ChangeAddessVC.h"
 #import "MyCodeVC.h"
 
@@ -45,8 +46,8 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"云算号",@"我的二维码",@"姓名",@"电话号码",@"性别",@"出生年月",@"住址",@"修改密码",@"接收抢/派单消息"];
-    _contentArr = [[NSMutableArray alloc] initWithArray:@[@"云算号",@"",@"姓名",@"电话号码",@"性别",@"出生年月",@"住址",@"******",@""]];
+    _titleArr = @[@"云算号",@"我的二维码",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"修改密码",@"接收抢/派单消息"];
+    _contentArr = [[NSMutableArray alloc] initWithArray:@[@"云算号",@"",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"******",@""]];
     if ([UserInfoModel defaultModel].account.length) {
         
         _contentArr[0] = [UserInfoModel defaultModel].account;
@@ -59,23 +60,28 @@
         
         _contentArr[3] = [UserInfoModel defaultModel].tel;
     }
+    if ([UserInfoModel defaultModel].wx_code.length) {
+        
+        _contentArr[4] = [UserInfoModel defaultModel].wx_code;
+    }
     if (![UserInfoModel defaultModel].sex) {}
+    
     else {
 
         if ([[UserInfoModel defaultModel].sex integerValue] == 0) {
 
-            _contentArr[4] = @"性别";
+            _contentArr[5] = @"性别";
         } else if ([[UserInfoModel defaultModel].sex integerValue] == 1) {
 
-            _contentArr[4] = @"男";
+            _contentArr[5] = @"男";
         } else if ([[UserInfoModel defaultModel].sex integerValue] == 2) {
 
-            _contentArr[4] = @"女";
+            _contentArr[5] = @"女";
         }
     }
     if ([UserInfoModel defaultModel].birth.length) {
         
-        _contentArr[5] = [UserInfoModel defaultModel].birth;
+        _contentArr[6] = [UserInfoModel defaultModel].birth;
     }
     if ([UserInfoModel defaultModel].province.length && [UserInfoModel defaultModel].city.length && [UserInfoModel defaultModel].district.length) {
 
@@ -102,10 +108,10 @@
                                 
                                 if ([UserInfoModel defaultModel].absolute_address.length) {
                                     
-                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"], [UserInfoModel defaultModel].absolute_address];
+                                    _contentArr[7] = [NSString stringWithFormat:@"%@-%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"], [UserInfoModel defaultModel].absolute_address];
                                 }else{
                                     
-                                    _contentArr[6] = [NSString stringWithFormat:@"%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"]];
+                                    _contentArr[7] = [NSString stringWithFormat:@"%@-%@-%@", provice[i][@"name"], city[j][@"name"], area[k][@"name"]];
                                 }
                             }
                         }
@@ -145,7 +151,7 @@
 #pragma mark -- tableview
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 9;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -166,7 +172,7 @@
 
     cell.contentL.hidden = NO;
     cell.headImg.hidden = YES;
-    if (indexPath.row == 8) {
+    if (indexPath.row == 9) {
         
         cell.OnOff.hidden = NO;
 
@@ -219,7 +225,7 @@
         }
     };
 
-    cell.rightView.hidden = indexPath.row == 0 || indexPath.row == 4 || indexPath.row == 8;
+    cell.rightView.hidden = indexPath.row == 0 || indexPath.row == 5 || indexPath.row == 9;
     
     switch (indexPath.row) {
         case 0:
@@ -255,6 +261,14 @@
         }
         case 4:
         {
+            if ([UserInfoModel defaultModel].wx_code.length) {
+                
+                cell.contentL.text = [UserInfoModel defaultModel].wx_code;
+            }
+            break;
+        }
+        case 5:
+        {
             if ([UserInfoModel defaultModel].sex) {
                 
                 if ([[UserInfoModel defaultModel].sex integerValue] == 0) {
@@ -270,7 +284,7 @@
             }
             break;
         }
-        case 5:
+        case 6:
         {
             if ([UserInfoModel defaultModel].birth.length) {
                 
@@ -279,7 +293,7 @@
             }
             break;
         }
-        case 6:
+        case 7:
         {
 //            if ([UserInfoModel defaultModel].tel.length) {
 //
@@ -320,12 +334,12 @@
 
             break;
         }
-        case 7:
+        case 8:
         {
 
             break;
         }
-        case 8:{
+        case 9:{
             
             if ([[UserInfoModel defaultModel].is_accept_grab integerValue] == 1) {
                 
@@ -377,6 +391,19 @@
             break;
         }
         case 4:
+        {
+            ChangeWXCodeVC *nextVC = [[ChangeWXCodeVC alloc] initWithWX:[UserInfoModel defaultModel].wx_code];
+            nextVC.changeWXCodeVCBlock = ^{
+              
+                if (self.personalVCBlock) {
+                    
+                    self.personalVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+            break;
+        }
+        case 5:
         {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"性别" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             
@@ -437,25 +464,25 @@
             }];
             break;
         }
-        case 5:
+        case 6:
         {
             BirthVC *nextVC = [[BirthVC alloc] initWithTime:[UserInfoModel defaultModel].birth];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
-        case 6:
+        case 7:
         {
             ChangeAddessVC *nextVC = [[ChangeAddessVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
-        case 7:
+        case 8:
         {
             ChangePassWordVC *nextVC = [[ChangePassWordVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
-        case 8:{
+        case 9:{
             
             break;
         }
