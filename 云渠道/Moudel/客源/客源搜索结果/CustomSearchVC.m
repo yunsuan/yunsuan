@@ -203,18 +203,11 @@
     
     CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
     CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
-//    nextVC.navigationController.hi
-//    nextVC.navigationController.navigationBar.hidden = YES;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 
 - (void)initUI{
-    
-//    self.titleLabel.text = @"搜索结果";
-//    self.navBackgroundView.hidden = NO;
-//    self.leftButton.hidden = YES;
-//    self.view.backgroundColor = YJBackColor;
 
     
     _searchTable = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360*SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];

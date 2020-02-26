@@ -78,12 +78,9 @@
 #define TAB_BAR_HEIGHT ((IS_IPHONE_X==YES || IS_IPHONE_Xr ==YES || IS_IPHONE_Xs== YES || IS_IPHONE_Xs_Max== YES) ? 83.0 : 49.0)
 #define TAB_BAR_MORE ((IS_IPHONE_X==YES || IS_IPHONE_Xr ==YES || IS_IPHONE_Xs== YES || IS_IPHONE_Xs_Max== YES) ? 34.0 : 0)
 
-
-
 /**
  *  颜色
  */
-
 #define COLOR(_R,_G,_B,_A) [UIColor colorWithRed:_R / 255.0f green: _G / 255.0f blue:_B / 255.0f alpha:_A]
 #define YJBackColor  COLOR(240, 240, 240, 1)
 #define YJTitleLabColor  COLOR(51, 51, 51, 1)

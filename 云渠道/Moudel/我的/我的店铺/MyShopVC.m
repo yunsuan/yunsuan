@@ -8,6 +8,8 @@
 
 #import "MyShopVC.h"
 
+#import "MyShopProjectListVC.h"
+
 #import "BlueTitleMoreHeader.h"
 #import "MyShopHeader.h"
 
@@ -78,6 +80,12 @@
             
             header.titleL.text = @"客户评论";
         }
+        
+        header.blueTitleMoreHeaderBlock = ^{
+          
+            MyShopProjectListVC *nextVC = [[MyShopProjectListVC alloc] init];
+            [self.navigationController pushViewController:nextVC animated:YES];
+        };
         return header;
     }
 }

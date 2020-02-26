@@ -7,6 +7,10 @@
 //
 
 #import "CustomerListVC.h"
+
+//新房客户详情
+#import "NewCustomDetailVC.h"
+
 #import "CustomDetailVC.h"
 #import "AddCustomerVC.h"
 #import "PYSearchViewController.h"
@@ -439,20 +443,23 @@
             self.customerListVCCustomBlock(model);
             [self.navigationController popViewControllerAnimated:YES];
         }
-//        CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
-//        LookMaintainDetailAddFollowVC *nextVC = [[LookMaintainDetailAddFollowVC alloc] init];
-//        nextVC.isSelect = self.isSelect;
-//        nextVC.property = model.client_property_type;
-//        nextVC.clientId = model.client_id;
-//        [self.navigationController pushViewController:nextVC animated:YES];
     }else{
         
         CustomerTableModel *model = _dataArr[(NSUInteger) indexPath.row];
-        CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
-        nextVC.customType = model.client_type;
-        nextVC.hidesBottomBarWhenPushed = YES;
-        nextVC.model = model;
-        [self.navigationController pushViewController:nextVC animated:YES];
+        
+//        if ([model.client_type isEqualToString:@"新房"]) {
+//
+//            NewCustomDetailVC *nextVC = [[NewCustomDetailVC alloc] initWithClientId:model.client_id];
+//            nextVC.model = model;
+//            [self.navigationController pushViewController:nextVC animated:YES];
+//        }else{
+            
+            CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
+            nextVC.customType = model.client_type;
+            nextVC.hidesBottomBarWhenPushed = YES;
+            nextVC.model = model;
+            [self.navigationController pushViewController:nextVC animated:YES];
+//        }
     }
 }
 

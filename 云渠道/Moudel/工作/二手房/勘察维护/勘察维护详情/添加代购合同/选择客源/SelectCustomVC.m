@@ -434,9 +434,6 @@
         self.selectCustomVCBlock(model);
         [self.navigationController popViewControllerAnimated:YES];
     }
-//    CustomDetailVC *nextVC = [[CustomDetailVC alloc] initWithClientId:model.client_id];
-//    nextVC.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 

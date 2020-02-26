@@ -1030,7 +1030,14 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"客户详情";
 
-    self.rightBtn.hidden = YES;
+    if ([self.customType isEqualToString:@"新房"] && [[UserModel defaultModel].agent_identity integerValue] < 2) {
+        
+        self.rightBtn.hidden = NO;
+    }else{
+        
+        self.rightBtn.hidden = YES;
+    }
+    
     [self.rightBtn setImage:[UIImage imageNamed:@"add_3"] forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     

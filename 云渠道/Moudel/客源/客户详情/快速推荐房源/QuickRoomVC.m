@@ -26,18 +26,14 @@
 @interface QuickRoomVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,PYSearchViewControllerDelegate>
 {
     CustomRequireModel *_model;
-//    NSArray *_arr;
     BOOL _upAndDown;
     NSInteger _page;
-//    NSMutableDictionary *_parameter;
     NSMutableArray *_dataArr;
-//    NSString *_provice;
     NSString *_city;
     NSString *_cityName;
     NSString *_district;
     NSString *_price;
     NSString *_type;
-//    NSString *_more;
     NSString *_tag;
     NSString *_houseType;
     NSString *_status;

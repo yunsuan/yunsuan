@@ -231,6 +231,11 @@
 		0C4F16D8240515A800D1AAC4 /* MyShopCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16D7240515A700D1AAC4 /* MyShopCommentCell.m */; };
 		0C4F16DB240518A200D1AAC4 /* MyShopHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16DA240518A200D1AAC4 /* MyShopHeader.m */; };
 		0C4F16DF240659F200D1AAC4 /* MyShopProjectListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16DE240659F200D1AAC4 /* MyShopProjectListVC.m */; };
+		0C4F16E32406699B00D1AAC4 /* MyShopRoomListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16E22406699B00D1AAC4 /* MyShopRoomListVC.m */; };
+		0C4F16E7240669ED00D1AAC4 /* MyShopRoomDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16E6240669ED00D1AAC4 /* MyShopRoomDetailVC.m */; };
+		0C4F16ED24066C7000D1AAC4 /* NewCustomDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16EC24066C7000D1AAC4 /* NewCustomDetailVC.m */; };
+		0C4F16F02406710200D1AAC4 /* SecondCustomDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16EF2406710200D1AAC4 /* SecondCustomDetailVC.m */; };
+		0C4F16F3240677D500D1AAC4 /* RentCustomDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16F2240677D500D1AAC4 /* RentCustomDetailVC.m */; };
 		0C549CF221E59FAB004CFA66 /* CustomRecommendVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C549CF121E59FAB004CFA66 /* CustomRecommendVC.m */; };
 		0C549CFA21E5A06E004CFA66 /* RecommendWaitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C549CF921E5A06E004CFA66 /* RecommendWaitVC.m */; };
 		0C549CFD21E5A0AA004CFA66 /* RecommendComplaintVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C549CFC21E5A0AA004CFA66 /* RecommendComplaintVC.m */; };
@@ -1302,6 +1307,16 @@
 		0C4F16DA240518A200D1AAC4 /* MyShopHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShopHeader.m; sourceTree = "<group>"; };
 		0C4F16DD240659F200D1AAC4 /* MyShopProjectListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShopProjectListVC.h; sourceTree = "<group>"; };
 		0C4F16DE240659F200D1AAC4 /* MyShopProjectListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShopProjectListVC.m; sourceTree = "<group>"; };
+		0C4F16E12406699B00D1AAC4 /* MyShopRoomListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShopRoomListVC.h; sourceTree = "<group>"; };
+		0C4F16E22406699B00D1AAC4 /* MyShopRoomListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShopRoomListVC.m; sourceTree = "<group>"; };
+		0C4F16E5240669ED00D1AAC4 /* MyShopRoomDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShopRoomDetailVC.h; sourceTree = "<group>"; };
+		0C4F16E6240669ED00D1AAC4 /* MyShopRoomDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShopRoomDetailVC.m; sourceTree = "<group>"; };
+		0C4F16EB24066C7000D1AAC4 /* NewCustomDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewCustomDetailVC.h; sourceTree = "<group>"; };
+		0C4F16EC24066C7000D1AAC4 /* NewCustomDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewCustomDetailVC.m; sourceTree = "<group>"; };
+		0C4F16EE2406710200D1AAC4 /* SecondCustomDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondCustomDetailVC.h; sourceTree = "<group>"; };
+		0C4F16EF2406710200D1AAC4 /* SecondCustomDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondCustomDetailVC.m; sourceTree = "<group>"; };
+		0C4F16F1240677D500D1AAC4 /* RentCustomDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentCustomDetailVC.h; sourceTree = "<group>"; };
+		0C4F16F2240677D500D1AAC4 /* RentCustomDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentCustomDetailVC.m; sourceTree = "<group>"; };
 		0C549CF021E59FAB004CFA66 /* CustomRecommendVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomRecommendVC.h; sourceTree = "<group>"; };
 		0C549CF121E59FAB004CFA66 /* CustomRecommendVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomRecommendVC.m; sourceTree = "<group>"; };
 		0C549CF821E5A06E004CFA66 /* RecommendWaitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendWaitVC.h; sourceTree = "<group>"; };
@@ -4245,10 +4260,57 @@
 		0C4F16DC240659D700D1AAC4 /* 项目列表 */ = {
 			isa = PBXGroup;
 			children = (
+				0C4F16E02406698C00D1AAC4 /* 活动房源列表 */,
 				0C4F16DD240659F200D1AAC4 /* MyShopProjectListVC.h */,
 				0C4F16DE240659F200D1AAC4 /* MyShopProjectListVC.m */,
 			);
 			path = "项目列表";
+			sourceTree = "<group>";
+		};
+		0C4F16E02406698C00D1AAC4 /* 活动房源列表 */ = {
+			isa = PBXGroup;
+			children = (
+				0C4F16E4240669DD00D1AAC4 /* 活动房源详情 */,
+				0C4F16E12406699B00D1AAC4 /* MyShopRoomListVC.h */,
+				0C4F16E22406699B00D1AAC4 /* MyShopRoomListVC.m */,
+			);
+			path = "活动房源列表";
+			sourceTree = "<group>";
+		};
+		0C4F16E4240669DD00D1AAC4 /* 活动房源详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0C4F16E5240669ED00D1AAC4 /* MyShopRoomDetailVC.h */,
+				0C4F16E6240669ED00D1AAC4 /* MyShopRoomDetailVC.m */,
+			);
+			path = "活动房源详情";
+			sourceTree = "<group>";
+		};
+		0C4F16E824066BFE00D1AAC4 /* 新房客户详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0C4F16EB24066C7000D1AAC4 /* NewCustomDetailVC.h */,
+				0C4F16EC24066C7000D1AAC4 /* NewCustomDetailVC.m */,
+			);
+			path = "新房客户详情";
+			sourceTree = "<group>";
+		};
+		0C4F16E924066C0900D1AAC4 /* 二手房详情详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0C4F16EE2406710200D1AAC4 /* SecondCustomDetailVC.h */,
+				0C4F16EF2406710200D1AAC4 /* SecondCustomDetailVC.m */,
+			);
+			path = "二手房详情详情";
+			sourceTree = "<group>";
+		};
+		0C4F16EA24066C1400D1AAC4 /* 租房客户详情 */ = {
+			isa = PBXGroup;
+			children = (
+				0C4F16F1240677D500D1AAC4 /* RentCustomDetailVC.h */,
+				0C4F16F2240677D500D1AAC4 /* RentCustomDetailVC.m */,
+			);
+			path = "租房客户详情";
 			sourceTree = "<group>";
 		};
 		0C549CEF21E59F88004CFA66 /* 客户推荐 */ = {
@@ -7597,6 +7659,9 @@
 		102DF96B2057A0A200E1859C /* 客源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C4F16EA24066C1400D1AAC4 /* 租房客户详情 */,
+				0C4F16E924066C0900D1AAC4 /* 二手房详情详情 */,
+				0C4F16E824066BFE00D1AAC4 /* 新房客户详情 */,
 				0C4BEDEB2394F58600B0B398 /* 异地客源 */,
 				0CA37B7A20899329005609C7 /* 客源搜索结果 */,
 				105E18F3206B8FA60031558D /* 新增客户 */,
@@ -8740,6 +8805,7 @@
 				0CED0BD921E6E4000016A029 /* RecommendSuccessCell.m in Sources */,
 				0CD90A8320E1DB9B00061B4A /* ReportRoomDetailView.m in Sources */,
 				10F7D0D121F83B17007818E3 /* AddContractCell5.m in Sources */,
+				0C4F16F02406710200D1AAC4 /* SecondCustomDetailVC.m in Sources */,
 				0C2883B7210EB13B00F69C5F /* RentingRoomMaintainVC.m in Sources */,
 				0C9CD45621058184004894A3 /* RentingComRoomDetailVC.m in Sources */,
 				10174C0B2072179300D00B9A /* LicenceCell.m in Sources */,
@@ -8805,6 +8871,7 @@
 				0C342FBA207E01510058406D /* CustomRequireModel.m in Sources */,
 				10AEEE7321A2A0B20049625B /* MyTeamTableCell.m in Sources */,
 				0CC19D1D207205CA0007CC5F /* ChangeAddessVC.m in Sources */,
+				0C4F16F3240677D500D1AAC4 /* RentCustomDetailVC.m in Sources */,
 				0CDD6FEB20CFA6B400D6609C /* ReleaseSenceVC.m in Sources */,
 				0CDD700920CFFC5D00D6609C /* RoomReportWaitVC.m in Sources */,
 				0C1A013D20AC3F7700665BB9 /* ComfirmInValidVC.m in Sources */,
@@ -8829,6 +8896,7 @@
 				0C6BFEBD2313CD860079B304 /* NewDealRuleVC.m in Sources */,
 				0CE82234221F95A200576742 /* ConfirmPhoneVC.m in Sources */,
 				0CE47B69206B9E33001ADD73 /* PersonalTableCell.m in Sources */,
+				0C4F16E7240669ED00D1AAC4 /* MyShopRoomDetailVC.m in Sources */,
 				0C25223A215CCFC60031CC44 /* SecAllRoomStoreModel.m in Sources */,
 				0C0850D0214A6AAA0034ED44 /* CompleteSurveyOfficeVC.m in Sources */,
 				0C997B4E21C886D100F805AA /* RentingCompleteSurveyStoreVC.m in Sources */,
@@ -8896,6 +8964,7 @@
 				0C3062E320CE4ADD004D1996 /* SecdaryAllRoomVC.m in Sources */,
 				0C2AB00B224CB76F00136E4D /* RecommendInfoCell.m in Sources */,
 				0CDD702B20D2685F00D6609C /* SingleContentCell.m in Sources */,
+				0C4F16E32406699B00D1AAC4 /* MyShopRoomListVC.m in Sources */,
 				0C9CD40520FF2702004894A3 /* CountDownCell2.m in Sources */,
 				0CEBDE3420AE6F7B004BAF7A /* AddressChooseView3.m in Sources */,
 				0C9B01C2216B554A0055A9A8 /* SelectStoreCell.m in Sources */,
@@ -9256,6 +9325,7 @@
 				0C9CD459210581A1004894A3 /* RentingComRoomProjectVC.m in Sources */,
 				10DBB1F4207CCACE00CFE59D /* KyoCinameSeatScrollView.m in Sources */,
 				0CF04F4B207B36C100A45F4A /* ValidVC.m in Sources */,
+				0C4F16ED24066C7000D1AAC4 /* NewCustomDetailVC.m in Sources */,
 				0C36C5482242551E007BB162 /* TagView2.m in Sources */,
 				0C997C3921DC88D500F805AA /* RentingAddStoreRequireMentVC.m in Sources */,
 				0CDD706A20D39B9C00D6609C /* ReportFailComplaintVC.m in Sources */,
