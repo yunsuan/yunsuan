@@ -225,7 +225,6 @@
 		0C4F16C32404EB9000D1AAC4 /* ActiveRoomDetailHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16C22404EB9000D1AAC4 /* ActiveRoomDetailHeader.m */; };
 		0C4F16C62404F28000D1AAC4 /* ActionRoomDetailThreeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16C52404F28000D1AAC4 /* ActionRoomDetailThreeCell.m */; };
 		0C4F16C92404F2A900D1AAC4 /* ActionRoomDetailTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16C82404F2A900D1AAC4 /* ActionRoomDetailTwoCell.m */; };
-		0C4F16CD2404F95E00D1AAC4 /* ActiveRoomRecommendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16CC2404F95E00D1AAC4 /* ActiveRoomRecommendView.m */; };
 		0C4F16D12404FD0300D1AAC4 /* MyShopVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16D02404FD0300D1AAC4 /* MyShopVC.m */; };
 		0C4F16D52405156700D1AAC4 /* MyShopRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16D42405156700D1AAC4 /* MyShopRoomCell.m */; };
 		0C4F16D8240515A800D1AAC4 /* MyShopCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C4F16D7240515A700D1AAC4 /* MyShopCommentCell.m */; };
@@ -494,6 +493,7 @@
 		0CC3546E2216B9A600475324 /* ContractDetailMainContractVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC3546D2216B9A600475324 /* ContractDetailMainContractVC.m */; };
 		0CC354722216BD0100475324 /* MainContractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354712216BD0100475324 /* MainContractCell.m */; };
 		0CC354752216C81200475324 /* ThreePartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC354742216C81200475324 /* ThreePartView.m */; };
+		0CC4BBAB240761B8002A3E27 /* ActionRoomDetailRecommendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC4BBAA240761B8002A3E27 /* ActionRoomDetailRecommendCell.m */; };
 		0CC7E90222FD5EFC00AB0E1F /* UIImage+WaterImg.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC7E90122FD5EFC00AB0E1F /* UIImage+WaterImg.m */; };
 		0CCBA132225383FB004872A5 /* RecommendMoreInfoChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCBA131225383FB004872A5 /* RecommendMoreInfoChildVC.m */; };
 		0CD0BD88219E586700A95A87 /* SystemWorkWaitDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD0BD87219E586700A95A87 /* SystemWorkWaitDetailVC.m */; };
@@ -1295,8 +1295,6 @@
 		0C4F16C52404F28000D1AAC4 /* ActionRoomDetailThreeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionRoomDetailThreeCell.m; sourceTree = "<group>"; };
 		0C4F16C72404F2A900D1AAC4 /* ActionRoomDetailTwoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionRoomDetailTwoCell.h; sourceTree = "<group>"; };
 		0C4F16C82404F2A900D1AAC4 /* ActionRoomDetailTwoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionRoomDetailTwoCell.m; sourceTree = "<group>"; };
-		0C4F16CB2404F95E00D1AAC4 /* ActiveRoomRecommendView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActiveRoomRecommendView.h; sourceTree = "<group>"; };
-		0C4F16CC2404F95E00D1AAC4 /* ActiveRoomRecommendView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActiveRoomRecommendView.m; sourceTree = "<group>"; };
 		0C4F16CF2404FD0300D1AAC4 /* MyShopVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShopVC.h; sourceTree = "<group>"; };
 		0C4F16D02404FD0300D1AAC4 /* MyShopVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShopVC.m; sourceTree = "<group>"; };
 		0C4F16D32405156700D1AAC4 /* MyShopRoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShopRoomCell.h; sourceTree = "<group>"; };
@@ -1824,6 +1822,8 @@
 		0CC354712216BD0100475324 /* MainContractCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainContractCell.m; sourceTree = "<group>"; };
 		0CC354732216C81200475324 /* ThreePartView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreePartView.h; sourceTree = "<group>"; };
 		0CC354742216C81200475324 /* ThreePartView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThreePartView.m; sourceTree = "<group>"; };
+		0CC4BBA9240761B8002A3E27 /* ActionRoomDetailRecommendCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionRoomDetailRecommendCell.h; sourceTree = "<group>"; };
+		0CC4BBAA240761B8002A3E27 /* ActionRoomDetailRecommendCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionRoomDetailRecommendCell.m; sourceTree = "<group>"; };
 		0CC7E90022FD5EFC00AB0E1F /* UIImage+WaterImg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+WaterImg.h"; sourceTree = "<group>"; };
 		0CC7E90122FD5EFC00AB0E1F /* UIImage+WaterImg.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WaterImg.m"; sourceTree = "<group>"; };
 		0CCBA130225383FB004872A5 /* RecommendMoreInfoChildVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecommendMoreInfoChildVC.h; sourceTree = "<group>"; };
@@ -4203,7 +4203,6 @@
 		0C4F16BC2404EA6E00D1AAC4 /* 房源详情 */ = {
 			isa = PBXGroup;
 			children = (
-				0C4F16CA2404F94100D1AAC4 /* 推荐理由页面 */,
 				0C4F16C02404EB7700D1AAC4 /* view */,
 				0C4F16BD2404EA9000D1AAC4 /* ActiveRoomDetailVC.h */,
 				0C4F16BE2404EA9000D1AAC4 /* ActiveRoomDetailVC.m */,
@@ -4220,17 +4219,10 @@
 				0C4F16C52404F28000D1AAC4 /* ActionRoomDetailThreeCell.m */,
 				0C4F16C72404F2A900D1AAC4 /* ActionRoomDetailTwoCell.h */,
 				0C4F16C82404F2A900D1AAC4 /* ActionRoomDetailTwoCell.m */,
+				0CC4BBA9240761B8002A3E27 /* ActionRoomDetailRecommendCell.h */,
+				0CC4BBAA240761B8002A3E27 /* ActionRoomDetailRecommendCell.m */,
 			);
 			path = view;
-			sourceTree = "<group>";
-		};
-		0C4F16CA2404F94100D1AAC4 /* 推荐理由页面 */ = {
-			isa = PBXGroup;
-			children = (
-				0C4F16CB2404F95E00D1AAC4 /* ActiveRoomRecommendView.h */,
-				0C4F16CC2404F95E00D1AAC4 /* ActiveRoomRecommendView.m */,
-			);
-			path = "推荐理由页面";
 			sourceTree = "<group>";
 		};
 		0C4F16CE2404FCE300D1AAC4 /* 我的店铺 */ = {
@@ -9123,7 +9115,6 @@
 				0C3D3042218B06FA00B8B8C2 /* ReStatusTableCell.m in Sources */,
 				0C9CD42A21009CC4004894A3 /* MaintainInfoImgCollCell.m in Sources */,
 				0CF04F55207B3CFE00A45F4A /* confirmDetailVC.m in Sources */,
-				0C4F16CD2404F95E00D1AAC4 /* ActiveRoomRecommendView.m in Sources */,
 				0CA37B8B2089D511005609C7 /* BDDynamicTree.m in Sources */,
 				0CE8224D221FCCC500576742 /* ConfirmPhoneUseDetailVC.m in Sources */,
 				0C2883802109653100F69C5F /* RentingSurveyVC.m in Sources */,
@@ -9253,6 +9244,7 @@
 				0CB3E2F221FD80D2007D71CF /* SecondaryMatchHeader.m in Sources */,
 				100D8F7D2180189B006839EB /* HNChannelView.m in Sources */,
 				0CF04F34207B00F900A45F4A /* RecommendCollCell.m in Sources */,
+				0CC4BBAB240761B8002A3E27 /* ActionRoomDetailRecommendCell.m in Sources */,
 				0CDD6FDB20CF662D00D6609C /* BaseHeader.m in Sources */,
 				0C8E694F23B60F8A00FF41AA /* LookMaintainCustomDetailCell.m in Sources */,
 				0C38825321F83E0800359423 /* LookMaintainCell.m in Sources */,

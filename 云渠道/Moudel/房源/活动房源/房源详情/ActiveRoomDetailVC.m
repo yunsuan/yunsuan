@@ -14,6 +14,7 @@
 #import "ActionRoomDetailThreeCell.h"
 #import "ActionRoomDetailTwoCell.h"
 #import "SingleContentCell.h"
+#import "ActionRoomDetailRecommendCell.h"
 
 #import "YBImageBrowser.h"
 
@@ -22,6 +23,8 @@
     
     NSString *_house_id;
     NSString *_info_id;
+    NSString *_title;
+    NSString *_content;
     
     NSMutableDictionary *_dataDic;
     
@@ -60,6 +63,7 @@
 - (void)initDataSource{
     
     _dataDic = [@{} mutableCopy];
+    _imgArr = [@[] mutableCopy];
 }
 
 - (void)RequestMethod{
@@ -76,6 +80,27 @@
                     [_dataDic setValue:@"" forKey:key];
                 }
             }];
+            
+            if ([_dataDic[@"imgInfo"][@"51"] count]) {
+                
+                [_imgArr addObject:@{@"type":@"户型图",@"list":_dataDic[@"imgInfo"][@"51"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"52"] count]) {
+                
+                [_imgArr addObject:@{@"type":@"3D图",@"list":_dataDic[@"imgInfo"][@"52"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"53"] count]) {
+                
+                [_imgArr addObject:@{@"type":@"效果图",@"list":_dataDic[@"imgInfo"][@"53"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"54"] count]) {
+                
+                [_imgArr addObject:@{@"type":@"平面图",@"list":_dataDic[@"imgInfo"][@"54"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"55"] count]) {
+                
+                [_imgArr addObject:@{@"type":@"实景图",@"list":_dataDic[@"imgInfo"][@"55"]}];
+            }
             [_houseTable reloadData];
         }else{
             
@@ -89,12 +114,41 @@
 
 - (void)ActionRecommendBtn:(UIButton *)btn{
     
-    
+    if (!_title.length) {
+        
+        [self showContent:@"请输入推荐标题"];
+        return;
+    }
+    if (!_content.length) {
+        
+        [self showContent:@"请输入推荐理由"];
+        return;
+    }
+    _recommendBtn.userInteractionEnabled = NO;
+    [BaseRequest POST:ProjectAddRecommendHouse_URL parameters:@{@"project_id":self.project_id,@"house_id":_house_id,@"title":_title,@"comment":_content} success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [self showContent:@"保存成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }else{
+            
+            _recommendBtn.userInteractionEnabled = YES;
+            [self showContent:resposeObject[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+        _recommendBtn.userInteractionEnabled = YES;
+        [self showContent:@"网络错误"];
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
-    return 5;
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -114,106 +168,115 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    
+    if (section == 5) {
+        
+        return 0;
+    }
     return UITableViewAutomaticDimension;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (section == 0) {
+    if (section == 5) {
         
-        ActiveRoomDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ActiveRoomDetailHeader"];
-        if (!header) {
-            
-            header = [[ActiveRoomDetailHeader alloc] initWithReuseIdentifier:@"ActiveRoomDetailHeader"];
-        }
-        header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
-        header.activeRoomDetailHeaderImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {
-            
-            NSMutableArray *tempArr = [NSMutableArray array];
-            
-            NSMutableArray *tempArr1 = [NSMutableArray array];
-            for (NSDictionary *dic in imgArr) {
-                
-                for (NSDictionary *subDic in dic[@"list"]) {
-                    
-                    [tempArr1 addObject:subDic];
-                }
-            }
-            [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                YBImageBrowserModel *model = [YBImageBrowserModel new];
-                model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
-                if ([obj[@"img_url_3d"] length]) {
-                    
-                    model.third_URL = [NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url_3d"]];
-                }
-                
-                [tempArr addObject:model];
-            }];
-            
-            [_imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                
-                NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:obj];
-                [tempDic setObject:obj[@"type"] forKey:@"name"];
-                
-                [tempDic setObject:obj[@"list"] forKey:@"data"];
-                [_imgArr replaceObjectAtIndex:idx withObject:tempDic];
-                
-            }];
-            
-             YBImageBrowserModel *YBmodel = tempArr[num];
-            if (YBmodel.third_URL.length) {
-                
-                BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
-                nextVC.weburl = YBmodel.third_URL;
-                [self.navigationController pushViewController:nextVC animated:YES];
-            }else{
-            YBImageBrowser *browser = [YBImageBrowser new];
-            browser.delegate = self;
-            browser.dataArray = tempArr;
-            browser.albumArr = _imgArr;
-            browser.infoid = _info_id;
-            browser.currentIndex = num;
-            [browser show];
-            }
-        };
-        return header;
+        return nil;
     }else{
         
-        BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
-        if (!header) {
+        if (section == 0) {
             
-            header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
-        }
-        
-        if (section == 1) {
-            
-            header.titleL.text = @"房号：";
-            if ([_dataDic count]) {
+            ActiveRoomDetailHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ActiveRoomDetailHeader"];
+            if (!header) {
                 
-                header.titleL.text = [NSString stringWithFormat:@"房号：%@",_dataDic[@"house_name"]];
+                header = [[ActiveRoomDetailHeader alloc] initWithReuseIdentifier:@"ActiveRoomDetailHeader"];
             }
-        }else if (section == 2){
-            
-            header.titleL.text = @"价格：";
-            if ([_dataDic count]) {
+            header.imgArr = [NSMutableArray arrayWithArray:_imgArr];
+            header.activeRoomDetailHeaderImgBtnBlock = ^(NSInteger num, NSArray *imgArr) {
                 
-                header.titleL.text = [NSString stringWithFormat:@"价格：%@万",_dataDic[@"total_price"]];
-            }
-        }else if (section == 3){
-            
-            header.titleL.text = @"物业：";
-            if ([_dataDic count]) {
+                NSMutableArray *tempArr = [NSMutableArray array];
                 
-                header.titleL.text = [NSString stringWithFormat:@"物业：%@",_dataDic[@"property_type"]];
-            }
+                NSMutableArray *tempArr1 = [NSMutableArray array];
+                for (NSDictionary *dic in imgArr) {
+                    
+                    for (NSDictionary *subDic in dic[@"list"]) {
+                        
+                        [tempArr1 addObject:subDic];
+                    }
+                }
+                [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    
+                    YBImageBrowserModel *model = [YBImageBrowserModel new];
+                    model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
+                    if ([obj[@"img_url_3d"] length]) {
+                        
+                        model.third_URL = [NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url_3d"]];
+                    }
+                    
+                    [tempArr addObject:model];
+                }];
+                
+                [_imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    
+                    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:obj];
+                    [tempDic setObject:obj[@"type"] forKey:@"name"];
+                    
+                    [tempDic setObject:obj[@"list"] forKey:@"data"];
+                    [_imgArr replaceObjectAtIndex:idx withObject:tempDic];
+                    
+                }];
+                
+                 YBImageBrowserModel *YBmodel = tempArr[num];
+                if (YBmodel.third_URL.length) {
+                    
+                    BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
+                    nextVC.weburl = YBmodel.third_URL;
+                    [self.navigationController pushViewController:nextVC animated:YES];
+                }else{
+                YBImageBrowser *browser = [YBImageBrowser new];
+                browser.delegate = self;
+                browser.dataArray = tempArr;
+                browser.albumArr = _imgArr;
+                browser.infoid = _info_id;
+                browser.currentIndex = num;
+                [browser show];
+                }
+            };
+            return header;
         }else{
             
-            header.titleL.text = @"房源推荐：";
+            BaseHeader *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"BaseHeader"];
+            if (!header) {
+                
+                header = [[BaseHeader alloc] initWithReuseIdentifier:@"BaseHeader"];
+            }
             
+            if (section == 1) {
+                
+                header.titleL.text = @"房号：";
+                if ([_dataDic count]) {
+                    
+                    header.titleL.text = [NSString stringWithFormat:@"房号：%@",_dataDic[@"house_name"]];
+                }
+            }else if (section == 2){
+                
+                header.titleL.text = @"价格：";
+                if ([_dataDic count]) {
+                    
+                    header.titleL.text = [NSString stringWithFormat:@"价格：%@万",_dataDic[@"total_price"]];
+                }
+            }else if (section == 3){
+                
+                header.titleL.text = @"物业：";
+                if ([_dataDic count]) {
+                    
+                    header.titleL.text = [NSString stringWithFormat:@"物业：%@",_dataDic[@"property_type"]];
+                }
+            }else{
+                
+                header.titleL.text = @"房源推荐：";
+                
+            }
+            return header;
         }
-        return header;
     }
 }
 
@@ -241,7 +304,7 @@
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.oneL.text = [NSString stringWithFormat:@"计价规则：%@",_dataDic[@""]];
+            cell.oneL.text = [NSString stringWithFormat:@"计价规则：%@",[_dataDic[@"price_way"] integerValue] == 1?@"按建筑面积":@"按套内面积"];
             cell.twoL.text = [NSString stringWithFormat:@"单价：%@元/㎡",_dataDic[@"unit_price"]];
             return cell;
         }else if (indexPath.section == 4){
@@ -256,7 +319,7 @@
             
             cell.contentL.text = @"121231231231123123123123123123";
             return cell;
-        }else{
+        }else if (indexPath.section == 3 || indexPath.section == 1){
             
             ActionRoomDetailThreeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ActionRoomDetailThreeCell"];
             if (!cell) {
@@ -279,6 +342,26 @@
                 cell.threeL.text= [NSString stringWithFormat:@"公摊面积：%@㎡",_dataDic[@"public_size"]];
             }
             return cell;
+        }else{
+            
+            ActionRoomDetailRecommendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ActionRoomDetailRecommendCell"];
+            if (!cell) {
+                
+                cell = [[ActionRoomDetailRecommendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ActionRoomDetailRecommendCell"];
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+             
+            cell.actionRoomDetailRecommendCellBlock = ^(NSString *title, NSString *content) {
+                
+                _title = title;
+                _content = content;
+            };
+            
+            cell.contentTV.text = _content;
+            cell.titleTF.textfield.text = _title;
+            
+            return cell;
         }
     }
 }
@@ -288,7 +371,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"房间详情";
     
-    _houseTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
+    _houseTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     _houseTable.estimatedRowHeight = 150 *SIZE;
     _houseTable.rowHeight = UITableViewAutomaticDimension;
     _houseTable.backgroundColor = self.view.backgroundColor;

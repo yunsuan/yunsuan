@@ -14,7 +14,7 @@
 #pragma mark ---  基础接口  ---
 
 //新服务器
-static NSString *const TestBase_Net = @"http://47.107.246.94/";
+//static NSString *const TestBase_Net = @"http://47.107.246.94/";
 
 //获取版本
 static NSString *const Version_URL = @"getVersion";
@@ -329,6 +329,9 @@ static NSString *const ProjectGetProjectBuildUnitTitle_URL = @"user/project/getP
 
 //活动房源详情
 static NSString *const ProjectGetHouseDetail_URL = @"agent/project/getHouseDetail";
+
+//推荐房源添加
+static NSString *const ProjectAddRecommendHouse_URL = @"agent/project/addRecommendHouse";
 #pragma mark ---  消息  ---
 
 //获取消息未读数量

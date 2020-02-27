@@ -45,7 +45,7 @@
         make.left.equalTo(self.contentView).offset(10 *SIZE);
         make.top.equalTo(self.contentView).offset(10 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-10 *SIZE);
-        make.width.mas_equalTo(110 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
     }];
     
     [_twoL mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,7 +53,7 @@
         make.right.equalTo(self.contentView).offset(-10 *SIZE);
         make.top.equalTo(self.contentView).offset(10 *SIZE);
         make.bottom.equalTo(self.contentView).offset(-10 *SIZE);
-        make.width.mas_equalTo(110 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
     }];
 }
 

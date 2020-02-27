@@ -472,6 +472,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ActiveRoomDetailVC *nextVC = [[ActiveRoomDetailVC alloc] initWithHouseId:[NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"house_id"]] info_id:_info_id];
+    nextVC.project_id = _project_id;
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
@@ -576,6 +577,7 @@
         
         _boxView = [[BoxView alloc] initWithFrame:CGRectMake(0, 41 *SIZE + NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - (41 *SIZE + NAVIGATION_BAR_HEIGHT))];
         WS(weakSelf);
+        SS(strongSelf);
         _boxView.confirmBtnBlock = ^(NSString *ID,NSString *str) {
 
             if ([str isEqualToString:@"不限"]) {
@@ -584,6 +586,8 @@
                     
                     [weakSelf.buildBtn setTitle:@"楼栋" forState:UIControlStateNormal];
                     _buildStr = [NSString stringWithFormat:@"%@",ID];
+                    [strongSelf->_unitArr removeAllObjects];
+                    [strongSelf->_unitArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
                 }else if (_tag == 2){
                     
                     [weakSelf.unitBtn setTitle:@"单元" forState:UIControlStateNormal];
@@ -607,6 +611,24 @@
                     
                     [weakSelf.buildBtn setTitle:str forState:UIControlStateNormal];
                     _buildStr = [NSString stringWithFormat:@"%@",ID];
+                    for (int i = 0; i < _buildA.count; i++) {
+                        
+                        if ([_buildStr integerValue] == [_buildA[i][@"build_id"] integerValue]) {
+                            
+                            NSArray *arr = strongSelf->_buildA[i][@"uniList"];
+                            [strongSelf->_unitArr removeAllObjects];
+                            for (int j = 0; j < arr.count; j++) {
+                                
+                                [strongSelf->_unitArr addObject:@{@"id":arr[j][@"unit_id"],@"param":arr[j][@"unit_name"]}];
+                            }
+                            [strongSelf->_unitArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+                            break;
+                        }else{
+                            
+                            [strongSelf->_unitArr removeAllObjects];
+                            [strongSelf->_unitArr insertObject:@{@"id":@"0",@"param":@"不限"} atIndex:0];
+                        }
+                    }
                 }else if (_tag == 2){
                     
                     [weakSelf.unitBtn setTitle:str forState:UIControlStateNormal];

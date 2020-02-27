@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ActiveRoomDetailVC : BaseViewController
 
+@property (nonatomic, strong) NSString *project_id;
+
 - (instancetype)initWithHouseId:(NSString *)house_id info_id:(NSString *)info_id;
 
 
