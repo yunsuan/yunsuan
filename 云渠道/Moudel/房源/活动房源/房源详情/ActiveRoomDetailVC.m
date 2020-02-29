@@ -37,6 +37,8 @@
 
 @property (nonatomic, strong) UIButton *recommendBtn;
 
+@property (nonatomic, strong) UIButton *cancelBtn;
+
 @end
 
 @implementation ActiveRoomDetailVC
@@ -68,7 +70,7 @@
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ProjectGetHouseDetail_URL parameters:@{@"house_id":_house_id} success:^(id resposeObject) {
+    [BaseRequest GET:ProjectGetHouseDetail_URL parameters:@{@"house_id":_house_id,@"config_id":self.config_id} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -80,6 +82,15 @@
                     [_dataDic setValue:@"" forKey:key];
                 }
             }];
+            
+            if ([_dataDic[@"recommend_house_info"][@"recommend_id"] integerValue] != 0) {
+                           
+                _content = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"comment"]];
+                _title = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"title"]];
+                
+                self.cancelBtn.hidden = NO;
+                self.recommendBtn.frame = CGRectMake(120 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 240 *SIZE, 40 *SIZE + TAB_BAR_MORE);
+            }
             
             if ([_dataDic[@"imgInfo"][@"51"] count]) {
                 
@@ -124,25 +135,78 @@
         [self showContent:@"请输入推荐理由"];
         return;
     }
-    _recommendBtn.userInteractionEnabled = NO;
-    [BaseRequest POST:ProjectAddRecommendHouse_URL parameters:@{@"project_id":self.project_id,@"house_id":_house_id,@"title":_title,@"comment":_content} success:^(id resposeObject) {
-        
-        if ([resposeObject[@"code"] integerValue] == 200) {
+    
+    if ([_dataDic[@"recommend_house_info"][@"recommend_id"] integerValue] != 0) {
+    
+        _recommendBtn.userInteractionEnabled = NO;
+        [BaseRequest POST:ProjectUpdateRecommendHouse_URL parameters:@{@"recommend_id":[NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"recommend_id"]],@"house_id":_house_id,@"title":_title,@"comment":_content} success:^(id resposeObject) {
             
-            [self showContent:@"保存成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self.navigationController popViewControllerAnimated:YES];
-            });
-        }else{
+                [self showContent:@"保存成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }else{
+                
+                _recommendBtn.userInteractionEnabled = YES;
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
             
             _recommendBtn.userInteractionEnabled = YES;
-            [self showContent:resposeObject[@"msg"]];
-        }
-    } failure:^(NSError *error) {
+            [self showContent:@"网络错误"];
+        }];
+    }else{
         
-        _recommendBtn.userInteractionEnabled = YES;
-        [self showContent:@"网络错误"];
+        _recommendBtn.userInteractionEnabled = NO;
+        [BaseRequest POST:ProjectAddRecommendHouse_URL parameters:@{@"project_id":self.project_id,@"house_id":_house_id,@"title":_title,@"comment":_content,@"config_id":self.config_id} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self showContent:@"保存成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }else{
+                
+                _recommendBtn.userInteractionEnabled = YES;
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            _recommendBtn.userInteractionEnabled = YES;
+            [self showContent:@"网络错误"];
+        }];
+    }
+}
+
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    [self alertControllerWithNsstring:@"放弃推荐" And:@"该操作将会把该房间从我的店铺移除，是否继续？" WithCancelBlack:^{
+        
+    } WithDefaultBlack:^{
+        
+        if (![_dataDic count]) {
+            
+            [self showContent:@"未找到房间信息"];
+            return;
+        }
+        [BaseRequest POST:ProjectUpdateRecommendHouse_URL parameters:@{@"recommend_id":[NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"recommend_id"]],@"house_id":_house_id,@"is_recommend":@"0"} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
     }];
 }
 
@@ -317,7 +381,9 @@
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            cell.contentL.text = @"121231231231123123123123123123";
+            cell.contentL.font = [UIFont systemFontOfSize:11 *SIZE];
+            
+            cell.contentL.text = _dataDic[@"sell_point"];
             return cell;
         }else if (indexPath.section == 3 || indexPath.section == 1){
             
@@ -352,12 +418,20 @@
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
              
+            
             cell.actionRoomDetailRecommendCellBlock = ^(NSString *title, NSString *content) {
                 
                 _title = title;
                 _content = content;
             };
             
+            if (_content.length) {
+                
+                cell.commentPlaceL.hidden = YES;
+            }else{
+                
+                cell.commentPlaceL.hidden = NO;
+            }
             cell.contentTV.text = _content;
             cell.titleTF.textfield.text = _title;
             
@@ -371,6 +445,7 @@
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"房间详情";
     
+    
     _houseTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - 40 *SIZE - TAB_BAR_MORE) style:UITableViewStyleGrouped];
     _houseTable.estimatedRowHeight = 150 *SIZE;
     _houseTable.rowHeight = UITableViewAutomaticDimension;
@@ -381,12 +456,21 @@
     [self.view addSubview:_houseTable];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _recommendBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
+    _recommendBtn.frame = CGRectMake(0 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 360 *SIZE, 40 *SIZE + TAB_BAR_MORE);
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"一键保存到我的店铺" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.view addSubview:_recommendBtn];
+    
+    _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _cancelBtn.frame = CGRectMake(0 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 120 *SIZE, 40 *SIZE + TAB_BAR_MORE);
+    [_cancelBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_cancelBtn setTitle:@"取消推荐" forState:UIControlStateNormal];
+    [_cancelBtn setBackgroundColor:YJ170Color];
+    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+    _cancelBtn.hidden = YES;
+    [self.view addSubview:_cancelBtn];
 }
 
 @end

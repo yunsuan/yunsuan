@@ -30,7 +30,7 @@
         }
     }];
     
-    _roomNumL.text = @"01-01";
+    _roomNumL.text = dataDic[@"house_name"];
     _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",dataDic[@"house_type_name"]];
     _areaL.text = [NSString stringWithFormat:@"建面：%@㎡",dataDic[@"estimated_build_size"]];;
     _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"property_type"]];;
@@ -82,6 +82,7 @@
     
     _priceL = [[UILabel alloc] init];
     _priceL.textColor = CLOrangeColor;
+    _priceL.textAlignment = NSTextAlignmentRight;
     _priceL.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.contentView addSubview:_priceL];
     

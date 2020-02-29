@@ -19,6 +19,8 @@
         self.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
         self.layer.borderWidth = 1*SIZE;
         [self addSubview:self.content];
+        [self addSubview:self.placeL];
+        self.placeL.hidden = YES;
         [self addSubview:self.dropimg];
     }
     return self;

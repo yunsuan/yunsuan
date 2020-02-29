@@ -123,10 +123,13 @@
                 
             }
         }else{
+            
+            _page -= 1;
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
+        _page -= 1;
         [_searchTable.mj_footer endRefreshing];
 //        NSLog(@"%@",error.localizedDescription);
         [self showContent:@"网络错误"];

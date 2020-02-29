@@ -10,6 +10,8 @@
 
 #import "CityVC.h"
 
+#import "MyShopRoomListVC.h"
+
 #import "CompanyCell.h"
 #import "PeopleCell.h"
 
@@ -28,7 +30,7 @@
     
     NSString *_city;
     NSString *_cityName;
-    NSString *_district;
+//    NSString *_district;
     
     NSArray *_tagsArr;
     NSArray *_propertyArr;
@@ -54,15 +56,6 @@
 
 @property (nonatomic, strong) UIButton *sortBtn;
 
-//@property (nonatomic, strong) BoxAddressView *areaView;
-//
-//@property (nonatomic, strong) BoxView *priceView;
-//
-//@property (nonatomic, strong) BoxView *typeView;
-//
-//@property (nonatomic, strong) UIImageView *upImg;
-//
-//@property (nonatomic, strong) MoreView *moreView;
 
 @end
 
@@ -83,51 +76,140 @@
 
     _tagsArr = [self getDetailConfigArrByConfigState:PROJECT_TAGS_DEFAULT];
     _propertyArr = [self getDetailConfigArrByConfigState:PROPERTY_TYPE];
+
+    _dataArr = [@[] mutableCopy];
+    
+    NSArray *opencity =  [UserModel defaultModel].cityArr;
+    NSMutableArray *citycode = [NSMutableArray array];
+    for (int i = 0; i < opencity.count; i++) {
+        
+        [citycode addObject:opencity[i][@"city_code"]];
+    }
+    if ([citycode containsObject:[LocationManager GetCityCode]]) {
+        
+        [_cityBtn setTitle:[LocationManager GetCityName] forState:UIControlStateNormal];
+        _city = [LocationManager GetCityCode];
+        _cityName = [LocationManager GetCityName];
+    }
+    else
+    {
+        [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
+        _city = [NSString stringWithFormat:@"510100"];
+        _cityName = @"成都市";
+    }
+    [self RequestMethod];
+}
+
+- (void)RequestMethod{
+    
+    if (_page == 1) {
+        
+        self.MainTableView.mj_footer.state = MJRefreshStateIdle;
+    }
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
+    if (_city.length) {
+        
+        [dic setObject:_city forKey:@"city"];
+    }
+
+    
+    [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
+        
+        [self.MainTableView.mj_header endRefreshing];
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            [_dataArr removeAllObjects];
+            if ([resposeObject[@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"]];
+            }else{
+                
+                self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+            [self.MainTableView reloadData];
+        }else{
+            
+            [self showContent:resposeObject[@"msg"]];
+            self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+        }
+    } failure:^(NSError *error) {
+        
+        [self.MainTableView.mj_header endRefreshing];
+        [self showContent:@"网路错误"];
+    }];
+    
+}
+
+- (void)RequestAddMethod{
+    
+    _page += 1;
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"page":@(_page)}];
+    [dic setObject:[UserModel defaultModel].agent_id forKey:@"agent_id"];
+    if (_city.length) {
+        
+        [dic setObject:_city forKey:@"city"];
+    }
+    
+    [BaseRequest GET:ProjectList_URL parameters:dic success:^(id resposeObject) {
+        
+        if ([resposeObject[@"code"] integerValue] == 200) {
+            
+            if ([resposeObject[@"data"] count]) {
+                
+                [self SetData:resposeObject[@"data"]];
+                [self.MainTableView.mj_footer endRefreshing];
+            }else{
+                
+                self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+            }
+        }else{
+            
+            _page -= 1;
+            [self showContent:resposeObject[@"msg"]];
+            self.MainTableView.mj_footer.state = MJRefreshStateNoMoreData;
+        }
+    } failure:^(NSError *error) {
+        
+        _page -= 1;
+        [self showContent:@"网路错误"];
+        [self.MainTableView.mj_footer endRefreshing];
+    }];
+    
+}
+
+- (void)SetData:(NSArray *)data{
+    
+    for (int i = 0; i < data.count; i++) {
+        
+        NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:data[i]];
+        [tempDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[NSNull class]]) {
+                
+                [tempDic setObject:@"" forKey:key];
+            }
+        }];
+        
+        RoomListModel *model = [[RoomListModel alloc] initWithDictionary:tempDic];
+        
+        [_dataArr addObject:model];
+    }
+    
+    [self.MainTableView reloadData];
 }
 
 - (void)ActionCityBtn:(UIButton *)btn{
  
-    CityVC *nextVC = [[CityVC alloc] initWithLabel:@""];
+    CityVC *nextVC = [[CityVC alloc] initWithLabel:[LocationManager GetCityName]];
     nextVC.cityVCSaveBlock = ^(NSString *code, NSString *city) {
         
         [self.rightBtn setTitle:city forState:UIControlStateNormal];
         _city = [NSString stringWithFormat:@"%@",code];
         
-        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
-        
-        NSError *err;
-        NSArray *pro = [NSJSONSerialization JSONObjectWithData:JSONData
-                                                       options:NSJSONReadingMutableContainers
-                                                         error:&err];
-        NSMutableArray * tempArr;
-        for (NSDictionary *proDic in pro) {
-            
-            for (NSDictionary *cityDic in proDic[@"city"]) {
-                
-                if ([cityDic[@"code"] integerValue] == [_city integerValue]) {
-                    
-                    tempArr = [NSMutableArray arrayWithArray:cityDic[@"district"]];
-                    break;
-                }
-            }
-        }
-        [tempArr insertObject:@{@"code":@"0",@"name":@"不限"} atIndex:0];
-//        self.areaView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-//        [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//            if (idx == 0) {
-//
-//                [tempArr replaceObjectAtIndex:idx withObject:@(1)];
-//            }else{
-//
-//                [tempArr replaceObjectAtIndex:idx withObject:@(0)];
-//            }
-//
-//        }];
-//        self.areaView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-//        [self.areaView.mainTable reloadData];
-//
-//        [self RequestMethod];
+        [self RequestMethod];
     };
     nextVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:nextVC animated:YES];
@@ -140,7 +222,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 120*SIZE;
+    return 120 *SIZE;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -277,15 +359,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    RoomListModel *model = _dataArr[indexPath.row];
+    MyShopRoomListVC *nextVC = [[MyShopRoomListVC alloc] initWithProjectId:model.project_id info_id:model.info_id];
+    nextVC.projectName = model.project_name;
+    nextVC.myShopRoomListVCBlock = ^{
+      
+        self.myShopProjectListVCBlock();
+    };
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)initUI{
     
     self.titleLabel.text = @"新增推荐";
     self.rightBtn.hidden = NO;
-//    self.rightBtn.frame = CGRectMake(300 *SIZE, 19 *SIZE, 50 *SIZE, 21 *SIZE);
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:12 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionCityBtn:) forControlEvents:UIControlEventTouchUpInside];
+    self.rightBtn.frame = CGRectMake(SCREEN_Width - 65 *SIZE, 7 *SIZE + STATUS_BAR_HEIGHT, 60 *SIZE, 30 *SIZE);
     if ([LocationManager GetCityName]) {
         
         [self.rightBtn setTitle:[LocationManager GetCityName] forState:UIControlStateNormal];
@@ -294,9 +384,11 @@
         [self.rightBtn setTitle:@"选择城市" forState:UIControlStateNormal];
     }
     
-    [self.rightBtn setTitleColor:YJ86Color forState:UIControlStateNormal];
+    [self.rightBtn setBackgroundColor:YJBlueBtnColor];
+    self.rightBtn.layer.cornerRadius = 2 *SIZE;
+    self.rightBtn.clipsToBounds = YES;
     
-    _MainTableView =   [[UITableView alloc]initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT + 105*SIZE, 360*SIZE, SCREEN_Height-STATUS_BAR_HEIGHT-105*SIZE) style:UITableViewStylePlain];
+    _MainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360 *SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _MainTableView.backgroundColor = YJBackColor;
     _MainTableView.delegate = self;
     _MainTableView.dataSource = self;
@@ -304,12 +396,13 @@
     _MainTableView.mj_header = [GZQGifHeader headerWithRefreshingBlock:^{
         
         _page = 1;
-        
+        [self RequestMethod];
     }];
     
     _MainTableView.mj_footer = [GZQGifFooter footerWithRefreshingBlock:^{
         
-        
+        _page += 1;
+        [self RequestAddMethod];
     }];
     [self.view addSubview:_MainTableView];
 }

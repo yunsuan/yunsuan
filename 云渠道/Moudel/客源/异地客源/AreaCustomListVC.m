@@ -104,10 +104,12 @@
         }else{
             [self showContent:resposeObject[@"msg"]];
             
+            _page -= 1;
             [_table.mj_footer endRefreshing];
         }
     } failure:^(NSError *error) {
         
+        _page -= 1;
         [_table.mj_footer endRefreshing];
         [self showContent:@"网络错误"];
     }];

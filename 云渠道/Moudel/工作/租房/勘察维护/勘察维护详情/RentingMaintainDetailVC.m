@@ -1057,7 +1057,6 @@
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.rightBtn setImage:[UIImage imageNamed:@"add_1"] forState:UIControlStateNormal];
-    //    [self.rightBtn setTitle:@"下架" forState:UIControlStateNormal];
     
     _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
     _mainTable.rowHeight = UITableViewAutomaticDimension;

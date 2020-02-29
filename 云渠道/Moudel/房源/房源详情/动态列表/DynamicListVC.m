@@ -121,10 +121,12 @@
         }
         else{
             
+            _page -= 1;
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
+        _page -= 1;
         [_listTable.mj_footer endRefreshing];
         _listTable.mj_footer.state = MJRefreshStateNoMoreData;
         [self showContent:@"网络错误"];

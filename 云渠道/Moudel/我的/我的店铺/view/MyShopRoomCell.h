@@ -10,13 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^MyShopRoomCellBlock)(NSInteger index,NSInteger btn);
+
 @interface MyShopRoomCell : UITableViewCell
+
+@property (nonatomic, copy) MyShopRoomCellBlock myShopRoomCellBlock;
 
 @property (nonatomic, strong) UIImageView *roomImg;
 
 @property (nonatomic, strong) UIView *specialView;
 
 @property (nonatomic, strong) UILabel *specialL;
+
+@property (nonatomic, strong) UILabel *titleL;
 
 @property (nonatomic, strong) UILabel *roomNumL;
 
@@ -35,6 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *seeL;
 
 @property (nonatomic, strong) UIView *line;
+
+@property (nonatomic, strong) UIButton *upBtn;
+
+@property (nonatomic, strong) UIButton *downBtn;
 
 @property (nonatomic, strong) NSDictionary *dataDic;
 

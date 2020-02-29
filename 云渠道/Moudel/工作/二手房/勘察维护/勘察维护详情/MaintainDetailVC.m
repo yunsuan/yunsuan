@@ -146,7 +146,14 @@
         
         [_tagArr addObject:dic[@"tag_name"]];
     }
-    _selfArr = [NSMutableArray arrayWithArray:[_detailDic[@"extra_tags"] componentsSeparatedByString:@","]];
+    if ([_detailDic[@"extra_tags"] length]) {
+        
+         _selfArr = [NSMutableArray arrayWithArray:[_detailDic[@"extra_tags"] componentsSeparatedByString:@","]];
+    }else{
+        
+         _selfArr = [NSMutableArray arrayWithArray:@[]];
+    }
+   
     if ([data[@"house"] isKindOfClass:[NSDictionary class]]) {
         
         _houseDic = [NSMutableDictionary dictionaryWithDictionary:data[@"house"]];
@@ -1158,7 +1165,6 @@
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.rightBtn setImage:[UIImage imageNamed:@"add_1"] forState:UIControlStateNormal];
-//    [self.rightBtn setTitle:@"下架" forState:UIControlStateNormal];
     
     _mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStyleGrouped];
     _mainTable.rowHeight = UITableViewAutomaticDimension;

@@ -210,10 +210,12 @@
         }else{
             [self showContent:resposeObject[@"msg"]];
             
+            _page -= 1;
             [_customerTable.mj_footer endRefreshing];
         }
     } failure:^(NSError *error) {
         
+        _page -= 1;
         [_customerTable.mj_footer endRefreshing];
         //        NSLog(@"%@",error.localizedDescription);
         [self showContent:@"网络错误"];

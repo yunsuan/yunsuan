@@ -26,6 +26,8 @@ typedef void(^ActionRoomDetailRecommendCellBlock)(NSString *title, NSString *con
 
 @property (nonatomic, strong) UITextView *contentTV;
 
+@property (nonatomic, strong) UILabel *commentPlaceL;
+
 @end
 
 NS_ASSUME_NONNULL_END

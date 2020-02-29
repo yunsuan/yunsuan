@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *project_id;
 
+@property (nonatomic, strong) NSString *config_id;
+
 - (instancetype)initWithHouseId:(NSString *)house_id info_id:(NSString *)info_id;
 
 

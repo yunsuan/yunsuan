@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^MyShopRoomListVCBlock)(void);
+
 @interface MyShopRoomListVC : BaseViewController
+
+@property (nonatomic, strong) MyShopRoomListVCBlock myShopRoomListVCBlock;
+
+@property (nonatomic, strong) NSString *projectName;
 
 - (instancetype)initWithProjectId:(NSString *)project_id info_id:(NSString *)info_id;
 

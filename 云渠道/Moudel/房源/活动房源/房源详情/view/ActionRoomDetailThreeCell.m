@@ -26,7 +26,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
-        label.adjustsFontSizeToFitWidth = YES;
+//        label.adjustsFontSizeToFitWidth = YES;
         label.font = [UIFont systemFontOfSize:11 *SIZE];
         if (i == 0) {
             

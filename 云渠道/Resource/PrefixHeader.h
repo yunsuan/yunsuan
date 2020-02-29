@@ -92,6 +92,7 @@
 #define CLBackColor  COLOR(242, 246, 247, 1)
 #define CLPlaceColor  COLOR(217, 208, 208, 1)
 #define CLOrangeColor  COLOR(253, 164, 51, 1)
+#define CLGreenColor  COLOR(16, 142, 120, 1)
 
 #define CLWhiteColor  [UIColor whiteColor]
 

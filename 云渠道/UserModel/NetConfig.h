@@ -332,6 +332,27 @@ static NSString *const ProjectGetHouseDetail_URL = @"agent/project/getHouseDetai
 
 //推荐房源添加
 static NSString *const ProjectAddRecommendHouse_URL = @"agent/project/addRecommendHouse";
+
+#pragma mark ---  我的店铺 ---
+
+//我的店铺详情
+static NSString *const GetOnlineStoreInfo_URL = @"agent/getOnlineStoreInfo";
+
+//我的店铺标签、服务区域修改
+static NSString *const UpdateOnlineStoreInfo_URL = @"agent/updateOnlineStoreInfo";
+
+//推荐房源取消推荐、编辑、房源置顶
+static NSString *const ProjectUpdateRecommendHouse_URL = @"agent/project/updateRecommendHouse";
+
+//推荐房源列表
+static NSString *const GetRecommendHouseList_URL = @"agent/getRecommendHouseList";
+
+//针对经纪人评论列表
+static NSString *const GetCommentList_URL = @"agent/getCommentList";
+
+//经纪人添加回复
+static NSString *const AddRelyComment_URL = @"agent/addReplyComment";
+
 #pragma mark ---  消息  ---
 
 //获取消息未读数量

@@ -194,8 +194,10 @@
 {
     
     if ([[UserModel defaultModel].agent_identity integerValue] ==1) {
+        
         self.rightBtn.hidden = NO;
     }else{
+        
         self.rightBtn.hidden = YES;
     }
     

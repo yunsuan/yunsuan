@@ -26,7 +26,7 @@
         
         UILabel *label = [[UILabel alloc] init];
         label.textColor = YJTitleLabColor;
-        label.font = [UIFont systemFontOfSize:13 *SIZE];
+        label.font = [UIFont systemFontOfSize:11 *SIZE];
         if (i == 0) {
             
             _oneL = label;

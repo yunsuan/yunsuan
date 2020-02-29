@@ -121,10 +121,12 @@
             
         }else{
             
+            _page -= 1;
             [self showContent:resposeObject[@"msg"]];
         }
     } failure:^(NSError *error) {
         
+        _page -= 1;
         [self.MainTableView.mj_header endRefreshing];
         [self showContent:@"网络错误"];
     }];

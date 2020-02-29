@@ -34,6 +34,14 @@
 
 - (void)textViewDidChange:(UITextView *)textView{
     
+    if (textView.text.length) {
+        
+        _commentPlaceL.hidden = YES;
+    }else{
+        
+        _commentPlaceL.hidden = NO;
+    }
+    
     if (self.actionRoomDetailRecommendCellBlock) {
         
         self.actionRoomDetailRecommendCellBlock(_titleTF.textfield.text, _contentTV.text);
@@ -59,6 +67,9 @@
     _titleTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
     _titleTF.textfield.delegate = self;
     [_titleTF.textfield addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+    _titleTF.textfield.placeholder = @"如 特价房源、品牌开发商等";
+    _titleTF.textfield.textColor = YJTitleLabColor;
+    _titleTF.textfield.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.contentView addSubview:_titleTF];
     
     _contentTV = [[UITextView alloc] init];
@@ -67,7 +78,14 @@
     _contentTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _contentTV.layer.borderWidth = 1*SIZE;
     _contentTV.delegate = self;
+    _contentTV.textColor = YJTitleLabColor;
     [self.contentView addSubview:_contentTV];
+    
+    _commentPlaceL = [[UILabel alloc] initWithFrame:CGRectMake(5 *SIZE, 8 *SIZE, 200 *SIZE, 13 *SIZE)];
+    _commentPlaceL.textColor = YJ170Color;
+    _commentPlaceL.text = @"如 室内明亮、户型方正等";
+    _commentPlaceL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [_contentTV addSubview:_commentPlaceL];
     
     [self MasonryUI];
 }

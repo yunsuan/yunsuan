@@ -8,12 +8,15 @@
 
 #import "MyShopRoomDetailVC.h"
 
+#import "MyShopVC.h"
 
 #import "YBImageBrowser.h"
 
 #import "BuildingAlbumCollCell.h"
 
-@interface MyShopRoomDetailVC ()<UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,YBImageBrowserDelegate>
+#import "BorderTF.h"
+
+@interface MyShopRoomDetailVC ()<UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource,YBImageBrowserDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     
     NSInteger _num;
@@ -39,7 +42,31 @@
 
 @property (nonatomic, strong) YBImageBrowser *browser;
 
+@property (nonatomic, strong) UILabel *propertyL;
+
+@property (nonatomic, strong) UILabel *attentL;
+
+@property (nonatomic, strong) UILabel *seeL;
+
+@property (nonatomic, strong) UILabel *roomNumL;
+
+@property (nonatomic, strong) UILabel *priceL;
+
+@property (nonatomic, strong) UILabel *areaL;
+
+@property (nonatomic, strong) UILabel *projectL;
+
+@property (nonatomic, strong) UILabel *titleL;
+
+@property (nonatomic, strong) BorderTF *titleTF;
+
+@property (nonatomic, strong) UILabel *commentL;
+
+@property (nonatomic, strong) UITextView *commentTV;
+
 @property (nonatomic, strong) UIButton *recommendBtn;
+
+@property (nonatomic, strong) UIButton *cancelBtn;
 
 @end
 
@@ -67,11 +94,14 @@
 - (void)initDataSource{
     
     _dataDic = [@{} mutableCopy];
+    
+    _imgArr = [@[] mutableCopy];
+    _allArr = [@[] mutableCopy];
 }
 
 - (void)RequestMethod{
     
-    [BaseRequest GET:ProjectGetHouseDetail_URL parameters:@{@"house_id":_house_id} success:^(id resposeObject) {
+    [BaseRequest GET:ProjectGetHouseDetail_URL parameters:@{@"house_id":_house_id,@"config_id":self.config_id} success:^(id resposeObject) {
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -83,6 +113,43 @@
                     [_dataDic setValue:@"" forKey:key];
                 }
             }];
+            
+            _propertyL.text = _dataDic[@"property_type"];
+            _attentL.text = [NSString stringWithFormat:@"关注：%@",_dataDic[@"collect_num"]];
+            _seeL.text = [NSString stringWithFormat:@"浏览：%@",_dataDic[@"browse_num"]];
+            
+            _roomNumL.text = [NSString stringWithFormat:@"房号：%@%@%@",_dataDic[@"build_name"],[_dataDic[@"unit_name"] length]?[NSString stringWithFormat:@"%@",_dataDic[@"unit_name"]]:@"",_dataDic[@"house_name"]];
+            _priceL.text = [NSString stringWithFormat:@"价格：%@万",_dataDic[@"total_price"]];
+            _areaL.text = [NSString stringWithFormat:@"面积：%@㎡",_dataDic[@"build_size"]];
+            
+            if ([_dataDic[@"recommend_house_info"][@"recommend_id"] integerValue] != 0) {
+                
+                _commentTV.text = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"comment"]];
+                _titleTF.textfield.text = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"title"]];
+                self.rightBtn.hidden = NO;
+            }
+            
+            if ([_dataDic[@"imgInfo"][@"51"] count]) {
+                           
+                [_imgArr addObject:@{@"type":@"户型图",@"list":_dataDic[@"imgInfo"][@"51"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"52"] count]) {
+                           
+                [_imgArr addObject:@{@"type":@"3D图",@"list":_dataDic[@"imgInfo"][@"52"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"53"] count]) {
+                           
+                [_imgArr addObject:@{@"type":@"效果图",@"list":_dataDic[@"imgInfo"][@"53"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"54"] count]) {
+                           
+                [_imgArr addObject:@{@"type":@"平面图",@"list":_dataDic[@"imgInfo"][@"54"]}];
+            }
+            if ([_dataDic[@"imgInfo"][@"55"] count]) {
+                           
+                [_imgArr addObject:@{@"type":@"实景图",@"list":_dataDic[@"imgInfo"][@"55"]}];
+            }
+            [self setImgArr:_imgArr];
         }else{
             
             [self showContent:resposeObject[@"msg"]];
@@ -95,63 +162,241 @@
 
 - (void)ActionRecommendBtn:(UIButton *)btn{
     
+    if (!_titleTF.textfield.text.length) {
+        
+        [self showContent:@"请输入推荐标题"];
+        return;
+    }
+    if (!_commentTV.text.length) {
+        
+        [self showContent:@"请输入推荐理由"];
+        return;
+    }
+    if ([_dataDic[@"recommend_house_info"][@"recommend_id"] integerValue] != 0) {
+        
+        _recommendBtn.userInteractionEnabled = NO;
+        [BaseRequest POST:ProjectUpdateRecommendHouse_URL parameters:@{@"recommend_id":[NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"recommend_id"]],@"house_id":_house_id,@"title":_titleTF.textfield.text,@"comment":_commentTV.text} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self showContent:@"保存成功"];
+                if (self.myShopRoomDetailVCBlock) {
+                    
+                    self.myShopRoomDetailVCBlock();
+                }
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
+                        
+                        if ([vc isKindOfClass:[MyShopVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                    }
+                });
+            }else{
+                
+                _recommendBtn.userInteractionEnabled = YES;
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            _recommendBtn.userInteractionEnabled = YES;
+            [self showContent:@"网络错误"];
+        }];
+    }else{
+        
+        _recommendBtn.userInteractionEnabled = NO;
+        [BaseRequest POST:ProjectAddRecommendHouse_URL parameters:@{@"project_id":self.project_id,@"house_id":_house_id,@"title":_titleTF.textfield.text,@"comment":_commentTV.text,@"config_id":self.config_id} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                [self showContent:@"保存成功"];
+                if (self.myShopRoomDetailVCBlock) {
+                    
+                    self.myShopRoomDetailVCBlock();
+                }
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    
+                    for (UIViewController *vc in self.navigationController.viewControllers) {
+                        
+                        if ([vc isKindOfClass:[MyShopVC class]]) {
+                            
+                            [self.navigationController popToViewController:vc animated:YES];
+                        }
+                    }
+                });
+            }else{
+                
+                _recommendBtn.userInteractionEnabled = YES;
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            _recommendBtn.userInteractionEnabled = YES;
+            [self showContent:@"网络错误"];
+        }];
+    }
+}
+
+- (void)setImgArr:(NSMutableArray *)imgArr{
     
+    if (!imgArr.count) {
+        
+        UIImageView *img = [[UIImageView alloc] initWithFrame:_scrollView.frame];
+        img.contentMode = UIViewContentModeScaleAspectFill;
+        img.image = [UIImage imageNamed:@"default_3"];
+        img.clipsToBounds = YES;
+        [self.view addSubview:img];
+    }
+    _imgArr = [NSMutableArray arrayWithArray:imgArr];
+    for ( int i = 0; i < imgArr.count; i++) {
+        
+        if ([imgArr[i] isKindOfClass:[NSDictionary class]]) {
+            
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:imgArr[i]];
+            
+            if ([tempDic[@"list"] count]) {
+                for (int j = 0; j < [tempDic[@"list"] count]; j++) {
+                    
+                    _total = _total + 1;
+                    [_allArr addObject:tempDic[@"list"][j]];
+                }
+            }else{
+                
+                _total += 1;
+                [_allArr addObject:@{@"img_url":@"default_3"}];
+            }
+        }
+    }
+    [_scrollView setContentSize:CGSizeMake(SCREEN_Width * _total, _scrollView.frame.size.height)];
+    
+    for (int i = 0; i < _total; i++) {
+        
+        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_Width * i, 0, SCREEN_Width, _scrollView.frame.size.height)];
+        img.backgroundColor = YJTitleLabColor;
+        img.contentMode = UIViewContentModeScaleAspectFill;
+        img.clipsToBounds = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionImgBtn:)];
+        [img addGestureRecognizer:tap];
+        img.userInteractionEnabled = YES;
+        [_scrollView addSubview:img];
+        
+        if ([_allArr[i][@"img_url"] isEqualToString:@"default_3"]) {
+            
+            img.image = [UIImage imageNamed:@"default_3"];
+        }else{
+            
+            [img sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_allArr[i][@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_3"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                
+                if (error) {
+                    
+                    img.image = [UIImage imageNamed:@"default_3"];
+                }
+            }];
+            if ([_allArr[i][@"img_url_3d"] length]) {
+                
+                UIImageView *img2 = [[UIImageView alloc] init];
+                img2.bounds = CGRectMake(0, 0, 60 *SIZE, 60 *SIZE);
+                img2.center = _scrollView.center;
+                img2.image = [UIImage imageNamed:@"3D"];
+                [img addSubview:img2];
+            }
+        }
+        
+    }
+    [_imgColl reloadData];
+    [_imgColl selectItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:NO scrollPosition:0];
 }
 
 - (void)ActionImgBtn:(UIButton *)btn{
     
-//    NSMutableArray *tempArr = [NSMutableArray array];
-//
-//    NSMutableArray *tempArr1 = [NSMutableArray array];
-//    for (NSDictionary *dic in _imgArr) {
-//
-//        for (NSDictionary *subDic in dic[@"list"]) {
-//
-//            [tempArr1 addObject:subDic];
-//        }
-//    }
-//    [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//        YBImageBrowserModel *model = [YBImageBrowserModel new];
-//        model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
-//        if ([obj[@"img_url_3d"] length]) {
-//
-//            model.third_URL = [NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url_3d"]];
-//        }
-//
-//        [tempArr addObject:model];
-//    }];
-//
-//    [_imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:obj];
-//        [tempDic setObject:obj[@"type"] forKey:@"name"];
-//
-//        [tempDic setObject:obj[@"list"] forKey:@"data"];
-//        [_imgArr replaceObjectAtIndex:idx withObject:tempDic];
-//
-//    }];
-//
-//     YBImageBrowserModel *YBmodel = tempArr[num];
-//    if (YBmodel.third_URL.length) {
-//
-//        BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
-//        nextVC.weburl = YBmodel.third_URL;
-//        [self.navigationController pushViewController:nextVC animated:YES];
-//    }else{
-//    YBImageBrowser *browser = [YBImageBrowser new];
-//    browser.delegate = self;
-//    browser.dataArray = tempArr;
-//    browser.albumArr = _imgArr;
-//    browser.infoid = _info_id;
-//    browser.currentIndex = num;
-//    [browser show];
-//    }
+    NSMutableArray *tempArr = [NSMutableArray array];
+
+    NSMutableArray *tempArr1 = [NSMutableArray array];
+    for (NSDictionary *dic in _imgArr) {
+
+        for (NSDictionary *subDic in dic[@"list"]) {
+
+            [tempArr1 addObject:subDic];
+        }
+    }
+    [tempArr1 enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        YBImageBrowserModel *model = [YBImageBrowserModel new];
+        model.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url"]]];
+        if ([obj[@"img_url_3d"] length]) {
+
+            model.third_URL = [NSString stringWithFormat:@"%@%@",TestBase_Net,obj[@"img_url_3d"]];
+        }
+
+        [tempArr addObject:model];
+    }];
+
+    [_imgArr enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithDictionary:obj];
+        [tempDic setObject:obj[@"type"] forKey:@"name"];
+
+        [tempDic setObject:obj[@"list"] forKey:@"data"];
+        [_imgArr replaceObjectAtIndex:idx withObject:tempDic];
+
+    }];
+
+     YBImageBrowserModel *YBmodel = tempArr[_num];
+    if (YBmodel.third_URL.length) {
+
+        BuildingAlbumVC *nextVC = [[BuildingAlbumVC alloc] init];
+        nextVC.weburl = YBmodel.third_URL;
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else{
+        
+        YBImageBrowser *browser = [YBImageBrowser new];
+        browser.delegate = self;
+        browser.dataArray = tempArr;
+        browser.albumArr = _imgArr;
+        browser.infoid = _info_id;
+        browser.currentIndex = _num;
+        [browser show];
+    }
 }
+
+- (void)ActionMoreBtn:(UIButton *)btn{
+    
+    [self alertControllerWithNsstring:@"放弃推荐" And:@"该操作将会把该房间从我的店铺移除，是否继续？" WithCancelBlack:^{
+        
+    } WithDefaultBlack:^{
+        
+        if (![_dataDic count]) {
+            
+            [self showContent:@"未找到房间信息"];
+            return;
+        }
+        [BaseRequest POST:ProjectUpdateRecommendHouse_URL parameters:@{@"recommend_id":[NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"recommend_id"]],@"house_id":_house_id,@"is_recommend":@"0"} success:^(id resposeObject) {
+            
+            if ([resposeObject[@"code"] integerValue] == 200) {
+                
+                if (self.myShopRoomDetailVCBlock) {
+                    
+                    self.myShopRoomDetailVCBlock();
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                
+                [self showContent:resposeObject[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+            [self showContent:@"网络错误"];
+        }];
+    }];
+}
+
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-    _num = (scrollView.contentOffset.x / SCREEN_Width) + 1;
+    _num = (scrollView.contentOffset.x / SCREEN_Width);
     _nowNum = scrollView.contentOffset.x / SCREEN_Width;
     NSInteger count = 0;
     for (int i = 0; i < _imgArr.count; i++) {
@@ -159,7 +404,7 @@
         
         if ([_imgArr[i][@"list"] count]) {
             
-            if (([_imgArr[i][@"list"] count]  + count)< _num) {
+            if (([_imgArr[i][@"list"] count]  + count)< _num + 1) {
                 
                 count = count + [_imgArr[i][@"list"] count];
             }else{
@@ -169,7 +414,7 @@
             }
         }else{
             
-            if ((1  + count)< _num) {
+            if ((1  + count)< _num + 1) {
                 
                 count = count + 1;
             }else{
@@ -237,6 +482,9 @@
     
     self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"房间详情";
+
+    
+    self.view.backgroundColor = CLWhiteColor;
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, 202.5 *SIZE)];
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -264,6 +512,85 @@
     [_imgColl registerClass:[BuildingAlbumCollCell class] forCellWithReuseIdentifier:@"BuildingAlbumCollCell"];
     [self.view addSubview:_imgColl];
     
+    _roomNumL = [[UILabel alloc] init];
+    _roomNumL.textColor = YJTitleLabColor;
+    _roomNumL.adjustsFontSizeToFitWidth = YES;
+    _roomNumL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _roomNumL.text = @"房号：";
+    [self.view addSubview:_roomNumL];
+    
+    _propertyL = [[UILabel alloc] init];
+    _propertyL.textColor = CLWhiteColor;
+    _propertyL.adjustsFontSizeToFitWidth = YES;
+    _propertyL.textAlignment = NSTextAlignmentCenter;
+    _propertyL.backgroundColor = YJBlueBtnColor;
+    _propertyL.layer.cornerRadius = 2 *SIZE;
+    _propertyL.clipsToBounds = YES;
+    _propertyL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [self.view addSubview:_propertyL];
+    
+    _priceL = [[UILabel alloc] init];
+    _priceL.textColor = YJTitleLabColor;
+//    _priceL.adjustsFontSizeToFitWidth = YES;
+    _priceL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _priceL.text = @"价格：";
+    [self.view addSubview:_priceL];
+    
+    _attentL = [[UILabel alloc] init];
+    _attentL.textColor = YJTitleLabColor;
+    _attentL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _attentL.text = @"关注：";
+    _attentL.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:_attentL];
+    
+    _areaL = [[UILabel alloc] init];
+    _areaL.textColor = YJTitleLabColor;
+    _areaL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _areaL.text = @"面积：";
+    [self.view addSubview:_areaL];
+    
+    _seeL = [[UILabel alloc] init];
+    _seeL.textColor = YJTitleLabColor;
+    _seeL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _seeL.text = @"浏览：";
+    _seeL.textAlignment = NSTextAlignmentRight;
+    [self.view addSubview:_seeL];
+    
+    _projectL = [[UILabel alloc] init];
+    _projectL.textColor = YJTitleLabColor;
+    _projectL.adjustsFontSizeToFitWidth = YES;
+    _projectL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _projectL.text = [NSString stringWithFormat:@"所属项目：%@",self.projectName];
+    [self.view addSubview:_projectL];
+    
+    _titleL = [[UILabel alloc] init];
+    _titleL.textColor = YJTitleLabColor;
+    _titleL.adjustsFontSizeToFitWidth = YES;
+    _titleL.font = [UIFont systemFontOfSize:11 *SIZE];
+    _titleL.text = @"推荐标题：";
+    [self.view addSubview:_titleL];
+    
+    _commentL = [[UILabel alloc] init];
+    _commentL.textColor = YJTitleLabColor;
+    _commentL.adjustsFontSizeToFitWidth = YES;
+    _commentL.text = @"推荐理由：";
+    _commentL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [self.view addSubview:_commentL];
+    
+    _titleTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
+    _titleTF.backgroundColor = CLWhiteColor;
+    _titleTF.textfield.delegate = self;
+//    [_titleTF.textfield addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+    [self.view addSubview:_titleTF];
+    
+    _commentTV = [[UITextView alloc] init];
+    _commentTV.clipsToBounds = YES;
+    _commentTV.layer.cornerRadius = 5*SIZE;
+    _commentTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
+    _commentTV.layer.borderWidth = 1*SIZE;
+    _commentTV.delegate = self;
+    [self.view addSubview:_commentTV];
+    
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -271,5 +598,94 @@
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.view addSubview:_recommendBtn];
+    
+    _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _cancelBtn.frame = CGRectMake(0 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 120 *SIZE, 40 *SIZE + TAB_BAR_MORE);
+    [_cancelBtn addTarget:self action:@selector(ActionMoreBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_cancelBtn setTitle:@"取消推荐" forState:UIControlStateNormal];
+    [_cancelBtn setBackgroundColor:YJ170Color];
+    _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+    [self.view addSubview:_cancelBtn];
+    
+    [_roomNumL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self.view).offset(212.5 *SIZE + NAVIGATION_BAR_HEIGHT);
+        make.width.mas_equalTo(280 *SIZE);
+    }];
+    
+    [_propertyL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.view).offset(-10 *SIZE);
+        make.top.equalTo(self.view).offset(212.5 *SIZE + NAVIGATION_BAR_HEIGHT);
+        make.width.mas_equalTo(60 *SIZE);
+        make.height.mas_equalTo(20 *SIZE);
+    }];
+    
+    [_priceL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self->_roomNumL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_attentL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.view).offset(-10 *SIZE);
+        make.top.equalTo(self->_roomNumL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_areaL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self->_priceL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_seeL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.right.equalTo(self.view).offset(-10 *SIZE);
+        make.top.equalTo(self->_priceL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(150 *SIZE);
+    }];
+    
+    [_projectL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self->_areaL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(340 *SIZE);
+    }];
+    
+    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self->_projectL.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_titleTF mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(80 *SIZE);
+        make.top.equalTo(self->_projectL.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(33 *SIZE);
+    }];
+    
+    [_commentL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(10 *SIZE);
+        make.top.equalTo(self->_titleTF.mas_bottom).offset(15 *SIZE);
+        make.width.mas_equalTo(70 *SIZE);
+    }];
+    
+    [_commentTV mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.equalTo(self.view).offset(80 *SIZE);
+        make.top.equalTo(self->_titleTF.mas_bottom).offset(10 *SIZE);
+        make.width.mas_equalTo(258 *SIZE);
+        make.height.mas_equalTo(70 *SIZE);
+    }];
 }
+
 @end

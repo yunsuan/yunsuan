@@ -70,6 +70,8 @@
 
 @property (nonatomic, strong) UIButton *recommendBtn;
 
+@property (nonatomic, strong) UIButton *roomBtn;
+
 @property (nonatomic, strong) UIView *parting;
 
 @property (nonatomic, strong) UIButton *counselBtn;
@@ -226,7 +228,19 @@
                 
                 [self SetData:resposeObject[@"data"]];
                 
-                
+                if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
+                        
+                    if ([self.isRecommend isEqualToString:@"NO"]) {
+                            
+                        [_recommendBtn setTitle:[NSString stringWithFormat:@"推荐房源(%@)",resposeObject[@"data"][@"recommend_house_num"]] forState:UIControlStateNormal];
+                    }else{
+                            
+                        [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
+                    }
+                }else{
+
+                    [_recommendBtn setTitle:[NSString stringWithFormat:@"推荐房源(%@)",resposeObject[@"data"][@"recommend_house_num"]] forState:UIControlStateNormal];
+                }
 //                JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
 //
 //                event.eventID = @"项目浏览次数";
@@ -402,8 +416,8 @@
             
         if ([self.isRecommend isEqualToString:@"NO"]) {
                 
-            ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
-            [self.navigationController pushViewController:nextVC animated:YES];
+//            ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
+//            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
 
             CustomListVC *nextVC = [[CustomListVC alloc] initWithProjectId:_projectId];
@@ -412,11 +426,16 @@
         }
     }else{
 
-        ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        
     }
     
     
+}
+
+- (void)ActionRoomBtn:(UIButton *)btn{
+    
+    ActiveRoomListVC *nextVC = [[ActiveRoomListVC alloc] initWithProjectId:_projectId info_id:_info_id];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)ActionCounselBtn:(UIButton *)btn{
@@ -923,39 +942,47 @@
     [_counselBtn setTitle:@"电话咨询" forState:UIControlStateNormal];
     [_counselBtn setBackgroundColor:COLOR(255, 188, 88, 1)];
     [_counselBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
-//
-//        _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
-//    }else{
-//
-//        if ([self.isRecommend isEqualToString:@"NO"]) {
-//
-//            _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width, 47 *SIZE + TAB_BAR_MORE);
-//        }
-//    }
+    if ([[UserModel defaultModel].agent_identity integerValue] == 2 || [[UserModel defaultModel].agent_identity integerValue] == 3) {
+
+        _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width - 120 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+    }else{
+
+        if ([self.isRecommend isEqualToString:@"NO"]) {
+
+            _counselBtn.frame = CGRectMake(0, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, SCREEN_Width - 120 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+        }
+    }
     [self.view addSubview:_counselBtn];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _recommendBtn.frame = CGRectMake(120 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 240 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+    _recommendBtn.frame = CGRectMake(120 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 120 *SIZE, 47 *SIZE + TAB_BAR_MORE);
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
     [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
-    [self.view addSubview:_recommendBtn];
+//    [self.view addSubview:_recommendBtn];
     if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
         
         if ([self.isRecommend isEqualToString:@"NO"]) {
             
-            [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
+//            [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
         }else{
             
-            [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
-//            [self.view addSubview:_recommendBtn];
+//            [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
+            [self.view addSubview:_recommendBtn];
         }
     }else{
 
-        [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
+//        [_recommendBtn setTitle:@"推荐房源" forState:UIControlStateNormal];
     }
+    
+    _roomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _roomBtn.frame = CGRectMake(240 *SIZE, self.view.frame.size.height - NAVIGATION_BAR_HEIGHT - 47 *SIZE - TAB_BAR_MORE, 120 *SIZE, 47 *SIZE + TAB_BAR_MORE);
+    _roomBtn.titleLabel.font = [UIFont systemFontOfSize:14 *SIZE];
+    [_roomBtn addTarget:self action:@selector(ActionRoomBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [_roomBtn setTitle:@"房源推荐" forState:UIControlStateNormal];
+    [_roomBtn setBackgroundColor:CLGreenColor];
+    [self.view addSubview:_roomBtn];
 }
 
 

@@ -473,6 +473,7 @@
     
     ActiveRoomDetailVC *nextVC = [[ActiveRoomDetailVC alloc] initWithHouseId:[NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"house_id"]] info_id:_info_id];
     nextVC.project_id = _project_id;
+    nextVC.config_id = [NSString stringWithFormat:@"%@",_dataArr[indexPath.row][@"config_id"]];
     [self.navigationController pushViewController:nextVC animated:YES];
 }
 
