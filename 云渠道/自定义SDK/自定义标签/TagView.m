@@ -65,6 +65,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     singleviewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"singleviewCell" forIndexPath:indexPath];
+    
     [cell setstylebytype:_type andsetlab:_data[indexPath.row]];
     return cell;
 }

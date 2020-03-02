@@ -82,9 +82,8 @@
     [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:15 *SIZE];
     [self.rightBtn addTarget:self action:@selector(ActionRightBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.rightBtn setBackgroundColor:YJBlueBtnColor];
-    self.rightBtn.layer.cornerRadius = 2 *SIZE;
-    self.rightBtn.clipsToBounds = YES;
+    [self.rightBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
+    
     self.rightBtn.frame = CGRectMake(SCREEN_Width - 65 *SIZE, 7 *SIZE + STATUS_BAR_HEIGHT, 60 *SIZE, 30 *SIZE);
     
     [self.view addSubview:self.whiteView];

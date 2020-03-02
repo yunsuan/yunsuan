@@ -213,9 +213,7 @@
     [self.rightBtn setTitle:@"查看历史" forState:UIControlStateNormal];
     self.rightBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     self.rightBtn.frame = CGRectMake(SCREEN_Width - 65 *SIZE, 7 *SIZE + STATUS_BAR_HEIGHT, 60 *SIZE, 30 *SIZE);
-    [self.rightBtn setBackgroundColor:YJBlueBtnColor];
-    self.rightBtn.layer.cornerRadius = 2 *SIZE;
-    self.rightBtn.clipsToBounds = YES;
+    [self.rightBtn setTitleColor:YJContentLabColor forState:UIControlStateNormal];
     
     _MainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, 360 *SIZE, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _MainTableView.backgroundColor = YJBackColor;

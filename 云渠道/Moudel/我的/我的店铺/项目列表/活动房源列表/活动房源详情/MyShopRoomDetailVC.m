@@ -64,6 +64,8 @@
 
 @property (nonatomic, strong) UITextView *commentTV;
 
+@property (nonatomic, strong) UILabel *commentPlaceL;
+
 @property (nonatomic, strong) UIButton *recommendBtn;
 
 @property (nonatomic, strong) UIButton *cancelBtn;
@@ -126,7 +128,10 @@
                 
                 _commentTV.text = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"comment"]];
                 _titleTF.textfield.text = [NSString stringWithFormat:@"%@",_dataDic[@"recommend_house_info"][@"title"]];
-                self.rightBtn.hidden = NO;
+                self.cancelBtn.hidden = NO;
+                self.recommendBtn.frame = CGRectMake(120 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 240 *SIZE, 40 *SIZE + TAB_BAR_MORE);
+                [self.recommendBtn setTitle:@"保  存" forState:UIControlStateNormal];
+                _commentPlaceL.hidden = YES;
             }
             
             if ([_dataDic[@"imgInfo"][@"51"] count]) {
@@ -427,6 +432,17 @@
     
 }
 
+- (void)textViewDidChange:(UITextView *)textView{
+    
+    if (textView.text.length) {
+        
+        _commentPlaceL.hidden = YES;
+    }else{
+        
+        _commentPlaceL.hidden = NO;
+    }
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
     return _imgArr.count;
@@ -580,7 +596,9 @@
     _titleTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
     _titleTF.backgroundColor = CLWhiteColor;
     _titleTF.textfield.delegate = self;
-//    [_titleTF.textfield addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+    _titleTF.textfield.placeholder = @"如 特价房源、品牌开发商等";
+    _titleTF.textfield.textColor = YJTitleLabColor;
+    _titleTF.textfield.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.view addSubview:_titleTF];
     
     _commentTV = [[UITextView alloc] init];
@@ -589,7 +607,14 @@
     _commentTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _commentTV.layer.borderWidth = 1*SIZE;
     _commentTV.delegate = self;
+    _commentTV.textColor = YJTitleLabColor;
     [self.view addSubview:_commentTV];
+    
+    _commentPlaceL = [[UILabel alloc] initWithFrame:CGRectMake(5 *SIZE, 8 *SIZE, 200 *SIZE, 13 *SIZE)];
+    _commentPlaceL.textColor = YJ170Color;
+    _commentPlaceL.text = @"如 室内明亮、户型方正等";
+    _commentPlaceL.font = [UIFont systemFontOfSize:11 *SIZE];
+    [_commentTV addSubview:_commentPlaceL];
     
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(0, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, SCREEN_Width, 40 *SIZE + TAB_BAR_MORE);
@@ -605,6 +630,7 @@
     [_cancelBtn setTitle:@"取消推荐" forState:UIControlStateNormal];
     [_cancelBtn setBackgroundColor:YJ170Color];
     _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
+    _cancelBtn.hidden = YES;
     [self.view addSubview:_cancelBtn];
     
     [_roomNumL mas_makeConstraints:^(MASConstraintMaker *make) {

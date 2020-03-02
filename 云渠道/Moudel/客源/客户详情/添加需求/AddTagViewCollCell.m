@@ -38,10 +38,11 @@
 
 - (UILabel *)displayLabel{
     if (!_displayLabel) {
-        _displayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0*SIZE, 17 *SIZE, self.contentView.frame.size.width , 12*SIZE)];
+        _displayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0*SIZE, 17 *SIZE, self.contentView.frame.size.width - 4 *SIZE, 12*SIZE)];
         _displayLabel.textAlignment = NSTextAlignmentCenter;
         _displayLabel.font = [UIFont systemFontOfSize:13*SIZE];
         _displayLabel.textColor = COLOR(115, 115, 115, 1);
+        _displayLabel.numberOfLines = 0;
     }
     return _displayLabel;
 }

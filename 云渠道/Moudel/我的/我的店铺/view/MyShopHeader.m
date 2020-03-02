@@ -14,7 +14,8 @@
 @interface MyShopHeader ()<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 {
     
-    NSMutableArray *_tagArr;
+    NSMutableArray *_tagArr1;
+    NSMutableArray *_addressArr1;
 }
 @end
 
@@ -33,8 +34,8 @@
 
 - (void)initDataSource{
     
-    _tagArr = [@[] mutableCopy];
-    _addressArr = [@[] mutableCopy];
+    _tagArr1 = [@[] mutableCopy];
+    _addressArr1 = [@[] mutableCopy];
 }
 
 - (void)setDataDic:(NSDictionary *)dataDic{
@@ -48,7 +49,7 @@
 
 - (void)setTagArr:(NSArray *)tagArr{
     
-    _tagArr = [NSMutableArray arrayWithArray:tagArr];
+    _tagArr1 = [NSMutableArray arrayWithArray:tagArr];
     [_propertyColl reloadData];
     [self reloadInputViews];
     [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -58,7 +59,7 @@
 
 - (void)setAddressArr:(NSArray *)addressArr{
     
-    _addressArr = [NSMutableArray arrayWithArray:addressArr];
+    _addressArr1 = [NSMutableArray arrayWithArray:addressArr];
     [_addressColl reloadData];
     [self reloadInputViews];
     [_addressColl mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -96,10 +97,10 @@
     
     if (collectionView == _addressColl) {
         
-        return _addressArr.count;
+        return _addressArr1.count;
     }else{
         
-        return _tagArr.count;
+        return _tagArr1.count;
     }
     
 }
@@ -109,11 +110,14 @@
     if (collectionView == _addressColl) {
         
         AddTagViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddTagViewCollCell" forIndexPath:indexPath];
+        if (!cell) {
             
+            cell = [[AddTagViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 100 *SIZE, 37 *SIZE)];
+        }
         cell.tag = indexPath.item;
         cell.cancelBtn.hidden = NO;
             
-        [cell setstylebytype:@"0" andsetlab:_addressArr[(NSUInteger) indexPath.item]];
+        [cell setstylebytype:@"0" andsetlab:_addressArr1[(NSUInteger) indexPath.item]];
         cell.displayLabel.adjustsFontSizeToFitWidth = YES;
         cell.deleteBtnBlock = ^(NSUInteger index) {
             
@@ -126,12 +130,15 @@
     }else{
         
         AddTagViewCollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AddTagViewCollCell" forIndexPath:indexPath];
-        
+        if (!cell) {
+            
+            cell = [[AddTagViewCollCell alloc] initWithFrame:CGRectMake(0, 0, 100 *SIZE, 37 *SIZE)];
+        }
         cell.tag = indexPath.item;
         cell.cancelBtn.hidden = NO;
         
         cell.displayLabel.adjustsFontSizeToFitWidth = YES;
-        [cell setstylebytype:@"0" andsetlab:_tagArr[(NSUInteger) indexPath.item]];
+        [cell setstylebytype:@"0" andsetlab:_tagArr1[(NSUInteger) indexPath.item]];
         
         cell.deleteBtnBlock = ^(NSUInteger index) {
         
@@ -208,10 +215,10 @@
     [self.contentView addSubview:_propertyColl];
     
     _addressLayout = [[GZQFlowLayout alloc] initWithType:AlignWithLeft betweenOfCell:4 *SIZE];
-    _addressLayout.itemSize = CGSizeMake(100 *SIZE, 37*SIZE);
+    _addressLayout.itemSize = CGSizeMake(340 *SIZE, 37*SIZE);
 //    _addressLayout.itemSize = CGSizeMake(280 *SIZE, 20*SIZE);
     
-    _addressColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 0, 280 *SIZE, 20 *SIZE) collectionViewLayout:_addressLayout];
+    _addressColl = [[UICollectionView alloc] initWithFrame:CGRectMake(10 *SIZE, 0, 340 *SIZE, 20 *SIZE) collectionViewLayout:_addressLayout];
     _addressColl.backgroundColor = [UIColor whiteColor];
     _addressColl.delegate = self;
     _addressColl.dataSource = self;

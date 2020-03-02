@@ -29,16 +29,20 @@
     [self removeFromSuperview];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+- (void)ActionTap{
     
     [self removeFromSuperview];
 }
+
 
 - (void)initUI{
     
     UIView *alphaView = [[UIView alloc] initWithFrame:self.bounds];
     alphaView.backgroundColor = [UIColor blackColor];
     alphaView.alpha = 0.4;
+    alphaView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+    [alphaView addGestureRecognizer:tap];
     [self addSubview:alphaView];
     
     _backView = [[UIView alloc] init];

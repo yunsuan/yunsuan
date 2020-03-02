@@ -276,6 +276,7 @@
                         
                         if ([resposeObject[@"code"] integerValue] == 200) {
                             
+                            [_buildArr removeAllObjects];
                             _buildA = resposeObject[@"data"];
                             for (int i = 0; i < _buildA.count; i++) {
                                 
