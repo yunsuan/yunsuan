@@ -17,6 +17,7 @@
     NSMutableArray *_dataArr;
     NSInteger _page;
     NSString *_str;
+    NSInteger _status;
 }
 @property (nonatomic , strong) UITableView *searchTable;
 
@@ -24,12 +25,13 @@
 
 @implementation CustomSearchVC
 
-- (instancetype)initWithTitle:(NSString *)str
+- (instancetype)initWithTitle:(NSString *)str status:(NSInteger )status
 {
     self = [super init];
     if (self) {
         
         _str = str;
+        _status = status;
         self.title = @"搜索结果";
     }
     return self;
@@ -47,7 +49,17 @@
 - (void)RequestMethod{
     
     _searchTable.mj_footer.state = MJRefreshStateIdle;
-    NSDictionary *dic = @{@"search":_str};
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"search":_str}];
+    if (_status == 0) {
+        
+        [dic setObject:@"184" forKey:@"client_type"];
+    }else if (_status == 1){
+        
+        [dic setObject:@"185" forKey:@"client_type"];
+    }else{
+        
+        [dic setObject:@"186" forKey:@"client_type"];
+    }
     [BaseRequest GET:ListClient_URL parameters:dic success:^(id resposeObject) {
         
         [_searchTable.mj_header endRefreshing];
@@ -91,12 +103,20 @@
 - (void)RequestAddMethod{
     
     _page += 1;
-    NSDictionary *dic = @{@"search":self.title,
-                          @"page":@(_page)
-                          };
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:@{@"search":_str,@"page":@(_page)}];
+    if (_status == 0) {
+        
+        [dic setObject:@"184" forKey:@"client_type"];
+    }else if (_status == 1){
+        
+        [dic setObject:@"185" forKey:@"client_type"];
+    }else{
+        
+        [dic setObject:@"186" forKey:@"client_type"];
+    }
+    
     [BaseRequest GET:ListClient_URL parameters:dic success:^(id resposeObject) {
         
-        [_searchTable.mj_footer endRefreshing];
         
         if ([resposeObject[@"code"] integerValue] == 200) {
             
@@ -109,7 +129,8 @@
                 if ([resposeObject[@"data"][@"data"] isKindOfClass:[NSArray class]]) {
                     
                     if ([resposeObject[@"data"][@"data"] count]) {
-                        
+                    
+                        [_searchTable.mj_footer endRefreshing];
                         [self SetData:resposeObject[@"data"][@"data"]];
                         
                     }else{
@@ -118,12 +139,15 @@
                     }
                 }else{
 
+                    [_searchTable.mj_footer endRefreshing];
                 }
             }else{
                 
+                [_searchTable.mj_footer endRefreshing];
             }
         }else{
             
+            [_searchTable.mj_footer endRefreshing];
             _page -= 1;
             [self showContent:resposeObject[@"msg"]];
         }

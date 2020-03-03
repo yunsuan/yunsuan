@@ -180,6 +180,7 @@
 		0C342FB7207DEB540058406D /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C342FB6207DEB540058406D /* BaseModel.m */; };
 		0C342FBA207E01510058406D /* CustomRequireModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C342FB9207E01510058406D /* CustomRequireModel.m */; };
 		0C342FD02080ACD50058406D /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C342FCF2080ACD50058406D /* UserInfoModel.m */; };
+		0C351479240E0617001A91D6 /* ChangeSelfDescVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C351478240E0617001A91D6 /* ChangeSelfDescVC.m */; };
 		0C36C52A2241EA68007BB162 /* GZQFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C5292241EA68007BB162 /* GZQFlowLayout.m */; };
 		0C36C52E2241EB87007BB162 /* TagCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C52C2241EB87007BB162 /* TagCollCell.m */; };
 		0C36C5452242551E007BB162 /* TagViewCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C36C53E2242551E007BB162 /* TagViewCollCell.m */; };
@@ -1222,6 +1223,8 @@
 		0C342FB9207E01510058406D /* CustomRequireModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomRequireModel.m; sourceTree = "<group>"; };
 		0C342FCE2080ACD50058406D /* UserInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoModel.h; sourceTree = "<group>"; };
 		0C342FCF2080ACD50058406D /* UserInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoModel.m; sourceTree = "<group>"; };
+		0C351477240E0617001A91D6 /* ChangeSelfDescVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangeSelfDescVC.h; sourceTree = "<group>"; };
+		0C351478240E0617001A91D6 /* ChangeSelfDescVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangeSelfDescVC.m; sourceTree = "<group>"; };
 		0C36C5282241EA68007BB162 /* GZQFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZQFlowLayout.h; sourceTree = "<group>"; };
 		0C36C5292241EA68007BB162 /* GZQFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZQFlowLayout.m; sourceTree = "<group>"; };
 		0C36C52C2241EB87007BB162 /* TagCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagCollCell.m; sourceTree = "<group>"; };
@@ -2894,6 +2897,7 @@
 		0C0B82122063A08900238D4F /* 个人信息 */ = {
 			isa = PBXGroup;
 			children = (
+				0C351476240E05FD001A91D6 /* 个人签名 */,
 				0C4C481A23FE63FE00561E27 /* 微信 */,
 				0CF04F74207C8C1900A45F4A /* 我的二维码 */,
 				0CC19D1A207205BA0007CC5F /* 修改住址 */,
@@ -3974,6 +3978,15 @@
 				0C314A482185AB7400F69F09 /* ModifyNerborVC.m */,
 			);
 			path = "修改左云右算";
+			sourceTree = "<group>";
+		};
+		0C351476240E05FD001A91D6 /* 个人签名 */ = {
+			isa = PBXGroup;
+			children = (
+				0C351477240E0617001A91D6 /* ChangeSelfDescVC.h */,
+				0C351478240E0617001A91D6 /* ChangeSelfDescVC.m */,
+			);
+			path = "个人签名";
 			sourceTree = "<group>";
 		};
 		0C36C5272241EA68007BB162 /* flowLayout */ = {
@@ -9506,6 +9519,7 @@
 				0CE49DE92398952D00F20716 /* AreaCustomDetailVC.m in Sources */,
 				10F7D0D821F86C59007818E3 /* ContractDetailVC.m in Sources */,
 				102DF97C2057A20100E1859C /* LoginVC.m in Sources */,
+				0C351479240E0617001A91D6 /* ChangeSelfDescVC.m in Sources */,
 				0C3AD5652069DADC0059CE02 /* RoomDetailTableCell3.m in Sources */,
 				0C15A1F52118348A00544F2E /* RentingMaintainAddFollowVC.m in Sources */,
 				0CE49DE42396521E00F20716 /* ZZQAvatarPicker.m in Sources */,

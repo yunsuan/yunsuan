@@ -1,16 +1,16 @@
 //
-//  ChangeWXCodeVC.m
+//  ChangeSelfDescVC.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2020/2/20.
+//  Created by 谷治墙 on 2020/3/3.
 //  Copyright © 2020 xiaoq. All rights reserved.
 //
 
-#import "ChangeWXCodeVC.h"
+#import "ChangeSelfDescVC.h"
 
-@interface ChangeWXCodeVC (){
+@interface ChangeSelfDescVC (){
     
-    NSString *_wx;
+    NSString *_self_desc;
 }
 @property (nonatomic, strong) UIView *whiteView;
 
@@ -18,14 +18,14 @@
 
 @end
 
-@implementation ChangeWXCodeVC
+@implementation ChangeSelfDescVC
 
-- (instancetype)initWithWX:(NSString *)wxCode
+- (instancetype)initWithDesc:(NSString *)self_desc
 {
     self = [super init];
     if (self) {
         
-        _wx = wxCode;
+        _self_desc = self_desc;
     }
     return self;
 }
@@ -48,16 +48,16 @@
     
     if (_nameTF.text.length && ![self isEmpty:_nameTF.text]) {
         
-        NSDictionary *dic = @{@"wx_code":_nameTF.text};
+        NSDictionary *dic = @{@"self_desc":_nameTF.text};
         [BaseRequest POST:UpdatePersonal_URL parameters:dic success:^(id resposeObject) {
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [UserInfoModel defaultModel].wx_code = _nameTF.text;
+                [UserInfoModel defaultModel].self_desc = _nameTF.text;
                 [UserModelArchiver infoArchive];
-                if (self.changeWXCodeVCBlock) {
+                if (self.changeSelfDescVCBlock) {
                     
-                    self.changeWXCodeVCBlock();
+                    self.changeSelfDescVCBlock();
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -75,7 +75,7 @@
 
 - (void)initUI{
     
-    self.titleLabel.text = @"微信号";
+    self.titleLabel.text = @"个性签名";
     self.navBackgroundView.hidden = NO;
     
     self.rightBtn.hidden = NO;
@@ -97,8 +97,8 @@
         
         _nameTF = [[UITextField alloc] initWithFrame:CGRectMake(10 *SIZE, 0, 340 *SIZE, 50 *SIZE)];
         _nameTF.font = [UIFont systemFontOfSize:13 *SIZE];
-        _nameTF.placeholder = @"请输入微信号";
-        _nameTF.text = _wx;
+        _nameTF.placeholder = @"个性签名";
+        _nameTF.text = _self_desc;
     }
     return _nameTF;
 }

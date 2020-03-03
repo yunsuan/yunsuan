@@ -41,7 +41,7 @@
     _projectlab.font = [UIFont systemFontOfSize:12*SIZE];
     _projectlab.textColor = YJContentLabColor;
     [backview addSubview:_projectlab];
-    _timelab = [[UILabel alloc]initWithFrame:CGRectMake(270*SIZE, 92.7*SIZE, 115*SIZE, 14*SIZE)];
+    _timelab = [[UILabel alloc]initWithFrame:CGRectMake(230*SIZE, 92.7*SIZE, 100 *SIZE, 14*SIZE)];
     _timelab.font = [UIFont systemFontOfSize:12*SIZE];
     _timelab.textColor = YJContentLabColor;
     _timelab.textAlignment = NSTextAlignmentRight;

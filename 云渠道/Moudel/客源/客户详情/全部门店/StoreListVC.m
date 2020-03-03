@@ -192,7 +192,6 @@
     
     NSDictionary *dic;
     
-    _page += 1;
     if (_area.length) {
         
         dic = @{@"province":_province,

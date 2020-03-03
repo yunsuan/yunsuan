@@ -10,6 +10,6 @@
 
 @interface CustomSearchVC : BaseViewController
 
-- (instancetype)initWithTitle:(NSString *)str;
+- (instancetype)initWithTitle:(NSString *)str status:(NSInteger )status;
 
 @end

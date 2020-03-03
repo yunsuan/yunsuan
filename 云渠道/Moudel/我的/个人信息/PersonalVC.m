@@ -12,6 +12,7 @@
 #import "BirthVC.h"
 #import "ChangeNameVC.h"
 #import "ChangeWXCodeVC.h"
+#import "ChangeSelfDescVC.h"
 #import "ChangeAddessVC.h"
 #import "MyCodeVC.h"
 
@@ -46,8 +47,8 @@
 
 - (void)initDataSource{
     
-    _titleArr = @[@"云算号",@"我的二维码",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"修改密码",@"接收抢/派单消息"];
-    _contentArr = [[NSMutableArray alloc] initWithArray:@[@"云算号",@"",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"******",@""]];
+    _titleArr = @[@"云算号",@"我的二维码",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"个性签名",@"修改密码",@"接收抢/派单消息"];
+    _contentArr = [[NSMutableArray alloc] initWithArray:@[@"云算号",@"",@"姓名",@"电话号码",@"微信号",@"性别",@"出生年月",@"住址",@"",@"******",@""]];
     if ([UserInfoModel defaultModel].account.length) {
         
         _contentArr[0] = [UserInfoModel defaultModel].account;
@@ -82,6 +83,10 @@
     if ([UserInfoModel defaultModel].birth.length) {
         
         _contentArr[6] = [UserInfoModel defaultModel].birth;
+    }
+    if ([UserInfoModel defaultModel].self_desc.length) {
+        
+        _contentArr[8] = [UserInfoModel defaultModel].self_desc;
     }
     if ([UserInfoModel defaultModel].province.length && [UserInfoModel defaultModel].city.length && [UserInfoModel defaultModel].district.length) {
 
@@ -151,7 +156,7 @@
 #pragma mark -- tableview
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 10;
+    return 11;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -172,7 +177,7 @@
 
     cell.contentL.hidden = NO;
     cell.headImg.hidden = YES;
-    if (indexPath.row == 9) {
+    if (indexPath.row == 10) {
         
         cell.OnOff.hidden = NO;
 
@@ -225,7 +230,7 @@
         }
     };
 
-    cell.rightView.hidden = indexPath.row == 0 || indexPath.row == 5 || indexPath.row == 9;
+    cell.rightView.hidden = indexPath.row == 0 || indexPath.row == 5 || indexPath.row == 10;
     
     switch (indexPath.row) {
         case 0:
@@ -336,10 +341,20 @@
         }
         case 8:
         {
+            
+            if ([UserInfoModel defaultModel].self_desc.length) {
+                
+                cell.contentL.text = [UserInfoModel defaultModel].self_desc;
+                
+            }
+            break;
+        }
+        case 9:
+        {
 
             break;
         }
-        case 9:{
+        case 10:{
             
             if ([[UserInfoModel defaultModel].is_accept_grab integerValue] == 1) {
                 
@@ -476,13 +491,26 @@
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
-        case 8:
+        case 8:{
+            
+            ChangeSelfDescVC *nextVC = [[ChangeSelfDescVC alloc] initWithDesc:[UserInfoModel defaultModel].self_desc];
+            nextVC.changeSelfDescVCBlock = ^{
+                
+                if (self.personalVCBlock) {
+                    
+                    self.personalVCBlock();
+                }
+            };
+            [self.navigationController pushViewController:nextVC animated:YES];
+            break;
+        }
+        case 9:
         {
             ChangePassWordVC *nextVC = [[ChangePassWordVC alloc] init];
             [self.navigationController pushViewController:nextVC animated:YES];
             break;
         }
-        case 9:{
+        case 10:{
             
             break;
         }

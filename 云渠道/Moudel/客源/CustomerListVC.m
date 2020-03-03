@@ -166,6 +166,16 @@
         dic[@"sort_type"] = _sortType;
         dic[@"sort"] = _asc;
     }
+    if (self.status == 0) {
+        
+        [dic setObject:@"184" forKey:@"client_type"];
+    }else if (self.status == 1){
+        
+        [dic setObject:@"185" forKey:@"client_type"];
+    }else{
+        
+        [dic setObject:@"186" forKey:@"client_type"];
+    }
     if (_type) {
         
         dic[@"property_type"] = _type;
@@ -376,7 +386,7 @@
     PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"请输入姓名/手机号" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
         // 开始搜索执行以下代码
         // 如：跳转到指定控制器
-        [searchViewController.navigationController pushViewController:[[CustomSearchVC alloc] initWithTitle:searchText] animated:YES];
+        [searchViewController.navigationController pushViewController:[[CustomSearchVC alloc] initWithTitle:searchText status:self.status] animated:YES];
     }];
     // 3. 设置风格
     searchViewController.searchBar.returnKeyType = UIReturnKeySearch;
