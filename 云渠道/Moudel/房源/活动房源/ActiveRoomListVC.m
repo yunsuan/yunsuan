@@ -233,7 +233,10 @@
 
 - (void)ActionTagBtn:(UIButton *)btn{
     
-    btn.selected = !btn.selected;
+//    btn.selected = !btn.selected;
+    _unitBtn.selected = NO;
+    _houseBtn.selected = NO;
+    _buildBtn.selected = NO;
     switch (btn.tag) {
         case 1:
         {
@@ -379,11 +382,19 @@
         }
         case 4:{
             
+            _areaStr = @"";
             if (_tag == 4) {
                 
-                _priceBtn.selected = NO;
+                _tag = btn.tag;
                 _tag = 0;
+                _unitBtn.selected = NO;
+                _buildBtn.selected = NO;
+                _houseBtn.selected = NO;
+                _areaBtn.selected = NO;
+                
                 [self.boxView removeFromSuperview];
+                _priceStr = @"2";
+                [self RequestMethod];
             }else{
                 
                 _tag = btn.tag;
@@ -393,31 +404,28 @@
                 _areaBtn.selected = NO;
                 
                 [self.boxView removeFromSuperview];
-                NSMutableArray *tempArr = [NSMutableArray arrayWithArray:_priceArr];
-                self.boxView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if (idx == 0) {
-                        
-                        tempArr[idx] = @(1);
-                    }else{
-                        
-                        tempArr[idx] = @(0);
-                    }
-                }];
-                self.boxView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [self.boxView.mainTable reloadData];
-                [self.view addSubview:self.boxView];
+                
+                _priceStr = @"1";
+                [self RequestMethod];
             }
             break;
         }
         case 5:{
             
+            _priceStr = @"";
             if (_tag == 5) {
                 
-                _areaBtn.selected = NO;
+                _tag = btn.tag;
                 _tag = 0;
+                _unitBtn.selected = NO;
+                _buildBtn.selected = NO;
+                _houseBtn.selected = NO;
+                _priceBtn.selected = NO;
+                
                 [self.boxView removeFromSuperview];
+                
+                _areaStr = @"2";
+                [self RequestMethod];
             }else{
                 
                 _tag = btn.tag;
@@ -427,21 +435,9 @@
                 _priceBtn.selected = NO;
                 
                 [self.boxView removeFromSuperview];
-                NSMutableArray *tempArr = [NSMutableArray arrayWithArray:_areaArr];
-                self.boxView.dataArr = [NSMutableArray arrayWithArray:tempArr];
-                [tempArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    
-                    if (idx == 0) {
-                        
-                        tempArr[idx] = @(1);
-                    }else{
-                        
-                        tempArr[idx] = @(0);
-                    }
-                }];
-                self.boxView.selectArr = [NSMutableArray arrayWithArray:tempArr];
-                [self.boxView.mainTable reloadData];
-                [self.view addSubview:self.boxView];
+                
+                _areaStr = @"1";
+                [self RequestMethod];
             }
             break;
         }

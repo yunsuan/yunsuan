@@ -585,7 +585,7 @@
     _titleTF = [[BorderTF alloc] initWithFrame:CGRectMake(0, 0, 258 *SIZE, 33 *SIZE)];
     _titleTF.backgroundColor = CLWhiteColor;
     _titleTF.textfield.delegate = self;
-    _titleTF.textfield.placeholder = @"如 特价房源、品牌开发商等";
+    _titleTF.textfield.placeholder = @"特价房源、品牌开发商等";
     _titleTF.textfield.textColor = YJTitleLabColor;
     _titleTF.textfield.font = [UIFont systemFontOfSize:11 *SIZE];
     [self.view addSubview:_titleTF];
@@ -601,7 +601,7 @@
     
     _commentPlaceL = [[UILabel alloc] initWithFrame:CGRectMake(5 *SIZE, 8 *SIZE, 200 *SIZE, 13 *SIZE)];
     _commentPlaceL.textColor = YJ170Color;
-    _commentPlaceL.text = @"如 室内明亮、户型方正等";
+    _commentPlaceL.text = @"室内明亮、户型方正等";
     _commentPlaceL.font = [UIFont systemFontOfSize:11 *SIZE];
     [_commentTV addSubview:_commentPlaceL];
     

@@ -345,6 +345,10 @@
                 self.editView.delegate = nil;
                 [self.editView removeFromSuperview];
                 MyShopRecommendVC *nextVC = [[MyShopRecommendVC alloc] init];
+                nextVC.myShopRecommendVCBlock = ^{
+                  
+                    [self RequestMethod];
+                };
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
@@ -426,9 +430,9 @@
             
             self.editView.delegate = nil;
             [self.editView removeFromSuperview];
-            MyShopRecommendDetailVC *nextVC = [[MyShopRecommendDetailVC alloc] initWithHouseId:[NSString stringWithFormat:@"%@",_roomArr[indexPath.row][@"house_id"]] info_id:@""];
-            nextVC.projectName = [NSString stringWithFormat:@"%@",_roomArr[indexPath.row][@"project_name"]];
-            nextVC.config_id = [NSString stringWithFormat:@"%@",_roomArr[indexPath.row][@"config_id"]];
+            MyShopRecommendDetailVC *nextVC = [[MyShopRecommendDetailVC alloc] initWithHouseId:[NSString stringWithFormat:@"%@",_commentArr[indexPath.row][@"house_id"]] info_id:@""];
+            nextVC.projectName = [NSString stringWithFormat:@"%@",_commentArr[indexPath.row][@"project_name"]];
+            nextVC.config_id = [NSString stringWithFormat:@"%@",_commentArr[indexPath.row][@"config_id"]];
             nextVC.myShopRecommendDetailVCBlock = ^{
                 
                 [self RequestMethod];

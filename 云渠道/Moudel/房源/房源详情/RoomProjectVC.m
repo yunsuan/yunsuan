@@ -228,19 +228,7 @@
                 
                 [self SetData:resposeObject[@"data"]];
                 
-                if ([[UserModel defaultModel].agent_identity integerValue] == 1) {
-                        
-                    if ([self.isRecommend isEqualToString:@"NO"]) {
-                            
-                        [_recommendBtn setTitle:[NSString stringWithFormat:@"推荐房源(%@)",resposeObject[@"data"][@"recommend_house_num"]] forState:UIControlStateNormal];
-                    }else{
-                            
-                        [_recommendBtn setTitle:@"快速报备" forState:UIControlStateNormal];
-                    }
-                }else{
-
-                    [_recommendBtn setTitle:[NSString stringWithFormat:@"推荐房源(%@)",resposeObject[@"data"][@"recommend_house_num"]] forState:UIControlStateNormal];
-                }
+                [_roomBtn setTitle:[NSString stringWithFormat:@"推荐房源(%@)",resposeObject[@"data"][@"recommend_house_num"]] forState:UIControlStateNormal];
 //                JANALYTICSCountEvent * event = [[JANALYTICSCountEvent alloc] init];
 //
 //                event.eventID = @"项目浏览次数";

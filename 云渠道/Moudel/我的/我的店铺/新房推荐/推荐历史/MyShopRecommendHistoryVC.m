@@ -153,7 +153,7 @@
         cell.upBtn.hidden = YES;
     }else{
         
-        cell.upBtn.hidden = NO;
+        cell.upBtn.hidden = YES;
     }
     cell.myShopRecommendCellBlock = ^(NSInteger index, NSInteger btn) {
         

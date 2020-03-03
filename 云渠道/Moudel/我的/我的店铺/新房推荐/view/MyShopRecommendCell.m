@@ -32,7 +32,7 @@
     
     _titleL.text = dataDic[@"title"];
     _roomNumL.text = dataDic[@"house_name"];
-    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",[dataDic[@"house_type"] integerValue]?dataDic[@"house_type_name"]:@""];
+    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",[dataDic[@"house_type"] integerValue]?dataDic[@"house_type"]:@""];
     _areaL.text = [NSString stringWithFormat:@"建面：%@㎡",dataDic[@"build_size"]];;
     _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"property_type"]];;
     _priceL.text = [NSString stringWithFormat:@"%@万",dataDic[@"total_price"]];;
@@ -41,7 +41,7 @@
     _stateL.text = [dataDic[@"state"] integerValue] == 1?@"未售":@"已售";
     
     _recommendL.text = [NSString stringWithFormat:@"推荐时间：%@",dataDic[@"create_time"]];;
-    _reasonL.text = [NSString stringWithFormat:@"%@",[dataDic[@"self_deal"] integerValue]?[dataDic[@"self_deal"] integerValue] == 1?@"自己成交":@"他人成交":@"未成交"];;
+    _reasonL.text = [NSString stringWithFormat:@"%@",[dataDic[@"self_deal"] integerValue]?[dataDic[@"self_deal"] integerValue] == 1?@"自己成交下架":@"他人成交下架":@"手动下架"];;
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{

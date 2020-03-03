@@ -458,7 +458,7 @@
     _recommendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _recommendBtn.frame = CGRectMake(0 *SIZE, SCREEN_Height - 40 *SIZE - TAB_BAR_MORE, 360 *SIZE, 40 *SIZE + TAB_BAR_MORE);
     [_recommendBtn addTarget:self action:@selector(ActionRecommendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [_recommendBtn setTitle:@"一键保存到我的店铺" forState:UIControlStateNormal];
+    [_recommendBtn setTitle:@"添加到我的店铺" forState:UIControlStateNormal];
     [_recommendBtn setBackgroundColor:YJBlueBtnColor];
     _recommendBtn.titleLabel.font = [UIFont systemFontOfSize:13 *SIZE];
     [self.view addSubview:_recommendBtn];

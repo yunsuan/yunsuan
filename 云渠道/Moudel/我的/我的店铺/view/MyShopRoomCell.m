@@ -32,7 +32,7 @@
     
     _titleL.text = dataDic[@"title"];
     _roomNumL.text = dataDic[@"house_name"];
-    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",[dataDic[@"house_type"] integerValue]?dataDic[@"house_type_name"]:@""];
+    _houseTypeL.text = [NSString stringWithFormat:@"户型：%@",[dataDic[@"house_type"] integerValue]?dataDic[@"house_type"]:@""];
     _areaL.text = [NSString stringWithFormat:@"建面：%@㎡",dataDic[@"build_size"]];;
     _typeL.text = [NSString stringWithFormat:@"类型：%@",dataDic[@"property_type"]];;
     _priceL.text = [NSString stringWithFormat:@"%@万",dataDic[@"total_price"]];;

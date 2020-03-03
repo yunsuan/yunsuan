@@ -35,13 +35,26 @@
 
 - (void)setDataDic:(NSDictionary *)dataDic{
     
-    [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",dataDic[@"head_img"]]] placeholderImage:[UIImage imageNamed:@"def_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-       
-        if (error) {
-            
-            _headImg.image = [UIImage imageNamed:@"def_head"];
-        }
-    }];
+    if ([dataDic[@"head_img"] containsString:@"http"]) {
+        
+        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",dataDic[@"head_img"]]] placeholderImage:[UIImage imageNamed:@"def_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+           
+            if (error) {
+                
+                _headImg.image = [UIImage imageNamed:@"def_head"];
+            }
+        }];
+    }else{
+        
+        [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"head_img"]]] placeholderImage:[UIImage imageNamed:@"def_head"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+           
+            if (error) {
+                
+                _headImg.image = [UIImage imageNamed:@"def_head"];
+            }
+        }];
+    }
+    
     
     _nameL.text = dataDic[@"nick_name"];
     _timeL.text = dataDic[@"create_time"];

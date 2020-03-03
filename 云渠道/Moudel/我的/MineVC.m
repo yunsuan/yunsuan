@@ -141,9 +141,9 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RequestMethod) name:@"goHome" object:nil];
 
-    _namelist = @[@[@"个人资料",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅",@"云算号"/*,@"我的收藏"*/,@"我的团队",@"我的店铺"],@[@"意见反馈",@"关于云算",@"操作指南"]];
-    _imageList = @[@[@"personaldata",@"certification",@"stores",@"work"],@[@"commission",@"focus",@"subs",@"icon_yunsuan",/*@"focus",*/@"team",@"store1"],@[@"opinion",@"about",@"operation"]];
-    _contentList= @[@[@"",@"",@"",@""],@[@"",@"",@"",@"",@"",@"",@""],@[@" ",YQDversion,@""]];
+    _namelist = @[@[@"个人资料",@"我的店铺",@"公司认证",@"门店认证",@"工作经历"],@[@"我的佣金",@"我的关注",@"我的订阅",@"云算号"/*,@"我的收藏"*/,@"我的团队"],@[@"意见反馈",@"关于云算",@"操作指南"]];
+    _imageList = @[@[@"personaldata",@"stores",@"certification",@"store2",@"work"],@[@"commission",@"focus",@"subs",@"icon_yunsuan",/*@"focus",*/@"team"],@[@"opinion",@"about",@"operation"]];
+    _contentList= @[@[@"",@"",@"",@"",@""],@[@"",@"",@"",@"",@"",@""],@[@" ",YQDversion,@""]];
     _imagePickerController = [[UIImagePickerController alloc] init];
     _imagePickerController.delegate = self;
 }
@@ -420,7 +420,13 @@
         cell = [[MineCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     [cell SetTitle:_namelist[indexPath.section][indexPath.row] icon:_imageList[indexPath.section][indexPath.row] contentlab:_contentList[indexPath.section][indexPath.row]];
-    
+    if (indexPath.section == 0 && indexPath.row == 3) {
+        
+        cell.icon.frame = CGRectMake(15*SIZE,14.5*SIZE, 19*SIZE, 16*SIZE);
+    }else{
+        
+        cell.icon.frame = CGRectMake(15*SIZE,13*SIZE, 19*SIZE, 19*SIZE);
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -445,7 +451,7 @@
             };
             nextVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:nextVC animated:YES];
-        }else if (indexPath.row == 1) {
+        }else if (indexPath.row == 2) {
             
             [BaseRequest GET:GetAuthInfo_URL parameters:nil success:^(id resposeObject) {
                 
@@ -491,7 +497,7 @@
 //                NSLog(@"%@",error);
             }];
             
-        }else if(indexPath.row == 2){
+        }else if(indexPath.row == 3){
             
             [BaseRequest GET:StoreAuthState_URL parameters:nil success:^(id resposeObject) {
                 
@@ -543,6 +549,11 @@
                 nextVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:nextVC animated:YES];
             }];
+        }else if (indexPath.row == 1){
+            
+            MyShopVC *nextVC = [[MyShopVC alloc] init];
+            //                nextVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:nextVC animated:YES];
         }else{
             
             ExperienceVC *nextVC = [[ExperienceVC alloc] init];
@@ -585,9 +596,7 @@
                 [self.navigationController pushViewController:nextVC animated:YES];
             }else{
                 
-                MyShopVC *nextVC = [[MyShopVC alloc] init];
-//                nextVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:nextVC animated:YES];
+                
             }
         }
     }else
