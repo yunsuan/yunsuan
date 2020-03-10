@@ -42,30 +42,33 @@
     _tagArr = [NSMutableArray arrayWithArray:data[1]];
     [_propertyColl reloadData];
     
-    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
-    }];
-    if (!_propertyArr.count && !_tagArr.count) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
-            
-            make.left.equalTo(self.contentView).offset(0 *SIZE);
-            make.top.equalTo(_headImg.mas_bottom).offset(10 *SIZE);
-            make.right.equalTo(self.contentView).offset(0 *SIZE);
-            make.height.equalTo(@(SIZE));
-            make.bottom.equalTo(self.contentView).offset(0);
+        [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
         }];
-    }else{
-        
-        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+        if (!_propertyArr.count && !_tagArr.count) {
             
-            make.left.equalTo(self.contentView).offset(0 *SIZE);
-            make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
-            make.right.equalTo(self.contentView).offset(0 *SIZE);
-            make.height.equalTo(@(SIZE));
-            make.bottom.equalTo(self.contentView).offset(0);
-        }];
-    }
+            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(self.contentView).offset(0 *SIZE);
+                make.top.equalTo(_headImg.mas_bottom).offset(10 *SIZE);
+                make.right.equalTo(self.contentView).offset(0 *SIZE);
+                make.height.equalTo(@(SIZE));
+                make.bottom.equalTo(self.contentView).offset(0);
+            }];
+        }else{
+            
+            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+                
+                make.left.equalTo(self.contentView).offset(0 *SIZE);
+                make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
+                make.right.equalTo(self.contentView).offset(0 *SIZE);
+                make.height.equalTo(@(SIZE));
+                make.bottom.equalTo(self.contentView).offset(0);
+            }];
+        }
+    });
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
@@ -194,7 +197,7 @@
 
 - (void)initUI{
     
-    _headImg = [[UIImageView alloc]initWithFrame:CGRectMake((CGFloat) (11.7*SIZE),(CGFloat)16.3*SIZE, 100*SIZE, (CGFloat)88.3*SIZE)];
+    _headImg = [[UIImageView alloc]init];//WithFrame:CGRectMake((CGFloat) (11.7*SIZE),(CGFloat)16.3*SIZE, 100*SIZE, (CGFloat)88.3*SIZE)];
     _headImg.contentMode = UIViewContentModeScaleAspectFill;
     _headImg.clipsToBounds = YES;
     [self.contentView addSubview:_headImg];
@@ -247,20 +250,18 @@
     [self.contentView addSubview:_propertyColl];
     
     
-    _line = [[UIView alloc]initWithFrame:CGRectMake(0*SIZE, 119*SIZE, 360*SIZE, 1*SIZE)];
+    _line = [[UIView alloc]init];//WithFrame:CGRectMake(0*SIZE, 119*SIZE, 360*SIZE, 1*SIZE)];
     _line.backgroundColor = YJBackColor;
     [self.contentView addSubview:_line];
 
+    [_headImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(self.contentView).offset(12 *SIZE);
+        make.top.equalTo(self.contentView).offset(16 *SIZE);
+        make.width.mas_equalTo(100 *SIZE);
+        make.height.mas_equalTo(88 *SIZE);
+    }];
     
-//    [_tagview mas_makeConstraints:^(MASConstraintMaker *make) {
-//        
-//        make.left.equalTo(self.contentView).offset(125 *SIZE);
-//        make.top.equalTo(self.contentView).offset(88 *SIZE);
-//        make.width.equalTo(@(150 *SIZE));
-//        make.height.equalTo(@(17 *SIZE));
-//        make.bottom.equalTo(self.contentView).offset(-16 *SIZE);
-//        
-//    }];
     
     [_propertyColl mas_makeConstraints:^(MASConstraintMaker *make) {
         

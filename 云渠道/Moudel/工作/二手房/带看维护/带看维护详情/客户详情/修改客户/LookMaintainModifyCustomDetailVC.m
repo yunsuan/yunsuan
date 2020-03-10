@@ -634,11 +634,11 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
     [_cardImg addGestureRecognizer:tap];
     [_whiteView addSubview:_cardImg];
-    [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_backStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    [_cardImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
         if (error) {
             
-            _backImg.image = [UIImage imageNamed:@"banner_default_2"];
+            _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
         }
     }];
     
@@ -650,11 +650,11 @@
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap1)];
     [_backImg addGestureRecognizer:tap1];
     [_whiteView addSubview:_backImg];
-    [_backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_cardStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+    [_backImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,_backStr]] placeholderImage:[UIImage imageNamed:@"banner_default_2"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
         
         if (error) {
             
-            _cardImg.image = [UIImage imageNamed:@"banner_default_2"];
+            _backImg.image = [UIImage imageNamed:@"banner_default_2"];
         }
     }];
     

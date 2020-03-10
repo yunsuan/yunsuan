@@ -305,6 +305,8 @@
 		0C7492FF22029078008F551B /* LookMaintainDetailAddAppointCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7492FE22029078008F551B /* LookMaintainDetailAddAppointCell2.m */; };
 		0C7493022202F091008F551B /* PriceSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7493012202F091008F551B /* PriceSetView.m */; };
 		0C74EB0E21BE57F50036915D /* RentingAllRoomProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */; };
+		0C7860372415395E00298A9E /* CustomSelectCityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C7860362415395D00298A9E /* CustomSelectCityVC.m */; };
+		0C78603A24153AC400298A9E /* DistrictChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C78603924153AC400298A9E /* DistrictChooseView.m */; };
 		0C81D5DA23BC87E3001C8DD1 /* CompleteCustomCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C81D5D923BC87E3001C8DD1 /* CompleteCustomCollCell.m */; };
 		0C8C97F22213F41900687AC8 /* SecondryRecommnedStatusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F12213F41900687AC8 /* SecondryRecommnedStatusVC.m */; };
 		0C8C97F52213F63100687AC8 /* SecondryStatusTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C8C97F42213F63100687AC8 /* SecondryStatusTableCell.m */; };
@@ -1471,6 +1473,10 @@
 		0C7493012202F091008F551B /* PriceSetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceSetView.m; sourceTree = "<group>"; };
 		0C74EB0C21BE57F50036915D /* RentingAllRoomProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RentingAllRoomProjectModel.h; sourceTree = "<group>"; };
 		0C74EB0D21BE57F50036915D /* RentingAllRoomProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RentingAllRoomProjectModel.m; sourceTree = "<group>"; };
+		0C7860352415395D00298A9E /* CustomSelectCityVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomSelectCityVC.h; sourceTree = "<group>"; };
+		0C7860362415395D00298A9E /* CustomSelectCityVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomSelectCityVC.m; sourceTree = "<group>"; };
+		0C78603824153AC400298A9E /* DistrictChooseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DistrictChooseView.h; sourceTree = "<group>"; };
+		0C78603924153AC400298A9E /* DistrictChooseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DistrictChooseView.m; sourceTree = "<group>"; };
 		0C81D5D823BC87E3001C8DD1 /* CompleteCustomCollCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompleteCustomCollCell.h; sourceTree = "<group>"; };
 		0C81D5D923BC87E3001C8DD1 /* CompleteCustomCollCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompleteCustomCollCell.m; sourceTree = "<group>"; };
 		0C8C97F02213F41900687AC8 /* SecondryRecommnedStatusVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondryRecommnedStatusVC.h; sourceTree = "<group>"; };
@@ -4717,6 +4723,15 @@
 			path = model;
 			sourceTree = "<group>";
 		};
+		0C7860342415394A00298A9E /* 选择城市 */ = {
+			isa = PBXGroup;
+			children = (
+				0C7860352415395D00298A9E /* CustomSelectCityVC.h */,
+				0C7860362415395D00298A9E /* CustomSelectCityVC.m */,
+			);
+			path = "选择城市";
+			sourceTree = "<group>";
+		};
 		0C8C97EF2213F3C800687AC8 /* 二手房 */ = {
 			isa = PBXGroup;
 			children = (
@@ -5743,6 +5758,8 @@
 				0CA37B912089DE27005609C7 /* AddressTableCell.m */,
 				0CEBDE3220AE6F7B004BAF7A /* AddressChooseView3.h */,
 				0CEBDE3320AE6F7B004BAF7A /* AddressChooseView3.m */,
+				0C78603824153AC400298A9E /* DistrictChooseView.h */,
+				0C78603924153AC400298A9E /* DistrictChooseView.m */,
 			);
 			path = "自定义地址选择器";
 			sourceTree = "<group>";
@@ -7829,6 +7846,7 @@
 		102DF96B2057A0A200E1859C /* 客源 */ = {
 			isa = PBXGroup;
 			children = (
+				0C7860342415394A00298A9E /* 选择城市 */,
 				0C4F16EA24066C1400D1AAC4 /* 租房客户详情 */,
 				0C4F16E924066C0900D1AAC4 /* 二手房详情详情 */,
 				0C4F16E824066BFE00D1AAC4 /* 新房客户详情 */,
@@ -8813,6 +8831,7 @@
 				0CD909D420D890D300061B4A /* BlueTitleMoreHeader.m in Sources */,
 				0C997B5121C8933B00F805AA /* RentingCompleteSurveyOfficeVC.m in Sources */,
 				105E18B520637D310031558D /* BrokerageRecordVC.m in Sources */,
+				0C78603A24153AC400298A9E /* DistrictChooseView.m in Sources */,
 				0CF04F94207CAFB000A45F4A /* UIView+PYSearchExtension.m in Sources */,
 				0C30631C20CE8C2B004D1996 /* SecAllRoomDetailTableHeader2.m in Sources */,
 				0C0BED5320A98841005A16A1 /* CityVC.m in Sources */,
@@ -9519,6 +9538,7 @@
 				0CE49DE92398952D00F20716 /* AreaCustomDetailVC.m in Sources */,
 				10F7D0D821F86C59007818E3 /* ContractDetailVC.m in Sources */,
 				102DF97C2057A20100E1859C /* LoginVC.m in Sources */,
+				0C7860372415395E00298A9E /* CustomSelectCityVC.m in Sources */,
 				0C351479240E0617001A91D6 /* ChangeSelfDescVC.m in Sources */,
 				0C3AD5652069DADC0059CE02 /* RoomDetailTableCell3.m in Sources */,
 				0C15A1F52118348A00544F2E /* RentingMaintainAddFollowVC.m in Sources */,
@@ -9752,7 +9772,7 @@
 				CODE_SIGN_ENTITLEMENTS = "云渠道/云渠道.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 73DTNFMD65;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9789,7 +9809,7 @@
 				CODE_SIGN_ENTITLEMENTS = "云渠道/云渠道.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 73DTNFMD65;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

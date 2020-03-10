@@ -119,7 +119,7 @@
 
             [UserModel defaultModel].index = @"0";
             [UserModelArchiver archive];
-            self.selectIndex = 2;
+//            self.selectIndex = 2;
             [self reloadData];
         }
 
@@ -129,32 +129,6 @@
         _city = [NSString stringWithFormat:@"510100"];
         _cityName = @"成都市";
         [self showContent:@"定位失败，已切换为默认城市，可点击城市手动切换"];
-//        [self alertControllerWithNsstring:@"定位失败" And:@"是否要重新定位" WithCancelBlack:^{
-//
-//            [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
-//            _city = [NSString stringWithFormat:@"510100"];
-//            _cityName = @"成都市";
-//        } WithDefaultBlack:^{
-//
-//            if ([CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied) {
-//
-//                [self StartLocation];
-//            }else{
-//                [_cityBtn setTitle:@"成都市" forState:UIControlStateNormal];
-//                _city = [NSString stringWithFormat:@"510100"];
-//                _cityName = @"成都市";
-//                [self alertControllerWithNsstring:@"打开[定位服务权限]来允许[云渠道]确定您的位置" And:@"请在系统设置中开启定位服务(设置>隐私>定位服务>开启)" WithCancelBlack:^{
-//
-//
-//                } WithDefaultBlack:^{
-//
-//                    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-//                    if( [[UIApplication sharedApplication]canOpenURL:url] ) {
-//                        [[UIApplication sharedApplication] openURL:url];
-//                    }
-//                }];
-//            }
-//        }];
     }];
 }
 

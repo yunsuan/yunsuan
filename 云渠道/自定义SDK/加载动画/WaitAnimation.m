@@ -54,9 +54,6 @@ static UIImageView *_imageV ;
     });
 }
 
-
-
-
 @end
 
 #pragma clang diagnostic pop

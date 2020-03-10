@@ -9,6 +9,7 @@
 #import "MyShopRecommendDetailVC.h"
 
 #import "MyShopVC.h"
+#import "RoomDetailVC1.h"
 
 #import "YBImageBrowser.h"
 
@@ -117,9 +118,13 @@
                     [_dataDic setValue:@"" forKey:key];
                 }
             }];
-            
+            self.project_id = [NSString stringWithFormat:@"%@",_dataDic[@"project_id"]];
             self.projectName = _dataDic[@"project_name"];
             _projectL.text = [NSString stringWithFormat:@"所属项目：%@",self.projectName];
+            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:_projectL.text];
+            [attr addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(5, _projectL.text.length - 5)];
+            [attr addAttribute:NSForegroundColorAttributeName value:YJBlueBtnColor range:NSMakeRange(5, _projectL.text.length - 5)];
+            _projectL.attributedText = attr;
             
             _propertyL.text = _dataDic[@"property_type"];
             _attentL.text = [NSString stringWithFormat:@"关注：%@",_dataDic[@"collect_num"]];
@@ -377,6 +382,18 @@
     }];
 }
 
+- (void)ActionTap{
+    
+    RoomListModel *model = [[RoomListModel alloc] init];
+    model.project_id = self.project_id;
+    model.project_name = self.projectName;
+    model.info_id = _info_id;
+    RoomDetailVC1 *nextVC = [[RoomDetailVC1 alloc] initWithModel:model];
+    nextVC.brokerage = @"no";
+    nextVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:nextVC animated:YES];
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
@@ -559,6 +576,9 @@
 //    _projectL.adjustsFontSizeToFitWidth = YES;
     _projectL.font = [UIFont systemFontOfSize:11 *SIZE];
     _projectL.text = [NSString stringWithFormat:@"所属项目："];
+    _projectL.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ActionTap)];
+    [_projectL addGestureRecognizer:tap];
     [self.view addSubview:_projectL];
     
     _stateL = [[UILabel alloc] init];

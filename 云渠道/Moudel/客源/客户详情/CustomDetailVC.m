@@ -953,7 +953,7 @@
                 }
                 
                 NSArray *tempArr1 = _projectArr[indexPath.row][@"project_tags"];
-                
+
                 NSArray *tempArr3 = @[tempArr,tempArr1.count == 0 ? @[]:tempArr1];
                 [cell settagviewWithdata:tempArr3];
                 
@@ -963,7 +963,6 @@
                         
                         CustomRequireModel *model = _dataArr[0];
 
-//                        CustomMatchModel *model = _dataArr[index];
                         QuickAddCustomVC *nextVC = [[QuickAddCustomVC alloc] initWithProjectId:[NSString stringWithFormat:@"%@",_projectArr[indexPath.row][@"project_id"]] clientId:model.client_id];
                         nextVC.projectName = _projectArr[indexPath.row][@"project_name"];//_model.project_name;
                         [self.navigationController pushViewController:nextVC animated:YES];

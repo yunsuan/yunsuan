@@ -535,6 +535,7 @@
         _projectBtn.content.text = projectName;
         _projectId = [NSString stringWithFormat:@"%@",projectId];
         _projectBtn->str = [NSString stringWithFormat:@"%@",projectId];
+        self.projectName = projectName;
         [self WorkSelectRequest];
     };
     [self.navigationController pushViewController:nextVC animated:YES];
@@ -546,14 +547,52 @@
         
         if (_isSign) {
             
-            SignWorkerPickView *view = [[SignWorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
-            WS(weakSelf);
-            view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
+            if (_agentArr.count) {
                 
-                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
-                _workId = [NSString stringWithFormat:@"%@",ID];
-            };
-            [self.view addSubview:view];
+                SignWorkerPickView *view = [[SignWorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
+                WS(weakSelf);
+                view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
+                    
+                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
+                    _workId = [NSString stringWithFormat:@"%@",ID];
+                };
+                [self.view addSubview:view];
+            }else{
+                
+                [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+                    
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"][@"agent_group"] count]) {
+                            
+                            _agentArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"agent_group"] mutableCopy]];
+                            _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
+                            _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
+                            _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
+                            SignWorkerPickView *view = [[SignWorkerPickView alloc] initWithFrame:self.view.bounds WithData:_agentArr];
+                            WS(weakSelf);
+                            view.signWorkerPickViewBlock = ^(NSString * _Nonnull Name, NSString * _Nonnull ID, NSString * _Nonnull tel) {
+                                
+                                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",Name,tel];
+                                _workId = [NSString stringWithFormat:@"%@",ID];
+                            };
+                            [self.view addSubview:view];
+                        }else{
+                            
+                            _isSign = [resposeObject[@"data"][@"is_sign"] integerValue];
+                            _needAppoint = [resposeObject[@"data"][@"need_appoint"] integerValue];
+                            _needComment = [resposeObject[@"data"][@"need_comment"] integerValue];
+                            [self showContent:@"项目无置业顾问"];
+                        }
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    
+                    [self showContent:@"网络错误"];
+                }];
+            }
         }else{
             
             if (_workArr.count) {
@@ -568,15 +607,49 @@
                     {
                         _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
                     }
-                    
-                    //                _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
                     _workId = [NSString stringWithFormat:@"%@",ID];
                     
                 };
                 [self.view addSubview:view];
             }else{
                 
-                
+                [BaseRequest GET:ProjectAdvicer_URL parameters:@{@"project_id":_projectId} success:^(id resposeObject) {
+                        
+                    if ([resposeObject[@"code"] integerValue] == 200) {
+                        
+                        if ([resposeObject[@"data"][@"rows"] count]) {
+                            
+                            _workArr = [NSMutableArray arrayWithArray:[resposeObject[@"data"][@"rows"] mutableCopy]];
+                            _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                            _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                            WorkerPickView *view = [[WorkerPickView alloc] initWithFrame:self.view.bounds WithData:_workArr];
+                            view.workerPickBlock = ^(NSString *GSMC, NSString *ID, NSString *RYBH, NSString *RYDH, NSString *RYXM, NSString *RYTP) {
+                                
+                                if (GSMC) {
+                                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",GSMC,RYXM,RYDH];
+                                }
+                                else
+                                {
+                                    _selectWorkerBtn.content.text = [NSString stringWithFormat:@"%@/%@",RYXM,RYDH];
+                                }
+                                _workId = [NSString stringWithFormat:@"%@",ID];
+                                
+                            };
+                            [self.view addSubview:view];
+                        }else{
+                            
+                            _state = [resposeObject[@"data"][@"tel_complete_state"] integerValue];
+                            _selected = [resposeObject[@"data"][@"advicer_selected"] integerValue];
+                            [self showContent:@"项目无置业顾问"];
+                        }
+                    }else{
+                        
+                        [self showContent:resposeObject[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                        
+                    [self showContent:@"网络错误"];
+                }];
             }
         }
     }else{
@@ -1915,13 +1988,30 @@
             
             if ([resposeObject[@"code"] integerValue] == 200) {
                 
-                [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
+                ReportCustomSuccessView *reportCustomSuccessView = [[ReportCustomSuccessView alloc] initWithFrame:self.view.frame];
+                NSDictionary *tempDic = @{@"project":self.projectName,
+                                          @"sex":_model.sex,
+                                          @"tel":_model.tel,
+                                          @"name":_model.name
+                                          };
+                reportCustomSuccessView.state = _state;
+                reportCustomSuccessView.dataDic = [NSMutableDictionary dictionaryWithDictionary:tempDic];
+                reportCustomSuccessView.reportCustomSuccessViewBlock = ^{
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
                     [self.navigationController popViewControllerAnimated:YES];
-                }];
+//                    [self MatchRequest];
+                };
+                [self.view addSubview:reportCustomSuccessView];
+//                [self alertControllerWithNsstring:@"恭喜" And:resposeObject[@"msg"] WithDefaultBlack:^{
+//
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"matchReload" object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadCustom" object:nil];
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
+//                    [self.navigationController popViewControllerAnimated:YES];
+//                }];
             }else{
                 
                 _surebtn.userInteractionEnabled = YES;

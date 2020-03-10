@@ -167,7 +167,6 @@
     if (_cardStr.length) {
         
         str = _cardStr;
-//        [dic setValue:_cardStr forKey:@"card_img"];
     }
     if (_backStr.length) {
         
@@ -178,7 +177,6 @@
             
             str = _backStr;
         }
-//        [dic setValue:_cardStr forKey:@"card_img"];
     }
     if (str.length) {
         

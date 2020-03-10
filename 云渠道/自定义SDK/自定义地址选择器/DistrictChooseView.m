@@ -1,23 +1,25 @@
+
 //
-//  AddressChooseView3.m
+//  DistrictChooseView.m
 //  云渠道
 //
-//  Created by 谷治墙 on 2018/5/18.
-//  Copyright © 2018年 xiaoq. All rights reserved.
+//  Created by 谷治墙 on 2020/3/8.
+//  Copyright © 2020 xiaoq. All rights reserved.
 //
 
-#import "AddressChooseView3.h"
+#import "DistrictChooseView.h"
+
 #define PICKERHEIGHT 216
 #define BGHEIGHT     256
 
 #define KEY_WINDOW_HEIGHT [UIApplication sharedApplication].keyWindow.frame.size.height
 
-@interface AddressChooseView3()<UIPickerViewDelegate,UIPickerViewDataSource>
+@interface DistrictChooseView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 
 /**
  pickerView
  */
-@property(nonatomic, strong) UIPickerView * pickerView;
+@property(nonatomic, strong) UIPickerView *pickerView;
 /**
  bgView
  */
@@ -31,7 +33,6 @@
 @property(nonatomic, strong) UIButton * cancleBtn;
 
 @property(nonatomic, strong) UIButton * sureBtn;
-
 /**
  记录市选中的位置
  */
@@ -45,19 +46,17 @@
 
 @property(nonatomic, strong) NSArray * dataSource;
 
-@property(nonatomic, copy) NSString * cityStr;
+@property(nonatomic, copy) NSString *areaStr;
 
-@property(nonatomic, copy) NSString * areaStr;
+@property(nonatomic , copy)NSString *cityStr;
 
 @property(nonatomic , copy)NSString *cityid;
 
 @property(nonatomic , copy)NSString *areaid;
 
-
-
 @end
 
-@implementation AddressChooseView3
+@implementation DistrictChooseView
 
 #pragma mark -- lazy
 
@@ -141,14 +140,15 @@
     return _areaArray;
 }
 #pragma mark -- init
-- (instancetype)initWithFrame:(CGRect)frame withdata:(NSArray *)data
+- (instancetype)initWithFrame:(CGRect)frame cityId:(NSString *)city_id cityName:(NSString *)city_name
 {
     if (self = [super initWithFrame:frame]) {
+        
+        self.cityid = city_id;
+        self.cityStr = city_name;
         self.selected = 0;
         [self loadDatas];
         [self initSuViews];
-        
-        
     }
     return self;
 }
@@ -163,38 +163,9 @@
     _proArr = [NSJSONSerialization JSONObjectWithData:JSONData
                                               options:NSJSONReadingMutableContainers
                                                 error:&err];
-    if ([UserModel defaultModel].cityArr.count) {
-        
-        _cityArray = [UserModel defaultModel].cityArr;
-        [self getAreaArrayBycity:_cityArray[0][@"city_code"] name:_cityArray[0][@"city_name"]];
-        self.cityStr = self.cityArray[0][@"city_name"];
-        self.cityid = self.cityArray[0][@"city_code"];
-        self.areaStr = self.areaArray[0][@"name"];
-        self.areaid = self.areaArray[0][@"code"];
-    }else{
-        
-        [BaseRequest GET:OpenCity_URL parameters:nil success:^(id resposeObject) {
-            
-            if ([resposeObject[@"code"] integerValue] == 200) {
-                
-                _cityArray = resposeObject[@"data"];
-                
-                if (_cityArray.count) {
-                    
-                    [self getAreaArrayBycity:_cityArray[0][@"city_code"] name:self.cityArray[0][@"city_name"]];
-                    self.cityStr = self.cityArray[0][@"city_name"];
-                    self.cityid = self.cityArray[0][@"city_code"];
-                    self.areaStr = self.areaArray[0][@"name"];
-                    self.areaid = self.areaArray[0][@"code"];
-                }
-                
-            }
-            [_pickerView reloadAllComponents];
-        } failure:^(NSError *error) {
-            
-            
-        }];
-    }
+    [self getAreaArrayBycity:self.cityid name:self.cityStr];
+    self.areaStr = self.areaArray[0][@"name"];
+    self.areaid = self.areaArray[0][@"code"];
 }
 
 - (void)getAreaArrayBycity:(NSString *)code name:(NSString *)name
@@ -223,13 +194,8 @@
                 
             }
         }
-        
     }
 }
-
-
-
-
 
 #pragma mark -- loadSubViews
 - (void)initSuViews
@@ -266,12 +232,8 @@
 #pragma mark -- UIPickerView
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (component == 0) {
-        return self.cityArray.count;
-    }else
-    {
-        return self.areaArray.count;
-    }
+    
+    return self.areaArray.count;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
@@ -279,37 +241,17 @@
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 3, 30)];
     label.adjustsFontSizeToFitWidth = YES;
     label.textAlignment = NSTextAlignmentCenter;
-    if (component == 0) {
-        
-        label.text = self.cityArray[row][@"city_name"];
-    }else{
-        
-        label.text = self.areaArray[row][@"name"];
-    }
+    
+    label.text = self.areaArray[row][@"name"];
+    
     return label;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (component == 0) {//选择市
-        self.selected = row;
-        
-        self.cityStr = self.cityArray[row][@"city_name"];
-        self.cityid = self.cityArray[row][@"city_code"];
-        
-        //        [self.pickerView reloadComponent:1];
-        [self.pickerView selectRow:0 inComponent:1 animated:YES];
-        
-        [self getAreaArrayBycity:self.cityArray[row][@"city_code"] name:self.cityArray[row][@"city_name"]];
-        self.areaStr = self.areaArray[0][@"name"];
-        self.areaid = self.areaArray[0][@"code"];
-        [self.pickerView reloadComponent:1];
-        
-    }else{
-        
-        self.areaStr = self.areaArray[row][@"name"];
-        self.areaid =  self.areaArray[row][@"code"];
-    }
+    
+    self.areaStr = self.areaArray[row][@"name"];
+    self.areaid =  self.areaArray[row][@"code"];
 }
 
 
@@ -320,7 +262,7 @@
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 2;
+    return 1;
 }
 
 
@@ -332,11 +274,12 @@
 
 - (void)sureBtnClick
 {
-    [self hidePickerView];
-    if (self.addressChooseView3ConfirmBlock != nil) {
+    
+    if (self.districtChooseViewConfirmBlock) {
         
-        self.addressChooseView3ConfirmBlock(self.cityStr, self.areaStr, self.cityid, self.areaid);
+        self.districtChooseViewConfirmBlock(self.areaStr, self.areaid);
     }
+    [self hidePickerView];
 }
 
 

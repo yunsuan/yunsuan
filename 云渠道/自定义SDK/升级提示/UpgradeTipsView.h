@@ -18,6 +18,8 @@ typedef void(^UpgradeTipsViewBlock)(void);
 
 @property (nonatomic, strong) UIView *whiteView;
 
+@property (nonatomic, strong) UILabel *titleL;
+
 @property (nonatomic, strong) UIScrollView *scroll;
 
 @property (nonatomic, strong) UILabel *contentL;

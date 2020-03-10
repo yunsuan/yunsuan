@@ -132,6 +132,11 @@
             }
         }
         _contentArr = [NSMutableArray arrayWithArray:tempArr2];
+        for (int i = 0; i < [_dataDic[@"tel"] count]; i++) {
+            
+            [_contentArr insertObject:[NSString stringWithFormat:@"联系号码：%@",_dataDic[@"tel"][i]] atIndex:(2 + i)];
+        }
+        
         [_table reloadData];
         if (self.lookMaintainCustomDetailVCBlock) {
 

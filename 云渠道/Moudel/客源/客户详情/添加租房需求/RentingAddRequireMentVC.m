@@ -195,87 +195,123 @@
 
 - (void)ActionAreaBtn:(UIButton *)btn{
     
-    switch (btn.tag) {
-        case 0:
-        {
-            _btnNum = 1;
-            break;
-        }
-        case 1:
-        {
-            _btnNum = 2;
-            break;
-        }
-        case 2:
-        {
-            _btnNum = 3;
-            break;
-        }
-        default:
-            break;
-    }
-    
-    AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
+//    switch (btn.tag) {
+//        case 0:
+//        {
+//            _btnNum = 1;
+//            break;
+//        }
+//        case 1:
+//        {
+//            _btnNum = 2;
+//            break;
+//        }
+//        case 2:
+//        {
+//            _btnNum = 3;
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//
+//    AddressChooseView3 *addressChooseView = [[AddressChooseView3 alloc] initWithFrame:self.view.frame withdata:@[]];
+//    WS(weakself);
+//    addressChooseView.addressChooseView3ConfirmBlock = ^(NSString *city, NSString *area, NSString *cityid, NSString *areaid) {
+//
+//        NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
+//
+//        NSError *err;
+//        NSArray *proArr = [NSJSONSerialization JSONObjectWithData:JSONData
+//                                                          options:NSJSONReadingMutableContainers
+//                                                            error:&err];
+//        NSString *pro = [cityid substringToIndex:2];
+//        pro = [NSString stringWithFormat:@"%@0000",pro];
+//        NSString *proName;
+//        if ([pro isEqualToString:@"900000"]) {
+//            proName = @"海外";
+//        }
+//        else{
+//            for (NSDictionary *dic in proArr) {
+//
+//                if([dic[@"code"] isEqualToString:pro]){
+//
+//                    proName = dic[@"name"];
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if (_btnNum == 1) {
+//
+//            weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+//            weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
+//            _addBtn.hidden = NO;
+//        }else if (_btnNum == 2){
+//
+//            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]]) {
+//
+//                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
+//
+//                }];
+//            }else{
+//
+//                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+//                weakself.addressBtn2->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
+//                _addBtn.hidden = NO;
+//            }
+//        }else{
+//
+//            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]] || [weakself.addressBtn2->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]]) {
+//
+//                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
+//
+//                }];
+//            }else{
+//
+//                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
+//                weakself.addressBtn3->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
+//                _addBtn.hidden = NO;
+//            }
+//        }
+//    };
+//    [self.view addSubview:addressChooseView];
+    CustomSelectCityVC *nextVC = [[CustomSelectCityVC alloc] init];
     WS(weakself);
-    addressChooseView.addressChooseView3ConfirmBlock = ^(NSString *city, NSString *area, NSString *cityid, NSString *areaid) {
+    nextVC.customSelectCityVCSaveBlock = ^(NSString * _Nonnull code, NSString * _Nonnull city) {
         
         NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"region" ofType:@"json"]];
-        
+
         NSError *err;
         NSArray *proArr = [NSJSONSerialization JSONObjectWithData:JSONData
                                                           options:NSJSONReadingMutableContainers
                                                             error:&err];
-        NSString *pro = [cityid substringToIndex:2];
+        NSString *pro = [code substringToIndex:2];
         pro = [NSString stringWithFormat:@"%@0000",pro];
         NSString *proName;
         if ([pro isEqualToString:@"900000"]) {
+            
             proName = @"海外";
-        }
-        else{
+        }else{
+            
             for (NSDictionary *dic in proArr) {
-                
+
                 if([dic[@"code"] isEqualToString:pro]){
-                    
+
                     proName = dic[@"name"];
                     break;
                 }
             }
         }
-        
-        if (_btnNum == 1) {
+        DistrictChooseView *view = [[DistrictChooseView alloc] initWithFrame:self.view.bounds cityId:code cityName:city];
+        view.districtChooseViewConfirmBlock = ^(NSString * _Nonnull area, NSString * _Nonnull areaid) {
             
             weakself.addressBtn.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
-            weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
-            _addBtn.hidden = NO;
-        }else if (_btnNum == 2){
-            
-            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]]) {
-                
-                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-                    
-                }];
-            }else{
-                
-                weakself.addressBtn2.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
-                weakself.addressBtn2->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
-                _addBtn.hidden = NO;
-            }
-        }else{
-            
-            if ([weakself.addressBtn->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]] || [weakself.addressBtn2->str isEqualToString:[NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid]]) {
-                
-                [self alertControllerWithNsstring:@"温馨提示" And:@"请不要选择相同区域" WithDefaultBlack:^{
-                    
-                }];
-            }else{
-                
-                weakself.addressBtn3.content.text = [NSString stringWithFormat:@"%@/%@/%@",proName,city,area];
-                weakself.addressBtn3->str = [NSString stringWithFormat:@"%@-%@-%@", pro, cityid, areaid];
-                _addBtn.hidden = NO;
-            }
-        }
+            weakself.addressBtn->str = [NSString stringWithFormat:@"%@-%@-%@", pro, code, areaid];
+        };
+        [self.view addSubview:view];
     };
-    [self.view addSubview:addressChooseView];
+    [self.navigationController pushViewController:nextVC animated:YES];
 }
 
 - (void)ActionTagBtn:(UIButton *)btn{
@@ -404,7 +440,7 @@
     if ([self.status isEqualToString:@"addCustom"]) {
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:[self.infoModel modeltodic]];
-        if (_btnNum == 1) {
+//        if (_btnNum == 1) {
             if (self.addressBtn->str.length) {
                 
                 dic[@"region"] = self.addressBtn->str;
@@ -413,19 +449,19 @@
                 [self showContent:@"请选择意向区域"];
                 return;
             }
-        }else if (_btnNum == 2){
-            
-            if (self.addressBtn2->str.length) {
-                
-                dic[@"region"] = [NSString stringWithFormat:@"%@,%@", self.addressBtn->str, self.addressBtn2->str];
-            }
-        }else{
-            
-            if (self.addressBtn3->str.length) {
-                
-                dic[@"region"] = [NSString stringWithFormat:@"%@,%@,%@", self.addressBtn->str, self.addressBtn2->str, self.addressBtn3->str];
-            }
-        }
+//        }else if (_btnNum == 2){
+//
+//            if (self.addressBtn2->str.length) {
+//
+//                dic[@"region"] = [NSString stringWithFormat:@"%@,%@", self.addressBtn->str, self.addressBtn2->str];
+//            }
+//        }else{
+//
+//            if (self.addressBtn3->str.length) {
+//
+//                dic[@"region"] = [NSString stringWithFormat:@"%@,%@,%@", self.addressBtn->str, self.addressBtn2->str, self.addressBtn3->str];
+//            }
+//        }
 //        if (_houseTypeBtn->str.length) {
 //
 //            dic[@"property_type"] = _houseTypeBtn->str;
@@ -528,24 +564,24 @@
         
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         dic[@"need_id"] = _model.need_id;
-        if (_btnNum == 1) {
+//        if (_btnNum == 1) {
             if (self.addressBtn->str.length) {
                 
                 dic[@"region"] = self.addressBtn->str;
             }
-        }else if (_btnNum == 2){
-            
-            if (self.addressBtn2->str.length) {
-                
-                dic[@"region"] = [NSString stringWithFormat:@"%@,%@", self.addressBtn->str, self.addressBtn2->str];
-            }
-        }else{
-            
-            if (self.addressBtn3->str.length) {
-                
-                dic[@"region"] = [NSString stringWithFormat:@"%@,%@,%@", self.addressBtn->str, self.addressBtn2->str, self.addressBtn3->str];
-            }
-        }
+//        }else if (_btnNum == 2){
+//            
+//            if (self.addressBtn2->str.length) {
+//                
+//                dic[@"region"] = [NSString stringWithFormat:@"%@,%@", self.addressBtn->str, self.addressBtn2->str];
+//            }
+//        }else{
+//            
+//            if (self.addressBtn3->str.length) {
+//                
+//                dic[@"region"] = [NSString stringWithFormat:@"%@,%@,%@", self.addressBtn->str, self.addressBtn2->str, self.addressBtn3->str];
+//            }
+//        }
 //        if (_houseTypeBtn->str.length) {
 //
 //            dic[@"property_type"] = _houseTypeBtn->str;

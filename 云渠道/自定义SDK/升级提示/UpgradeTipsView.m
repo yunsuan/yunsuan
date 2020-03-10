@@ -26,7 +26,7 @@
         
         self.upgradeTipsViewBlock();
     }
-    [self removeFromSuperview];
+//    [self removeFromSuperview];
 }
 
 - (void)ActionCancelBtn:(UIButton *)btn{
@@ -50,6 +50,14 @@
     _img = [[UIImageView alloc] init];
     _img.image = [UIImage imageNamed:@"1"];
     [_whiteView addSubview:_img];
+    
+    _titleL = [[UILabel alloc] init];
+    _titleL.textColor = YJTitleLabColor;
+    _titleL.adjustsFontSizeToFitWidth = YES;
+    _titleL.font = [UIFont boldSystemFontOfSize:16 *SIZE];
+    _titleL.textAlignment = NSTextAlignmentCenter;
+    _titleL.text = @"发现新版本";
+    [_whiteView addSubview:_titleL];
     
     _scroll = [[UIScrollView alloc] init];
     [_whiteView addSubview:_scroll];
@@ -80,7 +88,7 @@
         make.left.equalTo(self).offset(30 *SIZE);
         make.top.equalTo(self).offset(170 *SIZE);
         make.width.mas_equalTo(300 *SIZE);
-        make.height.mas_equalTo(250 *SIZE);
+        make.height.mas_equalTo(260 *SIZE);
     }];
     
     [_img mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -91,36 +99,43 @@
         make.height.mas_equalTo(43 *SIZE);
     }];
     
-    [_scroll mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+    [_titleL mas_makeConstraints:^(MASConstraintMaker *make) {
+       
         make.left.equalTo(_whiteView).offset(10 *SIZE);
         make.top.equalTo(_whiteView).offset(70 *SIZE);
         make.width.mas_equalTo(280 *SIZE);
-        make.height.mas_equalTo(130 *SIZE);
+    }];
+    
+    [_scroll mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_whiteView).offset(45 *SIZE);
+        make.top.equalTo(_whiteView).offset(90 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
+        make.height.mas_equalTo(80 *SIZE);
     }];
     
     [_contentL mas_makeConstraints:^(MASConstraintMaker *make) {
        
-        make.left.equalTo(_scroll).offset(10 *SIZE);
+        make.left.equalTo(_scroll).offset(0 *SIZE);
         make.top.equalTo(_scroll).offset(10 *SIZE);
-        make.width.mas_equalTo(260 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
         make.bottom.equalTo(_scroll.mas_bottom).offset(-10 *SIZE);
     }];
     
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(_whiteView).offset(20 *SIZE);
+        make.left.equalTo(_whiteView).offset(50 *SIZE);
         make.top.equalTo(_whiteView).offset(200 *SIZE);
-        make.width.mas_equalTo(260 *SIZE);
+        make.width.mas_equalTo(200 *SIZE);
         make.height.mas_equalTo(40 *SIZE);
     }];
     
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.equalTo(self).offset(165 *SIZE);
-        make.top.equalTo(self).offset(435 *SIZE);
-        make.width.mas_equalTo(30 *SIZE);
-        make.height.mas_equalTo(30 *SIZE);
+        make.left.equalTo(self).offset(160 *SIZE);
+        make.top.equalTo(self).offset(450 *SIZE);
+        make.width.mas_equalTo(40 *SIZE);
+        make.height.mas_equalTo(40 *SIZE);
     }];
 }
 

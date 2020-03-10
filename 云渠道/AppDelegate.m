@@ -169,6 +169,7 @@ static NSString *const kQQAPPID = @"1106811849";
                     
                         self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
                         self->_updateView.contentL.text = dic[@"releaseNotes"];
+                        self->_updateView.titleL.text = [NSString stringWithFormat:@"发现新版本 %@",dic[@"version"]];
                         self->_updateView.upgradeTipsViewBlock = ^{
                             
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
@@ -246,21 +247,39 @@ static NSString *const kQQAPPID = @"1106811849";
 //    dispatch_group_async(group, queue1, ^{
         [BaseRequest GET:ProjectResources_URL parameters:nil success:^(id resposeObject) {
             if ([resposeObject[@"code"] integerValue] == 200) {
+                
                 NSArray *arr = resposeObject[@"data"];
                 NSMutableDictionary *dic =[NSMutableDictionary dictionary];
+                
                 NSMutableArray *allarr = [NSMutableArray array];
                 NSMutableArray *selctarr = [NSMutableArray array];
-                for (NSUInteger i=0; i<arr.count; i++) {
-                    [dic setValue:arr[i] forKey:arr[i][@"tag"]];
-                    [allarr addObject:arr[i][@"tag"]];
+                
+                for (NSUInteger i = 0; i < arr.count; i++) {
+                    
+                    if ([arr[i][@"tag"] isEqualToString:@"推荐"]) {
+                        
+                    }else{
+                        
+                        [dic setValue:arr[i] forKey:arr[i][@"tag"]];
+                        [allarr addObject:arr[i][@"tag"]];
+                    }
                 }
+                if ([allarr[0] isEqualToString:@"关注"]) {
+                    
+                    [allarr exchangeObjectAtIndex:0 withObjectAtIndex:1];
+                }
+                
                 [UserModel defaultModel].tagDic = dic;
                 [UserModel defaultModel].tagAllArr = allarr;
-                if (![UserModel defaultModel].tagSelectArr) {
-                    for (NSUInteger i= 0; i<5; i++) {
-                        [selctarr addObject:arr[i][@"tag"]];
+                
+                if (![UserModel defaultModel].tagSelectArr1) {
+                    
+                    for (NSUInteger i = 0; i < 5; i++) {
+                        
+                        [selctarr addObject:allarr[i]];
                     }
                     [UserModel defaultModel].tagSelectArr = selctarr;
+                    [UserModel defaultModel].tagSelectArr1 = selctarr;
                 }
                 [UserModelArchiver archive];
             }
@@ -727,45 +746,45 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
 //    [self UpdateRequest];
-    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        NSArray *array = resposeObject[@"results"];
-        NSDictionary *dic = array[0];
-        NSString *appStoreVersion = dic[@"version"];
-        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-            
-            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
-                
-                if ([resposeObject[@"code"] integerValue] == 200) {
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                        [self->_updateView removeFromSuperview];
-                        
-                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                        self->_updateView.contentL.text = dic[@"releaseNotes"];
-                        self->_updateView.upgradeTipsViewBlock = ^{
-                            
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
-                        };
-                        if ([resposeObject[@"data"][@"must"] integerValue]) {
-
-                            self->_updateView.cancelBtn.hidden = YES;
-                        }
-                    
-                        
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
-                    });
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        }
-    } failure:^(NSError * _Nonnull error) {
-        
-        NSLog(@"%@",error);
-    }];
+//    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        NSArray *array = resposeObject[@"results"];
+//        NSDictionary *dic = array[0];
+//        NSString *appStoreVersion = dic[@"version"];
+//        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
+//
+//            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+//
+//                if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//                        [self->_updateView removeFromSuperview];
+//
+//                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                        self->_updateView.contentL.text = dic[@"releaseNotes"];
+//                        self->_updateView.upgradeTipsViewBlock = ^{
+//
+//                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
+//                        };
+//                        if ([resposeObject[@"data"][@"must"] integerValue]) {
+//
+//                            self->_updateView.cancelBtn.hidden = YES;
+//                        }
+//
+//
+//                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
+//                    });
+//                }
+//            } failure:^(NSError *error) {
+//
+//            }];
+//        }
+//    } failure:^(NSError * _Nonnull error) {
+//
+//        NSLog(@"%@",error);
+//    }];
 }
 
 
@@ -790,88 +809,88 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadMessList" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"recommendReload" object:nil];
     }
-    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        NSArray *array = resposeObject[@"results"];
-        NSDictionary *dic = array[0];
-        NSString *appStoreVersion = dic[@"version"];
-        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-            
-            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
-                
-                if ([resposeObject[@"code"] integerValue] == 200) {
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                        [self->_updateView removeFromSuperview];
-                        
-                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                        self->_updateView.contentL.text = dic[@"releaseNotes"];
-                        self->_updateView.upgradeTipsViewBlock = ^{
-                            
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
-                        };
-                        if ([resposeObject[@"data"][@"must"] integerValue]) {
-
-                            self->_updateView.cancelBtn.hidden = YES;
-                        }
-                        
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
-                    });
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        }
-    } failure:^(NSError * _Nonnull error) {
-        
-        NSLog(@"%@",error);
-    }];
+//    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        NSArray *array = resposeObject[@"results"];
+//        NSDictionary *dic = array[0];
+//        NSString *appStoreVersion = dic[@"version"];
+//        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
+//
+//            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+//
+//                if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//                        [self->_updateView removeFromSuperview];
+//
+//                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                        self->_updateView.contentL.text = dic[@"releaseNotes"];
+//                        self->_updateView.upgradeTipsViewBlock = ^{
+//
+//                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
+//                        };
+//                        if ([resposeObject[@"data"][@"must"] integerValue]) {
+//
+//                            self->_updateView.cancelBtn.hidden = YES;
+//                        }
+//
+//                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
+//                    });
+//                }
+//            } failure:^(NSError *error) {
+//
+//            }];
+//        }
+//    } failure:^(NSError * _Nonnull error) {
+//
+//        NSLog(@"%@",error);
+//    }];
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 //    [self UpdateRequest];
-    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
-        
-        NSLog(@"%@",resposeObject);
-        NSArray *array = resposeObject[@"results"];
-        NSDictionary *dic = array[0];
-        NSString *appStoreVersion = dic[@"version"];
-        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
-            
-            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
-                
-                if ([resposeObject[@"code"] integerValue] == 200) {
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    
-                        [self->_updateView removeFromSuperview];
-                        
-                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                        self->_updateView.contentL.text = dic[@"releaseNotes"];
-                        self->_updateView.upgradeTipsViewBlock = ^{
-                            
-                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
-                        };
-                        if ([resposeObject[@"data"][@"must"] integerValue]) {
-
-                            self->_updateView.cancelBtn.hidden = YES;
-                        }
-                        
-                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
-                    });
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        }
-    } failure:^(NSError * _Nonnull error) {
-        
-        NSLog(@"%@",error);
-    }];
+//    [BaseRequest VersionUpdateSuccess:^(id  _Nonnull resposeObject) {
+//
+//        NSLog(@"%@",resposeObject);
+//        NSArray *array = resposeObject[@"results"];
+//        NSDictionary *dic = array[0];
+//        NSString *appStoreVersion = dic[@"version"];
+//        if ([[appStoreVersion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue] > [[YQDversion stringByReplacingOccurrencesOfString:@"." withString:@""] floatValue]) {
+//
+//            [BaseRequest GET:@"getVersionInfo" parameters:nil success:^(id resposeObject) {
+//
+//                if ([resposeObject[@"code"] integerValue] == 200) {
+//
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//                        [self->_updateView removeFromSuperview];
+//
+//                        self->_updateView = [[UpgradeTipsView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                        self->_updateView.contentL.text = dic[@"releaseNotes"];
+//                        self->_updateView.upgradeTipsViewBlock = ^{
+//
+//                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id1371978352?mt=8"]];
+//                        };
+//                        if ([resposeObject[@"data"][@"must"] integerValue]) {
+//
+//                            self->_updateView.cancelBtn.hidden = YES;
+//                        }
+//
+//                        [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self->_updateView];
+//                    });
+//                }
+//            } failure:^(NSError *error) {
+//
+//            }];
+//        }
+//    } failure:^(NSError * _Nonnull error) {
+//
+//        NSLog(@"%@",error);
+//    }];
 }
 
 

@@ -52,6 +52,7 @@ static CGFloat labelHeight = 40;
         _myChannelArr =  [UserModel defaultModel].tagSelectArr;
         _recommendChannelArr = [NSMutableArray arrayWithArray:[UserModel defaultModel].tagAllArr];
         for (int i = 0; i < _myChannelArr.count; i++) {
+            
             [_recommendChannelArr removeObject:_myChannelArr[i]];
         }
         [self setUI];
@@ -94,25 +95,71 @@ static CGFloat labelHeight = 40;
     __weak typeof(self) wself = self;
     dispatch_async(_queue, ^{
         for (int i = 0 ; i < wself.myChannelArr.count; i++) {
+            
             HNChannelModel *model = [[HNChannelModel alloc]init];
             model.name = wself.myChannelArr[i];
             model.isMyChannel = YES;
-            if ([wself.myChannelArr[i] isEqualToString:@"推荐"]||[wself.myChannelArr[i] isEqualToString:@"关注"]) {
+            if (/*[wself.myChannelArr[i] isEqualToString:@"推荐"]||*/[wself.myChannelArr[i] isEqualToString:@"关注"]) {
                 model.isRegular = YES;
             }
             else{
                 model.isRegular = NO;
             }
-            [wself.datas addObject:model];
+            if ([wself.myChannelArr[i] isEqualToString:@"推荐"]) {
+                
+                
+            }else{
+                
+                [wself.datas addObject:model];
+            }
+            
         }
+        
+        HNChannelModel *model = wself.datas[0];
+        if ([model.name isEqualToString:@"关注"]) {
+            
+            [wself.datas exchangeObjectAtIndex:0 withObjectAtIndex:1];
+        }else{
+            
+            
+        }
+        
         for (int i = 0 ; i < wself.recommendChannelArr.count; i++) {
+
             HNChannelModel *model = [[HNChannelModel alloc]init];
             model.name = wself.recommendChannelArr[i];
             model.isMyChannel = NO;
-            model.isRegular = NO;
-            [wself.datas addObject:model];
-            
+            if (/*[wself.myChannelArr[i] isEqualToString:@"推荐"]||*/[wself.recommendChannelArr[i] isEqualToString:@"关注"]) {
+                model.isRegular = YES;
+            }
+            else{
+                model.isRegular = NO;
+            }
+            if ([wself.recommendChannelArr[i] isEqualToString:@"推荐"]) {
+
+
+            }else{
+
+                [wself.datas addObject:model];
+            }
         }
+
+        HNChannelModel *model1 = wself.datas[0];
+        if ([model1.name isEqualToString:@"关注"]) {
+
+            [wself.datas exchangeObjectAtIndex:0 withObjectAtIndex:1];
+        }else{
+
+
+        }
+//        for (int i = 0 ; i < wself.recommendChannelArr.count; i++) {
+//
+//            HNChannelModel *model = [[HNChannelModel alloc]init];
+//            model.name = wself.recommendChannelArr[i];
+//            model.isMyChannel = NO;
+//            model.isRegular = NO;
+//            [wself.datas addObject:model];
+//        }
         [wself refreshFrames];
     });
 }
@@ -135,6 +182,7 @@ static CGFloat labelHeight = 40;
     });
     
     for (int i = 0 ; i < wself.datas.count; i++) {
+        
         HNChannelModel *model = wself.datas[i];
         if (!model.isMyChannel) {
             int index = i - wself.divisionModel.tag - 1; // 从0开始tag

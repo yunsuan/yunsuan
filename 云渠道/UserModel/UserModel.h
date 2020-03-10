@@ -29,7 +29,10 @@
 @property (nonatomic , strong) NSMutableArray *houseArr;
 @property (nonatomic , strong) NSMutableDictionary *tagDic;
 @property (nonatomic , strong) NSMutableArray *tagAllArr;
+
 @property (nonatomic , strong) NSMutableArray *tagSelectArr;
+
+@property (nonatomic , strong) NSMutableArray *tagSelectArr1;
 @property (nonatomic , strong) NSMutableArray *workArr;
 @property (nonatomic , strong) NSMutableArray *cityArr;
 @property (nonatomic , strong) NSMutableArray *groupArr;
