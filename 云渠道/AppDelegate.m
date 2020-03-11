@@ -256,13 +256,13 @@ static NSString *const kQQAPPID = @"1106811849";
                 
                 for (NSUInteger i = 0; i < arr.count; i++) {
                     
-                    if ([arr[i][@"tag"] isEqualToString:@"推荐"]) {
-                        
-                    }else{
+//                    if ([arr[i][@"tag"] isEqualToString:@"推荐"]) {
+//
+//                    }else{
                         
                         [dic setValue:arr[i] forKey:arr[i][@"tag"]];
                         [allarr addObject:arr[i][@"tag"]];
-                    }
+//                    }
                 }
                 if ([allarr[0] isEqualToString:@"关注"]) {
                     
@@ -270,16 +270,23 @@ static NSString *const kQQAPPID = @"1106811849";
                 }
                 
                 [UserModel defaultModel].tagDic = dic;
-                [UserModel defaultModel].tagAllArr = allarr;
                 
-                if (![UserModel defaultModel].tagSelectArr1) {
+                if ([UserModel defaultModel].tagAllArr != allarr) {
                     
-                    for (NSUInteger i = 0; i < 5; i++) {
+                    [UserModel defaultModel].tagAllArr = allarr;
+                    
+                    if (![UserModel defaultModel].tagSelectArr1) {
                         
-                        [selctarr addObject:allarr[i]];
+                        for (NSUInteger i = 0; i < 5; i++) {
+                            
+                            [selctarr addObject:allarr[i]];
+                        }
+                        [UserModel defaultModel].tagSelectArr = selctarr;
+                        [UserModel defaultModel].tagSelectArr1 = selctarr;
                     }
-                    [UserModel defaultModel].tagSelectArr = selctarr;
-                    [UserModel defaultModel].tagSelectArr1 = selctarr;
+                }else{
+                    
+                    
                 }
                 [UserModelArchiver archive];
             }

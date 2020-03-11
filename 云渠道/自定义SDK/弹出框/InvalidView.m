@@ -16,7 +16,7 @@
     if (self) {
         
         [self initUI];
-        _type_id =@"0";
+        _type_id = @"0";
     }
     return self;
 }
@@ -24,7 +24,7 @@
 - (void)ActionConfirmBtn:(UIButton *)btn{
 
     
-    if (!_type_id.length) {
+    if (![_type_id integerValue]) {
     
         if (self.invalidViewBlockFail) {
             
@@ -159,6 +159,7 @@
         }else{
             
             _reasonTV = [[UITextView alloc] initWithFrame:CGRectMake(23 *SIZE, 216 *SIZE, 204 *SIZE, 77 *SIZE)];
+            _reasonTV.backgroundColor = CLWhiteColor;
             _reasonTV.contentInset = UIEdgeInsetsMake(5 *SIZE, 5 *SIZE, 5 *SIZE, 5 *SIZE);
             _reasonTV.layer.cornerRadius = 5 *SIZE;
             _reasonTV.layer.borderWidth = SIZE;

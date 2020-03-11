@@ -274,7 +274,14 @@
                                   [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"house_contract"][@"today"],resposeObject[@"data"][@"house_contract"][@"total"]]];
 
 
-                _rentCountData = @[[NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],[NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],[NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],[NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],[NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
+                _rentCountData = @[
+                    [NSString stringWithFormat:@"报备有效%@，报备无效%@，累计%@",resposeObject[@"data"][@"rent_record"][@"value"],resposeObject[@"data"][@"rent_record"][@"disabled"],resposeObject[@"data"][@"rent_record"][@"total"]],
+                    [NSString stringWithFormat:@"有效房源%@，无效%@，房源累计%@套",resposeObject[@"data"][@"rent_survey"][@"value"],resposeObject[@"data"][@"rent_survey"][@"disabled"],resposeObject[@"data"][@"rent_survey"][@"total"]],
+                    [NSString stringWithFormat:@"维护房源%@套",resposeObject[@"data"][@"rent_maintain"][@"total"]],
+                    //6带看维护
+                    [NSString stringWithFormat:@"累计%@条",resposeObject[@"data"][@"house_take_maintain"][@"total"]],
+                    [NSString stringWithFormat:@"今日新增%@，累计%@，变更%@套",resposeObject[@"data"][@"rent_sub"][@"today"],resposeObject[@"data"][@"rent_sub"][@"total"],resposeObject[@"data"][@"rent_sub"][@"change"]],
+                    [NSString stringWithFormat:@"今日新增%@，累计%@",resposeObject[@"data"][@"rent_contract"][@"today"],resposeObject[@"data"][@"rent_contract"][@"total"]]];
 
                 [_MainTableView reloadData];
             } failure:^(NSError *error) {

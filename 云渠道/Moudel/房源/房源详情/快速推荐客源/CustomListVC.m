@@ -96,6 +96,7 @@
 
 - (void)RequestMethod{
     
+    _page = 1;
     _customerTable.mj_footer.state = MJRefreshStateIdle;
     [BaseRequest GET:FastRecommendList_URL parameters:nil success:^(id resposeObject) {
         

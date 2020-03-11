@@ -393,7 +393,7 @@
                 return 0;
             }else{
                 
-                return _projectArr.count < 3? _projectArr.count : 3;
+                return _projectArr.count;
             }
         }else{
             
@@ -640,7 +640,7 @@
                         header = [[SecondaryMatchHeader alloc] initWithReuseIdentifier:@"CustomTableListHeader"];
                     }
                     CustomRequireModel *model = _dataArr[0];
-                    header.numListL.text = [NSString stringWithFormat:@"匹配小区列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
+                    header.numListL.text = [NSString stringWithFormat:@"匹配门店列表(%ld)",[model.fit_info[@"fit_store_list"] count]];
                     header.secondaryMatchHeaderMoreBlock = ^{
                         StoreListVC *nextVC = [[StoreListVC alloc] init];
                         if ([_customType isEqualToString:@"二手房"]) {

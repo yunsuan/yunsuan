@@ -42,33 +42,34 @@
     _tagArr = [NSMutableArray arrayWithArray:data[1]];
     [_propertyColl reloadData];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
-        }];
-        if (!_propertyArr.count && !_tagArr.count) {
-            
-            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(self.contentView).offset(0 *SIZE);
-                make.top.equalTo(_headImg.mas_bottom).offset(10 *SIZE);
-                make.right.equalTo(self.contentView).offset(0 *SIZE);
-                make.height.equalTo(@(SIZE));
-                make.bottom.equalTo(self.contentView).offset(0);
-            }];
-        }else{
-            
-            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
-                make.left.equalTo(self.contentView).offset(0 *SIZE);
-                make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
-                make.right.equalTo(self.contentView).offset(0 *SIZE);
-                make.height.equalTo(@(SIZE));
-                make.bottom.equalTo(self.contentView).offset(0);
-            }];
-        }
-    });
+    [_propertyColl mas_updateConstraints:^(MASConstraintMaker *make) {
+    make.height.mas_equalTo(_propertyColl.collectionViewLayout.collectionViewContentSize.height + 5 *SIZE);
+    }];
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//
+//        if (!_propertyArr.count && !_tagArr.count) {
+//
+//            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                make.left.equalTo(self.contentView).offset(0 *SIZE);
+//                make.top.equalTo(_headImg.mas_bottom).offset(10 *SIZE);
+//                make.right.equalTo(self.contentView).offset(0 *SIZE);
+//                make.height.equalTo(@(SIZE));
+//                make.bottom.equalTo(self.contentView).offset(0);
+//            }];
+//        }else{
+//
+//            [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+//
+//                make.left.equalTo(self.contentView).offset(0 *SIZE);
+//                make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
+//                make.right.equalTo(self.contentView).offset(0 *SIZE);
+//                make.height.equalTo(@(SIZE));
+//                make.bottom.equalTo(self.contentView).offset(0);
+//            }];
+//        }
+//    });
 }
 
 - (void)setDataDic:(NSMutableDictionary *)dataDic{
@@ -76,17 +77,18 @@
     _titleL.text = dataDic[@"project_name"];
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"匹配度：%@%@",dataDic[@"score"],@"%"]];
     [attr addAttribute:NSForegroundColorAttributeName value:YJ86Color range:NSMakeRange(0, 4)];
-    _rateL.attributedText = attr;
+//    _rateL.attributedText = attr;
     
     NSString *imgname =dataDic[@"img_url"];
-    if (imgname.length>0) {
+    
+    if (imgname.length > 0) {
+        
         [_headImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",TestBase_Net,dataDic[@"img_url"]]] placeholderImage:[UIImage imageNamed:@"default_1"] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             
             if (error) {
                 
                 _headImg.image = [UIImage imageNamed:@"default_1"];
             }
-            
         }];
     }else{
         _headImg.image = [UIImage imageNamed:@"default_1"];
@@ -156,15 +158,15 @@
     
     if (section == 1) {
         
-        return _tagArr.count > 2 ? 2:_tagArr.count;
+        return _tagArr.count > 3 ? 3 :_tagArr.count;
     }else{
         
         if (_propertyArr.count) {
             
-            return _propertyArr.count > 2 ? 2:_propertyArr.count;
+            return _propertyArr.count > 3 ? 3 :_propertyArr.count;
         }else{
             
-            return _tagArr.count > 2 ? 2:_tagArr.count;
+            return _tagArr.count > 3 ? 3 :_tagArr.count;
         }
     }
 }
@@ -273,9 +275,9 @@
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+
         make.left.equalTo(self.contentView).offset(0 *SIZE);
-        make.top.equalTo(_propertyColl.mas_bottom).offset(5 *SIZE);
+        make.top.equalTo(_headImg.mas_bottom).offset(20 *SIZE);
         make.right.equalTo(self.contentView).offset(0 *SIZE);
         make.height.equalTo(@(SIZE));
         make.bottom.equalTo(self.contentView).offset(0);

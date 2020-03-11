@@ -101,6 +101,7 @@
     [_whiteView addSubview:_phoneL];
     
     _markTV = [[UITextView alloc] initWithFrame:CGRectMake(25 *SIZE, 140 *SIZE, 200 *SIZE, 50 *SIZE)];
+    _markTV.backgroundColor = CLWhiteColor;
     _markTV.keyboardType = UIKeyboardTypeDefault;
     _markTV.layer.borderColor = COLOR(219, 219, 219, 1).CGColor;
     _markTV.layer.borderWidth = SIZE;

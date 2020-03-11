@@ -78,10 +78,10 @@
     if (_city.length) {
         
         [self RequestMethod];
-//        if (![self.status isEqualToString:@"推荐"]) {
-//
-//            [self RequestMethod];
-//        }
+        if (![self.status isEqualToString:@"推荐"]) {
+
+            [self RequestMethod];
+        }
     }else{
         
         if ([self.status isEqualToString:@"推荐"]) {

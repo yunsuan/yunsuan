@@ -512,7 +512,7 @@
 
 - (void)ActionNextBtn:(UIButton *)btn{
     
-    if (!_addAreaCustomView.regionBtn.content.text && !_addAreaCustomView.regionBtn1.content.text) {
+    if (!_addAreaCustomView.regionBtn.content.text.length || !_addAreaCustomView.regionBtn1.content.text.length) {
         
         [self showContent:@"请选择区域"];
         return;

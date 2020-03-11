@@ -207,6 +207,13 @@
     [self.bgView addSubview:self.pickerView];
     [self.toolBar addSubview:self.cancleBtn];
     [self.toolBar addSubview:self.sureBtn];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    } else {
+        // Fallback on earlier versions
+    }
     [self showPickerView];
 }
 

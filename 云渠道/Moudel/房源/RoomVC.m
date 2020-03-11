@@ -112,16 +112,19 @@
         [self reloadData];
         [self pageController:self willEnterViewController:self.childViewControllers[0] withInfo:@{}];
         [self reloadData];
-        if ([UserModel defaultModel].index.length) {
-
-
-        }else{
-
-            [UserModel defaultModel].index = @"0";
-            [UserModelArchiver archive];
-//            self.selectIndex = 2;
-            [self reloadData];
+        
+        [UserModel defaultModel].index = @"0";
+        [UserModelArchiver archive];
+        for (int i = 0; i < self->_titlearr.count; i++) {
+            
+            if ([self->_titlearr[i] isEqualToString:@"新房"]) {
+                
+                self.selectIndex = i;
+                [UserModel defaultModel].index = [NSString stringWithFormat:@"%d",i];
+                [UserModelArchiver archive];
+            }
         }
+        [self reloadData];
 
     } Faild:^{
         

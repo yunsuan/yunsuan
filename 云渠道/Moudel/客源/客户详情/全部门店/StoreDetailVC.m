@@ -47,6 +47,7 @@
 
 - (void)initDataSource{
     
+    _page = 1;
     _dataArr = [@[] mutableCopy];
     _store_info = [@{} mutableCopy];
     _numofhouse = 0;
@@ -56,7 +57,7 @@
 {
     
     [self.view addSubview:self.recommendView];
-    if ([_sex integerValue]==2) {
+    if ([_sex integerValue] == 2) {
         _recommendView.sexBtn.content.text =@"女";
         _recommendView.sexBtn->str = @"2";
     }
@@ -157,7 +158,7 @@
 
 - (void)requestMethodWithpage:(NSInteger )page{
     
-    NSString *pagestr = [NSString stringWithFormat:@"%ld",page];
+    NSString *pagestr = [NSString stringWithFormat:@"%ld",(long)page];
     
     if (page == 1) {
         
@@ -342,9 +343,10 @@
 }
 
 - (void)initUI{
-     self.navBackgroundView.hidden = NO;
+    
+    self.navBackgroundView.hidden = NO;
     self.titleLabel.text = @"门店详情";
-    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT - TAB_BAR_HEIGHT) style:UITableViewStylePlain];
+    _table = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATION_BAR_HEIGHT, SCREEN_Width, SCREEN_Height - NAVIGATION_BAR_HEIGHT) style:UITableViewStylePlain];
     _table.backgroundColor = self.view.backgroundColor;
     _table.rowHeight = UITableViewAutomaticDimension;
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;

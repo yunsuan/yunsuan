@@ -158,6 +158,13 @@
     [self.toolBar addSubview:self.cancleBtn];
     [self.toolBar addSubview:self.sureBtn];
     [self showPickerView];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        [self setOverrideUserInterfaceStyle:UIUserInterfaceStyleLight];
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 #pragma mark -- showPickerView
